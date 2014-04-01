@@ -1,0 +1,54 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+ng-include(src="'partials/header'")
+
+div.container
+  .row
+    .col-md-2
+      ul.nav.nav-list
+        li(ng-class="tab == 'allergies' && 'active'", style='cursor:pointer;')
+          a(ng-click='tab = "allergies"') allergies
+        li(ng-class="tab == 'demographics' && 'active'", style='cursor:pointer;')
+          a(ng-click='tab = "demographics"') demographics
+        li(ng-class="tab == 'encounters' && 'active'", style='cursor:pointer;')
+          a(ng-click='tab = "encounters"') encounters
+        li(ng-class="tab == 'immunizations' && 'active'", style='cursor:pointer;')
+          a(ng-click='tab = "immunizations"') immunizations
+        li(ng-class="tab == 'labs' && 'active'", style='cursor:pointer;')
+          a(ng-click='tab = "labs"') labs
+        li(ng-class="tab == 'medications' && 'active'", style='cursor:pointer;')
+          a(ng-click='tab = "medications"') medications
+        li(ng-class="tab == 'problems' && 'active'", style='cursor:pointer;')
+          a(ng-click='tab = "problems"') problems
+        li(ng-class="tab == 'vitals' && 'active'", style='cursor:pointer;')
+          a(ng-click='tab = "vitals"') vitals
+    .col-md-10(ng-show='tab == "encounters"')
+      ng-include(src='"partials/record/encounter"')
+    .col-md-10(ng-show='tab == "demographics"')
+      ng-include(src='"partials/record/demographics"')
+    .col-md-10(ng-show='tab == "vitals"')
+      ng-include(src='"partials/record/vitals"')
+    .col-md-10(ng-show='tab == "labs"')
+      ng-include(src='"partials/record/labs"')
+    .col-md-10(ng-show='tab == "medications"')
+      ng-include(src='"partials/record/medications"')
+    .col-md-10(ng-show='tab == "immunizations"')
+      ng-include(src='"partials/record/immunizations"')
+    .col-md-10(ng-show='tab == "allergies"')
+      ng-include(src='"partials/record/allergies"')
+    .col-md-10(ng-show='tab == "problems"')
+      ng-include(src='"partials/record/problems"')
+

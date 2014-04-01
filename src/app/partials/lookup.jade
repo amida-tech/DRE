@@ -1,0 +1,54 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//  http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+.container
+  div(style='height: 100px') &nbsp;
+  .row
+    .col-md-6.col-md-offset-3
+      .well
+        h4(ng-hide='toggleView') Verify User.
+        div(ng-show='(toggleView && !verified)')
+          h4.fui-cross  Invalid Information.
+        div(ng-show='(toggleView && verified)')
+          h4.fui-check  Valid Information.
+        .lead(ng-hide='toggleView') Enter user information to ensure validity.
+        .lead(ng-show='(toggleView && verified)') The information you supplied is accurate.
+        .lead(ng-show='(toggleView && !verified)') The information was unable to be verified.
+        input.btn.btn-primary.btn-lg.btn-block(value='Enter Information' ng-show='toggleView' ng-click='resetForm()')
+        form(novalidate,name='checkUser',ng-submit='verify()', ng-hide='toggleView')
+          // firstname
+          .form-group(ng-class="{'has-error': checkUser.firstname.$invalid, 'has-success': !checkUser.firstname.$invalid}")
+            input.form-control(type='text',placeholder='First Name',name='firstname',ng-model='user.firstname',required)
+            span.help-block(ng-show='checkUser.firstname.$error.required') is required
+          // middlename
+          .form-group(ng-class="{'has-error': !checkUser.middlename, 'has-success': !checkUser.middlename}")
+            input.form-control(type='text',placeholder='Middle Name',name='middlename',ng-model='user.middlename')
+            span.help-block(ng-show='!user.middlename') is optional
+          // lastname
+          .form-group(ng-class="{'has-error': checkUser.lastname.$invalid, 'has-success': !checkUser.lastname.$invalid}")
+            input.form-control(type='text',placeholder='Last Name',name='lastname',ng-model='user.lastname', required)
+            span.help-block(ng-show='checkUser.lastname.$error.required') is required
+          // date of birth
+          .form-group(ng-class="{'has-error': checkUser.birthdate.$invalid, 'has-success': !checkUser.birthdate.$invalid}")
+            input.form-control(type='text',placeholder='Date of Birth',name='birthdate',ng-model='user.birthdate',ng-pattern='dateformat', required)
+            span.help-block(ng-show='checkUser.birthdate.$error.required') is required
+            span.help-block(ng-show='checkUser.birthdate.$error.pattern && checkUser.birthdate.$dirty') Valid date format is mm/dd/yyyy   
+          // direct address
+          .form-group(ng-class="{'has-error': checkUser.directemail.$invalid, 'has-success': !checkUser.directemail.$invalid}")
+            input.form-control(type='email',placeholder='DIRECT Address',name='directemail',ng-model='user.directemail', required)
+            span.help-block(ng-show='checkUser.directemail.$error.required') is required
+            span.help-block(ng-show='checkUser.directemail.$error.email') should be an email 
+          
+          input.btn.btn-primary.btn-lg.btn-block(type='submit',value='Verify' ng-disabled='checkUser.firstname.$error.required || checkUser.lastname.$error.required || checkUser.birthdate.$error.required || checkUser.birthdate.$error.pattern || checkUser.directemail.$error.required || checkUser.directemail.$error.email ')

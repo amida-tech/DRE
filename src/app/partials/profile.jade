@@ -1,0 +1,85 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//  http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+div(ng-include="'partials/header'")
+
+.container
+  .row
+    .col-md-12
+      h2 Profile
+
+      form(novalidate)
+        // email
+        .form-group
+          label.control-label(for='inputFirstname') Email
+          input.form-control(type='email', placeholder='Email',name='email',ng-model='userAccount.email',required)
+          span.help-block(ng-show='userAccount.email.$error.required') is required
+          span.help-block(ng-show='userAccount.email.$error.email') should be an email
+
+      form(role='form',name='userProfile',novalidate)
+
+        .form-group
+          label.control-label(for='inputAddress') Address
+          input#inputAddress.form-control(type='text', name="address", placeholder='1600 Penn ave', required, ng-model='userProfile.address')
+          span.help-block(ng-show='userProfile.address.$error.required') Address is required
+
+        .form-group
+          label.control-label(for='inputAddress2') Address 2
+          input#inputAddress2.form-control(type='text', name="address2", placeholder='', ng-model='userProfile.address2')
+
+        .form-group
+          label.control-label(for='inputCity') City
+          input#inputCity.form-control(type='text', name="city", placeholder='Townville', required, ng-model='userProfile.city')
+          span.help-block(ng-show='userProfile.city.$error.required') City is required
+
+        .form-group
+          label.control-label(for='inputState') State
+          select#inputState.form-control(type='text', name="state", placeholder='ST', required, ng-model='userProfile.state')
+            option(ng-repeat='state in states') {{state}}
+          span.help-block(ng-show='userProfile.state.$error.required') State is required
+
+        .form-group
+          label.control-label(for='inputZipcode') Zipcode
+          input#inputZipcode.form-control(type='text', name="zipcode", placeholder='12345', ng-pattern='zipcodeformat', required, ng-model='userProfile.zipcode')
+          span.help-block(ng-show='userProfile.zipcode.$error.required') Zipcode is required
+          span.help-block(ng-show='!userProfile.zipcode.$valid && userProfile.zipcode.$dirty && !userProfile.zipcode.$error.required') Valid zipcode format is NNNNN
+
+        </br>
+
+        .form-group
+          label.control-label(for='inputPhone') Phone number
+          input#inputPhone.form-control(type='text', name="phone", placeholder='xxxxxxxxxx', ng-pattern='phoneformat', required, ng-model='userProfile.phone')
+          span.help-block(ng-show='userProfile.phone.$error.required') Phone number is required
+          span.help-block(ng-show='!userProfile.phone.$valid && userProfile.phone.$dirty && !userProfile.phone.$error.required') Valid phone number format is xxxxxxxxxx
+
+        .form-group
+          label.control-label(for='inputPhonetype') Phone type
+          .radio(ng-class="{checked: (userProfile.phonetype === 'mobile')}")
+            label
+                bt-radio#inputPhonetype(name='phonetype', required, ng-model='userProfile.phonetype', value='mobile')
+                | Mobile (Voice calls and SMS/text messages)
+          .radio(ng-class="{checked: (userProfile.phonetype === 'landline')}")
+            label
+                bt-radio#inputPhonetype(name='phonetype', required, ng-model='userProfile.phonetype', value='landline')
+                | Landline (Voice calls only)
+          span.help-block(ng-show='userProfile.phonetype.$error.required') Phone type is required
+
+        </br>
+
+        .form-group
+          button.btn.btn-success(type='submit',ng-click='updateProfile()') Update
+
+
+

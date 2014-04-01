@@ -1,0 +1,79 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//  http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+div(ng-controller="NavbarCtrl")
+  .navbar.navbar-default
+    .container
+      .navbar-header
+        a.navbar-brand(href='#/{{username}}' ng-show="appConfig === 'phix'")
+          img(src="img/bb-logo-vector.png" width="27px" height="27px")
+          | &nbsp; PHIX
+        a.navbar-brand(href='#/{{username}}/mail/inbox' ng-show="appConfig === 'clinician'")
+          img(src="img/bb-logo-vector.png" width="27px" height="27px")
+          | &nbsp; PHIX
+      ul.nav.pull-right
+        li(ng-class='tab == "validate" && "active"' ng-show="appConfig === 'clinician'")
+          a(href='{{nodeLocation}}' + '/#/lookup' target='_blank')
+            span.fui-check-inverted
+            span.hidden-lg Validate
+        li(ng-class='tab == "exchange" && "active"' ng-show="appConfig === 'clinician'")
+          a(href='#/{{username}}/exchange')
+            span.fui-eye
+            span.hidden-lg Exchange
+        li(ng-class='tab == "pending" && "active"' ng-hide='verified' ng-show="appConfig === 'phix'")
+          a(href='#/{{username}}/pending')
+            span.fui-check-inverted
+            span.hidden-lg Verify
+        li(ng-class='tab == "user" && "active"' ng-show="verified && (appConfig === 'phix')")
+          a(href='#/{{username}}')
+            span.fui-user
+            span.hidden-lg Health
+        li(ng-class='tab == "mail" && "active"' ng-show='verified')
+          a(href='#/{{username}}/mail/inbox')
+            span.fui-mail
+            span.hidden-lg Messages
+            span.navbar-new(ng-hide='unreadCount === 0') {{unreadCount}}
+        li(ng-class='tab == "folder" && "active"' ng-show="verified && (appConfig === 'phix')")
+          a(href='#/{{username}}/store')
+            span.fui-list
+            span.hidden-lg Stored Records
+        li(ng-class='tab == "lock" && "active"' ng-show="verified && (appConfig === 'phix')")
+          a(href='#/{{username}}/rules')
+            span.fui-lock
+            span.hidden-lg Privacy
+        li(ng-show='clinician')
+          a(data-toggle='modal',data-target='#requestModal',ng-click='result = null')
+            span.fui-alert
+            span.hidden-lg Request Records
+        li(ng-class='tab == "gear" && "active"'  ng-show="appConfig === 'phix'")
+          a(href='#/{{username}}/profile')
+            span.fui-gear
+            span.hidden-lg Profile
+        li.dropdown(style="min-width: 200px;")
+          a.dropdown-toggle(href='#',data-toggle='dropdown',bt-dropdown, ng-click='refreshDelegates()')
+            | {{name}}
+            span(ng-show='currentDelegate')  as {{currentDelegate}}
+            b.caret
+          ul.dropdown-menu
+            li
+              a(href='#/{{username}}') {{name}}
+            li(ng-repeat='delegate in delegates')
+              a(href='',ng-click='setDelegate("{{delegate.username}}")') {{delegate.name}}
+            li.divider
+            li
+              a(href = '', ng-click='logout()') Logout
+
+
+  ph-request

@@ -1,0 +1,191 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//  http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+ng-include(src="'partials/header'")
+
+.container
+  .row
+    .col-md-12
+      h4.mbl {{directemail}}
+  .row
+    .col-md-2
+      button.btn.btn-primary.btn-block(style='margin-bottom: 15px;',data-toggle='modal',data-target='#composeModal',ng-click='attach = null; getClinicians(); clearMessage();') Compose
+      div.modal.fade(id='composeModal' tabindex="-1" role="dialog" aria-hidden="true")
+        div.modal-dialog
+          div.modal-content
+            div.modal-header
+              button.close(type='button' data-dismiss='modal' aria-hidden='true') &times;
+              div.modal-title
+                h4 Compose Message
+            form.modal-body(name="composeMessage", novalidate)
+              ph-clinitian
+              label(for='subject') Subject
+              input#subject.form-control.mbm(ng-model='outboundMessage.subject', ng-hide='clinicianConfig', type='text', required, placeholder='My Medical Records.')
+              input#subject.form-control.mbm(ng-model='outboundMessage.subject', ng-hide='phixConfig', type='text', required, placeholder='Your Medical Records.')
+              label(for='message') Message
+              textarea#message.form-control(rows=8, ng-model='outboundMessage.contents', required, placeholder='Please See Attached.')
+              p(ng-hide='clinicianConfig')
+                a(ng-click='attach = "file"; getFiles();', style='cursor:pointer;', ng-show='files')
+                  | attach files
+                span(ng-show = 'files') |
+                a(ng-click='attach = "records"', style='cursor:pointer;')
+                  | attach my record
+              div(ng-show='attach == "file"')
+                table.table.table-hover(ng-show='attach == "file"')
+                  tbody
+                    tr(ng-repeat="file in files | filter: {source: '!outbox'}")
+                      td.col-md-1
+                        .checkbox
+                          bt-checkbox(ng-model='file.selected')
+                      td.col-md-5
+                        | {{file.fileName}}
+
+                      td
+                        strong {{file.details}}
+                        strong(ng-hide='file.details') -
+              div(ng-show='attach == "records"')
+                table
+                  tr
+                    td
+                      .checkbox
+                        bt-checkbox(id='all', type='checkbox', ng-checked='all',ng-model='all')
+                    td
+                      | All Records
+                  tr
+                    td
+                      .checkbox
+                        bt-checkbox(id='allergies', type='checkbox', ng-checked='allergies',ng-model='allergies')
+                    td
+                      | Allergies
+                  tr
+                    td
+                      .checkbox
+                        bt-checkbox(id='encounters', type='checkbox', ng-checked='encounters',ng-model='encounters')
+                    td
+                      | Encounters
+                  tr
+                    td
+                      .checkbox
+                        bt-checkbox(id='immunizations', type='checkbox', ng-checked='immunizations',ng-model='immunizations')
+                    td
+                      | Immunizations
+                  tr
+                    td
+                      .checkbox
+                        bt-checkbox(id='medications', type='checkbox', ng-checked='medications',ng-model='medications')
+                    td
+                      | Medications
+                  tr
+                    td
+                      .checkbox
+                        bt-checkbox(id='problems', type='checkbox', ng-checked='problems',ng-model='problems')
+                    td
+                      | Problems
+                  tr
+                    td
+                      .checkbox
+                        bt-checkbox(id='procedures', type='checkbox', ng-checked='procedures',ng-model='procedures')
+                    td
+                      | Procedures
+                  tr
+                    td
+                      .checkbox
+                        bt-checkbox(id='results', type='checkbox', ng-checked='results',ng-model='results')
+                    td
+                      | Results
+                  tr
+                    td
+                      .checkbox
+                        bt-checkbox(id='vitals', type='checkbox', ng-checked='vitals',ng-model='vitals')
+                    td
+                      | Vitals
+              form(ng-show='clinicianConfig')
+                .form-group.mtm(ng-show='clinicianConfig')
+                  label(for='name') Attach File
+                  input.form-control(type='file' id="filename")
+              p(ng-show='attach == "result"')
+                strong Attached:
+                span(ng-repeat='attachments in outboundMessage.attachments') {{attachments.fileName}}
+              p(ng-show='attach == "record-result"')
+                strong Attached:
+
+            div.modal-footer
+              button.btn.btn-primary(type='button' ng-click='sendMessage()' data-dismiss='modal' ng-disabled='composeMessage.$error.required') Send
+              button.btn.btn-danger(type='button' ng-click='removeMessage()' data-dismiss='modal') Discard
+
+      ul.nav.nav-list
+        li(ng-class='tab == "inbox" && "active"')
+          a(ng-click='tab = "inbox"; switchTab();', style='cursor:pointer;') Inbox
+        li(ng-class='tab == "outbox" && "active"')
+          a(ng-click='tab = "outbox"; switchTab();', style='cursor:pointer;') Outbox
+    .col-md-10(ng-show='tab == "inbox"')
+      .row
+        .col-md-3
+          .checkbox(style='margin-left: 15px', ng-show='inboxLength > 0')
+            label
+              bt-checkbox(ng-model='status.all', ng-click='reset()')
+              | Select All
+        .col-md-9
+          ul.nav.nav-pills.pull-right(style='margin-bottom: 15px;', ng-show='inboxLength > 0')
+            li
+              a(style='height: 41px;' ng-click='markRead();')
+                | Mark as Read
+            li
+              a(style='height: 41px;' ng-click='archive("inbox");')
+                span.fui-cross
+
+      table.table.table-hover
+        tbody
+          tr(ng-show='inboxLength === 0')
+            td.lead You have no new messages.
+          tr(ng-repeat='message in inboxMessages | filter: {archived: "false"}',style='cursor:pointer;',ng-click='modal.message = message;')
+            td.col-md-1
+              .checkbox
+                bt-checkbox(ng-model='message.selected')
+            td(ng-show='!message.read', data-toggle='modal',data-target='#myModal', ng-click='message.read = true; markReadOne(message);')
+              strong {{message.sender}}
+            td(ng-show='message.read', data-toggle='modal',data-target='#myModal')
+              | {{message.sender}}
+            td(ng-show='!message.read', data-toggle='modal',data-target='#myModal', ng-click='message.read = true; markReadOne(message);')
+              strong {{message.subject}}
+            td(ng-show='message.read', data-toggle='modal',data-target='#myModal')
+              | {{message.subject}}
+            td(ng-show='!message.read', data-toggle='modal',data-target='#myModal', ng-click='message.read = true; markReadOne(message);')
+              strong {{message.received | date:'mediumDate'}}
+            td(ng-show='message.read', data-toggle='modal',data-target='#myModal')
+              | {{message.received | date:'mediumDate'}}
+    .col-md-10(ng-show='tab == "outbox"')
+      .row
+        .col-md-3
+          .checkbox(style='margin-left: 15px', ng-show='outboxLength > 0')
+            label
+              bt-checkbox(ng-model='status.all', ng-click='reset()')
+              | Select All
+        .col-md-9
+          button.btn.btn-primary.pull-right(style='height: 41px; margin-bottom: 15px; width: 55px;' ng-click='archive("outbox");' ng-show='outboxLength > 0')
+            span.fui-cross
+      table.table.table-hover
+        tbody
+          tr(ng-show='outboxLength === 0')
+            td.lead You have no sent messages.
+          tr(ng-repeat='message in outboxMessages | filter: {archived: "false"}',ng-click='modal.message = message;',style='cursor:pointer;')
+            td
+              .checkbox
+                bt-checkbox(ng-model='message.selected')
+            td(data-toggle='modal',data-target='#myModal') {{message.recipient}}
+            td(data-toggle='modal',data-target='#myModal') {{message.subject}}
+            td(data-toggle='modal',data-target='#myModal') {{message.received | date:'mediumDate'}}
+
+ng-include(src='"partials/mail/read"')

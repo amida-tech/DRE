@@ -1,0 +1,85 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//  http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+div
+  .navbar.navbar-default
+    .container
+      .navbar-header
+        a.navbar-brand 
+          img(src="img/bb-logo-vector.png" width="27px" height="27px") 
+          | &nbsp; PHIX
+      .pull-right.navbar-form(style='margin-top:18px;padding-right: 0;')
+        a.btn.btn-primary.btn-wide(href='#/signup', ng-show="appConfig === 'phix'") Enroll
+        a.btn.btn-inverse.btn-wide(href='#/login',style='margin-left: 15px;;') Login
+.container( ng-show="appConfig === 'phix'")
+  .row
+    .col-md-12
+      .jumbotron
+        .row
+          .col-md-3
+            img(src="img/bb-logo-vector.png")
+          .col-md-9
+            .container
+              h1 Blue Button 
+              h1 Personal Health Information
+        .row
+          .col-md-12
+            p
+            | A convenient, reliable, private and secure way for patients to obtain their medical records, consolidate them into a user-friendly and useful format, and store them safely in the cloud.
+            p
+              a.btn.btn-primary.btn-lg(href='#/signup') Enroll Today!
+  .row
+    .col-md-3
+      h4 Safe
+      p Our medical data management solution provides strong protections for security and privacy, including verified enrollment, secure protocols for data transmission, and secure storage in the cloud.
+    .col-md-3
+      h4 Easy
+      p Our interface is familiar and intuitive. You can easily browse all of your medical data, seeing at a glance who sent you information, what type of information it is, and when it was sent.
+    .col-md-3
+      h4 Complete
+      p All of your medical data is stored in one place, even if you use multiple providers. You don't have to worry about data loss, as our cloud solution has support for regular backups.
+    .col-md-3
+      h4 Connected
+      p Sharing your data with a trusted third party is as simple as sending an email, and our technology helps you verify that you are sending the data to the right party.
+
+.container( ng-show="appConfig === 'clinician'")
+  .row
+    .col-md-12
+      .jumbotron
+        .row
+          .col-md-3
+            img(src="img/bb-logo-vector.png")
+          .col-md-9
+            .container
+              h1 Clinician
+              h1 Front-end
+        .row
+          .col-md-12
+            p
+            | A secure, cloud-based solution that allows clinicians to engage their patients by sharing information with them, receiving information from them, and gaining trusted access to their information for ongoing clinical monitoring.
+  .row
+    .col-md-3
+      h4 Secure
+      p Our medical data management solution provides strong protections for security and privacy, including secure protocols for data transmission and secure storage in the cloud.
+    .col-md-3
+      h4 Engaging
+      p Our capabilities allow rich bi-directional sharing of patient data, and will allow you to satisfy the VDT criteria for Meaningful Use phase 2.
+    .col-md-3
+      h4 Easy
+      p Our solution is web-based, meaning that it is easily available from all computers within your practice.  Our web interfaces are clean and intuitive. 
+    .col-md-3
+      h4 Standardized
+      p Our solution is built on the most important industry standards, including Blue Button and DIRECT, making it easy to connect other systems that support these standards with our solution. 
+

@@ -1,0 +1,136 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//  http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+div
+  .navbar.navbar-default
+    .container
+      .navbar-header
+        a.navbar-brand PHIX
+
+.container
+  .row
+    .col-md-12
+      h2 Enrollment form
+      p Please, fill out all fields in this form.
+
+
+      form(role='form',name='enrollmentForm',novalidate)
+
+        .form-group
+          label.control-label(for='inputFirstname') First name
+          input#inputFirstname.form-control(type='text', name="firstname", placeholder='Jane', required, ng-model='data.firstname')
+          span.help-block(ng-show='enrollmentForm.firstname.$error.required') First name is required
+
+        .form-group
+          label.control-label(for='inputMiddlename') Middle name
+          input#inputMiddlename.form-control(type='text', name="middlename", placeholder='Q', ng-model='data.middlename')
+        .form-group
+          label.control-label(for='inputLastname') Last name
+          input#inputLastname.form-control(type='text', name="lastname", placeholder='Public', required, ng-model='data.lastname')
+          span.help-block(ng-show='enrollmentForm.firstname.$error.required') First name is required
+
+        </br>
+
+        .form-group
+          label.control-label(for='inputBirthdate') Birthdate
+          input#inputBirthdate.form-control(type='text', name="birthdate", placeholder='mm/dd/yyyy',ng-pattern='dateformat', required, ng-model='data.birthdate')
+
+          span.help-block(ng-show='enrollmentForm.birthdate.$error.required') Birthdate is required
+          span.help-block(ng-show='enrollmentForm.birthdate.$error.pattern && enrollmentForm.birthdate.$dirty') Valid date format is mm/dd/yyyy
+
+        .form-group
+          label.control-label(for='inputSSN') Social security number
+          input#inputSSN.form-control(type='text', name="ssn", placeholder='nnn-nn-nnnn', ng-pattern='ssnformat', required, ng-model='data.ssn')
+          span.help-block(ng-show='enrollmentForm.ssn.$error.required') SSN is required
+          span.help-block(ng-show='enrollmentForm.ssn.$error.pattern && enrollmentForm.ssn.$dirty') Valid SSN format is nnn-nn-nnnn
+
+        </br>
+
+        .form-group
+          label.control-label(for='gender') Gender
+          .radio
+            label
+                bt-radio#inputGender1(name='gender', value='female', required, ng-model='data.gender')
+                | Female
+          .radio
+            label
+                bt-radio#inputGender2(name='gender', value='male', required, ng-model='data.gender')
+                | Male
+          .radio
+            label
+                bt-radio#inputGender3(name='gender', value='none', required, ng-model='data.gender')
+                | Prefer not to disclose
+          span.help-block(ng-show='enrollmentForm.gender.$error.required') Gender is required
+
+
+
+
+
+        </br>
+
+
+        .form-group
+          label.control-label(for='inputAddress') Address
+          input#inputAddress.form-control(type='text', name="address", placeholder='1600 Penn ave', required, ng-model='data.address')
+          span.help-block(ng-show='enrollmentForm.address.$error.required') Address is required
+
+        .form-group
+          label.control-label(for='inputAddress2') Address 2
+          input#inputAddress2.form-control(type='text', name="address2", placeholder='', ng-model='data.address2')
+
+        .form-group
+          label.control-label(for='inputCity') City
+          input#inputCity.form-control(type='text', name="city", placeholder='Townville', required, ng-model='data.city')
+          span.help-block(ng-show='enrollmentForm.city.$error.required') City is required
+
+        .form-group
+          label.control-label(for='inputState') State
+          select#inputState.form-control(type='text', name="state", placeholder='ST', required, ng-model='data.state')
+            option(ng-repeat='state in states') {{state}}
+          span.help-block(ng-show='enrollmentForm.state.$error.required') State is required
+
+        .form-group
+          label.control-label(for='inputZipcode') Zipcode
+          input#inputZipcode.form-control(type='text', name="zipcode", placeholder='12345', ng-pattern='zipcodeformat', required, ng-model='data.zipcode')
+          span.help-block(ng-show='enrollmentForm.zipcode.$error.required') Zipcode is required
+          span.help-block(ng-show='!enrollmentForm.zipcode.$valid && enrollmentForm.zipcode.$dirty && !enrollmentForm.zipcode.$error.required') Valid zipcode format is NNNNN
+
+        </br>
+
+        .form-group
+          label.control-label(for='inputPhone') Phone number
+          input#inputPhone.form-control(type='text', name="phone", placeholder='xxxxxxxxxx', ng-pattern='phoneformat', required, ng-model='data.phone')
+          span.help-block(ng-show='enrollmentForm.phone.$error.required') Phone number is required
+          span.help-block(ng-show='!enrollmentForm.phone.$valid && enrollmentForm.phone.$dirty && !enrollmentForm.phone.$error.required') Valid phone number format is xxxxxxxxxx
+
+        .form-group
+          label.control-label(for='inputPhonetype') Phone type
+          .radio
+            label
+                bt-radio#inputPhonetype(name='phonetype', required, ng-model='data.phonetype', ng-value="'mobile'")
+                | Mobile (Voice calls and SMS/text messages)
+          .radio
+            label
+                bt-radio#inputPhonetype(name='phonetype', required, ng-model='data.phonetype', ng-value="'landline'")
+                | Landline (Voice calls only)
+          span.help-block(ng-show='enrollmentForm.phonetype.$error.required') Phone type is required
+
+        </br>
+
+        .form-group
+          button.btn.btn-success(type='submit',ng-click='enroll()' ng-disabled='enrollmentForm.phonetype.$error.required || (!enrollmentForm.phone.$valid && enrollmentForm.phone.$dirty) || enrollmentForm.phone.$error.required || enrollmentForm.zipcode.$error.required || (!enrollmentForm.zipcode.$valid && enrollmentForm.zipcode.$dirty) || enrollmentForm.state.$error.required || enrollmentForm.city.$error.required || enrollmentForm.address.$error.required || enrollmentForm.gender.$error.required || enrollmentForm.firstname.$error.required || enrollmentForm.lastname.$error.required || enrollmentForm.ssn.$error.required || enrollmentForm.ssn.$error.pattern || enrollmentForm.birthdate.$error.required || enrollmentForm.birthdate.$error.pattern') Enroll
+          alert.alert-error.alert-dismissable.mtl(name='server-alert' ng-show='enroll.serverError') {{enroll.serverError}}
+
+

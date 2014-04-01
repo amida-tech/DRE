@@ -1,0 +1,68 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//  http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+ng-include(src='"partials/header"')
+
+.container
+  .row
+    .col-md-12
+      h3 Your Stored Records
+      button#upload.btn.btn-primary(data-target='#uploadModal',role='button',data-toggle='modal') Upload
+      
+      //- modela window for new record upload
+      #uploadModal.modal.fade(tabindex='-1',role='dialog',aria-labelledby='uploadModalLabel',aria-hidden='true')
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button',data-dismiss='modal',aria-hidden='true') &times;
+              .modal-title
+                h4 Upload Record
+            .modal-body
+              form
+                .form-group()
+                  label(for='name') Select File
+                  input.form-control(type='file', id="filename")
+
+                .form-group()
+                  label(for='details') Details
+                  input.form-control(type='text', id="details" ng-model="details")
+
+                //- ng-include(src='"partials/merge"', ng-show='uploaded')
+                
+                button.btn.btn-primary(type='submit',ng-click='upload()', data-dismiss='modal') upload
+
+      //- list of records rendered
+      table.table.table-hover(style='cursor: pointer;')
+        thead
+          tr
+            th File
+            th Date Added
+            th Type
+            th Source
+            th Details
+            th Status
+        tbody
+          tr(ng-hide='data.files')
+            td.lead You have no health records stored.
+          tr(data-toggle='modal',data-target='#myModal', ng-repeat="record in data.files", ng-click="modal.record=record")
+            td(data-toggle='modal',data-target='#myModal') {{record.fileName}}
+            td(data-toggle='modal',data-target='#myModal') {{record.uploadDate | date: "MMMM dd, yyyy"}}
+            td(data-toggle='modal',data-target='#myModal') {{contentType(record.contentType)}}
+            td(data-toggle='modal',data-target='#myModal') {{record.source}}
+            td(data-toggle='modal',data-target='#myModal') {{record.details}}
+            td(data-toggle='modal',data-target='#myModal') 
+              span.glyphicon.glyphicon-check(ng-show='record.parsedFlag && record.contentType==="CCDA"')
+
+ng-include(src='"partials/records/merge"')

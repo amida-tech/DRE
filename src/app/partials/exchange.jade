@@ -1,0 +1,94 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//  http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+div(ng-include="'partials/header'")
+
+.container
+  .row
+    .col-md-12
+      
+
+      form(role='form',name='exchangeForm',novalidate).col-md-5
+        h5 Patient Data Request
+        .form-group
+          label.control-label(for='inputFirstname') First name
+          input#inputFirstname.form-control(type='text', name="firstname", placeholder='Jane', required, ng-model='data.firstname')
+          span.help-block(ng-show='enrollmentForm.firstname.$error.required') First name is required
+
+        .form-group
+          label.control-label(for='inputMiddlename') Middle name
+          input#inputMiddlename.form-control(type='text', name="middlename", placeholder='Q', ng-model='data.middlename')
+        .form-group
+          label.control-label(for='inputLastname') Last name
+          input#inputLastname.form-control(type='text', name="lastname", placeholder='Public', required, ng-model='data.lastname')
+          span.help-block(ng-show='enrollmentForm.firstname.$error.required') First name is required
+
+        </br>
+
+        .form-group
+          label.control-label(for='inputBirthdate') Birthdate
+          input#inputBirthdate.form-control(type='text', name="birthdate", placeholder='mm/dd/yyyy',ng-pattern='dateformat', required, ng-model='data.birthdate')
+
+          span.help-block(ng-show='enrollmentForm.birthdate.$error.required') Birthdate is required
+          span.help-block(ng-show='enrollmentForm.birthdate.$error.pattern && enrollmentForm.birthdate.$dirty') Valid date format is mm/dd/yyyy
+        .form-group
+          button.btn.btn-success(type='submit',ng-click='findPatients()') Find Patients
+          span.mll(name='server-alert', ng-show='serverError') {{serverError}}
+     div.col-md-6
+       h5.mbl(ng-show='patients') Results
+       table.table.table-hover
+         tr(ng-repeat = 'patient in patients', style='cursor:pointer;')
+           td.strong(data-toggle='modal',data-target='#myModal', ng-click='setModalPatient(patient)'){{patient.fullname}}
+           td.strong(data-toggle='modal',data-target='#myModal', ng-click='setModalPatient(patient)'){{patient.city}}, {{patient.state}} {{patient.zipcode}}
+div.modal.fade(id='myModal' tabindex="-1" role="dialog" aria-hidden="true")
+        div.modal-dialog
+          div.modal-content
+            div.modal-header
+              button.close(type='button' data-dismiss='modal' aria-hidden='true') &times;
+              div.modal-title
+                h4 Request Access
+                div.modal-body
+                  form
+                    .lead Request access to record of {{currentPatient.fullname}}?
+                    p.checkbox
+                      label All Records
+                        bt-checkbox(id='all', type='checkbox', ng-checked='all',ng-model='all')
+                    p.checkbox
+                      label Allergies
+                        bt-checkbox(id='allergies', type='checkbox', ng-checked='allergies',ng-model='allergies')
+                    p.checkbox
+                      label Encounters
+                        bt-checkbox(id='encounters', type='checkbox', ng-checked='encounters',ng-model='encounters')    
+                    p.checkbox
+                      label Immunizations
+                        bt-checkbox(id='immunizations', type='checkbox', ng-checked='immunizations',ng-model='immunizations')
+                    p.checkbox
+                      label Medications
+                        bt-checkbox(id='medications', type='checkbox', ng-checked='medications',ng-model='medications')
+                    p.checkbox
+                      label Problems
+                        bt-checkbox(id='problems', type='checkbox', ng-checked='problems',ng-model='problems')
+                    p.checkbox
+                      label Procedures
+                        bt-checkbox(id='procedures', type='checkbox', ng-checked='procedures',ng-model='procedures')    
+                    p.checkbox
+                      label Results
+                        bt-checkbox(id='encounters', type='checkbox', ng-checked='results',ng-model='results')
+                    p.checkbox
+                      label Vitals
+                        bt-checkbox(id='vitals', type='checkbox', ng-checked='vitals',ng-model='vitals')
+                div.modal-footer
+                  button.btn.pull-right(type='button' data-dismiss='modal') Cancel
+                  button.btn.btn-primary.pull-right.mrm(type='button' ng-click='requestAccess()' data-dismiss='modal') Send

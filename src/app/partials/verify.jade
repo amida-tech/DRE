@@ -1,0 +1,84 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//  http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+div
+  .navbar.navbar-default
+    .container
+      .navbar-header
+        a.navbar-brand 
+          img(src="images/images/bb-logo-vector.png" width="27px" height="27px") 
+          | &nbsp; PHIX
+      .pull-right
+        ul.nav
+          li 
+            a Internal Verification
+
+.container
+  .row
+    .col-md-12
+      .jumbotron(ng-show='verified == null')
+        h1 Enter verification code
+        p Please scan the QR code using the verification scanner, or enter the verification sequence provided by the customer.
+        form
+          .form-group
+            input(type='text',placeholder='Enter Code',ng-model='codeHolder', class='form-control' style='width: 200px;')
+          .form-group
+            button.btn.btn-primary(type='submit',ng-click='verify()') Verify
+
+      //- {{ data | json }}
+      .jumbotron(ng-show='verified == "inprocess"')
+        h1 Identity verification
+        p.lead
+          | (in process) 
+
+        .row(style='padding-top: 20px')
+          .col-md-6  
+            strong Name
+            .well 
+              {{data.personal.firstname}} {{data.personal.middlename}} {{data.personal.lastname}}
+            strong Gender
+            .well
+              {{data.personal.gender}}
+            strong Birthday
+            .well  {{data.personal.birthdate | date: "MMMM dd, yyyy"}}
+          .col-md-6  
+            strong Social Security Number 
+            .well {{data.personal.ssn}}
+            strong Address
+            .well {{data.personal.address}}
+              <br/>
+              div(ng-show="data.personal.address2") {{data.personal.address2}}
+              {{data.personal.city}}, {{data.personal.state}} {{data.personal.zipcode}}
+            strong Phone  
+            .well {{data.personal.phone}}
+
+
+        a.btn.btn-success.mrl.btn-wide(ng-click='approve()') Approve
+
+        a.btn.btn-danger.btn-wide(ng-click='reject()') Reject
+      .jumbotron(ng-show='verified == "approved"')
+        h1 Identity verification completed
+        p.lead
+          | (Approved)
+        a.btn.btn-primary(ng-click='verified = null') Home
+      .jumbotron(ng-show='verified == "rejected"')
+        h1 Identity verification completed
+        p.lead
+          | (Rejected)
+        a.btn.btn-primary(ng-click='verified = null') Home
+      .jumbotron(ng-show='verified == "invalid"')
+        h1 Verification code is invalid
+        p Please, double check customer's verification code
+        a.btn.btn-primary(ng-click='verified = null') Try Again

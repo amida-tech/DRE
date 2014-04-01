@@ -1,0 +1,267 @@
+// =======================================================================
+// Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// =======================================================================
+.container(ng-controller='PreviewCtrl')
+  .row
+    .col-md-4
+      ul.nav.nav-list
+        li(ng-class="tab == 'encounters' && 'active'")
+          a(ng-click='tab = "encounters"') encounters
+        li(ng-class="tab == 'demographics' && 'active'")
+          a(ng-click='tab = "demographics"') demographics
+        li(ng-class="tab == 'vitals' && 'active'")
+          a(ng-click='tab = "vitals"') vitals
+        li(ng-class="tab == 'labs' && 'active'")
+          a(ng-click='tab = "labs"') labs
+        li(ng-class="tab == 'medications' && 'active'")
+          a(ng-click='tab = "medications"') medications
+        li(ng-class="tab == 'immunizations' && 'active'")
+          a(ng-click='tab = "immunizations"') immunizations
+        li(ng-class="tab == 'allergies' && 'active'")
+          a(ng-click='tab = "allergies"') allergies
+        li(ng-class="tab == 'problems' && 'active'")
+          a(ng-click='tab = "problems"') problems
+    .col-md-8(ng-show='tab == "encounters"')
+      .row
+        .col-md-12
+          h4 January 1st 2013 : Preventative Visit
+      .row(style='padding-top: 20px')
+        .col-md-12
+          strong Dr. Robert Johnson
+          br
+          br
+          | 12345 some st
+          br
+          | someplace, md 20808
+          h5 Reason for Visit
+          p
+            | large things on the other thing
+          h5 Notes
+          p
+            | Noticed things that started happening, decided to do something about it.
+          p
+            span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+
+      .row
+        .col-md-12
+          h4 January 1st 2013 : Preventative Visit
+      .row(style='padding-top: 20px')
+        .col-md-12
+          strong Dr. Robert Johnson
+          br
+          br
+          | 12345 some st
+          br
+          | someplace, md 20808
+          h5 Reason for Visit
+          p
+            | large things on the other thing
+          h5 Notes
+          p
+            | Noticed things that started happening, decided to do something about it.
+          p
+            span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+
+    .col-md-8(ng-show='tab == "vitals"')
+      .row
+        .col-md-12
+          h4 January 1st 2013 : Preventative Visit
+          span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+      .row(style='padding-top: 20px')
+        .col-md-6
+          .well
+            strong Weight
+            h5 175
+              small lb
+        .col-md-6
+          .well
+            strong Height
+            h5 5"10'
+        .col-md-6
+          .well
+            strong Tempurature
+            h5 97.3
+              small F
+      .row(style='padding-top: 20px')
+        .col-md-12
+          h4 April 1st 2012 : Preventative Visit
+          span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+      .row(style='padding-top: 20px')
+        .col-md-6
+          .well
+            strong Weight
+            h5 175
+              small lb
+        .col-md-6
+          .well
+            strong Height
+            h5 5"10'
+        .col-md-6
+          .well
+            strong Tempurature
+            h5 97.3
+              small F
+    .col-md-8(ng-show='tab == "labs"')
+      .row
+        .col-md-12
+          h4 January 1st 2013: Lipid Profile
+          span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+      .row(style='padding-top: 20px')
+        .col-md-6
+          .well
+            strong Cholesterol
+            h5 214
+            h5
+              small Standard 100-200
+        .col-md-6
+          .well
+            strong Triglyceride
+            h5 90
+            h5
+              small Standard 0-150
+        .col-md-6
+          .well
+            strong HDL Cholesterol
+            h5 56
+            h5
+              small Standard 40-59
+        .col-md-6
+          .well
+            strong LDL Cholesterol
+            h5 140
+            h5
+              small Standard 0-129
+      .row
+        .col-md-6
+          .well
+            strong Chol/HDL Ratio
+            h5 3.8
+            h5
+              small Standard 0-6.7
+        .col-md-6
+          .well
+            strong TRIG/HDL (CALC)
+            h5 1.6
+        .col-md-6
+          .well
+            strong Non-HDL
+            h5 158
+      .row(style='padding-top: 20px')
+        .col-md-12
+          h4 April 1st 2012 : Chlamydia/ GC NAAT
+          span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+      .row(style='padding-top: 20px')
+        .col-md-6
+          .well
+            strong GC NAAT
+            h5 Negative
+            h5
+              small source: Urine
+    .col-md-8(ng-show='tab == "medications"')
+      .row
+        .col-md-12
+          .well
+            h4 Triamcinolone Acetonide 0.1% External Cream
+            h5 Start date: Jan 1st 2013
+            p
+              strong Instructions
+            p
+              | Apply to affected area
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+        .col-md-12
+          .well
+            h5 Lipitor
+            h6 Start date: Feb 5th 2012
+            p
+              strong Instructions
+            p
+              | Take 1 pill every 12 hours with food.
+            p
+              strong Can Refill
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+    .col-md-8(ng-show='tab == "immunizations"')
+      .row(style='padding-top: 20px')
+        .col-md-12
+          .well
+            strong HEP B Recombinant
+            p
+              | Dates: 08/12/08, 08/12/08, 07/23/08, 07/15/08
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+        .col-md-12
+          .well
+            strong Hepatits A
+            p
+              | Dates: 08/8/08, 07/10/08, 07/16/08
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+        .col-md-12
+          .well
+            strong IPV Vaccine SC OR IM
+            p
+              | Dates: 08/12/06, 08/20/06
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+        .col-md-12
+          .well
+            strong TDAP
+            p
+              | Dates: 07/23/08
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+        .col-md-12
+          .well
+            strong Tetanus/ Diphtheria
+            p
+              | Dates: 01/01/13
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+        .col-md-12
+          .well
+            strong Typhoid
+            p
+              | Dates: 01/01/08
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+    .col-md-8(ng-show='tab == "allergies"')
+      .row(style='padding-top: 20px')
+        .col-md-12
+          .well
+            h3 Allergy to Penicillin
+            p
+              strong Details
+              br
+              | All varients on penicillin
+            p
+              strong Date
+              | February 1st, 1997
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
+    .col-md-8(ng-show='tab == "problems"')
+      .row(style='padding-top: 20px')
+        .col-md-12
+          .well
+            h4 Type 2 Diabetes
+            p
+              strong Details
+              br
+              | Such and such tests showed borderline diabetes
+            p
+              strong Date
+              | February 1st, 2004
+            p
+              span.label.label-primary(bt-tooltip='Source: bluebutton.xml from Dr. Jon Williams on Dec 20, 2002') Source Info
