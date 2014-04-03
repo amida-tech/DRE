@@ -14,17 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular
-  .module('dre', [
-    'ngRoute',
-    'dre.record'
-  ])
-  .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    
-  }])
-    // Note TabService is included but not used to ensure its been instantiated
-  .run(['$rootScope', '$location', function ($rootScope, $location) {
+angular.module('dre.nav', [])
 
-    $location.path('/record');
+  .controller('navCtrl', ['$scope', '$http', '$location', 
+    function($scope, $http, $location) {
 
-  }])
+
+
+      $scope.dateformat = /^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(19\d{2}|[2]\d{3})$/;
+      $scope.ssnformat = /^\d{3}-?\d{2}-?\d{4}$/;
+
+      $scope.zipcodeformat = /^\d{5}$/;
+      $scope.phoneformat = /^\d{10}$/;
+
+      var statesAbbr = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
+      $scope.states = statesAbbr;
+
+    }
+  ]);

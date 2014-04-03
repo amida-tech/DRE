@@ -14,17 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular
-  .module('dre', [
-    'ngRoute',
-    'dre.record'
-  ])
-  .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    
-  }])
-    // Note TabService is included but not used to ensure its been instantiated
-  .run(['$rootScope', '$location', function ($rootScope, $location) {
+angular.module('dre.record', ['dre.record.allergies'])
 
-    $location.path('/record');
+.config(['$routeProvider',
+function($routeProvider) {
+  $routeProvider.when('/record', {
+      templateUrl: 'app/record/record.tpl.html',
+      controller: 'recordCtrl'
+  });
+}])
 
-  }])
+  .controller('recordCtrl', ['$scope', '$http', '$location', 
+    function($scope, $http, $location) {
+
+      $scope.navPath = "app/nav/nav.tpl.html";
+
+      console.log($scope);
+
+    }
+  ]);

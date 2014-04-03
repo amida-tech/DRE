@@ -1,0 +1,32 @@
+
+
+
+
+<div class="fluid-container col-md-12">
+	<div class="row">
+		<div ng-include="navPath"></div>
+		<div class="col-md-9" ng-controller="allergiesCtrl">
+		<h5 class="lead">Allergies</h5>
+
+				<div class="panel-group" id="#accordian-allergy" ng-repeat="allergy in allergies">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							
+							<a data-toggle="collapse" data-parent="#accordian-allergy" data-target="#collapse{{$index}}">
+							<div class="panel-title">
+							<span class="glyphicon glyphicon-exclamation-sign"></span>
+							<span style="text-transform:uppercase;">{{allergy.name}}</span>
+							<span class="pull-right" style="text-transform:uppercase;">{{allergy.severity}}</span>
+
+							</div>
+							</a>
+						</div>
+						<div id="collapse{{$index}}" class="panel-collapse collapse">
+							<div class="panel-body">
+							LOREM HIPSTUM
+							</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
