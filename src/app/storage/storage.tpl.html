@@ -1,38 +1,29 @@
 
 
-
-
 <div class="fluid-container col-md-12">
 	<div class="row">
-	<div class="col-md-3 bg-info">
-		<img src="/assets/img/img-female.png" width="150" height="150" class="img-circle center-block">
-		<p class="text-center lead">Jane Doe</p>
-		<p>HOME</p>
-		<p>MY RECORD</p>
-		<p>
-			<span>MESSAGES</span>
-			<span class="badge pull-right">3</span>
-		</p>
-		<p>STORAGE</p>
-	</div>
-		<div class="col-md-9">
-		<p class="lead">Allergies</p>
-		<ul class="list-group">
-			<li class="list-group-item list-group-item-warning">
-				<strong>
-				<span class="glyphicon glyphicon-exclamation-sign"></span>
-				<span>PENICILLIN</span>
-				<span class="pull-right">SEVERE</span>
-				</strong>
-			</li>
-			<li class="list-group-item list-group-item-warning">
-				<strong>
-				<span class="glyphicon glyphicon-exclamation-sign"></span>
-				<span>GLUTEN</span>
-				<span class="pull-right">MODERATE</span>
-				</strong>
-			</li>
-		</ul>
+		<div ng-include="navPath"></div>
+		<div class="col-md-9" ng-controller="storageCtrl">
+		<h5 class="lead">Storage</h5>
+
+				<div class="panel-group" id="#accordian-allergy" ng-repeat="file in fileList">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a data-toggle="collapse" data-parent="#accordian-allergy" data-target="#collapse{{$index}}">
+							<div class="panel-title">
+							<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
+							<span style="text-transform:lowercase;">{{file.name}}</span>
+							<span class="pull-right" style="text-transform:lowercase;">{{file.modified}}</span>
+
+							</div>
+							</a>
+						</div>
+						<div id="collapse{{$index}}" class="panel-collapse collapse">
+							<div class="panel-body">
+							LOREM HIPSTUM
+							</div>
+					</div>
+				</div>
 		</div>
 	</div>
 </div>

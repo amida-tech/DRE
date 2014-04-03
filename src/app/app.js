@@ -17,14 +17,17 @@ limitations under the License.
 angular
   .module('dre', [
     'ngRoute',
-    'dre.record'
+    'dre.record',
+    'dre.storage'
   ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    
+    $routeProvider.when('/', {
+        templateUrl: 'app/record/record.tpl.html',
+        controller: 'recordCtrl'
+    });
+      
   }])
     // Note TabService is included but not used to ensure its been instantiated
   .run(['$rootScope', '$location', function ($rootScope, $location) {
-
-    $location.path('/record');
 
   }])
