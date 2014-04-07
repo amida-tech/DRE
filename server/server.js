@@ -64,6 +64,10 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 
+var api  = require('./lib/api');
+app.use(api);
+
+
     app.listen(3000);
     console.log("Server listening on port "+ 3000);
 

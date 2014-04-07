@@ -26,11 +26,20 @@ function($routeProvider) {
 
   .controller('allergiesCtrl', ['$scope', '$http', '$location',
     function($scope, $http, $location) {
-      $scope.allergies = [{
-        name: 'hay',
-        severity: 'severe'
-      }, {name:'pencillin',
-        severity: 'severe'}];
+
+      $scope.allergies = [];
+
+      $http({method: 'GET', url: '/record/allergies'}).
+    success(function(data, status, headers, config) {
+      $scope.allergies = data.allergies;
+    }).
+    error(function(data, status, headers, config) {
+      console.log('error');
+    });
+
+
+
+
 
      
     }

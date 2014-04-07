@@ -29,7 +29,5 @@ function($routeProvider) {
 
       $scope.navPath = "app/nav/nav.tpl.html";
 
-      console.log($scope);
-
     }
   ]);
