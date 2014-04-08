@@ -19,7 +19,7 @@ angular.module('dre.storage', [])
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/storage', {
-      templateUrl: 'app/storage/storage.tpl.html',
+      templateUrl: 'templates/storage/storage.tpl.html',
       controller: 'storageCtrl'
   });
 }])
@@ -27,10 +27,10 @@ function($routeProvider) {
   .controller('storageCtrl', ['$scope', '$http', '$location', 
     function($scope, $http, $location) {
 
-      $scope.navPath = "app/nav/nav.tpl.html";
+      $scope.navPath = "templates/nav/nav.tpl.html";
 
 
-      $scope.fileList = [{name: 'test.txt', type: 'Blue Button', modified: '12/2/2013'}, {name: 'test1.xml', type: 'Blue Button', modified: '12/2/2013'}, {name: 'test2.pdf', type: 'Blue Button', modified: '12/2/2013'}]
+      $scope.fileList = [{name: 'test.txt', type: 'Blue Button', modified: '12/2/2013'}, {name: 'test1.xml', type: 'Blue Button', modified: '12/2/2013'}, {name: 'test2.pdf', type: 'Blue Button', modified: '12/2/2013'}];
 
       //Name, kinda, and modified values.
 

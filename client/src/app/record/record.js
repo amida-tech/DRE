@@ -19,7 +19,7 @@ angular.module('dre.record', ['dre.record.allergies'])
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/record', {
-      templateUrl: 'app/record/record.tpl.html',
+      templateUrl: 'templates/record/record.tpl.html',
       controller: 'recordCtrl'
   });
 }])
@@ -27,7 +27,7 @@ function($routeProvider) {
   .controller('recordCtrl', ['$scope', '$http', '$location', 
     function($scope, $http, $location) {
 
-      $scope.navPath = "app/nav/nav.tpl.html";
+      $scope.navPath = "templates/nav/nav.tpl.html";
 
     }
   ]);

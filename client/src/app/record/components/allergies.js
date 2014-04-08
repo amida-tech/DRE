@@ -19,7 +19,7 @@ angular.module('dre.record.allergies', [])
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/record/allergies', {
-      templateUrl: 'app/record/components/allergies.tpl.html',
+      templateUrl: 'templates/record/components/allergies.tpl.html',
       controller: 'recordsCtrl'
   });
 }])

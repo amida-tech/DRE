@@ -19,7 +19,7 @@ angular.module('dre.dashboard', [])
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/dashboard', {
-      templateUrl: 'app/dashboard/dashboard.tpl.html',
+      templateUrl: 'templates/dashboard/dashboard.tpl.html',
       controller: 'dashboardCtrl'
   });
 }])
@@ -27,7 +27,7 @@ function($routeProvider) {
   .controller('dashboardCtrl', ['$scope', '$http', '$location',
     function($scope, $http, $location) {
 
-            $scope.navPath = "app/nav/nav.tpl.html";
+            $scope.navPath = "templates/nav/nav.tpl.html";
      
     }
   ]);

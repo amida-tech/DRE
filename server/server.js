@@ -33,7 +33,7 @@ var app = express();
 
   //path.resolve(__dirname, '../src')
 
-  app.set('client_location', path.resolve(__dirname, '../src'));
+  app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
   //app.use(express.favicon(config.client.location + '/favicon.ico'));
   app.use(express.static(app.get('client_location')));

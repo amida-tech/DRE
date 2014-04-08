@@ -13,7 +13,7 @@ module.exports = function(grunt) {
   // Default task.
 
   grunt.registerTask('default', ['jshint', 'build']);
-  grunt.registerTask('build', ['clean', 'copy:assets', 'copy:less', 'copy:partials', 'concat']);
+  grunt.registerTask('build', ['clean', 'copy:assets', 'copy:partials', 'copy:vendor', 'concat']);
   //grunt.registerTask('default', ['jshint','build','karma:unit']);
   //grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy:assets']);
   //grunt.registerTask('release', ['clean','html2js','uglify','jshint','karma:unit','concat:index', 'recess:min','copy:assets']);
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       ' * Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %>\n */\n',
     clean: ['<%= distdir %>/*'],
     src: {
-      js: ['src/app/app.js', 'src/common/directives/*.js', 'src/common/services/*.js', 'src/common/controllers/*.js'],
+      js: ['src/app/app.js', 'src/app/**/*.js'],
       html: ['src/index.html']
     },
     copy: {
@@ -52,22 +52,22 @@ module.exports = function(grunt) {
           cwd: 'src/assets/'
         }]
       },
-      less: {
-        files: [{
-          dest: '<%= distdir %>/less',
-          src: '**',
-          expand: true,
-          cwd: 'src/less/'
-        }]
-      },
       partials: {
         files: [{
-          dest: '<%= distdir %>/partials',
-          src: '**',
+          dest: '<%= distdir %>/templates',
+          src: '**/*.tpl.html',
           expand: true,
-          cwd: 'src/app/partials/'
+          cwd: 'src/app'
         }]
-
+      },
+      vendor: {
+        files: [{
+          dest: '<%= distdir %>/fonts',
+          src: ['bootstrap/fonts/*'],
+          expand: true,
+          flatten: true,
+          cwd: 'src/vendor'
+        }]
       }
     },
     concat: {
@@ -85,25 +85,21 @@ module.exports = function(grunt) {
           process: true
         }
       },
+      css: {
+        src: ['src/vendor/bootstrap/css/bootstrap.min.css', 'src/vendor/font-awesome/font-awesome.min.css'],
+        dest: '<%= distdir %>/<%= pkg.name %>.css'
+      },
       angular: {
-        src: ['vendor/angular/angular.js', 'vendor/angular/angular-route.js'],
+        src: ['src/vendor/angular/angular.js', 'src/vendor/angular/angular-route.js'],
         dest: '<%= distdir %>/angular.js'
       },
       jquery: {
-        src: ['vendor/jquery/*.js'],
+        src: ['src/vendor/jquery/*.js'],
         dest: '<%= distdir %>/jquery.js'
       },
       bootstrap: {
-        src: ['vendor/bootstrap/*.js'],
+        src: ['src/vendor/bootstrap/js/bootstrap.min.js'],
         dest: '<%= distdir %>/bootstrap.js'
-      },
-      flatui: {
-        src: ['vendor/flatui/*.js'],
-        dest: '<%= distdir %>/flatui.js'
-      },
-      less: {
-        src: ['vendor/less/*.js'],
-        dest: '<%= distdir %>/less.js'
       }
     },
     jshint: {

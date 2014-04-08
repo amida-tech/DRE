@@ -23,7 +23,7 @@ angular
   ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
-        templateUrl: 'app/dashboard/dashboard.tpl.html',
+        templateUrl: 'templates/dashboard/dashboard.tpl.html',
         controller: 'dashboardCtrl'
     });
       
@@ -31,4 +31,4 @@ angular
     // Note TabService is included but not used to ensure its been instantiated
   .run(['$rootScope', '$location', function ($rootScope, $location) {
 
-  }])
+  }]);
