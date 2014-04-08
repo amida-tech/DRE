@@ -18,12 +18,13 @@ angular
   .module('dre', [
     'ngRoute',
     'dre.record',
-    'dre.storage'
+    'dre.storage',
+    'dre.dashboard'
   ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
-        templateUrl: 'app/record/record.tpl.html',
-        controller: 'recordCtrl'
+        templateUrl: 'app/dashboard/dashboard.tpl.html',
+        controller: 'dashboardCtrl'
     });
       
   }])

@@ -1,0 +1,32 @@
+{
+  "author": "Dmitry Kachaev and Matthew McCall",
+  "name": "DRE-Demo",
+  "description": "Data Reconciliation Engine Demo Client.",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:amida-tech/DRE-UI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amida-tech/DRE-UI/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  ],
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "express": "3.4.x"
+  },
+  "devDependencies": {
+    "grunt": "0.4.x",
+    "grunt-contrib-copy": "0.5.x",
+    "grunt-contrib-clean": "0.5.x",
+    "grunt-contrib-concat": "0.3.x",
+    "grunt-contrib-jshint": "0.8.x"
+  }
+}

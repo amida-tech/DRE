@@ -1,0 +1,43 @@
+
+
+
+
+<div class="fluid-container col-md-12">
+	<div class="row">
+		<div ng-include="navPath"></div>
+		<div class="col-md-9" ng-controller="allergiesCtrl">
+			<h5 class="lead">Notifications</h5>
+			<div class="container">
+				<div class="panel panel-primary col-md-3 col-md-offset-1">
+					<a href="#" style="text-decoration: none;">
+						<div class="panel-body">
+							<h5 class="lead text-primary"><i class="fa fa-envelope fa-lg"></i>  0 new messages are in your inbox.</h5>
+						</div>
+					</a>
+				</div>
+				<div class="panel panel-danger col-md-3 col-md-offset-1">
+					<a href="#" style="text-decoration: none;">
+						<div class="panel-body">
+							<h5 class="lead text-danger"><i class="fa fa-archive fa-lg"></i>  0 new records loaded into storage.</h5>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="container">
+				<div class="panel panel-success col-md-3 col-md-offset-1">
+					<a href="#" style="text-decoration: none;">
+						<div class="panel-body">
+							<h5 class="lead text-success"><i class="fa fa-question-circle fa-lg"></i>   0 new entries awaiting your review.</h5>
+						</div>
+					</a>
+				</div>
+				<div class="panel panel-success col-md-3 col-md-offset-1">
+					<a href="#" style="text-decoration: none;">
+						<div class="panel-body">
+							<h5 class="lead text-success"><i class="fa fa-files-o fa-lg"></i>   0 new entries merged into your record.</h5>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
