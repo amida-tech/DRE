@@ -19,19 +19,9 @@ var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var app = express();
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
 
-
-/*
-  var viewDir = config.client.location;
-
-  app.set('views', viewDir);
-  app.set('view engine', 'jade');
-  app.set('view options', {
-    layout: false,
-    'no-debug': true
-  });*/
-
-  //path.resolve(__dirname, '../src')
 
   app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
@@ -67,7 +57,31 @@ app.use(express.cookieParser());
 var api  = require('./lib/api');
 app.use(api);
 
+var storage  = require('./lib/storage');
+app.use(storage);
 
+//Initialize Database Connection.
+function connectDatabase(server, database, callback) {
+  var Db = mongo.Db;
+  var Grid = mongo.Grid;
+
+  Db.connect('mongodb://' + '/' + database, function(err, dbase) {
+    if (err) {
+      throw err;
+    }
+    app.set("db_conn", dbase);
+    app.set("grid_conn", new Grid(dbase, 'storage'));
+    callback();
+  });
+}
+
+var databaseServer = 'localhost';
+var databaseName = 'dre';
+
+//Launch Application.
+connectDatabase(databaseServer, databaseName, function() {
+    mongoose.connect('mongodb://' + databaseServer + '/'+ databaseName);
     app.listen(3000);
     console.log("Server listening on port "+ 3000);
+});
 

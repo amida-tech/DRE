@@ -16,25 +16,82 @@ limitations under the License.
 
 var express = require('express');
 var mongo = require('mongodb');
+var fs = require('fs');
 var ObjectId = require('mongodb').ObjectID;
 var app = module.exports = express();
 var Db = mongo.Db;
 var Grid = mongo.Grid;
-var blueButton = require('../parse/bluebutton.js');
+//var blueButton = require('../parse/bluebutton.js');
 
-var grid;
-var db;
+function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSize, callback) {
+  var db = app.get("db_conn");
+  var grid = app.get("grid_conn");
+  var buffer = new Buffer(inboundFile);
 
+  grid.put(buffer, {
+    metadata: {
+      source: false
+    },
+    'filename': inboundFileName,
+    'content_type': inboundFileType,
+  }, function(err, fileInfo) {
+    if (err) {
+      callback(err);
+    } else {
+      if(fileInfo.length !== inboundFileSize) {
+        callback('file size mismatch');
+      } else {
+        callback(null, fileInfo);
+      }
+    }
+  });
+}
+
+function validateFileMessage (requestObject, callback) {
+//Placeholder validation function.
+callback(null);
+}
+
+
+//Routes.
+
+app.put('/storage', function(req, res) {
+  if (!req.files.recordUpload) {
+    console.error('Wrong object name');
+    res.send(400);
+  } else {
+    validateFileMessage(req.files.recordUpload, function(err) {
+      if (err) {
+        console.error(err);
+        res.send(400, err);
+      } else {
+        fs.readFile(req.files.recordUpload.path, 'utf8', function(err, data) {
+          if (err) {
+            console.error(err);
+            res.send(400, err);
+          } else {
+            storeFile(data, req.files.recordUpload.name, req.files.recordUpload.type, req.files.recordUpload.size, function(err, fileInfo) {
+              if (err) {
+                res.send(400)
+              } else {
+              res.send(200);
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+});
+
+
+
+/*
 //Post raw record to storage.
-app.put('/storage', auth.ensureAuthenticated, function(req, res) {
-  db = app.get("db_conn");
-  grid = app.get("grid_conn");
+app.put('/storage', function(req, res) {
 
-  var user = req.user.username;
-  console.log("adding record to store for user: " + user);
 
-  // source - Inbox/Outbox/Upload
-  // details - Some details about the file (doctor name (sender )for Inbox, user comments for Upload, doctor name (to whom it was sent) for Outbox)
+
   var source = '';
   var details = '';
 
@@ -110,10 +167,6 @@ app.put('/storage', auth.ensureAuthenticated, function(req, res) {
     return;
   });
 });
-
-
-
-
 
 
 
