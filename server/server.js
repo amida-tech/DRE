@@ -60,6 +60,9 @@ app.use(api);
 var storage  = require('./lib/storage');
 app.use(storage);
 
+var parser = require('./lib/parser');
+app.use(parser);
+
 //Initialize Database Connection.
 function connectDatabase(server, database, callback) {
   var Db = mongo.Db;

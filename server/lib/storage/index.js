@@ -21,24 +21,29 @@ var ObjectId = require('mongodb').ObjectID;
 var app = module.exports = express();
 var Db = mongo.Db;
 var Grid = mongo.Grid;
-//var blueButton = require('../parse/bluebutton.js');
+var parser = require('../parser/index.js');
 
-function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSize, callback) {
+var checkRecordType = parser.checkRecordType;
+
+function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSize, inboundXMLType, callback) {
   var db = app.get("db_conn");
   var grid = app.get("grid_conn");
   var buffer = new Buffer(inboundFile);
 
+  var fileMetadata = {};
+  if (inboundXMLType) {
+    fileMetadata.fileClass = inboundXMLType;
+  }
+
   grid.put(buffer, {
-    metadata: {
-      source: false
-    },
+    metadata: fileMetadata,
     'filename': inboundFileName,
     'content_type': inboundFileType,
   }, function(err, fileInfo) {
     if (err) {
       callback(err);
     } else {
-      if(fileInfo.length !== inboundFileSize) {
+      if (fileInfo.length !== inboundFileSize) {
         callback('file size mismatch');
       } else {
         callback(null, fileInfo);
@@ -47,41 +52,60 @@ function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSiz
   });
 }
 
-function validateFileMessage (requestObject, callback) {
-//Placeholder validation function.
-callback(null);
+function validateFileMessage(requestObject, callback) {
+  //Placeholder validation function.
+  callback(null);
 }
 
-
-//Routes.
-
-app.put('/storage', function(req, res) {
-  if (!req.files.recordUpload) {
-    console.error('Wrong object name');
-    res.send(400);
+function processUpload(recordUpload, callback) {
+  if (!recordUpload) {
+    callback('Wrong object name');
   } else {
-    validateFileMessage(req.files.recordUpload, function(err) {
+    validateFileMessage(recordUpload, function(err) {
       if (err) {
-        console.error(err);
-        res.send(400, err);
+        callback(err);
       } else {
-        fs.readFile(req.files.recordUpload.path, 'utf8', function(err, data) {
+        fs.readFile(recordUpload.path, 'utf8', function(err, fileData) {
           if (err) {
-            console.error(err);
-            res.send(400, err);
+            callback(err);
           } else {
-            storeFile(data, req.files.recordUpload.name, req.files.recordUpload.type, req.files.recordUpload.size, function(err, fileInfo) {
-              if (err) {
-                res.send(400)
-              } else {
-              res.send(200);
-              }
-            });
+            if (recordUpload.type === 'application/xml') {
+              checkRecordType(fileData, function(err, xmlType) {
+                storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, xmlType, function(err, fileInfo) {
+                  if (err) {
+                    callback(err);
+                  } else {
+                    callback(null);
+                  }
+                });
+              });
+            } else {
+                storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, null, function(err, fileInfo) {
+                  if (err) {
+                    callback(err);
+                  } else {
+                    callback(null);
+                  }
+                });
+            }
           }
         });
       }
     });
   }
+}
+
+//Routes.
+app.put('/storage', function(req, res) {
+
+  processUpload(req.files.recordUpload, function(err) {
+    if (err) {
+      res.send(400, err);
+    } else {
+      res.send(200);
+    }
+  });
+
 });
 
 
