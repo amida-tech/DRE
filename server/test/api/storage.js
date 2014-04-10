@@ -45,7 +45,7 @@ describe('Storage API', function() {
   });
 
   it('File Endpoint PUT', function(done) {
-    api.put('/storage')
+    api.put('/api/v1/storage')
       .attach('recordUpload', '../artifacts/CCD.sample.xml')
       .expect(200)
       .end(function(err, res) {
@@ -53,6 +53,22 @@ describe('Storage API', function() {
           return done(err);
         }
         done();
+      });
+  });
+
+});
+
+describe('Storage API Get list', function() {
+
+  it('File Endpoint GET', function(done) {
+    api.get('/api/v1/storage')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          return done(err);
+        } else {
+          done();
+        }
       });
   });
 

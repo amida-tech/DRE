@@ -96,7 +96,7 @@ function processUpload(recordUpload, callback) {
 }
 
 //Routes.
-app.put('/storage', function(req, res) {
+app.put('/api/v1/storage', function(req, res) {
 
   processUpload(req.files.recordUpload, function(err) {
     if (err) {
@@ -107,6 +107,104 @@ app.put('/storage', function(req, res) {
   });
 
 });
+
+function getRecordList (callback) {
+  var db = app.get("db_conn");
+  var grid = app.get("grid_conn");
+
+
+  var responseJSON = {};
+  var responseArray = [];
+
+  db.collection('storage.files', function(err, recordCollection) {
+
+    if (err) {
+      callback(err);
+    } else {
+      recordCollection.find( function(err, findResults) {
+        findResults.toArray(function(err, recordArray) {
+
+          var recordResponseArray = [];
+
+          for (var i=0; i<recordArray.length; i++) {
+
+            var recordJSON = {};
+
+            recordJSON.file_id = recordArray[i]._id;
+            recordJSON.file_name = recordArray[i].filename;
+            recordJSON.file_size = recordArray[i].length;
+            recordJSON.file_mime_type = recordArray[i].contentType;
+            recordJSON.file_upload_date = recordArray[i].uploadDate;
+
+            if (recordArray[i].metadata.fileClass) {
+              recordJSON.file_class = recordArray[i].metadata.fileClass;
+            }
+
+            recordResponseArray.push(recordJSON);
+          }
+
+          callback(null, recordResponseArray);
+
+        });
+
+      });
+    }
+  });
+
+}
+
+//Get user record list.
+app.get('/api/v1/storage', function(req, res) {
+
+  getRecordList(function(err, recordList) {
+    var recordResponse = {};
+    recordResponse.storage = recordList;
+    res.send(recordResponse);  
+  });
+
+  
+
+  /*var responseJSON = {};
+  var responseArray = [];
+
+  db.collection('storage.files', function(err, coll) {
+    if (err) {
+      throw err;
+    }
+    coll.find({
+      'metadata.owner': req.user.username
+    }, function(err, results) {
+      if (err) {
+        throw err;
+      }
+      results.toArray(function(err, docs) {
+        for (var i = 0; i < docs.length; i++) {
+          var documentJSON = {};
+          documentJSON.fileName = docs[i].filename;
+          documentJSON.contentType = docs[i].contentType;
+          documentJSON.length = docs[i].length;
+          documentJSON.source = docs[i].metadata.source;
+          documentJSON.details = docs[i].metadata.details;
+          documentJSON.parsedFlag = docs[i].metadata.parsedFlag;
+          documentJSON.uploadDate = docs[i].uploadDate;
+          documentJSON.identifier = docs[i]._id;
+          responseArray.push(documentJSON);
+          documentJSON = {};
+        }
+        responseJSON.files = responseArray;
+        responseArray = [];
+        //console.log(responseJSON);
+        res.json(responseJSON);
+        responseJSON = {};
+        return;
+      });
+    });
+  });*/
+
+});
+
+
+
 
 
 

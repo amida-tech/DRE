@@ -3,24 +3,24 @@
 <div class="fluid-container col-md-12">
 	<div class="row">
 		<div ng-include="navPath"></div>
-		<div class="col-md-9" ng-controller="storageCtrl">
+		<div class="col-md-9">
 		<h5 class="lead">Storage</h5>
 
-				<div class="panel-group" id="#accordian-allergy" ng-repeat="file in fileList">
+				<div class="panel-group" id="#accordian-allergy" ng-repeat="file in file_array | orderBy:predicate">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<a data-toggle="collapse" data-parent="#accordian-allergy" data-target="#collapse{{$index}}">
 							<div class="panel-title">
 							<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
-							<span style="text-transform:lowercase;">{{file.name}}</span>
-							<span class="pull-right" style="text-transform:lowercase;">{{file.modified}}</span>
+							<span style="text-transform:lowercase;">{{file.file_name}}</span>
+							<span class="pull-right" style="text-transform:lowercase;">{{file.file_upload_date | date: 'short'}}</span>
 
 							</div>
 							</a>
 						</div>
 						<div id="collapse{{$index}}" class="panel-collapse collapse">
 							<div class="panel-body">
-							LOREM HIPSTUM
+							{{file}}
 							</div>
 					</div>
 				</div>

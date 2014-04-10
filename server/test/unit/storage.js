@@ -14,22 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular.module('dre.record', ['dre.record.allergies'])
+var should = require('chai').should;
+var storage = require('../../lib/storage/index.js');
 
-.config(['$routeProvider',
-function($routeProvider) {
-  $routeProvider.when('/record', {
-      templateUrl: 'templates/record/record.tpl.html',
-      controller: 'recordCtrl'
+describe('Storage API', function() {
+
+  it('Test 1', function(done) {
+    storage.getRecordList(function(err, res) {
+      done();
+
+    });
   });
-}])
 
-  .controller('recordCtrl', ['$scope', '$http', '$location', 
-    function($scope, $http, $location) {
-
-      $scope.navPath = "templates/nav/nav.tpl.html";
-
-      
-
-    }
-  ]);
+});

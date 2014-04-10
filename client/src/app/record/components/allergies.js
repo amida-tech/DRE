@@ -37,10 +37,5 @@ function($routeProvider) {
       console.log('error');
     });
 
-
-
-
-
-     
     }
   ]);

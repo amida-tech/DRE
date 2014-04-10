@@ -30,7 +30,17 @@ function($routeProvider) {
       $scope.navPath = "templates/nav/nav.tpl.html";
 
 
-      $scope.fileList = [{name: 'test.txt', type: 'Blue Button', modified: '12/2/2013'}, {name: 'test1.xml', type: 'Blue Button', modified: '12/2/2013'}, {name: 'test2.pdf', type: 'Blue Button', modified: '12/2/2013'}];
+      $scope.predicate = "-file_upload_date";
+
+      $scope.file_array = [];
+
+      $http({method: 'GET', url: '/api/v1/storage'}).
+    success(function(data, status, headers, config) {
+      $scope.file_array = data.storage;
+    }).
+    error(function(data, status, headers, config) {
+      console.log(data);
+    });
 
       //Name, kinda, and modified values.
 
