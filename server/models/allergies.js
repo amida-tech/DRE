@@ -14,37 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-var should = require('chai').should;
-var fs = require('fs');
-var storage = require('../../lib/parser/index.js');
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
-function loadSampleRecord(callback) {
-  fs.readFile('../artifacts/CCD.sample.xml', 'utf8', function(err, data) {
-    if (err) {
-      callback(err);
-    }
-    callback(null, data);
-  });
-}
-
-
-describe('Storage API', function() {
-  var sampleFile = '';
-
-  before(function(done) {
-    loadSampleRecord(function(err, file) {
-      if (err) {
-        done(err);
-      }
-      sampleFile = file;
-      done();
-    });
-  });
-
-  it('Test 1', function(done) {
-    storage.extractRecord(sampleFile, function(err, results) {
-          done();
-    });
-  });
-
+//This is data model used purely for portal user authentication purposes
+var Allergies = new Schema({
+        date_range: {
+          start: Date,
+          end: Date
+        },
+        name: String,
+        code: String,
+        code_system: String,
+        code_system_name: String,
+        status: String,
+        severity: String,
+        reaction: {
+          name: String,
+          code: String,
+          code_system: String
+        }
 });
+
+module.exports = mongoose.model('Allergies', Allergies);

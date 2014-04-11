@@ -22,8 +22,10 @@ var app = module.exports = express();
 var Db = mongo.Db;
 var Grid = mongo.Grid;
 var parser = require('../parser/index.js');
+var mongoose = require('mongoose');
+var allergy = require('../../models/allergies');
 
-var checkRecordType = parser.checkRecordType;
+var extractRecord = parser.extractRecord;
 
 function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSize, inboundXMLType, callback) {
   var db = app.get("db_conn");
@@ -57,6 +59,93 @@ function validateFileMessage(requestObject, callback) {
   callback(null);
 }
 
+function saveComponents (masterObject, callback) { 
+
+  saveAllergies(masterObject.allergies, function(err) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null);
+    }
+  });
+
+  //Need to have a final check.
+
+}
+
+function saveAllergies(inputArray, callback) {
+
+  function createAllergyObject(allergyInputObject) {
+
+    var allergySaveObject = {};
+
+    //Really need to do much better validation all in here.
+    if (allergyInputObject.date_range) {
+      allergySaveObject.date_range = {};
+      allergySaveObject.date_range.start = allergyInputObject.date_range.start;
+      allergySaveObject.date_range.end = allergyInputObject.date_range.end;
+    }
+
+    if (allergyInputObject.name) {
+      allergySaveObject.name = allergyInputObject.name;
+    }
+
+    if (allergyInputObject.code) {
+      allergySaveObject.code = allergyInputObject.code;
+    }
+
+    if (allergyInputObject.code_system) {
+      allergySaveObject.code_system = allergyInputObject.code_system;
+    }
+
+    if (allergyInputObject.code_system_name) {
+      allergySaveObject.code_system_name = allergyInputObject.code_system_name;
+    }
+
+    if (allergyInputObject.status) {
+      allergySaveObject.status = allergyInputObject.status;
+    }
+
+    if (allergyInputObject.severity) {
+      allergySaveObject.severity = allergyInputObject.severity;
+    }
+
+    if (allergyInputObject.reaction) {
+      allergySaveObject.reaction = {};
+      allergySaveObject.reaction.name = allergyInputObject.reaction.name;
+      allergySaveObject.reaction.code = allergyInputObject.reaction.code;
+      allergySaveObject.reaction.code_system = allergyInputObject.reaction.code_system;
+    }
+
+    return allergySaveObject;
+  }
+
+  function saveAllergyObject (allergySaveObject, allergyObjectNumber, callback) {
+
+    var tempAllergy = new allergy(allergySaveObject);
+
+    tempAllergy.save(function(err, saveResults) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, allergyObjectNumber, saveResults);
+      }
+    });
+
+
+  }
+
+  for (var i = 0; i < inputArray.length; i++) {
+    var allergyObject = createAllergyObject(inputArray[i]);
+    saveAllergyObject(allergyObject, i, function(err, savedObjectNumber, results) {
+      if (savedObjectNumber === (inputArray.length - 1)) {
+        callback(null);
+      }
+    });
+  }
+
+}
+
 function processUpload(recordUpload, callback) {
   if (!recordUpload) {
     callback('Wrong object name');
@@ -70,23 +159,31 @@ function processUpload(recordUpload, callback) {
             callback(err);
           } else {
             if (recordUpload.type === 'application/xml') {
-              checkRecordType(fileData, function(err, xmlType) {
+              extractRecord(fileData, function(err, xmlType, parsedRecord) {
                 storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, xmlType, function(err, fileInfo) {
                   if (err) {
                     callback(err);
                   } else {
-                    callback(null);
+                    saveComponents(parsedRecord, function(err, res) {
+                      if (err) {
+                        callback(err);
+                      } else {
+                        callback(null);
+                      }
+                    });
                   }
                 });
+
               });
             } else {
-                storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, null, function(err, fileInfo) {
-                  if (err) {
-                    callback(err);
-                  } else {
-                    callback(null);
-                  }
-                });
+
+              storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, null, function(err, fileInfo) {
+                if (err) {
+                  callback(err);
+                } else {
+                  callback(null);
+                }
+              });
             }
           }
         });
@@ -94,7 +191,6 @@ function processUpload(recordUpload, callback) {
     });
   }
 }
-
 //Routes.
 app.put('/api/v1/storage', function(req, res) {
 
@@ -161,46 +257,7 @@ app.get('/api/v1/storage', function(req, res) {
     recordResponse.storage = recordList;
     res.send(recordResponse);  
   });
-
   
-
-  /*var responseJSON = {};
-  var responseArray = [];
-
-  db.collection('storage.files', function(err, coll) {
-    if (err) {
-      throw err;
-    }
-    coll.find({
-      'metadata.owner': req.user.username
-    }, function(err, results) {
-      if (err) {
-        throw err;
-      }
-      results.toArray(function(err, docs) {
-        for (var i = 0; i < docs.length; i++) {
-          var documentJSON = {};
-          documentJSON.fileName = docs[i].filename;
-          documentJSON.contentType = docs[i].contentType;
-          documentJSON.length = docs[i].length;
-          documentJSON.source = docs[i].metadata.source;
-          documentJSON.details = docs[i].metadata.details;
-          documentJSON.parsedFlag = docs[i].metadata.parsedFlag;
-          documentJSON.uploadDate = docs[i].uploadDate;
-          documentJSON.identifier = docs[i]._id;
-          responseArray.push(documentJSON);
-          documentJSON = {};
-        }
-        responseJSON.files = responseArray;
-        responseArray = [];
-        //console.log(responseJSON);
-        res.json(responseJSON);
-        responseJSON = {};
-        return;
-      });
-    });
-  });*/
-
 });
 
 

@@ -2,7 +2,8 @@ var express = require('express');
 var app = module.exports = express();
 var bb = require('../bluebutton/bluebutton.js');
 
-function checkRecordType(inputRecord, callback) {
+
+function extractRecord(inputRecord, callback) {
 
 	var bbRes;
 
@@ -12,12 +13,13 @@ function checkRecordType(inputRecord, callback) {
 		callback('error parsing file');
 	}
 
+
 	if (bbRes.data.document = 'ccda') {
-		callback(null, bbRes.data.document)
+		callback(null, bbRes.data.document, bbRes.data)
 	} else {
 		callback(null);
 	}
 
 }
 
-module.exports.checkRecordType = checkRecordType;
+module.exports.extractRecord = extractRecord;
