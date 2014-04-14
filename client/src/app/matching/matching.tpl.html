@@ -1,0 +1,86 @@
+
+
+
+
+<div class="fluid-container col-md-12">
+	<div class="row">
+		<div ng-include="navPath"></div>
+		<div class="col-md-9" ng-controller="allergiesCtrl">
+			<h5 class="lead">Updates</h5>
+
+			<ul class="nav nav-tabs nav-justified" >
+				<li class="active"><a data-target="#unreviewed" data-toggle="tab"><span class="badge">2</span><strong>&nbsp;&nbsp;Unreviewed Entries</strong></a></li>
+				<li><a data-target="#ignored" data-toggle="tab"><span class="badge">6</span><strong>&nbsp;&nbsp;Ignored Entries</strong></a></li>
+				<li><a data-target="#merged" data-toggle="tab"><span class="badge">8</span><strong>&nbsp;&nbsp;Merged Entries</strong></a></li>
+			</ul>
+			<br/>
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade in active" id="unreviewed">
+					<div class="panel-group">
+						<div class="panel panel-default" style="overflow: visible;">
+							<div class="panel-heading">
+								<div class="panel-title" style="text-transform:uppercase;">
+									<span><strong>Allergy</strong></span>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div class="pull-left col-md-4">
+									<h4>Source</h4>
+									<pre>Upload<br>Hello</pre>
+								</div>
+								<div class="pull-left col-md-4">
+									<h4>Details</h4>
+									<pre>Your momma</pre>
+								</div>
+								<div class="pull-right">
+								<h5><br></h5>
+								<div class="btn-group">
+									<button type="button" type="submit" class="btn btn-primary" ng-click="reconciliationClick()">Review</button>
+									<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu" >
+										<li><a href="#">Action</a></li>
+										<li><a href="#">Another action</a></li>
+										<li><a href="#">Something else here</a></li>
+										<li class="divider"></li>
+										<li><a href="#">Separated link</a></li>
+									</ul>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="ignored">
+					<table class="table">
+						<thead>
+							<tr><td><strong>Source Information</strong></td></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><span><strong>Reaction:</strong>  {{allergy.reaction.name}}</span></td>
+								<td><span><strong>Status:</strong>  {{allergy.status}}</span></td>
+								<td><span><strong>Started:</strong>  {{allergy.date_range.start}}</span></td>
+								<td><span><strong>Ended:</strong>  {{allergy.date_range.end}}</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane fade" id="merged">
+					<table class="table">
+						<thead>
+							<tr><td><strong>Record History</strong></td></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><span><strong>Reaction:</strong>  {{allergy.reaction.name}}</span></td>
+								<td><span><strong>Status:</strong>  {{allergy.status}}</span></td>
+								<td><span><strong>Started:</strong>  {{allergy.date_range.start}}</span></td>
+								<td><span><strong>Ended:</strong>  {{allergy.date_range.end}}</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

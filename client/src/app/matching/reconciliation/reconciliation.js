@@ -14,22 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular
-  .module('dre', [
-    'ngRoute',
-    'dre.record',
-    'dre.storage',
-    'dre.dashboard',
-    'dre.match'
-  ])
-  .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    $routeProvider.when('/', {
-        templateUrl: 'templates/dashboard/dashboard.tpl.html',
-        controller: 'dashboardCtrl'
-    });
-      
-  }])
-    // Note TabService is included but not used to ensure its been instantiated
-  .run(['$rootScope', '$location', function ($rootScope, $location) {
+angular.module('dre.match.reconciliation', [])
 
-  }]);
+.config(['$routeProvider',
+function($routeProvider) {
+  $routeProvider.when('/match/reconciliation', {
+      templateUrl: 'templates/matching/reconciliation/reconciliation.tpl.html',
+      controller: 'reconciliationCtrl'
+  });
+}])
+
+  .controller('reconciliationCtrl', ['$scope', '$http', '$location', 
+    function($scope, $http, $location) {
+
+      console.log('hit');
+
+      $scope.navPath = "templates/nav/nav.tpl.html";
+
+      
+
+    }
+  ]);
