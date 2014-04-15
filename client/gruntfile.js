@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       ' * Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %>\n */\n',
     clean: ['<%= distdir %>/*'],
     src: {
-      js: ['src/app/app.js', 'src/app/**/*.js'],
+      js: ['src/app/app.js', 'src/app/**/*.js', 'src/common/**/*.js'],
       html: ['src/index.html']
     },
     copy: {

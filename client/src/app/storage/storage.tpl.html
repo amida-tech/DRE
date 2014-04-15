@@ -4,26 +4,56 @@
 	<div class="row">
 		<div ng-include="navPath"></div>
 		<div class="col-md-9">
-		<h5 class="lead">Storage</h5>
+			<div class="col-md-12">
+				<h5>
+					<br/>
+					<span class="lead">Storage</span>
+					<button type="button" class="btn btn-info pull-right" data-target="#uploadModal" data-toggle="modal"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</button>
+					<br/>
+					<br/>
+				</h5>
+			</div>
 
-				<div class="panel-group" id="#accordian-allergy" ng-repeat="file in file_array | orderBy:predicate">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<a data-toggle="collapse" data-parent="#accordian-allergy" data-target="#collapse{{$index}}">
-							<div class="panel-title">
-							<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
-							<span style="text-transform:lowercase;">{{file.file_name}}</span>
-							<span class="pull-right" style="text-transform:lowercase;">{{file.file_upload_date | date: 'short'}}</span>
-
-							</div>
-							</a>
+			<div id="uploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button class="close" type="button" data-dismiss="modal" ara-hidden="true">&times;</button>
+							<div class="modal-title">Upload Record</div>
 						</div>
-						<div id="collapse{{$index}}" class="panel-collapse collapse">
-							<div class="panel-body">
-							{{file}}
+						<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<input class="form-control" type="file" id="uploadFile" file-model="myFile"/>
 							</div>
+						</form>
+
+						<button class="btn btn-primary" type="submit" ng-click="uploadRecord()" data-dismiss="modal">Upload</button>
+
+
+						</div>
 					</div>
 				</div>
+			</div>
+
+
+			<div class="panel-group" id="#accordian-allergy" ng-repeat="file in file_array | orderBy:predicate">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a data-toggle="collapse" data-parent="#accordian-allergy" data-target="#collapse{{$index}}">
+							<div class="panel-title">
+								<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
+								<span style="text-transform:lowercase;">{{file.file_name}}</span>
+								<span class="pull-right" style="text-transform:lowercase;">{{file.file_upload_date | date: 'short'}}</span>
+							</div>
+						</a>
+					</div>
+					<div id="collapse{{$index}}" class="panel-collapse collapse">
+						<div class="panel-body">
+							{{file}}
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>

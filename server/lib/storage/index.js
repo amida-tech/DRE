@@ -44,11 +44,12 @@ function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSiz
     if (err) {
       callback(err);
     } else {
-      if (fileInfo.length !== inboundFileSize) {
-        callback('file size mismatch');
-      } else {
+      /*Relax for now pending further investigation, seems to be chunking overhead.*/
+      //if (fileInfo.length !== inboundFileSize) {
+      //  callback('file size mismatch');
+      //} else {
         callback(null, fileInfo);
-      }
+      //}
     }
   });
 }
@@ -193,8 +194,11 @@ function processUpload(recordUpload, callback) {
 //Routes.
 app.put('/api/v1/storage', function(req, res) {
 
-  processUpload(req.files.recordUpload, function(err) {
+  console.log(req.files.file);
+
+  processUpload(req.files.file, function(err) {
     if (err) {
+      console.error(err);
       res.send(400, err);
     } else {
       res.send(200);

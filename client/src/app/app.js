@@ -20,7 +20,9 @@ angular
     'dre.record',
     'dre.storage',
     'dre.dashboard',
-    'dre.match'
+    'dre.match',
+    'directives.fileModel',
+    'services.fileUpload'
   ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/', {

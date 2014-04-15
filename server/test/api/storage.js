@@ -46,7 +46,7 @@ describe('Storage API', function() {
 
   it('File Endpoint PUT', function(done) {
     api.put('/api/v1/storage')
-      .attach('recordUpload', '../artifacts/CCD.sample.xml')
+      .attach('file', '../artifacts/CCD.sample.xml')
       .expect(200)
       .end(function(err, res) {
         if (err) {

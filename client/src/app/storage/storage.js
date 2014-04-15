@@ -14,35 +14,55 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular.module('dre.storage', [])
+angular.module('dre.storage', ['directives.fileModel'])
 
 .config(['$routeProvider',
-function($routeProvider) {
-  $routeProvider.when('/storage', {
+  function($routeProvider) {
+    $routeProvider.when('/storage', {
       templateUrl: 'templates/storage/storage.tpl.html',
       controller: 'storageCtrl'
-  });
-}])
-
-  .controller('storageCtrl', ['$scope', '$http', '$location', 
-    function($scope, $http, $location) {
-
-      $scope.navPath = "templates/nav/nav.tpl.html";
-
-
-      $scope.predicate = "-file_upload_date";
-
-      $scope.file_array = [];
-
-      $http({method: 'GET', url: '/api/v1/storage'}).
-    success(function(data, status, headers, config) {
-      $scope.file_array = data.storage;
-    }).
-    error(function(data, status, headers, config) {
-      console.log(data);
     });
+  }
+])
 
-      //Name, kinda, and modified values.
+.controller('storageCtrl', ['$scope', '$http', '$location', 'fileUpload',
+  function($scope, $http, $location, fileUpload) {
 
-    }
-  ]);
+    $scope.navPath = "templates/nav/nav.tpl.html";
+
+    $scope.predicate = "-file_upload_date";
+
+    $scope.file_array = [];
+
+    $scope.refreshRecords = function() {
+      $http({
+        method: 'GET',
+        url: '/api/v1/storage'
+      }).
+      success(function(data, status, headers, config) {
+        $scope.file_array = data.storage;
+      }).
+      error(function(data, status, headers, config) {
+        console.log(data);
+      });
+    };
+
+    $scope.refreshRecords();
+
+
+    //File upload.
+    $scope.uploadRecord = function() {
+
+      var uploadFile = $scope.myFile;
+      var uploadUrl = "/api/v1/storage";
+      fileUpload.uploadFileToUrl(uploadFile, uploadUrl, function(err, res) {
+        if (err) {
+          console.log(err);
+        }
+        $scope.refreshRecords();
+      });
+
+    };
+
+  }
+]);
