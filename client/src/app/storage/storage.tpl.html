@@ -29,18 +29,37 @@
 						</form>
 
 						<button class="btn btn-primary" type="submit" ng-click="uploadRecord()" data-dismiss="modal">Upload</button>
-
-
 						</div>
 					</div>
 				</div>
 			</div>
 
-
-			<div class="panel-group" id="#accordian-allergy" ng-repeat="file in file_array | orderBy:predicate">
+			<div class="panel-group">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a data-toggle="collapse" data-parent="#accordian-allergy" data-target="#collapse{{$index}}">
+						<div class="panel-title">	
+							<span style="cursor:pointer;" ng-click="nameSort();"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>File Name</span>
+							<span style="cursor:pointer;" ng-click="dateSort();" class="pull-right"><i class="fa fa-sort pull-right" style="margin-right: 10px; line-height: 1.6em;"></i>Upload Date</span>
+						</div>		
+					</div>
+					<div class="panel-body">
+							<ul class="list-group" ng-repeat="file in file_array | orderBy:predicate">
+							<a>
+							<li class="list-group-item" style="cursor:pointer;">
+								<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
+								<span style="text-transform:lowercase;">{{file.file_name}}</span>
+								<span class="pull-right" style="text-transform:lowercase;">{{file.file_upload_date | date: 'short'}}</span>
+							</li>
+							</a>
+							</ul>
+					</div>
+				</div>
+			</div>
+
+			<!--<div class="panel-group" ng-repeat="file in file_array | orderBy:predicate">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a>
 							<div class="panel-title">
 								<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
 								<span style="text-transform:lowercase;">{{file.file_name}}</span>
@@ -48,12 +67,9 @@
 							</div>
 						</a>
 					</div>
-					<div id="collapse{{$index}}" class="panel-collapse collapse">
-						<div class="panel-body">
-							{{file}}
-						</div>
-					</div>
 				</div>
-			</div>
+			</div>-->
+
+
 		</div>
 	</div>

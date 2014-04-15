@@ -32,6 +32,31 @@ angular.module('dre.storage', ['directives.fileModel'])
 
     $scope.predicate = "-file_upload_date";
 
+
+    $scope.nameSort = function () {
+      if ($scope.predicate.substring(0,1) === "-") {
+        if ($scope.predicate.substring(1) === "file_name") {
+          $scope.predicate = "file_name";
+        } else {
+          $scope.predicate = "-file_name";
+        }
+      } else {
+        $scope.predicate = "-file_name";
+      }
+    };
+
+    $scope.dateSort = function () {
+      if ($scope.predicate.substring(0,1) === "-") {
+        if ($scope.predicate.substring(1) === "file_upload_date") {
+          $scope.predicate = "file_upload_date";
+        } else {
+          $scope.predicate = "-file_upload_date";
+        }
+      } else {
+        $scope.predicate = "-file_upload_date";
+      }
+    };
+
     $scope.file_array = [];
 
     $scope.refreshRecords = function() {
@@ -59,6 +84,7 @@ angular.module('dre.storage', ['directives.fileModel'])
         if (err) {
           console.log(err);
         }
+        $scope.myFile = null;
         $scope.refreshRecords();
       });
 
