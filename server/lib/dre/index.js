@@ -4,14 +4,18 @@ var allergyFunctions = require('../record/allergies');
 
 
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
-function removeMatchDuplicates(newArray, baseArray, matchResults, callback) {
+function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, callback) {
 
 	function removeAllergyMatches(allergyMatches, srcAllergyArray, callback) {
 
 		//This is all types of broken.
 		function updateDuplicateAllergies(iter, update_id, callback) {
 			allergyFunctions.getAllergy(update_id, function(err, currentAllergy) {
-				//Update Current allergy here.
+				currentAllergy.metadata.attribution.push({
+					record_id: newSourceID,
+					attributed: new Date(),
+					attribution: 'duplicate'
+				});
 				allergyFunctions.updateAllergy(currentAllergy, function(err, savedObject) {
 					if (err) {
 						callback(err);
@@ -43,19 +47,22 @@ function removeMatchDuplicates(newArray, baseArray, matchResults, callback) {
 					}
 				});
 			}
-
 		}
 
 	}
 
+	if (matchResults.match.allergies.length > 0) {
 	removeAllergyMatches(matchResults.match.allergies, newArray.allergies, function(err, newAllergies) {
 		newArray.allergies = newAllergies;
 		callback(null, newArray);
 	});
+	} else {
+		callback(null, newArray);
+	}
 
 }
 
-function reconcile(newArray, baseArray, callback) {
+function reconcile(newArray, baseArray, newSourceID, callback) {
 
 
 //Win inject Dmitry's match library here.
@@ -63,14 +70,14 @@ var stubResult = {
     "match":
     {
         "allergies" : [
-            { "src_id" : 0, "dest_id" : 0, "match":"duplicate" }
+            //{ "src_id" : 0, "dest_id" : 0, "match":"duplicate" }
             //{ "src_id" : 1, "dest_id" : 1, "match":"duplicate" },
             //{ "src_id" : 2, "dest_id" : 2, "match":"not" }
         ]
     }
 }
 
-removeMatchDuplicates(newArray, baseArray, stubResult, function(err, newObjectPostMatch) {
+removeMatchDuplicates(newArray, baseArray, stubResult, newSourceID, function(err, newObjectPostMatch) {
 	callback(null, newObjectPostMatch);
 });
 

@@ -51,7 +51,7 @@ function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSiz
       //if (fileInfo.length !== inboundFileSize) {
       //  callback('file size mismatch');
       //} else {
-        callback(null, fileInfo);
+      callback(null, fileInfo);
       //}
     }
   });
@@ -63,11 +63,11 @@ function validateFileMessage(requestObject, callback) {
 }
 
 //Wrapper function to save all components of an incoming object.
-function saveComponents (masterObject, callback) { 
+function saveComponents(masterObject, sourceID, callback) {
 
   //console.log(masterObject);
 
-  allergyFunctions.saveAllergies(masterObject.allergies, function(err) {
+  allergyFunctions.saveAllergies(masterObject.allergies, sourceID, function(err) {
     if (err) {
       callback(err);
     } else {
@@ -77,7 +77,7 @@ function saveComponents (masterObject, callback) {
   //Need to have a final check.
 }
 
-function getSavedComponents (callback) {
+function getSavedComponents(callback) {
 
   var savedObject = {};
 
@@ -116,7 +116,6 @@ function processUpload(recordUpload, callback) {
           if (err) {
             callback(err);
           } else {
-
             attemptParse(recordUpload.type, fileData, function(err, recType, recParsed) {
               if (err) {
                 callback(err);
@@ -129,24 +128,28 @@ function processUpload(recordUpload, callback) {
                   }
                 });
               } else {
-              getSavedComponents(function(err, recSaved) {
-                dre.reconcile(recParsed, recSaved, function(err, recMatchResults) {
-                  storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, recType, function(err, fileInfo) {
+                storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, recType, function(err, fileInfo) {
                   if (err) {
                     callback(err);
                   } else {
-                    saveComponents(recMatchResults, function(err, res) {
+                    getSavedComponents(function(err, recSaved) {
                       if (err) {
                         callback(err);
                       } else {
-                        callback(null);
-                      }
+                      dre.reconcile(recParsed, recSaved, fileInfo._id, function(err, recMatchResults) {
+                        saveComponents(recMatchResults, fileInfo._id, function(err, res) {
+                          if (err) {
+                            callback(err);
+                          } else {
+                            callback(null);
+                          }
+                        });
+                      });
+                    }
                     });
                   }
                 });
-                });
-              });
-            }
+              }
             });
           }
         });
@@ -154,11 +157,11 @@ function processUpload(recordUpload, callback) {
     });
   }
 }
-             
 
-                //Need to retreive allergies from database, then feed parsed in and those into match.
 
-                /*
+//Need to retreive allergies from database, then feed parsed in and those into match.
+
+/*
                 storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, xmlType, function(err, fileInfo) {
                   if (err) {
                     callback(err);
@@ -192,7 +195,7 @@ function processUpload(recordUpload, callback) {
 }*/
 
 
-function getRecordList (callback) {
+function getRecordList(callback) {
   var db = app.get("db_conn");
   var grid = app.get("grid_conn");
 
@@ -205,12 +208,12 @@ function getRecordList (callback) {
     if (err) {
       callback(err);
     } else {
-      recordCollection.find( function(err, findResults) {
+      recordCollection.find(function(err, findResults) {
         findResults.toArray(function(err, recordArray) {
 
           var recordResponseArray = [];
 
-          for (var i=0; i<recordArray.length; i++) {
+          for (var i = 0; i < recordArray.length; i++) {
 
             var recordJSON = {};
 
@@ -244,9 +247,9 @@ app.get('/api/v1/storage', function(req, res) {
   getRecordList(function(err, recordList) {
     var recordResponse = {};
     recordResponse.storage = recordList;
-    res.send(recordResponse);  
+    res.send(recordResponse);
   });
-  
+
 });
 
 //Uploads a file into storage.
@@ -262,7 +265,6 @@ app.put('/api/v1/storage', function(req, res) {
   });
 
 });
-
 
 
 

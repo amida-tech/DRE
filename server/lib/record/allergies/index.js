@@ -56,11 +56,22 @@ module.exports.getAllergy = getAllergy;
 module.exports.updateAllergy = updateAllergy;
 
 //Saves an array of incoming allergies.
-function saveAllergies(inputArray, callback) {
+function saveAllergies(inputArray, sourceID, callback) {
 
   function createAllergyObject(allergyInputObject) {
 
     var allergySaveObject = {};
+
+    allergySaveObject.metadata = {};
+    allergySaveObject.metadata.attribution = [];
+
+    var allergyAttribution = {
+      record_id: sourceID,
+      attributed: new Date(),
+      attribution: 'new'
+    }
+
+    allergySaveObject.metadata.attribution.push(allergyAttribution);
 
     //Really need to do much better validation all in here.
     if (allergyInputObject.date_range) {
@@ -100,12 +111,15 @@ function saveAllergies(inputArray, callback) {
       allergySaveObject.reaction.code_system = allergyInputObject.reaction.code_system;
     }
 
+
     return allergySaveObject;
   }
 
   function saveAllergyObject (allergySaveObject, allergyObjectNumber, callback) {
 
     var tempAllergy = new allergy(allergySaveObject);
+
+    console.log(tempAllergy);
 
     tempAllergy.save(function(err, saveResults) {
       if (err) {
