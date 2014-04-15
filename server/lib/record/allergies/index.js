@@ -60,6 +60,8 @@ function saveAllergies(inputArray, sourceID, callback) {
 
   function createAllergyObject(allergyInputObject) {
 
+    console.log(allergyInputObject);
+
     var allergySaveObject = {};
 
     allergySaveObject.metadata = {};
@@ -81,15 +83,15 @@ function saveAllergies(inputArray, sourceID, callback) {
     }
 
     if (allergyInputObject.name) {
-      allergySaveObject.name = allergyInputObject.name;
+      allergySaveObject.name = allergyInputObject.allergen.name;
     }
 
     if (allergyInputObject.code) {
-      allergySaveObject.code = allergyInputObject.code;
+      allergySaveObject.code = allergyInputObject.allergen.code;
     }
 
     if (allergyInputObject.code_system) {
-      allergySaveObject.code_system = allergyInputObject.code_system;
+      allergySaveObject.code_system = allergyInputObject.allergen.code_system_name;
     }
 
     if (allergyInputObject.code_system_name) {

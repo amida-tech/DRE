@@ -29,7 +29,7 @@ function($routeProvider) {
 
       $scope.allergies = [];
 
-      $http({method: 'GET', url: '/record/allergies'}).
+      $http({method: 'GET', url: '/api/v1/record/allergies'}).
     success(function(data, status, headers, config) {
       $scope.allergies = data.allergies;
     }).
