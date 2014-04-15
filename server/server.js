@@ -63,6 +63,9 @@ app.use(storage);
 var parser = require('./lib/parser');
 app.use(parser);
 
+var allergies = require('./lib/record/allergies');
+app.use(allergies);
+
 //Initialize Database Connection.
 function connectDatabase(server, database, callback) {
   var Db = mongo.Db;

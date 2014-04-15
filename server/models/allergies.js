@@ -15,25 +15,33 @@ limitations under the License.
 ======================================================================*/
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+  Schema = mongoose.Schema;
+ObjectId = Schema.ObjectId;
 
 //This is data model used purely for portal user authentication purposes
 var Allergies = new Schema({
-        date_range: {
-          start: Date,
-          end: Date
-        },
-        name: String,
-        code: String,
-        code_system: String,
-        code_system_name: String,
-        status: String,
-        severity: String,
-        reaction: {
-          name: String,
-          code: String,
-          code_system: String
-        }
+  metadata: {
+    attribution: [{
+      record_id: ObjectId,
+      attributed: Date,
+      attribution: String
+    }]
+  },
+  date_range: {
+    start: Date,
+    end: Date
+  },
+  name: String,
+  code: String,
+  code_system: String,
+  code_system_name: String,
+  status: String,
+  severity: String,
+  reaction: {
+    name: String,
+    code: String,
+    code_system: String
+  }
 });
 
 module.exports = mongoose.model('Allergies', Allergies);

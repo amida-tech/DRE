@@ -23,9 +23,12 @@ var Db = mongo.Db;
 var Grid = mongo.Grid;
 var parser = require('../parser/index.js');
 var allergy = require('../../models/allergies');
+var allergyFunctions = require('../record/allergies');
+var dre = require('../dre/index.js');
 
 var extractRecord = parser.extractRecord;
 
+//Saves raw file to gridFS.
 function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSize, inboundXMLType, callback) {
   var db = app.get("db_conn");
   var grid = app.get("grid_conn");
@@ -59,93 +62,48 @@ function validateFileMessage(requestObject, callback) {
   callback(null);
 }
 
+//Wrapper function to save all components of an incoming object.
 function saveComponents (masterObject, callback) { 
 
-  saveAllergies(masterObject.allergies, function(err) {
+  //console.log(masterObject);
+
+  allergyFunctions.saveAllergies(masterObject.allergies, function(err) {
     if (err) {
       callback(err);
     } else {
       callback(null);
     }
   });
-
   //Need to have a final check.
-
 }
 
-function saveAllergies(inputArray, callback) {
+function getSavedComponents (callback) {
 
-  function createAllergyObject(allergyInputObject) {
+  var savedObject = {};
 
-    var allergySaveObject = {};
+  allergyFunctions.getAllergies(function(err, savedAllergies) {
+    savedObject.allergies = savedAllergies;
+    callback(null, savedObject);
+  });
+}
 
-    //Really need to do much better validation all in here.
-    if (allergyInputObject.date_range) {
-      allergySaveObject.date_range = {};
-      allergySaveObject.date_range.start = allergyInputObject.date_range.start;
-      allergySaveObject.date_range.end = allergyInputObject.date_range.end;
-    }
-
-    if (allergyInputObject.name) {
-      allergySaveObject.name = allergyInputObject.name;
-    }
-
-    if (allergyInputObject.code) {
-      allergySaveObject.code = allergyInputObject.code;
-    }
-
-    if (allergyInputObject.code_system) {
-      allergySaveObject.code_system = allergyInputObject.code_system;
-    }
-
-    if (allergyInputObject.code_system_name) {
-      allergySaveObject.code_system_name = allergyInputObject.code_system_name;
-    }
-
-    if (allergyInputObject.status) {
-      allergySaveObject.status = allergyInputObject.status;
-    }
-
-    if (allergyInputObject.severity) {
-      allergySaveObject.severity = allergyInputObject.severity;
-    }
-
-    if (allergyInputObject.reaction) {
-      allergySaveObject.reaction = {};
-      allergySaveObject.reaction.name = allergyInputObject.reaction.name;
-      allergySaveObject.reaction.code = allergyInputObject.reaction.code;
-      allergySaveObject.reaction.code_system = allergyInputObject.reaction.code_system;
-    }
-
-    return allergySaveObject;
-  }
-
-  function saveAllergyObject (allergySaveObject, allergyObjectNumber, callback) {
-
-    var tempAllergy = new allergy(allergySaveObject);
-
-    tempAllergy.save(function(err, saveResults) {
+function attemptParse(recordType, recordData, callback) {
+  if (recordType === 'application/xml') {
+    extractRecord(recordData, function(err, xmlType, parsedRecord) {
       if (err) {
         callback(err);
       } else {
-        callback(null, allergyObjectNumber, saveResults);
-      }
-    });
-
-
-  }
-
-  for (var i = 0; i < inputArray.length; i++) {
-    var allergyObject = createAllergyObject(inputArray[i]);
-    saveAllergyObject(allergyObject, i, function(err, savedObjectNumber, results) {
-      if (savedObjectNumber === (inputArray.length - 1)) {
-        callback(null);
+        if (xmlType === 'ccda') {
+          callback(null, xmlType, parsedRecord);
+        } else {
+          callback(null, null);
+        }
       }
     });
   }
-
 }
 
+//Master wrapper function.
 function processUpload(recordUpload, callback) {
   if (!recordUpload) {
     callback('Wrong object name');
@@ -158,8 +116,49 @@ function processUpload(recordUpload, callback) {
           if (err) {
             callback(err);
           } else {
-            if (recordUpload.type === 'application/xml') {
-              extractRecord(fileData, function(err, xmlType, parsedRecord) {
+
+            attemptParse(recordUpload.type, fileData, function(err, recType, recParsed) {
+              if (err) {
+                callback(err);
+              } else if (!recType) {
+                storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, null, function(err, fileInfo) {
+                  if (err) {
+                    callback(err);
+                  } else {
+                    callback(null);
+                  }
+                });
+              } else {
+              getSavedComponents(function(err, recSaved) {
+                dre.reconcile(recParsed, recSaved, function(err, recMatchResults) {
+                  storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, recType, function(err, fileInfo) {
+                  if (err) {
+                    callback(err);
+                  } else {
+                    saveComponents(recMatchResults, function(err, res) {
+                      if (err) {
+                        callback(err);
+                      } else {
+                        callback(null);
+                      }
+                    });
+                  }
+                });
+                });
+              });
+            }
+            });
+          }
+        });
+      }
+    });
+  }
+}
+             
+
+                //Need to retreive allergies from database, then feed parsed in and those into match.
+
+                /*
                 storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, xmlType, function(err, fileInfo) {
                   if (err) {
                     callback(err);
@@ -190,22 +189,8 @@ function processUpload(recordUpload, callback) {
       }
     });
   }
-}
-//Routes.
-app.put('/api/v1/storage', function(req, res) {
+}*/
 
-  console.log(req.files.file);
-
-  processUpload(req.files.file, function(err) {
-    if (err) {
-      console.error(err);
-      res.send(400, err);
-    } else {
-      res.send(200);
-    }
-  });
-
-});
 
 function getRecordList (callback) {
   var db = app.get("db_conn");
@@ -243,7 +228,6 @@ function getRecordList (callback) {
           }
 
           callback(null, recordResponseArray);
-
         });
 
       });
@@ -252,7 +236,9 @@ function getRecordList (callback) {
 
 }
 
-//Get user record list.
+//Routes.
+
+//Returns list of records in storage.
 app.get('/api/v1/storage', function(req, res) {
 
   getRecordList(function(err, recordList) {
@@ -263,7 +249,19 @@ app.get('/api/v1/storage', function(req, res) {
   
 });
 
+//Uploads a file into storage.
+app.put('/api/v1/storage', function(req, res) {
 
+  processUpload(req.files.file, function(err) {
+    if (err) {
+      console.error(err);
+      res.send(400, err);
+    } else {
+      res.send(200);
+    }
+  });
+
+});
 
 
 
