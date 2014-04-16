@@ -24,7 +24,8 @@
     "request": "2.33.x",
     "mongodb": "1.4.x",
     "mongoose": "3.8.8",
-    "jsdom": "0.10.5"
+    "jsdom": "0.10.5",
+    "deep-equal": "0.2.x"
   },
   "devDependencies": {
     "grunt": "0.4.x",

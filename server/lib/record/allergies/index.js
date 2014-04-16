@@ -19,7 +19,7 @@ var app = module.exports = express();
 var allergy = require('../../../models/allergies');
 
 //Get all allergies.
-function getAllergies (callback) {
+function getAllergies(callback) {
 
   allergy.find(function(err, queryResults) {
     if (err) {
@@ -32,8 +32,10 @@ function getAllergies (callback) {
 }
 
 //Gets a single allergy based on id.
-function getAllergy (input_id, callback) {
-  allergy.findOne({_id: input_id}, function(err, allergyEntry) {
+function getAllergy(input_id, callback) {
+  allergy.findOne({
+    _id: input_id
+  }, function(err, allergyEntry) {
     if (err) {
       callback(err);
     } else {
@@ -42,7 +44,7 @@ function getAllergy (input_id, callback) {
   });
 }
 
-function updateAllergy (input_allergy, callback) {
+function updateAllergy(input_allergy, callback) {
   input_allergy.save(function(err, saveObject) {
     if (err) {
       callback(err);
@@ -55,73 +57,100 @@ function updateAllergy (input_allergy, callback) {
 module.exports.getAllergy = getAllergy;
 module.exports.updateAllergy = updateAllergy;
 
-//Saves an array of incoming allergies.
-function saveAllergies(inputArray, sourceID, callback) {
+function createAllergyObjectMetaData(allergyInputObject, sourceID) {
 
-  function createAllergyObject(allergyInputObject) {
+  allergyInputObject.metadata = {};
+  allergyInputObject.metadata.attribution = [];
 
-    console.log(allergyInputObject);
+  var allergyAttribution = {};
 
-    var allergySaveObject = {};
-
-    allergySaveObject.metadata = {};
-    allergySaveObject.metadata.attribution = [];
-
-    var allergyAttribution = {
+  if (sourceID) {
+    allergyAttribution = {
       record_id: sourceID,
       attributed: new Date(),
       attribution: 'new'
     }
-
-    allergySaveObject.metadata.attribution.push(allergyAttribution);
-
-    //Really need to do much better validation all in here.
-    if (allergyInputObject.date_range) {
-      allergySaveObject.date_range = {};
-      allergySaveObject.date_range.start = allergyInputObject.date_range.start;
-      allergySaveObject.date_range.end = allergyInputObject.date_range.end;
-    }
-
-    if (allergyInputObject.name) {
-      allergySaveObject.name = allergyInputObject.allergen.name;
-    }
-
-    if (allergyInputObject.code) {
-      allergySaveObject.code = allergyInputObject.allergen.code;
-    }
-
-    if (allergyInputObject.code_system) {
-      allergySaveObject.code_system = allergyInputObject.allergen.code_system_name;
-    }
-
-    if (allergyInputObject.code_system_name) {
-      allergySaveObject.code_system_name = allergyInputObject.code_system_name;
-    }
-
-    if (allergyInputObject.status) {
-      allergySaveObject.status = allergyInputObject.status;
-    }
-
-    if (allergyInputObject.severity) {
-      allergySaveObject.severity = allergyInputObject.severity;
-    }
-
-    if (allergyInputObject.reaction) {
-      allergySaveObject.reaction = {};
-      allergySaveObject.reaction.name = allergyInputObject.reaction.name;
-      allergySaveObject.reaction.code = allergyInputObject.reaction.code;
-      allergySaveObject.reaction.code_system = allergyInputObject.reaction.code_system;
-    }
-
-
-    return allergySaveObject;
   }
 
-  function saveAllergyObject (allergySaveObject, allergyObjectNumber, callback) {
+  allergyInputObject.metadata.attribution.push(allergyAttribution);
+
+  return allergyInputObject;
+
+}
+
+
+function createAllergyObject(allergyInputObject) {
+
+  //console.log(allergyInputObject);
+
+  var allergySaveObject = {};
+
+  //allergySaveObject.metadata = {};
+  //allergySaveObject.metadata.attribution = [];
+
+  //var allergyAttribution = {};
+
+  //if (sourceID) {
+  //  allergyAttribution = {
+  //    record_id: sourceID,
+  //    attributed: new Date(),
+  //    attribution: 'new'
+  //  }
+  //}
+
+  //allergySaveObject.metadata.attribution.push(allergyAttribution);
+
+  //Really need to do much better validation all in here.
+  if (allergyInputObject.date_range) {
+    allergySaveObject.date_range = {};
+    allergySaveObject.date_range.start = allergyInputObject.date_range.start;
+    allergySaveObject.date_range.end = allergyInputObject.date_range.end;
+  }
+
+  if (allergyInputObject.name) {
+    allergySaveObject.name = allergyInputObject.allergen.name;
+  }
+
+  if (allergyInputObject.code) {
+    allergySaveObject.code = allergyInputObject.allergen.code;
+  }
+
+  if (allergyInputObject.code_system) {
+    allergySaveObject.code_system = allergyInputObject.allergen.code_system_name;
+  }
+
+  if (allergyInputObject.code_system_name) {
+    allergySaveObject.code_system_name = allergyInputObject.code_system_name;
+  }
+
+  if (allergyInputObject.status) {
+    allergySaveObject.status = allergyInputObject.status;
+  }
+
+  if (allergyInputObject.severity) {
+    allergySaveObject.severity = allergyInputObject.severity;
+  }
+
+  if (allergyInputObject.reaction) {
+    allergySaveObject.reaction = {};
+    allergySaveObject.reaction.name = allergyInputObject.reaction.name;
+    allergySaveObject.reaction.code = allergyInputObject.reaction.code;
+    allergySaveObject.reaction.code_system = allergyInputObject.reaction.code_system;
+  }
+
+  return allergySaveObject;
+}
+
+module.exports.createAllergyObject = createAllergyObject;
+
+//Saves an array of incoming allergies.
+function saveAllergies(inputArray, sourceID, callback) {
+
+  function saveAllergyObject(allergySaveObject, allergyObjectNumber, callback) {
 
     var tempAllergy = new allergy(allergySaveObject);
 
-    console.log(tempAllergy);
+    //console.log(tempAllergy);
 
     tempAllergy.save(function(err, saveResults) {
       if (err) {
@@ -135,7 +164,7 @@ function saveAllergies(inputArray, sourceID, callback) {
   }
 
   for (var i = 0; i < inputArray.length; i++) {
-    var allergyObject = createAllergyObject(inputArray[i]);
+    var allergyObject = createAllergyObjectMetaData(inputArray[i], sourceID);
     saveAllergyObject(allergyObject, i, function(err, savedObjectNumber, results) {
       if (savedObjectNumber === (inputArray.length - 1)) {
         callback(null);
@@ -156,12 +185,11 @@ app.get('/api/v1/record/allergies', function(req, res) {
       allergyJSON.allergies = allergyList;
       res.send(allergyJSON);
     }
-    
+
   });
-  
+
 });
 
 
 module.exports.getAllergies = getAllergies;
 module.exports.saveAllergies = saveAllergies;
-

@@ -66,15 +66,18 @@ function validateFileMessage(requestObject, callback) {
 function saveComponents(masterObject, sourceID, callback) {
 
   //console.log(masterObject);
-
-  allergyFunctions.saveAllergies(masterObject.allergies, sourceID, function(err) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null);
-    }
-  });
-  //Need to have a final check.
+  if (masterObject.allergies.length > 0) {
+    allergyFunctions.saveAllergies(masterObject.allergies, sourceID, function(err) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null);
+      }
+    });
+  } else {
+    callback(null);
+    //Need to have a final check.
+  }
 }
 
 function getSavedComponents(callback) {
@@ -136,16 +139,17 @@ function processUpload(recordUpload, callback) {
                       if (err) {
                         callback(err);
                       } else {
-                      dre.reconcile(recParsed, recSaved, fileInfo._id, function(err, recMatchResults) {
-                        saveComponents(recMatchResults, fileInfo._id, function(err, res) {
-                          if (err) {
-                            callback(err);
-                          } else {
-                            callback(null);
-                          }
+                        dre.reconcile(recParsed, recSaved, fileInfo._id, function(err, recMatchResults) {
+                          console.log(recMatchResults);
+                          saveComponents(recMatchResults, fileInfo._id, function(err, res) {
+                            if (err) {
+                              callback(err);
+                            } else {
+                              callback(null);
+                            }
+                          });
                         });
-                      });
-                    }
+                      }
                     });
                   }
                 });
