@@ -6,6 +6,8 @@ var equal = require('deep-equal');
 
 var lookups = require('./lookups.js');
 
+var allergies = require('./match/allergies.js');
+
 
 //Matching Library.
 //---------
@@ -68,6 +70,12 @@ exports.matchSections = function matchSections(new_record, master) {
     var new_entries = range(new_record.length);
     var master_entries = range(master.length);
 
+    //console.log("all new entries");
+    //console.log(new_entries.elements());
+
+    //console.log("all master entries");
+    //console.log(master_entries.elements());
+
     for (var i in new_entries.elements()) {
         for (var j in master_entries.elements()) {
 
@@ -79,12 +87,10 @@ exports.matchSections = function matchSections(new_record, master) {
 
             //console.log(i+" - "+j);
             var c = this.compare(new_record[i], master[j]);
-
-            //console.log(c);
             //console.log(c.match);
             if (c.match === "duplicate") {
                 //assume that new record as well as master record doesn't have duplicates (in itself)
-                new_entries.delete(j);
+                new_entries.delete(i);
                 master_entries.delete(j);
                 result.push({"match" : "duplicate", "src_id": i, "dest_id" : j });
                 break;
@@ -94,9 +100,23 @@ exports.matchSections = function matchSections(new_record, master) {
 
     }
 
+    //console.log("result");
+    //console.log(result);
+
     for (var k in new_entries.elements()) {
         result.push({"match" : "new", "src_id": k});
     }
+
+
+    //console.log("new entries");
+    //console.log(new_entries.elements());
+
+    //console.log("dup master entries");
+    //console.log(master_entries.elements());
+
+    //console.log("result");
+    //console.log(result);
+
 
     return result;
 };
@@ -113,15 +133,10 @@ exports.match = function match(new_record, master) {
 
         var new_section;
         var master_section = [];
-
-
-
-
         if (master.hasOwnProperty(name)) { master_section=master[name]; }
 
         if (new_record.hasOwnProperty(name)) {
             new_section = new_record[name];
-
 
             //console.log(this.matchSections(new_section, master_section));
             result["match"][name]=this.matchSections(new_section, master_section);
