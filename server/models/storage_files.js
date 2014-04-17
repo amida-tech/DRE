@@ -19,7 +19,10 @@ var mongoose = require('mongoose'),
 ObjectId = Schema.ObjectId;
 
 //This is data model used purely for portal user authentication purposes
-var storage.files = new Schema({
+
+
+
+var storageSchema = new Schema({
   metadata: {
     class: String
   },
@@ -31,4 +34,4 @@ var storage.files = new Schema({
   filename: String,
 });
 
-module.exports = mongoose.model('Storage.files', storage.files);
+module.exports = mongoose.model('storage.files', storageSchema);

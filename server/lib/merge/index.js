@@ -17,6 +17,7 @@ limitations under the License.
 var express = require('express');
 var app = module.exports = express();
 var merge = require('../../models/merges');
+var Storage_files = require('../../models/storage_files')
 
 
 function saveMerge (mergeObject, callback) {
@@ -37,13 +38,17 @@ module.exports.saveMerge = saveMerge;
 
 function getMerges(callback) {
 
-  merge.find(function(err, queryResults) {
+  merge.find()
+  .populate('allergy_id record_id', 'name severity filename uploadDate')
+  .exec(function (err, mergeResults) {
     if (err) {
       callback(err);
     } else {
-      callback(null, queryResults);
+      console.log(mergeResults);
+      callback(null, mergeResults);
     }
   });
+
 
 }
 
