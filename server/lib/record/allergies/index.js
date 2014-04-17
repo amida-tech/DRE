@@ -17,6 +17,7 @@ limitations under the License.
 var express = require('express');
 var app = module.exports = express();
 var allergy = require('../../../models/allergies');
+var mergeFunctions = require('../../merge')
 
 //Get all allergies.
 function getAllergies(callback) {
@@ -44,7 +45,49 @@ function getAllergy(input_id, callback) {
   });
 }
 
+function updateAllergyAndMerge (input_allergy, sourceID, callback) {
+
+  var mergeFlag = false;
+  var updateFlag = false;
+
+  var tmpMergeEntry = {
+    entry_type: 'allergy',
+    entry_id: input_allergy._id,
+    record_id: sourceID,
+    merged: new Date(),
+    merge_reason: 'duplicate'
+  }
+
+  function checkUAMFinished () {
+    if (mergeFlag && updateFlag) {
+      callback(null);
+    }
+  }
+
+  mergeFunctions.saveMerge(tmpMergeEntry, function(err, saveResults) {
+    if (err) {
+      callback(err);
+    } else {
+      mergeFlag = true;
+      checkUAMFinished();
+    }
+  })
+
+  updateAllergy(input_allergy, function(err, saveObject) {
+    if (err) {
+      callback(err);
+    } else {
+      updateFlag = true;
+      checkUAMFinished();
+    }
+  });
+
+}
+
+module.exports.updateAllergyAndMerge = updateAllergyAndMerge;
+
 function updateAllergy(input_allergy, callback) {
+
   input_allergy.save(function(err, saveObject) {
     if (err) {
       callback(err);
@@ -55,7 +98,7 @@ function updateAllergy(input_allergy, callback) {
 }
 
 module.exports.getAllergy = getAllergy;
-module.exports.updateAllergy = updateAllergy;
+//module.exports.updateAllergy = updateAllergy;
 
 function createAllergyObjectMetaData(allergyInputObject, sourceID) {
 
@@ -148,24 +191,42 @@ function saveAllergies(inputArray, sourceID, callback) {
 
   function saveAllergyObject(allergySaveObject, allergyObjectNumber, callback) {
 
-    var tempAllergy = new allergy(allergySaveObject);
+    function checkSAMFinished() {
+      if (mergeFlag && saveFlag) {
+        callback(null, allergyObjectNumber);
+      }
+    }
 
-    //console.log(tempAllergy);
+    var tempAllergy = new allergy(allergySaveObject);
 
     tempAllergy.save(function(err, saveResults) {
       if (err) {
         callback(err);
       } else {
-        callback(null, allergyObjectNumber, saveResults);
+
+        var tmpMergeEntry = {
+          entry_type: 'allergy',
+          entry_id: saveResults._id,
+          record_id: saveResults.metadata.attribution[0].record_id,
+          merged: new Date(),
+          merge_reason: 'new'
+        }
+
+        mergeFunctions.saveMerge(tmpMergeEntry, function(err, mergeResults) {
+          if (err) {
+            callback(err);
+          } else {
+            callback(null, allergyObjectNumber);
+          }
+        });
       }
     });
-
 
   }
 
   for (var i = 0; i < inputArray.length; i++) {
     var allergyObject = createAllergyObjectMetaData(inputArray[i], sourceID);
-    saveAllergyObject(allergyObject, i, function(err, savedObjectNumber, results) {
+    saveAllergyObject(allergyObject, i, function(err, savedObjectNumber) {
       if (savedObjectNumber === (inputArray.length - 1)) {
         callback(null);
       }

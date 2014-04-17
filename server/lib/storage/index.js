@@ -91,7 +91,8 @@ function getSavedComponents(callback) {
 }
 
 function attemptParse(recordType, recordData, callback) {
-  if (recordType === 'application/xml') {
+  //console.log(recordType);
+  if (recordType === 'application/xml' || recordType === 'text/xml') {
     extractRecord(recordData, function(err, xmlType, parsedRecord) {
       if (err) {
         callback(err);
@@ -103,6 +104,8 @@ function attemptParse(recordType, recordData, callback) {
         }
       }
     });
+  } else {
+    callback(null, null);
   }
 }
 
@@ -140,7 +143,7 @@ function processUpload(recordUpload, callback) {
                         callback(err);
                       } else {
                         dre.reconcile(recParsed, recSaved, fileInfo._id, function(err, recMatchResults) {
-                          console.log(recMatchResults);
+                          //console.log(recMatchResults);
                           saveComponents(recMatchResults, fileInfo._id, function(err, res) {
                             if (err) {
                               callback(err);
@@ -258,6 +261,8 @@ app.get('/api/v1/storage', function(req, res) {
 
 //Uploads a file into storage.
 app.put('/api/v1/storage', function(req, res) {
+
+  //console.log(req.files.file);
 
   processUpload(req.files.file, function(err) {
     if (err) {

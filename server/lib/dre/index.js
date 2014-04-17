@@ -3,7 +3,6 @@ var app = module.exports = express();
 var allergyFunctions = require('../record/allergies');
 var match = require('./match.js');
 
-
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
 function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, callback) {
 
@@ -19,13 +18,16 @@ function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, c
 					attributed: new Date(),
 					attribution: 'duplicate'
 				});
-				allergyFunctions.updateAllergy(currentAllergy, function(err, savedObject) {
+
+				allergyFunctions.updateAllergyAndMerge(currentAllergy, newSourceID, function(err) {
 					if (err) {
 						callback(err);
 					} else {
 						callback(null, iter);
 					}
 				});
+
+
 			});
 		}
 
@@ -127,8 +129,8 @@ for (var i=0;i<baseArray.allergies.length;i++) {
 
 baseObjectForParsing.allergies = cleanedBaseArray;
 
-console.log(baseObjectForParsing.allergies);
-console.log(newObjectForParsing.allergies);
+//console.log(baseObjectForParsing.allergies);
+//console.log(newObjectForParsing.allergies);
 
 
 //Win inject Dmitry's match library here.
@@ -148,7 +150,7 @@ var stubResult = {
 
 var matchResult = match.match(newObjectForParsing, baseObjectForParsing);
 
-console.log(JSON.stringify(matchResult, undefined, 4));
+//console.log(JSON.stringify(matchResult, undefined, 4));
 
 
 
