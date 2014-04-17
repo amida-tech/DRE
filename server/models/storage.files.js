@@ -19,12 +19,16 @@ var mongoose = require('mongoose'),
 ObjectId = Schema.ObjectId;
 
 //This is data model used purely for portal user authentication purposes
-var Merges = new Schema({
-      entry_type: String,
-      allergy_id: {type: ObjectId, ref: 'Allergies'},
-      record_id: {type: ObjectId, ref: 'storage.files'},
-      merged: Date,
-      merge_reason: String
-    });
+var storage.files = new Schema({
+  metadata: {
+    class: String
+  },
+  md5: String,
+  uploadDate: Date,
+  chunkSize: Number,
+  length: Number,
+  contentType: String,
+  filename: String,
+});
 
-module.exports = mongoose.model('Merges', Merges);
+module.exports = mongoose.model('Storage.files', storage.files);

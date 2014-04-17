@@ -29,11 +29,32 @@ function($routeProvider) {
 
       $scope.navPath = "templates/nav/nav.tpl.html";
 
+      $scope.new_merges = [];
+      $scope.duplicate_merges = [];
+
 
       $scope.reconciliationClick = function () {
         $location.path("match/reconciliation");
       };
 
+  $http({
+    method: 'GET',
+    url: '/api/v1/merges'
+  }).
+  success(function(data, status, headers, config) {
+
+    for (var i=0;i<data.merges.length;i++) {
+      if (data.merges[i].merge_reason === "new") {
+        $scope.new_merges.push(data.merges[i]);
+      } else if (data.merges[i].merge_reason === "duplicate") {
+        $scope.duplicate_merges.push(data.merges[i]);
+      }
+    }
+
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  });
       
 
     }

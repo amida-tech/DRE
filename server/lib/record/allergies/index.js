@@ -52,7 +52,7 @@ function updateAllergyAndMerge (input_allergy, sourceID, callback) {
 
   var tmpMergeEntry = {
     entry_type: 'allergy',
-    entry_id: input_allergy._id,
+    allergy_id: input_allergy._id,
     record_id: sourceID,
     merged: new Date(),
     merge_reason: 'duplicate'
@@ -206,7 +206,7 @@ function saveAllergies(inputArray, sourceID, callback) {
 
         var tmpMergeEntry = {
           entry_type: 'allergy',
-          entry_id: saveResults._id,
+          allergy_id: saveResults._id,
           record_id: saveResults.metadata.attribution[0].record_id,
           merged: new Date(),
           merge_reason: 'new'

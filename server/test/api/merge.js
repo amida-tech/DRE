@@ -14,17 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
-ObjectId = Schema.ObjectId;
+var should = require('chai').should;
+var supertest = require('supertest');
+var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
+var api = supertest.agent(deploymentLocation);
+var fs = require('fs');
 
-//This is data model used purely for portal user authentication purposes
-var Merges = new Schema({
-      entry_type: String,
-      allergy_id: {type: ObjectId, ref: 'Allergies'},
-      record_id: {type: ObjectId, ref: 'storage.files'},
-      merged: Date,
-      merge_reason: String
-    });
 
-module.exports = mongoose.model('Merges', Merges);
+
+describe('Merge API Get list', function() {
+
+  it('Merge Endpoint GET', function(done) {
+    api.get('/api/v1/merges')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          return done(err);
+        } else {
+          console.log(res.body);
+          done();
+        }
+      });
+  });
+
+});

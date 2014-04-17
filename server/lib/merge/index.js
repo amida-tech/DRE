@@ -34,3 +34,33 @@ function saveMerge (mergeObject, callback) {
 }
 
 module.exports.saveMerge = saveMerge;
+
+function getMerges(callback) {
+
+  merge.find(function(err, queryResults) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, queryResults);
+    }
+  });
+
+}
+
+//Get all merges API.
+app.get('/api/v1/merges', function(req, res) {
+
+  getMerges(function(err, mergeList) {
+    if (err) {
+      res.send(400, err);
+    } else {
+      var mergeJSON = {};
+      mergeJSON.merges = mergeList;
+      res.send(mergeJSON);
+    }
+
+  });
+
+});
+
+
