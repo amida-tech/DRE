@@ -13,11 +13,11 @@ function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, c
 			allergyFunctions.getAllergy(update_id, function(err, currentAllergy) {
 				//console.log(currentAllergy);
 				//Needs to get added to, but held out of match for now.
-				currentAllergy.metadata.attribution.push({
-					record_id: newSourceID,
-					attributed: new Date(),
-					attribution: 'duplicate'
-				});
+				//currentAllergy.metadata.attribution.push({
+				//	record_id: newSourceID,
+				//	attributed: new Date(),
+				//	attribution: 'duplicate'
+				//});
 
 				allergyFunctions.updateAllergyAndMerge(currentAllergy, newSourceID, function(err) {
 					if (err) {

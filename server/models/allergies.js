@@ -22,9 +22,7 @@ ObjectId = Schema.ObjectId;
 var Allergies = new Schema({
   metadata: {
     attribution: [{
-      record_id: ObjectId,
-      attributed: Date,
-      attribution: String
+      merge_id: {type: ObjectId, _ref: 'Merges'}
     }]
   },
   date_range: {

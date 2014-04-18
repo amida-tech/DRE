@@ -47,9 +47,6 @@ function getAllergy(input_id, callback) {
 
 function updateAllergyAndMerge (input_allergy, sourceID, callback) {
 
-  var mergeFlag = false;
-  var updateFlag = false;
-
   var tmpMergeEntry = {
     entry_type: 'allergy',
     allergy_id: input_allergy._id,
@@ -58,29 +55,22 @@ function updateAllergyAndMerge (input_allergy, sourceID, callback) {
     merge_reason: 'duplicate'
   }
 
-  function checkUAMFinished () {
-    if (mergeFlag && updateFlag) {
-      callback(null);
-    }
-  }
 
   mergeFunctions.saveMerge(tmpMergeEntry, function(err, saveResults) {
     if (err) {
       callback(err);
     } else {
-      mergeFlag = true;
-      checkUAMFinished();
+      input_allergy.metadata.attribution.push({merge_id: saveResults._id});
+      updateAllergy(input_allergy, function(err, saveObject) {
+        if (err) {
+          callback(err);
+        } else {
+          callback(null);
+        }
+      });
     }
   })
 
-  updateAllergy(input_allergy, function(err, saveObject) {
-    if (err) {
-      callback(err);
-    } else {
-      updateFlag = true;
-      checkUAMFinished();
-    }
-  });
 
 }
 
@@ -191,12 +181,6 @@ function saveAllergies(inputArray, sourceID, callback) {
 
   function saveAllergyObject(allergySaveObject, allergyObjectNumber, callback) {
 
-    function checkSAMFinished() {
-      if (mergeFlag && saveFlag) {
-        callback(null, allergyObjectNumber);
-      }
-    }
-
     var tempAllergy = new allergy(allergySaveObject);
 
     tempAllergy.save(function(err, saveResults) {
@@ -216,7 +200,17 @@ function saveAllergies(inputArray, sourceID, callback) {
           if (err) {
             callback(err);
           } else {
-            callback(null, allergyObjectNumber);
+
+            tempAllergy.metadata.attribution[0].merge_id = mergeResults._id;
+            tempAllergy.save(function(err, saveResults) {
+              if (err) {
+                callback(err);
+              } else {
+                callback(null, allergyObjectNumber);
+              }
+            });
+
+            
           }
         });
       }
