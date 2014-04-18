@@ -21,9 +21,7 @@ ObjectId = Schema.ObjectId;
 //This is data model used purely for portal user authentication purposes
 var Allergies = new Schema({
   metadata: {
-    attribution: [{
-      merge_id: {type: ObjectId, _ref: 'Merges'}
-    }]
+    attribution: [{type: ObjectId, ref: 'Merges'}]
   },
   date_range: {
     start: Date,

@@ -22,11 +22,14 @@ var mergeFunctions = require('../../merge')
 //Get all allergies.
 function getAllergies(callback) {
 
-  allergy.find(function(err, queryResults) {
+  allergy.find()
+  .populate('metadata.attribution', 'record_id merged')
+  .exec(function (err, mergeResults) {
     if (err) {
       callback(err);
     } else {
-      callback(null, queryResults);
+      console.log(mergeResults);
+      callback(null, mergeResults);
     }
   });
 
@@ -60,7 +63,7 @@ function updateAllergyAndMerge (input_allergy, sourceID, callback) {
     if (err) {
       callback(err);
     } else {
-      input_allergy.metadata.attribution.push({merge_id: saveResults._id});
+      input_allergy.metadata.attribution.push(saveResults._id);
       updateAllergy(input_allergy, function(err, saveObject) {
         if (err) {
           callback(err);
@@ -179,7 +182,7 @@ module.exports.createAllergyObject = createAllergyObject;
 //Saves an array of incoming allergies.
 function saveAllergies(inputArray, sourceID, callback) {
 
-  function saveAllergyObject(allergySaveObject, allergyObjectNumber, callback) {
+  function saveAllergyObject(allergySaveObject, allergyObjectNumber, inputSourceID, callback) {
 
     var tempAllergy = new allergy(allergySaveObject);
 
@@ -188,10 +191,11 @@ function saveAllergies(inputArray, sourceID, callback) {
         callback(err);
       } else {
 
+
         var tmpMergeEntry = {
           entry_type: 'allergy',
           allergy_id: saveResults._id,
-          record_id: saveResults.metadata.attribution[0].record_id,
+          record_id: inputSourceID,
           merged: new Date(),
           merge_reason: 'new'
         }
@@ -200,8 +204,8 @@ function saveAllergies(inputArray, sourceID, callback) {
           if (err) {
             callback(err);
           } else {
-
-            tempAllergy.metadata.attribution[0].merge_id = mergeResults._id;
+            console.log('hit');
+            tempAllergy.metadata.attribution.push(mergeResults._id);
             tempAllergy.save(function(err, saveResults) {
               if (err) {
                 callback(err);
@@ -219,8 +223,8 @@ function saveAllergies(inputArray, sourceID, callback) {
   }
 
   for (var i = 0; i < inputArray.length; i++) {
-    var allergyObject = createAllergyObjectMetaData(inputArray[i], sourceID);
-    saveAllergyObject(allergyObject, i, function(err, savedObjectNumber) {
+    var allergyObject = inputArray[i];
+    saveAllergyObject(allergyObject, i, sourceID, function(err, savedObjectNumber) {
       if (savedObjectNumber === (inputArray.length - 1)) {
         callback(null);
       }
