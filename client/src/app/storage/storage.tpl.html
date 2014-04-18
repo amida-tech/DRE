@@ -42,7 +42,7 @@
 					</div>
 					<div class="panel-body">
 							<ul class="list-group" ng-repeat="file in file_array | orderBy:predicate">
-							<a>
+							<a ng-href="/api/v1/storage/record/{{file.file_id}}">
 							<li class="list-group-item" style="cursor:pointer;">
 								<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
 								<span style="text-transform:lowercase;">{{file.file_name}}</span>

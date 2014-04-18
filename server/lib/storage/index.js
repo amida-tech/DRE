@@ -166,41 +166,38 @@ function processUpload(recordUpload, callback) {
 }
 
 
-//Need to retreive allergies from database, then feed parsed in and those into match.
+app.get('/api/v1/storage/record/:identifier', function(req, res) {
+  db = app.get("db_conn");
+  grid = app.get("grid_conn");
 
-/*
-                storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, xmlType, function(err, fileInfo) {
-                  if (err) {
-                    callback(err);
-                  } else {
-                    saveComponents(parsedRecord, function(err, res) {
-                      if (err) {
-                        callback(err);
-                      } else {
-                        callback(null);
-                      }
-                    });
-                  }
-                });
-
-              });
-            } else {
-
-              storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, null, function(err, fileInfo) {
-                if (err) {
-                  callback(err);
-                } else {
-                  callback(null);
-                }
-              });
-            }
+  //Removed owner validation for demo purposes.
+  db.collection('storage.files', function(err, coll) {
+    if (err) {
+      throw err;
+    }
+    var objectID = new ObjectId(req.params.identifier);
+    coll.findOne({
+      "_id": objectID
+    }, function(err, results) {
+      if (err) {
+        throw err;
+      }
+      if (results) {
+        grid.get(objectID, function(err, data) {
+          if (err) {
+            throw err;
           }
+          var returnFile = data.toString();
+          //res.attachment();
+          //db.close();
+          //grid.close();
+          res.setHeader('Content-disposition', 'attachment; filename=' + results.filename);
+          res.send(returnFile);
         });
       }
     });
-  }
-}*/
-
+  });
+});
 
 function getRecordList(callback) {
   var db = app.get("db_conn");

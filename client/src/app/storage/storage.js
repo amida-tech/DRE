@@ -36,9 +36,6 @@ angular.module('dre.storage', ['directives.fileModel'])
       $scope.notifications = notifications;
     });
 
-
-
-
     $scope.nameSort = function () {
       if ($scope.predicate.substring(0,1) === "-") {
         if ($scope.predicate.substring(1) === "file_name") {

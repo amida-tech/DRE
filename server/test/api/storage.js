@@ -72,4 +72,24 @@ describe('Storage API Get list', function() {
       });
   });
 
+  it('Download File GET', function(done) {
+    api.get('/api/v1/storage')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          return done(err);
+        } else {
+          api.get('/api/v1/storage/record/' + res.body.storage[0].file_id)
+          .expect(200)
+          .end(function(err, res) {
+            if (err) {
+              return done(err);
+            } else {
+              done();
+            }
+          });
+        }
+      });
+  });
+
 });
