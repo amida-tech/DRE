@@ -16,7 +16,7 @@
 			<ul class="nav nav-tabs nav-justified" >
 				<!--<li class="active"><a data-target="#unreviewed" data-toggle="tab" style="cursor: pointer;"><span class="badge">2</span><strong>&nbsp;&nbsp;Unmerged Entries</strong></a></li>-->
 				<li class="active"><a data-target="#newEntries" data-toggle="tab" style="cursor: pointer;"><span class="panel-title"><span class="badge">6</span>&nbsp;&nbsp;New Entries</span></a></li>
-				<li><a data-target="#duplicateEntries" data-toggle="tab" style="cursor: pointer;"><span class="panel-title"><span class="badge">8</span>&nbsp;&nbsp;Duplicate Entries</span></a></li>
+				<li><a data-target="#duplicateEntries" data-toggle="tab" style="cursor: pointer;"><span class="panel-title">Duplicate Entries</span></a></li>
 			</ul>
 			<div id="myTabContent" class="tab-content" >
 				<div class="tab-pane fade" id="unreviewed">
@@ -64,7 +64,7 @@
 							<tr><td><strong>New Allergies</strong></td></tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="new_merge in new_merges">
+							<tr ng-repeat="new_merge in new_merges | orderBy:predicate">
 								<td><strong>Allergen:&nbsp;&nbsp;</strong><a href="#/record" style="text-transform: uppercase; cursor: pointer;">{{new_merge.allergy_id.name}}</a></td>
 								<td><strong>Received:&nbsp;&nbsp;</strong><span>{{new_merge.merged | date: 'short'}}</span></td>
 								<td><strong>Source:&nbsp;&nbsp;</strong><a href="#/storage" style="cursor: pointer;">{{new_merge.record_id.filename}}</a></td>
@@ -78,7 +78,7 @@
 							<tr><td><strong>Duplicate Allergies</strong></td></tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="duplicate_merge in duplicate_merges">
+							<tr ng-repeat="duplicate_merge in duplicate_merges | orderBy:predicate">
 
 								<td><strong>Allergen:&nbsp;&nbsp;</strong><a href="#/record" style="text-transform: uppercase; cursor: pointer;">{{duplicate_merge.allergy_id.name}}</a></td>
 								<td><strong>Received:&nbsp;&nbsp;</strong><span>{{duplicate_merge.merged | date: 'short'}}</span></td>

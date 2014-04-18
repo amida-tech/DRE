@@ -17,45 +17,48 @@ limitations under the License.
 angular.module('dre.match', ['dre.match.reconciliation'])
 
 .config(['$routeProvider',
-function($routeProvider) {
-  $routeProvider.when('/match', {
+  function($routeProvider) {
+    $routeProvider.when('/match', {
       templateUrl: 'templates/matching/matching.tpl.html',
       controller: 'matchCtrl'
-  });
-}])
+    });
+  }
+])
 
-  .controller('matchCtrl', ['$scope', '$http', '$location', 
-    function($scope, $http, $location) {
+.controller('matchCtrl', ['$scope', '$http', '$location',
+  function($scope, $http, $location) {
 
-      $scope.navPath = "templates/nav/nav.tpl.html";
+    $scope.navPath = "templates/nav/nav.tpl.html";
 
-      $scope.new_merges = [];
-      $scope.duplicate_merges = [];
+    $scope.new_merges = [];
+    $scope.duplicate_merges = [];
+
+    $scope.predicate = "-merged";
 
 
-      $scope.reconciliationClick = function () {
-        $location.path("match/reconciliation");
-      };
+    $scope.reconciliationClick = function() {
+      $location.path("match/reconciliation");
+    };
 
-  $http({
-    method: 'GET',
-    url: '/api/v1/merges'
-  }).
-  success(function(data, status, headers, config) {
+    $http({
+      method: 'GET',
+      url: '/api/v1/merges'
+    }).
+    success(function(data, status, headers, config) {
 
-    for (var i=0;i<data.merges.length;i++) {
-      if (data.merges[i].merge_reason === "new") {
-        $scope.new_merges.push(data.merges[i]);
-      } else if (data.merges[i].merge_reason === "duplicate") {
-        $scope.duplicate_merges.push(data.merges[i]);
+      for (var i = 0; i < data.merges.length; i++) {
+        if (data.merges[i].merge_reason === "new") {
+          $scope.new_merges.push(data.merges[i]);
+        } else if (data.merges[i].merge_reason === "duplicate") {
+          $scope.duplicate_merges.push(data.merges[i]);
+        }
       }
-    }
 
-  }).
-  error(function(data, status, headers, config) {
-    console.log('error');
-  });
-      
+    }).
+    error(function(data, status, headers, config) {
+      console.log('error');
+    });
 
-    }
-  ]);
+
+  }
+]);
