@@ -54,8 +54,8 @@
 										<tr><td><strong>Source Information</strong></td></tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td><span><strong>Reaction:</strong>  {{allergy.reaction.name}}</span></td>
+											<tr ng-repeat="attribution in allergy.metadata.attribution">
+												<td><span><strong>Reaction:</strong>  {{attribution}}</span></td>
 												<td><span><strong>Status:</strong>  {{allergy.status}}</span></td>
 												<td><span><strong>Started:</strong>  {{allergy.date_range.start}}</span></td>
 												<td><span><strong>Ended:</strong>  {{allergy.date_range.end}}</span></td>

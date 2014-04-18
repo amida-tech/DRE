@@ -23,13 +23,24 @@ var mergeFunctions = require('../../merge')
 function getAllergies(callback) {
 
   allergy.find()
+  .lean()
   .populate('metadata.attribution', 'record_id merged')
   .exec(function (err, mergeResults) {
     if (err) {
       callback(err);
     } else {
-      console.log(mergeResults);
-      callback(null, mergeResults);
+      //console.log(mergeResults);
+
+      allergy.populate(mergeResults, {path: 'metadata.attribution.record_id', select: 'filename'}, function (err, docs) {
+        if (err) {
+          console.log(err);
+        }
+        console.log(docs);
+        callback(null, docs);
+      })
+
+
+      //callback(null, mergeResults);
     }
   });
 
