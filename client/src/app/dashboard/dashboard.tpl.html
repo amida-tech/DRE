@@ -6,7 +6,7 @@
 	<div class="row">
 		<div ng-include="navPath"></div>
 		<div class="col-md-9" ng-controller="dashboardCtrl">
-						<div class="col-md-12">
+			<div class="col-md-12">
 				<br/>
 				<span class="lead">Notifications</span>
 				<br/>
@@ -16,14 +16,14 @@
 				<div class="panel panel-primary col-md-3 col-md-offset-1">
 					<a href="#" style="text-decoration: none;">
 						<div class="panel-body">
-							<h5 class="lead text-primary"><i class="fa fa-envelope fa-lg"></i>  0 new messages are in your inbox.</h5>
+							<h5 class="lead text-primary"><i class="fa fa-arrow-circle-down fa-lg"></i>  {{notifications.new_merges}} new entries have been merged.</h5>
 						</div>
 					</a>
 				</div>
 				<div class="panel panel-danger col-md-3 col-md-offset-1">
 					<a href="#" style="text-decoration: none;">
 						<div class="panel-body">
-							<h5 class="lead text-danger"><i class="fa fa-archive fa-lg"></i>  0 new records loaded into storage.</h5>
+							<h5 class="lead text-danger"><i class="fa fa-files-o fa-lg"></i>  {{notifications.duplicate_merges}} new duplicates have been merged.</h5>
 						</div>
 					</a>
 				</div>
@@ -32,14 +32,14 @@
 				<div class="panel panel-success col-md-3 col-md-offset-1">
 					<a href="#" style="text-decoration: none;">
 						<div class="panel-body">
-							<h5 class="lead text-success"><i class="fa fa-question-circle fa-lg"></i>   0 new entries awaiting your review.</h5>
+							<h5 class="lead text-success"><i class="fa fa-medkit fa-lg"></i>   {{notifications.record_count}} total entries on your record.</h5>
 						</div>
 					</a>
 				</div>
 				<div class="panel panel-success col-md-3 col-md-offset-1">
 					<a href="#" style="text-decoration: none;">
 						<div class="panel-body">
-							<h5 class="lead text-success"><i class="fa fa-files-o fa-lg"></i>   0 new entries merged into your record.</h5>
+							<h5 class="lead text-success"><i class="fa fa-archive fa-lg"></i>   {{notifications.file_count}} total records in storage.</h5>
 						</div>
 					</a>
 				</div>

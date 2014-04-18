@@ -69,6 +69,9 @@ app.use(allergies);
 var merges = require('./lib/merge');
 app.use(merges);
 
+var notification = require('./lib/notification');
+app.use(notification);
+
 //Initialize Database Connection.
 function connectDatabase(server, database, callback) {
   var Db = mongo.Db;

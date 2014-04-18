@@ -25,12 +25,18 @@ angular.module('dre.storage', ['directives.fileModel'])
   }
 ])
 
-.controller('storageCtrl', ['$scope', '$http', '$location', 'fileUpload',
-  function($scope, $http, $location, fileUpload) {
+.controller('storageCtrl', ['$scope', '$http', '$location', 'fileUpload', 'getNotifications',
+  function($scope, $http, $location, fileUpload, getNotifications) {
 
     $scope.navPath = "templates/nav/nav.tpl.html";
-
     $scope.predicate = "-file_upload_date";
+
+    $scope.notifications = {};
+    getNotifications.getUpdate(function(err, notifications) {
+      $scope.notifications = notifications;
+    });
+
+
 
 
     $scope.nameSort = function () {

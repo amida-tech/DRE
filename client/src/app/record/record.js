@@ -24,10 +24,15 @@ function($routeProvider) {
   });
 }])
 
-  .controller('recordCtrl', ['$scope', '$http', '$location', 
-    function($scope, $http, $location) {
+  .controller('recordCtrl', ['$scope', '$http', '$location', 'getNotifications',
+    function($scope, $http, $location, getNotifications) {
 
       $scope.navPath = "templates/nav/nav.tpl.html";
+
+      $scope.notifications = {};
+        getNotifications.getUpdate(function(err, notifications) {
+        $scope.notifications = notifications;
+      });
 
       
 

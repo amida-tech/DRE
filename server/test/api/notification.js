@@ -14,25 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular
-  .module('dre', [
-    'ngRoute',
-    'dre.record',
-    'dre.storage',
-    'dre.dashboard',
-    'dre.match',
-    'directives.fileModel',
-    'services.fileUpload',
-    'services.getNotifications'
-  ])
-  .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    $routeProvider.when('/', {
-        templateUrl: 'templates/dashboard/dashboard.tpl.html',
-        controller: 'dashboardCtrl'
-    });
-      
-  }])
-    // Note TabService is included but not used to ensure its been instantiated
-  .run(['$rootScope', '$location', function ($rootScope, $location) {
+var should = require('chai').should;
+var supertest = require('supertest');
+var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
+var api = supertest.agent(deploymentLocation);
+var fs = require('fs');
 
-  }]);
+
+
+describe('Merge API Get list', function() {
+
+  it('Merge Endpoint GET', function(done) {
+    api.get('/api/v1/notification')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          return done(err);
+        } else {
+          console.log(res.body);
+          done();
+        }
+      });
+  });
+
+});

@@ -17,17 +17,22 @@ limitations under the License.
 angular.module('dre.dashboard', [])
 
 .config(['$routeProvider',
-function($routeProvider) {
-  $routeProvider.when('/dashboard', {
+  function($routeProvider) {
+    $routeProvider.when('/dashboard', {
       templateUrl: 'templates/dashboard/dashboard.tpl.html',
       controller: 'dashboardCtrl'
-  });
-}])
+    });
+  }
+])
 
-  .controller('dashboardCtrl', ['$scope', '$http', '$location',
-    function($scope, $http, $location) {
+.controller('dashboardCtrl', ['$scope', '$http', '$location', 'getNotifications',
+  function($scope, $http, $location, getNotifications) {
 
-            $scope.navPath = "templates/nav/nav.tpl.html";
-     
-    }
-  ]);
+    $scope.navPath = "templates/nav/nav.tpl.html";
+    $scope.notifications = {};
+    getNotifications.getUpdate(function(err, notifications) {
+      $scope.notifications = notifications;
+    });
+
+  }
+]);
