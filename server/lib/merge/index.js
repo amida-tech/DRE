@@ -17,7 +17,7 @@ limitations under the License.
 var express = require('express');
 var app = module.exports = express();
 var merge = require('../../models/merges');
-//var Storage_files = require('../../models/storage_files')
+var Storage_files = require('../../models/storage_files')
 
 
 function saveMerge (mergeObject, callback) {

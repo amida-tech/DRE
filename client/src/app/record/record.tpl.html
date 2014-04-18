@@ -28,8 +28,8 @@
 					<div id="collapse{{$index}}" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="nav nav-tabs nav-justified">
-								<li class="active" style="cursor: pointer;"><a data-target="#details{{$index}}" data-toggle="tab">Details</a></li>
-								<li style="cursor: pointer;"><a data-target="#sources{{$index}}" data-toggle="tab">Sources</a></li>
+								<li class="active panel-title" style="cursor: pointer;"><a data-target="#details{{$index}}" data-toggle="tab">Details</a></li>
+								<li style="cursor: pointer;" class="panel-title"><a data-target="#sources{{$index}}" data-toggle="tab">Sources</a></li>
 								<!--<li><a data-target="#history{{$index}}" data-toggle="tab">History</a></li>-->
 							</ul>
 							<div id="myTabContent" class="tab-content">
@@ -55,10 +55,9 @@
 										</thead>
 										<tbody>
 											<tr ng-repeat="attribution in allergy.metadata.attribution">
-												<td><span><strong>Reaction:</strong>  {{attribution}}</span></td>
-												<td><span><strong>Status:</strong>  {{allergy.status}}</span></td>
-												<td><span><strong>Started:</strong>  {{allergy.date_range.start}}</span></td>
-												<td><span><strong>Ended:</strong>  {{allergy.date_range.end}}</span></td>
+												<td><strong>Source:</strong>  <a href="/#/storage">{{attribution.record_id.filename}}</a></td>
+												<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
+												<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
 											</tr>
 										</tbody>
 									</table>

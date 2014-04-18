@@ -17,30 +17,29 @@ limitations under the License.
 var express = require('express');
 var app = module.exports = express();
 var allergy = require('../../../models/allergies');
-var mergeFunctions = require('../../merge')
+var mergeFunctions = require('../../merge');
+//Need to refactor to respect merge functions.
+var merge = require('../../../models/merges');
+var Storage_files = require('../../../models/storage_files');
 
 //Get all allergies.
 function getAllergies(callback) {
 
-  allergy.find()
-  .lean()
-  .populate('metadata.attribution', 'record_id merged')
-  .exec(function (err, mergeResults) {
+ allergy.find()
+  .populate('metadata.attribution', 'record_id merge_reason merged')
+  .exec(function(err, allergyResults) {
     if (err) {
       callback(err);
     } else {
-      //console.log(mergeResults);
-
-      allergy.populate(mergeResults, {path: 'metadata.attribution.record_id', select: 'filename'}, function (err, docs) {
+      Storage_files.populate(allergyResults, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
         if (err) {
-          console.log(err);
+          callback(err);
+        } else {
+          //console.log(docs[0].metadata.attribution);
+          callback(null, docs);
         }
-        console.log(docs);
-        callback(null, docs);
-      })
-
-
-      //callback(null, mergeResults);
+      });
+      
     }
   });
 
@@ -253,6 +252,7 @@ app.get('/api/v1/record/allergies', function(req, res) {
     } else {
       var allergyJSON = {};
       allergyJSON.allergies = allergyList;
+      console.log(allergyJSON.allergies[0].metadata.attribution);
       res.send(allergyJSON);
     }
 
