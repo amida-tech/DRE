@@ -40,7 +40,7 @@ describe('Allergies API', function() {
         if (err) {
           return done(err);
         }
-        console.log(res.body.allergies[0].metadata);
+        console.log(res.body.allergies[0].metadata.attribution[0].record_id);
         done();
       });
   });
