@@ -1,7 +1,8 @@
 var express = require('express');
 var app = module.exports = express();
 var allergyFunctions = require('../record/allergies');
-var match = require('./match.js');
+var Match = require('./match.js');
+var compare = require('./match/compare-partial.js').compare;
 
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
 function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, callback) {
@@ -147,8 +148,11 @@ var stubResult = {
 
 //console.log(newArray.allergies);
 //console.log(baseArray.allergies);
+var match = new Match(compare);
+var matchResult = match.match(newObjectForParsing,baseObjectForParsing);
 
-var matchResult = match.match(newObjectForParsing, baseObjectForParsing);
+
+//var matchResult = match.match(newObjectForParsing, baseObjectForParsing);
 
 //console.log(JSON.stringify(matchResult, undefined, 4));
 
