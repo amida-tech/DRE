@@ -147,6 +147,7 @@ function createAllergyObject(allergyInputObject) {
   //allergySaveObject.metadata.attribution.push(allergyAttribution);
 
   //Really need to do much better validation all in here.
+
   if (allergyInputObject.date_range) {
     allergySaveObject.date_range = {};
     allergySaveObject.date_range.start = allergyInputObject.date_range.start;
@@ -154,15 +155,15 @@ function createAllergyObject(allergyInputObject) {
   }
 
   if (allergyInputObject.name) {
-    allergySaveObject.name = allergyInputObject.allergen.name;
+    allergySaveObject.name = allergyInputObject.name;
   }
 
   if (allergyInputObject.code) {
-    allergySaveObject.code = allergyInputObject.allergen.code;
+    allergySaveObject.code = allergyInputObject.code;
   }
 
   if (allergyInputObject.code_system) {
-    allergySaveObject.code_system = allergyInputObject.allergen.code_system_name;
+    allergySaveObject.code_system = allergyInputObject.code_system;
   }
 
   if (allergyInputObject.code_system_name) {

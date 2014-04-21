@@ -1,6 +1,6 @@
 var express = require('express');
 var app = module.exports = express();
-var bb = require('../bluebutton/bluebutton.js');
+var bb = require('../bluebutton/bluebutton.min.js');
 
 
 function extractRecord(inputRecord, callback) {
