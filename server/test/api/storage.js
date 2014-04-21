@@ -22,7 +22,7 @@ var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 
 function loadSampleRecord(callback) {
-  fs.readFile('../artifacts/CCD.sample.xml', 'utf8', function(err, data) {
+  fs.readFile('../artifacts/CCD_demo1.xml', 'utf8', function(err, data) {
     if (err) {
       callback(err);
     }
@@ -46,7 +46,7 @@ describe('Storage API', function() {
 
   it('File Endpoint PUT', function(done) {
     api.put('/api/v1/storage')
-      .attach('file', '../artifacts/CCD.sample.xml')
+      .attach('file', '../artifacts/CCD_demo1.xml')
       .expect(200)
       .end(function(err, res) {
         if (err) {
