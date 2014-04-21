@@ -18,4 +18,5 @@ before_script:
 services:
     - mongodb
 
-#script:
+script:
+    - grunt --gruntfile client/gruntfile.js
