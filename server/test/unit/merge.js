@@ -14,23 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
-ObjectId = Schema.ObjectId;
+var should = require('chai').should;
+var storage = require('../../lib/storage/index.js');
 
+describe('Storage API', function() {
 
-//GridFS will automatically make this, but a schema is needed for population/refs.
+  it('Test 1', function(done) {
+    storage.getRecordList(function(err, res) {
+      done();
 
-var storageSchema = new Schema({
-  metadata: {
-    class: String
-  },
-  md5: String,
-  uploadDate: Date,
-  chunkSize: Number,
-  length: Number,
-  contentType: String,
-  filename: String,
+    });
+  });
+
 });
-
-module.exports = mongoose.model('storage.files', storageSchema);

@@ -54,9 +54,6 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 
-var api  = require('./lib/api');
-app.use(api);
-
 var storage  = require('./lib/storage');
 app.use(storage);
 
