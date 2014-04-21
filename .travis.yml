@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+    - "0.10"
+
+before_script:
+    - npm install -g grunt-cli@0.1.x
+    - npm install -g mocha
+    - npm install -g istanbul
+
+    - cd server
+    - npm install --quiet
+    - node server.js &
+    - sleep 3
+    - cd ../client
+    - npm install --quiet
+    - grunt
+
+services:
+    - mongodb
+
+script:
