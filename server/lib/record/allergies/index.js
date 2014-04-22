@@ -253,7 +253,7 @@ app.get('/api/v1/record/allergies', function(req, res) {
     } else {
       var allergyJSON = {};
       allergyJSON.allergies = allergyList;
-      console.log(allergyJSON.allergies[0].metadata.attribution);
+      //console.log(allergyJSON.allergies[0].metadata.attribution);
       res.send(allergyJSON);
     }
 
