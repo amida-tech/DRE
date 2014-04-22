@@ -61,6 +61,7 @@ angular.module('dre.storage', ['directives.fileModel'])
     };
 
     $scope.file_array = [];
+    $scope.displayRecords = false;
 
     $scope.refreshRecords = function() {
       $http({
@@ -69,6 +70,14 @@ angular.module('dre.storage', ['directives.fileModel'])
       }).
       success(function(data, status, headers, config) {
         $scope.file_array = data.storage;
+        getNotifications.getUpdate(function(err, notifications) {
+          $scope.notifications = notifications;
+        });
+        if ($scope.file_array.length > 0) {
+          $scope.displayRecords = true;
+        } else {
+          $scope.displayRecords = false;
+        }
       }).
       error(function(data, status, headers, config) {
         console.log(data);
@@ -76,6 +85,8 @@ angular.module('dre.storage', ['directives.fileModel'])
     };
 
     $scope.refreshRecords();
+
+
 
 
     //File upload.

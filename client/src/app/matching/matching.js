@@ -39,7 +39,7 @@ angular.module('dre.match', ['dre.match.reconciliation'])
     $scope.duplicate_merges = [];
 
     $scope.predicate = "-merged";
-
+    $scope.displayMerges = false;
 
     $scope.reconciliationClick = function() {
       $location.path("match/reconciliation");
@@ -50,6 +50,13 @@ angular.module('dre.match', ['dre.match.reconciliation'])
       url: '/api/v1/merges'
     }).
     success(function(data, status, headers, config) {
+
+      if (data.merges.length > 0) {
+        $scope.displayMerges = true;
+      } else {
+        $scope.displayMerges = false;
+      }
+
 
       for (var i = 0; i < data.merges.length; i++) {
         if (data.merges[i].merge_reason === "new") {

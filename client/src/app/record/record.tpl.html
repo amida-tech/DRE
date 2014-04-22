@@ -13,7 +13,8 @@
 				<br/>
 			</div>
 
-			<div class="panel-group" id="#accordian-allergy" ng-repeat="allergy in allergies">
+			<div ng-hide="displayAllergies" class="panel-title">No allergies are currently in your record.</div>
+			<div ng-show="displayAllergies" class="panel-group" id="#accordian-allergy" ng-repeat="allergy in allergies">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 

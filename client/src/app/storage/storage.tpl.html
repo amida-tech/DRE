@@ -32,7 +32,8 @@
 				</div>
 			</div>
 
-			<div class="panel-group">
+			<div ng-hide="displayRecords" class="panel-title">No records are currently in storage.</div>
+			<div class="panel-group" ng-show="displayRecords">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="panel-title">	

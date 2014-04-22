@@ -17,25 +17,35 @@ limitations under the License.
 angular.module('dre.record.allergies', [])
 
 .config(['$routeProvider',
-function($routeProvider) {
-  $routeProvider.when('/record/allergies', {
+  function($routeProvider) {
+    $routeProvider.when('/record/allergies', {
       templateUrl: 'templates/record/components/allergies.tpl.html',
       controller: 'recordsCtrl'
-  });
-}])
+    });
+  }
+])
 
-  .controller('allergiesCtrl', ['$scope', '$http', '$location',
-    function($scope, $http, $location) {
+.controller('allergiesCtrl', ['$scope', '$http', '$location',
+  function($scope, $http, $location) {
 
-      $scope.allergies = [];
+    $scope.allergies = [];
+    $scope.displayAllergies = false;
 
-      $http({method: 'GET', url: '/api/v1/record/allergies'}).
+    $http({
+      method: 'GET',
+      url: '/api/v1/record/allergies'
+    }).
     success(function(data, status, headers, config) {
       $scope.allergies = data.allergies;
+      if ($scope.allergies.length > 0) {
+        $scope.displayAllergies = true;
+      } else {
+        $scope.displayAllergies = false;
+      }
     }).
     error(function(data, status, headers, config) {
       console.log('error');
     });
 
-    }
-  ]);
+  }
+]);

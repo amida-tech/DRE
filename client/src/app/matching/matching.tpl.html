@@ -13,12 +13,14 @@
 				<br/>
 			</div>
 
-			<ul class="nav nav-tabs nav-justified" >
+
+			<div ng-hide="displayMerges" class="panel-title">No updates are available at this time.</div>
+			<ul class="nav nav-tabs nav-justified" ng-show="displayMerges">
 				<!--<li class="active"><a data-target="#unreviewed" data-toggle="tab" style="cursor: pointer;"><span class="badge">2</span><strong>&nbsp;&nbsp;Unmerged Entries</strong></a></li>-->
 				<li class="active"><a data-target="#newEntries" data-toggle="tab" style="cursor: pointer;"><span class="panel-title"><span class="badge">{{notifications.new_merges}}</span>&nbsp;&nbsp;New Entries</span></a></li>
 				<li><a data-target="#duplicateEntries" data-toggle="tab" style="cursor: pointer;"><span class="panel-title"><span class="badge">{{notifications.duplicate_merges}}</span>&nbsp;&nbsp;Duplicate Entries</span></a></li>
 			</ul>
-			<div id="myTabContent" class="tab-content" >
+			<div id="myTabContent" class="tab-content" ng-show="displayMerges">
 				<div class="tab-pane fade" id="unreviewed">
 					<div class="panel-group">
 						<div class="panel panel-default" style="overflow: visible;">
@@ -35,7 +37,7 @@
 							</div>
 							<div class="pull-left col-md-4">
 									<h5>Details</h5>
-									<pre>Your momma</pre>
+									<pre>placeholder</pre>
 								</div>
 
 							<div class="pull-right">
