@@ -29,6 +29,13 @@ function($routeProvider) {
 
       $scope.navPath = "templates/nav/nav.tpl.html";
 
+      $scope.dismissModal = function (index) {
+        $("#myModal" + index).on("hidden.bs.modal", function (e) {
+            $location.path("/storage");
+            $scope.$apply();
+        });
+      };
+
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;
