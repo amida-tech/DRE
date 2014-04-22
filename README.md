@@ -20,9 +20,7 @@ npm install
 grunt
 
 cd ..
-cd server
 npm install
 
-cd ..
 node server/server.js
 ```
