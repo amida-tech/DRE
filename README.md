@@ -23,4 +23,6 @@ cd ..
 npm install
 
 node server/server.js
+
+# go to localhost:3000 in your browser
 ```
