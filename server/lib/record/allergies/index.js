@@ -26,6 +26,7 @@ var Storage_files = require('../../../models/storage_files');
 function getAllergies(callback) {
 
  allergy.find()
+  .lean()
   .populate('metadata.attribution', 'record_id merge_reason merged')
   .exec(function(err, allergyResults) {
     if (err) {
@@ -35,7 +36,24 @@ function getAllergies(callback) {
         if (err) {
           callback(err);
         } else {
-          //console.log(docs[0].metadata.attribution);
+          //May be part of model?
+          var serverityReference = {
+            "Mild": 1,
+            "Mild to Moderate": 2,
+            "Moderate": 3,
+            "Moderate to Severe": 4,
+            "Severe": 5,
+            "Fatal": 6
+          };
+
+          for (var i=0;i<docs.length;i++) {
+            for (severity in serverityReference) {
+              if (severity.toUpperCase() === docs[i].severity.toUpperCase()) {
+                docs[i].severity_weight = serverityReference[severity];
+              }
+            }
+          }
+          
           callback(null, docs);
         }
       });
