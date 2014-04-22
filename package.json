@@ -1,14 +1,14 @@
 {
   "author": "Dmitry Kachaev and Matthew McCall",
-  "name": "PHIX",
-  "description": "Patient health information eXchange.",
+  "name": "DRE-Server",
+  "description": "Data Reconcilliation Engine (Server).",
   "version": "0.0.2",
   "repository": {
     "type": "git",
-    "url": "git@github.com:amida-tech/PHIX.git"
+    "url": "git@github.com:amida-tech/DRE-UX.git"
   },
   "bugs": {
-    "url": "https://github.com/amida-tech/PHIX/issues"
+    "url": "https://github.com/amida-tech/DRE-UX/issues"
   },
   "licenses": [
     {
