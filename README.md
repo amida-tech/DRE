@@ -7,12 +7,16 @@ DRE-UX is demo frontend for Raccoon. [Raccoon](https://github.com/amida-tech/Rac
 [![Coverage Status](https://coveralls.io/repos/amida-tech/DRE-UX/badge.png)](https://coveralls.io/r/amida-tech/DRE-UX)
 
 
+###Prerequisites
 
+- Node.js (v0.10+)
+- Grunt.js
+- MongoDB
 
 ###Quick up and running quide
 
 ```
-# you need Grunt.js installed
+# you need Node.js and Grunt.js installed
 # and MongoDB runnning
 
 cd client
@@ -26,3 +30,10 @@ node server/server.js
 
 # go to localhost:3000 in your browser
 ```
+
+###Screenshots of demo app
+
+![Dashboard](./docs/images/dashboard.png)
+![Storage](./docs/images/storage.png)
+![Allergies Section](./docs/images/allergies.png)
+![Updates](./docs/images/updates.png)
