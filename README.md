@@ -9,7 +9,7 @@ DRE-UX is demo frontend for Raccoon. [Raccoon](https://github.com/amida-tech/Rac
 
 ###Prerequisites
 
-- Node.js (v0.10+)
+- Node.js (v0.10+) and NPM
 - Grunt.js
 - MongoDB
 
