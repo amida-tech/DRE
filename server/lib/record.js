@@ -125,6 +125,12 @@ exports.getRecord = function(fileId, callback) {
     });
 };
 
+exports.recordCount = function(conditions, callback) {
+    Storage_files.count(conditions, function(err, count) {
+        callback(err, count);
+    });
+};
+
 //========================== ALLERGIES
 
 //Get all allergies.
@@ -272,6 +278,12 @@ exports.addAllergyMergeEntry = function(update_id, mergeInfo, callback) {
     });
 };
 
+exports.allergyCount = function(conditions, callback) {
+    allergy.count(conditions, function(err, count) {
+        callback(err, count);
+    });
+};
+
 //====================== MERGES ==========
 
 exports.getMerges = function(callback) {
@@ -297,3 +309,8 @@ var saveMerge = function(mergeObject, callback) {
     });
 };
 
+exports.mergeCount = function(conditions, callback) {
+    merge.count(conditions, function(err, count) {
+        callback(err, count);
+    });
+};
