@@ -2,6 +2,8 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
 
+var mergeFunctions = require('../lib/merge');
+
 var databaseName = 'dre';
 
 //===================== CONNECTION ====================================
@@ -171,4 +173,48 @@ exports.getAllergy = function(input_id, callback) {
     });
 };
 
+//Saves an array of incoming allergies.
+exports.saveNewAllergies = function(inputArray, sourceID, callback) {
+    function saveAllergyObject(allergySaveObject, allergyObjectNumber, inputSourceID, callback) {
+        var tempAllergy = new allergy(allergySaveObject);
+
+        tempAllergy.save(function(err, saveResults) {
+            if (err) {
+                callback(err);
+            } else {
+                var tmpMergeEntry = {
+                        entry_type: 'allergy',
+                        allergy_id: saveResults._id,
+                        record_id: inputSourceID,
+                        merged: new Date(),
+                        merge_reason: 'new'
+                };
+
+                mergeFunctions.saveMerge(tmpMergeEntry, function(err, mergeResults) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        tempAllergy.metadata.attribution.push(mergeResults._id);
+                        tempAllergy.save(function(err, saveResults) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                callback(null, allergyObjectNumber);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    for (var i = 0; i < inputArray.length; i++) {
+        var allergyObject = inputArray[i];
+        saveAllergyObject(allergyObject, i, sourceID, function(err, savedObjectNumber) {
+            if (savedObjectNumber === (inputArray.length - 1)) {
+                callback(null);
+            }
+        });
+    }
+};
 

@@ -20,7 +20,6 @@ var fs = require('fs');
 var app = module.exports = express();
 var parser = require('../parser/index.js');
 var allergy = require('../../models/allergies');
-var allergyFunctions = require('../record/allergies');
 var dre = require('../dre/index.js');
 
 var extractRecord = parser.extractRecord;
@@ -36,7 +35,7 @@ function saveComponents(masterObject, sourceID, callback) {
 
   //console.log(masterObject);
   if (masterObject.allergies.length > 0) {
-    allergyFunctions.saveAllergies(masterObject.allergies, sourceID, function(err) {
+    record.saveNewAllergies(masterObject.allergies, sourceID, function(err) {
       if (err) {
         callback(err);
       } else {

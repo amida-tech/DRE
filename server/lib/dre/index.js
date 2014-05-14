@@ -120,28 +120,8 @@ function reconcile(newArray, baseArray, newSourceID, callback) {
 
     baseObjectForParsing.allergies = cleanedBaseArray;
 
-    //console.log(baseObjectForParsing.allergies);
-    //console.log(newObjectForParsing.allergies);
-
-    //Win inject Dmitry's match library here.
-    var stubResult = {
-        "match": {
-            "allergies" : [
-                { "src_id" : 0, "dest_id" : 0, "match":"duplicate" },
-                { "src_id" : 1, "dest_id" : 1, "match":"duplicate" },
-                { "src_id" : 2, "dest_id" : 2, "match":"not" }
-            ]
-        }
-    }
-
-    //console.log(newArray.allergies);
-    //console.log(baseArray.allergies);
     var match = new Match(compare);
-    var matchResult = match.match(newObjectForParsing,baseObjectForParsing);
-
-    //var matchResult = match.match(newObjectForParsing, baseObjectForParsing);
-
-    //console.log(JSON.stringify(matchResult, undefined, 4));
+    var matchResult = match.match(newObjectForParsing, baseObjectForParsing);
 
     removeMatchDuplicates(newObjectForParsing, baseArray, matchResult, newSourceID, function(err, newObjectPostMatch) {
         callback(null, newObjectPostMatch);
