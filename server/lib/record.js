@@ -1,13 +1,14 @@
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
+var _ = require('underscore');
 
+var sectionEntry = require('../models/sectionEntry');
 var merge = require('../models/merges');
-var allergy = require('../models/allergies');
 var StorageFiles = require('../models/storage_files');
 
-var _ = require('underscore');
-    
+var allergy = sectionEntry.getSchema('allergy', 'Allergies');
+
 // Connection
 
 var databaseName = 'dre';
