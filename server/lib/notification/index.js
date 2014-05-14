@@ -58,7 +58,7 @@ function getNotifications (callback) {
     }
   });
 
-  record.recordCount(function(err, count) {
+  record.recordCount({patKey: 'test'}, function(err, count) {
     if (err) {
       callback(err);
     } else {

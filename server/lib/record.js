@@ -29,7 +29,7 @@ exports.connectDatabase = function connectDatabase(server, callback) {
 // Records
 
 //Saves raw file to gridFS.
-exports.storeFile = function storeFile(inboundFile, inboundFileInfo, inboundXMLType, callback) {
+exports.saveRecord = function(patKey, inboundFile, inboundFileInfo, inboundXMLType, callback) {
     var buffer = new Buffer(inboundFile);
 
     var fileMetadata = {};
@@ -38,9 +38,10 @@ exports.storeFile = function storeFile(inboundFile, inboundFileInfo, inboundXMLT
     }
 
     grid.put(buffer, {
+        patKey: patKey,
         metadata: fileMetadata,
-        'filename': inboundFileInfo.name,
-        'content_type': inboundFileInfo.type,
+        filename: inboundFileInfo.name,
+        content_type: inboundFileInfo.type,
     }, function(err, fileInfo) {
         if (err) {
             callback(err);
@@ -55,12 +56,12 @@ exports.storeFile = function storeFile(inboundFile, inboundFileInfo, inboundXMLT
     });
 };
 
-exports.getRecordList = function(callback) {
+exports.getRecordList = function(patKey, callback) {
     db.collection('storage.files', function(err, recordCollection) {
         if (err) {
             callback(err);
         } else {
-            recordCollection.find(function(err, findResults) {
+            recordCollection.find({patKey: patKey}, function(err, findResults) {
                 findResults.toArray(function(err, recordArray) {
                     var recordResponseArray = [];
                     for (var i = 0; i < recordArray.length; i++) {

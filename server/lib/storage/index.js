@@ -89,7 +89,7 @@ function processUpload(recordUpload, callback) {
                             if (err) {
                                 callback(err);
                             } else if (!recType) {
-                                record.storeFile(fileData, recordUpload, null, function(err, fileInfo) {
+                                record.saveRecord('test', fileData, recordUpload, null, function(err, fileInfo) {
                                     if (err) {
                                         callback(err);
                                     } else {
@@ -97,7 +97,7 @@ function processUpload(recordUpload, callback) {
                                     }
                                 });
                             } else {
-                                record.storeFile(fileData, recordUpload, recType, function(err, fileInfo) {
+                                record.saveRecord('test', fileData, recordUpload, recType, function(err, fileInfo) {
                                     if (err) {
                                         callback(err);
                                     } else {
@@ -141,7 +141,7 @@ app.get('/api/v1/storage/record/:identifier', function(req, res) {
 
 //Returns list of records in storage.
 app.get('/api/v1/storage', function(req, res) {
-    record.getRecordList(function(err, recordList) {
+    record.getRecordList('test', function(err, recordList) {
         var recordResponse = {};
         recordResponse.storage = recordList;
         res.send(recordResponse);

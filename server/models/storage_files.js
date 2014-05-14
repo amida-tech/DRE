@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
-ObjectId = Schema.ObjectId;
+var mongoose = require('mongoose');
 
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
 
 //GridFS will automatically make this, but a schema is needed for population/refs.
-
 var storageSchema = new Schema({
-  metadata: {
-    class: String
-  },
-  md5: String,
-  uploadDate: Date,
-  chunkSize: Number,
-  length: Number,
-  contentType: String,
-  filename: String,
+    patKey: String,
+    metadata: {
+        class: String
+    },
+    md5: String,
+    uploadDate: Date,
+    chunkSize: Number,
+    length: Number,
+    contentType: String,
+    filename: String,
 });
 
 module.exports = mongoose.model('storage.files', storageSchema);
