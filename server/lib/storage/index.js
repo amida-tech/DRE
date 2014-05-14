@@ -29,35 +29,6 @@ var dre = require('../dre/index.js');
 var extractRecord = parser.extractRecord;
 var record = require('../record');
 
-//Saves raw file to gridFS.
-function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSize, inboundXMLType, callback) {
-  var db = record.db_conn;
-  var grid = record.grid_conn;
-  var buffer = new Buffer(inboundFile);
-
-  var fileMetadata = {};
-  if (inboundXMLType) {
-    fileMetadata.fileClass = inboundXMLType;
-  }
-
-  grid.put(buffer, {
-    metadata: fileMetadata,
-    'filename': inboundFileName,
-    'content_type': inboundFileType,
-  }, function(err, fileInfo) {
-    if (err) {
-      callback(err);
-    } else {
-      /*Relax for now pending further investigation, seems to be chunking overhead.*/
-      //if (fileInfo.length !== inboundFileSize) {
-      //  callback('file size mismatch');
-      //} else {
-      callback(null, fileInfo);
-      //}
-    }
-  });
-}
-
 function validateFileMessage(requestObject, callback) {
   //Placeholder validation function.
   callback(null);
@@ -127,7 +98,7 @@ function processUpload(recordUpload, callback) {
               if (err) {
                 callback(err);
               } else if (!recType) {
-                storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, null, function(err, fileInfo) {
+                record.storeFile(fileData, recordUpload, null, function(err, fileInfo) {
                   if (err) {
                     callback(err);
                   } else {
@@ -135,7 +106,7 @@ function processUpload(recordUpload, callback) {
                   }
                 });
               } else {
-                storeFile(fileData, recordUpload.name, recordUpload.type, recordUpload.size, recType, function(err, fileInfo) {
+                record.storeFile(fileData, recordUpload, recType, function(err, fileInfo) {
                   if (err) {
                     callback(err);
                   } else {
