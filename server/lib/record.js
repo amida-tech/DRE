@@ -2,7 +2,10 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
 
-var mergeFunctions = require('../lib/merge');
+var merge = require('../models/merges');
+var allergy = require('../models/allergies');
+var Storage_files = require('../models/storage_files');
+
 
 var databaseName = 'dre';
 
@@ -124,9 +127,6 @@ exports.getRecord = function(fileId, callback) {
 
 //========================== ALLERGIES
 
-var allergy = require('../models/allergies');
-var Storage_files = require('../models/storage_files');
-
 //Get all allergies.
 exports.getAllergies = function(callback) {
     var query = allergy.find().lean().populate('metadata.attribution', 'record_id merge_reason merged');
@@ -199,7 +199,7 @@ exports.saveNewAllergies = function(inputArray, sourceID, callback) {
                         merge_reason: 'new'
                 };
 
-                mergeFunctions.saveMerge(tmpMergeEntry, function(err, mergeResults) {
+                saveMerge(tmpMergeEntry, function(err, mergeResults) {
                     if (err) {
                         callback(err);
                     } else {
@@ -236,7 +236,7 @@ var updateAllergyAndMerge = function(input_allergy, mergeInfo, callback) {
         merge_reason: mergeInfo.merge_reason
     };
 
-    mergeFunctions.saveMerge(tmpMergeEntry, function(err, saveResults) {
+    saveMerge(tmpMergeEntry, function(err, saveResults) {
         if (err) {
             callback(err);
         } else {
@@ -271,3 +271,29 @@ exports.addAllergyMergeEntry = function(update_id, mergeInfo, callback) {
         });
     });
 };
+
+//====================== MERGES ==========
+
+exports.getMerges = function(callback) {
+    var query = merge.find().populate('allergy_id record_id', 'name severity filename uploadDate');
+    query.exec(function (err, mergeResults) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, mergeResults);
+        }
+    });
+};
+
+var saveMerge = function(mergeObject, callback) {
+    var saveMerge = new merge(mergeObject);
+
+    saveMerge.save(function(err, saveResults) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, saveResults);
+        }
+    });
+};
+
