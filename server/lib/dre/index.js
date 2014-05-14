@@ -1,6 +1,5 @@
 var express = require('express');
 var app = module.exports = express();
-var allergyFunctions = require('../record/allergies');
 var Match = require('./match.js');
 var compare = require('./match/compare-partial.js').compare;
 var record = require('../record');
@@ -10,24 +9,17 @@ function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, c
     function removeAllergyMatches(allergyMatches, srcAllergyArray, callback) {
         //This is all types of broken. 
         function updateDuplicateAllergies(iter, update_id, callback) {
-            record.getAllergy(update_id, function(err, currentAllergy) {
-                //console.log(currentAllergy);
-                //Needs to get added to, but held out of match for now.
-                //currentAllergy.metadata.attribution.push({
-                //	record_id: newSourceID,
-                //	attributed: new Date(),
-                //	attribution: 'duplicate'
-                //});
-
-                allergyFunctions.updateAllergyAndMerge(currentAllergy, newSourceID, function(err) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        callback(null, iter);
-                    }
-                });
+            var mergeInfo = {record_id: newSourceID, merge_reason: 'duplicate'};
+            record.addAllergyMergeEntry(update_id, mergeInfo, function(err) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null, iter);
+                }
             });
         }
+
+        var returnArray = [];
 
         function checkLoopComplete(iteration, length) {
             if (iteration === length) {
@@ -36,7 +28,6 @@ function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, c
                 callback(null, returnArray);
             }
         }
-        var returnArray = [];
 
         for (var i = 0; i < allergyMatches.length; i++) {
             if (allergyMatches[i].match === 'duplicate') {

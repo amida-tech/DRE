@@ -16,48 +16,7 @@ limitations under the License.
 
 var express = require('express');
 var app = module.exports = express();
-var mergeFunctions = require('../../merge');
-//Need to refactor to respect merge functions.
-var merge = require('../../../models/merges');
 var record = require('../../record');
-
-function updateAllergyAndMerge (input_allergy, sourceID, callback) {
-    var tmpMergeEntry = {
-            entry_type: 'allergy',
-            allergy_id: input_allergy._id,
-            record_id: sourceID,
-            merged: new Date(),
-            merge_reason: 'duplicate'
-    }
-
-    mergeFunctions.saveMerge(tmpMergeEntry, function(err, saveResults) {
-        if (err) {
-            callback(err);
-        } else {
-            input_allergy.metadata.attribution.push(saveResults._id);
-            updateAllergy(input_allergy, function(err, saveObject) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
-        }
-    })
-}
-
-module.exports.updateAllergyAndMerge = updateAllergyAndMerge;
-
-function updateAllergy(input_allergy, callback) {
-
-  input_allergy.save(function(err, saveObject) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, saveObject);
-    }
-  });
-}
 
 app.get('/api/v1/record/allergies', function(req, res) {
     record.getAllergies(function(err, allergyList) {

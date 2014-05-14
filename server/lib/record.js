@@ -148,7 +148,6 @@ exports.getAllergies = function(callback) {
                             "Fatal": 6
                     };
                     for (var i=0;i<docs.length;i++) {
-                        console.log(i);
                         for (severity in serverityReference) {
                             if (severity.toUpperCase() === docs[i].severity.toUpperCase()) {
                                 docs[i].severity_weight = serverityReference[severity];
@@ -162,8 +161,18 @@ exports.getAllergies = function(callback) {
     });
 };
 
+var updateAllergy = function(input_allergy, callback) {
+    input_allergy.save(function(err, saveObject) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, saveObject);
+        }
+    });
+};
+
 //Gets a single allergy based on id.
-exports.getAllergy = function(input_id, callback) {
+var getAllergy = exports.getAllergy = function(input_id, callback) {
     allergy.findOne({_id: input_id}, function(err, allergyEntry) {
         if (err) {
             callback(err);
@@ -218,3 +227,47 @@ exports.saveNewAllergies = function(inputArray, sourceID, callback) {
     }
 };
 
+var updateAllergyAndMerge = function(input_allergy, mergeInfo, callback) {
+    var tmpMergeEntry = {
+        entry_type: 'allergy',
+        allergy_id: input_allergy._id,
+        record_id: mergeInfo.record_id,
+        merged: new Date(),
+        merge_reason: mergeInfo.merge_reason
+    };
+
+    mergeFunctions.saveMerge(tmpMergeEntry, function(err, saveResults) {
+        if (err) {
+            callback(err);
+        } else {
+            input_allergy.metadata.attribution.push(saveResults._id);
+            updateAllergy(input_allergy, function(err, saveObject) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null);
+                }
+            });
+        }
+    });
+};
+
+exports.addAllergyMergeEntry = function(update_id, mergeInfo, callback) {
+    getAllergy(update_id, function(err, currentAllergy) {
+        //console.log(currentAllergy);
+        //Needs to get added to, but held out of match for now.
+        //currentAllergy.metadata.attribution.push({
+        //  record_id: newSourceID,
+        //  attributed: new Date(),
+        //  attribution: 'duplicate'
+        //});
+
+        updateAllergyAndMerge(currentAllergy, mergeInfo, function(err) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null);
+            }
+        });
+    });
+};
