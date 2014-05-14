@@ -58,7 +58,7 @@ function getNotifications (callback) {
     }
   });
 
-  record.recordCount({patKey: 'test'}, function(err, count) {
+  record.recordCount('test', function(err, count) {
     if (err) {
       callback(err);
     } else {
@@ -67,7 +67,7 @@ function getNotifications (callback) {
     }
   });
 
-  record.allergyCount(function(err, count) {
+  record.allergyCount({patKey: 'test'}, function(err, count) {
     if (err) {
       callback(err);
     } else {

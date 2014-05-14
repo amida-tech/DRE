@@ -32,7 +32,7 @@ function validateFileMessage(requestObject, callback) {
 function saveComponents(masterObject, sourceID, callback) {
     //console.log(masterObject);
     if (masterObject.allergies.length > 0) {
-        record.saveNewAllergies(masterObject.allergies, sourceID, function(err) {
+        record.saveNewAllergies('test', masterObject.allergies, sourceID, function(err) {
             if (err) {
                 callback(err);
             } else {
@@ -48,7 +48,7 @@ function saveComponents(masterObject, sourceID, callback) {
 function getSavedComponents(callback) {
     var savedObject = {};
 
-    record.getAllergies(function(err, savedAllergies) {
+    record.getAllergies('test', function(err, savedAllergies) {
         savedObject.allergies = savedAllergies;
         callback(null, savedObject);
     });

@@ -32,13 +32,13 @@ exports.connectDatabase = function connectDatabase(server, callback) {
 exports.saveRecord = function(patKey, inboundFile, inboundFileInfo, inboundXMLType, callback) {
     var buffer = new Buffer(inboundFile);
 
-    var fileMetadata = {};
+    var fileMetadata = {patKey: patKey};
     if (inboundXMLType) {
         fileMetadata.fileClass = inboundXMLType;
     }
 
+    console.log(patKey);
     grid.put(buffer, {
-        patKey: patKey,
         metadata: fileMetadata,
         filename: inboundFileInfo.name,
         content_type: inboundFileInfo.type,
@@ -61,7 +61,7 @@ exports.getRecordList = function(patKey, callback) {
         if (err) {
             callback(err);
         } else {
-            recordCollection.find({patKey: patKey}, function(err, findResults) {
+            recordCollection.find({"metadata.patKey": patKey}, function(err, findResults) {
                 findResults.toArray(function(err, recordArray) {
                     var recordResponseArray = [];
                     for (var i = 0; i < recordArray.length; i++) {
@@ -114,8 +114,8 @@ exports.getRecord = function(fileId, callback) {
     });
 };
 
-exports.recordCount = function(conditions, callback) {
-    StorageFiles.count(conditions, function(err, count) {
+exports.recordCount = function(patKey, callback) {
+    StorageFiles.count({"metadata.patKey" : patKey}, function(err, count) {
         callback(err, count);
     });
 };
@@ -123,8 +123,8 @@ exports.recordCount = function(conditions, callback) {
 // Allergies
 
 //Get all allergies.
-exports.getAllergies = function(callback) {
-    var query = allergy.find().lean().populate('metadata.attribution', 'record_id merge_reason merged');
+exports.getAllergies = function(patKey, callback) {
+    var query = allergy.find({patKey: patKey}).lean().populate('metadata.attribution', 'record_id merge_reason merged');
     query.exec(function(err, allergyResults) {
         if (err) {
             callback(err);
@@ -178,11 +178,11 @@ var getAllergy = exports.getAllergy = function(input_id, callback) {
 };
 
 //Saves an array of incoming allergies.
-exports.saveNewAllergies = function(inputArray, sourceID, callback) {
+exports.saveNewAllergies = function(patKey, inputArray, sourceID, callback) {
     function saveAllergyObject(allergySaveObject, allergyObjectNumber, inputSourceID, callback) {
         var tempAllergy = new allergy(allergySaveObject);
 
-        tempAllergy.save(function(err, saveResults) {
+        tempAllergy.save(function(err, saveResults) { // TODO: double save, logic needs to be updated
             if (err) {
                 callback(err);
             } else {
@@ -199,6 +199,7 @@ exports.saveNewAllergies = function(inputArray, sourceID, callback) {
                         callback(err);
                     } else {
                         tempAllergy.metadata.attribution.push(mergeResults._id);
+                        tempAllergy.patKey = patKey;
                         tempAllergy.save(function(err, saveResults) {
                             if (err) {
                                 callback(err);

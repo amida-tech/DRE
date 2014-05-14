@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
-ObjectId = Schema.ObjectId;
+var mongoose = require('mongoose');
 
-//This is data model used purely for portal user authentication purposes
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
+
 var Merges = new Schema({
-      entry_type: String,
-      allergy_id: {type: ObjectId, ref: 'Allergies'},
-      record_id: {type: ObjectId, ref: 'storage.files'},
-      merged: Date,
-      merge_reason: String
-    });
+    entry_type: String,
+    allergy_id: {type: ObjectId, ref: 'Allergies'},
+    record_id: {type: ObjectId, ref: 'storage.files'},
+    merged: Date,
+    merge_reason: String
+});
 
 module.exports = mongoose.model('Merges', Merges);

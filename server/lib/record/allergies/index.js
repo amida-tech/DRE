@@ -19,7 +19,7 @@ var app = module.exports = express();
 var record = require('../../record');
 
 app.get('/api/v1/record/allergies', function(req, res) {
-    record.getAllergies(function(err, allergyList) {
+    record.getAllergies('test', function(err, allergyList) {
         if (err) {
             res.send(400, err);
         } else {
