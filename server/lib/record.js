@@ -22,7 +22,7 @@ exports.connectDatabase = function connectDatabase(server, callback) {
 };
 
 //Saves raw file to gridFS.
-exports.storeFile = function(inboundFile, inboundFileInfo, inboundXMLType, callback) {
+exports.storeFile = function storeFile(inboundFile, inboundFileInfo, inboundXMLType, callback) {
   var grid = grid_conn;
   var buffer = new Buffer(inboundFile);
 
@@ -48,4 +48,47 @@ exports.storeFile = function(inboundFile, inboundFileInfo, inboundXMLType, callb
     }
   });
 }
+
+exports.getRecordList = function(callback) {
+    var db = db_conn;
+
+    var responseJSON = {};
+    var responseArray = [];
+
+    db.collection('storage.files', function(err, recordCollection) {
+
+      if (err) {
+        callback(err);
+      } else {
+        recordCollection.find(function(err, findResults) {
+          findResults.toArray(function(err, recordArray) {
+
+            var recordResponseArray = [];
+
+            for (var i = 0; i < recordArray.length; i++) {
+
+              var recordJSON = {};
+
+              recordJSON.file_id = recordArray[i]._id;
+              recordJSON.file_name = recordArray[i].filename;
+              recordJSON.file_size = recordArray[i].length;
+              recordJSON.file_mime_type = recordArray[i].contentType;
+              recordJSON.file_upload_date = recordArray[i].uploadDate;
+
+              if (recordArray[i].metadata.fileClass) {
+                recordJSON.file_class = recordArray[i].metadata.fileClass;
+              }
+
+              recordResponseArray.push(recordJSON);
+            }
+
+            callback(null, recordResponseArray);
+          });
+
+        });
+      }
+    });
+
+  }
+
 

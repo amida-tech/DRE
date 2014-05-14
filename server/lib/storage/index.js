@@ -169,56 +169,12 @@ app.get('/api/v1/storage/record/:identifier', function(req, res) {
   });
 });
 
-function getRecordList(callback) {
-  var db = record.db_conn;
-  var grid = record.grid_conn;
-
-
-  var responseJSON = {};
-  var responseArray = [];
-
-  db.collection('storage.files', function(err, recordCollection) {
-
-    if (err) {
-      callback(err);
-    } else {
-      recordCollection.find(function(err, findResults) {
-        findResults.toArray(function(err, recordArray) {
-
-          var recordResponseArray = [];
-
-          for (var i = 0; i < recordArray.length; i++) {
-
-            var recordJSON = {};
-
-            recordJSON.file_id = recordArray[i]._id;
-            recordJSON.file_name = recordArray[i].filename;
-            recordJSON.file_size = recordArray[i].length;
-            recordJSON.file_mime_type = recordArray[i].contentType;
-            recordJSON.file_upload_date = recordArray[i].uploadDate;
-
-            if (recordArray[i].metadata.fileClass) {
-              recordJSON.file_class = recordArray[i].metadata.fileClass;
-            }
-
-            recordResponseArray.push(recordJSON);
-          }
-
-          callback(null, recordResponseArray);
-        });
-
-      });
-    }
-  });
-
-}
-
 //Routes.
 
 //Returns list of records in storage.
 app.get('/api/v1/storage', function(req, res) {
 
-  getRecordList(function(err, recordList) {
+  record.getRecordList(function(err, recordList) {
     var recordResponse = {};
     recordResponse.storage = recordList;
     res.send(recordResponse);
