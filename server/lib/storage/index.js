@@ -17,10 +17,7 @@ limitations under the License.
 var express = require('express');
 var mongo = require('mongodb');
 var fs = require('fs');
-var ObjectId = require('mongodb').ObjectID;
 var app = module.exports = express();
-var Db = mongo.Db;
-var Grid = mongo.Grid;
 var parser = require('../parser/index.js');
 var allergy = require('../../models/allergies');
 var allergyFunctions = require('../record/allergies');
@@ -137,36 +134,14 @@ function processUpload(recordUpload, callback) {
   }
 }
 
-
 app.get('/api/v1/storage/record/:identifier', function(req, res) {
-  db = record.db_conn;
-  grid = record.grid_conn;
-
-  //Removed owner validation for demo purposes.
-  db.collection('storage.files', function(err, coll) {
-    if (err) {
-      throw err;
-    }
-    var objectID = new ObjectId(req.params.identifier);
-    coll.findOne({
-      "_id": objectID
-    }, function(err, results) {
-      if (err) {
-        throw err;
-      }
-      if (results) {
-        grid.get(objectID, function(err, data) {
-          if (err) {
+    record.getRecord(req.params.identifier, function(err, filename, returnFile) {
+        if (err) {
             throw err;
-          }
-          var returnFile = data.toString();
-          //res.attachment();
-          res.setHeader('Content-disposition', 'attachment; filename=' + results.filename);
-          res.send(returnFile);
-        });
-      }
+        }
+        res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+        res.send(returnFile);
     });
-  });
 });
 
 //Routes.

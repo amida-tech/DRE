@@ -1,5 +1,6 @@
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var ObjectId = require('mongodb').ObjectID;
 
 var databaseName = 'dre';
 
@@ -47,7 +48,7 @@ exports.storeFile = function storeFile(inboundFile, inboundFileInfo, inboundXMLT
       //}
     }
   });
-}
+};
 
 exports.getRecordList = function(callback) {
     var db = db_conn;
@@ -56,39 +57,63 @@ exports.getRecordList = function(callback) {
     var responseArray = [];
 
     db.collection('storage.files', function(err, recordCollection) {
+        if (err) {
+            callback(err);
+        } else {
+            recordCollection.find(function(err, findResults) {
+                findResults.toArray(function(err, recordArray) {
+                    var recordResponseArray = [];
+                    for (var i = 0; i < recordArray.length; i++) {
+                        var recordJSON = {};
 
-      if (err) {
-        callback(err);
-      } else {
-        recordCollection.find(function(err, findResults) {
-          findResults.toArray(function(err, recordArray) {
+                        recordJSON.file_id = recordArray[i]._id;
+                        recordJSON.file_name = recordArray[i].filename;
+                        recordJSON.file_size = recordArray[i].length;
+                        recordJSON.file_mime_type = recordArray[i].contentType;
+                        recordJSON.file_upload_date = recordArray[i].uploadDate;
 
-            var recordResponseArray = [];
+                        if (recordArray[i].metadata.fileClass) {
+                            recordJSON.file_class = recordArray[i].metadata.fileClass;
+                        }
 
-            for (var i = 0; i < recordArray.length; i++) {
+                        recordResponseArray.push(recordJSON);
+                    }
 
-              var recordJSON = {};
-
-              recordJSON.file_id = recordArray[i]._id;
-              recordJSON.file_name = recordArray[i].filename;
-              recordJSON.file_size = recordArray[i].length;
-              recordJSON.file_mime_type = recordArray[i].contentType;
-              recordJSON.file_upload_date = recordArray[i].uploadDate;
-
-              if (recordArray[i].metadata.fileClass) {
-                recordJSON.file_class = recordArray[i].metadata.fileClass;
-              }
-
-              recordResponseArray.push(recordJSON);
-            }
-
-            callback(null, recordResponseArray);
-          });
-
-        });
-      }
+                    callback(null, recordResponseArray);
+                });
+            });
+        }
     });
+}
 
-  }
+exports.getRecord = function(fileId, callback) {
+    var db = db_conn;
+    var grid = grid_conn;
+
+    //Removed owner validation for demo purposes.
+    db.collection('storage.files', function(err, coll) {
+        if (err) {
+            callback(err);
+        } else {
+            var objectID = new ObjectId(fileId);
+            coll.findOne({"_id": objectID}, function(err, results) {
+                if (err) {
+                    callback(err);
+                } else if (results) {
+                    grid.get(objectID, function(err, data) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            var returnFile = data.toString();
+                            callback(null, results.filename, returnFile);
+                        }
+                    });
+                } else {
+                    callback(new Error('no file'));
+                }
+            });
+        }
+    });
+};
 
 
