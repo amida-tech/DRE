@@ -81,12 +81,7 @@ function reconcile(newArray, baseArray, newSourceID, callback) {
     var newObjectForParsing = {};
     newObjectForParsing.allergies = {};
 
-    var cleanedArray = [];
-
-    for (var i=0;i<newArray.allergies.length;i++) {
-        var cleanedAllergy = allergyFunctions.createAllergyObject(newArray.allergies[i]);
-        cleanedArray.push(cleanedAllergy);
-    }
+    var cleanedArray = newArray.allergies;
 
     newObjectForParsing.allergies = cleanedArray;
 

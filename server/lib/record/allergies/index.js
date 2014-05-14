@@ -59,94 +59,6 @@ function updateAllergy(input_allergy, callback) {
   });
 }
 
-function createAllergyObjectMetaData(allergyInputObject, sourceID) {
-
-  allergyInputObject.metadata = {};
-  allergyInputObject.metadata.attribution = [];
-
-  var allergyAttribution = {};
-
-  if (sourceID) {
-    allergyAttribution = {
-      record_id: sourceID,
-      attributed: new Date(),
-      attribution: 'new'
-    }
-  }
-
-  allergyInputObject.metadata.attribution.push(allergyAttribution);
-
-  return allergyInputObject;
-
-}
-
-
-function createAllergyObject(allergyInputObject) {
-
-  //console.log(allergyInputObject);
-
-  var allergySaveObject = {};
-
-  //allergySaveObject.metadata = {};
-  //allergySaveObject.metadata.attribution = [];
-
-  //var allergyAttribution = {};
-
-  //if (sourceID) {
-  //  allergyAttribution = {
-  //    record_id: sourceID,
-  //    attributed: new Date(),
-  //    attribution: 'new'
-  //  }
-  //}
-
-  //allergySaveObject.metadata.attribution.push(allergyAttribution);
-
-  //Really need to do much better validation all in here.
-
-  if (allergyInputObject.date_range) {
-    allergySaveObject.date_range = {};
-    allergySaveObject.date_range.start = allergyInputObject.date_range.start;
-    allergySaveObject.date_range.end = allergyInputObject.date_range.end;
-  }
-
-  if (allergyInputObject.name) {
-    allergySaveObject.name = allergyInputObject.name;
-  }
-
-  if (allergyInputObject.code) {
-    allergySaveObject.code = allergyInputObject.code;
-  }
-
-  if (allergyInputObject.code_system) {
-    allergySaveObject.code_system = allergyInputObject.code_system;
-  }
-
-  if (allergyInputObject.code_system_name) {
-    allergySaveObject.code_system_name = allergyInputObject.code_system_name;
-  }
-
-  if (allergyInputObject.status) {
-    allergySaveObject.status = allergyInputObject.status;
-  }
-
-  if (allergyInputObject.severity) {
-    allergySaveObject.severity = allergyInputObject.severity;
-  }
-
-  if (allergyInputObject.reaction) {
-    allergySaveObject.reaction = {};
-    allergySaveObject.reaction.name = allergyInputObject.reaction.name;
-    allergySaveObject.reaction.code = allergyInputObject.reaction.code;
-    allergySaveObject.reaction.code_system = allergyInputObject.reaction.code_system;
-  }
-
-  return allergySaveObject;
-}
-
-module.exports.createAllergyObject = createAllergyObject;
-
-//Get all allergies API.
 app.get('/api/v1/record/allergies', function(req, res) {
     record.getAllergies(function(err, allergyList) {
         if (err) {
@@ -154,7 +66,6 @@ app.get('/api/v1/record/allergies', function(req, res) {
         } else {
             var allergyJSON = {};
             allergyJSON.allergies = allergyList;
-            //console.log(allergyJSON.allergies[0].metadata.attribution);
             res.send(allergyJSON);
         }
     });
