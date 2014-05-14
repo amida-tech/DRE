@@ -6,6 +6,8 @@ var merge = require('../models/merges');
 var allergy = require('../models/allergies');
 var StorageFiles = require('../models/storage_files');
 
+var _ = require('underscore');
+    
 // Connection
 
 var databaseName = 'dre';
@@ -287,4 +289,19 @@ exports.mergeCount = function(conditions, callback) {
     merge.count(conditions, function(err, count) {
         callback(err, count);
     });
+};
+
+// Utility
+
+exports.cleanSectionEntries = function(input) {
+    var result = [];
+    var n = input.length;
+    for (var i =0; i<n; ++i) {
+        var cleanEntry = _.clone(input[i]);
+        ['__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
+            delete cleanEntry[key];
+        });
+        result.push(cleanEntry);
+    }
+    return result;
 };

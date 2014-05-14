@@ -82,29 +82,7 @@ function reconcile(newArray, baseArray, newSourceID, callback) {
 
     var baseObjectForParsing = {};
     baseObjectForParsing.allergies = {};
-
-    var cleanedBaseArray = [];
-
-    for (var i=0;i<baseArray.allergies.length;i++) {
-        var newBaseAllergy = {};
-        newBaseAllergy.date_range = {};
-        newBaseAllergy.date_range.start = baseArray.allergies[i].date_range.start;
-        newBaseAllergy.date_range.end = baseArray.allergies[i].date_range.end;
-        newBaseAllergy.name = baseArray.allergies[i].name;
-        newBaseAllergy.code = baseArray.allergies[i].code;
-        newBaseAllergy.code_system = baseArray.allergies[i].code_system;
-        newBaseAllergy.code_system_name = baseArray.allergies[i].code_system_name;
-        newBaseAllergy.status = baseArray.allergies[i].status;
-        newBaseAllergy.severity = baseArray.allergies[i].severity;
-        newBaseAllergy.reaction = {};
-        newBaseAllergy.reaction.name = baseArray.allergies[i].reaction.name;
-        newBaseAllergy.reaction.code = baseArray.allergies[i].reaction.code;
-        newBaseAllergy.reaction.code_system = baseArray.allergies[i].reaction.code_system;
-
-        cleanedBaseArray.push(newBaseAllergy);
-    }
-
-    baseObjectForParsing.allergies = cleanedBaseArray;
+    baseObjectForParsing.allergies = record.cleanSectionEntries(baseArray.allergies);
 
     var match = new Match(compare);
     var matchResult = match.match(newObjectForParsing, baseObjectForParsing);
