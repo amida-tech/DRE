@@ -23,6 +23,22 @@ app.get('/api/v1/record/allergies', function(req, res) {
         if (err) {
             res.send(400, err);
         } else {
+            //May be part of model?
+            var serverityReference = {
+                    "Mild": 1,
+                    "Mild to Moderate": 2,
+                    "Moderate": 3,
+                    "Moderate to Severe": 4,
+                    "Severe": 5,
+                    "Fatal": 6
+            };
+            for (var i=0;i<allergyList.length;i++) {
+                for (severity in serverityReference) {
+                    if (severity.toUpperCase() === allergyList[i].severity.toUpperCase()) {
+                        allergyList[i].severity_weight = serverityReference[severity];
+                    }
+                }
+            }
             var allergyJSON = {};
             allergyJSON.allergies = allergyList;
             res.send(allergyJSON);
