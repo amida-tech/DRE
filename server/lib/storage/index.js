@@ -27,11 +27,12 @@ var allergyFunctions = require('../record/allergies');
 var dre = require('../dre/index.js');
 
 var extractRecord = parser.extractRecord;
+var record = require('../record');
 
 //Saves raw file to gridFS.
 function storeFile(inboundFile, inboundFileName, inboundFileType, inboundFileSize, inboundXMLType, callback) {
-  var db = app.get("db_conn");
-  var grid = app.get("grid_conn");
+  var db = record.db_conn;
+  var grid = record.grid_conn;
   var buffer = new Buffer(inboundFile);
 
   var fileMetadata = {};
@@ -167,8 +168,8 @@ function processUpload(recordUpload, callback) {
 
 
 app.get('/api/v1/storage/record/:identifier', function(req, res) {
-  db = app.get("db_conn");
-  grid = app.get("grid_conn");
+  db = record.db_conn;
+  grid = record.grid_conn;
 
   //Removed owner validation for demo purposes.
   db.collection('storage.files', function(err, coll) {
@@ -198,8 +199,8 @@ app.get('/api/v1/storage/record/:identifier', function(req, res) {
 });
 
 function getRecordList(callback) {
-  var db = app.get("db_conn");
-  var grid = app.get("grid_conn");
+  var db = record.db_conn;
+  var grid = record.grid_conn;
 
 
   var responseJSON = {};
