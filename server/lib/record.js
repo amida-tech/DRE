@@ -4,67 +4,58 @@ var ObjectId = require('mongodb').ObjectID;
 
 var merge = require('../models/merges');
 var allergy = require('../models/allergies');
-var Storage_files = require('../models/storage_files');
+var StorageFiles = require('../models/storage_files');
 
+// Connection
 
 var databaseName = 'dre';
 
-//===================== CONNECTION ====================================
-
-var db_conn = null;
-var grid_conn = null;
+var db = null;
+var grid = null;
 
 exports.connectDatabase = function connectDatabase(server, callback) {
-  var Db = mongo.Db;
-  var Grid = mongo.Grid;
-
-  Db.connect('mongodb://' + server + '/' + databaseName, function(err, dbase) {
-    if (err) {
-      throw err;
-    }
-    db_conn = exports.db_conn = dbase;
-    grid_conn = exports.grid_conn = new Grid(dbase, 'storage');
-    mongoose.connect('mongodb://' + server + '/'+ databaseName);
-    callback();
-  });
+    mongo.Db.connect('mongodb://' + server + '/' + databaseName, function(err, dbase) {
+        if (err) {
+            callback(err);
+        } else {
+            db = dbase;
+            grid = new mongo.Grid(dbase, 'storage');
+            mongoose.connect('mongodb://' + server + '/'+ databaseName);
+            callback();
+        }
+    });
 };
 
-//========================== RECORDS =================================
+// Records
 
 //Saves raw file to gridFS.
 exports.storeFile = function storeFile(inboundFile, inboundFileInfo, inboundXMLType, callback) {
-  var grid = grid_conn;
-  var buffer = new Buffer(inboundFile);
+    var buffer = new Buffer(inboundFile);
 
-  var fileMetadata = {};
-  if (inboundXMLType) {
-    fileMetadata.fileClass = inboundXMLType;
-  }
-
-  grid.put(buffer, {
-    metadata: fileMetadata,
-    'filename': inboundFileInfo.name,
-    'content_type': inboundFileInfo.type,
-  }, function(err, fileInfo) {
-    if (err) {
-      callback(err);
-    } else {
-      /*Relax for now pending further investigation, seems to be chunking overhead.*/
-      //if (fileInfo.length !== inboundFileInfo.size) {
-      //  callback('file size mismatch');
-      //} else {
-      callback(null, fileInfo);
-      //}
+    var fileMetadata = {};
+    if (inboundXMLType) {
+        fileMetadata.fileClass = inboundXMLType;
     }
-  });
+
+    grid.put(buffer, {
+        metadata: fileMetadata,
+        'filename': inboundFileInfo.name,
+        'content_type': inboundFileInfo.type,
+    }, function(err, fileInfo) {
+        if (err) {
+            callback(err);
+        } else {
+            /*Relax for now pending further investigation, seems to be chunking overhead.*/
+            //if (fileInfo.length !== inboundFileInfo.size) {
+            //  callback('file size mismatch');
+            //} else {
+            callback(null, fileInfo);
+            //}
+        }
+    });
 };
 
 exports.getRecordList = function(callback) {
-    var db = db_conn;
-
-    var responseJSON = {};
-    var responseArray = [];
-
     db.collection('storage.files', function(err, recordCollection) {
         if (err) {
             callback(err);
@@ -96,9 +87,6 @@ exports.getRecordList = function(callback) {
 };
 
 exports.getRecord = function(fileId, callback) {
-    var db = db_conn;
-    var grid = grid_conn;
-
     //Removed owner validation for demo purposes.
     db.collection('storage.files', function(err, coll) {
         if (err) {
@@ -126,12 +114,12 @@ exports.getRecord = function(fileId, callback) {
 };
 
 exports.recordCount = function(conditions, callback) {
-    Storage_files.count(conditions, function(err, count) {
+    StorageFiles.count(conditions, function(err, count) {
         callback(err, count);
     });
 };
 
-//========================== ALLERGIES
+// Allergies
 
 //Get all allergies.
 exports.getAllergies = function(callback) {
@@ -140,7 +128,7 @@ exports.getAllergies = function(callback) {
         if (err) {
             callback(err);
         } else {
-            Storage_files.populate(allergyResults, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
+            StorageFiles.populate(allergyResults, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
                 if (err) {
                     callback(err);
                 } else {
@@ -284,7 +272,7 @@ exports.allergyCount = function(conditions, callback) {
     });
 };
 
-//====================== MERGES ==========
+// Merges
 
 exports.getMerges = function(callback) {
     var query = merge.find().populate('allergy_id record_id', 'name severity filename uploadDate');

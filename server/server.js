@@ -71,8 +71,12 @@ app.use(notification);
 var databaseServer = 'localhost';
 
 //Launch Application.
-record.connectDatabase(databaseServer, function() {
-    app.listen(3000);
-    console.log("Server listening on port "+ 3000);
+record.connectDatabase(databaseServer, function(err) {
+    if (err) {
+        console.log(err);
+    } else {
+        app.listen(3000);
+        console.log("Server listening on port "+ 3000);
+    }
 });
 
