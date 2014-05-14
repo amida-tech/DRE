@@ -53,7 +53,7 @@ function getSavedComponents(callback) {
 
   var savedObject = {};
 
-  allergyFunctions.getAllergies(function(err, savedAllergies) {
+  record.getAllergies(function(err, savedAllergies) {
     savedObject.allergies = savedAllergies;
     callback(null, savedObject);
   });

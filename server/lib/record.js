@@ -4,6 +4,8 @@ var ObjectId = require('mongodb').ObjectID;
 
 var databaseName = 'dre';
 
+//===================== CONNECTION ====================================
+
 var db_conn = null;
 var grid_conn = null;
 
@@ -21,6 +23,8 @@ exports.connectDatabase = function connectDatabase(server, callback) {
     callback();
   });
 };
+
+//========================== RECORDS =================================
 
 //Saves raw file to gridFS.
 exports.storeFile = function storeFile(inboundFile, inboundFileInfo, inboundXMLType, callback) {
@@ -84,7 +88,7 @@ exports.getRecordList = function(callback) {
             });
         }
     });
-}
+};
 
 exports.getRecord = function(fileId, callback) {
     var db = db_conn;
@@ -112,6 +116,57 @@ exports.getRecord = function(fileId, callback) {
                     callback(new Error('no file'));
                 }
             });
+        }
+    });
+};
+
+//========================== ALLERGIES
+
+var allergy = require('../models/allergies');
+var Storage_files = require('../models/storage_files');
+
+//Get all allergies.
+exports.getAllergies = function(callback) {
+    var query = allergy.find().lean().populate('metadata.attribution', 'record_id merge_reason merged');
+    query.exec(function(err, allergyResults) {
+        if (err) {
+            callback(err);
+        } else {
+            Storage_files.populate(allergyResults, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
+                if (err) {
+                    callback(err);
+                } else {
+                    //May be part of model?
+                    var serverityReference = {
+                            "Mild": 1,
+                            "Mild to Moderate": 2,
+                            "Moderate": 3,
+                            "Moderate to Severe": 4,
+                            "Severe": 5,
+                            "Fatal": 6
+                    };
+                    for (var i=0;i<docs.length;i++) {
+                        console.log(i);
+                        for (severity in serverityReference) {
+                            if (severity.toUpperCase() === docs[i].severity.toUpperCase()) {
+                                docs[i].severity_weight = serverityReference[severity];
+                            }
+                        }
+                    }
+                    callback(null, docs);
+                }
+            });
+        }
+    });
+};
+
+//Gets a single allergy based on id.
+exports.getAllergy = function(input_id, callback) {
+    allergy.findOne({_id: input_id}, function(err, allergyEntry) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, allergyEntry);
         }
     });
 };
