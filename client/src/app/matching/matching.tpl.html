@@ -6,88 +6,48 @@
 	<div class="row">
 		<div ng-include="navPath"></div>
 		<div class="col-md-9" ng-controller="allergiesCtrl" >
+			<!-- Unreviewed Updates. -->
 			<div class="col-md-12">
 				<br/>
-				<span class="lead">Updates</span>
+				<span class="lead">Unreviewed Updates</span>
+				<br/>
+				<br/>
+				<div class="alert alert-info">There are 0 record updates awaiting your review.
+					<div class="pull-right" style="margin-top: -7px;">
+						<button type="button" class="btn btn-success" ng-click="reconciliationClick()">Review</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<br/>
+				<span class="lead">Completed Updates</span>
 				<br/>
 				<br/>
 			</div>
 
 
 			<div ng-hide="displayMerges" class="panel-title">No updates are available at this time.</div>
-			<ul class="nav nav-tabs nav-justified" ng-show="displayMerges">
-				<!--<li class="active"><a data-target="#unreviewed" data-toggle="tab" style="cursor: pointer;"><span class="badge">2</span><strong>&nbsp;&nbsp;Unmerged Entries</strong></a></li>-->
-				<li class="active"><a data-target="#newEntries" data-toggle="tab" style="cursor: pointer;"><span class="panel-title"><span class="badge">{{notifications.new_merges}}</span>&nbsp;&nbsp;New Entries</span></a></li>
-				<li><a data-target="#duplicateEntries" data-toggle="tab" style="cursor: pointer;"><span class="panel-title"><span class="badge">{{notifications.duplicate_merges}}</span>&nbsp;&nbsp;Duplicate Entries</span></a></li>
-			</ul>
-			<div id="myTabContent" class="tab-content" ng-show="displayMerges">
-				<div class="tab-pane fade" id="unreviewed">
-					<div class="panel-group">
-						<div class="panel panel-default" style="overflow: visible;">
-							<div class="panel-heading">
-								<div class="panel-title" style="text-transform:uppercase;">
-									<span><strong><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;Allergy</strong></span>
-								</div>
-							</div>
-
-							<div class="panel-body">
-							<div class="pull-left col-md-4">
-									<h5>Source</h5>
-									<pre>Upload<br>Hello</pre>
-							</div>
-							<div class="pull-left col-md-4">
-									<h5>Details</h5>
-									<pre>placeholder</pre>
-								</div>
-
-							<div class="pull-right">
-								<h5><br></h5>
-								<div class="btn-group" style='padding-right: 10px;' style="overflow: visible;">
-									<button type="button" type="submit" class="btn btn-primary" ng-click="reconciliationClick()">Review</button>
-									<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-									<ul class="dropdown-menu dropdown-menu-right" role="menu" >
-										<li><a href="#">Action</a></li>
-										<li><a href="#">Another action</a></li>
-										<li><a href="#">Something else here</a></li>
-										<li class="divider"></li>
-										<li><a href="#">Separated link</a></li>
-									</ul>
-								</div>
-							</div>
-							</div>
-
-						</div>
+			<div class="panel-group" ng-show="displayMerges">
+				<div class="panel panel-default">
+					<div class="panel-heading" style="min-height:45px;">
+						<div class="panel-title">
+							<span style="cursor:pointer;" ng-click="nameSort();" class="col-md-4" style="display:block;"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>Update</span>
+							<span style="cursor:pointer;" ng-click="nameSort();" class="col-md-4"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>Element</span>
+							<span style="cursor:pointer;" ng-click="dateSort();" class="pull-right"><i class="fa fa-sort pull-right" style="margin-right: 10px; line-height: 1.6em;"></i>Date</span>
+						</div>		
 					</div>
-
-				</div>
-				<div class="tab-pane fade in active" id="newEntries">
-					<table class="table">
-						<thead>
-							<tr><td><strong>New Allergies</strong></td></tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="new_merge in new_merges | orderBy:predicate">
-								<td><strong>Allergen:&nbsp;&nbsp;</strong><a href="#/record" style="text-transform: uppercase; cursor: pointer;">{{new_merge.allergy_id.name}}</a></td>
-								<td><strong>Received:&nbsp;&nbsp;</strong><span>{{new_merge.merged | date: 'short'}}</span></td>
-								<td><strong>Source:&nbsp;&nbsp;</strong><a href="#/storage" style="cursor: pointer;">{{new_merge.record_id.filename}}</a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="tab-pane fade" id="duplicateEntries">
-					<table class="table">
-						<thead>
-							<tr><td><strong>Duplicate Allergies</strong></td></tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="duplicate_merge in duplicate_merges | orderBy:predicate">
-
-								<td><strong>Allergen:&nbsp;&nbsp;</strong><a href="#/record" style="text-transform: uppercase; cursor: pointer;">{{duplicate_merge.allergy_id.name}}</a></td>
-								<td><strong>Received:&nbsp;&nbsp;</strong><span>{{duplicate_merge.merged | date: 'short'}}</span></td>
-								<td><strong>Source:&nbsp;&nbsp;</strong><a href="#/storage" style="cursor: pointer;">{{duplicate_merge.record_id.filename}}</a></td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="panel-body">
+						<ul class="list-group" ng-repeat="new_merge in new_merges | orderBy:predicate">
+							<a ng-href="/">
+								<li class="list-group-item" style="cursor:pointer; text-transform:capitalize;">
+									<span class="col-md-4">{{new_merge.merge_reason}} {{new_merge.entry_type}}</span>
+									<span style="text-transform:uppercase;">{{new_merge.allergy_id.name}}</span>
+									<span class="pull-right" style="text-transform:lowercase;">{{new_merge.merged | date: 'short'}}</span>
+								</li>
+							</a>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>

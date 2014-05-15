@@ -6,91 +6,23 @@
 	<div class="row">
 		<div ng-include="navPath"></div>
 		<div class="col-md-9" ng-controller="allergiesCtrl">
-			<h5 class="lead">Reconciliation</h5>
-			<div class="panel-group col-md-4">
-				<div class="panel panel-default" style="overflow: visible;">
-					<div class="panel-heading">
-						<div class="panel-title">
-							<span style="text-transform:uppercase;"><strong>New Entry</strong></span>
-						</div>
-					</div>
-					<div class="panel-body">
-
-						<table class="table table-condensed table-hover">
-						<thead><tr><td><h4>Allergen</h4></td></tr></thead>
-						<tbody>
-						<tr><td><strong>Name:</strong></td><td>Penicilin</td></tr>
-						<tr><td><strong>Type:</strong></td><td>Drug Allergy</td></tr>
-						<tr><td><strong>Code:</strong></td><td>4HRKS</td></tr>
-						<tr><td><strong>Coding System:</strong></td><td>SNOMED</td></tr>
-						</tbody>
-						</table>
-						<table class="table table-condensed table-hover">
-						<thead><tr><td><h4>Severity&nbsp;&nbsp;<span class="label label-info">Different</span></h4></td></tr></thead>
-						<tbody>
-						<tr><td><strong>Severity:</strong></td><td>Severity</td></tr>
-						</tbody>
-						</table>
-
-						<table class="table table-condensed table-hover">
-						<thead><tr><td><h4>Reaction&nbsp;&nbsp;<span class="label label-primary">New</span></h4></td></tr></thead>
-						<tbody>
-						<tr><td><strong>Name:</strong></td><td>Hives</td></tr>
-						<tr><td><strong>Type:</strong></td><td>Drug Allergy</td></tr>
-						<tr><td><strong>Code:</strong></td><td>4HRKS</td></tr>
-						<tr><td><strong>Coding System:</strong></td><td>SNOMED</td></tr>
-						</tbody>
-						</table>
-
-					</div>
-				</div>
-			</div>
-			<div class="panel-group col-md-4">
-				<div class="panel panel-primary" style="overflow: visible;">
-					<div class="panel-heading">
-						<div class="panel-title">
-							<span style="text-transform:uppercase;"><strong>Current Entry</strong></span>
-						</div>
-					</div>
-					<div class="panel-body">
-						
-						<table class="table table-condensed table-hover">
-						<thead><tr><td><h4>Allergen</h4></td></tr></thead>
-						<tbody>
-						<tr><td><strong>Name:</strong></td><td>Penicilin</td></tr>
-						<tr><td><strong>Type:</strong></td><td>Drug Allergy</td></tr>
-						<tr><td><strong>Code:</strong></td><td>4HRKS</td></tr>
-						<tr><td><strong>Coding System:</strong></td><td>SNOMED</td></tr>
-						</tbody>
-						</table>
-						<table class="table table-condensed table-hover">
-						<thead><tr><td><h4>Severity</h4></td></tr></thead>
-						<tbody>
-						<tr><td><strong>Severity:</strong></td><td>Severity</td></tr>
-						</tbody>
-						</table>
-
-						<table class="table table-condensed table-hover">
-						<thead><tr><td><h4>Reaction</h4></td></tr></thead>
-						<tbody>
-						<tr><td><strong>Name:</strong></td><td>Hives</td></tr>
-						<tr><td><strong>Type:</strong></td><td>Drug Allergy</td></tr>
-						<tr><td><strong>Code:</strong></td><td>4HRKS</td></tr>
-						<tr><td><strong>Coding System:</strong></td><td>SNOMED</td></tr>
-						</tbody>
-						</table>
-
-
-						<div class="pull-right">
-							<button type="button" class="btn btn-success">Save</button>
-							<button type="button" class="btn btn-default">Cancel</button>
+			<br/>
+			<h5 class="lead">Unreviewed Updates</h5>
+						<div class="panel panel-default">
+							<div class="panel-body">
+							<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick()">Review</button></div>
+							<h4>Allergy Update</h4>
+							<h5>One of your files may have an update to your EGG allergy.</h5>
+							</div>
 						</div>
 
-
-
-					</div>
-				</div>
-			</div>
+						<div class="panel panel-default">
+							<div class="panel-body">
+							<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick()">Review</button></div>
+							<h4>Allergy Update</h4>
+							<h5>One of your files may have an update to your EGG allergy.</h5>
+							</div>
+						</div>
 		</div>
 	</div>
 </div>

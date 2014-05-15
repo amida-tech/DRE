@@ -29,18 +29,33 @@ angular.module('dre.match', ['dre.match.reconciliation'])
   function($scope, $http, $location, getNotifications) {
 
     $scope.navPath = "templates/nav/nav.tpl.html";
-
     $scope.notifications = {};
+
+
     getNotifications.getUpdate(function(err, notifications) {
       $scope.notifications = notifications;
     });
 
     $scope.new_merges = [];
     $scope.duplicate_merges = [];
-
     $scope.predicate = "-merged";
     $scope.displayMerges = false;
 
+
+    $scope.getUnresolvedUpdates = function() {
+
+      //Will need to flag source record data.
+      var placeholderJSON = {
+        //2 Allergies are awaiting your review.  
+
+      };
+
+
+    };
+
+
+
+    //This is going away.
     $scope.reconciliationClick = function() {
       $location.path("match/reconciliation");
     };
@@ -59,6 +74,7 @@ angular.module('dre.match', ['dre.match.reconciliation'])
 
 
       for (var i = 0; i < data.merges.length; i++) {
+        console.log(data.merges);
         if (data.merges[i].merge_reason === "new") {
           $scope.new_merges.push(data.merges[i]);
         } else if (data.merges[i].merge_reason === "duplicate") {
