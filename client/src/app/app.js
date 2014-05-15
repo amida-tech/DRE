@@ -21,6 +21,7 @@ angular
     'dre.storage',
     'dre.dashboard',
     'dre.match',
+    'dre.match.review',
     'directives.fileModel',
     'services.fileUpload',
     'services.getNotifications'
