@@ -19,7 +19,14 @@ var fs = require('fs');
 var storage = require('../../lib/parser/index.js');
 
 function loadSampleRecord(callback) {
-  fs.readFile('../artifacts/CCD.sample.xml', 'utf8', function(err, data) {
+
+  if (process.cwd().indexOf('test') > -1) {
+    var cwd = process.cwd().substring(0, (process.cwd().indexOf('test') - 1));
+  } else {
+    var cwd = process.cwd();
+  }
+
+  fs.readFile(cwd + '/test/artifacts/standard/CCD_demo1.xml', 'utf8', function(err, data) {
     if (err) {
       callback(err);
     }
@@ -43,7 +50,7 @@ describe('Storage API', function() {
 
   it('Test 1', function(done) {
     storage.extractRecord(sampleFile, function(err, results) {
-          done();
+      done();
     });
   });
 
