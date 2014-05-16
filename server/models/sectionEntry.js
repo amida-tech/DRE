@@ -66,11 +66,26 @@ var convertToSchema = function(description) {
     }
 };
 
-exports.getSchema = function(entryType, collectionName) {
-    var description = getDescription(entryType);
-    var mongooseDescription = convertToSchema(description);
-    mongooseDescription.patKey = String;
-    mongooseDescription.metadata =  {attribution: [{type: ObjectId, ref: entryType + 'Merges'}]};
-    var schema = new Schema(mongooseDescription);
-    return mongoose.model(collectionName, schema);
+var models = {};
+
+var collectionNames = {
+    allergy: 'Allergies'
 };
+
+exports.getModel = function(entryType) {
+    var model = models[entryType];
+    if (model) {
+        return model;
+    } else {
+        var collectionName = collectionNames[entryType];
+        var description = getDescription(entryType);
+        var mongooseDescription = convertToSchema(description);
+        mongooseDescription.patKey = String;
+        mongooseDescription.metadata =  {attribution: [{type: ObjectId, ref: entryType + 'Merges'}]};
+        var schema = new Schema(mongooseDescription);
+        model = mongoose.model(collectionName, schema);
+        models[entryType] = model;
+        return model;
+    }
+}
+    

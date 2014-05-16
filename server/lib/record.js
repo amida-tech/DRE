@@ -6,7 +6,7 @@ var _ = require('underscore');
 var sectionEntry = require('../models/sectionEntry');
 var StorageFiles = require('../models/storage_files');
 
-var allergy = sectionEntry.getSchema('allergy', 'Allergies');
+var allergy = sectionEntry.getModel('allergy');
 
 // Connection
 
