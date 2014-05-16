@@ -70,7 +70,7 @@ exports.getSchema = function(entryType, collectionName) {
     var description = getDescription(entryType);
     var mongooseDescription = convertToSchema(description);
     mongooseDescription.patKey = String;
-    mongooseDescription.metadata =  {attribution: [{type: ObjectId, ref: 'Merges'}]};
+    mongooseDescription.metadata =  {attribution: [{type: ObjectId, ref: entryType + 'Merges'}]};
     var schema = new Schema(mongooseDescription);
     return mongoose.model(collectionName, schema);
 };

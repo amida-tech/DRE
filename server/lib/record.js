@@ -4,7 +4,6 @@ var ObjectId = require('mongodb').ObjectID;
 var _ = require('underscore');
 
 var sectionEntry = require('../models/sectionEntry');
-var merge = require('../models/merges');
 var StorageFiles = require('../models/storage_files');
 
 var allergy = sectionEntry.getSchema('allergy', 'Allergies');
@@ -175,7 +174,7 @@ exports.saveNewAllergies = function(patKey, inputArray, sourceID, callback) {
             } else {
                 var tmpMergeEntry = {
                         entry_type: 'allergy',
-                        allergy_id: saveResults._id,
+                        entry_id: saveResults._id,
                         record_id: inputSourceID,
                         merged: new Date(),
                         merge_reason: 'new'
@@ -213,7 +212,7 @@ exports.saveNewAllergies = function(patKey, inputArray, sourceID, callback) {
 var updateAllergyAndMerge = function(input_allergy, mergeInfo, callback) {
     var tmpMergeEntry = {
         entry_type: 'allergy',
-        allergy_id: input_allergy._id,
+        entry_id: input_allergy._id,
         record_id: mergeInfo.record_id,
         merged: new Date(),
         merge_reason: mergeInfo.merge_reason
@@ -298,7 +297,6 @@ exports.getMerges = function(type, typeFields, recordFields, callback) {
         if (err) {
             callback(err);
         } else {
-            console.log(mergeResults);
             callback(null, mergeResults);
         }
     });
