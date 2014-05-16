@@ -67,7 +67,7 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="new_merge in new_merges | orderBy:predicate">
-								<td><strong>Allergen:&nbsp;&nbsp;</strong><a href="#/record" style="text-transform: uppercase; cursor: pointer;">{{new_merge.allergy_id.name}}</a></td>
+								<td><strong>Allergen:&nbsp;&nbsp;</strong><a href="#/record" style="text-transform: uppercase; cursor: pointer;">{{new_merge.entry_id.name}}</a></td>
 								<td><strong>Received:&nbsp;&nbsp;</strong><span>{{new_merge.merged | date: 'short'}}</span></td>
 								<td><strong>Source:&nbsp;&nbsp;</strong><a href="#/storage" style="cursor: pointer;">{{new_merge.record_id.filename}}</a></td>
 							</tr>
@@ -82,7 +82,7 @@
 						<tbody>
 							<tr ng-repeat="duplicate_merge in duplicate_merges | orderBy:predicate">
 
-								<td><strong>Allergen:&nbsp;&nbsp;</strong><a href="#/record" style="text-transform: uppercase; cursor: pointer;">{{duplicate_merge.allergy_id.name}}</a></td>
+								<td><strong>Allergen:&nbsp;&nbsp;</strong><a href="#/record" style="text-transform: uppercase; cursor: pointer;">{{duplicate_merge.entry_id.name}}</a></td>
 								<td><strong>Received:&nbsp;&nbsp;</strong><span>{{duplicate_merge.merged | date: 'short'}}</span></td>
 								<td><strong>Source:&nbsp;&nbsp;</strong><a href="#/storage" style="cursor: pointer;">{{duplicate_merge.record_id.filename}}</a></td>
 							</tr>

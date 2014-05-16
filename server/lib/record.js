@@ -6,8 +6,6 @@ var _ = require('underscore');
 var sectionEntry = require('../models/sectionEntry');
 var StorageFiles = require('../models/storage_files');
 
-var allergy = sectionEntry.getModel('allergy');
-
 // Connection
 
 var databaseName = 'dre';
@@ -126,6 +124,7 @@ exports.recordCount = function(patKey, callback) {
 
 //Get all allergies.
 exports.getAllergies = function(patKey, callback) {
+    var allergy = sectionEntry.getModel('allergy');
     var query = allergy.find({patKey: patKey}).lean().populate('metadata.attribution', 'record_id merge_reason merged');
     query.exec(function(err, allergyResults) {
         if (err) {
@@ -154,6 +153,7 @@ var updateAllergy = function(input_allergy, callback) {
 
 //Gets a single allergy based on id.
 var getAllergy = exports.getAllergy = function(input_id, callback) {
+    var allergy = sectionEntry.getModel('allergy');
     allergy.findOne({_id: input_id}, function(err, allergyEntry) {
         if (err) {
             callback(err);
@@ -166,6 +166,7 @@ var getAllergy = exports.getAllergy = function(input_id, callback) {
 //Saves an array of incoming allergies.
 exports.saveNewAllergies = function(patKey, inputArray, sourceID, callback) {
     function saveAllergyObject(allergySaveObject, allergyObjectNumber, inputSourceID, callback) {
+        var allergy = sectionEntry.getModel('allergy');
         var tempAllergy = new allergy(allergySaveObject);
 
         tempAllergy.save(function(err, saveResults) { // TODO: double save, logic needs to be updated
@@ -255,6 +256,7 @@ exports.addAllergyMergeEntry = function(update_id, mergeInfo, callback) {
 };
 
 exports.allergyCount = function(conditions, callback) {
+    var allergy = sectionEntry.getModel('allergy');
     allergy.count(conditions, function(err, count) {
         callback(err, count);
     });
