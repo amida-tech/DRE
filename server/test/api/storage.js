@@ -21,8 +21,14 @@ var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 
+if (process.cwd().indexOf('test') > -1) {
+  var cwd = process.cwd().substring(0, (process.cwd().indexOf('test') - 1));
+} else {
+  var cwd = process.cwd();
+}
+
 function loadSampleRecord(callback) {
-  fs.readFile('../artifacts/CCD_demo1.xml', 'utf8', function(err, data) {
+  fs.readFile(cwd + '/test/artifacts/standard/CCD_demo1.xml', 'utf8', function(err, data) {
     if (err) {
       callback(err);
     }
@@ -46,7 +52,7 @@ describe('Storage API', function() {
 
   it('File Endpoint PUT', function(done) {
     api.put('/api/v1/storage')
-      .attach('file', '../artifacts/CCD_demo1.xml')
+      .attach('file', cwd + '/test/artifacts/standard/CCD_demo1.xml')
       .expect(200)
       .end(function(err, res) {
         if (err) {

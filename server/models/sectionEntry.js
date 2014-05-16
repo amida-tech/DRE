@@ -81,7 +81,8 @@ exports.getModel = function(entryType) {
         var description = getDescription(entryType);
         var mongooseDescription = convertToSchema(description);
         mongooseDescription.patKey = String;
-        mongooseDescription.metadata =  {attribution: [{type: ObjectId, ref: entryType + 'Merges'}]};
+        console.log(mongooseDescription);
+        mongooseDescription.metadata =  {attribution: [{type: ObjectId, ref: entryType + 'merges'}]};
         var schema = new Schema(mongooseDescription);
         model = mongoose.model(collectionName, schema);
         models[entryType] = model;
