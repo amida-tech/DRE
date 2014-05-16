@@ -25,7 +25,8 @@
     "mongodb": "1.4.x",
     "mongoose": "3.8.8",
     "jsdom": "0.10.5",
-    "deep-equal": "0.2.x"
+    "deep-equal": "0.2.x",
+    "underscore": "1.6.x"
   },
   "devDependencies": {
     "grunt": "0.4.x",
