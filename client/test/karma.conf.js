@@ -10,12 +10,22 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
+    // why do I need to include src here?  should be able to use dist...
     files: [
-      'src/**/*.js'
+      {pattern: 'dist/angular.js', watched: false},
+      {pattern: 'src/vendor/angular/angular-mocks.js'},
+      {pattern: 'dist/jquery.js', watched: false},
+      {pattern: 'dist/bootstrap.js', watched: false},
+      'dist/index.html',
+      'dist/templates/**/*.html',
+      'dist/*.js',
+      {pattern: 'dist/**/*.js'},
+      'src/**/*.js',
+      'test/main.spec.js'
     ],
 
 
