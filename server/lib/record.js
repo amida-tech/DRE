@@ -14,6 +14,10 @@ var db = null;
 var grid = null;
 
 exports.connectDatabase = function connectDatabase(server, callback) {
+    if (db != null) {
+        callback();
+        return;
+    }
     mongo.Db.connect('mongodb://' + server + '/' + databaseName, function(err, dbase) {
         if (err) {
             callback(err);
@@ -291,29 +295,8 @@ var collectionNames = {
 
 var models = {};
 
-var getMergeModel = function(type) {
-    var model = models[type];
-    if (model) {
-        return model;
-    } else {
-        var Schema = mongoose.Schema;
-        var ObjectId = Schema.ObjectId;
-        var collName = collectionNames[type];
-        var schema = new Schema({
-            entry_type: String,
-            entry_id: {type: ObjectId, ref: collName},
-            record_id: {type: ObjectId, ref: 'storage.files'},
-            merged: Date,
-            merge_reason: String
-        });
-        var model = mongoose.model(type + 'Merges', schema);
-        models[type] = model;
-        return model;
-    }
-};
-
 exports.getMerges = function(type, typeFields, recordFields, callback) {
-    var model = getMergeModel(type);
+    var model = sectionEntry.getMergeModel(type);
     var allFields = typeFields + ' ' + recordFields;
     var query = model.find({entry_type: type}).populate('entry_id record_id', allFields);
     query.exec(function (err, mergeResults) {
@@ -326,7 +309,7 @@ exports.getMerges = function(type, typeFields, recordFields, callback) {
 };
 
 var saveMerge = function(mergeObject, callback) {
-    var Model = getMergeModel(mergeObject.entry_type);
+    var Model = sectionEntry.getMergeModel(mergeObject.entry_type);
     var saveMerge = new Model(mergeObject);
 
     saveMerge.save(function(err, saveResults) {
@@ -339,7 +322,7 @@ var saveMerge = function(mergeObject, callback) {
 };
 
 exports.mergeCount = function(type, conditions, callback) {
-    var model = getMergeModel(type);
+    var model = sectionEntry.getMergeModel(type);
     model.count(conditions, function(err, count) {
         callback(err, count);
     });
