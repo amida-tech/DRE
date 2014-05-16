@@ -20,7 +20,7 @@ var record = require('../record');
 
 //Get all merges API.
 app.get('/api/v1/merges', function(req, res) {
-    record.getMerges(function(err, mergeList) {
+    record.getMerges('allergy', 'name severity', 'filename uploadDate', function(err, mergeList) {
         if (err) {
             res.send(400, err);
         } else {

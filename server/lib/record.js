@@ -263,8 +263,9 @@ exports.allergyCount = function(conditions, callback) {
 
 // Merges
 
-exports.getMerges = function(callback) {
-    var query = merge.find().populate('allergy_id record_id', 'name severity filename uploadDate');
+exports.getMerges = function(type, typeFields, recordFields, callback) {
+    var allFields = typeFields + ' ' + recordFields;
+    var query = merge.find({entry_type: type}).populate('allergy_id record_id', allFields);
     query.exec(function (err, mergeResults) {
         if (err) {
             callback(err);
