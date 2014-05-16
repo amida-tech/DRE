@@ -123,14 +123,15 @@ exports.recordCount = function(patKey, callback) {
 // Allergies
 
 //Get all allergies.
-exports.getAllergies = function(patKey, callback) {
-    var allergy = sectionEntry.getModel('allergy');
-    var query = allergy.find({patKey: patKey}).lean().populate('metadata.attribution', 'record_id merge_reason merged');
-    query.exec(function(err, allergyResults) {
+
+var getSection = exports.getSection = function(type, patKey, callback) {
+    var sectionModel = sectionEntry.getModel(type);
+    var query = sectionModel.find({patKey: patKey}).lean().populate('metadata.attribution', 'record_id merge_reason merged');
+    query.exec(function(err, results) {
         if (err) {
             callback(err);
         } else {
-            StorageFiles.populate(allergyResults, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
+            StorageFiles.populate(results, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
                 if (err) {
                     callback(err);
                 } else {
@@ -139,6 +140,10 @@ exports.getAllergies = function(patKey, callback) {
             });
         }
     });
+};
+
+exports.getAllergies = function(patKey, callback) {
+    getSection('allergy', patKey, callback);
 };
 
 var updateAllergy = function(input_allergy, callback) {
@@ -151,47 +156,50 @@ var updateAllergy = function(input_allergy, callback) {
     });
 };
 
-//Gets a single allergy based on id.
-var getAllergy = exports.getAllergy = function(input_id, callback) {
-    var allergy = sectionEntry.getModel('allergy');
-    allergy.findOne({_id: input_id}, function(err, allergyEntry) {
+var getEntry = exports.getEntry = function(type, input_id, callback) {
+    var model = sectionEntry.getModel(type);
+    model.findOne({_id: input_id}, function(err, entry) {
         if (err) {
             callback(err);
         } else {
-            callback(null, allergyEntry);
+            callback(null, entry);
         }
-    });
+    });    
 };
 
-//Saves an array of incoming allergies.
-exports.saveNewAllergies = function(patKey, inputArray, sourceID, callback) {
-    function saveAllergyObject(allergySaveObject, allergyObjectNumber, inputSourceID, callback) {
-        var allergy = sectionEntry.getModel('allergy');
-        var tempAllergy = new allergy(allergySaveObject);
+//Gets a single allergy based on id.
+var getAllergy = exports.getAllergy = function(input_id, callback) {
+    getEntry('allergy', input_id, callback);
+};
 
-        tempAllergy.save(function(err, saveResults) { // TODO: double save, logic needs to be updated
+var saveNewEntries = exports.saveNewEntries = function(type, patKey, inputArray, sourceID, callback) {
+    function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
+        var model = sectionEntry.getModel(type);
+        var tempEntry = new model(entryObject);
+
+        tempEntry.save(function(err, saveResults) { // TODO: double save, logic needs to be updated
             if (err) {
                 callback(err);
             } else {
                 var tmpMergeEntry = {
-                        entry_type: 'allergy',
-                        entry_id: saveResults._id,
-                        record_id: inputSourceID,
-                        merged: new Date(),
-                        merge_reason: 'new'
+                    entry_type: type,
+                    entry_id: saveResults._id,
+                    record_id: inputSourceID,
+                    merged: new Date(),
+                    merge_reason: 'new'
                 };
 
                 saveMerge(tmpMergeEntry, function(err, mergeResults) {
                     if (err) {
                         callback(err);
                     } else {
-                        tempAllergy.metadata.attribution.push(mergeResults._id);
-                        tempAllergy.patKey = patKey;
-                        tempAllergy.save(function(err, saveResults) {
+                        tempEntry.metadata.attribution.push(mergeResults._id);
+                        tempEntry.patKey = patKey;
+                        tempEntry.save(function(err, saveResults) {
                             if (err) {
                                 callback(err);
                             } else {
-                                callback(null, allergyObjectNumber);
+                                callback(null, entryObjectNumber);
                             }
                         });
                     }
@@ -201,13 +209,18 @@ exports.saveNewAllergies = function(patKey, inputArray, sourceID, callback) {
     }
 
     for (var i = 0; i < inputArray.length; i++) {
-        var allergyObject = inputArray[i];
-        saveAllergyObject(allergyObject, i, sourceID, function(err, savedObjectNumber) {
+        var entryObject = inputArray[i];
+        saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber) {
             if (savedObjectNumber === (inputArray.length - 1)) {
                 callback(null);
             }
         });
     }
+};
+
+//Saves an array of incoming allergies.
+exports.saveNewAllergies = function(patKey, inputArray, sourceID, callback) {
+    saveNewEntries('allergy', patKey, inputArray, sourceID, callback);
 };
 
 var updateAllergyAndMerge = function(input_allergy, mergeInfo, callback) {
