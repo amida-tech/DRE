@@ -20,14 +20,17 @@ var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
 var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
+var path = require('path');
 
 function loadSampleRecord(callback) {
-  fs.readFile('../artifacts/CCD_demo1.xml', 'utf8', function(err, data) {
-    if (err) {
-      callback(err);
-    }
-    callback(null, data);
-  });
+    var filepath = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
+    fs.readFile(filepath, 'utf8', function(err, data) {
+        if (err) {
+            callback(err);
+            return;
+        }
+        callback(null, data);
+    });
 }
 
 
@@ -38,15 +41,17 @@ describe('Storage API', function() {
     loadSampleRecord(function(err, file) {
       if (err) {
         done(err);
+      } else {
+          sampleFile = file;
+          done();
       }
-      sampleFile = file;
-      done();
     });
   });
 
   it('File Endpoint PUT', function(done) {
+    var filepath = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
     api.put('/api/v1/storage')
-      .attach('file', '../artifacts/CCD_demo1.xml')
+      .attach('file', filepath)
       .expect(200)
       .end(function(err, res) {
         if (err) {
