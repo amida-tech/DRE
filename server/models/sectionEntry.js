@@ -72,11 +72,32 @@ var collectionNames = {
     allergy: 'Allergies'
 };
 
+var getMergeModel = exports.getMergeModel = function(type) {
+    var model = models[type];
+    if (model) {
+        return model;
+    } else {
+        var Schema = mongoose.Schema;
+        var ObjectId = Schema.ObjectId;
+        var collName = collectionNames[type];
+        var schema = new Schema({
+            entry_type: String,
+            entry_id: {type: ObjectId, ref: collName},
+            record_id: {type: ObjectId, ref: 'storage.files'},
+            merged: Date,
+            merge_reason: String
+        });
+        var model = mongoose.model(type + 'Merges', schema);
+        models[type] = model;
+        return model;
+    }
+};
 exports.getModel = function(entryType) {
     var model = models[entryType];
     if (model) {
         return model;
     } else {
+        getMergeModel(entryType);
         var collectionName = collectionNames[entryType];
         var description = getDescription(entryType);
         var mongooseDescription = convertToSchema(description);
