@@ -290,7 +290,7 @@ exports.allergyCount = function(conditions, callback) {
 // Merges
 
 var collectionNames = {
-    allergy: 'Allergies'
+    allergy: 'allergies'
 };
 
 var models = {};

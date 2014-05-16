@@ -69,7 +69,7 @@ var convertToSchema = function(description) {
 var models = {};
 
 var collectionNames = {
-    allergy: 'Allergies'
+    allergy: 'allergies'
 };
 
 var getMergeModel = exports.getMergeModel = function(type) {
@@ -87,7 +87,7 @@ var getMergeModel = exports.getMergeModel = function(type) {
             merged: Date,
             merge_reason: String
         });
-        var model = mongoose.model(type + 'Merges', schema);
+        var model = mongoose.model(type + 'merges', schema);
         models[type] = model;
         return model;
     }
