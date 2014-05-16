@@ -146,8 +146,8 @@ exports.getAllergies = function(patKey, callback) {
     getSection('allergy', patKey, callback);
 };
 
-var updateAllergy = function(input_allergy, callback) {
-    input_allergy.save(function(err, saveObject) {
+var updateEntry = function(input_entry, callback) {
+    input_entry.save(function(err, saveObject) {
         if (err) {
             callback(err);
         } else {
@@ -223,10 +223,10 @@ exports.saveNewAllergies = function(patKey, inputArray, sourceID, callback) {
     saveNewEntries('allergy', patKey, inputArray, sourceID, callback);
 };
 
-var updateAllergyAndMerge = function(input_allergy, mergeInfo, callback) {
+var updateEntryAndMerge = function(type, input_entry, mergeInfo, callback) {
     var tmpMergeEntry = {
-        entry_type: 'allergy',
-        entry_id: input_allergy._id,
+        entry_type: type,
+        entry_id: input_entry._id,
         record_id: mergeInfo.record_id,
         merged: new Date(),
         merge_reason: mergeInfo.merge_reason
@@ -236,8 +236,8 @@ var updateAllergyAndMerge = function(input_allergy, mergeInfo, callback) {
         if (err) {
             callback(err);
         } else {
-            input_allergy.metadata.attribution.push(saveResults._id);
-            updateAllergy(input_allergy, function(err, saveObject) {
+            input_entry.metadata.attribution.push(saveResults._id);
+            updateEntry(input_entry, function(err, saveObject) {
                 if (err) {
                     callback(err);
                 } else {
@@ -248,8 +248,8 @@ var updateAllergyAndMerge = function(input_allergy, mergeInfo, callback) {
     });
 };
 
-exports.addAllergyMergeEntry = function(update_id, mergeInfo, callback) {
-    getAllergy(update_id, function(err, currentAllergy) {
+var addEntryMergeEntry = exports.addEntryMergeEntry = function(type, update_id, mergeInfo, callback) {
+    getEntry(type, update_id, function(err, current) {
         //console.log(currentAllergy);
         //Needs to get added to, but held out of match for now.
         //currentAllergy.metadata.attribution.push({
@@ -258,7 +258,7 @@ exports.addAllergyMergeEntry = function(update_id, mergeInfo, callback) {
         //  attribution: 'duplicate'
         //});
 
-        updateAllergyAndMerge(currentAllergy, mergeInfo, function(err) {
+        updateEntryAndMerge(type, current, mergeInfo, function(err) {
             if (err) {
                 callback(err);
             } else {
@@ -268,11 +268,19 @@ exports.addAllergyMergeEntry = function(update_id, mergeInfo, callback) {
     });
 };
 
-exports.allergyCount = function(conditions, callback) {
-    var allergy = sectionEntry.getModel('allergy');
-    allergy.count(conditions, function(err, count) {
+exports.addAllergyMergeEntry = function(update_id, mergeInfo, callback) {
+    addEntryMergeEntry('allergy', update_id, mergeInfo, callback);
+};
+
+var sectionEntryCount = exports.sectionEntryCount = function(type, conditions, callback) {
+    var model = sectionEntry.getModel(type);
+    model.count(conditions, function(err, count) {
         callback(err, count);
     });
+};
+
+exports.allergyCount = function(conditions, callback) {
+    sectionEntryCount('allergy', conditions, callback);
 };
 
 // Merges
