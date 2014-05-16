@@ -263,20 +263,50 @@ exports.allergyCount = function(conditions, callback) {
 
 // Merges
 
+var collectionNames = {
+    allergy: 'Allergies'
+};
+
+var models = {};
+
+var getMergeModel = function(type) {
+    var model = models[type];
+    if (model) {
+        return model;
+    } else {
+        var Schema = mongoose.Schema;
+        var ObjectId = Schema.ObjectId;
+        var collName = collectionNames[type];
+        var schema = new Schema({
+            entry_type: String,
+            entry_id: {type: ObjectId, ref: collName},
+            record_id: {type: ObjectId, ref: 'storage.files'},
+            merged: Date,
+            merge_reason: String
+        });
+        var model = mongoose.model(type + 'Merges', schema);
+        models[type] = model;
+        return model;
+    }
+};
+
 exports.getMerges = function(type, typeFields, recordFields, callback) {
+    var model = getMergeModel(type);
     var allFields = typeFields + ' ' + recordFields;
-    var query = merge.find({entry_type: type}).populate('allergy_id record_id', allFields);
+    var query = model.find({entry_type: type}).populate('entry_id record_id', allFields);
     query.exec(function (err, mergeResults) {
         if (err) {
             callback(err);
         } else {
+            console.log(mergeResults);
             callback(null, mergeResults);
         }
     });
 };
 
 var saveMerge = function(mergeObject, callback) {
-    var saveMerge = new merge(mergeObject);
+    var Model = getMergeModel(mergeObject.entry_type);
+    var saveMerge = new Model(mergeObject);
 
     saveMerge.save(function(err, saveResults) {
         if (err) {
@@ -287,8 +317,9 @@ var saveMerge = function(mergeObject, callback) {
     });
 };
 
-exports.mergeCount = function(conditions, callback) {
-    merge.count(conditions, function(err, count) {
+exports.mergeCount = function(type, conditions, callback) {
+    var model = getMergeModel(type);
+    model.count(conditions, function(err, count) {
         callback(err, count);
     });
 };

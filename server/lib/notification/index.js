@@ -40,7 +40,7 @@ function getNotifications (callback) {
   }
 
 
-  record.mergeCount({merge_reason: "new"}, function(err, count) {
+  record.mergeCount('allergy', {merge_reason: "new"}, function(err, count) {
     if (err) {
       callback(err);
     } else {
@@ -49,7 +49,7 @@ function getNotifications (callback) {
     }
   });
 
-  record.mergeCount({merge_reason: "duplicate"}, function(err, count) {
+  record.mergeCount('allergy', {merge_reason: "duplicate"}, function(err, count) {
     if (err) {
       callback(err);
     } else {
