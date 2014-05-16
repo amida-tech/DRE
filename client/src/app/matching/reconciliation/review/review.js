@@ -14,20 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular.module('dre.match.reconciliation', [])
+angular.module('dre.match.review', [])
 
 .config(['$routeProvider',
 function($routeProvider) {
-  $routeProvider.when('/match/reconciliation', {
-      templateUrl: 'templates/matching/reconciliation/reconciliation.tpl.html',
-      controller: 'reconciliationCtrl'
+  $routeProvider.when('/match/reconciliation/review', {
+      templateUrl: 'templates/matching/reconciliation/review/review.tpl.html',
+      controller: 'reviewCtrl'
   });
 }])
 
-  .controller('reconciliationCtrl', ['$scope', '$http', '$location', 
+  .controller('reviewCtrl', ['$scope', '$http', '$location', 
     function($scope, $http, $location) {
 
-      console.log('hit');
+       $scope.reconciliationClick = function() {
+      $location.path("match/reconciliation");
+    };
 
       $scope.navPath = "templates/nav/nav.tpl.html";
 
