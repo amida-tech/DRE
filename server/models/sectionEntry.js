@@ -69,7 +69,7 @@ var convertToSchema = function(description) {
 var models = {};
 
 var collectionNames = {
-    allergy: 'Allergies'
+    allergy: 'allergies'
 };
 
 var mergeModels = {};
@@ -92,7 +92,7 @@ var getMergeModel = exports.getMergeModel = function(type, noUpdate) {
             merged: Date,
             merge_reason: String
         });
-        var model = mongoose.model(type + 'Merges', schema);
+        var model = mongoose.model(type + 'merges', schema);
         mergeModels[type] = model;
         return model;
     }
@@ -110,7 +110,8 @@ var getModel = exports.getModel = function(entryType, noUpdate) {
         var description = getDescription(entryType);
         var mongooseDescription = convertToSchema(description);
         mongooseDescription.patKey = String;
-        mongooseDescription.metadata =  {attribution: [{type: ObjectId, ref: entryType + 'Merges'}]};
+        //console.log(mongooseDescription);
+        mongooseDescription.metadata =  {attribution: [{type: ObjectId, ref: entryType + 'merges'}]};
         var schema = new Schema(mongooseDescription);
         model = mongoose.model(collectionName, schema);
         models[entryType] = model;

@@ -45,7 +45,7 @@ describe('Storage API', function() {
 
   it('Test 1', function(done) {
     storage.extractRecord(sampleFile, function(err, results) {
-          done();
+      done();
     });
   });
 
