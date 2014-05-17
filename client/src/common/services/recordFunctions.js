@@ -8,18 +8,25 @@ angular.module('services.recordFunctions', [])
             if (Object.prototype.toString.call(date) === '[object Array]') {
                 if (date.length > 0) {
                     for (var d in date) {
-                        if (date[d].length > 0) {
+
+                        //Array Handler.
+                        if (Object.prototype.toString.call(date[d]) === '[object Array]') {
                             for (var de in date[d]) {
-                        if (date[d][de].precision === "day") {
-                            var tmpDate = $filter('date')(date[d][de].date, 'mediumDate');
-                            date[d][de].displayDate = tmpDate;
-                        }
-
-
-
-
+                                if (date[d][de].precision === "day") {
+                                    var tmpDateArr = $filter('date')(date[d][de].date, 'mediumDate');
+                                    date[d][de].displayDate = tmpDateArr;
+                                }
                             }
                         }
+
+                        //Object Handler.
+                        if (Object.prototype.toString.call(date[d]) === '[object Object]') {
+                                if (date[d].precision === "day") {
+                                    var tmpDateObj = $filter('date')(date[d].date, 'mediumDate');
+                                    date[d].displayDate = tmpDateObj;
+                                }
+                        }
+
                     }
                     return date;
                 } else {

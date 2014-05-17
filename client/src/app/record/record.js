@@ -28,6 +28,8 @@ function($routeProvider) {
     function($scope, $http, $location, getNotifications) {
 
       $scope.navPath = "templates/nav/nav.tpl.html";
+      $scope.medicationsPath = "templates/record/components/medications.tpl.html";
+      $scope.allergiesPath = "templates/record/components/allergies.tpl.html";
 
       $scope.dismissModal = function (index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {
