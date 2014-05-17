@@ -55,7 +55,7 @@ module.exports = function(grunt) {
           reporter: 'spec',
           timeout: '10000'
         },
-        src: ['test/api/*.js', 'test/api/**/*.js']
+        src: ['test/api/*.js', 'test/api/**/*.js', 'test/unit/*.js', 'test/record/*.js']
       }
     }
   });
