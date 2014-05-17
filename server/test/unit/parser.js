@@ -20,19 +20,8 @@ var storage = require('../../lib/parser/index.js');
 var path = require('path');
 
 function loadSampleRecord(callback) {
-<<<<<<< HEAD
-
-  if (process.cwd().indexOf('test') > -1) {
-    var cwd = process.cwd().substring(0, (process.cwd().indexOf('test') - 1));
-  } else {
-    var cwd = process.cwd();
-  }
-
-  fs.readFile(cwd + '/test/artifacts/standard/CCD_demo1.xml', 'utf8', function(err, data) {
-=======
   var filepath = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
   fs.readFile(filepath, 'utf8', function(err, data) {
->>>>>>> afsin
     if (err) {
       callback(err);
     }

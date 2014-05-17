@@ -92,13 +92,8 @@ var getMergeModel = exports.getMergeModel = function(type, noUpdate) {
             merged: Date,
             merge_reason: String
         });
-<<<<<<< HEAD
         var model = mongoose.model(type + 'merges', schema);
-        models[type] = model;
-=======
-        var model = mongoose.model(type + 'Merges', schema);
         mergeModels[type] = model;
->>>>>>> afsin
         return model;
     }
 };
