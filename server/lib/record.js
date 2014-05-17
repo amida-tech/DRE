@@ -41,7 +41,6 @@ exports.saveRecord = function(patKey, inboundFile, inboundFileInfo, inboundXMLTy
         fileMetadata.fileClass = inboundXMLType;
     }
 
-    console.log(patKey);
     grid.put(buffer, {
         metadata: fileMetadata,
         filename: inboundFileInfo.name,
@@ -180,7 +179,7 @@ var saveNewEntries = exports.saveNewEntries = function(type, patKey, inputArray,
     function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
         var model = sectionEntry.getModel(type);
         var tempEntry = new model(entryObject);
-
+        
         tempEntry.save(function(err, saveResults) { // TODO: double save, logic needs to be updated
             if (err) {
                 callback(err);
@@ -192,12 +191,13 @@ var saveNewEntries = exports.saveNewEntries = function(type, patKey, inputArray,
                     merged: new Date(),
                     merge_reason: 'new'
                 };
-
+                
                 saveMerge(tmpMergeEntry, function(err, mergeResults) {
                     if (err) {
                         callback(err);
                     } else {
-                        tempEntry.metadata.attribution.push(mergeResults._id);
+                        tempEntry.metadata = {};
+                        tempEntry.metadata.attribution = [mergeResults._id];
                         tempEntry.patKey = patKey;
                         tempEntry.save(function(err, saveResults) {
                             if (err) {

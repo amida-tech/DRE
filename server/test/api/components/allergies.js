@@ -40,7 +40,11 @@ describe('Allergies API', function() {
         if (err) {
           return done(err);
         }
+<<<<<<< HEAD
         console.log(res.body);
+=======
+        //console.log(res.body.allergies[0].metadata.attribution[0].record_id);
+>>>>>>> afsin
         done();
       });
   });

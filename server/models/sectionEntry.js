@@ -72,11 +72,16 @@ var collectionNames = {
     allergy: 'allergies'
 };
 
-var getMergeModel = exports.getMergeModel = function(type) {
-    var model = models[type];
+var mergeModels = {};
+
+var getMergeModel = exports.getMergeModel = function(type, noUpdate) {
+    var model = mergeModels[type];
     if (model) {
         return model;
     } else {
+        if ((! noUpdate) && ! models[type]) {
+            getModel(type, true);
+        }
         var Schema = mongoose.Schema;
         var ObjectId = Schema.ObjectId;
         var collName = collectionNames[type];
@@ -87,17 +92,25 @@ var getMergeModel = exports.getMergeModel = function(type) {
             merged: Date,
             merge_reason: String
         });
+<<<<<<< HEAD
         var model = mongoose.model(type + 'merges', schema);
         models[type] = model;
+=======
+        var model = mongoose.model(type + 'Merges', schema);
+        mergeModels[type] = model;
+>>>>>>> afsin
         return model;
     }
 };
-exports.getModel = function(entryType) {
+
+var getModel = exports.getModel = function(entryType, noUpdate) {
     var model = models[entryType];
     if (model) {
         return model;
     } else {
-        getMergeModel(entryType);
+        if ((! noUpdate) && ! mergeModels[entryType]) {
+            getMergeModel(entryType, true);
+        }
         var collectionName = collectionNames[entryType];
         var description = getDescription(entryType);
         var mongooseDescription = convertToSchema(description);
@@ -109,5 +122,5 @@ exports.getModel = function(entryType) {
         models[entryType] = model;
         return model;
     }
-}
+};
     

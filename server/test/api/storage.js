@@ -20,6 +20,7 @@ var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
 var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
+var path = require('path');
 
 if (process.cwd().indexOf('test') > -1) {
   var cwd = process.cwd().substring(0, (process.cwd().indexOf('test') - 1));
@@ -28,12 +29,23 @@ if (process.cwd().indexOf('test') > -1) {
 }
 
 function loadSampleRecord(callback) {
+<<<<<<< HEAD
   fs.readFile(cwd + '/test/artifacts/standard/CCD_demo1.xml', 'utf8', function(err, data) {
     if (err) {
       callback(err);
     }
     callback(null, data);
   });
+=======
+    var filepath = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
+    fs.readFile(filepath, 'utf8', function(err, data) {
+        if (err) {
+            callback(err);
+            return;
+        }
+        callback(null, data);
+    });
+>>>>>>> afsin
 }
 
 
@@ -44,15 +56,21 @@ describe('Storage API', function() {
     loadSampleRecord(function(err, file) {
       if (err) {
         done(err);
+      } else {
+          sampleFile = file;
+          done();
       }
-      sampleFile = file;
-      done();
     });
   });
 
   it('File Endpoint PUT', function(done) {
+    var filepath = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
     api.put('/api/v1/storage')
+<<<<<<< HEAD
       .attach('file', cwd + '/test/artifacts/standard/CCD_demo1.xml')
+=======
+      .attach('file', filepath)
+>>>>>>> afsin
       .expect(200)
       .end(function(err, res) {
         if (err) {
