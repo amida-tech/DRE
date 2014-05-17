@@ -15,14 +15,15 @@ limitations under the License.
 ======================================================================*/
 
 var should = require('chai').should;
-var storage = require('../../lib/record.js');
+var record = require('../../lib/record.js');
 
 describe('Storage API', function() {
 
   it('Test 1', function(done) {
-    storage.getRecordList('test', function(err, res) {
-      done();
-
+      record.connectDatabase('localhost', function(err) {
+          record.getRecordList('test', function(err, res) {
+              done();
+          });
     });
   });
 
