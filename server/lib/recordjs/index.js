@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
 var _ = require('underscore');
 
-var sectionEntry = require('../models/sectionEntry');
-var StorageFiles = require('../models/storage_files');
+var sectionEntry = require('./models/sectionEntry');
+var StorageFiles = require('./models/storage_files');
 
 // Connection
 

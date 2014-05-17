@@ -15,7 +15,7 @@ limitations under the License.
 ======================================================================*/
 
 var should = require('chai').should;
-var record = require('../../lib/record.js');
+var record = require('../../lib/recordjs');
 
 describe('Storage API', function() {
 

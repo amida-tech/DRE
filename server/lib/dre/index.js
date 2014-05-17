@@ -2,7 +2,7 @@ var express = require('express');
 var app = module.exports = express();
 var Match = require('./match.js');
 var compare = require('./match/compare-partial.js').compare;
-var record = require('../record');
+var record = require('../recordjs');
 
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
 function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, callback) {

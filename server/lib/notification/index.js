@@ -16,7 +16,7 @@ limitations under the License.
 
 var express = require('express');
 var app = module.exports = express();
-var record = require('../record');
+var record = require('../recordjs');
 
 function getNotifications (callback) {
 
