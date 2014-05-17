@@ -24,7 +24,8 @@ var dre = angular
     'dre.match.review',
     'directives.fileModel',
     'services.fileUpload',
-    'services.getNotifications'
+    'services.getNotifications',
+    'services.recordFunctions'
   ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
