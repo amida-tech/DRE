@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
 var _ = require('underscore');
 
-var sectionEntry = require('./models/sectionEntry');
-var StorageFiles = require('./models/storage_files');
+var models = require('./models');
+var storageModel = models.storageModel();
 
 // Connection
 
@@ -118,7 +118,7 @@ exports.getRecord = function(fileId, callback) {
 };
 
 exports.recordCount = function(patKey, callback) {
-    StorageFiles.count({"metadata.patKey" : patKey}, function(err, count) {
+    storageModel.count({"metadata.patKey" : patKey}, function(err, count) {
         callback(err, count);
     });
 };
@@ -128,13 +128,13 @@ exports.recordCount = function(patKey, callback) {
 //Get all allergies.
 
 var getSection = exports.getSection = function(type, patKey, callback) {
-    var sectionModel = sectionEntry.getModel(type);
+    var sectionModel = models.getModel(type);
     var query = sectionModel.find({patKey: patKey}).lean().populate('metadata.attribution', 'record_id merge_reason merged');
     query.exec(function(err, results) {
         if (err) {
             callback(err);
         } else {
-            StorageFiles.populate(results, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
+            storageModel.populate(results, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
                 if (err) {
                     callback(err);
                 } else {
@@ -160,7 +160,7 @@ var updateEntry = function(input_entry, callback) {
 };
 
 var getEntry = exports.getEntry = function(type, input_id, callback) {
-    var model = sectionEntry.getModel(type);
+    var model = models.getModel(type);
     model.findOne({_id: input_id}, function(err, entry) {
         if (err) {
             callback(err);
@@ -177,7 +177,7 @@ var getAllergy = exports.getAllergy = function(input_id, callback) {
 
 var saveNewEntries = exports.saveNewEntries = function(type, patKey, inputArray, sourceID, callback) {
     function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
-        var model = sectionEntry.getModel(type);
+        var model = models.getModel(type);
         var tempEntry = new model(entryObject);
         
         tempEntry.save(function(err, saveResults) { // TODO: double save, logic needs to be updated
@@ -277,7 +277,7 @@ exports.addAllergyMergeEntry = function(update_id, mergeInfo, callback) {
 };
 
 var sectionEntryCount = exports.sectionEntryCount = function(type, conditions, callback) {
-    var model = sectionEntry.getModel(type);
+    var model = models.getModel(type);
     model.count(conditions, function(err, count) {
         callback(err, count);
     });
@@ -289,14 +289,8 @@ exports.allergyCount = function(conditions, callback) {
 
 // Merges
 
-var collectionNames = {
-    allergy: 'allergies'
-};
-
-var models = {};
-
 exports.getMerges = function(type, typeFields, recordFields, callback) {
-    var model = sectionEntry.getMergeModel(type);
+    var model = models.getMergeModel(type);
     var allFields = typeFields + ' ' + recordFields;
     var query = model.find({entry_type: type}).populate('entry_id record_id', allFields);
     query.exec(function (err, mergeResults) {
@@ -309,7 +303,7 @@ exports.getMerges = function(type, typeFields, recordFields, callback) {
 };
 
 var saveMerge = function(mergeObject, callback) {
-    var Model = sectionEntry.getMergeModel(mergeObject.entry_type);
+    var Model = models.getMergeModel(mergeObject.entry_type);
     var saveMerge = new Model(mergeObject);
 
     saveMerge.save(function(err, saveResults) {
@@ -322,7 +316,7 @@ var saveMerge = function(mergeObject, callback) {
 };
 
 exports.mergeCount = function(type, conditions, callback) {
-    var model = sectionEntry.getMergeModel(type);
+    var model = models.getMergeModel(type);
     model.count(conditions, function(err, count) {
         callback(err, count);
     });

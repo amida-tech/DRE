@@ -1,5 +1,5 @@
 /*=======================================================================
-Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+Copyright 2014 Amida Technology Solutions (http://amida-tech.com)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -118,4 +118,25 @@ var getModel = exports.getModel = function(entryType, noUpdate) {
         return model;
     }
 };
-    
+
+exports.storageModel = (function() {
+    //GridFS will automatically make this, but a schema is needed for population/refs.
+    var schema = new Schema({
+        patKey: String,
+        metadata: {
+            class: String
+        },
+        md5: String,
+        uploadDate: Date,
+        chunkSize: Number,
+        length: Number,
+        contentType: String,
+        filename: String,
+    });
+
+    var model = mongoose.model('storage.files', schema);
+
+    return function() {
+        return model;
+    };
+}());
