@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications'])
+angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters'])
 
 .config(['$routeProvider',
 function($routeProvider) {
@@ -30,6 +30,7 @@ function($routeProvider) {
       $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
       $scope.allergiesPath = "templates/record/components/allergies.tpl.html";
+      $scope.encountersPath = "templates/record/components/encounters.tpl.html";
 
       $scope.dismissModal = function (index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {
