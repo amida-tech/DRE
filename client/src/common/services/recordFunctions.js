@@ -7,13 +7,11 @@ angular.module('services.recordFunctions', [])
         //Returns printable array from address.
         this.formatAddress = function(address) {
             var displayAddress = [];
-
             if (address.streetLines.length > 0) {
                 for (var addrLine in address.streetLines) {
                     displayAddress.push(address.streetLines[addrLine]);
                 }
             }
-
             var cityLine = "";
             var cityTest = "";
             if (address.city) {
@@ -25,51 +23,82 @@ angular.module('services.recordFunctions', [])
             if (address.zip) {
                 cityTest = cityLine.length > 0 ? cityLine = cityLine + " " + address.zip : cityLine = address.zip;
             }
-
             if (cityLine.length > 0) {
                 displayAddress.push(cityLine);
             }
             address.displayAddress = displayAddress;
-
             return address;
-
         };
 
+        //Returns printable person name.
+        this.formatName = function(inputName) {
+            var outputName = "";
 
+            if (inputName.last && inputName.first) {
+                outputName = inputName.first + " " + inputName.last;
+            } else if (inputName.first) {
+                outputName = inputName.first;
+            } else if (inputName.last) {
+                outputName = inputName.last;
+            }
 
+            //TODO:  Add middle name handler, prefix, and suffix.
+
+            inputName.displayName = outputName;
+
+            return inputName;
+        };
+
+        //Returns printable quantity/unit pair from values.
+        this.formatQuantity = function(inputQuantity) {
+            var returnQuantity = "";
+            if (inputQuantity.value) {
+                returnQuantity = inputQuantity.value;
+            }
+            if (inputQuantity.unit && inputQuantity.value) {
+                returnQuantity = returnQuantity + " " + inputQuantity.unit;
+            }
+            inputQuantity.displayQuantity = returnQuantity;
+            return inputQuantity;
+        };
+
+        //Returns printable Date.
         this.formatDate = function(date) {
+
+            function formatOutput(input_date) {
+                var tmpDateArr;
+                if (input_date.precision === "year") {
+                    tmpDateArr = $filter('date')(input_date.date, 'yyyy');
+                    input_date.displayDate = tmpDateArr;
+                }
+                if (input_date.precision === "month") {
+                    tmpDateArr = $filter('date')(input_date.date, 'MMM, yyyy');
+                    input_date.displayDate = tmpDateArr;
+                }
+                if (input_date.precision === "day") {
+                    tmpDateArr = $filter('date')(input_date.date, 'mediumDate');
+                    input_date.displayDate = tmpDateArr;
+                }
+                if (input_date.precision === "subsecond") {
+                    tmpDateArr = $filter('date')(input_date.date, 'mediumDate');
+                    input_date.displayDate = tmpDateArr;
+                }
+                return input_date;
+            }
+
             if (Object.prototype.toString.call(date) === '[object Array]') {
                 if (date.length > 0) {
                     for (var d in date) {
-
                         //Array Handler.
                         if (Object.prototype.toString.call(date[d]) === '[object Array]') {
                             for (var de in date[d]) {
-                                var tmpDateArr;
-                                if (date[d][de].precision === "day") {
-                                    tmpDateArr = $filter('date')(date[d][de].date, 'mediumDate');
-                                    date[d][de].displayDate = tmpDateArr;
-                                }
-                                if (date[d][de].precision === "subsecond") {
-                                    tmpDateArr = $filter('date')(date[d][de].date, 'mediumDate');
-                                    date[d][de].displayDate = tmpDateArr;
-                                }
+                                date[d][de] = formatOutput(date[d][de]);
                             }
                         }
-
                         //Object Handler.
                         if (Object.prototype.toString.call(date[d]) === '[object Object]') {
-                            var tmpDateObj;
-                            if (date[d].precision === "day") {
-                                tmpDateObj = $filter('date')(date[d].date, 'mediumDate');
-                                date[d].displayDate = tmpDateObj;
-                            }
-                            if (date[d].precision === "subsecond") {
-                                tmpDateObj = $filter('date')(date[d].date, 'mediumDate');
-                                date[d].displayDate = tmpDateObj;
-                            }
+                            date[d] = formatOutput(date[d]);
                         }
-
                     }
                     return date;
                 } else {

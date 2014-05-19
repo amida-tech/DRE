@@ -7,6 +7,10 @@
 		<div ng-include="navPath"></div>
 		<div class="col-md-9">
 
+			<div ng-controller="immunizationsCtrl">
+				<div ng-include="immunizationsPath"></div>
+			</div>
+
 			<div ng-controller="allergiesCtrl">
 				<div ng-include="allergiesPath"></div>
 			</div>
@@ -21,8 +25,6 @@
 			<div ng-controller="proceduresCtrl">
 				<div ng-include="proceduresPath"></div>
 			</div>
-
-
 
 		</div>
 	</div>
