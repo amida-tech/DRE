@@ -4,6 +4,11 @@ angular.module('services.recordFunctions', [])
 
     function($filter) {
 
+        this.minDateFromArray = function(inputArray) {
+            var sortedArray = $filter('orderBy')(inputArray, "-date");
+            return sortedArray[0];
+        };
+
         //Returns printable array from address.
         this.formatAddress = function(address) {
             var displayAddress = [];
@@ -77,6 +82,10 @@ angular.module('services.recordFunctions', [])
                 }
                 if (input_date.precision === "day") {
                     tmpDateArr = $filter('date')(input_date.date, 'mediumDate');
+                    input_date.displayDate = tmpDateArr;
+                }
+                if (input_date.precision === "minute") {
+                    tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
                     input_date.displayDate = tmpDateArr;
                 }
                 if (input_date.precision === "subsecond") {
