@@ -20,6 +20,7 @@ var dre = angular
     'dre.record',
     'dre.storage',
     'dre.dashboard',
+    'dre.demographics',
     'dre.match',
     'dre.match.review',
     'directives.fileModel',
