@@ -6,6 +6,7 @@ var _ = require('underscore');
 var models = require('./models');
 var storage = require('./storage');
 var merge = require('./merge');
+var section = require('section');
 // Connection
 
 var databaseName = 'dre';

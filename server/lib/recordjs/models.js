@@ -113,7 +113,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
         desc.patKey = String;
         desc.metadata =  {attribution: [{type: ObjectId, ref: mergeColName}]};
         var schema = new Schema(desc);
-        result.clinical[type] = connection.model(name, schema);
+        result.clinical[type] = connection.model(colName, schema);
     });
     return result;
 };
