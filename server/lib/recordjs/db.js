@@ -19,7 +19,8 @@ var mongoose = require('mongoose');
 
 var models = require('./models');
 
-exports.connect = function connectDatabase(server, dbName, callback) {
+exports.connect = function connectDatabase(server, options, callback) {
+    var dbName = options.dbName;
     mongo.Db.connect('mongodb://' + server + '/' + dbName, function(err, dbase) {
         if (err) {
             callback(err);
@@ -29,7 +30,16 @@ exports.connect = function connectDatabase(server, dbName, callback) {
             dbinfo.grid = new mongo.Grid(dbase, 'storage');
             var c = mongoose.createConnection('mongodb://' + server + '/'+ dbName);
             dbinfo.storageModel = models.storageModel(c);
-            callback(null, dbinfo);
+            
+            var r = models.models(c, options.typeToSection, options.typeToSchemaDesc);
+            if (! r) {
+                callback(new Error('models cannot be generated'));
+            } else {
+                dbinfo.models = r.clinical;
+                dbinfo.mergeModels = r.merge;
+            
+                callback(null, dbinfo);
+            }
         }
     });
 };

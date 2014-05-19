@@ -5,6 +5,7 @@ var _ = require('underscore');
 
 var models = require('./models');
 var storage = require('./storage');
+var merge = require('./merge');
 // Connection
 
 var databaseName = 'dre';
@@ -32,13 +33,15 @@ exports.connectDatabase = function connectDatabase(server, callback) {
             dbinfo.db = db;
             dbinfo.grid = grid;
             dbinfo.storageModel = storageModel;
+            var r = models.models(c);
+            dbinfo.models = r.clinical;
+            dbinfo.mergeModels = r.merge;
             callback();
         }
     });
 };
 
-
-
+// Records
 
 exports.saveRecord = function(patKey, inboundFile, inboundFileInfo, inboundXMLType, callback) {
     storage.saveRecord(dbinfo, patKey, inboundFile, inboundFileInfo, inboundXMLType, callback);
@@ -56,6 +59,20 @@ exports.recordCount = function(patKey, callback) {
     storage.recordCount(dbinfo, patKey, callback);
 };
 
+
+// Merges
+
+exports.getMerges = function(type, typeFields, recordFields, callback) {
+    merge.getMerges(type, typeFields, recordFields, callback);
+};
+
+var saveMerge = function(mergeObject, callback) {
+    merge.saveMerge(dbinfo, mergeObject, callback);
+};
+
+exports.mergeCount = function(type, conditions, callback) {
+    merge.count(dbinfo, type, conditions, callback);
+};
 
 
 
@@ -222,41 +239,6 @@ var sectionEntryCount = exports.sectionEntryCount = function(type, conditions, c
 
 exports.allergyCount = function(conditions, callback) {
     sectionEntryCount('allergy', conditions, callback);
-};
-
-// Merges
-
-exports.getMerges = function(type, typeFields, recordFields, callback) {
-    var model = models.getMergeModel(type);
-    var allFields = typeFields + ' ' + recordFields;
-    var query = model.find({entry_type: type}).populate('entry_id record_id', allFields);
-    query.exec(function (err, mergeResults) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null, mergeResults);
-        }
-    });
-};
-
-var saveMerge = function(mergeObject, callback) {
-    var Model = models.getMergeModel(mergeObject.entry_type);
-    var saveMerge = new Model(mergeObject);
-
-    saveMerge.save(function(err, saveResults) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null, saveResults);
-        }
-    });
-};
-
-exports.mergeCount = function(type, conditions, callback) {
-    var model = models.getMergeModel(type);
-    model.count(conditions, function(err, count) {
-        callback(err, count);
-    });
 };
 
 // Utility

@@ -20,137 +20,102 @@ var bb = require('blue-button');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
-var typeToSection = exports.typeToSection = {
-    allergy: 'allergies',
-    procedure: 'procedures',
-    medication: 'medications',
-    encounter: 'encounters',
-    vital: 'vitals',
-    result: 'results',
-    social: 'socialHistory',
-    immunization: 'immunizations',
-    demographics: 'demographics',
-    problem: 'problems'
+var bbToMongoose = function(description) {
+    if (! description) return null;
+    if (Array.isArray(description)) {
+        var elem = bbToMongoose(description[0]);
+        if (! elem) return null;
+        return [elem];
+    } else if (typeof description === "object") {
+        var result = {};
+        Object.keys(description).forEach(function(key) {
+            var elem = bbToMongoose(description[key]);
+            if (! elem) return null;
+            result[key] = elem;
+        });
+        return result;
+    } else {
+        if (description === 'string') {
+            return String;
+        } else if (description === 'datetime') {
+            return Date;
+        } else {
+            return null;
+        }
+    }
 };
 
-var mergeColName = function(type) {
-    return type + 'merges';
-}
+var modelDescription = function(type, callback) {
+    var name = typeToSection[type];
+    if (name) {
+        bb.generateSchema(name, function(err, bbd) {
+            if (err) {
+                callback(err);
+            } else {
+                bbd = (name === 'demographics') ? bbd : bbd[0];
+                var d = bbToMongoose(bbd);
+                if (! d) {
+                    callback(new Error('unsupported bluebutton schema description'));
+                } else {
+                    callback(null, d);
+                }
+            }
+        });
+    } else {
+        callback(new Error("unrecognized type " + type));
+    }
+};
 
 var storageColName = 'storage.files';
 
-var privateMergeModel = (function() {
-    var mergeModels = {};
-   
-    return function(type, updateClinical) {
-        var model = mergeModels[type];
-        if (model) {
-            return model;
-        } else {
-            if (updateClinical) {
-                var cr = privateClinicalModel(type, false);
-                if (! cr) return null;
-            }
-            var name = typeToSection[type];
-            if (! name) {
-                return null;
-            }
-            var schema = new Schema({
-                entry_type: String,
-                entry_id: {type: ObjectId, ref: collName},
-                record_id: {type: ObjectId, ref: storageColName},
-                merged: Date,
-                merge_reason: String
-            });
-            var model = mongoose.model(mergeColName(), schema);
-            mergeModels[type] = model;
-            return model;
-        }
-    };
-})();
+exports.models = function(connection, typeToSection, typeToSchemaDesc) {
+    if (! connection) connection = mongoose;
 
-var privateClinicalModel = (function() {
-    var bbToMongoose = function(description) {
-        if (! description) return null;
-        if (Array.isArray(description)) {
-            var elem = bbToMongoose(description[0]);
-            if (! elem) return null;
-            return [elem];
-        } else if (typeof description === "object") {
-            var result = {};
-            Object.keys(description).forEach(function(key) {
-                var elem = bbToMongoose(description[key]);
-                if (! elem) return null;
-                result[key] = elem;
-            });
-            return result;
-        } else {
-            if (description === 'string') {
-                return String;
-            } else if (description === 'datetime') {
-                return Date;
-            } else {
-                return null;
-            }
-        }
-    };
-
-    var modelDescription = function(type, callback) {
-        var name = typeToSection[type];
-        if (name) {
-            bb.generateSchema(name, function(err, bbd) {
-                if (err) {
-                    callback(err);
-                } else {
-                    bbd = (name === 'demographics') ? bbd : bbd[0];
-                    var d = bbToMongoose(bbd);
-                    if (! d) {
-                        callback(new Error('unsupported bluebutton schema description'));
-                    } else {
-                        callback(null, d);
-                    }
-                }
-            });
-        } else {
-            callback(new Error("unrecognized type " + type));
-        }
-    };
-
-    var models = {};
-
-    return function(type, updateMerge) {
-        var model = models[type];
-        if (model) {
-            return model;
-        } else {
-            if (updateMerge) {
-                var mr = privateMergeModel(type, false);
-                if (! mr) return null;
-            }
-            var name = typeToSection[type];
-            if (! name) {
-                return null;
-            }
+    if (! typeToSection) {
+        typeToSection = {
+            allergy: 'allergies',
+            procedure: 'procedures',
+            medication: 'medications',
+            encounter: 'encounters',
+            vital: 'vitals',
+            result: 'results',
+            social: 'socialHistory',
+            immunization: 'immunizations',
+            demographics: 'demographics',
+            problem: 'problems'
+        };
+    
+        Object.keys(typeToSection).forEach(function(type) {
             modelDescription('ccda_' + name, function(err, desc) {  // this is actually synch.  need to change in blue-button
                 if (err) return null;
-                desc.patKey = String;
-                desc.metadata =  {attribution: [{type: ObjectId, ref: mergeColName()}]};
-                var schema = new Schema(desc);
-                model = mongoose.model(name, schema);
-                models[type] = model;
-                return model;
+                typeToSchemaDesc[type] = desc;
             });
-        }
+        });
+    }
+
+    var result = {
+        merge: {},
+        clinical: {}
     };
-})();
-
-
-exports.clinicalModel = function(type) {
-    return privateClinicalModel(type, true);
-};
-
-exports.mergeModel = function(type) {
-    return privateMergeModel(type, true);
+    Object.keys(typeToSection).forEach(function(type) {
+        var colName = typeToSection[type];
+        var mergeColName = type + 'merges';
+        var mergeSchema = new Schema({
+            entry_type: String,
+            entry_id: {type: ObjectId, ref: colName},
+            record_id: {type: ObjectId, ref: storageColName},
+            merged: Date,
+            merge_reason: String
+        });
+        result.merge[type] = connection.model(mergeColName, mergeSchema);
+    
+        var desc = typeToSchemaDesc[type];
+        desc.patKey = String;
+        desc.metadata =  {attribution: [{type: ObjectId, ref: mergeColName}]};
+        var schema = new Schema(desc);
+        result.clinical[type] = connection.model(name, schema);
+    });
+    return result;
 };
 
 exports.storageModel = function(connection) {

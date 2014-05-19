@@ -58,7 +58,12 @@ describe('storage.files', function() {
     
     before(function(done) {
         for (var i=0; i<6; ++i) contents[i] = createFileContent(i);
-        db.connect('localhost', 'storagetest', function(err, result) {
+        var options = {
+            dbName: 'storagetest',
+            typeToSection: {},
+            typeToSchemaDesc: {}
+        };
+        db.connect('localhost', options, function(err, result) {
             if (err) {
                 done(err);
             } else {
