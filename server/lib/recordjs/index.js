@@ -4,17 +4,19 @@ var ObjectId = require('mongodb').ObjectID;
 var _ = require('underscore');
 
 var models = require('./models');
-var storageModel = models.storageModel();
-
+var storage = require('./storage');
 // Connection
 
 var databaseName = 'dre';
 
 var db = null;
 var grid = null;
+var storageModel = models.storageModel();
+
+var dbinfo = null;
 
 exports.connectDatabase = function connectDatabase(server, callback) {
-    if (db != null) {
+    if (dbinfo != null) {
         callback();
         return;
     }
@@ -25,103 +27,38 @@ exports.connectDatabase = function connectDatabase(server, callback) {
             db = dbase;
             grid = new mongo.Grid(dbase, 'storage');
             mongoose.connect('mongodb://' + server + '/'+ databaseName);
+            storageModel = models.storageModel();
+            dbinfo = {};
+            dbinfo.db = db;
+            dbinfo.grid = grid;
+            dbinfo.storageModel = storageModel;
             callback();
         }
     });
 };
 
-// Records
 
-//Saves raw file to gridFS.
+
+
 exports.saveRecord = function(patKey, inboundFile, inboundFileInfo, inboundXMLType, callback) {
-    var buffer = new Buffer(inboundFile);
-
-    var fileMetadata = {patKey: patKey};
-    if (inboundXMLType) {
-        fileMetadata.fileClass = inboundXMLType;
-    }
-
-    grid.put(buffer, {
-        metadata: fileMetadata,
-        filename: inboundFileInfo.name,
-        content_type: inboundFileInfo.type,
-    }, function(err, fileInfo) {
-        if (err) {
-            callback(err);
-        } else {
-            /*Relax for now pending further investigation, seems to be chunking overhead.*/
-            //if (fileInfo.length !== inboundFileInfo.size) {
-            //  callback('file size mismatch');
-            //} else {
-            callback(null, fileInfo);
-            //}
-        }
-    });
+    storage.saveRecord(dbinfo, patKey, inboundFile, inboundFileInfo, inboundXMLType, callback);
 };
 
 exports.getRecordList = function(patKey, callback) {
-    db.collection('storage.files', function(err, recordCollection) {
-        if (err) {
-            callback(err);
-        } else {
-            recordCollection.find({"metadata.patKey": patKey}, function(err, findResults) {
-                findResults.toArray(function(err, recordArray) {
-                    var recordResponseArray = [];
-                    for (var i = 0; i < recordArray.length; i++) {
-                        var recordJSON = {};
-
-                        recordJSON.file_id = recordArray[i]._id;
-                        recordJSON.file_name = recordArray[i].filename;
-                        recordJSON.file_size = recordArray[i].length;
-                        recordJSON.file_mime_type = recordArray[i].contentType;
-                        recordJSON.file_upload_date = recordArray[i].uploadDate;
-
-                        if (recordArray[i].metadata.fileClass) {
-                            recordJSON.file_class = recordArray[i].metadata.fileClass;
-                        }
-
-                        recordResponseArray.push(recordJSON);
-                    }
-
-                    callback(null, recordResponseArray);
-                });
-            });
-        }
-    });
+    storage.getRecordList(dbinfo, patKey, callback);
 };
 
 exports.getRecord = function(fileId, callback) {
-    //Removed owner validation for demo purposes.
-    db.collection('storage.files', function(err, coll) {
-        if (err) {
-            callback(err);
-        } else {
-            var objectID = new ObjectId(fileId);
-            coll.findOne({"_id": objectID}, function(err, results) {
-                if (err) {
-                    callback(err);
-                } else if (results) {
-                    grid.get(objectID, function(err, data) {
-                        if (err) {
-                            callback(err);
-                        } else {
-                            var returnFile = data.toString();
-                            callback(null, results.filename, returnFile);
-                        }
-                    });
-                } else {
-                    callback(new Error('no file'));
-                }
-            });
-        }
-    });
+    storage.getRecord(dbinfo, fileId, callback);
 };
 
 exports.recordCount = function(patKey, callback) {
-    storageModel.count({"metadata.patKey" : patKey}, function(err, count) {
-        callback(err, count);
-    });
+    storage.recordCount(dbinfo, patKey, callback);
 };
+
+
+
+
 
 // Allergies
 
