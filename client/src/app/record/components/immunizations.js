@@ -39,7 +39,6 @@ angular.module('dre.record.immunizations', [])
       }).
       success(function(data, status, headers, config) {
         $scope.immunizations = data.immunizations;
-        console.log($scope.immunizations);
         if ($scope.immunizations.length > 0) {
           $scope.displayImmunizations = true;
         } else {
@@ -314,7 +313,6 @@ angular.module('dre.record.immunizations', [])
       if ($scope.immunizations[i].performer.name) {
         for (var perName in $scope.immunizations[i].performer.name) {
           recordFunctions.formatName($scope.immunizations[i].performer.name[perName]);  
-          console.log($scope.immunizations[i].performer.name[perName]);
         }
         
         

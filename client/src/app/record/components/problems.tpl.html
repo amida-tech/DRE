@@ -1,0 +1,84 @@
+<!--Begin Medications-->
+
+<div class="col-md-12">
+	<br/>
+	<span class="lead">Problem List</span>
+	<br/>
+	<br/>
+</div>
+<div ng-hide="displayProblems" class="panel-title">No problems are currently in your record.</div>
+<div ng-show="displayProblems" class="panel-group" id="#accordian-problems" ng-repeat="problem in problems | orderBy:problemPredicate">
+
+	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Record Sources</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+							<tr><td><strong>Source Information</strong></td></tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="attribution in allergy.metadata.attribution">
+								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record_id.filename}}</a></td>
+								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
+								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+
+			<a data-toggle="collapse" data-parent="#accordian-problems" data-target="#problem-{{$index}}">
+				<div class="panel-title" style="cursor:pointer;">
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+					<span style="text-transform:uppercase;">{{problem.name}} - {{problem.status}}</span>
+					<span class="pull-right" style="text-transform:uppercase;" ng-show="problem.statusFlag">{{problem.date[0].displayDate}}</span>
+					<span class="pull-right" style="text-transform:uppercase;" ng-hide="problem.statusFlag">{{problem.date[1].displayDate}}</span>
+				</div>
+			</a>
+		</div>
+		<div id="problem-{{$index}}" class="panel-collapse collapse">
+			<div class="panel-body">
+				<div id="myTabContent" >
+					<div class="col-md-12">
+						<h4>Details</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
+							<div class="pull-left col-md-12">{{problem.date[0].displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
+							<div class="pull-left col-md-12">{{problem.date[1].displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Onset Age:</strong></div><br/>
+							<div class="pull-left col-md-12">{{problem.onsetAgeDisplay}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Problem Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{problem.code}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Problem Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{problem.code_system_name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Reported Status:</strong></div><br/>
+							<div class="pull-left col-md-12">{{problem.patient_status}}</div>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
