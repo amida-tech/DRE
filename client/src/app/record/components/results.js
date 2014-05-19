@@ -150,7 +150,6 @@ angular.module('dre.record.results', [])
       for (var iRes in $scope.results[i].results) {
         recordFunctions.formatQuantity($scope.results[i].results[iRes].physicalQuantity);
         recordFunctions.formatDate($scope.results[i].results[iRes].measuredAt);
-
       }
 
     }
