@@ -61,6 +61,9 @@ app.use(parser);
 var allergies = require('./lib/record/allergies');
 app.use(allergies);
 
+var immunizations = require('./lib/record/immunizations');
+app.use(immunizations);
+
 var merges = require('./lib/merge');
 app.use(merges);
 

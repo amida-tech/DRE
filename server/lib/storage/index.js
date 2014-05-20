@@ -46,11 +46,26 @@ function saveComponents(masterObject, sourceID, callback) {
 }
 
 function getSavedComponents(callback) {
-    var savedObject = {};
+    var responseObject = {};
+    var responseIter = 0;
+    var patient_id = 'test';
 
-    record.getAllergies('test', function(err, savedAllergies) {
-        savedObject.allergies = savedAllergies;
-        callback(null, savedObject);
+    function checkComponentsComplete () {
+        if (responseIter === 2) {
+            callback(null, responseObject);
+        }
+    }
+
+    record.getAllergies(patient_id, function(err, savedAllergies) {
+        responseObject.allergies = savedAllergies;
+        responseIter = responseIter + 1;
+        checkComponentsComplete();
+    });
+
+    record.getImmunizations(patient_id, function(err, savedImmunizations) {
+        responseObject.immunizations = savedImmunizations;
+        responseIter = responseIter + 1;
+        checkComponentsComplete();
     });
 }
 
@@ -105,7 +120,11 @@ function processUpload(recordUpload, callback) {
                                             if (err) {
                                                 callback(err);
                                             } else {
+                                                //Must expand get Saved to return all components.
+
+                                                console.log(recParsed);
                                                 dre.reconcile(recParsed, recSaved, fileInfo._id, function(err, recMatchResults) {
+
                                                     saveComponents(recMatchResults, fileInfo._id, function(err, res) {
                                                         if (err) {
                                                             callback(err);
