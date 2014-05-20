@@ -90,7 +90,9 @@ exports.mergeCount = function(type, conditions, callback) {
 
 var capitalize = function(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);
-}; 
+};
+
+module.exports.capitalize = capitalize;
 
 Object.keys(typeToSection).forEach(function(type) {
     var sectionName = capitalize(typeToSection[type]);
