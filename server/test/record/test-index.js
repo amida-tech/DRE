@@ -43,31 +43,26 @@ describe('CCD_1', function() {
     before(function(done) {
         var filepath  = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
         xml = fs.readFileSync(filepath, 'utf-8');
-        bb.parse(xml, {component: 'ccda_ccd'}, function(err, result) {
+        var result = bb.parseString(xml);
+        ccd = result.data;
+        options = {
+            dbName: 'indextest',
+            typeToSection: record.typeToSection,
+            typeToSchemaDesc: record.typeToSchemaDesc
+        };
+        db.connect('localhost', options, function(err, dbinfoin) {
             if (err) {
                 done(err);
             } else {
-                ccd = result.toJSON();
-                options = {
-                    dbName: 'indextest',
-                    typeToSection: record.typeToSection,
-                    typeToSchemaDesc: record.typeToSchemaDesc
-                };
-                db.connect('localhost', options, function(err, dbinfoin) {
-                    if (err) {
-                        done(err);
-                    } else {
-                        dbinfo = dbinfoin;
-                        done();
-                    }    
-                });
-            }
+                dbinfo = dbinfoin;
+                done();
+            }    
         });
     });
     
     it('check ccd/dbinfo', function(done) {
         assert.ok(ccd, 'ccd problem');
-        assert.ok(ccd, 'dbinfo problem');
+        assert.ok(dbinfo, 'dbinfo problem');
         done();
     });
     
