@@ -21,6 +21,7 @@ exports.compare = function compare(a, b) {
 
         //TODO: relies on normalization of code attribute in parser
 
+        /*
         // same allergen +50%
         if (a.code === b.code  && a.code_system_name === b.code_system_name) {
             pct = pct + 50;
@@ -34,7 +35,7 @@ exports.compare = function compare(a, b) {
             if (a.severity === b.severity) {
                 pct = pct + 10;
             }
-        }
+        }*/
 
         //console.log({"match": "partial", "percent" : pct});
         if (pct === 0)
