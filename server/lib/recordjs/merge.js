@@ -14,6 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
+exports.saveMerge = function(dbinfo, mergeObject, callback) {
+    var Model = dbinfo.mergeModels[mergeObject.entry_type];
+    var saveMerge = new Model(mergeObject);
+
+    saveMerge.save(function(err, saveResults) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, saveResults);
+        }
+    });
+};
+
 exports.getMerges = function(dbinfo, type, typeFields, recordFields, callback) {
     var model = dbinfo.mergeModels[type];
     var allFields = typeFields + ' ' + recordFields;
@@ -23,19 +36,6 @@ exports.getMerges = function(dbinfo, type, typeFields, recordFields, callback) {
             callback(err);
         } else {
             callback(null, mergeResults);
-        }
-    });
-};
-
-var saveMerge = function(dbinfo, mergeObject, callback) {
-    var Model = dbinfo.mergeModels[mergeObject.entry_type];
-    var saveMerge = new Model(mergeObject);
-
-    saveMerge.save(function(err, saveResults) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null, saveResults);
         }
     });
 };

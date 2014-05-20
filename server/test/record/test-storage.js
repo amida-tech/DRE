@@ -82,26 +82,28 @@ describe('storage.files', function() {
     });
     
     it('saveRecord', function(done) {
-    	var f = function(index) {
+        var f = function(fullCount, index, callback) {
             var fileinfo = {
                 name: getFileName(index),
                 type: getContentType(index)
             }
             storage.saveRecord(dbinfo, pats[index], contents[index], fileinfo, classes[index], function(err, result) {
                 if (err) {
-                    done(err);
+                    callback(err);
                 } else {
                     ids[index] = result._id;
                     var count = 0;
-                    for (var j=0; j<6; ++j) if (ids[j]) ++count;
-                    if (count === 6) {
-                        done();
+                    for (var j=0; j<fullCount; ++j) if (ids[j]) ++count;
+                    if (count === fullCount) {
+                        callback();
                     }
                 }
             });
     	};
         for (var i=0; i<6; ++i) {
-            f(i);
+            f(6, i, function(err) {
+                done(err);
+            });
         }
     });
     

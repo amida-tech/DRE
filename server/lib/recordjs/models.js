@@ -24,74 +24,54 @@ var bbToMongoose = function(description) {
     if (! description) return null;
     if (Array.isArray(description)) {
         var elem = bbToMongoose(description[0]);
-        if (! elem) return null;
+        if (! elem) throw new Error('unknown description in array: ' + description);
         return [elem];
     } else if (typeof description === "object") {
         var result = {};
         Object.keys(description).forEach(function(key) {
             var elem = bbToMongoose(description[key]);
-            if (! elem) return null;
+            if (! elem) throw new Error('unknown description in object: ' + description);
             result[key] = elem;
         });
         return result;
     } else {
         if (description === 'string') {
-            return String;
+            return {type: String};
         } else if (description === 'datetime') {
-            return Date;
+            return {type: Date};
+        } else if (description === 'number') {
+            return {type: Number};
+        } else if (description === 'boolean') {
+            return {type: Boolean};
         } else {
-            return null;
+            throw new Error('unknown description: ' + description);
         }
     }
 };
 
-var modelDescription = function(type, callback) {
-    var name = typeToSection[type];
-    if (name) {
-        bb.generateSchema(name, function(err, bbd) {
-            if (err) {
-                callback(err);
+exports.modelDescription = function(name, callback) {
+    var options = {
+        component: name
+    };
+    bb.generateSchema(options, function(err, bbd) {
+        if (err) {
+            callback(err);
+        } else {
+            var bbdc = (name === 'ccda_demographics') ? bbd : bbd[0];
+            var d = bbToMongoose(bbdc);
+            if (! d) {
+                callback(new Error('unsupported bluebutton schema description'));
             } else {
-                bbd = (name === 'demographics') ? bbd : bbd[0];
-                var d = bbToMongoose(bbd);
-                if (! d) {
-                    callback(new Error('unsupported bluebutton schema description'));
-                } else {
-                    callback(null, d);
-                }
+                callback(null, d);
             }
-        });
-    } else {
-        callback(new Error("unrecognized type " + type));
-    }
+        }
+    });
 };
 
 var storageColName = 'storage.files';
 
 exports.models = function(connection, typeToSection, typeToSchemaDesc) {
     if (! connection) connection = mongoose;
-
-    if (! typeToSection) {
-        typeToSection = {
-            allergy: 'allergies',
-            procedure: 'procedures',
-            medication: 'medications',
-            encounter: 'encounters',
-            vital: 'vitals',
-            result: 'results',
-            social: 'socialHistory',
-            immunization: 'immunizations',
-            demographics: 'demographics',
-            problem: 'problems'
-        };
-    
-        Object.keys(typeToSection).forEach(function(type) {
-            modelDescription('ccda_' + name, function(err, desc) {  // this is actually synch.  need to change in blue-button
-                if (err) return null;
-                typeToSchemaDesc[type] = desc;
-            });
-        });
-    }
 
     var result = {
         merge: {},
