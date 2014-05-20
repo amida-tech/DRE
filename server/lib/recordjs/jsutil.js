@@ -1,5 +1,5 @@
 /*=======================================================================
-Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
+Copyright 2014 Amida Technology Solutions (http://amida-tech.com)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-var mongoose = require('mongoose');
+exports.deepDelete = function deepDelete(obj, prop) {
+    if (obj && (typeof obj === 'object')) {
+        delete obj[prop];
+        Object.keys(obj).forEach(function(key) {
+            deepDelete(obj[key], prop);
+        });
+    }
+};
 
-var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
-
-//GridFS will automatically make this, but a schema is needed for population/refs.
-var storageSchema = new Schema({
-    patKey: String,
-    metadata: {
-        class: String
-    },
-    md5: String,
-    uploadDate: Date,
-    chunkSize: Number,
-    length: Number,
-    contentType: String,
-    filename: String,
-});
-
-module.exports = mongoose.model('storage.files', storageSchema);
+exports.deepEmptyArrayDelete = function deepEmptyArrayDelete(obj) {
+    if (typeof obj === 'object') {
+        Object.keys(obj).forEach(function(key) {
+            if (obj[key] && Array.isArray(obj[key]) && obj[key].length === 0) {
+                delete obj[key];
+            } else {
+                deepEmptyArrayDelete(obj[key]);
+            }
+        });
+    }
+}

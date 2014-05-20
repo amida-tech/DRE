@@ -21,7 +21,7 @@ var parser = require('../parser/index.js');
 var dre = require('../dre/index.js');
 
 var extractRecord = parser.extractRecord;
-var record = require('../record');
+var record = require('../recordjs');
 
 function validateFileMessage(requestObject, callback) {
     //Placeholder validation function.

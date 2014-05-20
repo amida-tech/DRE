@@ -16,7 +16,7 @@ limitations under the License.
 
 var express = require('express');
 var app = module.exports = express();
-var record = require('../../record.js');
+var record = require('../../recordjs');
 
 app.get('/api/v1/record/allergies', function(req, res) {
     record.getAllergies('test', function(err, allergyList) {
