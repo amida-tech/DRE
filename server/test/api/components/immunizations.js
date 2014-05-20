@@ -43,7 +43,7 @@ describe('Immunizations API', function() {
         if (err) {
           return done(err);
         }
-        console.log(res.body);
+        //console.log(res.body);
         done();
       });
   });
