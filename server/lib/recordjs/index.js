@@ -53,7 +53,7 @@ exports.connectDatabase = function connectDatabase(server, dbName, callback) {
             callback(err);
         } else {
             dbinfo = dbinfoin;
-            callback(null);
+            callback(null, dbinfo);
         }    
     });
 };
@@ -77,10 +77,6 @@ exports.recordCount = function(patKey, callback) {
 };
 
 // Merges
-
-var saveMerge = function(mergeObject, callback) {
-    merge.saveMerge(dbinfo, mergeObject, callback);
-};
 
 exports.getMerges = function(type, typeFields, recordFields, callback) {
     merge.getMerges(type, typeFields, recordFields, callback);
@@ -108,10 +104,6 @@ Object.keys(typeToSection).forEach(function(type) {
         section.getSection(dbinfo, type, patKey, callback);
     };
 
-    exports['get' + typeName] = exports.getAllergy = function(input_id, callback) {
-        section.getEntry(dbinfo, type, input_id, callback);
-    };
-
     exports['add' + typeName + 'MergeEntry'] = function(update_id, mergeInfo, callback) {
         section.addEntryMergeEntry(dbinfo, type, update_id, mergeInfo, callback);
     };
@@ -137,3 +129,14 @@ exports.cleanSectionEntries = function(input) {
     }
     return result;
 };
+ 
+exports.cleanSectionEntry = function(input) {
+    var cleanEntry = _.clone(input);
+    ['__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
+        delete cleanEntry[key];
+    });
+    //jsutil.deepDelete(cleanEntry, '_id');
+    //jsutil.deepEmptyArrayDelete(cleanEntry);
+    return cleanEntry;
+};
+

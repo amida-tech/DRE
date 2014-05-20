@@ -26,11 +26,16 @@ var expect = chai.expect;
 var assert = chai.assert;
 
 describe('CCD_1', function() {
+    var dbinfo = null;
+    var xml = null;
     var ccd = null;
+    var fileId = null;
+    var allergies = null;
+    var storedAllergies = null;
 
     before(function(done) {
         var filepath  = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
-        var xml = fs.readFileSync(filepath, 'utf-8');
+        xml = fs.readFileSync(filepath, 'utf-8');
         bb.parse(xml, {component: 'ccda_ccd'}, function(err, result) {
             if (err) {
                 done(err);
@@ -40,6 +45,7 @@ describe('CCD_1', function() {
                     if (err) {
                         done(err);
                     } else {
+                        dbinfo = dbresult;
                         done();
                     }
                 });
@@ -52,16 +58,30 @@ describe('CCD_1', function() {
         done();
     });
     
+    it('storage', function(done) {
+        var fileInfo = {name: 'ccd_1.xml', type: 'text/xml'};
+        record.saveRecord('pat1', xml, fileInfo, 'ccda', function(err, result) {
+            if (err) {
+                done(err);
+            } else {
+                fileId = result._id;
+                expect(fileId).to.exist;
+                done();
+            }
+        });
+    });
+    
     it('saveAllergies/getAllergies', function(done) {
-        var allergies = ccd.allergies;
+        allergies = ccd.allergies;
         var order = {};
         var n = allergies.length;
         for (var i=0; i<n; ++i) {
             order[allergies[i].name] = i;
         }
-        record.saveNewAllergies('pat1', allergies, null, function(err) {
+        record.saveNewAllergies('pat1', allergies, fileId, function(err) {
             assert.notOk(err, 'saveAllergies failed');
             record.getAllergies('pat1', function(err, results) {
+                storedAllergies = results;
                 var cleanResults = record.cleanSectionEntries(results);
                 var orderedResults = [];
                 for (var j=0; j<n; ++j) {
@@ -71,5 +91,21 @@ describe('CCD_1', function() {
                 done();
             });
         });
+    });
+    
+    it('allergyCount', function(done) {
+        record.allergyCount({patKey: 'pat1'}, function(err, count) {
+            if (err) {
+                done(err);
+            } else {
+                expect(3).to.equal(count);
+                done();
+            }
+        });
+    });
+    
+    after(function(done) {
+        dbinfo.db.dropDatabase();
+        done();
     });
 });

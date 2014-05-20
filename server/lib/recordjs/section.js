@@ -43,7 +43,7 @@ exports.sectionEntryCount = exports.sectionEntryCount = function(dbinfo, type, c
 
 var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
     var model = dbinfo.models[type];
-    model.findOne({_id: input_id}, function(err, entry) {
+    model.findOne({"_id": input_id}, function(err, entry) {
         if (err) {
             callback(err);
         } else {
