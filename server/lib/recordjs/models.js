@@ -49,23 +49,11 @@ var bbToMongoose = function(description) {
     }
 };
 
-exports.modelDescription = function(name, callback) {
-    var options = {
-        component: name
-    };
-    bb.generateSchema(options, function(err, bbd) {
-        if (err) {
-            callback(err);
-        } else {
-            var bbdc = (name === 'ccda_demographics') ? bbd : bbd[0];
-            var d = bbToMongoose(bbdc);
-            if (! d) {
-                callback(new Error('unsupported bluebutton schema description'));
-            } else {
-                callback(null, d);
-            }
-        }
-    });
+exports.modelDescription = function(name) {
+    var bbd = bb.generateSchema(name);
+    var bbdc = (name === 'ccda_demographics') ? bbd : bbd[0];
+    var d = bbToMongoose(bbdc)
+    return d;
 };
 
 var storageColName = 'storage.files';
@@ -93,6 +81,8 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
         desc.patKey = String;
         desc.metadata =  {attribution: [{type: ObjectId, ref: mergeColName}]};
         var schema = new Schema(desc);
+        
+        
         result.clinical[type] = connection.model(colName, schema);
     });
     return result;

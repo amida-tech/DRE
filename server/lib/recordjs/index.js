@@ -12,9 +12,9 @@ var jsutil = require('./jsutil');
 
 var typeToSection = exports.typeToSection = {
     allergy: 'allergies',
-    //procedure: 'procedures',
-    //medication: 'medications'//,
-    //encounter: 'encounters',
+    procedure: 'procedures',
+    medication: 'medications',
+    encounter: 'encounters',
     vital: 'vitals',
     result: 'results',
     social: 'socialHistory',
@@ -25,10 +25,9 @@ var typeToSection = exports.typeToSection = {
 
 var typeToSchemaDesc = {};
 Object.keys(typeToSection).forEach(function(type) {
-    models.modelDescription('ccda_' + typeToSection[type], function(err, desc) {  // this is actually synch.  need to change in blue-button
-        if (err) throw(err);
-        typeToSchemaDesc[type] = desc;
-    });
+    var desc = models.modelDescription('ccda_' + typeToSection[type]);
+    if (!desc) throw new Error('cannot get schema for ' + 'ccda_' + typeToSection[type]);
+    typeToSchemaDesc[type] = desc;
 });
 //typeToSchemaDesc.medication.date = typeToSchemaDesc.medication.date[0];
 exports.typeToSchemaDesc = typeToSchemaDesc;
