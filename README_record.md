@@ -70,7 +70,7 @@ Get the sections from the database
 var id0 = null;
 record.getAllergies('patientKey', function(err, result) {
   if (err) throw err;
-  id0 = result._id;
+  id0 = result[0]._id;
 });
 
 ```
