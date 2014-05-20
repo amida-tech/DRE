@@ -30,8 +30,19 @@ function validateFileMessage(requestObject, callback) {
 
 //Wrapper function to save all components of an incoming object.
 function saveComponents(masterObject, sourceID, callback) {
+
+    //TODO:  Wrap for completion confirmation.
     for (var secName in masterObject) {
-        record["saveNew" + record.capitalize(secName)]('test', masterObject[secName], sourceID, function(err) {
+        //Handle demos differently, since obj not arr.
+        var saveArray = masterObject[secName];
+        if (secName === 'demographics') {
+            var tmpArray = [];
+            tmpArray.push(masterObject[secName]);
+            saveArray = tmpArray;
+        }
+
+
+        record["saveNew" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
             if (err) {
                 callback(err);
             } else {

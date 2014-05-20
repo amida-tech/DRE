@@ -94,8 +94,8 @@ angular.module('dre.record.encounters', [])
       }];
     };
 
-    //$scope.getRecord();
-    $scope.getStub();
+    $scope.getRecord();
+    //$scope.getStub();
 
     for (var i in $scope.encounters) {
 

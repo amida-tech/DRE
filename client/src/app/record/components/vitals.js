@@ -200,8 +200,8 @@ angular.module('dre.record.vitals', [])
       }];
     };
 
-    //$scope.getRecord();
-    $scope.getStub();
+    $scope.getRecord();
+    //$scope.getStub();
 
     //Restructrure Object.
     var tmpVitals = [];

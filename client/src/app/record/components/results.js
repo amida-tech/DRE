@@ -139,8 +139,8 @@ angular.module('dre.record.results', [])
       }];
     };
 
-    //$scope.getRecord();
-    $scope.getStub();
+    $scope.getRecord();
+    //$scope.getStub();
 
     for (var i in $scope.results) {
       resultDate($scope.results[i]);

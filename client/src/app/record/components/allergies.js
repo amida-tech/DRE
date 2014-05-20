@@ -39,7 +39,6 @@ angular.module('dre.record.allergies', [])
       }).
       success(function(data, status, headers, config) {
         $scope.allergies = data.allergies;
-        console.log($scope.allergies);
         if ($scope.allergies.length > 0) {
           $scope.displayAllergies = true;
         } else {
@@ -136,8 +135,8 @@ angular.module('dre.record.allergies', [])
 
   };
 
-  //$scope.getAllergies();
-  $scope.getStub();
+  $scope.getRecord();
+  //$scope.getStub();
 
     for (var i in $scope.allergies) {
 
