@@ -32,7 +32,7 @@ describe('CCD_1', function() {
     var fileId = null;
     var allergies = null;
     var storedAllergies = null;
-
+    
     before(function(done) {
         var filepath  = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
         xml = fs.readFileSync(filepath, 'utf-8');
@@ -99,6 +99,86 @@ describe('CCD_1', function() {
                 done(err);
             } else {
                 expect(3).to.equal(count);
+                done();
+            }
+        });
+    });
+    
+    it('mergeCount', function(done) {
+        record.mergeCount('allergy', {}, function(err, count) {
+            if (err) {
+                done(err);
+            } else {
+                expect(3).to.equal(count);
+                done();
+            }
+        });
+    });
+    
+    it('getMerges', function(done) {
+        record.getMerges('allergy', 'name severity', 'filename uploadDate', function(err, mergeList) {
+            if (err) {
+                done(err);
+            } else {
+                var order = {};
+                var n = allergies.length;
+                for (var i=0; i<n; ++i) {
+                    order[allergies[i].name] = i;
+                }
+                expect(n).to.equal(mergeList.length);
+                for (var i=0; i<n; ++i) {
+                    var mergeRecord = mergeList[i];
+                    var index = order[mergeRecord.entry_id.name];
+                    expect(index).to.exist;
+                    expect(allergies[index].severity).to.equal(mergeRecord.entry_id.severity);
+                    expect(mergeRecord.record_id.filename).to.equal('ccd_1.xml');
+                    expect(mergeRecord.merge_reason).to.equal('new');
+                }
+                done();
+            }
+        });
+    });
+    
+    it('addAllergyMergeEntry', function(done) {
+        var id = storedAllergies[0]._id;
+        var info = {record_id: fileId, merge_reason: 'duplicate'};
+        record.addAllergyMergeEntry(id, info, function(err) {
+            if (err) {
+                done(err);
+            } else {
+                done();
+            }
+        });
+    });
+    
+    it('mergeCount all', function(done) {
+        record.mergeCount('allergy', {}, function(err, count) {
+            if (err) {
+                done(err);
+            } else {
+                expect(4).to.equal(count);
+                done();
+            }
+        });
+    });
+    
+    it('mergeCount new', function(done) {
+        record.mergeCount('allergy', {merge_reason: 'new'}, function(err, count) {
+            if (err) {
+                done(err);
+            } else {
+                expect(3).to.equal(count);
+                done();
+            }
+        });
+    });
+    
+    it('mergeCount duplidate', function(done) {
+        record.mergeCount('allergy', {merge_reason: 'duplicate'}, function(err, count) {
+            if (err) {
+                done(err);
+            } else {
+                expect(1).to.equal(count);
                 done();
             }
         });

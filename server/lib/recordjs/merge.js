@@ -40,7 +40,7 @@ exports.getMerges = function(dbinfo, type, typeFields, recordFields, callback) {
     });
 };
 
-exports.mergeCount = function(type, conditions, callback) {
+exports.count = function(dbinfo, type, conditions, callback) {
     var model = dbinfo.mergeModels[type];
     model.count(conditions, function(err, count) {
         callback(err, count);
