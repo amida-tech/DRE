@@ -84,6 +84,9 @@ exports.getRecord = function(dbinfo, fileId, callback) {
         if (err) {
             callback(err);
         } else {
+            if (typeof fileId === 'string') {
+                fileId = mongoose.Types.ObjectId(fileId);
+            }
             coll.findOne({"_id": fileId}, function(err, results) {
                 if (err) {
                     callback(err);

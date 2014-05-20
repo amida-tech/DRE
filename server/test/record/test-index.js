@@ -22,6 +22,12 @@ var fs = require('fs');
 
 var record = require('../../lib/recordjs');
 
+var merge = require('../../lib/recordjs/merge');
+var section = require('../../lib/recordjs/section');
+var storage = require('../../lib/recordjs/storage');
+var db = require('../../lib/recordjs/db');
+var jsutil = require('../../lib/recordjs/jsutil');
+
 var expect = chai.expect;
 var assert = chai.assert;
 
@@ -32,6 +38,7 @@ describe('CCD_1', function() {
     var fileId = null;
     var allergies = null;
     var storedAllergies = null;
+    var dbinfo = null;
     
     before(function(done) {
         var filepath  = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
@@ -41,26 +48,33 @@ describe('CCD_1', function() {
                 done(err);
             } else {
                 ccd = result.toJSON();
-                record.connectDatabase('localhost', 'indextest', function(err, dbresult) {
+                options = {
+                    dbName: 'indextest',
+                    typeToSection: record.typeToSection,
+                    typeToSchemaDesc: record.typeToSchemaDesc
+                };
+                db.connect('localhost', options, function(err, dbinfoin) {
                     if (err) {
                         done(err);
                     } else {
-                        dbinfo = dbresult;
+                        dbinfo = dbinfoin;
                         done();
-                    }
+                    }    
                 });
             }
         });
     });
     
-    it('check ccd', function(done) {
+    it('check ccd/dbinfo', function(done) {
         assert.ok(ccd, 'ccd problem');
+        assert.ok(ccd, 'dbinfo problem');
         done();
     });
     
+    
     it('storage', function(done) {
         var fileInfo = {name: 'ccd_1.xml', type: 'text/xml'};
-        record.saveRecord('pat1', xml, fileInfo, 'ccda', function(err, result) {
+        storage.saveRecord(dbinfo, 'pat1', xml, fileInfo, 'ccda', function(err, result) {
             if (err) {
                 done(err);
             } else {
@@ -78,11 +92,17 @@ describe('CCD_1', function() {
         for (var i=0; i<n; ++i) {
             order[allergies[i].name] = i;
         }
-        record.saveNewAllergies('pat1', allergies, fileId, function(err) {
+        section.saveNewEntries(dbinfo, 'allergy', 'pat1', allergies, fileId, function(err) {
             assert.notOk(err, 'saveAllergies failed');
-            record.getAllergies('pat1', function(err, results) {
+            section.getSection(dbinfo, 'allergy', 'pat1', function(err, results) {
                 storedAllergies = results;
-                var cleanResults = record.cleanSectionEntries(results);
+                var cleanResultsX = record.cleanSectionEntries(results);
+                var cleanResults = [];
+                for (var i=0; i<cleanResultsX.length; ++i) {
+                    cleanEntry = cleanResultsX[i];
+                    jsutil.deepEmptyArrayDelete(cleanEntry);
+                    cleanResults[i] = cleanEntry;
+                }
                 var orderedResults = [];
                 for (var j=0; j<n; ++j) {
                     orderedResults[order[cleanResults[j].name]] = cleanResults[j];
@@ -94,7 +114,7 @@ describe('CCD_1', function() {
     });
     
     it('allergyCount', function(done) {
-        record.allergyCount({patKey: 'pat1'}, function(err, count) {
+        section.sectionEntryCount(dbinfo, 'allergy', {patKey: 'pat1'}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -105,7 +125,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount', function(done) {
-        record.mergeCount('allergy', {}, function(err, count) {
+        merge.count(dbinfo, 'allergy', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -116,7 +136,7 @@ describe('CCD_1', function() {
     });
     
     it('getMerges', function(done) {
-        record.getMerges('allergy', 'name severity', 'filename uploadDate', function(err, mergeList) {
+        merge.getMerges(dbinfo, 'allergy', 'name severity', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 done(err);
             } else {
@@ -142,7 +162,7 @@ describe('CCD_1', function() {
     it('addAllergyMergeEntry', function(done) {
         var id = storedAllergies[0]._id;
         var info = {record_id: fileId, merge_reason: 'duplicate'};
-        record.addAllergyMergeEntry(id, info, function(err) {
+        section.addEntryMergeEntry(dbinfo, 'allergy', id, info, function(err) {
             if (err) {
                 done(err);
             } else {
@@ -152,7 +172,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount all', function(done) {
-        record.mergeCount('allergy', {}, function(err, count) {
+        merge.count(dbinfo, 'allergy', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -163,7 +183,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount new', function(done) {
-        record.mergeCount('allergy', {merge_reason: 'new'}, function(err, count) {
+        merge.count(dbinfo, 'allergy', {merge_reason: 'new'}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -174,7 +194,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount duplidate', function(done) {
-        record.mergeCount('allergy', {merge_reason: 'duplicate'}, function(err, count) {
+        merge.count(dbinfo, 'allergy', {merge_reason: 'duplicate'}, function(err, count) {
             if (err) {
                 done(err);
             } else {

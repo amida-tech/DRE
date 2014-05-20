@@ -10,7 +10,7 @@ var merge = require('./merge');
 var section = require('./section');
 var jsutil = require('./jsutil');
 
-var typeToSection = {
+var typeToSection = exports.typeToSection = {
     allergy: 'allergies',
     //procedure: 'procedures',
     //medication: 'medications'//,
@@ -23,7 +23,7 @@ var typeToSection = {
     problem: 'problems'
 };
 
-typeToSchemaDesc = {};
+var typeToSchemaDesc = {};
 Object.keys(typeToSection).forEach(function(type) {
     models.modelDescription('ccda_' + typeToSection[type], function(err, desc) {  // this is actually synch.  need to change in blue-button
         if (err) throw(err);
@@ -31,17 +31,18 @@ Object.keys(typeToSection).forEach(function(type) {
     });
 });
 //typeToSchemaDesc.medication.date = typeToSchemaDesc.medication.date[0];
+exports.typeToSchemaDesc = typeToSchemaDesc;
 
 var dbinfo = null;
 
 exports.connectDatabase = function connectDatabase(server, dbName, callback) {
-    if (dbinfo != null) {
-        callback();
-        return;
-    }
     if (! callback) {
         callback = dbName;
         dbName = 'dre';
+    }
+    if (dbinfo != null) {
+        callback();
+        return;
     }
     options = {
         dbName: dbName,
@@ -123,9 +124,11 @@ exports.cleanSectionEntries = function(input) {
         ['__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
             delete cleanEntry[key];
         });
-        jsutil.deepDelete(cleanEntry, '_id');
-        jsutil.deepEmptyArrayDelete(cleanEntry);
-        result.push(cleanEntry);
+        if (cleanEntry) {
+            jsutil.deepDelete(cleanEntry, '_id');
+            //jsutil.deepEmptyArrayDelete(cleanEntry);
+            result.push(cleanEntry);
+        }
     }
     return result;
 };

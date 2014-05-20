@@ -147,7 +147,7 @@ describe('storage.files', function() {
     it('getRecord', function(done) {
         var count = 0;
         var f = function(index) {
-            storage.getRecord(dbinfo, ids[index], function(err, filename, content) {
+            storage.getRecord(dbinfo, ids[index].toString(), function(err, filename, content) {
                 if (err) {
                     done(err);
                 } else {
