@@ -60,7 +60,6 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
     function checkSectionLoopComplete(iteration, totalSections) {
         if (iteration === (totalSections - 1)) {
-            console.log(newObject);
             callback(null, newObject);
         }
     }

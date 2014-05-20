@@ -30,18 +30,14 @@ function validateFileMessage(requestObject, callback) {
 
 //Wrapper function to save all components of an incoming object.
 function saveComponents(masterObject, sourceID, callback) {
-    //console.log(masterObject);
-    if (masterObject.allergies.length > 0) {
-        record.saveNewAllergies('test', masterObject.allergies, sourceID, function(err) {
+    for (var secName in masterObject) {
+        record["saveNew" + record.capitalize(secName)]('test', masterObject[secName], sourceID, function(err) {
             if (err) {
                 callback(err);
             } else {
                 callback(null);
             }
         });
-    } else {
-        callback(null);
-        //Need to have a final check.
     }
 }
 
