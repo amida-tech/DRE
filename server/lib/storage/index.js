@@ -121,10 +121,7 @@ function processUpload(recordUpload, callback) {
                                                 callback(err);
                                             } else {
                                                 //Must expand get Saved to return all components.
-
-                                                console.log(recParsed);
                                                 dre.reconcile(recParsed, recSaved, fileInfo._id, function(err, recMatchResults) {
-
                                                     saveComponents(recMatchResults, fileInfo._id, function(err, res) {
                                                         if (err) {
                                                             callback(err);

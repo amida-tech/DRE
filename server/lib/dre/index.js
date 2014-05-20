@@ -3,13 +3,20 @@ var app = module.exports = express();
 var Match = require('./match.js');
 var compare = require('./match/compare-partial.js').compare;
 var record = require('../recordjs');
+var bbMatch = require("blue-button-match");
 
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
-function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, callback) {
-    function removeAllergyMatches(allergyMatches, srcAllergyArray, callback) {
-        //This is all types of broken. 
-        function updateDuplicateAllergies(iter, update_id, callback) {
-            var mergeInfo = {record_id: newSourceID, merge_reason: 'duplicate'};
+function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
+
+    function removeMatches(srcMatches, srcArray, section, callback) {
+
+        var returnArray = [];
+
+        function updateDuplicate(iter, update_id, callback) {
+            var mergeInfo = {
+                record_id: newSourceID,
+                merge_reason: 'duplicate'
+            };
             record.addAllergyMergeEntry(update_id, mergeInfo, function(err) {
                 if (err) {
                     callback(err);
@@ -19,75 +26,100 @@ function removeMatchDuplicates(newArray, baseArray, matchResults, newSourceID, c
             });
         }
 
-        var returnArray = [];
-
         function checkLoopComplete(iteration, length) {
             if (iteration === length) {
                 //console.log(returnArray);
-                //console.log(srcAllergyArray);
-                callback(null, returnArray);
+                callback(null, section, returnArray);
             }
         }
 
-        for (var i = 0; i < allergyMatches.length; i++) {
-            if (allergyMatches[i].match === 'duplicate') {
-                //Update New Array.
-                //console.log(allergyMatches[i].src_id);
-                //srcAllergyArray.splice(allergyMatches[i].src_id, 1);
-                //console.log(srcAllergyArray);
-
-                //Update Matched Allergy.
-
-                updateDuplicateAllergies(i, baseArray.allergies[allergyMatches[i].dest_id]._id, function(err, resIter) {
+        for (var i = 0; i < srcMatches.length; i++) {
+            if (srcMatches[i].match === 'duplicate') {
+                /*updateDuplicate(i, baseArray.allergies[allergyMatches[i].dest_id]._id, function(err, resIter) {
                     if (err) {
                         console.error(err);
                     } else {
-                        checkLoopComplete(resIter, (allergyMatches.length - 1));
+                        checkLoopComplete(resIter, (srcMatches.length - 1));
                     }
-                });
-            } else if (allergyMatches[i].match === 'new') {
-
-                returnArray.push(srcAllergyArray[allergyMatches[i].src_id]);
-
-                checkLoopComplete(i, (allergyMatches.length-1));
+                });*/
+            } else if (srcMatches[i].match === 'new') {
+                returnArray.push(srcArray[srcMatches[i].src_id]);
+                checkLoopComplete(i, (srcMatches.length - 1));
             }
+        }
+
+    }
+
+
+    //Establish Loop Limits.
+    var sectionIter = 0;
+    var sectionTotal = 0;
+    for (var iSecCnt in newObject) {
+        sectionTotal++;
+    }
+
+    function checkSectionLoopComplete(iteration, totalSections) {
+        if (iteration === (totalSections - 1)) {
+            console.log(newObject);
+            callback(null, newObject);
         }
     }
 
+    for (var iSec in newObject) {
+        var currentMatchResult = matchResults.match[iSec];
+
+        if (currentMatchResult !== undefined) {
+            if (currentMatchResult.length > 0) {
+
+                removeMatches(currentMatchResult, newObject[iSec], iSec, function(err, returnSection, newEntries) {
+
+
+                    newObject[returnSection] = newEntries;
+                    sectionIter++;
+                    checkSectionLoopComplete(sectionIter, sectionTotal);
+                });
+
+            } else {
+                sectionIter++;
+                checkSectionLoopComplete(sectionIter, sectionTotal);
+            }
+        } else {
+            sectionIter++;
+            checkSectionLoopComplete(sectionIter, sectionTotal);
+        }
+    }
+
+/*
     if (matchResults.match.allergies.length > 0) {
-        //console.log(matchResults.match.allergies);
-        removeAllergyMatches(matchResults.match.allergies, newArray.allergies, function(err, newAllergies) {
-            newArray.allergies = newAllergies;
+        removeMatches(matchResults.match.allergies, newObject.allergies, function(err, newEntries) {
+            newObject.allergies = newEntries;
             //console.log(newArray);
-            callback(null, newArray);
+            callback(null, newObject);
         });
     } else {
-        callback(null, newArray);
-    }
+        callback(null, newObject);
+    }*/
 }
 
-function reconcile(newArray, baseArray, newSourceID, callback) {
-    //shim:  reconciles bb.js output into better format.
 
-    var newObjectForParsing = {};
-    newObjectForParsing.allergies = {};
+//Main function, performs match and dedupes.
+function reconcile(newObject, baseObject, newSourceID, callback) {
 
-    var cleanedArray = newArray.allergies;
-
-    newObjectForParsing.allergies = cleanedArray;
-
-    //shim to strip attribution from basearray for matching.
-    //console.log(baseArray);
-    //stip id, v, metadata.
+    newObjectForParsing = newObject;
 
     var baseObjectForParsing = {};
-    baseObjectForParsing.allergies = {};
-    baseObjectForParsing.allergies = record.cleanSectionEntries(baseArray.allergies);
+    for (var iObj in baseObject) {
+        baseObjectForParsing[iObj] = {};
+        baseObjectForParsing[iObj] = record.cleanSectionEntries(baseObject[iObj]);
+    }
 
     var match = new Match(compare);
     var matchResult = match.match(newObjectForParsing, baseObjectForParsing);
 
-    removeMatchDuplicates(newObjectForParsing, baseArray, matchResult, newSourceID, function(err, newObjectPostMatch) {
+    //console.log(matchResult);
+
+    removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch) {
+        //console.log(newObjectPostMatch);
         callback(null, newObjectPostMatch);
     });
 }
