@@ -113,6 +113,14 @@ Object.keys(typeToSection).forEach(function(type) {
     };
 });
 
+exports.getAllSections = function(patientKey, callback) {
+    allSections.getAllSections(dbinfo, patientKey, callback);
+};
+
+exports.saveAllSectionsAsNew = function(patientKey, patientRecord, fileId, callback) {
+    allSections.saveAllSectionsAsNew(dbinfo, patientKey, patientRecord, fileId, callback);
+};
+
 // Utility
 
 exports.cleanSectionEntries = function(input) {
@@ -120,7 +128,7 @@ exports.cleanSectionEntries = function(input) {
     var n = input.length;
     for (var i =0; i<n; ++i) {
         var cleanEntry = _.clone(input[i]);
-        ['__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
+        ['__index', '__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
             delete cleanEntry[key];
         });
         if (cleanEntry) {
@@ -134,7 +142,7 @@ exports.cleanSectionEntries = function(input) {
  
 exports.cleanSectionEntry = function(input) {
     var cleanEntry = _.clone(input);
-    ['__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
+    ['__index', '__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
         delete cleanEntry[key];
     });
     //jsutil.deepDelete(cleanEntry, '_id');
