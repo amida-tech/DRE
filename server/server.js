@@ -58,11 +58,8 @@ app.use(storage);
 var parser = require('./lib/parser');
 app.use(parser);
 
-var allergies = require('./lib/record/allergies');
-app.use(allergies);
-
-var immunizations = require('./lib/record/immunizations');
-app.use(immunizations);
+var healthRecord = require('./lib/record');
+app.use(healthRecord);
 
 var merges = require('./lib/merge');
 app.use(merges);

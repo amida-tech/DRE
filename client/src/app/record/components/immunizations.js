@@ -293,8 +293,8 @@ angular.module('dre.record.immunizations', [])
 
     };
 
-    //$scope.getImmunizations();
-    $scope.getStub();
+    $scope.getRecord();
+    //$scope.getStub();
 
     for (var i in $scope.immunizations) {
 

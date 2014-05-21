@@ -44,8 +44,8 @@ angular.module('dre.demographics', [])
         url: '/api/v1/record/demographics'
       }).
       success(function(data, status, headers, config) {
-        $scope.demographics = data.demographics;
-        if ($scope.immunizations.length > 0) {
+        $scope.demographics = data.demographics[0];
+        if (data.demographics.length > 0) {
           $scope.displayDemographics = true;
         } else {
           $scope.displayDemographics = false;
@@ -132,8 +132,8 @@ angular.module('dre.demographics', [])
 
     };
 
-    //$scope.getImmunizations();
-    $scope.getStub();
+    $scope.getRecord();
+    //$scope.getStub();
 
 
   }

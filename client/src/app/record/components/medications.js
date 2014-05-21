@@ -36,15 +36,14 @@ angular.module('dre.record.medications', [])
     $scope.getRecord = function() {
       $http({
         method: 'GET',
-        url: '/api/v1/record/allergies'
+        url: '/api/v1/record/medications'
       }).
       success(function(data, status, headers, config) {
-        $scope.allergies = data.allergies;
-        console.log($scope.allergies);
-        if ($scope.allergies.length > 0) {
-          $scope.displayAllergies = true;
+        $scope.medications = data.medications;
+        if ($scope.medications.length > 0) {
+          $scope.displayMedications = true;
         } else {
-          $scope.displayAllergies = false;
+          $scope.displayMedications = false;
         }
       }).
       error(function(data, status, headers, config) {
@@ -117,8 +116,8 @@ angular.module('dre.record.medications', [])
       }];
     };
 
-    //$scope.getRecord();
-    $scope.getStub();
+    $scope.getRecord();
+    //$scope.getStub();
 
     for (var i in $scope.medications) {
 

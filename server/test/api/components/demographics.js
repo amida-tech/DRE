@@ -21,7 +21,7 @@ var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 
-describe('Immunizations API', function() {
+describe('Demographics API', function() {
 
   before(function(done) {
     var filepath = path.join(__dirname, '../../artifacts/standard/CCD_demo1.xml');
@@ -36,8 +36,8 @@ describe('Immunizations API', function() {
       });
   });
 
-  it('Immunizations test', function(done) {
-    api.get('/api/v1/record/immunizations')
+  it('Demographics test', function(done) {
+    api.get('/api/v1/record/demographics')
       .expect(200)
       .end(function(err, res) {
         if (err) {

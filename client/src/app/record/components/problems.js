@@ -125,8 +125,9 @@ angular.module('dre.record.problems', [])
       }];
     };
 
-    //$scope.getRecord();
-    $scope.getStub();
+    $scope.getRecord();
+    //$scope.getStub();
+
     for (var i in $scope.problems) {
       problemStatus($scope.problems[i]);
       onsetAge($scope.problems[i]);

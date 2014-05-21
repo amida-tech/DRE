@@ -238,8 +238,9 @@ angular.module('dre.record.procedures', [])
           ];
     };
 
-    //$scope.getRecord();
-    $scope.getStub();
+    $scope.getRecord();
+    //$scope.getStub();
+
     for (var i in $scope.procedures) {
       recordFunctions.formatDate($scope.procedures[i].date);
       for (var proloc in $scope.procedures[i].providers) {
