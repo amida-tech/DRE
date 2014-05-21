@@ -43,31 +43,26 @@ describe('CCD_1', function() {
     before(function(done) {
         var filepath  = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
         xml = fs.readFileSync(filepath, 'utf-8');
-        bb.parse(xml, {component: 'ccda_ccd'}, function(err, result) {
+        var result = bb.parseString(xml);
+        ccd = result.data;
+        options = {
+            dbName: 'indextest',
+            typeToSection: record.typeToSection,
+            typeToSchemaDesc: record.typeToSchemaDesc
+        };
+        db.connect('localhost', options, function(err, dbinfoin) {
             if (err) {
                 done(err);
             } else {
-                ccd = result.toJSON();
-                options = {
-                    dbName: 'indextest',
-                    typeToSection: record.typeToSection,
-                    typeToSchemaDesc: record.typeToSchemaDesc
-                };
-                db.connect('localhost', options, function(err, dbinfoin) {
-                    if (err) {
-                        done(err);
-                    } else {
-                        dbinfo = dbinfoin;
-                        done();
-                    }    
-                });
-            }
+                dbinfo = dbinfoin;
+                done();
+            }    
         });
     });
     
     it('check ccd/dbinfo', function(done) {
         assert.ok(ccd, 'ccd problem');
-        assert.ok(ccd, 'dbinfo problem');
+        assert.ok(dbinfo, 'dbinfo problem');
         done();
     });
     
@@ -87,27 +82,74 @@ describe('CCD_1', function() {
     
     it('saveAllergies/getAllergies', function(done) {
         allergies = ccd.allergies;
-        var order = {};
         var n = allergies.length;
-        for (var i=0; i<n; ++i) {
-            order[allergies[i].name] = i;
-        }
         section.saveNewEntries(dbinfo, 'allergy', 'pat1', allergies, fileId, function(err) {
             assert.notOk(err, 'saveAllergies failed');
             section.getSection(dbinfo, 'allergy', 'pat1', function(err, results) {
                 storedAllergies = results;
-                var cleanResultsX = record.cleanSectionEntries(results);
-                var cleanResults = [];
-                for (var i=0; i<cleanResultsX.length; ++i) {
-                    cleanEntry = cleanResultsX[i];
-                    jsutil.deepEmptyArrayDelete(cleanEntry);
-                    cleanResults[i] = cleanEntry;
-                }
-                var orderedResults = [];
-                for (var j=0; j<n; ++j) {
-                    orderedResults[order[cleanResults[j].name]] = cleanResults[j];
-                }
-                assert.deepEqual(orderedResults, allergies, 'write, read failed');
+                var cleanResults = record.cleanSectionEntries(results);
+                assert.deepEqual(cleanResults, allergies, 'write, read failed');
+                done();
+            });
+        });
+    });
+    
+    it('saveProcedures/getProcedures', function(done) {
+        var procedures = ccd.procedures;
+        var n = procedures.length;
+        section.saveNewEntries(dbinfo, 'procedure', 'pat1', procedures, fileId, function(err) {
+            assert.notOk(err, 'saveProcedures failed');
+            section.getSection(dbinfo, 'procedure', 'pat1', function(err, results) {
+                var cleanResults = record.cleanSectionEntries(results);
+                assert.deepEqual(cleanResults, procedures, 'write, read failed');
+                done();
+            });
+        });
+    });
+    
+    it('saveDemographics/getDemographics', function(done) {
+        var demographics = ccd.demographics;
+        section.saveNewEntries(dbinfo, 'demographics', 'pat1', demographics, fileId, function(err) {
+            assert.notOk(err, 'saveProcedures failed');
+            section.getSection(dbinfo, 'demographics', 'pat1', function(err, results) {
+                var cleanResults = record.cleanSectionEntries(results);
+                assert.deepEqual(cleanResults, demographics, 'write, read failed');
+                done();
+            });
+        });
+    });
+    
+    it('saveMedication/getMedication', function(done) {
+        var medications = ccd.medications;
+        section.saveNewEntries(dbinfo, 'medication', 'pat1', medications, fileId, function(err) {
+            assert.notOk(err, 'saveMedication failed');
+            section.getSection(dbinfo, 'medication', 'pat1', function(err, results) {
+                var cleanResults = record.cleanSectionEntries(results);
+                assert.deepEqual(cleanResults, medications, 'write, read failed');
+                done();
+            });
+        });
+    });
+    
+    it('saveProblems/getProblems', function(done) {
+        var problems = ccd.problems;
+        section.saveNewEntries(dbinfo, 'problem', 'pat1', problems, fileId, function(err) {
+            assert.notOk(err, 'saveProblems failed');
+            section.getSection(dbinfo, 'problem', 'pat1', function(err, results) {
+                var cleanResults = record.cleanSectionEntries(results);
+                assert.deepEqual(cleanResults, problems, 'write, read failed');
+                done();
+            });
+        });
+    });
+    
+    it('saveImmunizations/getImmunizations', function(done) {
+        var immunizations = ccd.immunizations;
+        section.saveNewEntries(dbinfo, 'immunization', 'pat1', immunizations, fileId, function(err) {
+            assert.notOk(err, 'saveImmunizations failed');
+            section.getSection(dbinfo, 'immunization', 'pat1', function(err, results) {
+                var cleanResults = record.cleanSectionEntries(results);
+                assert.deepEqual(cleanResults, immunizations, 'write, read failed');
                 done();
             });
         });
