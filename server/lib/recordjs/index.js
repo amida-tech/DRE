@@ -23,6 +23,19 @@ var typeToSection = exports.typeToSection = {
     problem: 'problems'
 };
 
+var sectionToType = exports.sectionToType = {
+    allergies: 'allergy',
+    procedures: 'procedure',
+    medications: 'medication',
+    encounters: 'encounter',
+    vitals: 'vital',
+    results: 'result',
+    socialHistory: 'social',
+    immunizations: 'immunization',
+    demographics: 'demographics',
+    problems: 'problem'
+};
+
 var typeToSchemaDesc = {};
 Object.keys(typeToSection).forEach(function(type) {
     var desc = models.modelDescription('ccda_' + typeToSection[type]);
@@ -127,7 +140,7 @@ exports.cleanSectionEntries = function(input) {
         });
         if (cleanEntry) {
             jsutil.deepDelete(cleanEntry, '_id');
-            //jsutil.deepEmptyArrayDelete(cleanEntry);
+            jsutil.deepEmptyArrayDelete(cleanEntry);
             result.push(cleanEntry);
         }
     }
