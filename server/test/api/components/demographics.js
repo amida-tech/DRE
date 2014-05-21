@@ -37,7 +37,7 @@ describe('Demographics API', function() {
   });
 
   it('Demographics test', function(done) {
-    api.get('/api/v1/demographics')
+    api.get('/api/v1/record/demographics')
       .expect(200)
       .end(function(err, res) {
         if (err) {
