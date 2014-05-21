@@ -43,17 +43,24 @@ function saveComponents(masterObject, sourceID, callback) {
             saveArray = tmpArray;
         }
 
-
-        record["saveNew" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
-            if (err) {
-                callback(err);
-            } else {
-                savedSections++;
-                if (totalSections === savedSections) {
-                    callback(null);
-                }
+        if (saveArray.length === 0) {
+            savedSections++;
+            if (totalSections === savedSections) {
+                callback(null);
             }
-        });
+        } else {
+            record["saveNew" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
+                if (err) {
+                    callback(err);
+                } else {
+                    savedSections++;
+                    //console.log(savedSections);
+                    if (totalSections === savedSections) {
+                        callback(null);
+                    }
+                }
+            });
+        }
     }
 }
 

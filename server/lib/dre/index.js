@@ -64,18 +64,24 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
     var sectionIter = 0;
     var sectionTotal = 0;
     for (var iSecCnt in newObject) {
+        //HACK:  NEED TO REMOVE ONCE DEMOS/SOCIAL HISTORY IMPLEMENTED.
         sectionTotal++;
+        
     }
 
     function checkSectionLoopComplete(iteration, totalSections) {
-        if (iteration === (totalSections - 1)) {
+        //console.log(sectionTotal);
+        //console.log(iteration);
+        if (iteration === (sectionTotal - 1)) {
             callback(null, newObject);
         }
     }
 
     for (var iSec in newObject) {
+
         var currentMatchResult = matchResults.match[iSec];
-        if (currentMatchResult !== undefined) {
+        //HACK: NEED TO FIX ONCE THESE SECTIONS IMPLEMENTED.
+        if (iSec !== 'demographics' && iSec !== 'socialHistory') {
             if (currentMatchResult.length > 0) {
 
                 removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries) {
@@ -112,9 +118,9 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     //console.log(JSON.stringify(newObjectForParsing.allergies, null, 10));
     //console.log(JSON.stringify(baseObjectForParsing.allergies, null, 10));
     var matchResult = match.match(newObjectForParsing, baseObjectForParsing);
-    //console.log(matchResult);
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch) {
+        //console.log(newObjectPostMatch);
         callback(null, newObjectPostMatch);
     });
 }
