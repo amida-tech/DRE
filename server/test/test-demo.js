@@ -106,7 +106,8 @@ describe('Verifying demo R1.0 sample xml files', function() {
 
 
         it('checking that JSON #1 and #2 are duplicates', function() {
-        	var m = match.match(js, js2);
+        	//console.log(js);
+            var m = match.match(js, js2);
 
             //console.log(JSON.stringify(m,null,4));
 
