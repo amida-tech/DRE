@@ -70,6 +70,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
         var mergeColName = type + 'merges';
         var mergeSchema = new Schema({
             entry_type: String,
+            patKey: String,
             entry_id: {type: ObjectId, ref: colName},
             record_id: {type: ObjectId, ref: storageColName},
             merged: Date,
@@ -79,6 +80,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
     
         var desc = typeToSchemaDesc[type];
         desc.patKey = String;
+        desc.__index = Number;
         desc.metadata =  {attribution: [{type: ObjectId, ref: mergeColName}]};
         var schema = new Schema(desc);
         
