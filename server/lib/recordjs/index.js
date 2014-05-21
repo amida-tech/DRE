@@ -128,32 +128,40 @@ Object.keys(typeToSection).forEach(function(type) {
     };
 });
 
+exports.getAllSections = function(patientKey, callback) {
+    allSections.getAllSections(dbinfo, patientKey, callback);
+};
+
+exports.saveAllSectionsAsNew = function(patientKey, patientRecord, fileId, callback) {
+    allSections.saveAllSectionsAsNew(dbinfo, patientKey, patientRecord, fileId, callback);
+};
+
 // Utility
 
 exports.cleanSectionEntries = function(input) {
-    var result = [];
-    var n = input.length;
-    for (var i =0; i<n; ++i) {
-        var cleanEntry = _.clone(input[i]);
-        ['__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
-            delete cleanEntry[key];
-        });
-        if (cleanEntry) {
-            jsutil.deepDelete(cleanEntry, '_id');
-            jsutil.deepEmptyArrayDelete(cleanEntry);
+    if (Array.isArray(input)) {
+        var result = [];
+        var n = input.length;
+    
+        for (var i =0; i<n; ++i) {
+            var cleanEntry = cleanSectionEntry(input[i]);
             result.push(cleanEntry);
         }
+        return result;
+    } else {
+        return cleanSectionEntry(input);
     }
-    return result;
 };
  
-exports.cleanSectionEntry = function(input) {
+var cleanSectionEntry = exports.cleanSectionEntry = function(input) {
+    if (input === null || input === undefined) return input;
     var cleanEntry = _.clone(input);
-    ['__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
+    ['__index', '__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
         delete cleanEntry[key];
     });
-    //jsutil.deepDelete(cleanEntry, '_id');
-    //jsutil.deepEmptyArrayDelete(cleanEntry);
+    jsutil.deepDelete(cleanEntry, '_id');
+    jsutil.deepEmptyArrayDelete(cleanEntry);
+    jsutil.deepDeleteEmpty(cleanEntry);
     return cleanEntry;
 };
 

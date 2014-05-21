@@ -34,3 +34,20 @@ exports.deepEmptyArrayDelete = function deepEmptyArrayDelete(obj) {
         });
     }
 }
+
+exports.deepDeleteEmpty = function deepDeleteEmpty(obj) {
+    if (typeof obj === 'object') {
+        Object.keys(obj).forEach(function(key) {
+            if (typeof obj[key] === 'object') {
+                if (Object.keys(obj[key]).length < 1) {
+                    if (! (obj[key] instanceof Date)) {
+                        delete obj[key];
+                    }
+                } else {
+                    deepDeleteEmpty(obj[key]);
+                }
+            }
+        });
+    }
+}
+

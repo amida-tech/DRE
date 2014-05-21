@@ -15,10 +15,11 @@ limitations under the License.
 ======================================================================*/
 
 var merge = require('./merge');
+var _ = require('underscore');
 
 exports.getSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
-    var query = model.find({patKey: patKey}).lean().populate('metadata.attribution', 'record_id merge_reason merged');
+    var query = model.find({patKey: patKey}).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
     query.exec(function(err, results) {
         if (err) {
             callback(err);
@@ -27,6 +28,9 @@ exports.getSection = function(dbinfo, type, patKey, callback) {
                 if (err) {
                     callback(err);
                 } else {
+                    if (type === 'demographics') {
+                        docs = docs[0];
+                    }
                     callback(null, docs);
                 }
             });
@@ -54,21 +58,21 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
 
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
     function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
-        var model = dbinfo.models[type];
         var tempEntry = new model(entryObject);
-        
+
         tempEntry.save(function(err, saveResults) { // TODO: double save, logic needs to be updated
             if (err) {
                 callback(err);
             } else {
                 var tmpMergeEntry = {
                     entry_type: type,
+                    patKey: patKey,
                     entry_id: saveResults._id,
                     record_id: inputSourceID,
                     merged: new Date(),
                     merge_reason: 'new'
                 };
-                
+
                 merge.saveMerge(dbinfo, tmpMergeEntry, function(err, mergeResults) {
                     if (err) {
                         callback(err);
@@ -89,19 +93,43 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
         });
     }
 
-    for (var i = 0; i < inputArray.length; i++) {
-        var entryObject = inputArray[i];
-        saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber) {
-            if (savedObjectNumber === (inputArray.length - 1)) {
-                callback(null);
+    var model = dbinfo.models[type];
+    model.count({patKey: patKey}, function(err, count) {
+        count = count + 1;
+        if (err) {
+            callback(err);
+        } else {
+            if (Array.isArray(inputArray)) {
+                var n = inputArray.length;
+                if (n === 0) {
+                    callback(new Error('no data'));
+                    return;
+                }
+                
+                for (var i = 0; i < inputArray.length; i++) {
+                    var entryObject = _.clone(inputArray[i]);
+                    entryObject.__index = count + i;
+                    saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber) {
+                        if (savedObjectNumber === (inputArray.length - 1)) {
+                            callback(null);
+                        }
+                    });
+                }
+            } else {
+                var entryObject = _.clone(inputArray);
+                entryObject.__index = count;
+                saveEntry(entryObject, 0, sourceID, function(err) {
+                    callback(err);
+                });
             }
-        });
-    }
+        }
+    });
 };
 
 var updateEntryAndMerge = function(dbinfo, type, input_entry, mergeInfo, callback) {
     var tmpMergeEntry = {
         entry_type: type,
+        patKey: input_entry.patKey,
         entry_id: input_entry._id,
         record_id: mergeInfo.record_id,
         merged: new Date(),
