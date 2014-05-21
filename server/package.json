@@ -27,7 +27,8 @@
     "jsdom": "0.10.5",
     "deep-equal": "0.2.x",
     "underscore": "1.6.x",
-    "blue-button": "0.0.x"
+    "blue-button": "0.0.7",
+    "blue-button-match": "0.0.5"
   },
   "devDependencies": {
     "grunt": "0.4.x",

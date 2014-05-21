@@ -19,21 +19,25 @@ var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
+var path = require('path');
 
-function loadSampleRecord(callback) {
-  fs.readFile('../artifacts/CCD.sample.xml', 'utf8', function(err, data) {
-    if (err) {
-      callback(err);
-    }
-    callback(null, data);
+describe('Demographics API', function() {
+
+  before(function(done) {
+    var filepath = path.join(__dirname, '../../artifacts/standard/CCD_demo1.xml');
+    api.put('/api/v1/storage')
+      .attach('file', filepath)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          return done(err);
+        }
+        done();
+      });
   });
-}
 
-
-describe('Allergies API', function() {
-
-  it('Allergies test', function(done) {
-    api.get('/api/v1/record/allergies')
+  it('Demographics test', function(done) {
+    api.get('/api/v1/record/demographics')
       .expect(200)
       .end(function(err, res) {
         if (err) {

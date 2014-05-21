@@ -1,1 +1,91 @@
-<P>I'm a record!</P>
+				<div class="col-md-12">
+					<br/>
+					<span class="lead">Allergies</span>
+					<br/>
+					<br/>
+				</div>
+				<div ng-hide="displayAllergies" class="panel-title">No allergies are currently in your record.</div>
+				<div ng-show="displayAllergies" class="panel-group" id="#accordian-allergy" ng-repeat="allergy in allergies | orderBy:allergyPredicate">
+
+					<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">Record Sources</h4>
+								</div>
+								<div class="modal-body">
+									<table class="table">
+										<thead>
+											<tr><td><strong>Source Information</strong></td></tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="attribution in allergy.metadata.attribution">
+												<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record_id.filename}}</a></td>
+												<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
+												<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+
+							<a data-toggle="collapse" data-parent="#accordian-allergy" data-target="#collapse{{$index}}">
+								<div class="panel-title" style="cursor:pointer;">
+									<span class="glyphicon glyphicon-exclamation-sign"></span>
+									<span style="text-transform:uppercase;">{{allergy.name}}</span>
+									<span class="pull-right" style="text-transform:uppercase;">{{allergy.severity}}</span>
+								</div>
+							</a>
+						</div>
+						<div id="collapse{{$index}}" class="panel-collapse collapse">
+							<div class="panel-body">
+								<div id="myTabContent" >
+									<div class="col-md-12">
+										<h4>Details</h4>
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+											<div class="pull-left col-md-12"><strong>Status:</strong></div><br/>
+											<div class="pull-left col-md-12">{{allergy.status}}</div>
+										</div>
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+											<div class="pull-left col-md-12"><strong>Start:</strong></div><br/>
+											<div class="pull-left col-md-12">{{allergy.date[0].displayDate}}</div>
+										</div>
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+											<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+											<div class="pull-left col-md-12">{{allergy.code}}</div>
+										</div>
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+											<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+											<div class="pull-left col-md-12">{{allergy.code_system_name}}</div>
+										</div>
+									</div>
+									<div class="col-md-12" ng-repeat="reaction in allergy.reaction">
+										<h4>Reactions</h4>
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+											<div class="pull-left col-md-12"><strong>Reaction:</strong></div><br/>
+											<div class="pull-left col-md-12">{{reaction.name}}</div>
+										</div>
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+											<div class="pull-left col-md-12"><strong>Severity:</strong></div><br/>
+											<div class="pull-left col-md-12">{{reaction.severity}}</div>
+										</div>
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+											<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+											<div class="pull-left col-md-12">{{reaction.code}}</div>
+										</div>
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+											<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+											<div class="pull-left col-md-12">{{reaction.code_system_name}}</div>
+										</div>
+									</div>
+									<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>

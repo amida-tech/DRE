@@ -1,0 +1,127 @@
+<!--Begin Medications-->
+
+<div class="col-md-12">
+	<br/>
+	<span class="lead">Procedures</span>
+	<br/>
+	<br/>
+</div>
+<div ng-hide="displayProcedures" class="panel-title">No procedures are currently in your record.</div>
+<div ng-show="displayProcedures" class="panel-group" id="#accordian-procedures" ng-repeat="procedure in procedures | orderBy:procedurePredicate">
+
+	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Record Sources</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+							<tr><td><strong>Source Information</strong></td></tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="attribution in allergy.metadata.attribution">
+								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record_id.filename}}</a></td>
+								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
+								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+
+			<a data-toggle="collapse" data-parent="#accordian-procedures" data-target="#procedure-{{$index}}">
+				<div class="panel-title" style="cursor:pointer;">
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+					<span style="text-transform:uppercase;">{{procedure.name}} - {{procedure.status}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{procedure.date[0].displayDate}}</span>
+				</div>
+			</a>
+		</div>
+		<div id="procedure-{{$index}}" class="panel-collapse collapse">
+			<div class="panel-body">
+				<div id="myTabContent" >
+					<div class="col-md-12">
+						<h4>Details</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
+							<div class="pull-left col-md-12">{{procedure.date[0].displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
+							<div class="pull-left col-md-12">{{procedure.date[1].displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{procedure.code}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{procedure.code_system_name}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 pull-left" ng-repeat="provider in procedure.providers">
+						<h4>Provider</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Provider:</strong></div><br/>
+							<div class="pull-left col-md-12">{{provider.organization.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="provider_address in provider.address.displayAddress">{{provider_address}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Phone:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="phone_number in provider.telecom">{{phone_number}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Email:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="email_address in provider.telecom">{{email_address}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 pull-left" ng-repeat="location in procedure.locations">
+						<h4>Location</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Provider:</strong></div><br/>
+							<div class="pull-left col-md-12">{{location.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
+							<div class="pull-left col-md-12">{{location.type.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="location_address in location.address.displayAddress">{{location_address}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 pull-left" ng-repeat="body_site in procedure.bodysite">
+						<h4>Body Site</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Location:</strong></div><br/>
+							<div class="pull-left col-md-12">{{body_site.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{body_site.code}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{body_site.code_system_name}}</div>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
