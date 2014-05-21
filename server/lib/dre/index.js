@@ -12,9 +12,11 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
 
+
         var returnArray = [];
 
         function updateDuplicate(iter, section, update_id, callback) {
+
             var mergeInfo = {
                 record_id: newSourceID,
                 merge_reason: 'duplicate'
@@ -30,10 +32,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
         function checkLoopComplete(iteration, length) {
 
-            //console.log('iter:' + iteration);
-            //console.log('test:' + length);
             if (iteration === length) {
-                //console.log(returnArray);
                 callback(null, section, returnArray);
             }
         }
@@ -54,24 +53,29 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 //If new, push the object to the return.
                 returnArray.push(srcArray[srcMatches[i].src_id]);
                 checkLoopComplete(i, (srcMatches.length - 1));
+            } else if (srcMatches[i].match === 'diff') {
+                //If diff, need to save source record for diff.
+                returnArray.push(srcArray[0]);
+                checkLoopComplete(i, (srcMatches.length - 1));
+            } else if (srcMatches[i].match === 'partial') {
+                //If partial, save partial.
+                //TODO:  Inject partial save.
+                returnArray.push(srcArray[srcMatches[i].src_id]);
+                checkLoopComplete(i, (srcMatches.length - 1));
             }
         }
 
     }
 
-
     //Loop all sections.
     var sectionIter = 0;
     var sectionTotal = 0;
     for (var iSecCnt in newObject) {
-        //HACK:  NEED TO REMOVE ONCE DEMOS/SOCIAL HISTORY IMPLEMENTED.
         sectionTotal++;
 
     }
 
     function checkSectionLoopComplete(iteration, totalSections) {
-        //console.log(sectionTotal);
-        //console.log(iteration);
         if (iteration === (sectionTotal - 1)) {
             callback(null, newObject);
         }
@@ -80,21 +84,14 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
     for (var iSec in newObject) {
 
         var currentMatchResult = matchResults.match[iSec];
-        //HACK: NEED TO FIX ONCE THESE SECTIONS IMPLEMENTED.
-        if (iSec !== 'demographics' && iSec !== 'socialHistory') {
-            if (currentMatchResult.length > 0) {
 
+            if (currentMatchResult.length > 0) {
                 removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries) {
                     newObject[returnSection] = newEntries;
                     sectionIter++;
                     checkSectionLoopComplete(sectionIter, sectionTotal);
                 });
-
             } else {
-                sectionIter++;
-                checkSectionLoopComplete(sectionIter, sectionTotal);
-            }
-        } else {
             sectionIter++;
             checkSectionLoopComplete(sectionIter, sectionTotal);
         }
@@ -115,9 +112,17 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
         baseObjectForParsing[iObj] = record.cleanSectionEntries(baseObject[iObj]);
     }
 
-    //console.log(JSON.stringify(newObjectForParsing.allergies, null, 10));
-    //console.log(JSON.stringify(baseObjectForParsing.allergies, null, 10));
+    baseObjectForParsing.data = baseObjectForParsing;
+    newObjectForParsing.data = newObjectForParsing;
+
+    //console.log(JSON.stringify(newObjectForParsing, null, 10));
+    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
+    console.log(JSON.stringify(matchResult, null, 10));
+
+    delete baseObjectForParsing.data;
+    delete newObjectForParsing.data;
+
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch) {
         //console.log(newObjectPostMatch);
