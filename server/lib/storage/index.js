@@ -119,11 +119,11 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
             callback(err);
         } else {
             dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results) {
-                saveComponents(reconciliation_results, parsed_record_identifier, function(err, save_results) {
+                saveComponents(reconciliation_results, parsed_record_identifier, function(err) {
                     if (err) {
                         callback(err);
                     } else {
-                        callback(null, save_results);
+                        callback(null);
                     }
                 });
             });
@@ -149,7 +149,7 @@ function importRecord(record_metadata, record_data, callback) {
                 if (err) {
                     callback(err);
                 } else {
-                    reconcileRecord(parsed_record, fileInfo._id, function(err, reconciliation_results) {
+                    reconcileRecord(parsed_record, fileInfo._id, function(err) {
                         if (err) {
                             callback(err);
                         } else {
