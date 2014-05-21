@@ -1,13 +1,13 @@
 var express = require('express');
 var app = module.exports = express();
-var Match = require('./match.js');
-var compare = require('./match/compare-partial.js').compare;
+
 var record = require('../recordjs');
 var bbMatch = require("blue-button-match");
 var _ = require("underscore");
 
 
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
+
 function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
 
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
@@ -66,7 +66,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
     for (var iSecCnt in newObject) {
         //HACK:  NEED TO REMOVE ONCE DEMOS/SOCIAL HISTORY IMPLEMENTED.
         sectionTotal++;
-        
+
     }
 
     function checkSectionLoopComplete(iteration, totalSections) {
@@ -104,6 +104,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
 
 //Main function, performs match and dedupes.
+
 function reconcile(newObject, baseObject, newSourceID, callback) {
 
     newObjectForParsing = newObject;
@@ -114,10 +115,9 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
         baseObjectForParsing[iObj] = record.cleanSectionEntries(baseObject[iObj]);
     }
 
-    var match = new Match(compare);
     //console.log(JSON.stringify(newObjectForParsing.allergies, null, 10));
     //console.log(JSON.stringify(baseObjectForParsing.allergies, null, 10));
-    var matchResult = match.match(newObjectForParsing, baseObjectForParsing);
+    var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch) {
         //console.log(newObjectPostMatch);
