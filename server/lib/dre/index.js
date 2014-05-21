@@ -112,11 +112,13 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
         baseObjectForParsing[iObj] = record.cleanSectionEntries(baseObject[iObj]);
     }
 
-    baseObjectForParsing.data = baseObjectForParsing;
-    newObjectForParsing.data = newObjectForParsing;
+    baseObjectForParsing={}.data = baseObjectForParsing;
+    newObjectForParsing={}.data = newObjectForParsing;
 
-    //console.log(JSON.stringify(newObjectForParsing, null, 10));
-    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
+    baseObjectForParsing.demographics={};
+
+    console.log(JSON.stringify(newObjectForParsing, null, 10));
+    console.log(JSON.stringify(baseObjectForParsing, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
     console.log(JSON.stringify(matchResult, null, 10));
 
