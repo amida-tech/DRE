@@ -116,6 +116,7 @@ function parseRecord(record_type, record_data, callback) {
 function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
 
     var sectionArray = [];
+    parsed_record.demographics = [parsed_record.demographics]
     for (var parsed_section in parsed_record) {
         sectionArray.push(parsed_section);
     }

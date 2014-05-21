@@ -86,7 +86,7 @@ describe('CCD_1', function() {
             if (err) {
                 done(err);
             } else {
-                modelutil.mongooseCleanFullRecord(result);
+                modelutil.mongooseToBBModelFullRecord(result);
                 expect(result).to.deep.equal(ccd);
                 done();
             }
