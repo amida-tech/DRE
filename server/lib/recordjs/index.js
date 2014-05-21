@@ -161,6 +161,7 @@ var cleanSectionEntry = exports.cleanSectionEntry = function(input) {
     });
     jsutil.deepDelete(cleanEntry, '_id');
     jsutil.deepEmptyArrayDelete(cleanEntry);
+    jsutil.deepDeleteEmpty(cleanEntry);
     return cleanEntry;
 };
 
