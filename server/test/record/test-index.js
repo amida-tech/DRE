@@ -82,27 +82,13 @@ describe('CCD_1', function() {
     
     it('saveAllergies/getAllergies', function(done) {
         allergies = ccd.allergies;
-        var order = {};
         var n = allergies.length;
-        for (var i=0; i<n; ++i) {
-            order[allergies[i].name] = i;
-        }
         section.saveNewEntries(dbinfo, 'allergy', 'pat1', allergies, fileId, function(err) {
             assert.notOk(err, 'saveAllergies failed');
             section.getSection(dbinfo, 'allergy', 'pat1', function(err, results) {
                 storedAllergies = results;
-                var cleanResultsX = record.cleanSectionEntries(results);
-                var cleanResults = [];
-                for (var i=0; i<cleanResultsX.length; ++i) {
-                    cleanEntry = cleanResultsX[i];
-                    jsutil.deepEmptyArrayDelete(cleanEntry);
-                    cleanResults[i] = cleanEntry;
-                }
-                var orderedResults = [];
-                for (var j=0; j<n; ++j) {
-                    orderedResults[order[cleanResults[j].name]] = cleanResults[j];
-                }
-                assert.deepEqual(orderedResults, allergies, 'write, read failed');
+                var cleanResults = record.cleanSectionEntries(results);
+                assert.deepEqual(cleanResults, allergies, 'write, read failed');
                 done();
             });
         });
