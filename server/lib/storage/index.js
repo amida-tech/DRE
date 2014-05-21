@@ -23,18 +23,20 @@ var dre = require('../dre/index.js');
 var extractRecord = parser.extractRecord;
 var record = require('../recordjs');
 
-function validateFileMessage(requestObject, callback) {
-    //Placeholder validation function.
-    callback(null);
-}
-
 //Wrapper function to save all components of an incoming object.
 function saveComponents(masterObject, sourceID, callback) {
 
-    //TODO:  Wrap for completion confirmation.
+    //Get Section Object length.
+    var totalSections = 0;
+    var savedSections = 0;
+    for (var secNum in masterObject) {
+        totalSections++;
+    }
+
     for (var secName in masterObject) {
-        //Handle demos differently, since obj not arr.
+
         var saveArray = masterObject[secName];
+
         if (secName === 'demographics') {
             var tmpArray = [];
             tmpArray.push(masterObject[secName]);
@@ -46,44 +48,53 @@ function saveComponents(masterObject, sourceID, callback) {
             if (err) {
                 callback(err);
             } else {
-                callback(null);
+                savedSections++;
+                if (totalSections === savedSections) {
+                    callback(null);
+                }
             }
         });
     }
 }
 
-function getSavedComponents(callback) {
+//Pull saved records from db for reconciliation.
+function getSavedRecord(saved_sections, callback) {
     var responseObject = {};
     var responseIter = 0;
     var patient_id = 'test';
 
-    function checkComponentsComplete () {
-        if (responseIter === 2) {
+    function checkComplete(current_iteration) {
+        if (current_iteration == (saved_sections.length - 1)) {
             callback(null, responseObject);
         }
     }
 
-    record.getAllergies(patient_id, function(err, savedAllergies) {
-        responseObject.allergies = savedAllergies;
-        responseIter = responseIter + 1;
-        checkComponentsComplete();
-    });
+    function getSavedSection(iteration, section) {
+        try {
+            record["get" + record.capitalize(section)](patient_id, function(err, savedObj) {
+                //console.log('hit');
+                responseObject[section] = savedObj;
+                checkComplete(iteration);
+            });
+        } catch (section_err) {
+            console.log(section_err);
+        }
+    }
 
-    record.getImmunizations(patient_id, function(err, savedImmunizations) {
-        responseObject.immunizations = savedImmunizations;
-        responseIter = responseIter + 1;
-        checkComponentsComplete();
-    });
+    for (var iSection in saved_sections) {
+        getSavedSection(iSection, saved_sections[iSection]);
+    }
 }
 
-function attemptParse(recordType, recordData, callback) {
-    if (recordType === 'application/xml' || recordType === 'text/xml') {
-        extractRecord(recordData, function(err, xmlType, parsedRecord) {
+//Parses raw inbound records into components.
+function parseRecord(record_type, record_data, callback) {
+    if (record_type === 'application/xml' || record_type === 'text/xml') {
+        extractRecord(record_data, function(err, xml_type, parsed_record) {
             if (err) {
                 callback(err);
             } else {
-                if (xmlType === 'ccda') {
-                    callback(null, xmlType, parsedRecord);
+                if (xml_type === 'ccda') {
+                    callback(null, xml_type, parsed_record);
                 } else {
                     callback(null, null);
                 }
@@ -92,6 +103,68 @@ function attemptParse(recordType, recordData, callback) {
     } else {
         callback(null, null);
     }
+}
+
+//Pulls saved components from DB, reconciles with incoming.
+function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
+
+    var sectionArray = [];
+    for (var parsed_section in parsed_record) {
+        sectionArray.push(parsed_section);
+    }
+
+
+    getSavedRecord(sectionArray, function(err, saved_record) {
+        if (err) {
+            callback(err);
+        } else {
+            dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results) {
+                saveComponents(reconciliation_results, parsed_record_identifier, function(err, save_results) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null, save_results);
+                    }
+                });
+            });
+        }
+    });
+}
+
+//Wrapper function for all match/merge operations.
+function importRecord(record_metadata, record_data, callback) {
+    parseRecord(record_metadata.type, record_data, function(err, parsed_record_type, parsed_record) {
+        if (err) {
+            callback(err);
+        } else if (!parsed_record_type) {
+            record.saveRecord('test', record_data, record_metadata, null, function(err, fileInfo) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null, fileInfo);
+                }
+            });
+        } else {
+            record.saveRecord('test', record_data, record_metadata, parsed_record_type, function(err, fileInfo) {
+                if (err) {
+                    callback(err);
+                } else {
+                    reconcileRecord(parsed_record, fileInfo._id, function(err, reconciliation_results) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            callback(null, fileInfo);
+                        }
+                    })
+                }
+            });
+        }
+    });
+}
+
+//Placeholder validation function.
+function validateFileMessage(requestObject, callback) {
+    callback(null);
 }
 
 //Master wrapper function.
@@ -107,40 +180,11 @@ function processUpload(recordUpload, callback) {
                     if (err) {
                         callback(err);
                     } else {
-                        attemptParse(recordUpload.type, fileData, function(err, recType, recParsed) {
+                        importRecord(recordUpload, fileData, function(err, import_results) {
                             if (err) {
                                 callback(err);
-                            } else if (!recType) {
-                                record.saveRecord('test', fileData, recordUpload, null, function(err, fileInfo) {
-                                    if (err) {
-                                        callback(err);
-                                    } else {
-                                        callback(null);
-                                    }
-                                });
                             } else {
-                                record.saveRecord('test', fileData, recordUpload, recType, function(err, fileInfo) {
-                                    if (err) {
-                                        callback(err);
-                                    } else {
-                                        getSavedComponents(function(err, recSaved) {
-                                            if (err) {
-                                                callback(err);
-                                            } else {
-                                                //Must expand get Saved to return all components.
-                                                dre.reconcile(recParsed, recSaved, fileInfo._id, function(err, recMatchResults) {
-                                                    saveComponents(recMatchResults, fileInfo._id, function(err, res) {
-                                                        if (err) {
-                                                            callback(err);
-                                                        } else {
-                                                            callback(null);
-                                                        }
-                                                    });
-                                                });
-                                            }
-                                        });
-                                    }
-                                });
+                                callback(null, import_results);
                             }
                         });
                     }
@@ -149,6 +193,8 @@ function processUpload(recordUpload, callback) {
         });
     }
 }
+
+//Routes.
 
 app.get('/api/v1/storage/record/:identifier', function(req, res) {
     record.getRecord(req.params.identifier, function(err, filename, returnFile) {
@@ -159,8 +205,6 @@ app.get('/api/v1/storage/record/:identifier', function(req, res) {
         res.send(returnFile);
     });
 });
-
-//Routes.
 
 //Returns list of records in storage.
 app.get('/api/v1/storage', function(req, res) {
