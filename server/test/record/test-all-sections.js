@@ -86,11 +86,8 @@ describe('CCD_1', function() {
             if (err) {
                 done(err);
             } else {
-                //console.log(result.medications[0].date);
                 modelutil.mongooseCleanFullRecord(result);
-                //console.log(result);
-                //console.log(ccd);
-                //expect(result).to.deep.equal(ccd);
+                expect(result).to.deep.equal(ccd);
                 done();
             }
         });
