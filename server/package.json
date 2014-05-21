@@ -28,7 +28,7 @@
     "deep-equal": "0.2.x",
     "underscore": "1.6.x",
     "blue-button": "0.0.7",
-    "blue-button-match": "0.0.5"
+    "blue-button-match": "0.1.1"
   },
   "devDependencies": {
     "grunt": "0.4.x",
