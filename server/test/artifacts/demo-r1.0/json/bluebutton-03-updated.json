@@ -93,6 +93,126 @@
         {
             "identifiers": [
                 {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "6660219000296"
+                },
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "6660219000356"
+                }
+            ],
+            "status": "completed",
+            "date": [
+                {
+                    "date": "2012-10-02T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "name": "Height",
+            "code": "8302-2",
+            "code_system_name": "LOINC",
+            "value": 64,
+            "unit": "[in_us]"
+        },
+        {
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "1166602190002918"
+                },
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "1166602190003518"
+                }
+            ],
+            "status": "completed",
+            "date": [
+                {
+                    "date": "2012-10-02T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "name": "Weight",
+            "code": "3141-9",
+            "code_system_name": "LOINC",
+            "value": 160,
+            "unit": "[lb_av]"
+        },
+        {
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "11666021900029181"
+                },
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "11666021900035181"
+                }
+            ],
+            "status": "completed",
+            "date": [
+                {
+                    "date": "2012-10-02T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "name": "BP Systolic",
+            "code": "8480-6",
+            "code_system_name": "LOINC",
+            "value": 120,
+            "unit": "mm[Hg]"
+        },
+        {
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "1166602190002928"
+                },
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "1166602190003528"
+                }
+            ],
+            "status": "completed",
+            "date": [
+                {
+                    "date": "2012-10-02T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "name": "BP Diastolic",
+            "code": "8462-4",
+            "code_system_name": "LOINC",
+            "value": 78,
+            "unit": "mm[Hg]"
+        },
+        {
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "1166602190002939"
+                },
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.6",
+                    "identifier_type": "1166602190003539"
+                }
+            ],
+            "status": "completed",
+            "date": [
+                {
+                    "date": "2012-10-02T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "name": "Body Mass Index Calculated",
+            "code": "39156-5",
+            "code_system_name": "LOINC",
+            "value": 27.5,
+            "unit": "1"
+        },
+        {
+            "identifiers": [
+                {
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }
             ],
@@ -233,6 +353,226 @@
         {
             "identifiers": [
                 {
+                    "identifier": "ce19d2be-3d3b-44ea-95f1-5a0a04586377"
+                }
+            ],
+            "results": [
+                {
+                    "identifiers": [
+                        {
+                            "identifier": "1331eea1-3efe-497e-96bc-de56796a253d"
+                        }
+                    ],
+                    "date": [
+                        {
+                            "date": "2012-11-26T00:00:00.000Z",
+                            "precision": "day"
+                        }
+                    ],
+                    "freeTextValue": "HGB (M 13-18 g/dl; F 12-16 g/dl)",
+                    "interpretations": [
+                        "abnormal",
+                        "high alert"
+                    ],
+                    "name": "Thyrotropin [Units/volume] in Serum or Plasma",
+                    "code": "3016-3",
+                    "code_system_name": "LOINC",
+                    "value": 6,
+                    "unit": "m[IU]/L"
+                }
+            ],
+            "name": "Thyrotropin [Units/volume] in Serum or Plasma by Detection limit less than or equal to 0.05 mIU/L",
+            "code": "11579-0",
+            "code_system_name": "LOINC"
+        },
+        {
+            "identifiers": [
+                {
+                    "identifier": "ce19d2be-3d3b-44ea-95f1-5a0a04586377"
+                }
+            ],
+            "results": [
+                {
+                    "identifiers": [
+                        {
+                            "identifier": "dc16a671-c8f7-4125-a3f6-c8787606f576"
+                        }
+                    ],
+                    "date": [
+                        {
+                            "date": "2012-11-26T00:00:00.000Z",
+                            "precision": "day"
+                        }
+                    ],
+                    "freeTextValue": "WBC (4.3-10.8 10+3/ul)",
+                    "interpretations": [
+                        "abnormal",
+                        "high alert"
+                    ],
+                    "name": "Hemoglobin A1c/Hemoglobin.total in Blood",
+                    "code": "4548-4",
+                    "code_system_name": "LOINC",
+                    "value": 8,
+                    "unit": "%"
+                }
+            ],
+            "name": "Hemoglobin A1c/Hemoglobin.total in Blood",
+            "code": "4548-4",
+            "code_system_name": "LOINC"
+        },
+        {
+            "identifiers": [
+                {
+                    "identifier": "ce19d2be-3d3b-44ea-95f1-5a0a04586377"
+                }
+            ],
+            "results": [
+                {
+                    "identifiers": [
+                        {
+                            "identifier": "9cd43fa7-db31-4c29-ab30-83f92fdcaa20"
+                        }
+                    ],
+                    "date": [
+                        {
+                            "date": "2012-11-26T00:00:00.000Z",
+                            "precision": "day"
+                        }
+                    ],
+                    "freeTextValue": "PLT (135-145 meq/l)",
+                    "interpretations": [
+                        "abnormal"
+                    ],
+                    "name": "Creatinine [Mass/volume] in Serum or Plasma",
+                    "code": "2160-0",
+                    "code_system_name": "LOINC",
+                    "value": 1.5,
+                    "unit": "mg/dL"
+                }
+            ],
+            "name": "Creatinine [Mass/volume] in Serum or Plasma",
+            "code": "2160-0",
+            "code_system_name": "LOINC"
+        },
+        {
+            "identifiers": [
+                {
+                    "identifier": "ce19d2be-3d3b-44ea-95f1-5a0a04586377"
+                }
+            ],
+            "results": [
+                {
+                    "identifiers": [
+                        {
+                            "identifier": "78df60b1-daf7-4838-b509-ec3a3f4116c1"
+                        }
+                    ],
+                    "date": [
+                        {
+                            "date": "2012-11-26T00:00:00.000Z",
+                            "precision": "day"
+                        }
+                    ],
+                    "interpretations": [
+                        "abnormal",
+                        "high alert"
+                    ],
+                    "name": "INR in Platelet poor plasma by Coagulation assay",
+                    "code": "6301-6",
+                    "code_system_name": "LOINC",
+                    "value": 1.5,
+                    "unit": "1"
+                }
+            ],
+            "name": "INR in Platelet poor plasma by Coagulation assay",
+            "code": "6301-6",
+            "code_system_name": "LOINC"
+        },
+        {
+            "identifiers": [
+                {
+                    "identifier": "ce19d2be-3d3b-44ea-95f1-5a0a04586377"
+                }
+            ],
+            "results": [
+                {
+                    "identifiers": [
+                        {
+                            "identifier": "aaa00f9e-0154-4eaa-be85-aeb34169f06a"
+                        }
+                    ],
+                    "date": [
+                        {
+                            "date": "2012-11-26T00:00:00.000Z",
+                            "precision": "day"
+                        }
+                    ],
+                    "interpretations": [
+                        "normal"
+                    ],
+                    "name": "Aortic valve Ejection [Time] by US.doppler",
+                    "code": "18041-4",
+                    "code_system_name": "LOINC",
+                    "value": 55,
+                    "unit": "%"
+                },
+                {
+                    "identifiers": [
+                        {
+                            "identifier": "347f958c-9b6b-4eeb-848d-624567117cb7"
+                        }
+                    ],
+                    "date": [
+                        {
+                            "date": "2012-11-26T00:00:00.000Z",
+                            "precision": "day"
+                        }
+                    ],
+                    "interpretations": [
+                        "abnormal"
+                    ],
+                    "name": "AV Orifice Area US",
+                    "code": "18089-3",
+                    "code_system_name": "LOINC",
+                    "value": 1.5,
+                    "unit": "cm2"
+                }
+            ],
+            "name": "2D echocardiogram panel",
+            "code": "34552-0",
+            "code_system_name": "LOINC"
+        },
+        {
+            "identifiers": [
+                {
+                    "identifier": "ce19d2be-3d3b-44ea-95f1-5a0a04586377"
+                }
+            ],
+            "results": [
+                {
+                    "identifiers": [
+                        {
+                            "identifier": "ba4f85fa-586c-4898-9aad-b592d4c2c383"
+                        }
+                    ],
+                    "date": [
+                        {
+                            "date": "2012-11-26T00:00:00.000Z",
+                            "precision": "day"
+                        }
+                    ],
+                    "name": "EKG impression Narrative",
+                    "code": "18844-1",
+                    "code_system_name": "LOINC"
+                }
+            ],
+            "name": "EKG 12 channel panel",
+            "code": "34534-8",
+            "code_system_name": "LOINC"
+        },
+        {
+            "identifiers": [
+                {
                     "identifier": "7d5a02b0-67a4-11db-bd13-0800200c9a66"
                 }
             ],
@@ -313,6 +653,71 @@
         {
             "date": [
                 {
+                    "date": "2012-10-02T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.9",
+                    "identifier_type": "6591225000051"
+                },
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.9",
+                    "identifier_type": "6591225000071"
+                }
+            ],
+            "status": "Prescribed",
+            "product": {
+                "name": "Cefepime 20 MG/ML",
+                "code": "329646",
+                "code_system_name": "RXNORM"
+            },
+            "administration": {
+                "form": {
+                    "name": "SOLUTION",
+                    "code": "C42986",
+                    "code_system_name": "Medication Route FDA"
+                }
+            }
+        },
+        {
+            "date": [
+                {
+                    "date": "2012-09-20T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.9",
+                    "identifier_type": "659122500005"
+                },
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.9",
+                    "identifier_type": "659122500007"
+                }
+            ],
+            "status": "Prescribed",
+            "product": {
+                "name": "Cephalexin 500 MG Oral Tablet",
+                "code": "309114",
+                "code_system_name": "RXNORM"
+            },
+            "administration": {
+                "form": {
+                    "name": "TABLET",
+                    "code": "C42998",
+                    "code_system_name": "Medication Route FDA"
+                },
+                "dose": {
+                    "value": 1
+                }
+            }
+        },
+        {
+            "date": [
+                {
                     "date": "2007-01-03T00:00:00.000Z",
                     "precision": "day"
                 },
@@ -378,6 +783,48 @@
         }
     ],
     "encounters": [
+        {
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.3.4",
+                    "identifier_type": "5283815"
+                }
+            ],
+            "date": [
+                {
+                    "date": "2012-10-02T00:00:00.000Z",
+                    "precision": "day"
+                },
+                {
+                    "date": "2012-10-05T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "locations": [
+                {
+                    "name": "Local Community Hospital",
+                    "loc_type": {
+                        "name": "Inpatient Medical/Surgical Ward",
+                        "code": "1061-1",
+                        "code_system_name": "HealthcareServiceLocation"
+                    },
+                    "addresses": [
+                        {
+                            "streetLines": [
+                                "1000 Hospital Way"
+                            ],
+                            "city": "Portland",
+                            "state": "OR",
+                            "zip": "97005",
+                            "country": "US"
+                        }
+                    ]
+                }
+            ],
+            "name": "UNK",
+            "code": "99231",
+            "code_system_name": "CPT"
+        },
         {
             "identifiers": [
                 {
@@ -568,6 +1015,74 @@
         }
     ],
     "immunizations": [
+        {
+            "date": [
+                {
+                    "date": "2012-08-06T15:35:00.000Z",
+                    "precision": "subsecond"
+                }
+            ],
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.4.111.0.4.4",
+                    "identifier_type": "1049280"
+                }
+            ],
+            "status": "complete",
+            "product": {
+                "lot_number": "MK456987",
+                "manufacturer": "Merck and Co., Inc.",
+                "name": "Pneumococcal (2 years and up)",
+                "code": "33",
+                "code_system_name": "CVX"
+            },
+            "administration": {
+                "route": {
+                    "name": "INTRAMUSCULAR",
+                    "code": "C28161",
+                    "code_system_name": "Medication Route FDA"
+                },
+                "quantity": {
+                    "value": 0.5,
+                    "unit": "ml"
+                }
+            },
+            "performer": {
+                "identifiers": [
+                    {
+                        "identifier": "2.16.840.1.113883.4.6",
+                        "identifier_type": "1569874562"
+                    }
+                ],
+                "name": [
+                    {
+                        "last": "Seven",
+                        "first": "Henry"
+                    }
+                ],
+                "address": [
+                    {
+                        "streetLines": [
+                            "1002 Healthcare Dr."
+                        ],
+                        "city": "Portland",
+                        "state": "OR",
+                        "zip": "97005",
+                        "country": "US"
+                    }
+                ],
+                "email": [
+                    {
+                        "address": "tel:+1-(555)555-1002"
+                    }
+                ],
+                "phone": [
+                    {
+                        "number": "+1-(555)555-1002"
+                    }
+                ]
+            }
+        },
         {
             "date": [
                 {
@@ -893,6 +1408,39 @@
         {
             "date": [
                 {
+                    "date": "2012-09-20T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
+                    "identifier_type": "615028800003"
+                },
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
+                    "identifier_type": "659935200001"
+                }
+            ],
+            "negation_indicator": false,
+            "status": "Active",
+            "source_list_identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
+                    "identifier_type": "615028800003"
+                },
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
+                    "identifier_type": "659935200001"
+                }
+            ],
+            "name": "Sinusitis",
+            "code": "36971009",
+            "code_system_name": "SNOMED CT"
+        },
+        {
+            "date": [
+                {
                     "date": "2008-01-03T00:00:00.000Z",
                     "precision": "day"
                 },
@@ -952,6 +1500,48 @@
         }
     ],
     "procedures": [
+        {
+            "identifiers": [
+                {
+                    "identifier": "1.3.6.1.4.1.22812.3.99930.3.4.7",
+                    "identifier_type": "11144556"
+                }
+            ],
+            "status": "Active",
+            "date": [
+                {
+                    "date": "2012-10-02T00:00:00.000Z",
+                    "precision": "day"
+                }
+            ],
+            "bodysite": [
+                {
+                    "name": "Lower Respiratory Tract Structure",
+                    "code": "82094008",
+                    "code_system_name": "SNOMED CT"
+                }
+            ],
+            "providers": [
+                {
+                    "address": {
+                        "streetLines": [
+                            "1002 Healthcare Dr."
+                        ],
+                        "city": "Portland",
+                        "state": "OR",
+                        "zip": "97005",
+                        "country": "US"
+                    },
+                    "telecom": {
+                        "value": "tel:+1-(555)555-1122"
+                    }
+                }
+            ],
+            "proc_type": "observation",
+            "name": "Sinus CT",
+            "code": "241526005",
+            "code_system_name": "SNOMED CT"
+        },
         {
             "identifiers": [
                 {

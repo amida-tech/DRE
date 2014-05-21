@@ -119,15 +119,17 @@ describe('Verifying demo R1.0 sample xml files', function() {
         });
 
 
-        it('checking that matches between JSON #1 and #3 are just new or duplicates entries', function() {
-        	var m = match.match(js, js3);
+        it('checking that matches between JSON #3 and #1 are just new or duplicates entries', function() {
+        	var m2 = match.match(js3, js);
 
-            console.log(JSON.stringify(m,null,4));
+            //console.log(JSON.stringify(m2,null,4));
 
         	for (var section in lookup) {
-        		for (el in m.match[lookup[section]]){
-        			expect(m.match[lookup[section]][el].match).to.not.equal("partial");
-        			assert.include(["duplicate", "new"],m.match[lookup[section]][el].match);
+        		//console.log(lookup[section]);
+        		//console.log(m2.match[lookup[section]]);
+        		for (el in m2.match[lookup[section]]){
+        			expect(m2.match[lookup[section]][el].match).to.not.equal("partial");
+        			assert.include(["duplicate", "new"],m2.match[lookup[section]][el].match);
         		}
         	}
 
