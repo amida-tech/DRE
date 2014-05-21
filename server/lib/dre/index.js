@@ -1,6 +1,5 @@
 var express = require('express');
 var app = module.exports = express();
-
 var record = require('../recordjs');
 var bbMatch = require("blue-button-match");
 var _ = require("underscore");
@@ -110,17 +109,19 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     for (var iObj in baseObject) {
         baseObjectForParsing[iObj] = {};
         baseObjectForParsing[iObj] = record.cleanSectionEntries(baseObject[iObj]);
+
+        if (baseObjectForParsing[iObj] === undefined) {
+            delete baseObjectForParsing[iObj];
+        }
     }
 
     baseObjectForParsing={}.data = baseObjectForParsing;
     newObjectForParsing={}.data = newObjectForParsing;
 
-    baseObjectForParsing.demographics={};
-
-    console.log(JSON.stringify(newObjectForParsing, null, 10));
-    console.log(JSON.stringify(baseObjectForParsing, null, 10));
+    //console.log(JSON.stringify(newObjectForParsing, null, 10));
+    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-    console.log(JSON.stringify(matchResult, null, 10));
+    //console.log(JSON.stringify(matchResult, null, 10));
 
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;

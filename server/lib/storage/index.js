@@ -81,6 +81,7 @@ function getSavedRecord(saved_sections, callback) {
             record["get" + record.capitalize(section)](patient_id, function(err, savedObj) {
                 //console.log('hit');
                 responseObject[section] = savedObj;
+                //console.log(responseObject);
                 checkComplete(iteration);
             });
         } catch (section_err) {
@@ -116,16 +117,18 @@ function parseRecord(record_type, record_data, callback) {
 function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
 
     var sectionArray = [];
-    parsed_record.demographics = [parsed_record.demographics]
+
     for (var parsed_section in parsed_record) {
         sectionArray.push(parsed_section);
     }
+
 
 
     getSavedRecord(sectionArray, function(err, saved_record) {
         if (err) {
             callback(err);
         } else {
+
             dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results) {
                 saveComponents(reconciliation_results, parsed_record_identifier, function(err) {
                     if (err) {
