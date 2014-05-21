@@ -1,0 +1,115 @@
+<!--Begin Medications-->
+
+<div class="col-md-12">
+	<br/>
+	<span class="lead">Immunizations</span>
+	<br/>
+	<br/>
+</div>
+<div ng-hide="displayImmunizations" class="panel-title">No immunizations are currently in your record.</div>
+<div ng-show="displayImmunizations" class="panel-group" id="#accordian-immunizations" ng-repeat="immunization in immunizations | orderBy:immunizationPredicate">
+
+	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Record Sources</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+							<tr><td><strong>Source Information</strong></td></tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="attribution in allergy.metadata.attribution">
+								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record_id.filename}}</a></td>
+								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
+								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+
+			<a data-toggle="collapse" data-parent="#accordian-immunizations" data-target="#immunization-{{$index}}">
+				<div class="panel-title" style="cursor:pointer;">
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+					<span style="text-transform:uppercase;">{{immunization.product.name}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{immunization.date[0].displayDate}}</span>
+				</div>
+			</a>
+		</div>
+		<div id="immunization-{{$index}}" class="panel-collapse collapse">
+			<div class="panel-body">
+				<div id="myTabContent" >
+					<div class="col-md-12">
+						<h4>Details</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
+							<div class="pull-left col-md-12">{{immunization.date[0].displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
+							<div class="pull-left col-md-12">{{immunization.date[1].displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Product Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{immunization.product.code}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Product Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{immunization.product.code_system_name}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 pull-left">
+						<h4>Product</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Lot Number:</strong></div><br/>
+							<div class="pull-left col-md-12">{{immunization.product.lot_number}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Manufacturer:</strong></div><br/>
+							<div class="pull-left col-md-12">{{immunization.product.manufacturer}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 pull-left">
+						<h4>Administration</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Route:</strong></div><br/>
+							<div class="pull-left col-md-12">{{immunization.administration.route.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Quantity:</strong></div><br/>
+							<div class="pull-left col-md-12">{{immunization.administration.quantity.displayQuantity}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 pull-left">
+						<h4>Performer</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_name in immunization.performer.name">
+							<div class="pull-left col-md-12"><strong>Performer:</strong></div><br/>
+							<div class="pull-left col-md-12" >{{performer_name.displayName}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_organization in immunization.performer.organization">
+							<div class="pull-left col-md-12"><strong>Organization:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="performer_organization_name in performer_organization.name">{{performer_organization_name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_address in immunization.performer.address">
+							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="performer_display_address in performer_address.displayAddress">{{performer_display_address}}</div>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

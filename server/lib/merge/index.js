@@ -16,56 +16,19 @@ limitations under the License.
 
 var express = require('express');
 var app = module.exports = express();
-var merge = require('../../models/merges');
-var Storage_files = require('../../models/storage_files')
-
-
-function saveMerge (mergeObject, callback) {
-
-    var saveMerge = new merge(mergeObject);
-
-    saveMerge.save(function(err, saveResults) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, saveResults);
-      }
-    });
-
-}
-
-module.exports.saveMerge = saveMerge;
-
-function getMerges(callback) {
-
-  merge.find()
-  .populate('allergy_id record_id', 'name severity filename uploadDate')
-  .exec(function (err, mergeResults) {
-    if (err) {
-      callback(err);
-    } else {
-      console.log(mergeResults);
-      callback(null, mergeResults);
-    }
-  });
-
-
-}
+var record = require('../recordjs');
 
 //Get all merges API.
 app.get('/api/v1/merges', function(req, res) {
-
-  getMerges(function(err, mergeList) {
-    if (err) {
-      res.send(400, err);
-    } else {
-      var mergeJSON = {};
-      mergeJSON.merges = mergeList;
-      res.send(mergeJSON);
-    }
-
-  });
-
+    record.getMerges('allergy', 'name severity', 'filename uploadDate', function(err, mergeList) {
+        if (err) {
+            res.send(400, err);
+        } else {
+            var mergeJSON = {};
+            mergeJSON.merges = mergeList;
+            res.send(mergeJSON);
+        }
+    });
 });
 
 

@@ -17,7 +17,6 @@ limitations under the License.
 var should = require('chai').should;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 
@@ -40,7 +39,7 @@ describe('Allergies API', function() {
         if (err) {
           return done(err);
         }
-        console.log(res.body.allergies[0].metadata.attribution[0].record_id);
+        //console.log(res.body);
         done();
       });
   });

@@ -5,7 +5,7 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  //grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   //grunt.loadNpmTasks('grunt-recess');
   //grunt.loadNpmTasks('grunt-karma');
   //grunt.loadNpmTasks('grunt-html2js');
@@ -42,6 +42,12 @@ module.exports = function(grunt) {
     src: {
       js: ['src/app/app.js', 'src/app/**/*.js', 'src/common/**/*.js'],
       html: ['src/index.html']
+    },
+    watch: {
+      all: {
+        files: ['./src/**/*.js', './test/**/*.js', './src/**/*.html', './src/**/*.tpl.html'],
+        tasks: ['default']
+      }
     },
     copy: {
       assets: {

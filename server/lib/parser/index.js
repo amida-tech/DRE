@@ -1,21 +1,23 @@
 var express = require('express');
 var app = module.exports = express();
-var bb = require('../bluebutton/bluebutton.js');
+var bb = require('blue-button');
 
 
 function extractRecord(inputRecord, callback) {
 
-	var bbRes;
+	var bbRecord;
+	var bbRecordType;
 
 	try {
-		bbRes = bb(inputRecord);
+		bbRecord = bb.parseString(inputRecord);
+		bbRecordType = bb.senseString(inputRecord);
+
 	} catch (parseError) {
-		callback('error parsing file');
+		callback(parseError);
 	}
 
-
-	if (bbRes.data.document = 'ccda') {
-		callback(null, bbRes.data.document, bbRes.data)
+	if (bbRecordType.type = 'ccda') {
+		callback(null, 'ccda', bbRecord.data)
 	} else {
 		callback(null);
 	}

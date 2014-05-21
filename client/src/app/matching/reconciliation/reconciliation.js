@@ -17,21 +17,26 @@ limitations under the License.
 angular.module('dre.match.reconciliation', [])
 
 .config(['$routeProvider',
-function($routeProvider) {
-  $routeProvider.when('/match/reconciliation', {
+  function($routeProvider) {
+    $routeProvider.when('/match/reconciliation', {
       templateUrl: 'templates/matching/reconciliation/reconciliation.tpl.html',
       controller: 'reconciliationCtrl'
-  });
-}])
+    });
+  }
+])
 
-  .controller('reconciliationCtrl', ['$scope', '$http', '$location', 
-    function($scope, $http, $location) {
+.controller('reconciliationCtrl', ['$scope', '$http', '$location',
+  function($scope, $http, $location) {
 
-      console.log('hit');
+    console.log('hit');
 
-      $scope.navPath = "templates/nav/nav.tpl.html";
+    $scope.navPath = "templates/nav/nav.tpl.html";
 
-      
+    $scope.reviewClick = function() {
+      $location.path("match/reconciliation/review");
+    };
 
-    }
-  ]);
+
+
+  }
+]);

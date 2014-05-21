@@ -14,16 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular
+var dre = angular
   .module('dre', [
     'ngRoute',
     'dre.record',
     'dre.storage',
     'dre.dashboard',
+    'dre.demographics',
     'dre.match',
+    'dre.match.review',
     'directives.fileModel',
     'services.fileUpload',
-    'services.getNotifications'
+    'services.getNotifications',
+    'services.recordFunctions'
   ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/', {

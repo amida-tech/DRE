@@ -14,24 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
-ObjectId = Schema.ObjectId;
+angular.module('dre.match.review', [])
 
-//This is data model used purely for portal user authentication purposes
+.config(['$routeProvider',
+function($routeProvider) {
+  $routeProvider.when('/match/reconciliation/review', {
+      templateUrl: 'templates/matching/reconciliation/review/review.tpl.html',
+      controller: 'reviewCtrl'
+  });
+}])
 
+  .controller('reviewCtrl', ['$scope', '$http', '$location', 
+    function($scope, $http, $location) {
 
+       $scope.reconciliationClick = function() {
+      $location.path("match/reconciliation");
+    };
 
-var storageSchema = new Schema({
-  metadata: {
-    class: String
-  },
-  md5: String,
-  uploadDate: Date,
-  chunkSize: Number,
-  length: Number,
-  contentType: String,
-  filename: String,
-});
+      $scope.navPath = "templates/nav/nav.tpl.html";
 
-module.exports = mongoose.model('storage.files', storageSchema);
+      
+
+    }
+  ]);

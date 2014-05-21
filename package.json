@@ -25,7 +25,10 @@
     "mongodb": "1.4.x",
     "mongoose": "3.8.8",
     "jsdom": "0.10.5",
-    "deep-equal": "0.2.x"
+    "deep-equal": "0.2.x",
+    "underscore": "1.6.x",
+    "blue-button": "*",
+    "blue-button-match": "*"
   },
   "devDependencies": {
     "grunt": "0.4.x",
@@ -33,6 +36,7 @@
     "grunt-contrib-clean": "0.5.x",
     "grunt-contrib-concat": "0.3.x",
     "grunt-contrib-jshint": "0.8.x",
+    "grunt-contrib-watch": "0.6.x",
     "mocha": "1.18.x",
     "chai": "1.9.x",
     "karma": "0.12.x",

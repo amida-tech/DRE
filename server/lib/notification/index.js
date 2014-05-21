@@ -16,9 +16,7 @@ limitations under the License.
 
 var express = require('express');
 var app = module.exports = express();
-var merge = require('../../models/merges');
-var storage_files = require('../../models/storage_files');
-var allergies = require('../../models/allergies');
+var record = require('../recordjs');
 
 function getNotifications (callback) {
 
@@ -42,7 +40,7 @@ function getNotifications (callback) {
   }
 
 
-  merge.count({merge_reason: "new"}, function(err, count) {
+  record.mergeCount('allergy', {merge_reason: "new"}, function(err, count) {
     if (err) {
       callback(err);
     } else {
@@ -51,7 +49,7 @@ function getNotifications (callback) {
     }
   });
 
-  merge.count({merge_reason: "duplicate"}, function(err, count) {
+  record.mergeCount('allergy', {merge_reason: "duplicate"}, function(err, count) {
     if (err) {
       callback(err);
     } else {
@@ -60,16 +58,16 @@ function getNotifications (callback) {
     }
   });
 
-  storage_files.count(function(err, count) {
+  record.recordCount('test', function(err, count) {
     if (err) {
       callback(err);
     } else {
       fileCount = count;
       checkDone();
     }
-  })
+  });
 
-  allergies.count(function(err, count) {
+  record.allergyCount({patKey: 'test'}, function(err, count) {
     if (err) {
       callback(err);
     } else {

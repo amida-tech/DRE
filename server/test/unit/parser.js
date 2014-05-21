@@ -17,9 +17,11 @@ limitations under the License.
 var should = require('chai').should;
 var fs = require('fs');
 var storage = require('../../lib/parser/index.js');
+var path = require('path');
 
 function loadSampleRecord(callback) {
-  fs.readFile('../artifacts/CCD.sample.xml', 'utf8', function(err, data) {
+  var filepath = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
+  fs.readFile(filepath, 'utf8', function(err, data) {
     if (err) {
       callback(err);
     }
@@ -43,7 +45,7 @@ describe('Storage API', function() {
 
   it('Test 1', function(done) {
     storage.extractRecord(sampleFile, function(err, results) {
-          done();
+      done();
     });
   });
 

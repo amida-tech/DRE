@@ -13,6 +13,12 @@ angular.module('services.getNotifications', [])
                 var total_merges = data.notifications.new_merges + data.notifications.duplicate_merges;
                 data.notifications.total_merges = total_merges;
 
+                if (data.notifications.total_merges > 0) {
+                    data.notifications.displayNotifications = true;
+                } else {
+                    data.notifications.displayNotifications = false;
+                }
+                console.log(data.notifications);
                 callback(null, data.notifications);
             }).
             error(function(data, status, headers, config) {

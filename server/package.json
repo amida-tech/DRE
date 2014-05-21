@@ -1,0 +1,43 @@
+{
+  "author": "Dmitry Kachaev and Matthew McCall",
+  "name": "DRE-Server",
+  "description": "Data Reconcilliation Engine (Server).",
+  "version": "0.0.2",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:amida-tech/DRE-UX.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amida-tech/DRE-UX/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  ],
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "express": "3.4.x",
+    "request": "2.33.x",
+    "mongodb": "1.4.x",
+    "mongoose": "3.8.8",
+    "jsdom": "0.10.5",
+    "deep-equal": "0.2.x",
+    "underscore": "1.6.x",
+    "blue-button": "*",
+    "blue-button-match": "*"
+  },
+  "devDependencies": {
+    "grunt": "0.4.x",
+    "grunt-contrib-jshint": "0.8.x",
+    "grunt-contrib-watch": "0.6.x",
+    "grunt-express-server": "0.4.x",
+    "grunt-mocha-test": "0.10.x",
+    "mocha": "1.18.x",
+    "chai": "1.9.x",
+    "supertest": "0.10.0"
+  }
+}
