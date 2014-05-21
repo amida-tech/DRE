@@ -2,6 +2,7 @@
 // relaxed JSHint to allow use of xit and xdescribe to disable some test cases (make them pending)
 
 var expect = require('chai').expect;
+var assert = require('chai').assert;
 
 var fs = require('fs');
 var bbjs = require('blue-button');
@@ -45,6 +46,12 @@ before(function(done) {
     js3 = bbjs.parseString(xml3).data;
     js4 = bbjs.parseString(xml4).data;
 
+    //save JSON into artifacts folder (just for reference and manual inspection)
+    fs.writeFileSync('test/artifacts/demo-r1.0/json/bluebutton-01-original.json', JSON.stringify(js,null,4));
+    fs.writeFileSync('test/artifacts/demo-r1.0/json/bluebutton-02-duplicate.json', JSON.stringify(js2,null,4));
+    fs.writeFileSync('test/artifacts/demo-r1.0/json/bluebutton-03-updated.json', JSON.stringify(js3,null,4));
+    fs.writeFileSync('test/artifacts/demo-r1.0/json/bluebutton-04-diff-source-partial-matches.json', JSON.stringify(js4,null,4));
+
     //bb4 = bbjs.parseString(xml4).data;
 
     //console.log(js);
@@ -55,7 +62,7 @@ before(function(done) {
 describe('Verifying demo R1.0 sample xml files', function() {
 
 
-        it('checking JSON files for all sections present', function() {
+        it('checking for all sections present in each demo file', function() {
 
         	for (var section in lookup) {
         		//console.log(lookup[section]);
@@ -96,5 +103,35 @@ describe('Verifying demo R1.0 sample xml files', function() {
             */
 
         });
+
+
+        it('checking that JSON #1 and #2 are duplicates', function() {
+        	var m = match.match(js, js2);
+
+            //console.log(JSON.stringify(m,null,4));
+
+        	for (var section in lookup) {
+        		for (el in m.match[lookup[section]]){
+        			expect(m.match[lookup[section]][el].match).to.equal("duplicate");
+        		}
+        	}
+
+        });
+
+
+        it('checking that matches between JSON #1 and #3 are just new or duplicates entries', function() {
+        	var m = match.match(js, js3);
+
+            console.log(JSON.stringify(m,null,4));
+
+        	for (var section in lookup) {
+        		for (el in m.match[lookup[section]]){
+        			expect(m.match[lookup[section]][el].match).to.not.equal("partial");
+        			assert.include(["duplicate", "new"],m.match[lookup[section]][el].match);
+        		}
+        	}
+
+        });
+
 
 });
