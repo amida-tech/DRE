@@ -17,25 +17,56 @@ limitations under the License.
 var jsutil = require('./jsutil');
 
 var mongooseCleanDocument = exports.mongooseCleanDocument = function(doc) {
-    ['__index', '__v', '_id', 'patKey', 'metadata'].forEach(function(prop) {
+    var id = doc._id;
+    ['__index', '__v'].forEach(function(prop) {
         delete doc[prop];
     });
     jsutil.deepDelete(doc, '_id');
     jsutil.deepEmptyArrayDelete(doc);
     jsutil.deepDeleteEmpty(doc);
+    doc._id = id;
+}
+
+var mongooseCleanSection = exports.mongooseCleanSection = function(section) {
+    if (Array.isArray(section)) { // all but demographics
+        var n = section.length;
+        for (var i=0; i<n; ++i) {
+            var entry = section[i];
+            mongooseCleanDocument(entry);
+        }
+    } else {
+        mongooseCleanDocument(section);
+    }
 }
 
 exports.mongooseCleanFullRecord = function(record) {
     Object.keys(record).forEach(function(sectionKey) {
         var section = record[sectionKey]
-        if (Array.isArray(section)) { // all but demographics
-            var n = section.length;
-            for (var i=0; i<n; ++i) {
-                var entry = section[i];
-                mongooseCleanDocument(entry);
-            }
-        } else {
-            mongooseCleanDocument(section);
-        }
+        mongooseCleanSection(section);
     });
 };
+
+var mongooseToBBModelDocument = exports.mongooseCleanDocument = function(doc) {
+    ['_id', 'patKey', 'metadata'].forEach(function(prop) {
+        delete doc[prop];
+    });
+}
+
+var mongooseToBBModelSection = exports.mongooseToBBModelSection = function(section) {
+    if (Array.isArray(section)) { // all but demographics
+        var n = section.length;
+        for (var i=0; i<n; ++i) {
+            var entry = section[i];
+            mongooseToBBModelDocument(entry);
+        }
+    } else {
+        mongooseToBBModelDocument(section);
+    }
+}
+
+exports.mongooseToBBModelFullRecord = function(record) {
+    Object.keys(record).forEach(function(sectionKey) {
+        var section = record[sectionKey]
+        mongooseToBBModelSection(section);
+    });
+}

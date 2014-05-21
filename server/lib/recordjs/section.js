@@ -16,6 +16,7 @@ limitations under the License.
 
 var merge = require('./merge');
 var _ = require('underscore');
+var modelutil = require('./modelutil');
 
 exports.getSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
@@ -28,9 +29,10 @@ exports.getSection = function(dbinfo, type, patKey, callback) {
                 if (err) {
                     callback(err);
                 } else {
-                    if (type === 'demographics') {
-                        docs = docs[0];
-                    }
+                    modelutil.mongooseCleanSection(docs);
+                    //if (type === 'demographics') {
+                    //    //docs = docs[0];
+                    //}
                     callback(null, docs);
                 }
             });

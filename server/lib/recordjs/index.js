@@ -9,6 +9,8 @@ var storage = require('./storage');
 var merge = require('./merge');
 var section = require('./section');
 var jsutil = require('./jsutil');
+var modelutil = require('./modelutil');
+var allsections = require('./allsections');
 
 var typeToSection = exports.typeToSection = {
     allergy: 'allergies',
@@ -129,39 +131,15 @@ Object.keys(typeToSection).forEach(function(type) {
 });
 
 exports.getAllSections = function(patientKey, callback) {
-    allSections.getAllSections(dbinfo, patientKey, callback);
+    allsections.getAllSections(dbinfo, patientKey, callback);
 };
 
 exports.saveAllSectionsAsNew = function(patientKey, patientRecord, fileId, callback) {
-    allSections.saveAllSectionsAsNew(dbinfo, patientKey, patientRecord, fileId, callback);
+    allsections.saveAllSectionsAsNew(dbinfo, patientKey, patientRecord, fileId, callback);
 };
 
 // Utility
 
 exports.cleanSectionEntries = function(input) {
-    if (Array.isArray(input)) {
-        var result = [];
-        var n = input.length;
-    
-        for (var i =0; i<n; ++i) {
-            var cleanEntry = cleanSectionEntry(input[i]);
-            result.push(cleanEntry);
-        }
-        return result;
-    } else {
-        return cleanSectionEntry(input);
-    }
+    modelutil.mongooseToBBModelSection(input);
 };
- 
-var cleanSectionEntry = exports.cleanSectionEntry = function(input) {
-    if (input === null || input === undefined) return input;
-    var cleanEntry = _.clone(input);
-    ['__index', '__v', '_id', 'patKey', 'metadata'].forEach(function(key) {
-        delete cleanEntry[key];
-    });
-    jsutil.deepDelete(cleanEntry, '_id');
-    jsutil.deepEmptyArrayDelete(cleanEntry);
-    jsutil.deepDeleteEmpty(cleanEntry);
-    return cleanEntry;
-};
-
