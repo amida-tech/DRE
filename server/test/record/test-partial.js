@@ -17,12 +17,128 @@ limitations under the License.
 var chai = require('chai');
 var util = require('util')
 var path = require('path');
-
+var ObjectId = require('mongodb').ObjectID;
 var db = require('../../lib/recordjs/db');
 var section = require('../../lib/recordjs/section')
 
 var expect = chai.expect;
 var assert = chai.assert;
+var db_connection;
+
+function getDBConnection(callback) {
+
+    var options = {
+        dbName: 'partialtest',
+        typeToSection: {},
+        typeToSchemaDesc: {}
+    };
+
+    var typeToSection = {};
+    typeToSection.testallergy = 'testallergies';
+    options.typeToSection = typeToSection;
+
+    var typeToSchemaDesc = {}
+    typeToSchemaDesc.testallergy = {
+        date: Date,
+        name: String,
+        severity: String,
+        reviewed: Boolean
+    }
+
+    options.typeToSchemaDesc = typeToSchemaDesc;
+
+
+
+    db.connect('localhost', options, function(err, result) {
+        if (err) {
+            done(err);
+        } else {
+            callback(null, result);
+        }
+    });
+}
+
+
+
+describe('Save Partial Records:', function() {
+
+    before(function(done) {
+        getDBConnection(function(err, conn) {
+            if (err) {
+                done(err);
+            } else {
+                //console.log(conn);
+                db_connection = conn;
+                done();
+            }
+        });
+    });
+
+    it('Save Test Partial Record', function(done) {
+        var test_partial_entry = [{
+            name: 'fake_record'
+        }];
+        var test_patient = 'test';
+        var filename = 'test_filename';
+        //var par_source_id = new ObjectId().toString();
+        section.savePartialEntries(db_connection, 'testallergy', test_patient, test_partial_entry, 'par_source_id', function(err, partial_save_result) {
+            done();
+        });
+    });
+
+        it('Save Test New Record', function(done) {
+        var test_partial_entry = [{
+            name: 'fake_record'
+        }];
+        var test_patient = 'test';
+        var filename = 'test_filename';
+        var new_source_id = new ObjectId().toString();
+        section.saveNewEntries(db_connection, 'testallergy', test_patient, test_partial_entry, new_source_id, function(err, partial_save_result) {
+            done();
+        });
+    });
+
+});
+
+//Need to test exclusion between reviewed and unreviewed.
+
+describe('Get Partial Records:', function(done) {
+
+    before(function(done) {
+        if (db_connection === undefined) {
+        getDBConnection(function(err, conn) {
+            if (err) {
+                done(err);
+            } else {
+                //console.log(conn);
+                db_connection = conn;
+                done();
+            }
+        });
+        } else {
+            done();
+        }
+    });
+
+    it('Get Partial Records', function(done) {
+        var test_patient = 'test';
+        section.getPartialSection(db_connection, 'testallergy', test_patient, function(err, res) {
+            //console.log(res);
+            done();
+        });
+    });
+
+    //Need to reconfigure to have attribution to input record to function correctly.
+    it('Get Normal Records', function(done) {
+        var test_patient = 'test';
+        section.getSection(db_connection, 'testallergy', test_patient, function(err, res) {
+            //console.log(res);
+            done();
+        });
+    });
+
+});
+
 
 
 
@@ -47,6 +163,8 @@ describe('partial', function() {
         });
     };
     
+
+    /*
     before(function(done) {
         var options = {
             dbName: 'mergestest',

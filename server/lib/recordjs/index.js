@@ -125,6 +125,10 @@ Object.keys(typeToSection).forEach(function(type) {
         section.getSection(dbinfo, type, patKey, callback);
     };
 
+    exports['getPartial' + sectionName] = function(patKey, callback) {
+        section.getPartialSection(dbinfo, type, patKey, callback);
+    };
+
     exports['add' + typeName + 'MergeEntry'] = function(update_id, mergeInfo, callback) {
         section.addEntryMergeEntry(dbinfo, type, update_id, mergeInfo, callback);
     };
@@ -148,3 +152,10 @@ exports.saveAllSectionsAsNew = function(patientKey, patientRecord, fileId, callb
 exports.cleanSectionEntries = function(input) {
     return modelutil.mongooseToBBModelSection(input);
 };
+
+// Matches
+
+//Will need a get 
+
+
+
