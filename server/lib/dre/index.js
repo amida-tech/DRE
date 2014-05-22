@@ -19,8 +19,6 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
 
-
-
         var returnArray = [];
         var returnPartialArray = [];
 
@@ -42,12 +40,12 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         function checkLoopComplete(iteration, length) {
 
             if (iteration === length) {
-                //console.log(returnPartialArray);
+                //console.log(returnArray);
                 callback(null, section, returnArray, returnPartialArray);
             }
         }
 
-                //console.log(baseArray);
+               //console.log(srcArray);
 
         for (var i = 0; i < srcMatches.length; i++) {
             if (srcMatches[i].match === 'duplicate') {
@@ -64,7 +62,13 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 });
             } else if (srcMatches[i].match === 'new') {
                 //If new, push the object to the return.
-                returnArray.push(srcArray[srcMatches[i].src_id]);
+                var tmpSrcIndex = 0;
+                if (srcMatches[i].src_id === undefined) {
+                } else {
+                    tmpSrcIndex = srcMatches[i].src_id;
+                }
+
+                returnArray.push(srcArray[tmpSrcIndex]);
                 checkLoopComplete(i, (srcMatches.length - 1));
             } else if (srcMatches[i].match === 'diff') {
 
@@ -126,6 +130,9 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
         var currentMatchResult = matchResults.match[iSec];
 
+
+        //console.log(newObject[iSec]);
+
         if (currentMatchResult.length > 0) {
             removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries, newPartialEntries) {
                 newObject[returnSection] = newEntries;
@@ -151,8 +158,6 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
 
     newObjectForParsing = newObject;
 
-
-
     var baseObjectForParsing = {};
     for (var iObj in baseObject) {
         baseObjectForParsing[iObj] = {};
@@ -171,13 +176,15 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
     //console.log(JSON.stringify(matchResult, null, 10));
 
+    //SHIM:  missing src_id is breaking things.
+
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
 
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
         //console.log(newObjectPostMatch);
-        //console.log(newPartialObjectPostMatch)
+        //console.log(newPartialObjectPostMatch);
         callback(null, newObjectPostMatch, newPartialObjectPostMatch);
     });
 }

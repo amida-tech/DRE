@@ -58,6 +58,7 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
 
 
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
+
     function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
         var tempEntry = new model(entryObject);
 
@@ -106,9 +107,9 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
                     callback(new Error('no data'));
                     return;
                 }
-                
                 for (var i = 0; i < inputArray.length; i++) {
                     var entryObject = _.clone(inputArray[i]);
+                    //console.log(entryObject);
                     entryObject.__index = count + i;
                     entryObject.reviewed = true;
                     saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber) {

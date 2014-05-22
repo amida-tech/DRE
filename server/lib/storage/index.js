@@ -26,6 +26,8 @@ var record = require('../recordjs');
 //Wrapper function to save all components of an incoming object.
 function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
 
+        //console.log(masterObject);
+
     //console.log(masterPartialObject);
     var masterComplete = false;
     var masterPartialComplete = false;
@@ -46,13 +48,14 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             totalSections++;
         }
 
-        //console.log(masterObject);
+
 
         for (var secName in masterObject) {
 
             var saveArray = masterObject[secName];
 
-            /*if (secName === 'demographics') {
+            //SHIM, should be adjusted to look for objects rather than specific elems.
+            /*if (secName === 'demographics' || secName === 'socialHistory') {
                 var tmpArray = [];
                 tmpArray.push(masterObject[secName]);
                 saveArray = tmpArray;
@@ -92,16 +95,20 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             totalSections++;
         }
 
+        if (totalSections === savedSections) {
+            callback(null);
+        }
+
         for (var secName in masterPartialObject) {
 
             //console.log(masterPartialObject[secName]);
             var saveArray = masterPartialObject[secName][0].partial_array;
 
-            if (secName === 'demographics') {
+            /*if (secName === 'demographics') {
                 var tmpArray = [];
                 tmpArray.push(masterPartialObject[secName][0].partial_array);
                 saveArray = tmpArray;
-            }
+            }*/
 
             //console.log(JSON.stringify(saveArray, null, 10));
 
@@ -121,7 +128,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
                                 callback(err);
                             } else {
 
-                                console.log(thisPartialObject[0]);
+                                //console.log(thisPartialObject[0]);
 
                                 var tmpMatch = {
                                     entry_type: section_name,
@@ -254,6 +261,16 @@ function importRecord(record_metadata, record_data, callback) {
                 if (err) {
                     callback(err);
                 } else {
+                    //SHIM.
+                    //console.log([parsed_record]);
+
+                    if (parsed_record.demographics) {
+                        var tmpDemographicsArray = new Array(parsed_record.demographics);
+                        //console.log(tmpDemographicsArray);
+                        parsed_record.demographics = tmpDemographicsArray;
+                    }
+
+
                     reconcileRecord(parsed_record, fileInfo._id, function(err) {
                         if (err) {
                             callback(err);
