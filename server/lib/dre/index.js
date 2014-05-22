@@ -20,6 +20,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
 
 
+
         var returnArray = [];
         var returnPartialArray = [];
 
@@ -46,6 +47,8 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
             }
         }
 
+                //console.log(baseArray);
+
         for (var i = 0; i < srcMatches.length; i++) {
             if (srcMatches[i].match === 'duplicate') {
                 //If duplicate, don't push to save array and make duplicate entry in log.
@@ -65,12 +68,26 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 checkLoopComplete(i, (srcMatches.length - 1));
             } else if (srcMatches[i].match === 'diff') {
                 //If diff, need to save source record for diff.
-                returnPartialArray.push(srcArray);
+                //console.log(baseArray.length);
+                //Added conditional logic to override only 'diff' return.
+                returnPartialArray.push({
+                    partial_array: srcArray,
+                    partial_match: srcMatches[i],
+                    source_array: baseArray[0]
+                });
                 checkLoopComplete(i, (srcMatches.length - 1));
+
+                
+
+
             } else if (srcMatches[i].match === 'partial') {
                 //If partial, save partial.
                 //TODO:  Inject partial save.
-                returnPartialArray.push(srcArray[srcMatches[i].src_id]);
+                returnPartialArray.push({
+                    partial_array: srcArray[srcMatches[i].src_id],
+                    partial_match: srcMatches[i],
+                    source_array: baseArray[0]
+                });
                 checkLoopComplete(i, (srcMatches.length - 1));
             }
         }
@@ -97,17 +114,17 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
         var currentMatchResult = matchResults.match[iSec];
 
-            if (currentMatchResult.length > 0) {
-                removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries, newPartialEntries) {
-                    newObject[returnSection] = newEntries;
-                    if (newPartialEntries.length > 0) {
-                        newPartialObject[returnSection] = {};
-                        newPartialObject[returnSection] = newPartialEntries;
-                    }
-                    sectionIter++;
-                    checkSectionLoopComplete(sectionIter, sectionTotal);
-                });
-            } else {
+        if (currentMatchResult.length > 0) {
+            removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries, newPartialEntries) {
+                newObject[returnSection] = newEntries;
+                if (newPartialEntries.length > 0) {
+                    newPartialObject[returnSection] = {};
+                    newPartialObject[returnSection] = newPartialEntries;
+                }
+                sectionIter++;
+                checkSectionLoopComplete(sectionIter, sectionTotal);
+            });
+        } else {
             sectionIter++;
             checkSectionLoopComplete(sectionIter, sectionTotal);
         }
@@ -122,6 +139,8 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
 
     newObjectForParsing = newObject;
 
+
+
     var baseObjectForParsing = {};
     for (var iObj in baseObject) {
         baseObjectForParsing[iObj] = {};
@@ -132,8 +151,8 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
         }
     }
 
-    baseObjectForParsing={}.data = baseObjectForParsing;
-    newObjectForParsing={}.data = newObjectForParsing;
+    baseObjectForParsing = {}.data = baseObjectForParsing;
+    newObjectForParsing = {}.data = newObjectForParsing;
 
     //console.log(JSON.stringify(newObjectForParsing, null, 10));
     //console.log(JSON.stringify(baseObjectForParsing, null, 10));

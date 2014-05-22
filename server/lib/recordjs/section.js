@@ -25,6 +25,7 @@ exports.getSection = function(dbinfo, type, patKey, callback) {
         if (err) {
             callback(err);
         } else {
+
             dbinfo.storageModel.populate(results, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
                 if (err) {
                     callback(err);
