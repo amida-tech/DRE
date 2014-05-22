@@ -63,10 +63,12 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
 
     var result = {
         merge: {},
-        clinical: {}
+        clinical: {},
+        match: {}
     };
     Object.keys(typeToSection).forEach(function(type) {
         var colName = typeToSection[type];
+
         var mergeColName = type + 'merges';
         var mergeSchema = new Schema({
             entry_type: String,
@@ -77,12 +79,25 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
             merge_reason: String
         });
         result.merge[type] = connection.model(mergeColName, mergeSchema);
+
+        var matchColName = type + 'matches';
+        var matchSchema = new Schema({
+            entry_type: String,
+            patKey: String,
+            entry_id: {type: ObjectId, ref: colName},
+            match_entry_id: {type: ObjectId, ref: colName},
+            percent: Number,
+            diff: {}
+        });
+        result.match[type] = connection.model(matchColName, matchSchema);
     
         var desc = typeToSchemaDesc[type];
         desc.patKey = String;
         desc.__index = Number;
         desc.metadata =  {attribution: [{type: ObjectId, ref: mergeColName}]};
+        desc.reviewed = Boolean;
         var schema = new Schema(desc);
+
         
         
         result.clinical[type] = connection.model(colName, schema);

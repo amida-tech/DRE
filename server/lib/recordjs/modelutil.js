@@ -18,8 +18,9 @@ var jsutil = require('./jsutil');
 var _ = require('underscore');
 
 var mongooseCleanDocument = exports.mongooseCleanDocument = function(doc) {
+
     var id = doc._id;
-    ['__index', '__v'].forEach(function(prop) {
+    ['__index', '__v', 'reviewed'].forEach(function(prop) {
         delete doc[prop];
     });
     jsutil.deepDelete(doc, '_id');

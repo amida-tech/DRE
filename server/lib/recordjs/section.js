@@ -20,19 +20,17 @@ var modelutil = require('./modelutil');
 
 exports.getSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
-    var query = model.find({patKey: patKey}).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
+    var query = model.find({patKey: patKey, reviewed: true}).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
     query.exec(function(err, results) {
         if (err) {
             callback(err);
         } else {
+
             dbinfo.storageModel.populate(results, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
                 if (err) {
                     callback(err);
                 } else {
                     modelutil.mongooseCleanSection(docs);
-                    //if (type === 'demographics') {
-                    //    //docs = docs[0];
-                    //}
                     callback(null, docs);
                 }
             });
@@ -57,6 +55,7 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
         }
     });    
 };
+
 
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
     function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
@@ -111,6 +110,7 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
                 for (var i = 0; i < inputArray.length; i++) {
                     var entryObject = _.clone(inputArray[i]);
                     entryObject.__index = count + i;
+                    entryObject.reviewed = true;
                     saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber) {
                         if (savedObjectNumber === (inputArray.length - 1)) {
                             callback(null);
@@ -120,6 +120,7 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
             } else {
                 var entryObject = _.clone(inputArray);
                 entryObject.__index = count;
+                entryObject.reviewed = true;
                 saveEntry(entryObject, 0, sourceID, function(err) {
                     callback(err);
                 });
@@ -174,4 +175,78 @@ exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callba
     });
 };
 
+exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
+    function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
+            
+            var tempEntry = new model(entryObject);
+            tempEntry.save(function(err, saveResults) {
+                if (err) {
+                     callback(err);
+                } else {
+                    callback(null, entryObjectNumber);
 
+                }
+            });
+    }
+
+
+    var model = dbinfo.models[type];
+    model.count({patKey: patKey}, function(err, count) {
+        count = count + 1;
+
+        if (err) {
+            callback(err);
+        } else {
+            if (Array.isArray(inputArray)) {
+                var n = inputArray.length;
+                if (n === 0) {
+                    callback(new Error('no data'));
+                    return;
+                }
+                
+                for (var i = 0; i < inputArray.length; i++) {
+                    var entryObject = _.clone(inputArray[i]);
+                    entryObject.__index = count + i;
+                    entryObject.reviewed = false;
+                    entryObject.patKey = patKey;
+                    saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber) {
+                        if (savedObjectNumber === (inputArray.length - 1)) {
+                            callback(null);
+                        }
+                    });
+                }
+            } else {
+                var entryObject = _.clone(inputArray);
+                //console.log(entryObject);
+                entryObject.__index = count;
+                entryObject.reviewed = false;
+                entryObject.patKey = patKey;
+                saveEntry(entryObject, 0, sourceID, function(err) {
+                    callback(err);
+                });
+            }
+        }
+    });
+};
+
+exports.getPartialSection = function(dbinfo, type, patKey, callback) {
+    var model = dbinfo.models[type];
+    var query = model.find({patKey: patKey, reviewed: false}).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
+    query.exec(function(err, results) {
+        if (err) {
+            callback(err);
+        } else {
+            dbinfo.storageModel.populate(results, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
+                if (err) {
+                    callback(err);
+                } else {
+                    modelutil.mongooseCleanSection(docs);
+                    //if (type === 'demographics') {
+                    //    //docs = docs[0];
+                    //}
+                    callback(null, docs);
+                }
+            });
+        }
+    });
+};

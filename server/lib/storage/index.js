@@ -24,44 +24,124 @@ var extractRecord = parser.extractRecord;
 var record = require('../recordjs');
 
 //Wrapper function to save all components of an incoming object.
-function saveComponents(masterObject, sourceID, callback) {
+function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
 
-    //Get Section Object length.
-    var totalSections = 0;
-    var savedSections = 0;
-    for (var secNum in masterObject) {
-        totalSections++;
-    }
+    //console.log(masterPartialObject);
+    var masterComplete = false;
+    var masterPartialComplete = false;
 
-    for (var secName in masterObject) {
+    function checkComponentsComplete () {
 
-        var saveArray = masterObject[secName];
-
-        if (secName === 'demographics') {
-            var tmpArray = [];
-            tmpArray.push(masterObject[secName]);
-            saveArray = tmpArray;
+        if(masterComplete && masterPartialComplete) {
+            callback(null);
         }
 
-        if (saveArray.length === 0) {
-            savedSections++;
-            if (totalSections === savedSections) {
-                callback(null);
-            }
-        } else {
-            record["saveNew" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
-                if (err) {
-                    callback(err);
-                } else {
-                    savedSections++;
-                    //console.log(savedSections);
-                    if (totalSections === savedSections) {
-                        callback(null);
-                    }
+    }
+
+    function saveMasterComponents() {
+        //Get Section Object length.
+        var totalSections = 0;
+        var savedSections = 0;
+        for (var secNum in masterObject) {
+            totalSections++;
+        }
+
+        //console.log(masterObject);
+
+        for (var secName in masterObject) {
+
+            var saveArray = masterObject[secName];
+
+            /*if (secName === 'demographics') {
+                var tmpArray = [];
+                tmpArray.push(masterObject[secName]);
+                saveArray = tmpArray;
+            }*/
+
+            //console.log(saveArray);
+
+            if (saveArray.length === 0) {
+                //console.log(secName);
+                savedSections++;
+                if (totalSections === savedSections) {
+                    callback(null);
                 }
-            });
+            } else {
+                record["saveNew" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        savedSections++;
+                        //console.log(savedSections);
+                        if (totalSections === savedSections) {
+                            masterComplete = true;
+                            checkComponentsComplete();
+                        }
+                    }
+                });
+            }
         }
     }
+
+    function savePartialComponents() {
+        //console.log(JSON.stringify(masterPartialObject, null, 10));
+        //Get Section Object length.
+        var totalSections = 0;
+        var savedSections = 0;
+        for (var secNum in masterPartialObject) {
+            totalSections++;
+        }
+
+        for (var secName in masterPartialObject) {
+
+            //console.log(masterPartialObject[secName]);
+            var saveArray = masterPartialObject[secName][0].partial_array;
+
+            if (secName === 'demographics') {
+                var tmpArray = [];
+                tmpArray.push(masterPartialObject[secName][0].partial_array);
+                saveArray = tmpArray;
+            }
+
+            //console.log(JSON.stringify(saveArray, null, 10));
+
+            if (saveArray.length === 0) {
+                savedSections++;
+                if (totalSections === savedSections) {
+                    callback(null);
+                }
+            } else {
+
+                console.log(JSON.stringify(masterPartialObject, null, 10));
+                //WRAP IN FUNCTION TO MAINTAIN MATCH VALUES.
+
+                function savePartialComponent (thisPartialObject) {
+                record["savePartial" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
+                    if (err) {
+                        callback(err);
+                    } else {
+
+                        //console.log(thisPartialObject);
+                        //rec
+
+
+                        savedSections++;
+                        //console.log(savedSections);
+                        if (totalSections === savedSections) {
+                            masterPartialComplete = true;
+                            checkComponentsComplete();
+                        }
+                    }
+                });
+                }
+                savePartialComponent(masterPartialObject);
+            }
+        }
+    }
+
+    saveMasterComponents();
+    savePartialComponents();
+
 }
 
 //Pull saved records from db for reconciliation.
@@ -81,7 +161,6 @@ function getSavedRecord(saved_sections, callback) {
             record["get" + record.capitalize(section)](patient_id, function(err, savedObj) {
                 //console.log('hit');
                 responseObject[section] = savedObj;
-                //console.log(responseObject);
                 checkComplete(iteration);
             });
         } catch (section_err) {
@@ -128,9 +207,8 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
         if (err) {
             callback(err);
         } else {
-
-            dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results) {
-                saveComponents(reconciliation_results, parsed_record_identifier, function(err) {
+            dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
+                saveComponents(reconciliation_results, partial_reconciliation_results, parsed_record_identifier, function(err) {
                     if (err) {
                         callback(err);
                     } else {

@@ -7,12 +7,22 @@ var _ = require("underscore");
 
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
 
+//If an object is a partial match or diff, it needs to be saved as a record in source form.
+//This record should have a flag on it to mark it as non-visible.
+//A new object needs to be created containing the diff/partial (either percent of diff)
+//This new object should have a reviewed flag on it.
+//On review, a flag toggle needs to be set up to enable one view or disable the other.
+
+
+
 function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
 
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
 
 
+
         var returnArray = [];
+        var returnPartialArray = [];
 
         function updateDuplicate(iter, section, update_id, callback) {
 
@@ -32,9 +42,12 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         function checkLoopComplete(iteration, length) {
 
             if (iteration === length) {
-                callback(null, section, returnArray);
+                //console.log(returnPartialArray);
+                callback(null, section, returnArray, returnPartialArray);
             }
         }
+
+                //console.log(baseArray);
 
         for (var i = 0; i < srcMatches.length; i++) {
             if (srcMatches[i].match === 'duplicate') {
@@ -54,13 +67,30 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 returnArray.push(srcArray[srcMatches[i].src_id]);
                 checkLoopComplete(i, (srcMatches.length - 1));
             } else if (srcMatches[i].match === 'diff') {
+
+                //console.log(baseArray);
                 //If diff, need to save source record for diff.
-                returnArray.push(srcArray[0]);
+                //console.log(baseArray.length);
+                //Added conditional logic to override only 'diff' return.
+                returnPartialArray.push({
+                    partial_array: srcArray,
+                    partial_match: srcMatches[i],
+                    source_array: baseArray[0]
+                });
+                
                 checkLoopComplete(i, (srcMatches.length - 1));
+
+                
+
+
             } else if (srcMatches[i].match === 'partial') {
                 //If partial, save partial.
                 //TODO:  Inject partial save.
-                returnArray.push(srcArray[srcMatches[i].src_id]);
+                returnPartialArray.push({
+                    partial_array: srcArray[srcMatches[i].src_id],
+                    partial_match: srcMatches[i],
+                    source_array: baseArray[0]
+                });
                 checkLoopComplete(i, (srcMatches.length - 1));
             }
         }
@@ -75,9 +105,11 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
     }
 
+    var newPartialObject = {};
+
     function checkSectionLoopComplete(iteration, totalSections) {
         if (iteration === (sectionTotal - 1)) {
-            callback(null, newObject);
+            callback(null, newObject, newPartialObject);
         }
     }
 
@@ -85,13 +117,17 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
         var currentMatchResult = matchResults.match[iSec];
 
-            if (currentMatchResult.length > 0) {
-                removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries) {
-                    newObject[returnSection] = newEntries;
-                    sectionIter++;
-                    checkSectionLoopComplete(sectionIter, sectionTotal);
-                });
-            } else {
+        if (currentMatchResult.length > 0) {
+            removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries, newPartialEntries) {
+                newObject[returnSection] = newEntries;
+                if (newPartialEntries.length > 0) {
+                    newPartialObject[returnSection] = {};
+                    newPartialObject[returnSection] = newPartialEntries;
+                }
+                sectionIter++;
+                checkSectionLoopComplete(sectionIter, sectionTotal);
+            });
+        } else {
             sectionIter++;
             checkSectionLoopComplete(sectionIter, sectionTotal);
         }
@@ -106,6 +142,8 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
 
     newObjectForParsing = newObject;
 
+
+
     var baseObjectForParsing = {};
     for (var iObj in baseObject) {
         baseObjectForParsing[iObj] = {};
@@ -116,8 +154,8 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
         }
     }
 
-    baseObjectForParsing={}.data = baseObjectForParsing;
-    newObjectForParsing={}.data = newObjectForParsing;
+    baseObjectForParsing = {}.data = baseObjectForParsing;
+    newObjectForParsing = {}.data = newObjectForParsing;
 
     //console.log(JSON.stringify(newObjectForParsing, null, 10));
     //console.log(JSON.stringify(baseObjectForParsing, null, 10));
@@ -128,9 +166,10 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     delete newObjectForParsing.data;
 
 
-    removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch) {
+    removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
         //console.log(newObjectPostMatch);
-        callback(null, newObjectPostMatch);
+        //console.log(newPartialObjectPostMatch)
+        callback(null, newObjectPostMatch, newPartialObjectPostMatch);
     });
 }
 

@@ -13,9 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
+var _ = require('underscore');
+
 
 exports.deepDelete = function deepDelete(obj, prop) {
-    if (obj && (typeof obj === 'object')) {
+    if (obj && _.isObject(obj)) {
         delete obj[prop];
         Object.keys(obj).forEach(function(key) {
             deepDelete(obj[key], prop);
@@ -24,7 +26,7 @@ exports.deepDelete = function deepDelete(obj, prop) {
 };
 
 exports.deepEmptyArrayDelete = function deepEmptyArrayDelete(obj) {
-    if (typeof obj === 'object') {
+    if (_.isObject(obj)) {
         Object.keys(obj).forEach(function(key) {
             if (obj[key] && Array.isArray(obj[key]) && obj[key].length === 0) {
                 delete obj[key];
@@ -36,9 +38,9 @@ exports.deepEmptyArrayDelete = function deepEmptyArrayDelete(obj) {
 }
 
 exports.deepDeleteEmpty = function deepDeleteEmpty(obj) {
-    if (typeof obj === 'object') {
+    if (_.isObject(obj)) {
         Object.keys(obj).forEach(function(key) {
-            if (typeof obj[key] === 'object') {
+            if (_.isObject(obj[key])) {
                 if (Object.keys(obj[key]).length < 1) {
                     if (! (obj[key] instanceof Date)) {
                         delete obj[key];

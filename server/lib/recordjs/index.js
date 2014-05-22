@@ -117,8 +117,20 @@ Object.keys(typeToSection).forEach(function(type) {
         section.saveNewEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
     };
 
+    exports['savePartial' + sectionName] = function(patKey, inputArray, sourceID, callback) {
+        section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+    };
+
+    exports['saveMatch' + sectionName] = function(patKey, inputArray, sourceID, callback) {
+        section.saveMatchEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+    };
+
     exports['get' + sectionName] = function(patKey, callback) {
         section.getSection(dbinfo, type, patKey, callback);
+    };
+
+    exports['getPartial' + sectionName] = function(patKey, callback) {
+        section.getPartialSection(dbinfo, type, patKey, callback);
     };
 
     exports['add' + typeName + 'MergeEntry'] = function(update_id, mergeInfo, callback) {
@@ -128,6 +140,7 @@ Object.keys(typeToSection).forEach(function(type) {
     exports[type + 'Count'] = function(conditions, callback) {
         section.sectionEntryCount(dbinfo, type, conditions, callback);
     };
+
 });
 
 exports.getAllSections = function(patientKey, callback) {
@@ -143,3 +156,10 @@ exports.saveAllSectionsAsNew = function(patientKey, patientRecord, fileId, callb
 exports.cleanSectionEntries = function(input) {
     return modelutil.mongooseToBBModelSection(input);
 };
+
+// Matches
+
+//Will need a get 
+
+
+
