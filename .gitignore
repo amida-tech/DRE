@@ -3,3 +3,7 @@ node_modules
 
 .project
 .settings
+
+server/coverage
+client/coverage
+coverage
