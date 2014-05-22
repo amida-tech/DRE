@@ -64,7 +64,23 @@ record.saveNewProcedures('patientKey', ccdJSON.procedures, fileId, function(err)
 });
 ```
 
-Get the sections from the database
+or you can persist the whole record
+
+``` javascript
+record.saveAllSectionsAsNew('patientKey', ccdJSON, fileId, function(err) {
+  if (err) throw err;
+});
+```
+
+you can get the whole record back
+
+``` javascript
+record.getAllSections('patientKey',function(err) {
+  if (err) throw err;
+});
+```
+
+or get the sections individually from the database
 
 ``` javascript
 var id0 = null;
