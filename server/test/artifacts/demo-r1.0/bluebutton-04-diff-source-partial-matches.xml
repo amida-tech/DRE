@@ -37,13 +37,12 @@
 				<country>US</country>
 				<!-- US is "United States" from ISO 3166-1 Country Codes: 1.0.3166.1 -->
 			</addr>
-			<telecom value="tel:(816)276-6909" use="HP"/>
+			<telecom value="tel:(202)276-6909" use="HP"/>
 			<!-- HP is "primary home" from HL7 AddressUse 2.16.840.1.113883.5.1119 -->
 			<patient>
 				<name use="L">
 					<!-- L is "Legal" from HL7 EntityNameUse 2.16.840.1.113883.5.45 -->
 					<given>Isabella</given>
-					<given>Isa</given>
 					<!-- CL is "Call me" from HL7 EntityNamePartQualifier 2.16.840.1.113883.5.43 -->
 					<family>Jones</family>
 				</name>
@@ -530,6 +529,50 @@
 												displayName="Inactive"/>
 										</observation>
 									</entryRelationship>
+
+                                    <!-- ADDED REACTION -->
+									<entryRelationship typeCode="MFST" inversionInd="true">
+										<observation classCode="OBS" moodCode="EVN">
+											<!-- ** Reaction observation ** -->
+											<templateId root="2.16.840.1.113883.10.20.22.4.9"/>
+											<id root="4adc1020-7b14-11db-9fe1-0800200c9a64"/>
+											<code nullFlavor="NA"/>
+											<text>
+												<reference value="#reaction2"/>
+											</text>
+											<statusCode code="completed"/>
+											<effectiveTime>
+												<low value="20060501"/>
+												<high value="20090227130000+0500"/>
+											</effectiveTime>
+											<value xsi:type="CD" code="56018004"
+												codeSystem="2.16.840.1.113883.6.96"
+												displayName="Wheezing"/>
+											<entryRelationship typeCode="SUBJ" inversionInd="true">
+												<observation classCode="OBS" moodCode="EVN">
+												<!-- ** Severity observation ** -->
+												<templateId root="2.16.840.1.113883.10.20.22.4.8"/>
+												<code code="SEV"
+												displayName="Severity Observation"
+												codeSystem="2.16.840.1.113883.5.4"
+												codeSystemName="ActCode"/>
+												<text>
+												<reference value="#severity5"/>
+												</text>
+												<statusCode code="completed"/>
+												<value xsi:type="CD" code="255604002"
+												displayName="Mild"
+												codeSystem="2.16.840.1.113883.6.96"
+												codeSystemName="SNOMED CT"/>
+												<interpretationCode code="S"
+												displayName="Suceptible"
+												codeSystem="2.16.840.1.113883.1.11.78"
+												codeSystemName="Observation Interpretation"/>
+												</observation>
+											</entryRelationship>
+										</observation>
+									</entryRelationship>
+
 									<entryRelationship typeCode="MFST" inversionInd="true">
 										<observation classCode="OBS" moodCode="EVN">
 											<!-- ** Reaction observation ** -->
@@ -1047,6 +1090,50 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
                                                 displayName="Inactive"/>
                                         </observation>
                                     </entryRelationship>
+
+                                    <!-- ADDED REACTION -->
+									<entryRelationship typeCode="MFST" inversionInd="true">
+										<observation classCode="OBS" moodCode="EVN">
+											<!-- ** Reaction observation ** -->
+											<templateId root="2.16.840.1.113883.10.20.22.4.9"/>
+											<id root="4adc1020-7b14-11db-9fe1-0800200c9a64"/>
+											<code nullFlavor="NA"/>
+											<text>
+												<reference value="#reaction3"/>
+											</text>
+											<statusCode code="completed"/>
+											<effectiveTime>
+												<low value="20080501"/>
+												<high value="20090227130000+0500"/>
+											</effectiveTime>
+											<value xsi:type="CD" code="247472004"
+												codeSystem="2.16.840.1.113883.6.96"
+												displayName="Hives"/>
+											<entryRelationship typeCode="SUBJ" inversionInd="true">
+												<observation classCode="OBS" moodCode="EVN">
+												<!-- ** Severity observation ** -->
+												<templateId root="2.16.840.1.113883.10.20.22.4.8"/>
+												<code code="SEV"
+												displayName="Severity Observation"
+												codeSystem="2.16.840.1.113883.5.4"
+												codeSystemName="ActCode"/>
+												<text>
+												<reference value="#severity6"/>
+												</text>
+												<statusCode code="completed"/>
+												<value xsi:type="CD" code="371923003"
+												displayName="Mild to moderate"
+												codeSystem="2.16.840.1.113883.6.96"
+												codeSystemName="SNOMED CT"/>
+												<interpretationCode code="S"
+												displayName="Suceptible"
+												codeSystem="2.16.840.1.113883.1.11.78"
+												codeSystemName="Observation Interpretation"/>
+												</observation>
+											</entryRelationship>
+										</observation>
+									</entryRelationship>
+
                                     <entryRelationship typeCode="MFST" inversionInd="true">
                                         <observation classCode="OBS" moodCode="EVN">
                                             <!-- ** Reaction observation ** -->
@@ -1205,6 +1292,15 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 								</participantRole>
 							</participant>
 							<entryRelationship typeCode="RSON">
+								<!-- added findings -->
+								<observation classCode="COND" moodCode="EVN">
+									<templateId root="2.16.840.1.113883.10.20.22.4.19"/>
+									<id root="db734647-fc99-424c-a864-7e3cda82e703" extension="45665"/>
+									<code code="404684003" displayName="Finding" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
+									<statusCode code="completed"/>
+									<value xsi:type="CE" code="32398004" displayName="Bronchitis" codeSystem="2.16.840.1.113883.6.96"/>
+								</observation>
+
 								<observation classCode="OBS" moodCode="EVN">
 									<templateId root="2.16.840.1.113883.10.20.22.4.19"/>
 									<id root="db734647-fc99-424c-a864-7e3cda82e703"
@@ -2395,15 +2491,8 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 									</performer>
 								</supply>
 							</entryRelationship>
-							<precondition typeCode="PRCN">
-								<!-- ** Precondition for substance administration ** -->
-								<templateId root="2.16.840.1.113883.10.20.22.4.25"/>
-								<criterion>
-									<code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
-									<value xsi:type="CE" code="56018004"
-										codeSystem="2.16.840.1.113883.6.96" displayName="Wheezing"/>
-								</criterion>
-							</precondition>
+
+						<!-- REMOVED PRECONDITION -->
 						</substanceAdministration>
 					</entry>
 				</section>
@@ -2901,7 +2990,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 								</originalText>
 							</code>
 							<statusCode code="completed"/>
-							<effectiveTime value="20120512"/>
+							<effectiveTime value="201205121430"/>
 							<methodCode nullFlavor="UNK"/>
 							<targetSiteCode code="appropriate_code" displayName="colon"
 								codeSystem="2.16.840.1.113883.3.88.12.3221.8.9"
@@ -3032,25 +3121,9 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 							<effectiveTime value="20110203"/>
 							<priorityCode code="CR" codeSystem="2.16.840.1.113883.5.7"
 								codeSystemName="ActPriority" displayName="Callback results"/>
-							<performer>
-								<assignedEntity>
-									<id root="2.16.840.1.113883.19" extension="1234"/>
-									<addr>
-										<streetAddressLine>17 Daws Rd.</streetAddressLine>
-										<city>Blue Bell</city>
-										<state>MA</state>
-										<postalCode>02368</postalCode>
-										<country>US</country>
-									</addr>
-									<telecom use="WP" value="(555)555-555-1234"/>
-									<representedOrganization>
-										<id root="2.16.840.1.113883.19.5"/>
-										<name>Community Health and Hospitals</name>
-										<telecom nullFlavor="UNK"/>
-										<addr nullFlavor="UNK"/>
-									</representedOrganization>
-								</assignedEntity>
-							</performer>
+
+							<!-- REMOVED PERFORMER -->
+
 							<participant typeCode="LOC">
 								<participantRole classCode="SDLOC">
 									<!-- ** Service delivery location ** -->
@@ -3300,8 +3373,26 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 								<low value="20050501"/>
 								<high value="20090227130000+0500"/>
 							</effectiveTime>
-							<value xsi:type="CD" code="8517006" displayName="Former smoker"
-								codeSystem="2.16.840.1.113883.6.96"/>
+							<value xsi:type="CD" code="449868002" codeSystem="2.16.840.1.113883.6.96"
+                displayName="Current every day smoker" />
+						</observation>
+					</entry>
+					<entry typeCode="DRIV">
+						<observation classCode="OBS" moodCode="EVN">
+							<!-- ** Social history observation ** -->
+							<templateId root="2.16.840.1.113883.10.20.22.4.38"/>
+							<id root="45efb604-7049-4a2e-ad33-d38556c9636c"/>
+							<code code="229819007" codeSystem="2.16.840.1.113883.6.96"
+								displayName="Tobacco use and exposure">
+								<originalText>
+									<reference value="#soc2"/>
+								</originalText>
+							</code>
+							<statusCode code="completed"/>
+							<effectiveTime>
+								<low value="20090227130000+0500"/>
+							</effectiveTime>
+							<value xsi:type="ST">None</value>
 						</observation>
 					</entry>
 					<entry typeCode="DRIV">
@@ -3321,24 +3412,6 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 								<high value="20090227130000+0500"/>
 							</effectiveTime>
 							<value xsi:type="ST">1 pack per day</value>
-						</observation>
-					</entry>
-					<entry typeCode="DRIV">
-						<observation classCode="OBS" moodCode="EVN">
-							<!-- ** Social history observation ** -->
-							<templateId root="2.16.840.1.113883.10.20.22.4.38"/>
-							<id root="45efb604-7049-4a2e-ad33-d38556c9636c"/>
-							<code code="229819007" codeSystem="2.16.840.1.113883.6.96"
-								displayName="Tobacco use and exposure">
-								<originalText>
-									<reference value="#soc2"/>
-								</originalText>
-							</code>
-							<statusCode code="completed"/>
-							<effectiveTime>
-								<low value="20090227130000+0500"/>
-							</effectiveTime>
-							<value xsi:type="ST">None</value>
 						</observation>
 					</entry>
 					<entry typeCode="DRIV">
@@ -3419,7 +3492,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 							<code code="46680005" codeSystem="2.16.840.1.113883.6.96"
 								codeSystemName="SNOMED -CT" displayName="Vital signs"/>
 							<statusCode code="completed"/>
-							<effectiveTime value="19991114"/>
+							<effectiveTime value="199911141430"/>
 							<component>
 								<observation classCode="OBS" moodCode="EVN">
 									<!-- ** Vital sign observation ** -->
@@ -3431,7 +3504,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 										<reference value="#vit1"/>
 									</text>
 									<statusCode code="completed"/>
-									<effectiveTime value="19991114"/>
+									<effectiveTime value="199911141430"/>
 									<value xsi:type="PQ" value="177" unit="cm"/>
 									<interpretationCode code="N" codeSystem="2.16.840.1.113883.5.83"
 									/>
@@ -3494,7 +3567,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 										<reference value="#vit2"/>
 									</text>
 									<statusCode code="completed"/>
-									<effectiveTime value="20000407"/>
+									<effectiveTime value="200004071430"/>
 									<value xsi:type="PQ" value="177" unit="cm"/>
 									<interpretationCode code="N" codeSystem="2.16.840.1.113883.5.83"
 									/>
@@ -3512,7 +3585,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 										<reference value="#vit4"/>
 									</text>
 									<statusCode code="completed"/>
-									<effectiveTime value="20000407"/>
+									<effectiveTime value="200004071430"/>
 									<value xsi:type="PQ" value="88" unit="kg"/>
 									<interpretationCode code="N" codeSystem="2.16.840.1.113883.5.83"
 									/>
