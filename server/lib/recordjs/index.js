@@ -121,6 +121,10 @@ Object.keys(typeToSection).forEach(function(type) {
         section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
     };
 
+    exports['saveMatch' + sectionName] = function(patKey, inputArray, sourceID, callback) {
+        section.saveMatchEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+    };
+
     exports['get' + sectionName] = function(patKey, callback) {
         section.getSection(dbinfo, type, patKey, callback);
     };

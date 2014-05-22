@@ -24,44 +24,103 @@ var extractRecord = parser.extractRecord;
 var record = require('../recordjs');
 
 //Wrapper function to save all components of an incoming object.
-function saveComponents(masterObject, sourceID, callback) {
+function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
 
-    //Get Section Object length.
-    var totalSections = 0;
-    var savedSections = 0;
-    for (var secNum in masterObject) {
-        totalSections++;
-    }
+    //console.log(masterPartialObject);
+    var masterComplete = false;
+    var masterPartialComplete = false;
 
-    for (var secName in masterObject) {
+    function checkComponentsComplete () {
 
-        var saveArray = masterObject[secName];
-
-        if (secName === 'demographics') {
-            var tmpArray = [];
-            tmpArray.push(masterObject[secName]);
-            saveArray = tmpArray;
+        if(masterComplete && masterPartialComplete) {
+            callback(null);
         }
 
-        if (saveArray.length === 0) {
-            savedSections++;
-            if (totalSections === savedSections) {
-                callback(null);
+    }
+
+    function saveMasterComponents() {
+        //Get Section Object length.
+        var totalSections = 0;
+        var savedSections = 0;
+        for (var secNum in masterObject) {
+            totalSections++;
+        }
+
+        for (var secName in masterObject) {
+
+            var saveArray = masterObject[secName];
+
+            if (secName === 'demographics') {
+                var tmpArray = [];
+                tmpArray.push(masterObject[secName]);
+                saveArray = tmpArray;
             }
-        } else {
-            record["saveNew" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
-                if (err) {
-                    callback(err);
-                } else {
-                    savedSections++;
-                    //console.log(savedSections);
-                    if (totalSections === savedSections) {
-                        callback(null);
-                    }
+
+            if (saveArray.length === 0) {
+                savedSections++;
+                if (totalSections === savedSections) {
+                    callback(null);
                 }
-            });
+            } else {
+                record["saveNew" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        savedSections++;
+                        //console.log(savedSections);
+                        if (totalSections === savedSections) {
+                            masterComplete = true;
+                            checkComponentsComplete();
+                        }
+                    }
+                });
+            }
         }
     }
+
+    function savePartialComponents() {
+        //Get Section Object length.
+        var totalSections = 0;
+        var savedSections = 0;
+        for (var secNum in masterPartialObject) {
+            totalSections++;
+        }
+
+        for (var secName in masterPartialObject) {
+
+            var saveArray = masterPartialObject[secName];
+
+            if (secName === 'demographics') {
+                var tmpArray = [];
+                tmpArray.push(masterPartialObject[secName]);
+                saveArray = tmpArray;
+            }
+
+            if (saveArray.length === 0) {
+                savedSections++;
+                if (totalSections === savedSections) {
+                    callback(null);
+                }
+            } else {
+                record["savePartial" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        savedSections++;
+                        //console.log(savedSections);
+                        if (totalSections === savedSections) {
+                            masterPartialComplete = true;
+                            checkComponentsComplete();
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    saveMasterComponents();
+    savePartialComponents();
+
 }
 
 //Pull saved records from db for reconciliation.
@@ -129,8 +188,8 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
             callback(err);
         } else {
 
-            dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results) {
-                saveComponents(reconciliation_results, parsed_record_identifier, function(err) {
+            dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
+                saveComponents(reconciliation_results, partial_reconciliation_results, parsed_record_identifier, function(err) {
                     if (err) {
                         callback(err);
                     } else {
