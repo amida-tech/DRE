@@ -17,24 +17,78 @@ limitations under the License.
 var should = require('chai').should;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
+var database = require('mongodb').Db;
 
-function loadTestRecord(fileName, callback){
-  var filepath = path.join(__dirname, '../../artifacts/demo-r1.0/' + fileName);
-  api.put('/api/v1/storage')
-      .attach('file', filepath)
-      .expect(200)
-      .end(function(err, res) {
+function removeCollection(inputCollection, callback) {
+  var db;
+  database.connect(databaseLocation, function(err, dbase) {
+    if (err) {
+      throw err;
+    }
+    db = dbase;
+    db.collection(inputCollection, function(err, coll) {
+      if (err) {
+        throw err;
+      }
+      coll.remove({}, function(err, results) {
         if (err) {
-          return done(err);
+          throw err;
+        }
+        db.close();
+        callback();
+      });
+    });
+  });
+}
+
+function loadTestRecord(fileName, callback) {
+  var filepath = path.join(__dirname, '../../../artifacts/demo-r1.0/' + fileName);
+  api.put('/api/v1/storage')
+    .attach('file', filepath)
+    .expect(200)
+    .end(function(err, res) {
+      if (err) {
+        callback(err);
+      }
+      callback(null);
+    });
+}
+
+
+xdescribe('Pre Test Cleanup', function() {
+
+  it('Remove Immunization Collections', function(done) {
+    removeCollection('immunizations', function(err) {
+      if (err) {
+        done(err);
+      }
+      removeCollection('immunizationmerges', function(err) {
+        if (err) {
+          done(err);
         }
         done();
       });
-};
+    });
+  });
 
-describe('Immunizations API', function() {
+});
+
+
+describe('Immunizations API - Test New', function() {
+
+  before(function(done) {
+    loadTestRecord('bluebutton-01-original.xml', function(err) {
+      if (err) {
+        done(err);
+      } else {
+        done();
+      }
+    });
+  });
 
   it('Immunizations test', function(done) {
     api.get('/api/v1/record/immunizations')
@@ -43,6 +97,7 @@ describe('Immunizations API', function() {
         if (err) {
           return done(err);
         }
+        //Should be four of them.
         console.log(res.body);
         done();
       });

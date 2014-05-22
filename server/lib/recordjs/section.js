@@ -59,10 +59,12 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
 
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
 
+    //This seems to be returning before all saves are complete.
+
     function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
         var tempEntry = new model(entryObject);
 
-        tempEntry.save(function(err, saveResults) { // TODO: double save, logic needs to be updated
+        tempEntry.save(function(err, saveResults) {
             if (err) {
                 callback(err);
             } else {
@@ -96,7 +98,56 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
     }
 
     var model = dbinfo.models[type];
-    model.count({patKey: patKey}, function(err, count) {
+    var saveLoopLength = 0;
+    var saveLoopIter = 0;
+
+    if (_.isArray(inputArray)) {
+        saveLoopLength = inputArray.length;
+    }
+
+    //console.log(saveLoopLength);
+
+    function checkLoopComplete () {
+        saveLoopIter++;
+        if (saveLoopIter === saveLoopLength) {
+            callback(null);
+        }
+
+    }
+
+    var count = 0;
+
+
+
+    if (_.isArray(inputArray)) {
+
+        if (inputArray.length === 0) {
+            callback(new Error('no data'));
+        } else {
+            for (var i = 0; i < inputArray.length; i++) {
+                var entryObject = _.clone(inputArray[i]);
+                //I have no idea what this things point is.
+                entryObject.__index = count + i;
+                entryObject.reviewed = true;
+                saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber) {
+                    checkLoopComplete();
+                });
+            }
+        }
+    } else {
+
+        var entryObject = _.clone(inputArray);
+        entryObject.__index = count;
+        entryObject.reviewed = true;
+        saveEntry(entryObject, 0, sourceID, function(err) {
+            if (err) {
+                callback(err);
+            } else {
+                callback();
+            }
+        });
+    }
+    /*model.count({patKey: patKey}, function(err, count) {
         count = count + 1;
         if (err) {
             callback(err);
@@ -127,7 +178,7 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
                 });
             }
         }
-    });
+    });*/
 };
 
 var updateEntryAndMerge = function(dbinfo, type, input_entry, mergeInfo, callback) {
