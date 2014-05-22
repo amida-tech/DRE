@@ -39,7 +39,7 @@
 			<a data-toggle="collapse" data-parent="#accordian-results" data-target="#result-{{$index}}">
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
-					<span style="text-transform:uppercase;">{{result.panelName.name}}</span>
+					<span style="text-transform:uppercase;">{{result.name}}</span>
 					<span class="pull-right" style="text-transform:uppercase;">{{result.minDate[0].displayDate}}</span>
 				</div>
 			</a>
@@ -48,14 +48,14 @@
 			<div class="panel-body">
 				<div id="myTabContent" >
 					<div class="col-md-12" ng-repeat="result_value in result.results">
-						<h4>{{result_value.resultName.name}}</h4>
+						<h4>{{result_value.name}}</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
 							<div class="pull-left col-md-12"><strong>Measured:</strong></div><br/>
-							<div class="pull-left col-md-12">{{result_value.measuredAt[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{result_value.date[0].displayDate}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
 							<div class="pull-left col-md-12"><strong>Measurement:</strong></div><br/>
-							<div class="pull-left col-md-12">{{result_value.physicalQuantity.displayQuantity}}</div>
+							<div class="pull-left col-md-12">{{result_value.displayQuantity}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
 							<div class="pull-left col-md-12"><strong>Interpretation:</strong></div><br/>
