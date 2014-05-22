@@ -40,7 +40,8 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
             if (srcMatches[i].match === 'duplicate') {
                 //If duplicate, don't push to save array and make duplicate entry in log.
                 //Need section, db id of match, return iter for loop check.
-                updateDuplicate(i, section, baseArray[srcMatches[i].dest_id]._id, function(err, resIter) {
+                var matchIndex = srcMatches[i].dest_id || 0;
+                updateDuplicate(i, section, baseArray[matchIndex]._id, function(err, resIter) {
                     if (err) {
                         console.error(err);
                     } else {
