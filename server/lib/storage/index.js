@@ -112,14 +112,17 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
                 }
             } else {
 
-                //console.log(masterPartialObject[secName][0]);
+                console.log(JSON.stringify(masterPartialObject, null, 10));
                 //WRAP IN FUNCTION TO MAINTAIN MATCH VALUES.
+
+                function savePartialComponent (thisPartialObject) {
                 record["savePartial" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
                     if (err) {
                         callback(err);
                     } else {
 
-                        //INJECT MATCH LOGIC HERE.
+                        //console.log(thisPartialObject);
+                        //rec
 
 
                         savedSections++;
@@ -130,6 +133,8 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
                         }
                     }
                 });
+                }
+                savePartialComponent(masterPartialObject);
             }
         }
     }

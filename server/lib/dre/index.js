@@ -67,6 +67,8 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 returnArray.push(srcArray[srcMatches[i].src_id]);
                 checkLoopComplete(i, (srcMatches.length - 1));
             } else if (srcMatches[i].match === 'diff') {
+
+                //console.log(baseArray);
                 //If diff, need to save source record for diff.
                 //console.log(baseArray.length);
                 //Added conditional logic to override only 'diff' return.
@@ -75,6 +77,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                     partial_match: srcMatches[i],
                     source_array: baseArray[0]
                 });
+                
                 checkLoopComplete(i, (srcMatches.length - 1));
 
                 
