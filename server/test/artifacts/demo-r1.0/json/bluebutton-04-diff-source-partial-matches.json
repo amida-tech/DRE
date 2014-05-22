@@ -242,7 +242,7 @@
                     ],
                     "date": [
                         {
-                            "date": "2000-03-23T14:30:00.000Z",
+                            "date": "2000-03-23T15:00:00.000Z",
                             "precision": "minute"
                         }
                     ],
@@ -896,12 +896,12 @@
         {
             "date": [
                 {
-                    "date": "2008-01-03T00:00:00.000Z",
-                    "precision": "day"
+                    "date": "2008-01-03T12:12:00.000Z",
+                    "precision": "minute"
                 },
                 {
-                    "date": "2008-01-03T00:00:00.000Z",
-                    "precision": "day"
+                    "date": "2008-01-03T12:12:00.000Z",
+                    "precision": "minute"
                 }
             ],
             "identifiers": [
