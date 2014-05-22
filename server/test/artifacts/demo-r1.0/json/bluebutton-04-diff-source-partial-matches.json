@@ -1,9 +1,6 @@
 {
     "demographics": {
         "name": {
-            "middle": [
-                "Isa"
-            ],
             "last": "Jones",
             "first": "Isabella"
         },
@@ -39,7 +36,7 @@
         ],
         "phone": [
             {
-                "number": "(816)276-6909",
+                "number": "(202)276-6909",
                 "type": "primary home"
             }
         ],
@@ -99,8 +96,8 @@
             "status": "completed",
             "date": [
                 {
-                    "date": "1999-11-14T00:00:00.000Z",
-                    "precision": "day"
+                    "date": "1999-11-14T14:30:00.000Z",
+                    "precision": "minute"
                 }
             ],
             "freeTextValue": "177 cm",
@@ -168,8 +165,8 @@
             "status": "completed",
             "date": [
                 {
-                    "date": "2000-04-07T00:00:00.000Z",
-                    "precision": "day"
+                    "date": "2000-04-07T14:30:00.000Z",
+                    "precision": "minute"
                 }
             ],
             "freeTextValue": "177 cm",
@@ -191,8 +188,8 @@
             "status": "completed",
             "date": [
                 {
-                    "date": "2000-04-07T00:00:00.000Z",
-                    "precision": "day"
+                    "date": "2000-04-07T14:30:00.000Z",
+                    "precision": "minute"
                 }
             ],
             "freeTextValue": "88 kg",
@@ -245,7 +242,7 @@
                     ],
                     "date": [
                         {
-                            "date": "2000-03-23T14:30:00.000Z",
+                            "date": "2000-03-23T15:00:00.000Z",
                             "precision": "minute"
                         }
                     ],
@@ -363,17 +360,6 @@
                     "value": 90,
                     "unit": "ml/min"
                 }
-            },
-            "precondition": {
-                "code": {
-                    "code": "ASSERTION",
-                    "code_system_name": "HL7ActCode"
-                },
-                "value": {
-                    "name": "Wheezing",
-                    "code": "56018004",
-                    "code_system_name": "SNOMED CT"
-                }
             }
         }
     ],
@@ -413,6 +399,11 @@
             ],
             "findings": [
                 {
+                    "name": "Bronchitis",
+                    "code": "32398004",
+                    "code_system_name": "SNOMED CT"
+                },
+                {
                     "name": "Pneumonia",
                     "code": "233604007",
                     "code_system_name": "SNOMED CT"
@@ -446,6 +437,12 @@
             "severity": "Moderate to severe",
             "status": "Inactive",
             "reaction": [
+                {
+                    "severity": "Mild",
+                    "name": "Wheezing",
+                    "code": "56018004",
+                    "code_system_name": "SNOMED CT"
+                },
                 {
                     "severity": "Mild",
                     "name": "Nausea",
@@ -555,6 +552,12 @@
             ],
             "status": "Inactive",
             "reaction": [
+                {
+                    "severity": "Mild to moderate",
+                    "name": "Hives",
+                    "code": "247472004",
+                    "code_system_name": "SNOMED CT"
+                },
                 {
                     "severity": "Mild",
                     "name": "Nausea",
@@ -876,7 +879,7 @@
     ],
     "socialHistory": [
         {
-            "value": "Former smoker",
+            "value": "Current every day smoker",
             "dateRange": [
                 {
                     "date": "2005-05-01T00:00:00.000Z",
@@ -893,12 +896,12 @@
         {
             "date": [
                 {
-                    "date": "2008-01-03T00:00:00.000Z",
-                    "precision": "day"
+                    "date": "2008-01-03T12:12:00.000Z",
+                    "precision": "minute"
                 },
                 {
-                    "date": "2008-01-03T00:00:00.000Z",
-                    "precision": "day"
+                    "date": "2008-01-03T12:12:00.000Z",
+                    "precision": "minute"
                 }
             ],
             "identifiers": [
@@ -961,8 +964,8 @@
             "status": "Completed",
             "date": [
                 {
-                    "date": "2012-05-12T00:00:00.000Z",
-                    "precision": "day"
+                    "date": "2012-05-12T14:30:00.000Z",
+                    "precision": "minute"
                 }
             ],
             "bodysite": [
@@ -1089,26 +1092,6 @@
                 {
                     "date": "2011-02-03T00:00:00.000Z",
                     "precision": "day"
-                }
-            ],
-            "providers": [
-                {
-                    "address": {
-                        "streetLines": [
-                            "17 Daws Rd."
-                        ],
-                        "city": "Blue Bell",
-                        "state": "MA",
-                        "zip": "02368",
-                        "country": "US"
-                    },
-                    "telecom": {
-                        "value": "(555)555-555-1234",
-                        "use": "work place"
-                    },
-                    "organization": {
-                        "name": "Community Health and Hospitals"
-                    }
                 }
             ],
             "locations": [
