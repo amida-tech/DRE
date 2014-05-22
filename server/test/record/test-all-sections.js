@@ -86,8 +86,9 @@ describe('CCD_1', function() {
             if (err) {
                 done(err);
             } else {
-                modelutil.mongooseToBBModelFullRecord(result);
-                expect(result).to.deep.equal(ccd);
+                var cleanResult = modelutil.mongooseToBBModelFullRecord(result);
+                cleanResult.demographics = cleanResult.demographics[0];
+                expect(cleanResult).to.deep.equal(ccd);
                 done();
             }
         });

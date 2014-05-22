@@ -141,5 +141,5 @@ exports.saveAllSectionsAsNew = function(patientKey, patientRecord, fileId, callb
 // Utility
 
 exports.cleanSectionEntries = function(input) {
-    modelutil.mongooseToBBModelSection(input);
+    return modelutil.mongooseToBBModelSection(input);
 };

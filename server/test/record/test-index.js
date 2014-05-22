@@ -113,7 +113,7 @@ describe('CCD_1', function() {
             assert.notOk(err, 'saveProcedures failed');
             section.getSection(dbinfo, 'demographics', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
-                assert.deepEqual(cleanResults, demographics, 'write, read failed');
+                assert.deepEqual(cleanResults[0], demographics, 'write, read failed');
                 done();
             });
         });
