@@ -42,6 +42,7 @@ angular.module('dre.record.medications', [])
         $scope.medications = data.medications;
         if ($scope.medications.length > 0) {
           $scope.displayMedications = true;
+          $scope.updateFields();
         } else {
           $scope.displayMedications = false;
         }
@@ -51,17 +52,23 @@ angular.module('dre.record.medications', [])
       });
     };
 
+    $scope.updateFields = function() {
+      for (var i in $scope.medications) {
+        recordFunctions.formatDate($scope.medications[i].date);
+      }
+    };
+
     $scope.getStub = function() {
       $scope.displayMedications = true;
       $scope.medications = [{
         "date": [
-          [{
+          {
             "date": "2007-01-03T00:00:00.000Z",
             "precision": "day"
           }, {
             "date": "2012-05-15T00:00:00.000Z",
             "precision": "day"
-          }]
+          }
         ],
         "identifiers": [{
           "identifier": "cdbd33f0-6cde-11db-9fe1-0800200c9a66"
@@ -114,16 +121,11 @@ angular.module('dre.record.medications', [])
           }
         }
       }];
+      $scope.updateFields();
     };
 
     $scope.getRecord();
     //$scope.getStub();
-
-    for (var i in $scope.medications) {
-
-      recordFunctions.formatDate($scope.medications[i].date);
-
-    }
 
   }
 ]);
