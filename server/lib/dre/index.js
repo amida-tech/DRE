@@ -7,6 +7,14 @@ var _ = require("underscore");
 
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
 
+//If an object is a partial match or diff, it needs to be saved as a record in source form.
+//This record should have a flag on it to mark it as non-visible.
+//A new object needs to be created containing the diff/partial (either percent of diff)
+//This new object should have a reviewed flag on it.
+//On review, a flag toggle needs to be set up to enable one view or disable the other.
+
+
+
 function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
 
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {

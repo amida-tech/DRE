@@ -117,6 +117,10 @@ Object.keys(typeToSection).forEach(function(type) {
         section.saveNewEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
     };
 
+    exports['savePartial' + sectionName] = function(patKey, inputArray, sourceID, callback) {
+        section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+    };
+
     exports['get' + sectionName] = function(patKey, callback) {
         section.getSection(dbinfo, type, patKey, callback);
     };
@@ -128,6 +132,7 @@ Object.keys(typeToSection).forEach(function(type) {
     exports[type + 'Count'] = function(conditions, callback) {
         section.sectionEntryCount(dbinfo, type, conditions, callback);
     };
+
 });
 
 exports.getAllSections = function(patientKey, callback) {

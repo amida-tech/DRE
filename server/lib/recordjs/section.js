@@ -58,6 +58,7 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
     });    
 };
 
+
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
     function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
         var tempEntry = new model(entryObject);
@@ -174,4 +175,74 @@ exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callba
     });
 };
 
+exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
+    function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
+        var tempEntry = new model(entryObject);
 
+        callback(null, tempEntry);
+
+        /*tempEntry.save(function(err, saveResults) { // TODO: double save, logic needs to be updated
+            if (err) {
+                callback(err);
+            } else {
+                var tmpMergeEntry = {
+                    entry_type: type,
+                    patKey: patKey,
+                    entry_id: saveResults._id,
+                    record_id: inputSourceID,
+                    merged: new Date(),
+                    merge_reason: 'new'
+                };
+
+                merge.saveMerge(dbinfo, tmpMergeEntry, function(err, mergeResults) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        tempEntry.metadata = {};
+                        tempEntry.metadata.attribution = [mergeResults._id];
+                        tempEntry.patKey = patKey;
+                        tempEntry.save(function(err, saveResults) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                callback(null, entryObjectNumber);
+                            }
+                        });
+                    }
+                });
+            }
+        });*/
+    }
+
+    var model = dbinfo.models[type];
+    model.count({patKey: patKey}, function(err, count) {
+        count = count + 1;
+        if (err) {
+            callback(err);
+        } else {
+            if (Array.isArray(inputArray)) {
+                var n = inputArray.length;
+                if (n === 0) {
+                    callback(new Error('no data'));
+                    return;
+                }
+                
+                for (var i = 0; i < inputArray.length; i++) {
+                    var entryObject = _.clone(inputArray[i]);
+                    entryObject.__index = count + i;
+                    saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber) {
+                        if (savedObjectNumber === (inputArray.length - 1)) {
+                            callback(null);
+                        }
+                    });
+                }
+            } else {
+                var entryObject = _.clone(inputArray);
+                entryObject.__index = count;
+                saveEntry(entryObject, 0, sourceID, function(err) {
+                    callback(err);
+                });
+            }
+        }
+    });
+};
