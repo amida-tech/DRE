@@ -28,32 +28,9 @@ angular.module('dre.record.vitals', [])
 .controller('vitalsCtrl', ['$scope', '$http', '$location', 'recordFunctions',
   function($scope, $http, $location, recordFunctions) {
 
-    $scope.medications = [];
+    $scope.vitals = [];
     $scope.displayVitals = false;
-    $scope.vitalPredicate = "status";
-
-
-    function vitalDate(inputObject) {
-
-      //TODO:  Improve so takes highest accuracy over lowest value.
-      var dateArray = [];
-
-      for (var iResult in inputObject.vitals) {
-        var currentResult = inputObject.vitals[iResult];
-        if (currentResult.measuredAt) {
-          for (var iDate in currentResult.measuredAt) {
-            dateArray.push(currentResult.measuredAt[iDate]);
-          }
-        }
-      }
-
-      var minDateArray = [];
-
-      minDateArray.push(recordFunctions.minDateFromArray(dateArray));
-
-      inputObject.minDate = minDateArray;
-
-    }
+    $scope.vitalPredicate = "-date";
 
     $scope.getRecord = function() {
       $http({
@@ -64,6 +41,7 @@ angular.module('dre.record.vitals', [])
         $scope.vitals = data.vitals;
         if ($scope.vitals.length > 0) {
           $scope.displayVitals = true;
+          $scope.updateFields();
         } else {
           $scope.displayVitals = false;
         }
@@ -73,154 +51,160 @@ angular.module('dre.record.vitals', [])
       });
     };
 
+    $scope.updateFields = function() {
+        for (var iRec in $scope.vitals) {
+            recordFunctions.formatDate($scope.vitals[iRec].date);
+            recordFunctions.formatQuantity($scope.vitals[iRec]);
+        }
+    };
+
     $scope.getStub = function() {
       $scope.displayVitals = true;
-      $scope.vitals = [{
-        "panelName": {
-          "name": "Vital signs",
-          "code": "46680005",
-          "code_system_name": "SNOMED CT"
-        },
-        "vitals": [{
-          "vitalName": {
-            "name": "Height",
-            "code": "8302-2",
-            "code_system_name": "LOINC"
-          },
-          "measuredAt": [{
-            "date": "1999-11-14T00:00:00.000Z",
-            "precision": "day"
-          }],
-          "physicalQuantity": {
-            "value": 177,
-            "unit": "cm"
-          },
-          "freeTextValue": "177 cm",
-          "interpretations": [
-            "Normal"
-          ]
-        }, {
-          "vitalName": {
-            "name": "Patient Body Weight - Measured",
-            "code": "3141-9",
-            "code_system_name": "LOINC"
-          },
-          "measuredAt": [{
-            "date": "1999-11-14T00:00:00.000Z",
-            "precision": "day"
-          }],
-          "physicalQuantity": {
-            "value": 86,
-            "unit": "kg"
-          },
-          "freeTextValue": "86 kg",
-          "interpretations": [
-            "Normal"
-          ]
-        }, {
-          "vitalName": {
-            "name": "Intravascular Systolic",
-            "code": "8480-6",
-            "code_system_name": "LOINC"
-          },
-          "measuredAt": [{
-            "date": "1999-11-14T00:00:00.000Z",
-            "precision": "day"
-          }],
-          "physicalQuantity": {
-            "value": 132,
-            "unit": "mm[Hg]"
-          },
-          "freeTextValue": "132/86 mmHg",
-          "interpretations": [
-            "Normal"
-          ]
-        }]
-      }, {
-        "panelName": {
-          "name": "Vital signs",
-          "code": "46680005",
-          "code_system_name": "SNOMED CT"
-        },
-        "vitals": [{
-          "vitalName": {
-            "name": "Height",
-            "code": "8302-2",
-            "code_system_name": "LOINC"
-          },
-          "measuredAt": [{
-            "date": "2000-04-07T00:00:00.000Z",
-            "precision": "day"
-          }],
-          "physicalQuantity": {
-            "value": 177,
-            "unit": "cm"
-          },
-          "freeTextValue": "177 cm",
-          "interpretations": [
-            "Normal"
-          ]
-        }, {
-          "vitalName": {
-            "name": "Patient Body Weight - Measured",
-            "code": "3141-9",
-            "code_system_name": "LOINC"
-          },
-          "measuredAt": [{
-            "date": "2000-04-07T00:00:00.000Z",
-            "precision": "day"
-          }],
-          "physicalQuantity": {
-            "value": 88,
-            "unit": "kg"
-          },
-          "freeTextValue": "88 kg",
-          "interpretations": [
-            "Normal"
-          ]
-        }, {
-          "vitalName": {
-            "name": "Intravascular Systolic",
-            "code": "8480-6",
-            "code_system_name": "LOINC"
-          },
-          "measuredAt": [{
-            "date": "2000-04-07T00:00:00.000Z",
-            "precision": "day"
-          }],
-          "physicalQuantity": {
-            "value": 145,
-            "unit": "mm[Hg]"
-          },
-          "freeTextValue": "145/88 mmHg",
-          "interpretations": [
-            "Normal"
-          ]
-        }]
-      }];
+      $scope.vitals = [
+            {
+                "identifiers": [
+                    {
+                        "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
+                    }
+                ],
+                "status": "completed",
+                "date": [
+                    {
+                        "date": "1999-11-14T00:00:00.000Z",
+                        "precision": "day"
+                    }
+                ],
+                "freeTextValue": "177 cm",
+                "interpretations": [
+                    "Normal"
+                ],
+                "name": "Height",
+                "code": "8302-2",
+                "code_system_name": "LOINC",
+                "value": 177,
+                "unit": "cm"
+            },
+            {
+                "identifiers": [
+                    {
+                        "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
+                    }
+                ],
+                "status": "completed",
+                "date": [
+                    {
+                        "date": "1999-11-14T00:00:00.000Z",
+                        "precision": "day"
+                    }
+                ],
+                "freeTextValue": "86 kg",
+                "interpretations": [
+                    "Normal"
+                ],
+                "name": "Patient Body Weight - Measured",
+                "code": "3141-9",
+                "code_system_name": "LOINC",
+                "value": 86,
+                "unit": "kg"
+            },
+            {
+                "identifiers": [
+                    {
+                        "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
+                    }
+                ],
+                "status": "completed",
+                "date": [
+                    {
+                        "date": "1999-11-14T00:00:00.000Z",
+                        "precision": "day"
+                    }
+                ],
+                "freeTextValue": "132/86 mmHg",
+                "interpretations": [
+                    "Normal"
+                ],
+                "name": "Intravascular Systolic",
+                "code": "8480-6",
+                "code_system_name": "LOINC",
+                "value": 132,
+                "unit": "mm[Hg]"
+            },
+            {
+                "identifiers": [
+                    {
+                        "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
+                    }
+                ],
+                "status": "completed",
+                "date": [
+                    {
+                        "date": "2000-04-07T00:00:00.000Z",
+                        "precision": "day"
+                    }
+                ],
+                "freeTextValue": "177 cm",
+                "interpretations": [
+                    "Normal"
+                ],
+                "name": "Height",
+                "code": "8302-2",
+                "code_system_name": "LOINC",
+                "value": 177,
+                "unit": "cm"
+            },
+            {
+                "identifiers": [
+                    {
+                        "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
+                    }
+                ],
+                "status": "completed",
+                "date": [
+                    {
+                        "date": "2000-04-07T00:00:00.000Z",
+                        "precision": "day"
+                    }
+                ],
+                "freeTextValue": "88 kg",
+                "interpretations": [
+                    "Normal"
+                ],
+                "name": "Patient Body Weight - Measured",
+                "code": "3141-9",
+                "code_system_name": "LOINC",
+                "value": 88,
+                "unit": "kg"
+            },
+            {
+                "identifiers": [
+                    {
+                        "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
+                    }
+                ],
+                "status": "completed",
+                "date": [
+                    {
+                        "date": "2000-04-07T00:00:00.000Z",
+                        "precision": "day"
+                    }
+                ],
+                "freeTextValue": "145/88 mmHg",
+                "interpretations": [
+                    "Normal"
+                ],
+                "name": "Intravascular Systolic",
+                "code": "8480-6",
+                "code_system_name": "LOINC",
+                "value": 145,
+                "unit": "mm[Hg]"
+            }
+        ];
+        
+        $scope.updateFields();
     };
 
     $scope.getRecord();
     //$scope.getStub();
-
-    //Restructrure Object.
-    var tmpVitals = [];
-    for (var i in $scope.vitals) {
-      for (var iVital in $scope.vitals[i].vitals) {
-        tmpVitals.push($scope.vitals[i].vitals[iVital]);
-      }
-    }
-    $scope.vitals = tmpVitals;
-
-    for (var iRec in $scope.vitals) {
-      recordFunctions.formatDate($scope.vitals[iRec].measuredAt);
-      recordFunctions.formatQuantity($scope.vitals[iRec].physicalQuantity);
-
-    }
-
-    //recordFunctions.formatDate($scope.vitals[i].results[iRes].measuredAt);
-
-
-
   }
 ]);
