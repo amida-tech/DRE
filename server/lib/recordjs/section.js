@@ -176,19 +176,18 @@ exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callba
 };
 
 exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
-    function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
-            
+    
+    function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {        
             var tempEntry = new model(entryObject);
             tempEntry.save(function(err, saveResults) {
                 if (err) {
                      callback(err);
                 } else {
-                    callback(null, entryObjectNumber);
+                    callback(null, entryObjectNumber, saveResults._id);
 
                 }
             });
     }
-
 
     var model = dbinfo.models[type];
     model.count({patKey: patKey}, function(err, count) {
@@ -209,9 +208,9 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     entryObject.__index = count + i;
                     entryObject.reviewed = false;
                     entryObject.patKey = patKey;
-                    saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber) {
+                    saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber, savedObjectId) {
                         if (savedObjectNumber === (inputArray.length - 1)) {
-                            callback(null);
+                            callback(null, savedObjectId);
                         }
                     });
                 }
@@ -221,8 +220,13 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                 entryObject.__index = count;
                 entryObject.reviewed = false;
                 entryObject.patKey = patKey;
-                saveEntry(entryObject, 0, sourceID, function(err) {
-                    callback(err);
+                saveEntry(entryObject, 0, sourceID, function(err, savedObjectNumber, savedObjectId) {
+                    if (err) {
+                        callback(err);    
+                    } else {
+                        callback(null, savedObjectId);
+                    }
+                    
                 });
             }
         }
@@ -249,4 +253,68 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
             });
         }
     });
+};
+
+exports.saveMatchEntries = function(dbinfo, type, patKey, inputObject, callback) {
+
+
+            var model = dbinfo.matchModels[type];
+            //console.log(model);
+
+            var tempEntry = new model(inputObject);
+
+            tempEntry.save(function(err, saveResults) {
+                if (err) {
+                     callback(err);
+                } else {
+                    callback(null, saveResults);
+
+                }
+            });
+
+
+    /*var model = dbinfo.models[type];
+    model.count({patKey: patKey}, function(err, count) {
+        count = count + 1;
+
+        if (err) {
+            callback(err);
+        } else {
+            if (Array.isArray(inputArray)) {
+                var n = inputArray.length;
+                if (n === 0) {
+                    callback(new Error('no data'));
+                    return;
+                }
+                
+                for (var i = 0; i < inputArray.length; i++) {
+                    var entryObject = _.clone(inputArray[i]);
+                    entryObject.__index = count + i;
+                    entryObject.reviewed = false;
+                    entryObject.patKey = patKey;
+                    saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber, savedObjectId) {
+                        if (savedObjectNumber === (inputArray.length - 1)) {
+                            callback(null, savedObjectId);
+                        }
+                    });
+                }
+            } else {
+                var entryObject = _.clone(inputArray);
+                //console.log(entryObject);
+                entryObject.__index = count;
+                entryObject.reviewed = false;
+                entryObject.patKey = patKey;
+                saveEntry(entryObject, 0, sourceID, function(err, savedObjectNumber, savedObjectId) {
+                    if (err) {
+                        callback(err);    
+                    } else {
+                        callback(null, savedObjectId);
+                    }
+                    
+                });
+            }
+        }
+    });*/
+
+
 };

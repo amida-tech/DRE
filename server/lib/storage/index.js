@@ -30,9 +30,9 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
     var masterComplete = false;
     var masterPartialComplete = false;
 
-    function checkComponentsComplete () {
+    function checkComponentsComplete() {
 
-        if(masterComplete && masterPartialComplete) {
+        if (masterComplete && masterPartialComplete) {
             callback(null);
         }
 
@@ -112,35 +112,51 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
                 }
             } else {
 
-                console.log(JSON.stringify(masterPartialObject, null, 10));
+                //console.log(JSON.stringify(masterPartialObject, null, 10));
                 //WRAP IN FUNCTION TO MAINTAIN MATCH VALUES.
 
-                function savePartialComponent (thisPartialObject) {
-                record["savePartial" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
-                    if (err) {
-                        callback(err);
-                    } else {
+                function savePartialComponent(thisPartialObject, section_name) {
+                    record["savePartial" + record.capitalize(section_name)]('test', saveArray, sourceID, function(err, save_partial_id) {
+                            if (err) {
+                                callback(err);
+                            } else {
 
-                        //console.log(thisPartialObject);
-                        //rec
+                                console.log(thisPartialObject[0]);
 
+                                var tmpMatch = {
+                                    entry_type: section_name,
+                                    entry_id: thisPartialObject[0].match_entry_id,
+                                    match_entry_id: save_partial_id
+                                }
 
-                        savedSections++;
-                        //console.log(savedSections);
-                        if (totalSections === savedSections) {
-                            masterPartialComplete = true;
-                            checkComponentsComplete();
+                                //Conditionally take diff/partial.
+                                if (thisPartialObject[0].partial_match.match === 'diff') {
+                                    tmpMatch.diff = thisPartialObject[0].partial_match.diff;
+                                } else {
+                                    tmpMatch.percent = thisPartialObject[0].partial_match.percent;
+                                }
+
+                                record["add" + record.capitalize(section_name) + "MatchEntry"]('test', tmpMatch, function(err, save_match_response) {
+                                if (err) {
+                                    callback(err);
+                                } else {
+                                    savedSections++;
+                                    if (totalSections === savedSections) {
+                                        masterPartialComplete = true;
+                                        checkComponentsComplete();
+                                    }
+                                }
+                            });
                         }
-                    }
-                });
-                }
-                savePartialComponent(masterPartialObject);
+                    });
             }
+            savePartialComponent(masterPartialObject[secName], secName);
         }
     }
+}
 
-    saveMasterComponents();
-    savePartialComponents();
+saveMasterComponents();
+savePartialComponents();
 
 }
 

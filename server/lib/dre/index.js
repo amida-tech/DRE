@@ -72,10 +72,19 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 //If diff, need to save source record for diff.
                 //console.log(baseArray.length);
                 //Added conditional logic to override only 'diff' return.
+
+                //SHIM:  Holder for 'New' Demographics fix.
+
+                var tmpMatchRecId
+                if (baseArray.length === 0) {
+                    tmpMatchRecId = null;
+                } else {
+                    tmpMatchRecId = baseArray[0]._id;
+                }
                 returnPartialArray.push({
                     partial_array: srcArray,
                     partial_match: srcMatches[i],
-                    source_array: baseArray[0]
+                    match_record_id: tmpMatchRecId
                 });
                 
                 checkLoopComplete(i, (srcMatches.length - 1));
@@ -89,7 +98,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 returnPartialArray.push({
                     partial_array: srcArray[srcMatches[i].src_id],
                     partial_match: srcMatches[i],
-                    source_array: baseArray[0]
+                    match_record_id: baseArray[0]._id
                 });
                 checkLoopComplete(i, (srcMatches.length - 1));
             }
