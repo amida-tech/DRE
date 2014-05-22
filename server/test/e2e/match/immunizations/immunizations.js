@@ -21,11 +21,9 @@ var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 
-describe('Immunizations API', function() {
-
-  before(function(done) {
-    var filepath = path.join(__dirname, '../../artifacts/standard/CCD_demo1.xml');
-    api.put('/api/v1/storage')
+function loadTestRecord(fileName, callback){
+  var filepath = path.join(__dirname, '../../artifacts/demo-r1.0/' + fileName);
+  api.put('/api/v1/storage')
       .attach('file', filepath)
       .expect(200)
       .end(function(err, res) {
@@ -34,7 +32,9 @@ describe('Immunizations API', function() {
         }
         done();
       });
-  });
+};
+
+describe('Immunizations API', function() {
 
   it('Immunizations test', function(done) {
     api.get('/api/v1/record/immunizations')
@@ -43,7 +43,7 @@ describe('Immunizations API', function() {
         if (err) {
           return done(err);
         }
-        //console.log(res.body);
+        console.log(res.body);
         done();
       });
   });
