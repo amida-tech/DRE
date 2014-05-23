@@ -105,6 +105,21 @@ describe('Verifying demo R1.0 sample xml files', function() {
         });
 
 
+        it('checking that JSON #1 agains empty master record', function() {
+            //console.log(js);
+            var m0 = match.match(js, {});
+
+            //console.log(JSON.stringify(m,null,4));
+
+            for (var section in lookup) {
+                for (el in m0.match[lookup[section]]){
+                    expect(m0.match[lookup[section]][el].match).to.equal("new");
+                }
+            }
+
+        });
+
+
         it('checking that JSON #1 and #2 are duplicates', function() {
         	//console.log(js);
             var m = match.match(js, js2);
@@ -133,6 +148,21 @@ describe('Verifying demo R1.0 sample xml files', function() {
         			assert.include(["duplicate", "new"],m2.match[lookup[section]][el].match);
         		}
         	}
+
+        });
+
+        it('checking that matches between JSON #4 and #3 are just new or duplicates entries', function() {
+            var m3 = match.match(js4, js3);
+
+            //console.log(JSON.stringify(m3,null,4));
+
+            for (var section in lookup) {
+                //console.log(lookup[section]);
+                //console.log(m2.match[lookup[section]]);
+                for (el in m3.match[lookup[section]]){
+                    assert.include(["duplicate", "new", "diff", "partial"],m3.match[lookup[section]][el].match);
+                }
+            }
 
         });
 

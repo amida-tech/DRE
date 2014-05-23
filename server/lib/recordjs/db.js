@@ -37,6 +37,7 @@ exports.connect = function connectDatabase(server, options, callback) {
             } else {
                 dbinfo.models = r.clinical;
                 dbinfo.mergeModels = r.merge;
+                dbinfo.matchModels = r.match;
             
                 callback(null, dbinfo);
             }
