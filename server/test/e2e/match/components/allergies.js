@@ -70,7 +70,12 @@ describe('Pre Test Cleanup', function() {
 				if (err) {
 					done(err);
 				}
-				done();
+				removeCollection('allergymatches', function(err) {
+					if(err) {
+						done(err);
+					}
+					done();
+				});
 			});
 		});
 	});
@@ -272,11 +277,13 @@ describe('Allergies API - Test Partial Matches:', function() {
 			});
 	});
 
-	it('Get Immunization Match Records', function(done) {
-		api.get('/api/v1/matches/immunizations')
+	it('Get Allergy Match Records', function(done) {
+		api.get('/api/v1/matches/allergies')
 		.expect(200)
 		.end(function(err, res) {
-			console.log(res.body);
+			//Not creating entry_id, only reference_id.
+
+			console.log(JSON.stringify(res.body, null, 10));
 			done();
 
 

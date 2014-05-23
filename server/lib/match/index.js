@@ -22,18 +22,19 @@ var _ = require('underscore');
 var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social', 'demographics', 'problems'];
 
 //Get all merges API.
-app.get('/api/v1/merges/:component', function(req, res) {
+app.get('/api/v1/matches/:component', function(req, res) {
 
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
-        record.getMerges(req.params.component, 'name severity', 'filename uploadDate', function(err, mergeList) {
+        record.getMatches(req.params.component, 'name severity', 'filename uploadDate', function(err, matchList) {
             if (err) {
                 res.send(400, err);
             } else {
-                var mergeJSON = {};
-                mergeJSON.merges = mergeList;
-                res.send(mergeJSON);
+                var matchJSON = {};
+                matchJSON.matches = matchList;
+                console.log(matchJSON);
+                res.send(matchJSON);
             }
         });
     }

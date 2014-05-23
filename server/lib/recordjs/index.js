@@ -7,6 +7,7 @@ var db = require('./db');
 var models = require('./models');
 var storage = require('./storage');
 var merge = require('./merge');
+var match = require('./match');
 var section = require('./section');
 var jsutil = require('./jsutil');
 var modelutil = require('./modelutil');
@@ -100,6 +101,11 @@ exports.getMerges = function(type, typeFields, recordFields, callback) {
 exports.mergeCount = function(type, conditions, callback) {
     merge.count(dbinfo, type, conditions, callback);
 };
+
+// Matches
+exports.getMatches = function(type, typeFields, recordFields, callback) {
+    match.getMatches(dbinfo, sectionToType[type], typeFields, recordFields, callback);
+}
 
 // Sections
 

@@ -325,7 +325,7 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
 
 exports.saveMatchEntries = function(dbinfo, type, patKey, inputObject, callback) {
 
-
+    //console.log(inputObject);
     var model = dbinfo.matchModels[type];
     //console.log(model);
 

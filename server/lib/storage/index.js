@@ -114,11 +114,9 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
                                 callback(err);
                             } else {
 
-                                //console.log(thisPartialObject[0]);
-
                                 var tmpMatch = {
                                     entry_type: section_name,
-                                    entry_id: thisPartialObject[0].match_entry_id,
+                                    entry_id: thisPartialObject[0].match_record_id,
                                     match_entry_id: save_partial_id
                                 }
 
