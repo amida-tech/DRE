@@ -124,6 +124,8 @@ describe('Verifying demo R1.0 sample xml files', function() {
         	//console.log(js);
             var m = match.match(js, js2);
 
+            fs.writeFileSync('test/artifacts/demo-r1.0/matches/02-in-01.json', JSON.stringify(m,null,4));
+
             //console.log(JSON.stringify(m,null,4));
 
         	for (var section in lookup) {
@@ -138,6 +140,7 @@ describe('Verifying demo R1.0 sample xml files', function() {
         it('checking that matches between JSON #3 and #1 are just new or duplicates entries', function() {
         	var m2 = match.match(js3, js);
 
+            fs.writeFileSync('test/artifacts/demo-r1.0/matches/03-in-01.json', JSON.stringify(m2,null,4));
             //console.log(JSON.stringify(m2,null,4));
 
         	for (var section in lookup) {
@@ -154,6 +157,7 @@ describe('Verifying demo R1.0 sample xml files', function() {
         it('checking that matches between JSON #4 and #3 are just new or duplicates entries', function() {
             var m3 = match.match(js4, js3);
 
+            fs.writeFileSync('test/artifacts/demo-r1.0/matches/04-in-03.json', JSON.stringify(m3,null,4));
             //console.log(JSON.stringify(m3,null,4));
 
             for (var section in lookup) {

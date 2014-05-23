@@ -1,0 +1,215 @@
+{
+    "match": {
+        "allergies": [
+            {
+                "match": "duplicate",
+                "src_id": "0",
+                "dest_id": "0"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "1",
+                "dest_id": "1"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "3",
+                "dest_id": "2"
+            },
+            {
+                "match": "new",
+                "src_id": "2"
+            },
+            {
+                "match": "new",
+                "src_id": "4"
+            }
+        ],
+        "encounters": [
+            {
+                "match": "duplicate",
+                "src_id": "1",
+                "dest_id": "0"
+            },
+            {
+                "match": "new",
+                "src_id": "0"
+            }
+        ],
+        "immunizations": [
+            {
+                "match": "duplicate",
+                "src_id": "1",
+                "dest_id": "0"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "2",
+                "dest_id": "1"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "3",
+                "dest_id": "2"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "4",
+                "dest_id": "3"
+            },
+            {
+                "match": "new",
+                "src_id": "0"
+            }
+        ],
+        "results": [
+            {
+                "match": "duplicate",
+                "src_id": "6",
+                "dest_id": "0"
+            },
+            {
+                "match": "new",
+                "src_id": "0"
+            },
+            {
+                "match": "new",
+                "src_id": "1"
+            },
+            {
+                "match": "new",
+                "src_id": "2"
+            },
+            {
+                "match": "new",
+                "src_id": "3"
+            },
+            {
+                "match": "new",
+                "src_id": "4"
+            },
+            {
+                "match": "new",
+                "src_id": "5"
+            }
+        ],
+        "medications": [
+            {
+                "match": "duplicate",
+                "src_id": "2",
+                "dest_id": "0"
+            },
+            {
+                "match": "new",
+                "src_id": "0"
+            },
+            {
+                "match": "new",
+                "src_id": "1"
+            }
+        ],
+        "problems": [
+            {
+                "match": "duplicate",
+                "src_id": "1",
+                "dest_id": "0"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "2",
+                "dest_id": "1"
+            },
+            {
+                "match": "new",
+                "src_id": "0"
+            }
+        ],
+        "procedures": [
+            {
+                "match": "duplicate",
+                "src_id": "1",
+                "dest_id": "0"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "2",
+                "dest_id": "1"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "3",
+                "dest_id": "2"
+            },
+            {
+                "match": "new",
+                "src_id": "0"
+            }
+        ],
+        "vitals": [
+            {
+                "match": "duplicate",
+                "src_id": "5",
+                "dest_id": "0"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "6",
+                "dest_id": "1"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "7",
+                "dest_id": "2"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "8",
+                "dest_id": "3"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "9",
+                "dest_id": "4"
+            },
+            {
+                "match": "duplicate",
+                "src_id": "10",
+                "dest_id": "5"
+            },
+            {
+                "match": "new",
+                "src_id": "0"
+            },
+            {
+                "match": "new",
+                "src_id": "1"
+            },
+            {
+                "match": "new",
+                "src_id": "2"
+            },
+            {
+                "match": "new",
+                "src_id": "3"
+            },
+            {
+                "match": "new",
+                "src_id": "4"
+            }
+        ],
+        "demographics": [
+            {
+                "match": "duplicate"
+            }
+        ],
+        "socialHistory": [
+            {
+                "match": "duplicate"
+            }
+        ]
+    },
+    "meta": {
+        "version": "0.1.4"
+    },
+    "errors": []
+}
