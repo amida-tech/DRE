@@ -20,13 +20,19 @@ var modelutil = require('./modelutil');
 
 exports.getSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
-    var query = model.find({patKey: patKey, reviewed: true}).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
+    var query = model.find({
+        patKey: patKey,
+        reviewed: true
+    }).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
     query.exec(function(err, results) {
         if (err) {
             callback(err);
         } else {
 
-            dbinfo.storageModel.populate(results, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
+            dbinfo.storageModel.populate(results, {
+                path: 'metadata.attribution.record_id',
+                select: 'filename'
+            }, function(err, docs) {
                 if (err) {
                     callback(err);
                 } else {
@@ -47,13 +53,15 @@ exports.sectionEntryCount = exports.sectionEntryCount = function(dbinfo, type, c
 
 var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
     var model = dbinfo.models[type];
-    model.findOne({"_id": input_id}, function(err, entry) {
+    model.findOne({
+        "_id": input_id
+    }, function(err, entry) {
         if (err) {
             callback(err);
         } else {
             callback(null, entry);
         }
-    });    
+    });
 };
 
 
@@ -107,7 +115,7 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
 
     //console.log(saveLoopLength);
 
-    function checkLoopComplete () {
+    function checkLoopComplete() {
         saveLoopIter++;
         if (saveLoopIter === saveLoopLength) {
             callback(null);
@@ -228,21 +236,23 @@ exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callba
 };
 
 exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
-    
-    function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {        
-            var tempEntry = new model(entryObject);
-            tempEntry.save(function(err, saveResults) {
-                if (err) {
-                     callback(err);
-                } else {
-                    callback(null, entryObjectNumber, saveResults._id);
 
-                }
-            });
+    function saveEntry(entryObject, entryObjectNumber, inputSourceID, callback) {
+        var tempEntry = new model(entryObject);
+        tempEntry.save(function(err, saveResults) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, entryObjectNumber, saveResults._id);
+
+            }
+        });
     }
 
     var model = dbinfo.models[type];
-    model.count({patKey: patKey}, function(err, count) {
+    model.count({
+        patKey: patKey
+    }, function(err, count) {
         count = count + 1;
 
         if (err) {
@@ -254,7 +264,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     callback(new Error('no data'));
                     return;
                 }
-                
+
                 for (var i = 0; i < inputArray.length; i++) {
                     var entryObject = _.clone(inputArray[i]);
                     entryObject.__index = count + i;
@@ -274,11 +284,11 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                 entryObject.patKey = patKey;
                 saveEntry(entryObject, 0, sourceID, function(err, savedObjectNumber, savedObjectId) {
                     if (err) {
-                        callback(err);    
+                        callback(err);
                     } else {
                         callback(null, savedObjectId);
                     }
-                    
+
                 });
             }
         }
@@ -287,12 +297,18 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
 
 exports.getPartialSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
-    var query = model.find({patKey: patKey, reviewed: false}).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
+    var query = model.find({
+        patKey: patKey,
+        reviewed: false
+    }).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
     query.exec(function(err, results) {
         if (err) {
             callback(err);
         } else {
-            dbinfo.storageModel.populate(results, {path: 'metadata.attribution.record_id', select: 'filename'}, function(err, docs) {
+            dbinfo.storageModel.populate(results, {
+                path: 'metadata.attribution.record_id',
+                select: 'filename'
+            }, function(err, docs) {
                 if (err) {
                     callback(err);
                 } else {
@@ -310,63 +326,18 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
 exports.saveMatchEntries = function(dbinfo, type, patKey, inputObject, callback) {
 
 
-            var model = dbinfo.matchModels[type];
-            //console.log(model);
+    var model = dbinfo.matchModels[type];
+    //console.log(model);
 
-            var tempEntry = new model(inputObject);
+    var tempEntry = new model(inputObject);
 
-            tempEntry.save(function(err, saveResults) {
-                if (err) {
-                     callback(err);
-                } else {
-                    callback(null, saveResults);
-
-                }
-            });
-
-
-    /*var model = dbinfo.models[type];
-    model.count({patKey: patKey}, function(err, count) {
-        count = count + 1;
-
+    tempEntry.save(function(err, saveResults) {
         if (err) {
             callback(err);
         } else {
-            if (Array.isArray(inputArray)) {
-                var n = inputArray.length;
-                if (n === 0) {
-                    callback(new Error('no data'));
-                    return;
-                }
-                
-                for (var i = 0; i < inputArray.length; i++) {
-                    var entryObject = _.clone(inputArray[i]);
-                    entryObject.__index = count + i;
-                    entryObject.reviewed = false;
-                    entryObject.patKey = patKey;
-                    saveEntry(entryObject, i, sourceID, function(err, savedObjectNumber, savedObjectId) {
-                        if (savedObjectNumber === (inputArray.length - 1)) {
-                            callback(null, savedObjectId);
-                        }
-                    });
-                }
-            } else {
-                var entryObject = _.clone(inputArray);
-                //console.log(entryObject);
-                entryObject.__index = count;
-                entryObject.reviewed = false;
-                entryObject.patKey = patKey;
-                saveEntry(entryObject, 0, sourceID, function(err, savedObjectNumber, savedObjectId) {
-                    if (err) {
-                        callback(err);    
-                    } else {
-                        callback(null, savedObjectId);
-                    }
-                    
-                });
-            }
-        }
-    });*/
+            callback(null, saveResults);
 
+        }
+    });
 
 };
