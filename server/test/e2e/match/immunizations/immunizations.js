@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-var should = require('chai').should;
+var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
 var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
@@ -59,7 +59,7 @@ function loadTestRecord(fileName, callback) {
 }
 
 
-xdescribe('Pre Test Cleanup', function() {
+describe('Pre Test Cleanup', function() {
 
   it('Remove Immunization Collections', function(done) {
     removeCollection('immunizations', function(err) {
@@ -78,7 +78,50 @@ xdescribe('Pre Test Cleanup', function() {
 });
 
 
-describe('Immunizations API - Test New', function() {
+describe('Immunizations API - Test New:', function() {
+
+  before(function(done) {
+    loadTestRecord('bluebutton-01-original.xml', function(err) {
+      if (err) {
+        done(err);
+      } else {
+        done();
+      }
+    });
+  });
+
+  it('Get Immunization Records', function(done) {
+    api.get('/api/v1/record/immunizations')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          return done(err);
+        }
+        expect(res.body.immunizations.length).to.equal(4);
+        //console.log(res.body.immunizations);
+        done();
+      });
+  });
+
+   it('Get Immunization Merge Records', function(done) {
+    api.get('/api/v1/merges/immunizations')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          return done(err);
+        }
+        expect(res.body.merges.length).to.equal(4);
+        for (var i in res.body.merges) {
+        	expect(res.body.merges[i].merge_reason).to.equal('new');
+        }
+        console.log(res.body);
+        done();
+      });
+  });
+
+});
+
+describe('Immunizations API - Test Duplicate:', function() {
 
   before(function(done) {
     loadTestRecord('bluebutton-01-original.xml', function(err) {
@@ -97,10 +140,13 @@ describe('Immunizations API - Test New', function() {
         if (err) {
           return done(err);
         }
-        //Should be four of them.
-        console.log(res.body);
+        expect(res.body.immunizations.length).to.equal(4);
+        //console.log(res.body.immunizations);
         done();
       });
   });
 
 });
+
+
+
