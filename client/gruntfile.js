@@ -99,6 +99,10 @@ module.exports = function(grunt) {
         src: ['src/vendor/angular/angular.js', 'src/vendor/angular/angular-route.js'],
         dest: '<%= distdir %>/angular.js'
       },
+      underscore: {
+        src: ['src/vendor/underscore/underscore.js'],
+        dest: '<%= distdir %>/underscore.js'
+      },
       jquery: {
         src: ['src/vendor/jquery/*.js'],
         dest: '<%= distdir %>/jquery.js'

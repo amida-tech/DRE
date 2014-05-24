@@ -8,7 +8,7 @@
 		<div class="col-md-9" ng-controller="reconciliationCtrl">
 			<br/>
 			<h5 class="lead">Unreviewed Updates</h5>
-						<div class="panel panel-default">
+						<!--div class="panel panel-default">
 							<div class="panel-body">
 							<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick()">Review</button></div>
 							<h4>Allergy Update</h4>
@@ -22,7 +22,17 @@
 							<h4>Allergy Update</h4>
 							<h5>One of your files may have an update to your EGG allergy.</h5>
 							</div>
+						</div-->
+
+
+						<div class="panel panel-default" ng-repeat="new_match in partial_matches">
+							<div class="panel-body" >
+							<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick()">Review</button></div>
+							<h4>{{new_match.section}} Update</h4>
+							<h5>One of your files may have an {{new_match.percent}}% match to your #{{new_match.dest_id}} {{new_match.section}}.</h5>
+							</div>
 						</div>
+
 		</div>
 	</div>
 </div>
