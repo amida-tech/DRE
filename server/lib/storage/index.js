@@ -73,42 +73,42 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
     }
 
     function savePartialComponents() {
-        //console.log(JSON.stringify(masterPartialObject, null, 10));
-        //Get Section Object length.
+
+        //Set initial counter values.
         var totalSections = 0;
         var savedSections = 0;
         for (var secNum in masterPartialObject) {
             totalSections++;
         }
 
-        if (totalSections === savedSections) {
-            callback(null);
+        function checkSavePartialComponentsComplete () {
+            savedSections++;
+            if (savedSections === totalSections) {
+                masterPartialComplete = true;
+                checkComponentsComplete();
+            }
         }
 
         for (var secName in masterPartialObject) {
 
-            //console.log(masterPartialObject[secName]);
-            var saveArray = masterPartialObject[secName][0].partial_array;
-
-            /*if (secName === 'demographics') {
-                var tmpArray = [];
-                tmpArray.push(masterPartialObject[secName][0].partial_array);
-                saveArray = tmpArray;
-            }*/
-
-            //console.log(JSON.stringify(saveArray, null, 10));
+            //console.log(JSON.stringify(masterPartialObject[secName], null, 10));
+            var saveArray = masterPartialObject[secName];
 
             if (saveArray.length === 0) {
-                savedSections++;
-                if (totalSections === savedSections) {
-                    callback(null);
-                }
+                checkSavePartialComponentsComplete();
             } else {
+                record["savePartial" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
 
-                //console.log(JSON.stringify(masterPartialObject, null, 10));
-                //WRAP IN FUNCTION TO MAINTAIN MATCH VALUES.
+                    if (err) {
+                        callback(err);
+                    } else {
+                        checkSavePartialComponentsComplete();
+                    }
+                });
 
-                function savePartialComponent(thisPartialObject, section_name) {
+
+
+                /*function savePartialComponent(thisPartialObject, section_name) {
                     record["savePartial" + record.capitalize(section_name)]('test', saveArray, sourceID, function(err, save_partial_id) {
                             if (err) {
                                 callback(err);
@@ -141,7 +141,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
                         }
                     });
             }
-            savePartialComponent(masterPartialObject[secName], secName);
+            savePartialComponent(masterPartialObject[secName], secName);*/
         }
     }
 }
@@ -220,7 +220,8 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
             callback(err);
         } else {
             dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
-                
+                //AHH ERROR HERE(NOT SAVING MULTIPLE PARTIAL MATCHES.)...
+                //console.log(partial_reconciliation_results);
                 saveComponents(reconciliation_results, partial_reconciliation_results, parsed_record_identifier, function(err) {
                     if (err) {
                         callback(err);

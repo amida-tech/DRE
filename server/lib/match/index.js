@@ -33,7 +33,7 @@ app.get('/api/v1/matches/:component', function(req, res) {
             } else {
                 var matchJSON = {};
                 matchJSON.matches = matchList;
-                console.log(matchJSON);
+                //console.log(matchJSON);
                 res.send(matchJSON);
             }
         });

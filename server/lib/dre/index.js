@@ -19,6 +19,9 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
 
+        console.log('srcMatches');
+        console.log(srcMatches);
+
         var returnArray = [];
         var returnPartialArray = [];
 
@@ -99,10 +102,15 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
             } else if (srcMatches[i].match === 'partial') {
                 //If partial, save partial.
                 //TODO:  Inject partial save.
+
+
+                //console.log(srcMatches[i].src_id);
+
+                //console.log(srcMatches[i]);
                 returnPartialArray.push({
                     partial_array: srcArray[srcMatches[i].src_id],
                     partial_match: srcMatches[i],
-                    match_record_id: baseArray[0]._id
+                    match_record_id: baseArray[srcMatches[i].dest_id]._id
                 });
                 checkLoopComplete(i, (srcMatches.length - 1));
             }
@@ -122,6 +130,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
     function checkSectionLoopComplete(iteration, totalSections) {
         if (iteration === (sectionTotal - 1)) {
+            //console.log(JSON.stringify(newPartialObject, null, 10));
             callback(null, newObject, newPartialObject);
         }
     }
@@ -185,6 +194,10 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
         //console.log(newObjectPostMatch);
         //console.log(newPartialObjectPostMatch);
+
+        //console.log(JSON.stringify(newPartialObjectPostMatch, null, 10));
+
+
         callback(null, newObjectPostMatch, newPartialObjectPostMatch);
     });
 }
