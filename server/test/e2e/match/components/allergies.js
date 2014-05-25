@@ -281,19 +281,13 @@ describe('Allergies API - Test Partial Matches:', function() {
 		api.get('/api/v1/matches/allergies')
 		.expect(200)
 		.end(function(err, res) {
-			//Not creating entry_id, only reference_id.
-
-			console.log(JSON.stringify(res.body, null, 10));
+			//console.log(JSON.stringify(res.body.matches, null, 10));
+			expect(res.body.matches.length).to.equal(2);
+			for (var i in res.body.matches) {
+				expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
+			}
 			done();
-
-
-
 		});
-
-
-
-
-
 	});
 
 });
