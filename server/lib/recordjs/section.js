@@ -113,8 +113,6 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
         saveLoopLength = inputArray.length;
     }
 
-    //console.log(saveLoopLength);
-
     function checkLoopComplete() {
         saveLoopIter++;
         if (saveLoopIter === saveLoopLength) {
@@ -185,7 +183,6 @@ var updateEntryAndMerge = function(dbinfo, type, input_entry, mergeInfo, callbac
 
 exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callback) {
     getEntry(dbinfo, type, update_id, function(err, current) {
-        //console.log(currentAllergy);
         //Needs to get added to, but held out of match for now.
         //currentAllergy.metadata.attribution.push({
         //  record_id: newSourceID,
@@ -212,7 +209,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                 callback(err);
             } else {
 
-                //console.log(entryMatch)
 
                 var tmpMatch = {
                     entry_type: type,
@@ -248,8 +244,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                                 }*/
 
 
-                //console.log(tmpMatch);
-
                 callback(null);
             }
         });
@@ -263,8 +257,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
     if (_.isArray(inputArray)) {
         saveLoopLength = inputArray.length;
     }
-
-    //console.log(saveLoopLength);
 
     function checkLoopComplete() {
         saveLoopIter++;
@@ -285,7 +277,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
         } else {
             for (var i = 0; i < inputArray.length; i++) {
                 var entryObject = _.clone(inputArray[i].partial_array);
-                //console.log(entryObject);
                 //I have no idea what this things point is.
                 entryObject.__index = count + i;
                 entryObject.reviewed = false;
@@ -345,7 +336,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                 }
             } else {
                 var entryObject = _.clone(inputArray);
-                //console.log(entryObject);
                 entryObject.__index = count;
                 entryObject.reviewed = false;
                 entryObject.patKey = patKey;
@@ -392,9 +382,7 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
 
 var saveMatchEntries = exports.saveMatchEntries = function(dbinfo, type, patKey, inputObject, callback) {
 
-    //console.log(inputObject);
     var model = dbinfo.matchModels[type];
-    //console.log(model);
 
     var tempEntry = new model(inputObject);
 

@@ -19,9 +19,6 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
 
-        console.log('srcMatches');
-        console.log(srcMatches);
-
         var returnArray = [];
         var returnPartialArray = [];
 
@@ -43,12 +40,9 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         function checkLoopComplete(iteration, length) {
 
             if (iteration === length) {
-                //console.log(returnArray);
                 callback(null, section, returnArray, returnPartialArray);
             }
         }
-
-               //console.log(srcArray);
 
         for (var i = 0; i < srcMatches.length; i++) {
             if (srcMatches[i].match === 'duplicate') {
@@ -59,7 +53,6 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                     if (err) {
                         console.error(err);
                     } else {
-                        //console.log(resIter);
                         checkLoopComplete(resIter, (srcMatches.length - 1));
                     }
                 });
@@ -75,9 +68,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 checkLoopComplete(i, (srcMatches.length - 1));
             } else if (srcMatches[i].match === 'diff') {
 
-                //console.log(baseArray);
                 //If diff, need to save source record for diff.
-                //console.log(baseArray.length);
                 //Added conditional logic to override only 'diff' return.
 
                 //SHIM:  Holder for 'New' Demographics fix.
@@ -104,9 +95,6 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 //TODO:  Inject partial save.
 
 
-                //console.log(srcMatches[i].src_id);
-
-                //console.log(srcMatches[i]);
                 returnPartialArray.push({
                     partial_array: srcArray[srcMatches[i].src_id],
                     partial_match: srcMatches[i],
@@ -130,7 +118,6 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
     function checkSectionLoopComplete(iteration, totalSections) {
         if (iteration === (sectionTotal - 1)) {
-            //console.log(JSON.stringify(newPartialObject, null, 10));
             callback(null, newObject, newPartialObject);
         }
     }
@@ -138,9 +125,6 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
     for (var iSec in newObject) {
 
         var currentMatchResult = matchResults.match[iSec];
-
-
-        //console.log(newObject[iSec]);
 
         if (currentMatchResult.length > 0) {
             removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries, newPartialEntries) {
@@ -192,11 +176,6 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
 
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
-        //console.log(newObjectPostMatch);
-        //console.log(newPartialObjectPostMatch);
-
-        //console.log(JSON.stringify(newPartialObjectPostMatch, null, 10));
-
 
         callback(null, newObjectPostMatch, newPartialObjectPostMatch);
     });
