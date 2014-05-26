@@ -23,7 +23,7 @@ angular.module('dre.match.review', [])
             controller: 'reviewCtrl'
         });
 
-        $routeProvider.when('/match/reconciliation/review/:section/:src_id/:dest_id', {
+        $routeProvider.when('/match/reconciliation/review/:section/:index/:src_id/:dest_id', {
             templateUrl: 'templates/matching/reconciliation/review/review.tpl.html',
             controller: 'reviewCtrl'
         });
@@ -35,6 +35,7 @@ angular.module('dre.match.review', [])
     function($scope, $http, $location, $route, $routeParams) {
 
         $scope.section = $routeParams["section"];
+        $scope.index = $routeParams["index"];
         $scope.src_id = $routeParams["src_id"];
         $scope.dest_id = $routeParams["dest_id"];
 

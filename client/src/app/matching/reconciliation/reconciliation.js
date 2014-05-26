@@ -33,8 +33,8 @@ angular.module('dre.match.reconciliation', [])
         $scope.navPath = "templates/nav/nav.tpl.html";
 
         $scope.reviewClick = function(match) {
-            alert(match);
-            $location.path("match/reconciliation/review/"+match.section+"/"+match.src_id+"/"+match.dest_id);
+            alert(JSON.stringify(match));
+            $location.path("match/reconciliation/review/"+match.section+"/"+match.index+"/"+match.src_id+"/"+match.dest_id);
         };
 
         $scope.matches = {
@@ -2433,8 +2433,9 @@ var lookup = [
 
         var tag = function(name){
           var section=name;
-          function addSection(el){
+          function addSection(el, index){
             el["section"]=name;
+            el["index"]=index;
             return el;
           }
           return addSection;
