@@ -74,40 +74,26 @@ function updateAdded(updateId, updateComponent, callback) {
 }
 
 
-function updateIgnored (updateId, updateComponent, callback) {
-
-    //Need to delete ignroed record from database, delete source data, and save determination.
-    /*record["removePartial" + record.capitalize(record.sectionToType[updateComponent])]('test', partialMatch._id, {
-            reviewed: true
-        }, function(err, updateResults) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null, err);
-            }
-        });*/
+function updateIgnored(updateId, updateComponent, callback) {
 
     record.getMatch(updateComponent, updateId, function(err, resultComponent) {
-            if (err) {
-                callback(err);
-            } else {
-                record["removePartial" + record.capitalize(record.sectionToType[updateComponent])]('test', resultComponent.match_entry_id._id, function(err, removalResults) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        callback(null);
-                    }
-                });
-            //console.log(resultComponent.match_entry_id._id);
-            //callback(null);
-
+        if (err) {
+            callback(err);
+        } else {
+            record["removePartial" + record.capitalize(record.sectionToType[updateComponent])]('test', resultComponent.match_entry_id._id, function(err, removalResults) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null);
+                }
+            });
         }
 
     });
 }
 
 
-function processUpdate (updateId, updateComponent, updateParameters, callback) {
+function processUpdate(updateId, updateComponent, updateParameters, callback) {
 
     //Clean parameters.
     var cleanParameters = {};
@@ -128,7 +114,7 @@ function processUpdate (updateId, updateComponent, updateParameters, callback) {
     }
 
     if (cleanParameters.determination === 'merged') {
-        //If determination is merged, overwrite original record, drop source, and update merge history of object.
+        //If determination is merged, overwrite original record, drop source object, and update merge history of object.
     }
 
     if (cleanParameters.determination === 'ignored') {
@@ -144,20 +130,10 @@ function processUpdate (updateId, updateComponent, updateParameters, callback) {
         });
     }
 
-
-
-  /*  saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null);
-        }
-    });*/
 }
 
 
 function saveRecord(updateId, updateComponent, updateParameters, callback) {
-    //console.log(updateParameters);
     record.updateMatch(updateComponent, updateId, updateParameters, function(err, updateResults) {
         if (err) {
             callback(err);
@@ -194,7 +170,7 @@ app.post('/api/v1/matches/:component/:record_id', function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
-        if (_.contains(['added' ,'ignored'], req.body.determination)) {
+        if (_.contains(['added', 'ignored'], req.body.determination)) {
             processUpdate(req.params.record_id, req.params.component, req.body, function(err) {
                 if (err) {
                     console.error(err);
@@ -202,7 +178,7 @@ app.post('/api/v1/matches/:component/:record_id', function(req, res) {
                 } else {
                     res.send(200);
                 }
-            });  
+            });
         } else {
             res.send(404);
         }
