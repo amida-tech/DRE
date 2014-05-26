@@ -18,6 +18,51 @@ var merge = require('./merge');
 var _ = require('underscore');
 var modelutil = require('./modelutil');
 
+
+exports.removeEntry = function(dbinfo, type, patKey, recordId, callback) {
+    
+    function removeModel (callback) {
+        var model = dbinfo.models[type];
+    
+        var query = model.remove({
+            patKey: patKey,
+            _id: recordId
+        });
+
+        query.exec(function(err, results) {
+            callback(null);
+        });
+    }
+
+    function removeMerge (callback) {
+        var model = dbinfo.mergeModels[type];
+        var query = model.remove({
+            entry_id: recordId
+        })
+        query.exec(function(err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null);
+            }
+        });
+    }
+
+    removeMerge(function(err) {
+        if (err) {
+            callback(err);
+        } else {
+            removeModel(function(err) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null);
+                }
+            });
+        }
+    });
+}
+
 exports.getSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
     var query = model.find({

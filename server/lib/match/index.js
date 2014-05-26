@@ -74,6 +74,38 @@ function updateAdded(updateId, updateComponent, callback) {
 }
 
 
+function updateIgnored (updateId, updateComponent, callback) {
+
+    //Need to delete ignroed record from database, delete source data, and save determination.
+    /*record["removePartial" + record.capitalize(record.sectionToType[updateComponent])]('test', partialMatch._id, {
+            reviewed: true
+        }, function(err, updateResults) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, err);
+            }
+        });*/
+
+    record.getMatch(updateComponent, updateId, function(err, resultComponent) {
+            if (err) {
+                callback(err);
+            } else {
+                record["removePartial" + record.capitalize(record.sectionToType[updateComponent])]('test', resultComponent.match_entry_id._id, function(err, removalResults) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null);
+                    }
+                });
+            //console.log(resultComponent.match_entry_id._id);
+            //callback(null);
+
+        }
+
+    });
+}
+
 
 function processUpdate (updateId, updateComponent, updateParameters, callback) {
 
@@ -83,19 +115,14 @@ function processUpdate (updateId, updateComponent, updateParameters, callback) {
 
     //Can be 1) Merged, 2) Added, 3) Ignored.
     if (cleanParameters.determination === 'added') {
-        //If determination is added, update saved record to be visible.  Might need to reinstate merge history.
         updateAdded(updateId, updateComponent, function(err, results) {
-                saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null);
-        }
-    });
-
-
-
-
+            saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null);
+                }
+            });
         });
 
     }
@@ -106,6 +133,15 @@ function processUpdate (updateId, updateComponent, updateParameters, callback) {
 
     if (cleanParameters.determination === 'ignored') {
         //If determination is ignored, dump the object from the database.
+        updateIgnored(updateId, updateComponent, function(err, results) {
+            saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null);
+                }
+            });
+        });
     }
 
 
@@ -158,7 +194,7 @@ app.post('/api/v1/matches/:component/:record_id', function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
-        if (_.contains(['added'], req.body.determination)) {
+        if (_.contains(['added' ,'ignored'], req.body.determination)) {
             processUpdate(req.params.record_id, req.params.component, req.body, function(err) {
                 if (err) {
                     console.error(err);

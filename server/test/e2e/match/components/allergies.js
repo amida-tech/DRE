@@ -292,7 +292,11 @@ describe('Allergies API - Test Partial Matches:', function() {
 
 	//TODO:  Test get partials api.
 
-	it('Update Allergy Match Records', function(done) {
+});
+
+describe('Allergies API - Test Added Matches', function() {
+
+it('Update Allergy Match Records', function(done) {
 
 		var update_id = '';
 		var match_id = '';
@@ -357,6 +361,83 @@ describe('Allergies API - Test Partial Matches:', function() {
 				done();
 			});
 	});
+
+});
+
+
+
+
+describe('Allergies API - Test Ignored Matches', function() {
+
+
+	//TODO:  Test get partials api.
+
+	it('Update Allergy Match Records Ignored', function(done) {
+
+		var update_id = '';
+		var match_id = '';
+
+		api.get('/api/v1/matches/allergies')
+			.expect(200)
+			.end(function(err, res) {
+				if (err) {
+					done(err);
+				} else {
+					update_id = res.body.matches[0]._id;
+					match_id = res.body.matches[0].match_entry_id._id;
+					api.post('/api/v1/matches/allergies/' + update_id)
+						.send({
+							determination: "ignored"
+						})
+						.expect(200)
+						.end(function(err, res) {
+							if (err) {
+								done(err);
+							} else {
+								api.get('/api/v1/record/allergies')
+									.expect(200)
+									.end(function(err, res) {
+										expect(res.body.allergies.length).to.equal(6);
+										done();
+									});
+							}
+						});
+				}
+			});
+	});
+
+	it('Get Allergy Merge Records Post Added', function(done) {
+		api.get('/api/v1/merges/allergies')
+			.expect(200)
+			.end(function(err, res) {
+				if (err) {
+					return done(err);
+				}
+				//console.log(res.body.merges);
+				expect(res.body.merges.length).to.equal(13);
+				var newCnt = 0;
+				var dupCnt = 0;
+				for (var i in res.body.merges) {
+					if (res.body.merges[i].merge_reason === 'new') {
+						newCnt++;
+					}
+					if (res.body.merges[i].merge_reason === 'duplicate') {
+						dupCnt++;
+					}
+				}
+				expect(newCnt).to.equal(6);
+				expect(dupCnt).to.equal(7);
+				done();
+			});
+	});
+
+
+
+
+
+
+
+
 
 
 });

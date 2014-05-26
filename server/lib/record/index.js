@@ -59,3 +59,4 @@ app.get('/api/v1/record/:component', function(req, res) {
         sendResponse(req.params.component);
     }
 });
+

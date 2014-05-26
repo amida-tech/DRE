@@ -142,6 +142,10 @@ Object.keys(typeToSection).forEach(function(type) {
         section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
     };
 
+    exports['removePartial' + typeName] = function(patKey, partialID, callback) {
+        section.removeEntry(dbinfo, type, patKey, partialID, callback);
+    };
+
     exports['add' + sectionName + 'MatchEntry'] = function(patKey, inputArray, callback) {
         section.saveMatchEntries(dbinfo, type, patKey, inputArray, callback);
     };
