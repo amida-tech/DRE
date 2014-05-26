@@ -24,10 +24,29 @@ var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medicati
 
 
 
-function updateMerged () {
+function updateAdded (updateId, updateComponent, callback) {
+    //need to update partial to full status.
+    //Need to get the update via Id first
+    record.getMatch(updateComponent, updateId, function(err, resultComponent) {
+        if (err) {
+            callback(err);
+        } else {
+            record["get" + record.capitalize(record.sectionToType[updateComponent])](resultComponent.entry_id._id, function(err, results) {
+                
+                //Flag record as reviewed so it is visible.
+                record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', results._id, {reviewed: true}, function(err, updateResults) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null, err);
+                    }
+                });
 
+            });
 
-
+        }
+        
+    });
 }
 
 
@@ -40,14 +59,41 @@ function processUpdate (updateId, updateComponent, updateParameters, callback) {
     cleanParameters.determination = updateParameters.determination;
 
     //Can be 1) Merged, 2) Added, 3) Ignored.
-
-    saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
+    if (cleanParameters.determination === 'added') {
+        //If determination is added, update saved record to be visible.  Might need to reinstate merge history.
+        updateAdded(updateId, updateComponent, function(err, results) {
+                saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
         if (err) {
             callback(err);
         } else {
             callback(null);
         }
     });
+
+
+
+
+        });
+
+    }
+
+    if (cleanParameters.determination === 'merged') {
+        //If determination is merged, overwrite original record, drop source, and update merge history of object.
+    }
+
+    if (cleanParameters.determination === 'ignored') {
+        //If determination is ignored, dump the object from the database.
+    }
+
+
+
+  /*  saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null);
+        }
+    });*/
 }
 
 
@@ -89,7 +135,7 @@ app.post('/api/v1/matches/:component/:record_id', function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
-        if (_.contains(['new'], req.body.determination)) {
+        if (_.contains(['added'], req.body.determination)) {
             processUpdate(req.params.record_id, req.params.component, req.body, function(err) {
                 if (err) {
                     console.error(err);

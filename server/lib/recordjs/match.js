@@ -27,6 +27,19 @@ exports.saveMatch = function(dbinfo, matchObject, callback) {
     });
 };
 
+exports.getMatch = function(dbinfo, type, matchId, callback) {
+    var model = dbinfo.matchModels[type];
+    var query = model.findOne({_id: matchId}).populate('entry_id match_entry_id');
+    query.exec(function (err, matchResults) {
+        if (err) {
+            callback(err);
+        } else {
+            //console.log(matchResults);
+            callback(null, matchResults);
+        }
+    });
+}
+
 exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback) {
     var model = dbinfo.matchModels[type];
     var query = model.findOne({_id: identifier});

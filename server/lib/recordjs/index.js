@@ -107,6 +107,10 @@ exports.getMatches = function(type, typeFields, recordFields, callback) {
     match.getMatches(dbinfo, sectionToType[type], typeFields, recordFields, callback);
 }
 
+exports.getMatch = function(type, matchId, callback) {
+    match.getMatch(dbinfo, sectionToType[type], matchId, callback);
+}
+
 exports.updateMatch = function(type, identifier, updateFields, callback) {
     match.updateMatch(dbinfo, sectionToType[type], identifier, updateFields, callback);   
 }
@@ -124,6 +128,14 @@ Object.keys(typeToSection).forEach(function(type) {
     
     exports['saveNew' + sectionName] = function(patKey, inputArray, sourceID, callback) {
         section.saveNewEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+    };
+
+    exports['update' + typeName] = function(patKey, recordId, recordUpdate, callback) {
+        section.saveNewEntries(dbinfo, type, patKey, recordId, recordUpdate, callback);
+    };
+
+    exports['get' + typeName] = function(recordId, callback) {
+        section.getEntry(dbinfo, type, recordId, callback);
     };
 
     exports['savePartial' + sectionName] = function(patKey, inputArray, sourceID, callback) {

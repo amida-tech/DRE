@@ -64,6 +64,30 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
     });
 };
 
+exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, callback) {
+    var model = dbinfo.models[type];
+    model.findOne({
+        "_id": recordId
+    }, function(err, entry) {
+        if (err) {
+            callback(err);
+        } else {
+            for (var iLine in recordUpdate) {
+                entry[iLine] = recordUpdate;
+            }
+            entry.save(function(err, results) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null, results);
+                }
+            })
+        }
+    });
+
+}
+
+
 
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
 

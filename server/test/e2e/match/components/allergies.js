@@ -302,7 +302,7 @@ describe('Allergies API - Test Partial Matches:', function() {
 				} else {
 					update_id = res.body.matches[0]._id
 					api.post('/api/v1/matches/allergies/' + update_id)
-						.send({determination: "new"})
+						.send({determination: "added"})
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
