@@ -290,9 +290,12 @@ describe('Allergies API - Test Partial Matches:', function() {
 			});
 	});
 
+	//TODO:  Test get partials api.
+
 	it('Update Allergy Match Records', function(done) {
 
 		var update_id = '';
+		var match_id = '';
 
 		api.get('/api/v1/matches/allergies')
 			.expect(200)
@@ -300,16 +303,30 @@ describe('Allergies API - Test Partial Matches:', function() {
 				if (err) {
 					done(err);
 				} else {
-					update_id = res.body.matches[0]._id
+					update_id = res.body.matches[0]._id;
+					match_id = res.body.matches[0].match_entry_id._id;
 					api.post('/api/v1/matches/allergies/' + update_id)
-						.send({determination: "added"})
+						.send({
+							determination: "added"
+						})
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								console.log(res);
-								done();
+								api.get('/api/v1/record/allergies')
+									.expect(200)
+									.end(function(err, res) {
+										//console.log(res.body);
+										var total_allergies = 0;
+										for (var iEntry in res.body.allergies) {
+											if (res.body.allergies[iEntry]._id === match_id) {
+												total_allergies++;
+											}
+										}
+										expect(total_allergies).to.equal(1);
+										done();
+									});
 							}
 						});
 				}

@@ -65,6 +65,7 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
 };
 
 exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, callback) {
+
     var model = dbinfo.models[type];
     model.findOne({
         "_id": recordId
@@ -72,6 +73,8 @@ exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, cal
         if (err) {
             callback(err);
         } else {
+            //console.log('entry');
+            //console.log(entry);
             for (var iLine in recordUpdate) {
                 entry[iLine] = recordUpdate;
             }
@@ -304,6 +307,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                 //I have no idea what this things point is.
                 entryObject.__index = count + i;
                 entryObject.reviewed = false;
+                entryObject.patKey = patKey;
                 var entryPartialMatch = inputArray[i].partial_match;
                 var entryPartialMatchRecordId = inputArray[i].match_record_id;
                 saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, function(err) {

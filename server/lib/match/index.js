@@ -23,32 +23,55 @@ var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medicati
 
 
 
+function updateAdded(updateId, updateComponent, callback) {
 
-function updateAdded (updateId, updateComponent, callback) {
-    //need to update partial to full status.
-    //Need to get the update via Id first
+    function getPartialMatch(matchEntryId, callback) {
+        record["getPartial" + record.capitalize(updateComponent)]('test', function(err, results) {
+            for (var iRecord in results) {
+                if (results[iRecord]._id.toString() === matchEntryId.toString()) {
+                    callback(null, results[iRecord]);
+                }
+            }
+        });
+    }
+
+    function updatePartialMatch(partialMatch, callback) {
+        //Flag record as reviewed so it is visible.
+        record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', partialMatch._id, {
+            reviewed: true
+        }, function(err, updateResults) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, err);
+            }
+        });
+
+    }
+
     record.getMatch(updateComponent, updateId, function(err, resultComponent) {
         if (err) {
             callback(err);
         } else {
-            record["get" + record.capitalize(record.sectionToType[updateComponent])](resultComponent.entry_id._id, function(err, results) {
-                
-                //Flag record as reviewed so it is visible.
-                record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', results._id, {reviewed: true}, function(err, updateResults) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        callback(null, err);
-                    }
-                });
+            getPartialMatch(resultComponent.match_entry_id._id, function(err, results) {
+                if (err) {
+                    callback(err);
+                } else {
+                    updatePartialMatch(results, function(err, updateResults) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            callback(null, updateResults);
+                        }
+                    });
+                }
 
             });
 
         }
-        
+
     });
 }
-
 
 
 
@@ -98,7 +121,7 @@ function processUpdate (updateId, updateComponent, updateParameters, callback) {
 
 
 function saveRecord(updateId, updateComponent, updateParameters, callback) {
-    console.log(updateParameters);
+    //console.log(updateParameters);
     record.updateMatch(updateComponent, updateId, updateParameters, function(err, updateResults) {
         if (err) {
             callback(err);

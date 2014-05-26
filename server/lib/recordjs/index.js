@@ -131,7 +131,7 @@ Object.keys(typeToSection).forEach(function(type) {
     };
 
     exports['update' + typeName] = function(patKey, recordId, recordUpdate, callback) {
-        section.saveNewEntries(dbinfo, type, patKey, recordId, recordUpdate, callback);
+        section.updateEntry(dbinfo, type, patKey, recordId, recordUpdate, callback);
     };
 
     exports['get' + typeName] = function(recordId, callback) {
