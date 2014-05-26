@@ -107,8 +107,11 @@ exports.getMatches = function(type, typeFields, recordFields, callback) {
     match.getMatches(dbinfo, sectionToType[type], typeFields, recordFields, callback);
 }
 
-// Sections
+exports.updateMatch = function(type, identifier, updateFields, callback) {
+    match.updateMatch(dbinfo, sectionToType[type], identifier, updateFields, callback);   
+}
 
+// Sections
 var capitalize = function(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);
 };

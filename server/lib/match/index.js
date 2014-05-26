@@ -21,6 +21,47 @@ var _ = require('underscore');
 
 var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social', 'demographics', 'problems'];
 
+
+
+
+function updateMerged () {
+
+
+
+}
+
+
+
+
+function processUpdate (updateId, updateComponent, updateParameters, callback) {
+
+    //Clean parameters.
+    var cleanParameters = {};
+    cleanParameters.determination = updateParameters.determination;
+
+    //Can be 1) Merged, 2) Added, 3) Ignored.
+
+    saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null);
+        }
+    });
+}
+
+
+function saveRecord(updateId, updateComponent, updateParameters, callback) {
+    console.log(updateParameters);
+    record.updateMatch(updateComponent, updateId, updateParameters, function(err, updateResults) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, updateResults);
+        }
+    });
+}
+
 //Get all merges API.
 app.get('/api/v1/matches/:component', function(req, res) {
 
@@ -29,6 +70,7 @@ app.get('/api/v1/matches/:component', function(req, res) {
     } else {
         record.getMatches(req.params.component, 'name severity', 'filename uploadDate', function(err, matchList) {
             if (err) {
+                console.error(err);
                 res.send(400, err);
             } else {
                 var matchJSON = {};
@@ -37,5 +79,27 @@ app.get('/api/v1/matches/:component', function(req, res) {
                 res.send(matchJSON);
             }
         });
+    }
+});
+
+
+//Get all merges API.
+app.post('/api/v1/matches/:component/:record_id', function(req, res) {
+
+    if (_.contains(supportedComponents, req.params.component) === false) {
+        res.send(404);
+    } else {
+        if (_.contains(['new'], req.body.determination)) {
+            processUpdate(req.params.record_id, req.params.component, req.body, function(err) {
+                if (err) {
+                    console.error(err);
+                    res.send(400, err);
+                } else {
+                    res.send(200);
+                }
+            });  
+        } else {
+            res.send(404);
+        }
     }
 });

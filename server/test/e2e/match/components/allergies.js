@@ -71,7 +71,7 @@ describe('Pre Test Cleanup', function() {
 					done(err);
 				}
 				removeCollection('allergymatches', function(err) {
-					if(err) {
+					if (err) {
 						done(err);
 					}
 					done();
@@ -279,15 +279,43 @@ describe('Allergies API - Test Partial Matches:', function() {
 
 	it('Get Allergy Match Records', function(done) {
 		api.get('/api/v1/matches/allergies')
-		.expect(200)
-		.end(function(err, res) {
-			//console.log(JSON.stringify(res.body.matches, null, 10));
-			expect(res.body.matches.length).to.equal(2);
-			for (var i in res.body.matches) {
-				expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
-			}
-			done();
-		});
+			.expect(200)
+			.end(function(err, res) {
+				//console.log(JSON.stringify(res.body.matches, null, 10));
+				expect(res.body.matches.length).to.equal(2);
+				for (var i in res.body.matches) {
+					expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
+				}
+				done();
+			});
 	});
+
+	it('Update Allergy Match Records', function(done) {
+
+		var update_id = '';
+
+		api.get('/api/v1/matches/allergies')
+			.expect(200)
+			.end(function(err, res) {
+				if (err) {
+					done(err);
+				} else {
+					update_id = res.body.matches[0]._id
+					api.post('/api/v1/matches/allergies/' + update_id)
+						.send({determination: "new"})
+						.expect(200)
+						.end(function(err, res) {
+							if (err) {
+								done(err);
+							} else {
+								console.log(res);
+								done();
+							}
+						});
+				}
+			});
+	});
+
+
 
 });

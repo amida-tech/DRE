@@ -14,19 +14,42 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-/*
-exports.saveMerge = function(dbinfo, mergeObject, callback) {
-    var Model = dbinfo.mergeModels[mergeObject.entry_type];
-    var saveMerge = new Model(mergeObject);
+exports.saveMatch = function(dbinfo, matchObject, callback) {
+    var Model = dbinfo.matchModels[matchObject.entry_type];
+    var saveMatch = new Model(matchObject);
 
-    saveMerge.save(function(err, saveResults) {
+    saveMatch.save(function(err, saveResults) {
         if (err) {
             callback(err);
         } else {
             callback(null, saveResults);
         }
     });
-};*/
+};
+
+exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback) {
+    var model = dbinfo.matchModels[type];
+    var query = model.findOne({_id: identifier});
+    query.exec(function (err, update_record) {
+        if (err) {
+            callback(err);
+        } else {
+            if (updateFields.determination) {
+                update_record.determination = updateFields.determination;
+                update_record.save(function(err, save_results) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null, save_results);
+                    }
+                });
+            } else {
+                callback('No update determination found.');
+            }
+            callback(null, update_record);
+        }
+    });
+}
 
 exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) {
 
