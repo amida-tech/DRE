@@ -28,7 +28,7 @@ angular.module('dre.record.problems', [])
 .controller('problemsCtrl', ['$scope', '$http', '$location', 'recordFunctions',
   function($scope, $http, $location, recordFunctions) {
 
-    $scope.medications = [];
+    $scope.problems = [];
     $scope.displayProblems = false;
     $scope.procedurePredicate = "status";
 
@@ -67,6 +67,7 @@ angular.module('dre.record.problems', [])
         $scope.problems = data.problems;
         if ($scope.problems.length > 0) {
           $scope.displayProblems = true;
+          $scope.updateFields();
         } else {
           $scope.displayProblems = false;
         }
@@ -74,6 +75,14 @@ angular.module('dre.record.problems', [])
       error(function(data, status, headers, config) {
         console.log('error');
       });
+    };
+
+    $scope.updateFields = function() {
+      for (var i in $scope.problems) {
+        problemStatus($scope.problems[i]);
+        onsetAge($scope.problems[i]);
+        recordFunctions.formatDate($scope.problems[i].date);
+      }
     };
 
     $scope.getStub = function() {
@@ -123,16 +132,12 @@ angular.module('dre.record.problems', [])
         "code": "195967001",
         "code_system_name": "SNOMED CT"
       }];
+      $scope.updateFields();
     };
 
     $scope.getRecord();
     //$scope.getStub();
 
-    for (var i in $scope.problems) {
-      problemStatus($scope.problems[i]);
-      onsetAge($scope.problems[i]);
-      recordFunctions.formatDate($scope.problems[i].date);
-    }
 
   }
 ]);

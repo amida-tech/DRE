@@ -41,6 +41,7 @@ angular.module('dre.record.immunizations', [])
         $scope.immunizations = data.immunizations;
         if ($scope.immunizations.length > 0) {
           $scope.displayImmunizations = true;
+          $scope.updateFields();
         } else {
           $scope.displayImmunizations = false;
         }
@@ -48,6 +49,31 @@ angular.module('dre.record.immunizations', [])
       error(function(data, status, headers, config) {
         console.log('error');
       });
+    };
+
+    $scope.updateFields = function() {
+      for (var i in $scope.immunizations) {
+  
+        recordFunctions.formatDate($scope.immunizations[i].date);
+  
+        if ($scope.immunizations[i].administration.quantity) {
+          recordFunctions.formatQuantity($scope.immunizations[i].administration.quantity);
+        }
+  
+        if ($scope.immunizations[i].performer.address) {
+          for (var perAddr in $scope.immunizations[i].performer.address) {
+            recordFunctions.formatAddress($scope.immunizations[i].performer.address[perAddr]);
+          }
+        }
+  
+        if ($scope.immunizations[i].performer.name) {
+          for (var perName in $scope.immunizations[i].performer.name) {
+            recordFunctions.formatName($scope.immunizations[i].performer.name[perName]);  
+          }
+          
+          
+        }
+      }
     };
 
     $scope.getStub = function() {
@@ -290,35 +316,11 @@ angular.module('dre.record.immunizations', [])
         },
         "refusal_reason": "Patient objection"
       }];
-
+      $scope.updateFields();
     };
 
     $scope.getRecord();
     //$scope.getStub();
-
-    for (var i in $scope.immunizations) {
-
-      recordFunctions.formatDate($scope.immunizations[i].date);
-
-      if ($scope.immunizations[i].administration.quantity) {
-        recordFunctions.formatQuantity($scope.immunizations[i].administration.quantity);
-      }
-
-      if ($scope.immunizations[i].performer.address) {
-        for (var perAddr in $scope.immunizations[i].performer.address) {
-          recordFunctions.formatAddress($scope.immunizations[i].performer.address[perAddr]);
-        }
-      }
-
-      if ($scope.immunizations[i].performer.name) {
-        for (var perName in $scope.immunizations[i].performer.name) {
-          recordFunctions.formatName($scope.immunizations[i].performer.name[perName]);  
-        }
-        
-        
-      }
-    }
-
 
   }
 ]);
