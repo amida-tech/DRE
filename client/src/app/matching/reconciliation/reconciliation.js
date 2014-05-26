@@ -32,8 +32,9 @@ angular.module('dre.match.reconciliation', [])
 
         $scope.navPath = "templates/nav/nav.tpl.html";
 
-        $scope.reviewClick = function() {
-            $location.path("match/reconciliation/review");
+        $scope.reviewClick = function(match) {
+            alert(match);
+            $location.path("match/reconciliation/review/"+match.section+"/"+match.src_id+"/"+match.dest_id);
         };
 
         $scope.matches = {

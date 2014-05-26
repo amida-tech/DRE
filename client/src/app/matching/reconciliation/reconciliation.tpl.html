@@ -27,7 +27,7 @@
 
 						<div class="panel panel-default" ng-repeat="new_match in partial_matches">
 							<div class="panel-body" >
-							<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick()">Review</button></div>
+							<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick(new_match)">Review</button></div>
 							<h4>{{new_match.section}} Update</h4>
 							<h5>One of your files may have an {{new_match.percent}}% match to your #{{new_match.dest_id}} {{new_match.section}}.</h5>
 							</div>
