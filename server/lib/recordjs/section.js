@@ -230,13 +230,85 @@ exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callba
 exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
 
     function saveEntry(entryObject, entryMatch, entrySourceId, callback) {
+
+        function savePartialMerge (type, patKey, fileId, entryId, matchId, callback) {
+
+             var tmpMergeEntry = {
+                    entry_type: type,
+                    patKey: patKey,
+                    entry_id: entryId,
+                    record_id: fileId,
+                    merged: new Date(),
+                    merge_reason: 'new'
+                };
+
+                merge.saveMerge(dbinfo, tmpMergeEntry, function(err, mergeResults) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        tempEntry.metadata = {};
+                        tempEntry.metadata.attribution = [matchId];
+                        tempEntry.patKey = patKey;
+                        tempEntry.save(function(err, saveResults) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                callback(null, saveResults);
+                            }
+                        });
+                    }
+                });
+        }
+
+        function savePartialMatch (type, patKey, entryId, matchEntryId, matchObject, callback) {
+             var tmpMatch = {
+                    entry_type: type,
+                    entry_id: entryId,
+                    match_entry_id: matchEntryId
+                }
+
+                //Conditionally take diff/partial.
+                if (matchObject.match === 'diff') {
+                    tmpMatch.diff = matchObject.diff;
+                } else {
+                    tmpMatch.percent = matchObject.percent;
+                }
+
+                saveMatchEntries(dbinfo, type, patKey, tmpMatch, function(err, results) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null, results);
+                    }
+
+                });
+
+        }
+
+
         var tempEntry = new model(entryObject);
         tempEntry.save(function(err, saveResults) {
             if (err) {
                 callback(err);
             } else {
 
+                savePartialMatch(type, patKey, entrySourceId, saveResults._id, entryMatch, function(err, partialMatchResults) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        savePartialMerge(type, patKey, entrySourceId, saveResults._id, partialMatchResults._id, function(err, partialMergeResults) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                callback(null);
+                            }
+                        });
+                    }
+                })
 
+
+
+                /*
                 var tmpMatch = {
                     entry_type: type,
                     entry_id: entrySourceId,
@@ -259,19 +331,10 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
 
                 });
 
-                /*record["add" + record.capitalize(section_name) + "MatchEntry"]('test', tmpMatch, function(err, save_match_response) {
-                                if (err) {
-                                    callback(err);
-                                } else {
-                                    savedSections++;
-                                    if (totalSections === savedSections) {
-                                        masterPartialComplete = true;
-                                        checkComponentsComplete();
-                                    }
-                                }*/
+               
 
 
-                callback(null);
+                callback(null);*/
             }
         });
     }

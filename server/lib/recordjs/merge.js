@@ -29,13 +29,22 @@ exports.saveMerge = function(dbinfo, mergeObject, callback) {
 
 exports.getMerges = function(dbinfo, type, typeFields, recordFields, callback) {
     var model = dbinfo.mergeModels[type];
-    var allFields = typeFields + ' ' + recordFields;
+    var allFields = typeFields + ' ' + recordFields + ' reviewed';
     var query = model.find({entry_type: type}).populate('entry_id record_id', allFields);
     query.exec(function (err, mergeResults) {
         if (err) {
             callback(err);
         } else {
-            callback(null, mergeResults);
+            //Filter out unreviewed entries.
+            var returnMerges = [];
+
+            for (var iMerge in mergeResults) {
+                if (mergeResults[iMerge].entry_id.reviewed !== false) {
+                    returnMerges.push(mergeResults[iMerge]);
+                }
+            }
+            
+            callback(null, returnMerges);
         }
     });
 };
