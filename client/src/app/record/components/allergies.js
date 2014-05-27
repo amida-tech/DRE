@@ -41,6 +41,7 @@ angular.module('dre.record.allergies', [])
         $scope.allergies = data.allergies;
         if ($scope.allergies.length > 0) {
           $scope.displayAllergies = true;
+          $scope.updateFields();
         } else {
           $scope.displayAllergies = false;
         }
@@ -49,6 +50,12 @@ angular.module('dre.record.allergies', [])
         console.log('error');
       });
     };
+
+  $scope.updateFields = function() {
+    for (var i in $scope.allergies) {
+      recordFunctions.formatDate($scope.allergies[i].date);
+    }
+  };
 
   $scope.getStub = function() {
     $scope.displayAllergies = true;
@@ -132,18 +139,11 @@ angular.module('dre.record.allergies', [])
                               "code_system_name": "RXNORM"
                     }
           ];
-
+    $scope.updateFields();
   };
 
   $scope.getRecord();
   //$scope.getStub();
-
-    for (var i in $scope.allergies) {
-
-      recordFunctions.formatDate($scope.allergies[i].date);
-
-    }
-
 
   }
 ]);

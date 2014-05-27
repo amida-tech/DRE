@@ -32,7 +32,6 @@ angular.module('dre.record.encounters', [])
     $scope.displayEncounters = false;
     $scope.encounterPredicate = "status";
 
-
     $scope.getRecord = function() {
       $http({
         method: 'GET',
@@ -42,6 +41,7 @@ angular.module('dre.record.encounters', [])
         $scope.encounters = data.encounters;
         if ($scope.encounters.length > 0) {
           $scope.displayEncounters = true;
+          $scope.updateFields();
         } else {
           $scope.displayEncounters = false;
         }
@@ -49,6 +49,15 @@ angular.module('dre.record.encounters', [])
       error(function(data, status, headers, config) {
         console.log('error');
       });
+    };
+
+    $scope.updateFields = function() {
+      for (var i in $scope.encounters) {
+        recordFunctions.formatDate($scope.encounters[i].date);
+        for (var ii in $scope.encounters[i].locations) {
+          recordFunctions.formatAddress($scope.encounters[i].locations[ii].addresses[0]);
+        }
+      }
     };
 
     $scope.getStub = function() {
@@ -63,12 +72,12 @@ angular.module('dre.record.encounters', [])
         }],
         "locations": [{
           "name": "Community Urgent Care Center",
-          "type": {
+          "loc_type": {
             "name": "Urgent Care Center",
             "code": "1160-1",
             "code_system_name": "HealthcareServiceLocation"
           },
-          "address": {
+          "addresses": [{
             "streetLines": [
               "17 Daws Rd."
             ],
@@ -76,7 +85,7 @@ angular.module('dre.record.encounters', [])
             "state": "MA",
             "zip": "02368",
             "country": "US"
-          }
+          }]
         }],
         "findings": [{
           "name": "Pneumonia",
@@ -91,21 +100,90 @@ angular.module('dre.record.encounters', [])
           "code": "AMB",
           "code_system_name": "HL7ActCode"
         }]
+      },
+      {
+        "identifiers": [{
+          "identifier": "2a620155-9d11-439e-92b3-5d9815ff4de8"
+        }],
+        "date": [{
+          "date": "2013-02-27T13:00:00.000Z",
+          "precision": "subsecond"
+        }],
+        "locations": [{
+          "name": "Community Urgent Care Center",
+          "loc_type": {
+            "name": "Urgent Care Center",
+            "code": "1160-1",
+            "code_system_name": "HealthcareServiceLocation"
+          },
+          "addresses": [{
+            "streetLines": [
+              "17 Daws Rd."
+            ],
+            "city": "Blue Bell",
+            "state": "MA",
+            "zip": "02368",
+            "country": "US"
+          }]
+        }],
+        "findings": [{
+          "name": "Pneumonia",
+          "code": "233604007",
+          "code_system_name": "SNOMED CT"
+        }],
+        "name": "Very special visit",
+        "code": "99213",
+        "code_system_name": "CPT",
+        "translations": [{
+          "name": "Ambulatory",
+          "code": "AMB",
+          "code_system_name": "HL7ActCode"
+        }]
+      },
+      {
+        "identifiers": [{
+          "identifier": "2a620155-9d11-439e-92b3-5d9815ff4de8"
+        }],
+        "date": [{
+          "date": "2010-02-27T13:00:00.000Z",
+          "precision": "subsecond"
+        }],
+        "locations": [{
+          "name": "Community Urgent Care Center",
+          "loc_type": {
+            "name": "Urgent Care Center",
+            "code": "1160-1",
+            "code_system_name": "HealthcareServiceLocation"
+          },
+          "addresses": [{
+            "streetLines": [
+              "17 Daws Rd."
+            ],
+            "city": "Blue Bell",
+            "state": "MA",
+            "zip": "02368",
+            "country": "US"
+          }]
+        }],
+        "findings": [{
+          "name": "Pneumonia",
+          "code": "233604007",
+          "code_system_name": "SNOMED CT"
+        }],
+        "name": "Special Visit",
+        "code": "99213",
+        "code_system_name": "CPT",
+        "translations": [{
+          "name": "Ambulatory",
+          "code": "AMB",
+          "code_system_name": "HL7ActCode"
+        }]
       }];
+      
+      $scope.updateFields();
     };
 
     $scope.getRecord();
     //$scope.getStub();
-
-    for (var i in $scope.encounters) {
-
-      recordFunctions.formatDate($scope.encounters[i].date);
-
-      for (var ii in $scope.encounters[i].locations) {
-        recordFunctions.formatAddress($scope.encounters[i].locations[ii].address);
-      }
-
-    }
-
   }
 ]);

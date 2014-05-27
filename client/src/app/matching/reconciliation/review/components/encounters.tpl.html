@@ -1,0 +1,53 @@
+
+<table class="col-md-12 table">
+    <tbody>
+        <tr>
+            <td class="info" style="text-align: center;"><h4>New Entry</h4>
+            </td>
+            <td class="active" style="text-align: center;"><h4>Master Record</h4>
+            </td>
+        </tr>
+        <tr><td class="col-md-6">
+
+
+            <table class="table col-md-6">
+                <thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.name}}</span>
+                    <span class="pull-right"  style="text-transform:uppercase;">{{src_el.date[0].date | date: 'mediumDate'}}</span>
+                </td></tr></thead>
+                <tbody>
+                    <tr>
+                        <tr><td><strong>Started:</strong></td><td>{{src_el.date[0].date | date: 'mediumDate'}}</td></tr>
+                        <tr><td><strong>Ended:</strong></td><td>{{src_el.date[1].date | date: 'mediumDate'}}</td></tr>
+
+                        <tr><td><strong>Findings:</strong></td><td></td></tr>
+
+
+                        <tr ng-repeat="finding in src_el.findings">
+                        <td><strong>Name:</strong> {{finding.name}}</td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+            {{ src[section][src_id] | json }}
+        </td>
+        <td class="col-md-6">
+            <table class="table col-md-6 table-hover">
+                <thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{dest_el.name}}</span>
+                    <span class="pull-right"  style="text-transform:uppercase;">{{dest_el.date[0].date | date: 'mediumDate'}}</span>
+                </td></tr></thead>
+                <tbody>
+                    <tr>
+                        <tr><td><strong>Started:</strong></td><td>{{dest_el.date[0].date | date: 'mediumDate'}}</td></tr>
+                        <tr><td><strong>Ended:</strong></td><td>{{dest_el.date[1].date | date: 'mediumDate'}}</td></tr>
+
+                        <tr><td><strong>Findings:</strong></td><td></td></tr>
+
+
+                        <tr ng-repeat="finding in dest_el.findings">
+                        <td><strong>Name:</strong> {{finding.name}}</td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+            {{ dest[section][dest_id] | json }}
+        </td></tr>
+    </tbody>
+</table>

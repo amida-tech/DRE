@@ -1,0 +1,59 @@
+
+<table class="col-md-12 table">
+	<tbody>
+		<tr>
+			<td class="info" style="text-align: center;"><h4>New Entry</h4>
+			</td>
+			<td class="active" style="text-align: center;"><h4>Master Record</h4>
+			</td>
+		</tr>
+		<tr><td>
+
+
+			<table class="table col-md-6">
+				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.product.name}}</span>
+					<span class="pull-right"  style="text-transform:uppercase;">{{src_el.date[0].date | date: 'mediumDate'}}</span>
+				</td></tr></thead>
+				<tbody>
+					<tr>
+						<tr><td><strong>Date:</strong></td><td>{{src_el.date[0].date | date: 'mediumDate'}}</td></tr>
+
+						<tr><td><strong>Status:</strong></td><td>{{src_el.status}}</td></tr>
+
+						<tr><td><strong>Route:</strong></td><td>{{src_el.administration.route.name}}</td></tr>
+						<tr><td><strong>Quantity:</strong></td><td>{{src_el.administration.quantity.value}}</td></tr>
+						<tr><td><strong>Units:</strong></td><td>{{src_el.administration.quantity.unit}}</td></tr>
+
+						<tr><td><strong>Manufacturer:</strong></td><td>{{src_el.product.manufacturer}}</td></tr>
+						<tr><td><strong>Lot Number:</strong></td><td>{{src_el.product.lot_number}}</td></tr>
+
+					</tr>
+				</tbody>
+			</table>
+			{{ src[section][src_id] | json }}
+		</td>
+		<td>
+			<table class="table col-md-6 table-hover">
+				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{dest_el.product.name}}</span>
+					<span class="pull-right"  style="text-transform:uppercase;">{{dest_el.date[0].date | date: 'mediumDate'}}</span>
+				</td></tr></thead>
+				<tbody>
+					<tr>
+						<tr><td><strong>Date:</strong></td><td>{{dest_el.date[0].date | date: 'mediumDate'}}</td></tr>
+
+						<tr><td><strong>Status:</strong></td><td>{{dest_el.status}}</td></tr>
+
+						<tr><td><strong>Route:</strong></td><td>{{dest_el.administration.route.name}}</td></tr>
+						<tr><td><strong>Quantity:</strong></td><td>{{dest_el.administration.quantity.value}}</td></tr>
+						<tr><td><strong>Units:</strong></td><td>{{dest_el.administration.quantity.unit}}</td></tr>
+
+						<tr><td><strong>Manufacturer:</strong></td><td>{{dest_el.product.manufacturer}}</td></tr>
+						<tr><td><strong>Lot Number:</strong></td><td>{{dest_el.product.lot_number}}</td></tr>
+
+					</tr>
+				</tbody>
+			</table>
+			{{ dest[section][dest_id] | json }}
+		</td></tr>
+	</tbody>
+</table>
