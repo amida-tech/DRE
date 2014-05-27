@@ -13,12 +13,12 @@
 
 			<table class="table col-md-6">
 				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{src_el.date[0].date | date: 'mediumDate'}}</span>
+					<span class="pull-right"  style="text-transform:uppercase;">{{src_el.date[0].date | date: 'mediumDate'}} <span class="label label-info pull-right">Different</span></span>
 				</td></tr></thead>
 				<tbody>
 					<tr>
-						<tr><td><strong>Value:</strong></td><td>{{src_el.value}}<span class="label label-info pull-right">Different</span></td></tr>
-						<tr><td><strong>Unit:</strong></td><td>{{src_el.unit}}<span class="label label-primary pull-right">New</span></td></tr>
+						<tr><td><strong>Value:</strong></td><td>{{src_el.value}}</td></tr>
+						<tr><td><strong>Unit:</strong></td><td>{{src_el.unit}}</td></tr>
 						<tr><td><strong>Intrepretation:</strong></td><td>{{src_el.interpretations[0]}}</td></tr>
 					</tr>
 				</tbody>
@@ -32,8 +32,8 @@
 				</td></tr></thead>
 				<tbody>
 					<tr>
-						<tr><td><strong>Value:</strong></td><td>{{dest_el.value}}<span class="label label-info pull-right">Different</span></td></tr>
-						<tr><td><strong>Unit:</strong></td><td>{{dest_el.unit}}<span class="label label-primary pull-right">New</span></td></tr>
+						<tr><td><strong>Value:</strong></td><td>{{dest_el.value}}</td></tr>
+						<tr><td><strong>Unit:</strong></td><td>{{dest_el.unit}}</td></tr>
 						<tr><td><strong>Intrepretation:</strong></td><td>{{dest_el.interpretations[0]}}</td></tr>
 					</tr>
 				</tbody>
