@@ -25,12 +25,12 @@
 						</div-->
 
 
-						<div class="panel panel-default" ng-repeat="match_section in matches">
+						<div class="panel panel-default" ng-repeat="match_section in matches" ng-show="match_section">
 							<div class="panel-body" >
-							<h4>{{match_section[0].entry_type}} Update(s)</h4>
+							<h4>{{capitalize(match_section[0].entry_type)}} Update(s)</h4>
 
 							<div class="well" ng-repeat="new_match in match_section">
-								<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick(partial_matches[new_match])">Review</button></div>
+								<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick(new_match)">Review</button></div>
 								<h5 ng-if="new_match.percent">Partial ({{new_match.percent}}%) Match with Master Health Record</h5>
 
 								<h5 ng-if="new_match.diff">Updated (Different) Information </h5>
@@ -49,8 +49,6 @@
 							<h5>One of your files may have an {{new_match.percent}}% match to your #{{new_match.dest_id}} {{new_match.section}}.</h5>
 							</div>
 						</div-->
-
-						{{partial_matches | json}}
 		</div>
 	</div>
 </div>

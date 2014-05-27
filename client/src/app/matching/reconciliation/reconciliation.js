@@ -32,10 +32,15 @@ angular.module('dre.match.reconciliation', [])
 
         $scope.reviewClick = function(match) {
             //alert(JSON.stringify(match));
-            $location.path("match/reconciliation/review/" + match.section + "/" + match.index + "/" + match.src_id + "/" + match.dest_id);
+            console.log(match);
+            $location.path("match/reconciliation/review/" + match.entry_type + "/" + match._id + "/" + match.entry_id._id + "/" + match.match_entry_id._id);
         };
 
-    $scope.masterMatch = {};
+    $scope.matches = {};
+
+    $scope.capitalize = function(value) {
+        return value.charAt(0).toUpperCase() + value.slice(1);
+    };
 
     $scope.getMatches = function() {
         var sections = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'socialHistory', 'demographics', 'problems'];
@@ -48,9 +53,9 @@ angular.module('dre.match.reconciliation', [])
                 url: '/api/v1/matches/' + loadsec
             }).
             success(function(data, status, headers, config) {
-                console.log(data);
-                $scope.masterMatch[loadsec] = data.matches;
-                console.log(JSON.stringify($scope.masterMatch, null, 10));
+                //console.log(data);
+                $scope.matches[loadsec] = data.matches;
+                //console.log(JSON.stringify($scope.masterMatch, null, 10));
             }).
             error(function(data, status, headers, config) {
                 console.log('error');
@@ -63,7 +68,7 @@ angular.module('dre.match.reconciliation', [])
     };
 
     $scope.getMatches();
-    $scope.matches = $scope.masterMatch;
+    //$scope.matches = $scope.masterMatch;
 
         //bb-04
         $scope.src = {
