@@ -35,6 +35,9 @@ angular.module('dre.match.review', [])
     function($scope, $http, $location, $route, $routeParams, $rootScope) {
 
 
+
+
+
         $scope.section = $routeParams["section"];
         $scope.index = $routeParams["index"];
         $scope.src_id = $routeParams["src_id"];

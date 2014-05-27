@@ -367,7 +367,7 @@ describe('Allergies API - Test Partial Matches:', function() {
 
 });
 
-describe('Allergies API - Test Added Matches', function() {
+xdescribe('Allergies API - Test Added Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -475,7 +475,7 @@ describe('Allergies API - Test Added Matches', function() {
 
 
 
-describe('Allergies API - Test Ignored Matches', function() {
+xdescribe('Allergies API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -579,7 +579,7 @@ describe('Allergies API - Test Ignored Matches', function() {
 });
 
 
-describe('Allergies API - Test Merged Matches', function() {
+xdescribe('Allergies API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var base_id = '';
