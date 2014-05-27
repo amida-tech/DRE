@@ -365,35 +365,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     }
                 })
 
-
-
-                /*
-                var tmpMatch = {
-                    entry_type: type,
-                    entry_id: entrySourceId,
-                    match_entry_id: saveResults._id
-                }
-
-                //Conditionally take diff/partial.
-                if (entryMatch.match === 'diff') {
-                    tmpMatch.diff = entryMatch.diff;
-                } else {
-                    tmpMatch.percent = entryMatch.percent;
-                }
-
-                saveMatchEntries(dbinfo, type, patKey, tmpMatch, function(err, results) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        callback(null, results);
-                    }
-
-                });
-
-               
-
-
-                callback(null);*/
             }
         });
     }
@@ -417,8 +388,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
 
     var count = 0;
 
-
-
     if (_.isArray(inputArray)) {
 
         if (inputArray.length === 0) {
@@ -438,7 +407,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
             }
         }
     } else {
-
         var entryObject = _.clone(inputArray);
         entryObject.__index = count;
         entryObject.reviewed = false;

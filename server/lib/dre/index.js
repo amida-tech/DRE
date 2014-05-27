@@ -176,7 +176,6 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
 
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
-
         callback(null, newObjectPostMatch, newPartialObjectPostMatch);
     });
 }

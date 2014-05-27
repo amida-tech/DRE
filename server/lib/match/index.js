@@ -19,7 +19,7 @@ var app = module.exports = express();
 var record = require('../recordjs');
 var _ = require('underscore');
 
-var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social', 'demographics', 'problems'];
+var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'socialHistory', 'demographics', 'problems'];
 
 
 

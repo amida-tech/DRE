@@ -81,6 +81,11 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             totalSections++;
         }
 
+        if (totalSections === savedSections) {
+            masterPartialComplete = true;
+            checkComponentsComplete();
+        }
+
         function checkSavePartialComponentsComplete () {
             savedSections++;
             if (savedSections === totalSections) {
@@ -219,6 +224,7 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
         if (err) {
             callback(err);
         } else {
+
             dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
                 //AHH ERROR HERE(NOT SAVING MULTIPLE PARTIAL MATCHES.)...
                 //console.log(partial_reconciliation_results);
@@ -265,6 +271,7 @@ function importRecord(record_metadata, record_data, callback) {
 
                     reconcileRecord(parsed_record, fileInfo._id, function(err) {
                         if (err) {
+                            console.error(err);
                             callback(err);
                         } else {
                             callback(null, fileInfo);
