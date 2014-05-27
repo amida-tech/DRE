@@ -40,6 +40,9 @@ angular.module('dre.match.review', [])
         $scope.src_id = $routeParams["src_id"];
         $scope.dest_id = $routeParams["dest_id"];
 
+        if ($scope.src_id==="undefined") {$scope.src_id=0;}
+        if ($scope.dest_id==="undefined") {$scope.dest_id=0;}
+
         //HACK: loaded everything form rootScope
         $scope.matches = $rootScope.matches;
         $scope.partial_matches = $rootScope.partial_matches;
@@ -50,6 +53,11 @@ angular.module('dre.match.review', [])
 
         $scope.src_el=$scope.src[$scope.section][$scope.src_id];
         $scope.dest_el=$scope.dest[$scope.section][$scope.dest_id];
+
+        if ($scope.section==="demographics"){
+            $scope.src_el=$scope.src[$scope.section];
+            $scope.dest_el=$scope.dest[$scope.section];
+        }
 
         $scope.encounter = $scope.src[$scope.section][$scope.src_id];
 

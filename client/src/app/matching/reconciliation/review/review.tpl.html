@@ -11,7 +11,8 @@
 				<div class="panel panel-default" style="overflow: visible;">
 					<div class="panel-heading ">
 						<div class="panel-title">
-							<h4>Patial ({{partial_matches[index].percent}}%) Match</h4>
+							<h4 ng-if="partial_matches[index].match==='partial'">Partial ({{partial_matches[index].percent}}%) Match</h4>
+							<h4 ng-if="partial_matches[index].match==='diff'">Updated (Different) Information</h4>
 						</div>
 					</div>
 					<div class="panel-body">
