@@ -64,6 +64,9 @@ app.use(healthRecord);
 var merges = require('./lib/merge');
 app.use(merges);
 
+var match = require('./lib/match');
+app.use(match);
+
 var notification = require('./lib/notification');
 app.use(notification);
 

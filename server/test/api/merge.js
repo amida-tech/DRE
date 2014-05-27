@@ -32,7 +32,6 @@ describe('Merge API Get list', function() {
         if (err) {
           return done(err);
         } else {
-          console.log(res.body);
           done();
         }
       });
