@@ -3,10 +3,8 @@
 	<tbody>
 		<tr>
 			<td class="info" style="text-align: center;"><h4>New Entry</h4>
-			{{ src[section][src_id] | json }}
 			</td>
-			<td class="active" style="text-align: center;"><h4>Fuggin' EGGS!!!</h4>
-			{{ dest[section][dest_id] | json }}
+			<td class="active" style="text-align: center;"><h4>Master Record</h4>
 			</td>
 		</tr>
 		<tr><td>
@@ -23,6 +21,7 @@
 					</tr>
 				</tbody>
 			</table>
+			{{ src[section][src_id] | json }}
 		</td>
 		<td>
 			<table class="table col-md-12 table-hover">
@@ -36,6 +35,7 @@
 					</tr>
 				</tbody>
 			</table>
+			{{ dest[section][dest_id] | json }}
 		</td></tr>
 	</tbody>
 </table>
