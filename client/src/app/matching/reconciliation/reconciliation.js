@@ -3112,6 +3112,10 @@ angular.module('dre.match.reconciliation', [])
 
         }
 
+        for (var i in $scope.partial_matches){
+            $scope.partial_matches[i].index=i;
+        }
+
         console.log($scope.partial_matches);
 
 
