@@ -7,6 +7,7 @@ var db = require('./db');
 var models = require('./models');
 var storage = require('./storage');
 var merge = require('./merge');
+var match = require('./match');
 var section = require('./section');
 var jsutil = require('./jsutil');
 var modelutil = require('./modelutil');
@@ -94,15 +95,31 @@ exports.recordCount = function(patKey, callback) {
 // Merges
 
 exports.getMerges = function(type, typeFields, recordFields, callback) {
-    merge.getMerges(dbinfo, type, typeFields, recordFields, callback);
+    merge.getMerges(dbinfo, sectionToType[type], typeFields, recordFields, callback);
+};
+
+exports.setMerge = function(mergeObject, callback) {
+    merge.saveMerge(dbinfo, mergeObject, callback);
 };
 
 exports.mergeCount = function(type, conditions, callback) {
     merge.count(dbinfo, type, conditions, callback);
 };
 
-// Sections
+// Matches
+exports.getMatches = function(type, typeFields, recordFields, callback) {
+    match.getMatches(dbinfo, sectionToType[type], typeFields, recordFields, callback);
+}
 
+exports.getMatch = function(type, matchId, callback) {
+    match.getMatch(dbinfo, sectionToType[type], matchId, callback);
+}
+
+exports.updateMatch = function(type, identifier, updateFields, callback) {
+    match.updateMatch(dbinfo, sectionToType[type], identifier, updateFields, callback);   
+}
+
+// Sections
 var capitalize = function(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);
 };
@@ -117,8 +134,20 @@ Object.keys(typeToSection).forEach(function(type) {
         section.saveNewEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
     };
 
+    exports['update' + typeName] = function(patKey, recordId, recordUpdate, callback) {
+        section.updateEntry(dbinfo, type, patKey, recordId, recordUpdate, callback);
+    };
+
+    exports['get' + typeName] = function(recordId, callback) {
+        section.getEntry(dbinfo, type, recordId, callback);
+    };
+
     exports['savePartial' + sectionName] = function(patKey, inputArray, sourceID, callback) {
         section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+    };
+
+    exports['removePartial' + typeName] = function(patKey, partialID, callback) {
+        section.removeEntry(dbinfo, type, patKey, partialID, callback);
     };
 
     exports['add' + sectionName + 'MatchEntry'] = function(patKey, inputArray, callback) {

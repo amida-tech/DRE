@@ -75,9 +75,12 @@ describe('Save Partial Records:', function() {
         });
     });
 
-    it('Save Test Partial Record', function(done) {
+    xit('Save Test Partial Record', function(done) {
         var test_partial_entry = [{
-            name: 'fake_record'
+            partial_array: [{
+                name: 'fake_record'
+            }]
+            
         }];
         var test_patient = 'test';
         var filename = 'test_filename';
@@ -87,7 +90,7 @@ describe('Save Partial Records:', function() {
         });
     });
 
-        it('Save Test New Record', function(done) {
+        xit('Save Test New Record', function(done) {
         var test_partial_entry = [{
             name: 'fake_record'
         }];

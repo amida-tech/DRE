@@ -34,6 +34,7 @@ exports.saveRecord = function(dbinfo, patKey, inboundFile, inboundFileInfo, inbo
         content_type: inboundFileInfo.type,
     }, function(err, fileInfo) {
         if (err) {
+            console.error(err);
             callback(err);
         } else {
             /*Relax for now pending further investigation, seems to be chunking overhead.*/
