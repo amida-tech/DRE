@@ -19,10 +19,39 @@
 						<!--Header-->
 						<ng-include src="dynamicTemplatePath"></ng-include>
 
-						<button type="button" class="btn btn-success" ng-click="saveReview()">Save Changes</button>
-						<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+						<div ng-if="partial_matches[index].match==='partial' && !partial_matches[index].subelements"> 
+							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record with New Entry</button>
+							<button type="button" class="btn btn-warning" ng-click="saveReview()">New Entry doesn't match Master Record</button>
+
+							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+						</div>
+
+						<div ng-if="partial_matches[index].match==='partial' && partial_matches[index].subelements"> 
+							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record with New Entry (and merge subelements)</button>
+							<button type="button" class="btn btn-info" ng-click="saveReview()">Keep Master Record (and merge subelements from New Entry)</button>
+							<button type="button" class="btn btn-warning" ng-click="saveReview()">New Entry doesn't match Master Record</button>
+
+							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+						</div>
+
+						<div ng-if="partial_matches[index].section==='socialHistory'"> 
+							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record</button>
+							<button type="button" class="btn btn-warning" ng-click="saveReview()">Ignore New Entry</button>
+
+							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+						</div>
+
+						<div ng-if="partial_matches[index].section==='demographics'"> 
+							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record</button>
+
+							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+						</div>
+
+
 					</div>
 				</div>
+
+				{{partial_matches[index] |json }}
 			</div>
 		</div>
 

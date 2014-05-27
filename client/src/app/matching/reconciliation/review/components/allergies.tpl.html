@@ -20,14 +20,14 @@
 						<tr><td><strong>Ended:</strong></td><td>{{src_el.date[1].date | date: 'mediumDate'}}</td></tr>
 
 
-						<tr><td><strong>Status:</strong></td><td>{{src_el.status}}<span class="label label-primary pull-right">New</span></td></tr>
+						<tr><td><strong>Status:</strong></td><td>{{src_el.status}}</td></tr>
 
 						<tr><td><strong>Reactions:</strong></td><td></td></tr>
 
 
 						<tr ng-repeat="reaction in src_el.reaction">
 						<td><strong>Reaction:</strong> {{reaction.name}}</td>
-						<td><strong>Severity:</strong> {{reaction.severity}}</td></tr>
+						<td><strong>Severity:</strong> {{reaction.severity}} <span class="label label-primary pull-right">New</span></td></tr>
 					</tr>
 				</tbody>
 			</table>
@@ -44,7 +44,7 @@
 						<tr><td><strong>Ended:</strong></td><td>{{dest_el.date[1].date | date: 'mediumDate'}}</td></tr>
 
 
-						<tr><td><strong>Status:</strong></td><td>{{dest_el.status}}<span class="label label-primary pull-right">New</span></td></tr>
+						<tr><td><strong>Status:</strong></td><td>{{dest_el.status}}</td></tr>
 
 						<tr><td><strong>Reactions:</strong></td><td></td></tr>
 

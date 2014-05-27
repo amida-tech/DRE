@@ -1,44 +1,70 @@
-
 <table class="col-md-12 table">
-	<tbody>
-		<tr>
-			<td class="info" style="text-align: center;"><h4>New Entry</h4>
-			</td>
-			<td class="active" style="text-align: center;"><h4>Master Record</h4>
-			</td>
-		</tr>
-		<tr><td>
-
-
-
-			<table class="table col-md-6">
-				<tbody>
-					<tr>
-						<tr><td><strong>Name:</strong></td><td>{{src_el.name.first}} {{src_el.name.middle[0]}} {{src_el.name.last}}</td></tr>
-						<tr><td><strong>Date of Birth:</strong></td><td>{{src_el.dob[0].date | date: longDate}}</td></tr>
-						<tr><td><strong>Gender:</strong></td><td>{{src_el.gender}}</td></tr>
-						<tr><td><strong>Marital Status:</strong></td><td>{{src_el.marital_status}}</td></tr>
-						<tr><td><strong>Race/Ethnicity:</strong></td><td>{{src_el.race_ethnicity}}</td></tr>
-						<tr><td><strong>Religion:</strong></td><td>{{src_el.religion}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ src[section] | json }}
-		</td>
-		<td>
-			<table class="table col-md-6 table-hover">
-				<tbody>
-					<tr>
-						<tr><td><strong>Name:</strong></td><td>{{dest_el.name.first}} {{dest_el.name.middle[0]}} {{dest_el.name.last}}</td></tr>
-						<tr><td><strong>Date of Birth:</strong></td><td>{{dest_el.dob[0].date | date: longDate}}</td></tr>
-						<tr><td><strong>Gender:</strong></td><td>{{dest_el.gender}}</td></tr>
-						<tr><td><strong>Marital Status:</strong></td><td>{{dest_el.marital_status}}</td></tr>
-						<tr><td><strong>Race/Ethnicity:</strong></td><td>{{dest_el.race_ethnicity}}</td></tr>
-						<tr><td><strong>Religion:</strong></td><td>{{dest_el.religion}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ dest[section] | json }}
-		</td></tr>
-	</tbody>
+    <tbody>
+        <tr>
+            <td class="col-md-3"></td>
+            <td class="info col-md-3" style="text-align: center;">
+                <h4>New Entry</h4>
+            </td>
+            <td class="active col-md-3" style="text-align: center;">
+                <h4>Master Record</h4>
+            </td>
+            <td class="info col-md-3" style="text-align: center;">
+                <h4>Updated Record</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Name:</strong>
+            </td>
+            <td>{{src_el.name.first}} {{src_el.name.middle[0]}} {{src_el.name.last}}</td>
+            <td>{{dest_el.name.first}} {{dest_el.name.middle[0]}} {{dest_el.name.last}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Date of Birth:</strong>
+            </td>
+            <td>{{src_el.dob[0].date | date: longDate}}</td>
+            <td>{{dest_el.dob[0].date | date: longDate}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Gender:</strong>
+            </td>
+            <td>{{src_el.gender}}</td>
+            <td>{{dest_el.gender}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Marital Status:</strong>
+            </td>
+            <td>{{src_el.marital_status}}</td>
+            <td>{{dest_el.marital_status}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Race/Ethnicity:</strong>
+            </td>
+            <td>{{src_el.race_ethnicity}}</td>
+            <td>{{dest_el.race_ethnicity}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Religion:</strong>
+            </td>
+            <td>{{src_el.religion}}</td>
+            <td>{{dest_el.religion}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>{{ src[section] | json }}</td>
+            <td>{{ dest[section] | json }}</td>
+            <td></td>
+        </tr>
+    </tbody>
 </table>

@@ -1,0 +1,50 @@
+
+<table class="col-md-12 table">
+	<tbody>
+		<tr>
+			<td class="info col-md-6" style="text-align: center;"><h4>New Entry</h4>
+			</td>
+			<td class="active col-md-6" style="text-align: center;"><h4>Master Record</h4>
+			</td>
+		</tr>
+		<tr><td>
+
+
+			<table class="table col-md-6">
+				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.name}}</span>
+					<span class="pull-right"  style="text-transform:uppercase;">{{src_el.status}}</span>
+				</td></tr></thead>
+				<tbody>
+					<tr>
+						<tr><td><strong>Date:</strong></td><td>{{src_el.date[0].date | date: 'mediumDate'}}</td></tr>
+						<tr><td><strong>Type:</strong></td><td>{{src_el.proc_type}}</td></tr>
+						<tr><td><strong>Body Site:</strong></td><td>{{src_el.bodysite[0].name}}<span class="label label-primary pull-right">New</span></td></tr>
+
+
+						<tr><td><strong>Organization:</strong></td><td>{{src_el.providers[0].organization.name}}<span class="label label-primary pull-right">New</span></td></tr>
+					</tr>
+				</tbody>
+			</table>
+			{{ src[section][src_id] | json }}
+		</td>
+		<td>
+			<table class="table col-md-6">
+				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{dest_el.name}}</span>
+					<span class="pull-right"  style="text-transform:uppercase;">{{dest_el.status}}</span>
+				</td></tr></thead>
+				<tbody>
+					<tr>
+						<tr><td><strong>Date:</strong></td><td>{{dest_el.date[0].date | date: 'mediumDate'}}</td></tr>
+						<tr><td><strong>Type:</strong></td><td>{{dest_el.proc_type}}</td></tr>
+						<tr><td><strong>Body Site:</strong></td><td>{{dest_el.bodysite[0].name}}</td></tr>
+
+
+						<tr><td><strong>Organization:</strong></td><td>{{dest_el.providers[0].organization.name}}</td></tr>
+
+					</tr>
+				</tbody>
+			</table>
+			{{ dest[section][dest_id] | json }}
+		</td></tr>
+	</tbody>
+</table>
