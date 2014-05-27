@@ -53,7 +53,7 @@ angular.module('dre.match.review', [])
             'problem': 'problems',
             'procedure': 'procedures',
             'vital': 'vitals',
-            'demographic': 'demographics',
+            'demographics': 'demographics',
             'social': 'socialHistory'
         };
         return lookup[inputSection];
@@ -98,7 +98,7 @@ angular.module('dre.match.review', [])
                     //console.log(data[loadsec][i]._id);
                     //console.log($scope.dest_id);
                     if (data[loadsec][i]._id === $scope.dest_id) {
-                        $scope.src_el = data[loadsec][i];
+                            $scope.src_el = data[loadsec][i];    
                     }
                 }
             }).
