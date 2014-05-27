@@ -1,44 +1,94 @@
-
 <table class="col-md-12 table">
-	<tbody>
-		<tr>
-			<td class="info" style="text-align: center;"><h4>New Entry</h4>
-			</td>
-			<td class="active" style="text-align: center;"><h4>Master Record</h4>
-			</td>
-		</tr>
-		<tr><td>
+    <tbody>
+        <tr>
+            <td class="col-md-3"></td>
+            <td class="info col-md-3" style="text-align: center;">
+                <h4>New Entry</h4>
+            </td>
+            <td class="active col-md-3" style="text-align: center;">
+                <h4>Master Record</h4>
+            </td>
+            <td class="info col-md-3" style="text-align: center;">
+                <h4>Updated Record</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Name:</strong>
+            </td>
+            <td>{{src_el.name.first}} {{src_el.name.middle[0]}} {{src_el.name.last}}   
+            	<button ng-if="partial_matches[index].diff['name']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('name')"> >> </button>
+            </td>
+            <td>{{dest_el.name.first}} {{dest_el.name.middle[0]}} {{dest_el.name.last}}</td>
+            <td>{{new_el.name.first}} {{new_el.name.middle[0]}} {{new_el.name.last}}</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Date of Birth:</strong>
+            </td>
+            <td>{{src_el.dob[0].date | date: longDate}}
+            	<button ng-if="partial_matches[index].diff['dob']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('dob')"> >> </button>
+            </td>
+            <td>{{dest_el.dob[0].date | date: longDate}}</td>
+            <td>{{new_el.dob[0].date | date: longDate}}</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Gender:</strong>
+            </td>
+            <td>{{src_el.gender}}
+            	<button ng-if="partial_matches[index].diff['gender']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('gender')"> >> </button>
+            </td>
+            <td>{{dest_el.gender}}</td>
+            <td>{{new_el.gender}}</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Marital Status:</strong>
+            </td>
+            <td>{{src_el.marital_status}}
+            	<button ng-if="partial_matches[index].diff['marital_status']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('marital_status')"> >> </button>
+            </td>
+            <td>{{dest_el.marital_status}}</td>
+            <td>{{new_el.marital_status}}</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Race/Ethnicity:</strong>
+            </td>
+            <td>{{src_el.race_ethnicity}}
+            	<button ng-if="partial_matches[index].diff['race_ethnicity']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('race_ethnicity')"> >> </button>
+            </td>
+            <td>{{dest_el.race_ethnicity}}</td>
+            <td>{{new_el.race_ethnicity}}</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Religion:</strong>
+            </td>
+            <td>{{src_el.religion}}
+            	<button ng-if="partial_matches[index].diff['religion']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('religion')"> >> </button>
+            </td>
+            <td>{{dest_el.religion}}</td>
+            <td>{{new_el.religion}}</td>
+        </tr>
 
+        <tr>
+            <td>
+                <strong>Phone:</strong>
+            </td>
+            <td>{{src_el.phone[0].number}}
+            	<button ng-if="partial_matches[index].diff['phone']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('phone')"> >> </button>
+            </td>
+            <td>{{dest_el.phone[0].number}}</td>
+            <td>{{new_el.phone[0].number}}</td>
+        </tr>
 
-
-			<table class="table col-md-6">
-				<tbody>
-					<tr>
-						<tr><td><strong>Name:</strong></td><td>{{src_el.name.first}} {{src_el.name.middle[0]}} {{src_el.name.last}}</td></tr>
-						<tr><td><strong>Date of Birth:</strong></td><td>{{src_el.dob[0].date | date: longDate}}</td></tr>
-						<tr><td><strong>Gender:</strong></td><td>{{src_el.gender}}</td></tr>
-						<tr><td><strong>Marital Status:</strong></td><td>{{src_el.marital_status}}</td></tr>
-						<tr><td><strong>Race/Ethnicity:</strong></td><td>{{src_el.race_ethnicity}}</td></tr>
-						<tr><td><strong>Religion:</strong></td><td>{{src_el.religion}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ src[section] | json }}
-		</td>
-		<td>
-			<table class="table col-md-6 table-hover">
-				<tbody>
-					<tr>
-						<tr><td><strong>Name:</strong></td><td>{{dest_el.name.first}} {{dest_el.name.middle[0]}} {{dest_el.name.last}}</td></tr>
-						<tr><td><strong>Date of Birth:</strong></td><td>{{dest_el.dob[0].date | date: longDate}}</td></tr>
-						<tr><td><strong>Gender:</strong></td><td>{{dest_el.gender}}</td></tr>
-						<tr><td><strong>Marital Status:</strong></td><td>{{dest_el.marital_status}}</td></tr>
-						<tr><td><strong>Race/Ethnicity:</strong></td><td>{{dest_el.race_ethnicity}}</td></tr>
-						<tr><td><strong>Religion:</strong></td><td>{{dest_el.religion}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ dest[section] | json }}
-		</td></tr>
-	</tbody>
+        <tr>
+            <td></td>
+            <td>{{ src[section] | json }}</td>
+            <td>{{ dest[section] | json }}</td>
+            <td>{{ new_el | json }}</td>
+        </tr>
+    </tbody>
 </table>

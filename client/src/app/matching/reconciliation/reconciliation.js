@@ -28,189 +28,47 @@ angular.module('dre.match.reconciliation', [])
 .controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope',
     function($scope, $http, $location, $rootScope) {
 
-        console.log('hit');
-
         $scope.navPath = "templates/nav/nav.tpl.html";
 
         $scope.reviewClick = function(match) {
             //alert(JSON.stringify(match));
-            $location.path("match/reconciliation/review/" + match.section + "/" + match.index + "/" + match.src_id + "/" + match.dest_id);
+            console.log(match);
+            $location.path("match/reconciliation/review/" + match.entry_type + "/" + match._id + "/" + match.entry_id._id + "/" + match.match_entry_id._id);
         };
 
-        $scope.matches = {
-            "allergies": [{
-                "match": "partial",
-                "percent": 95,
-                "subelements": [{
-                    "match": "duplicate",
-                    "src_id": "1",
-                    "dest_id": "0"
-                }, {
-                    "match": "new",
-                    "src_id": "0"
-                }],
-                "src_id": "0",
-                "dest_id": "0"
-            }, {
-                "match": "duplicate",
-                "src_id": "1",
-                "dest_id": "1"
-            }, {
-                "match": "duplicate",
-                "src_id": "2",
-                "dest_id": "2"
-            }, {
-                "match": "duplicate",
-                "src_id": "3",
-                "dest_id": "3"
-            }, {
-                "match": "partial",
-                "percent": 95,
-                "subelements": [{
-                    "match": "duplicate",
-                    "src_id": "1",
-                    "dest_id": "0"
-                }, {
-                    "match": "new",
-                    "src_id": "0"
-                }],
-                "src_id": "4",
-                "dest_id": "4"
-            }],
-            "encounters": [{
-                "match": "partial",
-                "percent": 95,
-                "subelements": [{
-                    "match": "duplicate",
-                    "src_id": "1",
-                    "dest_id": "0"
-                }, {
-                    "match": "new",
-                    "src_id": "0"
-                }],
-                "src_id": "0",
-                "dest_id": "1"
-            }],
-            "immunizations": [{
-                "match": "duplicate",
-                "src_id": "0",
-                "dest_id": "1"
-            }, {
-                "match": "duplicate",
-                "src_id": "1",
-                "dest_id": "2"
-            }, {
-                "match": "duplicate",
-                "src_id": "2",
-                "dest_id": "3"
-            }, {
-                "match": "duplicate",
-                "src_id": "3",
-                "dest_id": "4"
-            }],
-            "results": [{
-                "match": "partial",
-                "percent": 95,
-                "subelements": [{
-                    "match": "partial",
-                    "percent": 75,
-                    "src_id": "0",
-                    "dest_id": "0"
-                }, {
-                    "match": "duplicate",
-                    "src_id": "1",
-                    "dest_id": "1"
-                }, {
-                    "match": "duplicate",
-                    "src_id": "2",
-                    "dest_id": "2"
-                }],
-                "src_id": "0",
-                "dest_id": "6"
-            }],
-            "medications": [{
-                "match": "partial",
-                "percent": 90,
-                "src_id": "0",
-                "dest_id": "2"
-            }],
-            "problems": [{
-                "match": "partial",
-                "percent": 70,
-                "src_id": "0",
-                "dest_id": "1"
-            }, {
-                "match": "duplicate",
-                "src_id": "1",
-                "dest_id": "2"
-            }],
-            "procedures": [{
-                "match": "partial",
-                "percent": 65,
-                "src_id": "0",
-                "dest_id": "1"
-            }, {
-                "match": "duplicate",
-                "src_id": "1",
-                "dest_id": "2"
-            }, {
-                "match": "partial",
-                "percent": 75,
-                "src_id": "2",
-                "dest_id": "3"
-            }],
-            "vitals": [{
-                "match": "partial",
-                "percent": 75,
-                "src_id": "0",
-                "dest_id": "5"
-            }, {
-                "match": "duplicate",
-                "src_id": "1",
-                "dest_id": "6"
-            }, {
-                "match": "duplicate",
-                "src_id": "2",
-                "dest_id": "7"
-            }, {
-                "match": "partial",
-                "percent": 75,
-                "src_id": "3",
-                "dest_id": "8"
-            }, {
-                "match": "partial",
-                "percent": 75,
-                "src_id": "4",
-                "dest_id": "9"
-            }, {
-                "match": "duplicate",
-                "src_id": "5",
-                "dest_id": "10"
-            }],
-            "demographics": [{
-                "match": "diff",
-                "diff": {
-                    "name": "new",
-                    "dob": "duplicate",
-                    "gender": "duplicate",
-                    "identifiers": "duplicate",
-                    "marital_status": "duplicate",
-                    "addresses": "duplicate",
-                    "phone": "new",
-                    "race_ethnicity": "duplicate",
-                    "languages": "duplicate",
-                    "religion": "duplicate",
-                    "birthplace": "duplicate",
-                    "guardians": "duplicate"
-                }
-            }],
-            "socialHistory": [{
-                "match": "diff",
-                "diff": {
-                    "0": "new"
-                }
-            }]
-        };
+    $scope.matches = {};
+
+    $scope.capitalize = function(value) {
+        return value.charAt(0).toUpperCase() + value.slice(1);
+    };
+
+    $scope.getMatches = function() {
+        var sections = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'socialHistory', 'demographics', 'problems'];
+        //var sections = ['allergies'];
+
+        function getMatchSections(loadsec) {
+            console.log(loadsec);
+            $http({
+                method: 'GET',
+                url: '/api/v1/matches/' + loadsec
+            }).
+            success(function(data, status, headers, config) {
+                //console.log(data);
+                $scope.matches[loadsec] = data.matches;
+                //console.log(JSON.stringify($scope.masterMatch, null, 10));
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        }
+
+        for (var i in sections) {
+            getMatchSections(sections[i]);
+        }
+    };
+
+    $scope.getMatches();
+    //$scope.matches = $scope.masterMatch;
 
         //bb-04
         $scope.src = {
@@ -3136,8 +2994,8 @@ angular.module('dre.match.reconciliation', [])
             $scope.partial_matches_sections[$scope.partial_matches[i].section].push(i);
         }
 
-        console.log($scope.partial_matches);
-        console.log($scope.partial_matches_sections);
+        //console.log($scope.partial_matches);
+        //console.log($scope.partial_matches_sections);
 
         $rootScope.matches = $scope.matches;
         $rootScope.src = $scope.src;

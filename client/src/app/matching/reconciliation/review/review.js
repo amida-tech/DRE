@@ -35,6 +35,9 @@ angular.module('dre.match.review', [])
     function($scope, $http, $location, $route, $routeParams, $rootScope) {
 
 
+
+
+
         $scope.section = $routeParams["section"];
         $scope.index = $routeParams["index"];
         $scope.src_id = $routeParams["src_id"];
@@ -57,7 +60,9 @@ angular.module('dre.match.review', [])
         if ($scope.section==="demographics"){
             $scope.src_el=$scope.src[$scope.section];
             $scope.dest_el=$scope.dest[$scope.section];
+            $scope.new_el=_.clone($scope.dest[$scope.section]);
         }
+
 
         $scope.encounter = $scope.src[$scope.section][$scope.src_id];
 
@@ -77,6 +82,10 @@ angular.module('dre.match.review', [])
             $location.path("match/reconciliation");
         };
 
+        $scope.merge = function(name){
+            console.log(name);
+            $scope.new_el[name]=$scope.src_el[name];
+        };
 
 
     }

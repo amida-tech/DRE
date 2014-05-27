@@ -75,8 +75,14 @@ exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) 
         if (err) {
             callback(err);
         } else {
-            //console.log(matchResults);
-            callback(null, matchResults);
+            var returnMatches = [];
+            for (var iMatch in matchResults) {
+                //Filter to undetermined records.
+                if (matchResults[iMatch].determination === undefined) {
+                    returnMatches.push(matchResults[iMatch]);
+                }
+            }
+            callback(null, returnMatches);
         }
     });
 };
