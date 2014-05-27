@@ -38,9 +38,9 @@ exports.getMerges = function(dbinfo, type, typeFields, recordFields, callback) {
         if (err) {
             callback(err);
         } else {
+
             //Filter out unreviewed entries.
             var returnMerges = [];
-
             for (var iMerge in mergeResults) {
                 if (mergeResults[iMerge].entry_id.reviewed !== false) {
                     returnMerges.push(mergeResults[iMerge]);

@@ -59,7 +59,7 @@ app.get('/api/v1/merges', function(req, res) {
                 res.send(400, err);
             } else {
                 mergeCount++;
-                mergeJSON.merges.concat(mergeList);
+                mergeJSON.merges = mergeJSON.merges.concat(mergeList);
                 checkComplete();
             }
         });
