@@ -91,11 +91,11 @@
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
-							<div class="pull-left col-md-12">{{location.type.name}}</div>
+							<div class="pull-left col-md-12">{{location.loc_type.name}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
 							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
-							<div class="pull-left col-md-12" ng-repeat="location_address in location.address.displayAddress">{{location_address}}</div>
+							<div class="pull-left col-md-12" ng-repeat="location_address in location.addresses[0].displayAddress">{{location_address}}</div>
 						</div>
 
 
