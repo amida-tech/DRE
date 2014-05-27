@@ -35,10 +35,16 @@ angular.module('dre.match.review', [])
     function($scope, $http, $location, $route, $routeParams, $rootScope) {
 
 
+
+
+
         $scope.section = $routeParams["section"];
         $scope.index = $routeParams["index"];
         $scope.src_id = $routeParams["src_id"];
         $scope.dest_id = $routeParams["dest_id"];
+
+        console.log('books');
+        console.log($scope);
 
         if ($scope.src_id==="undefined") {$scope.src_id=0;}
         if ($scope.dest_id==="undefined") {$scope.dest_id=0;}
