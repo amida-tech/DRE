@@ -3083,18 +3083,33 @@ angular.module('dre.match.reconciliation', [])
             'socialHistory',
         ];
 
+        $scope.lookup2 = {
+            'allergies':"Allergies",
+            'encounters':"Encounters",
+            'immunizations':"Immunizations",
+            'results':"Lab Results",
+            'medications':"Medications",
+            'problems':"Problems",
+            'procedures':"Procedures",
+            'vitals':"Vital Signs",
+            'demographics':"Demographics",
+            'socialHistory':"Social History"
+        };
+
 
         $scope.partial_matches = [];
-        var partial_match = _.matches({
-            match: "partial"
-        });
+        $scope.partial_matches_sections = {};
+
+
+        var partial_match = function(el){
+            return el.match==="partial" || el.match ==="diff";
+        };
 
         var tag = function(name) {
             var section = name;
 
             function addSection(el, index) {
                 el["section"] = name;
-                el["index"] = index;
                 return el;
             }
             return addSection;
@@ -3114,10 +3129,15 @@ angular.module('dre.match.reconciliation', [])
 
         for (var i in $scope.partial_matches){
             $scope.partial_matches[i].index=i;
+
+            if(!$scope.partial_matches_sections[$scope.partial_matches[i].section]) {
+                $scope.partial_matches_sections[$scope.partial_matches[i].section]=[];   
+            }
+            $scope.partial_matches_sections[$scope.partial_matches[i].section].push(i);
         }
 
         console.log($scope.partial_matches);
-
+        console.log($scope.partial_matches_sections);
 
         $rootScope.matches = $scope.matches;
         $rootScope.src = $scope.src;
