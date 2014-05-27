@@ -131,7 +131,33 @@ angular.module('dre.match.review', [])
         getMasterSections($scope.convertTense($scope.section));
 
         $scope.saveReview = function() {
-            $location.path("match/reconciliation");
+            //console.log($scope.partial_matches._id);
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/allergies/' + $scope.partial_matches._id,
+                data: {determination: 'merged'}
+            }).
+            success(function(data, status, headers, config) {
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        };
+
+        $scope.ignoreReview = function() {
+            //console.log($scope.partial_matches._id);
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/allergies/' + $scope.partial_matches._id,
+                data: {determination: 'ignored'}
+            }).
+            success(function(data, status, headers, config) {
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
         };
 
         $scope.cancelReview = function() {
