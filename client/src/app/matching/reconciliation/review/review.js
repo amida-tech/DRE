@@ -132,9 +132,11 @@ angular.module('dre.match.review', [])
 
         $scope.saveReview = function() {
             //console.log($scope.partial_matches._id);
+            var updateSection = $scope.convertTense($scope.section);
+
             $http({
                 method: 'POST',
-                url: '/api/v1/matches/allergies/' + $scope.partial_matches._id,
+                url: '/api/v1/matches/' + updateSection + '/' + $scope.partial_matches._id,
                 data: {determination: 'merged'}
             }).
             success(function(data, status, headers, config) {
@@ -147,9 +149,11 @@ angular.module('dre.match.review', [])
 
         $scope.ignoreReview = function() {
             //console.log($scope.partial_matches._id);
+            var updateSection = $scope.convertTense($scope.section);
+
             $http({
                 method: 'POST',
-                url: '/api/v1/matches/allergies/' + $scope.partial_matches._id,
+                url: '/api/v1/matches/' + updateSection + '/' + $scope.partial_matches._id,
                 data: {determination: 'ignored'}
             }).
             success(function(data, status, headers, config) {
