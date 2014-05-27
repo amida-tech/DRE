@@ -98,6 +98,10 @@ exports.getMerges = function(type, typeFields, recordFields, callback) {
     merge.getMerges(dbinfo, sectionToType[type], typeFields, recordFields, callback);
 };
 
+exports.setMerge = function(mergeObject, callback) {
+    merge.saveMerge(dbinfo, mergeObject, callback);
+};
+
 exports.mergeCount = function(type, conditions, callback) {
     merge.count(dbinfo, type, conditions, callback);
 };

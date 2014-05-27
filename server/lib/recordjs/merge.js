@@ -18,10 +18,13 @@ exports.saveMerge = function(dbinfo, mergeObject, callback) {
     var Model = dbinfo.mergeModels[mergeObject.entry_type];
     var saveMerge = new Model(mergeObject);
 
+    //console.log(saveMerge);
+
     saveMerge.save(function(err, saveResults) {
         if (err) {
             callback(err);
         } else {
+           
             callback(null, saveResults);
         }
     });
@@ -43,7 +46,7 @@ exports.getMerges = function(dbinfo, type, typeFields, recordFields, callback) {
                     returnMerges.push(mergeResults[iMerge]);
                 }
             }
-            
+
             callback(null, returnMerges);
         }
     });

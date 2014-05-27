@@ -700,8 +700,8 @@
 												<reference value="#severity2"/>
 											</text>
 											<statusCode code="completed"/>
-											<value xsi:type="CD" code="6736007"
-												displayName="Moderate"
+											<value xsi:type="CD" code="371924009"
+												displayName="Moderate to severe"
 												codeSystem="2.16.840.1.113883.6.96"
 												codeSystemName="SNOMED CT"/>
 											<interpretationCode code="N" displayName="Normal"

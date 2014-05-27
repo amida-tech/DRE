@@ -98,9 +98,12 @@ exports.sectionEntryCount = exports.sectionEntryCount = function(dbinfo, type, c
 
 var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
     var model = dbinfo.models[type];
-    model.findOne({
+
+    var query = model.findOne({
         "_id": input_id
-    }, function(err, entry) {
+    }).populate('metadata.attribution');
+
+    query.exec(function(err, entry) {
         if (err) {
             callback(err);
         } else {
@@ -112,24 +115,31 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
 exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, callback) {
 
     var model = dbinfo.models[type];
-    model.findOne({
+    var query = model.findOne({
         "_id": recordId
-    }, function(err, entry) {
+    });
+
+    query.exec(function(err, entry) {
         if (err) {
             callback(err);
         } else {
-            //console.log('entry');
-            //console.log(entry);
+
             for (var iLine in recordUpdate) {
-                entry[iLine] = recordUpdate;
+
+                if (iLine === 'metadata') {
+                    entry[iLine].attribution.concat(recordUpdate[iLine].attribution);
+                } else {
+                    entry[iLine] = recordUpdate[iLine];     
+                }
             }
+
             entry.save(function(err, results) {
                 if (err) {
                     callback(err);
                 } else {
                     callback(null, results);
                 }
-            })
+            });
         }
     });
 
@@ -274,7 +284,7 @@ exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callba
 
 exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
 
-    function saveEntry(entryObject, entryMatch, entrySourceId, callback) {
+    function saveEntry(entryObject, entryMatch, entrySourceId, sourceRecId, callback) {
 
         function savePartialMerge (type, patKey, fileId, entryId, matchId, callback) {
 
@@ -287,12 +297,15 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     merge_reason: 'new'
                 };
 
+                //console.log(tmpMergeEntry);
+
                 merge.saveMerge(dbinfo, tmpMergeEntry, function(err, mergeResults) {
                     if (err) {
                         callback(err);
                     } else {
+                        //console.log(mergeResults);
                         tempEntry.metadata = {};
-                        tempEntry.metadata.attribution = [matchId];
+                        tempEntry.metadata.attribution = [mergeResults._id];
                         tempEntry.patKey = patKey;
                         tempEntry.save(function(err, saveResults) {
                             if (err) {
@@ -330,7 +343,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
 
         }
 
-
+        //console.log(entryObject);
         var tempEntry = new model(entryObject);
         tempEntry.save(function(err, saveResults) {
             if (err) {
@@ -341,7 +354,8 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     if (err) {
                         callback(err);
                     } else {
-                        savePartialMerge(type, patKey, entrySourceId, saveResults._id, partialMatchResults._id, function(err, partialMergeResults) {
+                        //BAD:  entrySourceId wrong here.
+                        savePartialMerge(type, patKey, sourceRecId, saveResults._id, partialMatchResults._id, function(err, partialMergeResults) {
                             if (err) {
                                 callback(err);
                             } else {
@@ -418,7 +432,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                 entryObject.patKey = patKey;
                 var entryPartialMatch = inputArray[i].partial_match;
                 var entryPartialMatchRecordId = inputArray[i].match_record_id;
-                saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, function(err) {
+                saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, sourceID, function(err) {
                     checkLoopComplete();
                 });
             }

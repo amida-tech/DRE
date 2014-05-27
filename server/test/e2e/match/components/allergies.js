@@ -227,7 +227,7 @@ describe('Allergies API - Test New/Dupe Mix:', function() {
 	});
 });
 
-//Modified severity on 3rd allergy.  Changed Nausea to Hives on first allergy.  2nd allergy a duplicate.
+//Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
 describe('Allergies API - Test Partial Matches:', function() {
 
 	before(function(done) {
@@ -260,7 +260,7 @@ describe('Allergies API - Test Partial Matches:', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(12);
+				expect(res.body.merges.length).to.equal(11);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -272,7 +272,7 @@ describe('Allergies API - Test Partial Matches:', function() {
 					}
 				}
 				expect(newCnt).to.equal(5);
-				expect(dupCnt).to.equal(7);
+				expect(dupCnt).to.equal(6);
 				done();
 			});
 	});
@@ -282,7 +282,7 @@ describe('Allergies API - Test Partial Matches:', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
-				expect(res.body.matches.length).to.equal(2);
+				expect(res.body.matches.length).to.equal(3);
 				for (var i in res.body.matches) {
 					expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
 				}
@@ -345,7 +345,7 @@ it('Update Allergy Match Records', function(done) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(13);
+				expect(res.body.merges.length).to.equal(12);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -357,7 +357,7 @@ it('Update Allergy Match Records', function(done) {
 					}
 				}
 				expect(newCnt).to.equal(6);
-				expect(dupCnt).to.equal(7);
+				expect(dupCnt).to.equal(6);
 				done();
 			});
 	});
@@ -414,7 +414,7 @@ describe('Allergies API - Test Ignored Matches', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(13);
+				expect(res.body.merges.length).to.equal(12);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -426,18 +426,81 @@ describe('Allergies API - Test Ignored Matches', function() {
 					}
 				}
 				expect(newCnt).to.equal(6);
-				expect(dupCnt).to.equal(7);
+				expect(dupCnt).to.equal(6);
 				done();
 			});
 	});
 
+});
 
 
+describe('Allergies API - Test Merged Matches', function() {
 
 
+	//TODO:  Test get partials api.
 
+	it('Update Allergy Match Records Merged', function(done) {
 
+		var update_id = '';
+		var match_id = '';
 
+		api.get('/api/v1/matches/allergies')
+			.expect(200)
+			.end(function(err, res) {
+				if (err) {
+					done(err);
+				} else {
+					update_id = res.body.matches[0]._id;
+					match_id = res.body.matches[0].match_entry_id._id;
+					api.post('/api/v1/matches/allergies/' + update_id)
+						.send({
+							determination: "merged"
+						})
+						.expect(200)
+						.end(function(err, res) {
+							if (err) {
+								done(err);
+							} else {
+								api.get('/api/v1/record/allergies')
+									.expect(200)
+									.end(function(err, res) {
+										console.log(JSON.stringify(res.body, null, 10));
+										done();
+									});
+							}
+						});
+				}
+			});
+	});
 
+	it('Get Allergy Merge Records Post Merged', function(done) {
+		api.get('/api/v1/merges/allergies')
+			.expect(200)
+			.end(function(err, res) {
+				if (err) {
+					return done(err);
+				}
+				//console.log(res.body.merges);
+				expect(res.body.merges.length).to.equal(13);
+				var newCnt = 0;
+				var dupCnt = 0;
+				var mrgCnt = 0
+				for (var i in res.body.merges) {
+					if (res.body.merges[i].merge_reason === 'new') {
+						newCnt++;
+					}
+					if (res.body.merges[i].merge_reason === 'duplicate') {
+						dupCnt++;
+					}
+					if (res.body.merges[i].merge_reason === 'update') {
+						mrgCnt++;
+					}
+				}
+				expect(newCnt).to.equal(6);
+				expect(dupCnt).to.equal(6);
+				expect(mrgCnt).to.equal(1);
+				done();
+			});
+	});
 
 });
