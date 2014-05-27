@@ -51,9 +51,26 @@ angular.module('dre.record.allergies', [])
       });
     };
 
+  var severityReference = {
+    "MILD": 1,
+    "MILD TO MODERATE": 2,
+    "MODERATE": 3,
+    "MODERATE TO SEVERE": 4,
+    "SEVERE": 5,
+    "FATAL": 6
+  };
+
   $scope.updateFields = function() {
     for (var i in $scope.allergies) {
-      recordFunctions.formatDate($scope.allergies[i].date);
+      var a = $scope.allergies[i];
+      recordFunctions.formatDate(a.date);
+      var sev = a.severity;
+      var v = 0;
+      if (sev) {
+        sev = sev.toUpperCase();
+        v = severityReference[sev] || 0;
+      }
+      a.severity_weight = v;
     }
   };
 
