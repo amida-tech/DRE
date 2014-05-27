@@ -290,7 +290,14 @@ describe('Allergies API - Test Partial Matches:', function() {
 			});
 	});
 
-	//TODO:  Test get partials api.
+	it('Get Partial Allergies', function(done) {
+		api.get('/api/v1/record/partial/allergies')
+			.expect(200)
+			.end(function(err, res) {
+				expect(res.body.allergies.length).to.equal(3);
+				done();
+			});
+	});
 
 });
 
@@ -370,8 +377,6 @@ it('Update Allergy Match Records', function(done) {
 describe('Allergies API - Test Ignored Matches', function() {
 
 
-	//TODO:  Test get partials api.
-
 	it('Update Allergy Match Records Ignored', function(done) {
 
 		var update_id = '';
@@ -436,9 +441,6 @@ describe('Allergies API - Test Ignored Matches', function() {
 
 describe('Allergies API - Test Merged Matches', function() {
 
-
-	//TODO:  Test get partials api.
-
 	it('Update Allergy Match Records Merged', function(done) {
 
 		var update_id = '';
@@ -464,7 +466,7 @@ describe('Allergies API - Test Merged Matches', function() {
 								api.get('/api/v1/record/allergies')
 									.expect(200)
 									.end(function(err, res) {
-										console.log(JSON.stringify(res.body, null, 10));
+										expect(res.body.allergies.length).to.equal(6);
 										done();
 									});
 							}
