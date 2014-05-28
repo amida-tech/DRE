@@ -621,13 +621,15 @@ describe('Allergies API - Test Merged Matches', function() {
 				var total_allergies = 0;
 				for (var iEntry in res.body.allergies) {
 					if (res.body.allergies[iEntry]._id === match_id) {
-
-						//TODO:  CHECK ATTRIBUTION ACCURACY.
-						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
 						total_allergies++;
+					}
+					if (res.body.allergies[iEntry]._id === base_id) {
+						expect(res.body.allergies[iEntry].metadata.attribution.length).to.equal(4);
 					}
 				}
 				expect(total_allergies).to.equal(0);
+				//console.log(base_id);
+
 				done();
 			});
 	});

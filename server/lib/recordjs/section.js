@@ -123,11 +123,11 @@ exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, cal
         if (err) {
             callback(err);
         } else {
-
             for (var iLine in recordUpdate) {
-
                 if (iLine === 'metadata') {
-                    entry[iLine].attribution.concat(recordUpdate[iLine].attribution);
+                    for (var iAttribution in recordUpdate[iLine].attribution) {
+                        entry[iLine].attribution.push(recordUpdate[iLine].attribution[iAttribution]);
+                    }
                 } else {
                     entry[iLine] = recordUpdate[iLine];     
                 }

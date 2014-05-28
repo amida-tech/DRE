@@ -84,12 +84,20 @@ angular.module('services.recordFunctions', [])
                     tmpDateArr = $filter('date')(input_date.date, 'mediumDate');
                     input_date.displayDate = tmpDateArr;
                 }
+                if (input_date.precision === "hour") {
+                    tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                    input_date.displayDate = tmpDateArr;
+                }
                 if (input_date.precision === "minute") {
                     tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
                     input_date.displayDate = tmpDateArr;
                 }
+                if (input_date.precision === "second") {
+                    tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                    input_date.displayDate = tmpDateArr;
+                }
                 if (input_date.precision === "subsecond") {
-                    tmpDateArr = $filter('date')(input_date.date, 'mediumDate');
+                    tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
                     input_date.displayDate = tmpDateArr;
                 }
                 return input_date;

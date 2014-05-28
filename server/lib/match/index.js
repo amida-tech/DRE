@@ -96,36 +96,37 @@ function updateMerged(updateId, updateComponent, callback) {
 
     function updateMainObject(updateComponent, entry_id, updateJSON, recordId, callback) {
 
-        record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', entry_id, updateJSON, function(err, updateResults) {
+
+        //First create merge entry.
+        var mergeObject = {
+            entry_type: record.sectionToType[updateComponent],
+            patKey: 'test',
+            entry_id: entry_id._id,
+            record_id: recordId,
+            merged: new Date(),
+            merge_reason: 'update'
+        };
+        record.setMerge(mergeObject, function(err, mergeResult) {
             if (err) {
-                console.error(err);
                 callback(err);
             } else {
-                //Add attribution to rec.
-
-                //console.log(entry_id);
-
-                var mergeObject = {
-                    entry_type: record.sectionToType[updateComponent],
-                    patKey: 'test',
-                    entry_id: entry_id._id,
-                    record_id: recordId,
-                    merged: new Date(),
-                    merge_reason: 'update'
-                };
-
-                //console.log(mergeObject);
-
-                record.setMerge(mergeObject, function(err, mergeResult) {
+                updateJSON.metadata.attribution = [mergeResult._id];
+                record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', entry_id, updateJSON, function(err, updateResults) {
                     if (err) {
+                        console.error(err);
                         callback(err);
                     } else {
-                        callback(null, err);    
+                        callback(null, err);
+
                     }
                 });
-
             }
         });
+
+
+
+
+
     }
 
     function removeMergedObject(updateId, updateComponent, callback) {
@@ -141,19 +142,22 @@ function updateMerged(updateId, updateComponent, callback) {
     }
 
 
-    console.log(updateComponent);
-    console.log(updateId);
+    //console.log(updateComponent);
+    //console.log(updateId);
     record.getMatch(updateComponent, updateId, function(err, resultComponent) {
         if (err) {
             callback(err);
         } else {
-            console.log(resultComponent);
+            //console.log(resultComponent);
+            //Getting the partial record here.
             record["get" + record.capitalize(record.sectionToType[updateComponent])](resultComponent.match_entry_id._id, function(err, recordResults) {
                 if (err) {
                     callback(err);
                 } else {
 
-                    //console.log(recordResults.metadata.attribution[0]);
+
+
+                    //Used to populate merge attribution element.
                     var recordId = recordResults.metadata.attribution[0].record_id;
 
                     var updateJSON = {};
