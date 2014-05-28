@@ -477,13 +477,23 @@ describe('Social API - Test Added Matches', function() {
 
 
 
-xdescribe('Social API - Test Ignored Matches', function() {
+describe('Social API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
 
+	before(function(done) {
+		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
+			if (err) {
+				done(err);
+			} else {
+				done();
+			}
+		});
+	});
+
 	it('Update Social Match Records Ignored', function(done) {
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/socialHistory')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -491,7 +501,7 @@ xdescribe('Social API - Test Ignored Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/allergies/' + update_id)
+					api.post('/api/v1/matches/socialHistory/' + update_id)
 						.send({
 							determination: "ignored"
 						})
@@ -508,14 +518,14 @@ xdescribe('Social API - Test Ignored Matches', function() {
 	});
 
 	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/allergies')
+		api.get('/api/v1/record/socialHistory')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.allergies.length).to.equal(6);
+				expect(res.body.socialHistory.length).to.equal(2);
 				var total_allergies = 0;
-				for (var iEntry in res.body.allergies) {
-					if (res.body.allergies[iEntry]._id === match_id) {
+				for (var iEntry in res.body.socialHistory) {
+					if (res.body.socialHistory[iEntry]._id === match_id) {
 						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
 						total_allergies++;
 					}
@@ -526,24 +536,24 @@ xdescribe('Social API - Test Ignored Matches', function() {
 	});
 
 	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/allergies')
+		api.get('/api/v1/record/partial/socialHistory')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.allergies.length).to.equal(1);
+				expect(res.body.socialHistory.length).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Social Merge Records Post Added', function(done) {
-		api.get('/api/v1/merges/allergies')
+		api.get('/api/v1/merges/socialHistory')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(12);
+				expect(res.body.merges.length).to.equal(4);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -553,27 +563,27 @@ xdescribe('Social API - Test Ignored Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('allergy');
+					expect(res.body.merges[i].entry_type).to.equal('social');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(6);
-				expect(dupCnt).to.equal(6);
+				expect(newCnt).to.equal(2);
+				expect(dupCnt).to.equal(2);
 				done();
 			});
 	});
 
 	it('Get Social Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/socialHistory')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(1);
+			expect(res.body.matches.length).to.equal(0);
 			done();
 		});
 	});
@@ -581,15 +591,25 @@ xdescribe('Social API - Test Ignored Matches', function() {
 });
 
 
-xdescribe('Social API - Test Merged Matches', function() {
+describe('Social API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var base_id = '';
 	var match_id = '';
 
+	before(function(done) {
+		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
+			if (err) {
+				done(err);
+			} else {
+				done();
+			}
+		});
+	});
+
 	it('Update Social Match Records Merged', function(done) {
 
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/socialHistory')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -598,7 +618,7 @@ xdescribe('Social API - Test Merged Matches', function() {
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/allergies/' + update_id)
+					api.post('/api/v1/matches/socialHistory/' + update_id)
 						.send({
 							determination: "merged"
 						})
@@ -615,14 +635,14 @@ xdescribe('Social API - Test Merged Matches', function() {
 	});
 
 	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/allergies')
+		api.get('/api/v1/record/socialHistory')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.allergies.length).to.equal(6);
+				expect(res.body.socialHistory.length).to.equal(2);
 				var total_allergies = 0;
 				for (var iEntry in res.body.allergies) {
-					if (res.body.allergies[iEntry]._id === match_id) {
+					if (res.body.socialHistory[iEntry]._id === match_id) {
 
 						//TODO:  CHECK ATTRIBUTION ACCURACY.
 						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
@@ -635,24 +655,24 @@ xdescribe('Social API - Test Merged Matches', function() {
 	});
 
 	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/allergies')
+		api.get('/api/v1/record/partial/socialHistory')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.allergies.length).to.equal(0);
+				expect(res.body.socialHistory.length).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Social Merge Records Post Merged', function(done) {
-		api.get('/api/v1/merges/allergies')
+		api.get('/api/v1/merges/socialHistory')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.merges,null, 10));
-				expect(res.body.merges.length).to.equal(13);
+				expect(res.body.merges.length).to.equal(5);
 				var newCnt = 0;
 				var dupCnt = 0;
 				var mrgCnt = 0
@@ -674,15 +694,15 @@ xdescribe('Social API - Test Merged Matches', function() {
 					expect(res.body.merges[i].entry_id._id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(6);
-				expect(dupCnt).to.equal(6);
+				expect(newCnt).to.equal(2);
+				expect(dupCnt).to.equal(2);
 				expect(mrgCnt).to.equal(1);
 				done();
 			});
 	});
 
 	it('Get Social Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/socialHistory')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
