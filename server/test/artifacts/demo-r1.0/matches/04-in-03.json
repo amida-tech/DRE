@@ -15,6 +15,16 @@
                         "src_id": "0"
                     }
                 ],
+                "diff": {
+                    "date": "duplicate",
+                    "identifiers": "duplicate",
+                    "severity": "duplicate",
+                    "status": "duplicate",
+                    "reaction": "new",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate"
+                },
                 "src_id": "0",
                 "dest_id": "0"
             },
@@ -47,6 +57,15 @@
                         "src_id": "0"
                     }
                 ],
+                "diff": {
+                    "date": "duplicate",
+                    "identifiers": "duplicate",
+                    "status": "duplicate",
+                    "reaction": "new",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate"
+                },
                 "src_id": "4",
                 "dest_id": "4"
             }
@@ -66,11 +85,35 @@
                         "src_id": "0"
                     }
                 ],
+                "diff": {
+                    "identifiers": "duplicate",
+                    "date": "duplicate",
+                    "locations": "duplicate",
+                    "findings": "new",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate",
+                    "translations": "duplicate"
+                },
                 "src_id": "0",
                 "dest_id": "1"
             }
         ],
         "immunizations": [
+            {
+                "match": "partial",
+                "percent": 75,
+                "diff": {
+                    "date": "duplicate",
+                    "identifiers": "duplicate",
+                    "status": "duplicate",
+                    "product": "new",
+                    "administration": "duplicate",
+                    "performer": "duplicate"
+                },
+                "src_id": "0",
+                "dest_id": "0"
+            },
             {
                 "match": "duplicate",
                 "src_id": "1",
@@ -85,10 +128,6 @@
                 "match": "duplicate",
                 "src_id": "3",
                 "dest_id": "3"
-            },
-            {
-                "match": "new",
-                "src_id": "0"
             }
         ],
         "results": [
@@ -113,6 +152,13 @@
                         "dest_id": "2"
                     }
                 ],
+                "diff": {
+                    "identifiers": "duplicate",
+                    "results": "new",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate"
+                },
                 "src_id": "0",
                 "dest_id": "6"
             }
@@ -121,6 +167,14 @@
             {
                 "match": "partial",
                 "percent": 90,
+                "diff": {
+                    "date": "duplicate",
+                    "identifiers": "duplicate",
+                    "status": "duplicate",
+                    "sig": "duplicate",
+                    "product": "duplicate",
+                    "administration": "duplicate"
+                },
                 "src_id": "0",
                 "dest_id": "2"
             }
@@ -129,6 +183,19 @@
             {
                 "match": "partial",
                 "percent": 70,
+                "diff": {
+                    "date": "new",
+                    "identifiers": "duplicate",
+                    "negation_indicator": "new",
+                    "onset_age": "duplicate",
+                    "onset_age_unit": "duplicate",
+                    "status": "duplicate",
+                    "patient_status": "duplicate",
+                    "source_list_identifiers": "duplicate",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate"
+                },
                 "src_id": "0",
                 "dest_id": "1"
             },
@@ -142,6 +209,17 @@
             {
                 "match": "partial",
                 "percent": 65,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "status": "duplicate",
+                    "date": "new",
+                    "bodysite": "duplicate",
+                    "providers": "duplicate",
+                    "proc_type": "duplicate",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate"
+                },
                 "src_id": "0",
                 "dest_id": "1"
             },
@@ -153,6 +231,16 @@
             {
                 "match": "partial",
                 "percent": 75,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "status": "duplicate",
+                    "date": "duplicate",
+                    "locations": "duplicate",
+                    "proc_type": "duplicate",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate"
+                },
                 "src_id": "2",
                 "dest_id": "3"
             }
@@ -161,6 +249,18 @@
             {
                 "match": "partial",
                 "percent": 75,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "status": "duplicate",
+                    "date": "new",
+                    "freeTextValue": "duplicate",
+                    "interpretations": "duplicate",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate",
+                    "value": "duplicate",
+                    "unit": "duplicate"
+                },
                 "src_id": "0",
                 "dest_id": "5"
             },
@@ -177,12 +277,36 @@
             {
                 "match": "partial",
                 "percent": 75,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "status": "duplicate",
+                    "date": "new",
+                    "freeTextValue": "duplicate",
+                    "interpretations": "duplicate",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate",
+                    "value": "duplicate",
+                    "unit": "duplicate"
+                },
                 "src_id": "3",
                 "dest_id": "8"
             },
             {
                 "match": "partial",
                 "percent": 75,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "status": "duplicate",
+                    "date": "new",
+                    "freeTextValue": "duplicate",
+                    "interpretations": "duplicate",
+                    "name": "duplicate",
+                    "code": "duplicate",
+                    "code_system_name": "duplicate",
+                    "value": "duplicate",
+                    "unit": "duplicate"
+                },
                 "src_id": "4",
                 "dest_id": "9"
             },
@@ -215,13 +339,14 @@
             {
                 "match": "diff",
                 "diff": {
-                    "0": "new"
+                    "value": "new",
+                    "dateRange": "duplicate"
                 }
             }
         ]
     },
     "meta": {
-        "version": "0.1.4"
+        "version": "0.1.5"
     },
     "errors": []
 }
