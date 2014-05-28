@@ -7,7 +7,7 @@
 	<br/>
 </div>
 <div ng-hide="displayProblems" class="panel-title">No problems are currently in your record.</div>
-<div ng-show="displayProblems" class="panel-group" id="#accordian-problems" ng-repeat="problem in problems | orderBy:problemPredicate">
+<div ng-show="displayProblems" class="panel-group" id="#accordian-problems" ng-repeat="problem in problems | orderBy:problemPredicate:1">
 
 	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">

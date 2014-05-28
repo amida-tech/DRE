@@ -30,7 +30,7 @@ angular.module('dre.record.results', [])
 
     $scope.results = [];
     $scope.displayResults = false;
-    $scope.procedurePredicate = "status";
+    $scope.resultPredicate = "-date_weight";
 
 
     function resultDate(inputObject) {
@@ -52,7 +52,7 @@ angular.module('dre.record.results', [])
       minDateArray.push(recordFunctions.minDateFromArray(dateArray));
 
       inputObject.minDate = minDateArray;
-
+      inputObject.date_weight = inputObject.minDate && inputObject.minDate[0] && inputObject.minDate[0].date;
     }
 
     $scope.getRecord = function() {

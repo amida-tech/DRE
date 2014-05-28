@@ -7,7 +7,7 @@
 	<br/>
 </div>
 <div ng-hide="displayEncounters" class="panel-title">No encounters are currently in your record.</div>
-<div ng-show="displayEncounters" class="panel-group" id="#accordian-encounters" ng-repeat="encounter in encounters">
+<div ng-show="displayEncounters" class="panel-group" id="#accordian-encounters" ng-repeat="encounter in encounters | orderBy:encounterPredicate">
 
 	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -91,11 +91,11 @@
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
-							<div class="pull-left col-md-12">{{location.type.name}}</div>
+							<div class="pull-left col-md-12">{{location.loc_type.name}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
 							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
-							<div class="pull-left col-md-12" ng-repeat="location_address in location.address.displayAddress">{{location_address}}</div>
+							<div class="pull-left col-md-12" ng-repeat="location_address in location.addresses[0].displayAddress">{{location_address}}</div>
 						</div>
 
 

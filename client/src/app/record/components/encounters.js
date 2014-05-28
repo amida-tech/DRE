@@ -30,7 +30,7 @@ angular.module('dre.record.encounters', [])
 
     $scope.encounters = [];
     $scope.displayEncounters = false;
-    $scope.encounterPredicate = "status";
+    $scope.encounterPredicate = "-date_weight";
 
     $scope.getRecord = function() {
       $http({
@@ -54,6 +54,7 @@ angular.module('dre.record.encounters', [])
     $scope.updateFields = function() {
       for (var i in $scope.encounters) {
         recordFunctions.formatDate($scope.encounters[i].date);
+        $scope.encounters[i].date_weight = $scope.encounters[i].date[0].date;
         for (var ii in $scope.encounters[i].locations) {
           recordFunctions.formatAddress($scope.encounters[i].locations[ii].addresses[0]);
         }

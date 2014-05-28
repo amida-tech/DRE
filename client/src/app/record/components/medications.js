@@ -30,7 +30,7 @@ angular.module('dre.record.medications', [])
 
     $scope.medications = [];
     $scope.displayMedications = false;
-    $scope.medicationPredicate = "status";
+    $scope.medicationPredicate = "-status";
 
 
     $scope.getRecord = function() {
