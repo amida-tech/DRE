@@ -30,7 +30,7 @@ angular.module('dre.record.immunizations', [])
 
     $scope.immunizations = [];
     $scope.displayImmunizations = false;
-    $scope.immunizationPredicate = "-severity_weight";
+    $scope.immunizationPredicate = "-date_weight";
 
     $scope.getRecord = function() {
       $http({
@@ -56,6 +56,8 @@ angular.module('dre.record.immunizations', [])
   
         recordFunctions.formatDate($scope.immunizations[i].date);
   
+        $scope.immunizations[i].date_weight = $scope.immunizations[i].date[0].date;
+  
         if ($scope.immunizations[i].administration.quantity) {
           recordFunctions.formatQuantity($scope.immunizations[i].administration.quantity);
         }
@@ -70,8 +72,6 @@ angular.module('dre.record.immunizations', [])
           for (var perName in $scope.immunizations[i].performer.name) {
             recordFunctions.formatName($scope.immunizations[i].performer.name[perName]);  
           }
-          
-          
         }
       }
     };
