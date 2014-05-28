@@ -325,11 +325,19 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     match_entry_id: matchEntryId
                 }
 
+                //HACK: extending saving of partial matches
+
                 //Conditionally take diff/partial.
-                if (matchObject.match === 'diff') {
+                if (matchObject.match === 'diff' ) {
                     tmpMatch.diff = matchObject.diff;
-                } else {
+                } else if (matchObject.match === 'partial'){
+                    tmpMatch.diff = matchObject.diff;
                     tmpMatch.percent = matchObject.percent;
+                }
+
+                //Passing on sublements
+                if (matchObject.subelements) {
+                    tmpMatch.subelements=matchObject.subelements;
                 }
 
                 saveMatchEntries(dbinfo, type, patKey, tmpMatch, function(err, results) {

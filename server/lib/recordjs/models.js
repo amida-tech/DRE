@@ -88,7 +88,8 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
             match_entry_id: {type: ObjectId, ref: colName},
             percent: Number,
             determination: String, //Can be 1) Merged, 2) Added, 3) Ignored.
-            diff: {}
+            diff: {},
+            subelements: {}
         });
         result.match[type] = connection.model(matchColName, matchSchema);
     
