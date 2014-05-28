@@ -471,7 +471,9 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
 };
 
 exports.getPartialSection = function(dbinfo, type, patKey, callback) {
+
     var model = dbinfo.models[type];
+    //console.log(model);
     var query = model.find({
         patKey: patKey,
         reviewed: false
@@ -480,6 +482,7 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
         if (err) {
             callback(err);
         } else {
+            console.log(results);
             dbinfo.storageModel.populate(results, {
                 path: 'metadata.attribution.record_id',
                 select: 'filename'

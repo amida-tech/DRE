@@ -226,8 +226,7 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
         } else {
 
             dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
-                //AHH ERROR HERE(NOT SAVING MULTIPLE PARTIAL MATCHES.)...
-                //console.log(partial_reconciliation_results);
+                //console.log(JSON.stringify(partial_reconciliation_results, null, 10));
                 saveComponents(reconciliation_results, partial_reconciliation_results, parsed_record_identifier, function(err) {
                     if (err) {
                         callback(err);
