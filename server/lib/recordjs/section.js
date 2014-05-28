@@ -347,6 +347,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     tmpMatch.diff = matchObject.diff;
                 } else {
                     tmpMatch.percent = matchObject.percent;
+                    tmpMatch.diff = matchObject.diff;
                 }
 
                 saveMatchEntries(dbinfo, type, patKey, tmpMatch, function(err, results) {
