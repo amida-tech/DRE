@@ -54,7 +54,7 @@ angular.module('dre.match.review', [])
             'procedure': 'procedures',
             'vital': 'vitals',
             'demographics': 'demographics',
-            'social': 'socialhistories'
+            'social': 'socialHistory'
         };
         return lookup[inputSection];
 
