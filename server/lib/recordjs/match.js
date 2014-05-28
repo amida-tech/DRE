@@ -18,6 +18,8 @@ exports.saveMatch = function(dbinfo, matchObject, callback) {
     var Model = dbinfo.matchModels[matchObject.entry_type];
     var saveMatch = new Model(matchObject);
 
+    //console.log(JSON.stringify(matchObject, null, 4));
+
     saveMatch.save(function(err, saveResults) {
         if (err) {
             callback(err);
