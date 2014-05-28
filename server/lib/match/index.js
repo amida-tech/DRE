@@ -140,10 +140,14 @@ function updateMerged(updateId, updateComponent, callback) {
 
     }
 
+
+    console.log(updateComponent);
+    console.log(updateId);
     record.getMatch(updateComponent, updateId, function(err, resultComponent) {
         if (err) {
             callback(err);
         } else {
+            console.log(resultComponent);
             record["get" + record.capitalize(record.sectionToType[updateComponent])](resultComponent.match_entry_id._id, function(err, recordResults) {
                 if (err) {
                     callback(err);
@@ -187,6 +191,8 @@ function updateMerged(updateId, updateComponent, callback) {
 }
 
 function processUpdate(updateId, updateComponent, updateParameters, callback) {
+
+    console.log(updateComponent);
 
     //Clean parameters.
     var cleanParameters = {};

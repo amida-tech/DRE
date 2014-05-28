@@ -11,22 +11,22 @@
 				<div class="panel panel-default" style="overflow: visible;">
 					<div class="panel-heading ">
 						<div class="panel-title">
-							<h4 ng-if="partial_matches[index].match==='partial'">Partial ({{partial_matches[index].percent}}%) Match</h4>
-							<h4 ng-if="partial_matches[index].match==='diff'">Updated (Different) Information</h4>
+							<h4 ng-if="partial_matches.percent">Partial ({{partial_matches[index].percent}}%) Match</h4>
+							<h4 ng-if="partial_matches.diff">Updated (Different) Information</h4>
 						</div>
 					</div>
 					<div class="panel-body">
 						<!--Header-->
 						<ng-include src="dynamicTemplatePath"></ng-include>
 
-						<div ng-if="partial_matches[index].match==='partial' && !partial_matches[index].subelements"> 
+						<div ng-if="partial_matches.percent && !partial_matches.subelements"> 
 							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record with New Entry</button>
-							<button type="button" class="btn btn-warning" ng-click="saveReview()">New Entry doesn't match Master Record</button>
+							<button type="button" class="btn btn-warning" ng-click="ignoreReview()">New Entry doesn't match Master Record</button>
 
 							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
 						</div>
 
-						<div ng-if="partial_matches[index].match==='partial' && partial_matches[index].subelements"> 
+						<div ng-if="partial_matches.percent && partial_matches.subelements"> 
 							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record with New Entry (and merge subelements)</button>
 							<button type="button" class="btn btn-info" ng-click="saveReview()">Keep Master Record (and merge subelements from New Entry)</button>
 							<button type="button" class="btn btn-warning" ng-click="saveReview()">New Entry doesn't match Master Record</button>
@@ -34,7 +34,7 @@
 							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
 						</div>
 
-						<div ng-if="partial_matches[index].section==='socialHistory'"> 
+						<div ng-if="partial_matches.diff"> 
 							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record</button>
 							<button type="button" class="btn btn-warning" ng-click="saveReview()">Ignore New Entry</button>
 
@@ -50,8 +50,6 @@
 
 					</div>
 				</div>
-
-				{{partial_matches[index] |json }}
 			</div>
 		</div>
 
