@@ -30,7 +30,7 @@ angular.module('dre.record.vitals', [])
 
     $scope.vitals = [];
     $scope.displayVitals = false;
-    $scope.vitalPredicate = "-date";
+    $scope.vitalPredicate = "-date_weight";
 
     $scope.getRecord = function() {
       $http({
@@ -53,7 +53,9 @@ angular.module('dre.record.vitals', [])
 
     $scope.updateFields = function() {
         for (var iRec in $scope.vitals) {
-            recordFunctions.formatDate($scope.vitals[iRec].date);
+            var d = $scope.vitals[iRec].date;
+            recordFunctions.formatDate(d);
+            $scope.vitals[iRec].date_weight = d && d[0] && d[0].date;
             recordFunctions.formatQuantity($scope.vitals[iRec]);
         }
     };
