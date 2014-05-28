@@ -17,7 +17,10 @@ var _ = require("underscore");
 
 function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
 
+
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
+
+        //console.log(srcArray);
 
         var returnArray = [];
         var returnPartialArray = [];
@@ -40,6 +43,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         function checkLoopComplete(iteration, length) {
 
             if (iteration === length) {
+                //console.log(returnPartialArray);
                 callback(null, section, returnArray, returnPartialArray);
             }
         }
@@ -79,8 +83,10 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 } else {
                     tmpMatchRecId = baseArray[0]._id;
                 }
+                //console.log(srcArray);
+                //Diffs always zero, can take only array object.
                 returnPartialArray.push({
-                    partial_array: srcArray,
+                    partial_array: srcArray[0],
                     partial_match: srcMatches[i],
                     match_record_id: tmpMatchRecId
                 });
@@ -123,6 +129,8 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
     }
 
     for (var iSec in newObject) {
+
+        //console.log(JSON.stringify(newObject[iSec], null, 10));
 
         var currentMatchResult = matchResults.match[iSec];
 
@@ -169,13 +177,12 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
     //console.log(JSON.stringify(matchResult, null, 10));
 
-    //SHIM:  missing src_id is breaking things.
-
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
 
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
+        //console.log(JSON.stringify(newPartialObjectPostMatch, null, 10));
         callback(null, newObjectPostMatch, newPartialObjectPostMatch);
     });
 }

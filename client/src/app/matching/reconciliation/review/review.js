@@ -54,7 +54,7 @@ angular.module('dre.match.review', [])
             'procedure': 'procedures',
             'vital': 'vitals',
             'demographics': 'demographics',
-            'social': 'socialHistory'
+            'social': 'socialhistories'
         };
         return lookup[inputSection];
 
@@ -88,14 +88,14 @@ angular.module('dre.match.review', [])
 
         //load partials and pull right one from url string param.
         function getPartialSections(loadsec) {
-            //console.log(loadsec);
+            console.log(loadsec);
             $http({
                 method: 'GET',
                 url: '/api/v1/record/partial/' + loadsec
             }).
             success(function(data, status, headers, config) {
                 for (var i in data[loadsec]) {
-                    //console.log(data[loadsec][i]._id);
+                    console.log(data[loadsec][i]._id);
                     //console.log($scope.dest_id);
                     if (data[loadsec][i]._id === $scope.dest_id) {
                             $scope.src_el = data[loadsec][i];    
