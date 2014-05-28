@@ -25,8 +25,8 @@ angular.module('dre.demographics', [])
   }
 ])
 
-.controller('demographicsCtrl', ['$scope', '$http', '$location', 'getNotifications', 'recordFunctions',
-  function($scope, $http, $location, getNotifications, recordFunctions) {
+.controller('demographicsCtrl', ['$scope', '$http', '$q', '$location', 'getNotifications', 'recordFunctions',
+  function($scope, $http, $q, $location, getNotifications, recordFunctions) {
 
     $scope.navPath = "templates/nav/nav.tpl.html";
     $scope.demographics = [];
@@ -39,19 +39,26 @@ angular.module('dre.demographics', [])
     });
 
     $scope.getRecord = function() {
-      $http({
-        method: 'GET',
-        url: '/api/v1/record/demographics'
-      }).
-      success(function(data, status, headers, config) {
+      $q.all([
+        $http({
+          method: 'GET',
+          url: '/api/v1/record/demographics'
+        }), 
+        $http({
+          method: 'GET',
+          url: '/api/v1/record/socialHistory'
+        })]).then(function(response) {
+        var data = response[0].data;
         $scope.demographics = data.demographics[0];
         if (data.demographics.length > 0) {
           $scope.displayDemographics = true;
         } else {
           $scope.displayDemographics = false;
         }
-      }).
-      error(function(data, status, headers, config) {
+        var socialData = response[1].data;
+        $scope.demographics.smoking_status = socialData.socialHistory[0].value;
+        
+      }, function(response) {
         console.log('error');
       });
     };

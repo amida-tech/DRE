@@ -587,13 +587,13 @@
             "product": {
                 "lot_number": "1",
                 "manufacturer": "Health LS - Immuno Inc.",
-                "name": "Influenza virus vaccine",
-                "code": "88",
+                "name": "Influenza, seasonal, injectable",
+                "code": "141",
                 "code_system_name": "CVX",
                 "translations": [
                     {
-                        "name": "Influenza, seasonal, injectable",
-                        "code": "141",
+                        "name": "Influenza virus vaccine",
+                        "code": "88",
                         "code_system_name": "CVX"
                     }
                 ]
