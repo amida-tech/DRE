@@ -30,8 +30,7 @@ angular.module('dre.record.procedures', [])
 
     $scope.procedures = [];
     $scope.displayProcedures = false;
-    $scope.procedurePredicate = "status";
-
+    $scope.procedurePredicate = "-date_weight";
 
     $scope.getRecord = function() {
       $http({
@@ -54,12 +53,14 @@ angular.module('dre.record.procedures', [])
     
     $scope.updateFields = function() {
       for (var i in $scope.procedures) {
-        recordFunctions.formatDate($scope.procedures[i].date);
-        for (var proloc in $scope.procedures[i].providers) {
-          recordFunctions.formatAddress($scope.procedures[i].providers[proloc].address);
+        var p = $scope.procedures[i];
+        recordFunctions.formatDate(p.date);
+        p.date_weight = p.date && p.date[0] && p.date[0].date;
+        for (var proloc in p.providers) {
+          recordFunctions.formatAddress(p.providers[proloc].address);
         }
-        for (var sloc in $scope.procedures[i].locations) {
-          recordFunctions.formatAddress($scope.procedures[i].locations[sloc].addresses[0]);
+        for (var sloc in p.locations) {
+          recordFunctions.formatAddress(p.locations[sloc].addresses[0]);
         }
       }
     };
