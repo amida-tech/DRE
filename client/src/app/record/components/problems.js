@@ -28,9 +28,29 @@ angular.module('dre.record.problems', [])
 .controller('problemsCtrl', ['$scope', '$http', '$location', 'recordFunctions',
   function($scope, $http, $location, recordFunctions) {
 
+    var statusWeight = {
+      active: 3,
+      inactive: 2,
+      resolved: 1
+    };
+
     $scope.problems = [];
     $scope.displayProblems = false;
-    $scope.procedurePredicate = "status";
+    $scope.problemPredicate = [
+       function(inputObject) {
+         var v = inputObject.status;
+         return (v && statusWeight[v.toLowerCase()]) || 0;
+       },
+       function(inputObject) {
+         var v = inputObject.status;
+         v = v && v.toLowerCase();
+         if (v === 'resolved') {
+            return inputObject.date[1].date;
+         } else {
+            return inputObject.date[0].date;
+         } 
+       }
+    ];
 
 
     function problemStatus (inputObject) {
