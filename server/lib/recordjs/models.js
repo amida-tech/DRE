@@ -97,7 +97,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
         desc.__index = Number;
         desc.metadata =  {attribution: [{type: ObjectId, ref: mergeColName}]};
         desc.reviewed = Boolean;
-        var schema = new Schema(desc, {collection: colName});
+        var schema = new Schema(desc);
 
         
         
