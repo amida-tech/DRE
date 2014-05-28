@@ -1811,16 +1811,16 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 									<!-- ** Immunization medication information ** -->
 									<templateId root="2.16.840.1.113883.10.20.22.4.54"/>
 									<manufacturedMaterial>
-										<code code="88" codeSystem="2.16.840.1.113883.12.292"
-											displayName="Influenza virus vaccine"
-											codeSystemName="CVX">
+										<code code="141"
+												displayName="Influenza, seasonal, injectable"
+												codeSystemName="CVX"
+												codeSystem="2.16.840.1.113883.12.292">
 											<originalText>
 												<reference value="#immi1"/>
 											</originalText>
-											<translation code="141"
-												displayName="Influenza, seasonal, injectable"
-												codeSystemName="CVX"
-												codeSystem="2.16.840.1.113883.12.292"/>
+											<translation  code="88" codeSystem="2.16.840.1.113883.12.292"
+											displayName="Influenza virus vaccine"
+											codeSystemName="CVX"/>
 										</code>
 										<lotNumberText>1</lotNumberText>
 									</manufacturedMaterial>

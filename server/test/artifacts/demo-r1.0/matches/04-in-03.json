@@ -73,23 +73,22 @@
         "immunizations": [
             {
                 "match": "duplicate",
-                "src_id": "0",
+                "src_id": "1",
                 "dest_id": "1"
             },
             {
                 "match": "duplicate",
-                "src_id": "1",
+                "src_id": "2",
                 "dest_id": "2"
             },
             {
                 "match": "duplicate",
-                "src_id": "2",
+                "src_id": "3",
                 "dest_id": "3"
             },
             {
-                "match": "duplicate",
-                "src_id": "3",
-                "dest_id": "4"
+                "match": "new",
+                "src_id": "0"
             }
         ],
         "results": [
