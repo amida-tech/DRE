@@ -76,7 +76,8 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
             entry_id: {type: ObjectId, ref: colName},
             record_id: {type: ObjectId, ref: storageColName},
             merged: Date,
-            merge_reason: String
+            merge_reason: String,
+            archived: Boolean
         });
         result.merge[type] = connection.model(mergeColName, mergeSchema);
 
@@ -97,6 +98,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
         desc.__index = Number;
         desc.metadata =  {attribution: [{type: ObjectId, ref: mergeColName}]};
         desc.reviewed = Boolean;
+        desc.archived = Boolean;
         var schema = new Schema(desc);
 
         
