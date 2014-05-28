@@ -23,37 +23,43 @@ exports.removeEntry = function(dbinfo, type, patKey, recordId, callback) {
     
     function removeModel (callback) {
         var model = dbinfo.models[type];
-    
-        var query = model.remove({
+        var query = model.update({
             patKey: patKey,
             _id: recordId
-        });
+        }, {archived: true});
 
         query.exec(function(err, results) {
-            callback(null);
+            if(err) {
+                callback(err);
+            } else {
+                callback(null, results);    
+            }
         });
     }
 
     function removeMerge (callback) {
         var model = dbinfo.mergeModels[type];
-        var query = model.remove({
+        var query = model.update({
             entry_id: recordId
-        })
+        }, {archived: true});
+
         query.exec(function(err, results) {
             if (err) {
                 callback(err);
             } else {
-                callback(null);
+                callback(null, results);
             }
         });
     }
 
     removeMerge(function(err) {
         if (err) {
+            console.error(err);
             callback(err);
         } else {
             removeModel(function(err) {
                 if (err) {
+                    console.error(err);
                     callback(err);
                 } else {
                     callback(null);
@@ -65,10 +71,21 @@ exports.removeEntry = function(dbinfo, type, patKey, recordId, callback) {
 
 exports.getSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
-    var query = model.find({
+
+    /*var query = model.find({
         patKey: patKey,
-        reviewed: true
-    }).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
+        reviewed: true,
+        archived: false
+    }).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');*/
+
+    var query = model.find({});
+    query.where('archived').in([null, false]);
+    query.where('reviewed', true);
+    query.where('patKey', patKey);
+    query.sort('__index');
+    query.lean()
+    query.populate('metadata.attribution', 'record_id merge_reason merged');
+
     query.exec(function(err, results) {
         if (err) {
             callback(err);
@@ -474,15 +491,27 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
 
     var model = dbinfo.models[type];
     //console.log(model);
-    var query = model.find({
+    /*var query = model.find({
         patKey: patKey,
-        reviewed: false
-    }).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');
+        reviewed: false,
+        archived: false
+    }).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');*/
+
+    var query = model.find({});
+    query.where('archived').in([null, false]);
+    query.where('reviewed', false);
+    query.where('patKey', patKey);
+    query.sort('__index');
+    query.lean()
+    query.populate('metadata.attribution', 'record_id merge_reason merged');
+
+
+
     query.exec(function(err, results) {
         if (err) {
             callback(err);
         } else {
-            console.log(results);
+            //console.log(results);
             dbinfo.storageModel.populate(results, {
                 path: 'metadata.attribution.record_id',
                 select: 'filename'
