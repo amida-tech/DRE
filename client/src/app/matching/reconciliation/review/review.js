@@ -188,6 +188,11 @@ angular.module('dre.match.review', [])
             $scope.dest_el[name]=$scope.src_el[name];
         };
 
+        //merges fields from New Entry into Master Record
+        $scope.merge_date = function(date, index){
+            $scope.dest_el[date][index]=$scope.src_el[date][index];
+        };
+
         //resets Master Record from copy
         $scope.reset = function(){
             $scope.dest_el=angular.copy($scope.dest_copy_el);

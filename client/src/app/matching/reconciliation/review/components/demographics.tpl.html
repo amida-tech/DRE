@@ -39,6 +39,7 @@
                 <strong>Gender:</strong>
             </td>
             <td>{{src_el.gender}}
+                <a ng-click="merge('gender')" class="pull-right" ng-if="diff.gender==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
             </td>
             <td>{{dest_el.gender}}
             </td>
@@ -49,6 +50,7 @@
                 <strong>Marital Status:</strong>
             </td>
             <td>{{src_el.marital_status}}
+                <a ng-click="merge('marital_status')" class="pull-right" ng-if="diff.marital_status==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
             </td>
             <td>{{dest_el.marital_status}}
             </td>
@@ -59,6 +61,7 @@
                 <strong>Race/Ethnicity:</strong>
             </td>
             <td>{{src_el.race_ethnicity}}
+                <a ng-click="merge('race_ethnicity')" class="pull-right" ng-if="diff.race_ethnicity==='new'"><i class="glyphicon glyphicon-import"></i>           </a> 
             </td>
             <td>{{dest_el.race_ethnicity}}
             </td>
@@ -69,6 +72,7 @@
                 <strong>Religion:</strong>
             </td>
             <td>{{src_el.religion}}
+                <a ng-click="merge('religion')" class="pull-right" ng-if="diff.religion==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
             </td>
             <td>{{dest_el.religion}}
             </td>
@@ -79,6 +83,7 @@
                 <strong>Birthplace:</strong>
             </td>
             <td>{{src_el.birthplace | bb_address}}
+                <a ng-click="merge('birthplace')" class="pull-right" ng-if="diff.birthplace==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
             </td>
             <td>{{dest_el.birthplace | bb_address}}
             </td>
@@ -89,6 +94,7 @@
                 <strong>Address:</strong>
             </td>
             <td>{{src_el.addresses[0] | bb_address}}
+                <a ng-click="merge('addresses')" class="pull-right" ng-if="diff.addresses==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
             </td>
             <td>{{dest_el.addresses[0] | bb_address}}
             </td>
@@ -111,6 +117,7 @@
                 <strong>Email:</strong>
             </td>
             <td>{{src_el.email[0].number}}
+                <a ng-click="merge('email')" class="pull-right" ng-if="diff.email==='new'"><i class="glyphicon glyphicon-import"></i></a> 
             </td>
             <td>{{dest_el.email[0].number}}
             </td>
@@ -124,6 +131,7 @@
                 {{src_el.languages[0].language}}
                 <br/>{{src_el.languages[0].mode}}
                 <br/>{{src_el.languages[0].proficiency}}
+                <a ng-click="merge('languages')" class="pull-right" ng-if="diff.languages==='new'"><i class="glyphicon glyphicon-import"></i>           </a> 
             </td>
             <td>
                 {{dest_el.languages[0].language}}
@@ -141,7 +149,8 @@
                 <br/>{{src_el.guardians[0].relation}}
                 <br/>{{src_el.guardians[0].addresses[0] | bb_address}}
                 <br/>{{src_el.guardians[0].phone[0].number}}
-
+                <a ng-click="merge('guardians')" class="pull-right" ng-if="diff.guardians==='new'"><i class="glyphicon glyphicon-import"></i>
+            </a>
             </td>
             <td>
                 {{dest_el.guardians[0].names[0] | bb_name}}
@@ -157,98 +166,3 @@
 </table>
 
 
-
-<!--table class="col-md-12 table">
-    <tbody>
-        <tr>
-            <td class="col-md-3"></td>
-            <td class="info col-md-3" style="text-align: center;">
-                <h4>New Entry</h4>
-            </td>
-            <td class="active col-md-3" style="text-align: center;">
-                <h4>Master Record</h4>
-            </td>
-            <td class="info col-md-3" style="text-align: center;">
-                <h4>Updated Record</h4>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Name:</strong>
-            </td>
-            <td>{{src_el.name.first}} {{src_el.name.middle[0]}} {{src_el.name.last}}   
-                <button ng-if="partial_matches[index].diff['name']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('name')"> >> </button>
-            </td>
-            <td>{{dest_el.name.first}} {{dest_el.name.middle[0]}} {{dest_el.name.last}}</td>
-            <td>{{new_el.name.first}} {{new_el.name.middle[0]}} {{new_el.name.last}}</td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Date of Birth:</strong>
-            </td>
-            <td>{{src_el.dob[0].date | date: longDate}}
-                <button ng-if="partial_matches[index].diff['dob']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('dob')"> >> </button>
-            </td>
-            <td>{{dest_el.dob[0].date | date: longDate}}</td>
-            <td>{{new_el.dob[0].date | date: longDate}}</td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Gender:</strong>
-            </td>
-            <td>{{src_el.gender}}
-                <button ng-if="partial_matches[index].diff['gender']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('gender')"> >> </button>
-            </td>
-            <td>{{dest_el.gender}}</td>
-            <td>{{new_el.gender}}</td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Marital Status:</strong>
-            </td>
-            <td>{{src_el.marital_status}}
-                <button ng-if="partial_matches[index].diff['marital_status']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('marital_status')"> >> </button>
-            </td>
-            <td>{{dest_el.marital_status}}</td>
-            <td>{{new_el.marital_status}}</td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Race/Ethnicity:</strong>
-            </td>
-            <td>{{src_el.race_ethnicity}}
-                <button ng-if="partial_matches[index].diff['race_ethnicity']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('race_ethnicity')"> >> </button>
-            </td>
-            <td>{{dest_el.race_ethnicity}}</td>
-            <td>{{new_el.race_ethnicity}}</td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Religion:</strong>
-            </td>
-            <td>{{src_el.religion}}
-                <button ng-if="partial_matches[index].diff['religion']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('religion')"> >> </button>
-            </td>
-            <td>{{dest_el.religion}}</td>
-            <td>{{new_el.religion}}</td>
-        </tr>
-
-        <tr>
-            <td>
-                <strong>Phone:</strong>
-            </td>
-            <td>{{src_el.phone[0].number}}
-                <button ng-if="partial_matches[index].diff['phone']==='new'" type="button" class="btn btn-xs btn-info" ng-click="merge('phone')"> >> </button>
-            </td>
-            <td>{{dest_el.phone[0].number}}</td>
-            <td>{{new_el.phone[0].number}}</td>
-        </tr>
-
-        <tr>
-            <td></td>
-            <td>{{ src[section] | json }}</td>
-            <td>{{ dest[section] | json }}</td>
-            <td>{{ new_el | json }}</td>
-        </tr>
-    </tbody>
-</table-->

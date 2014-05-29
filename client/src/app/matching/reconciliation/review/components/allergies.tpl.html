@@ -23,36 +23,40 @@
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.severity==='new'">Different</span>
                 <strong>Severity:</strong>
             </td>
             <td>{{src_el.severity}}
+                <a ng-click="merge('severity')" class="pull-right" ng-if="diff.severity==='new'"><i class="glyphicon glyphicon-import"></i></a> 
             </td>
             <td>{{dest_el.severity}}
             </td>
         </tr>
         <tr>
             <td style="text-align: right;">
-                <span class="label label-info">Different</span>
+                <span class="label label-info" ng-if="diff.date==='new'">Different</span>
                 <strong>Date:</strong>
             </td>
             <td>{{src_el.date[0] | bb_date }}
-                <a href="" class="pull-right"><i class="glyphicon glyphicon-import"></i></a>
+                <a ng-click="merge('date')" class="pull-right" ng-if="diff.date==='new'"><i class="glyphicon glyphicon-import"></i></a> 
             </td>
             <td>{{dest_el.date[0] | bb_date }}
-                <a href="" class="pull-right"><i class="glyphicon glyphicon-remove-circle"></i></a>
             </td>
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.status==='new'">Different</span>
                 <strong>Status:</strong>
             </td>
             <td>{{src_el.status}}
+                <a ng-click="merge('status')" class="pull-right" ng-if="diff.status==='new'"><i class="glyphicon glyphicon-import"></i></a> 
             </td>
             <td>{{dest_el.status}}
             </td>
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.reaction==='new'">Different</span>
                 <strong>Reactions:</strong>
             </td>
             <td>
@@ -60,6 +64,7 @@
                     <div>
                         <strong>Reaction:</strong>{{reaction.name}}
                         <strong>Severity:</strong>{{reaction.severity}}</div>
+                <a ng-click="merge_sub('reaction')" class="pull-right" ng-if="diff.reaction==='new'"><i class="glyphicon glyphicon-import"></i></a> 
                 </div>
             </td>
             <td>
