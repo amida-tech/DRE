@@ -12,9 +12,9 @@
 				<span class="lead">Unreviewed Updates</span>
 				<br/>
 				<br/>
-				<div class="alert alert-info">There are 13 record updates awaiting your review.
+				<div class="alert alert-info">There are {{notifications.unreviewed_merges}} record updates awaiting your review.
 					<div class="pull-right" style="margin-top: -7px;">
-						<button type="button" class="btn btn-success" ng-click="reconciliationClick()">Review</button>
+						<button type="button" class="btn btn-success" ng-click="reconciliationClick()" ng-show="notifications.unreviewed_merges > 0">Review</button>
 					</div>
 				</div>
 			</div>

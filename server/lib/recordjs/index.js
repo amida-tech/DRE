@@ -119,6 +119,10 @@ exports.updateMatch = function(type, identifier, updateFields, callback) {
     match.updateMatch(dbinfo, sectionToType[type], identifier, updateFields, callback);   
 }
 
+exports.matchCount = function(type, conditions, callback) {
+    match.count(dbinfo, type, conditions, callback);
+};
+
 // Sections
 var capitalize = function(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);

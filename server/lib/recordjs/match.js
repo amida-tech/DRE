@@ -89,10 +89,14 @@ exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) 
     });
 };
 
-/*
+
 exports.count = function(dbinfo, type, conditions, callback) {
-    var model = dbinfo.mergeModels[type];
-    model.count(conditions, function(err, count) {
+    var model = dbinfo.matchModels[type];
+    var query = model.count()
+    query.where('determination').in([null, false]);
+    //Ignoring Conditions
+    //query.where(conditions);
+    query.exec(conditions, function(err, count) {
         callback(err, count);
     });
-};*/
+};
