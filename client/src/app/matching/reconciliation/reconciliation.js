@@ -25,8 +25,15 @@ angular.module('dre.match.reconciliation', [])
     }
 ])
 
-.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope',
-    function($scope, $http, $location, $rootScope) {
+.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope', 'getNotifications',
+    function($scope, $http, $location, $rootScope, getNotifications) {
+
+        $scope.notifications = {};
+
+
+        getNotifications.getUpdate(function(err, notifications) {
+          $scope.notifications = notifications;
+        });
 
         $scope.navPath = "templates/nav/nav.tpl.html";
 

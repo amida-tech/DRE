@@ -31,8 +31,14 @@ angular.module('dre.match.review', [])
     }
 ])
 
-.controller('reviewCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', '$rootScope', 'recordFunctions',
-    function($scope, $http, $location, $route, $routeParams, $rootScope, recordFunctions) {
+.controller('reviewCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', '$rootScope', 'recordFunctions', 'getNotifications',
+    function($scope, $http, $location, $route, $routeParams, $rootScope, recordFunctions, getNotifications) {
+        $scope.notifications = {};
+
+
+        getNotifications.getUpdate(function(err, notifications) {
+          $scope.notifications = notifications;
+        });
 
         //set to false to hide JSON debug output in UI/templates
         $scope.debug=true;
