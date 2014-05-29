@@ -105,6 +105,8 @@ function getNotifications (callback) {
     }
 
     for (var iSection in supportedComponents) {
+
+
       record.mergeCount(supportedComponents[iSection], {merge_reason: "new"}, function(err, count) {
         if (err) {
           callback(err);
@@ -113,6 +115,7 @@ function getNotifications (callback) {
           checkCountComplete();
         }
       });
+
     }
   }
 
