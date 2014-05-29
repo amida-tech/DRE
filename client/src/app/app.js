@@ -67,6 +67,62 @@ var dre = angular
             return tmpDateArr;
         };
     })
+    .filter('bb_name', function($filter) {
+      //Format Blue Button name JSON struct into string
+
+        return function(input_name) {
+            if (typeof input_name ==="undefined") {return "";}
+
+            var full_name;
+
+            if (input_name.first) {full_name=input_name.first+" ";}
+
+            if (input_name.middle && input_name.middle.length>0) {
+              for (var m in input_name.middle){
+                full_name=full_name+input_name.middle[m]+" ";  
+              }
+            }
+
+            if (input_name.last) {full_name=full_name+input_name.last;}
+
+            full_name=full_name.trim();
+
+            
+            return full_name;
+        };
+    })
+    .filter('bb_address', function($filter) {
+      //Format Blue Button address JSON struct into string
+
+        return function(address) {
+            if (typeof address ==="undefined") {return "";}
+
+            var displayAddress = [];
+
+            if (address.streetLines && address.streetLines.length > 0) {
+                for (var addrLine in address.streetLines) {
+                    displayAddress.push(address.streetLines[addrLine]);
+                }
+            }
+            var cityLine = "";
+            var cityTest = "";
+            if (address.city) {
+                cityTest = cityLine.length > 0 ? cityLine = cityLine + " " + address.city + "," : cityLine = address.city + ",";
+            }
+            if (address.state) {
+                cityTest = cityLine.length > 0 ? cityLine = cityLine + " " + address.state : cityLine = address.state;
+            }
+            if (address.zip) {
+                cityTest = cityLine.length > 0 ? cityLine = cityLine + " " + address.zip : cityLine = address.zip;
+            }
+            if (cityLine.length > 0) {
+                displayAddress.push(cityLine);
+            }
+            
+            return displayAddress.join(", ");
+        };
+    })
+
 
 .config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
