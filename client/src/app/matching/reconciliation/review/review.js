@@ -49,8 +49,10 @@ angular.module('dre.match.review', [])
         $scope.src_id = $routeParams["src_id"];
         $scope.dest_id = $routeParams["dest_id"];
         $scope.dest_el = {};
+        $scope.dest_copy_el = {}; //copy of master for reset purposes (in merge)
         $scope.src_el = {};
         $scope.partial_matches = {};
+        $scope.diff = {};
 
     $scope.convertTense = function(inputSection) {
         var lookup = {
@@ -83,6 +85,7 @@ angular.module('dre.match.review', [])
                 for (var i in data.matches) {
                     if (data.matches[i]._id === $scope.index) {
                         $scope.partial_matches = data.matches[i];
+                        $scope.diff=$scope.partial_matches.diff;
                         //console.log($scope.partial_matches);
                     }
                 }
@@ -129,6 +132,7 @@ angular.module('dre.match.review', [])
                     //console.log($scope.dest_id);
                     if (data[loadsec][i]._id === $scope.src_id) {
                         $scope.dest_el = data[loadsec][i];
+                        $scope.dest_copy_el = angular.copy($scope.dest_el);
                     }
                 }
             }).
@@ -178,41 +182,21 @@ angular.module('dre.match.review', [])
             $location.path("match/reconciliation");
         };
 
+        //merges fields from New Entry into Master Record
         $scope.merge = function(name){
             console.log(name);
-            $scope.new_el[name]=$scope.src_el[name];
+            $scope.dest_el[name]=$scope.src_el[name];
         };
+
+        //resets Master Record from copy
+        $scope.reset = function(){
+            $scope.dest_el=angular.copy($scope.dest_copy_el);
+        };
+
 
         $scope.reconciliationClick = function() {
             $location.path("match/reconciliation");
         };
-/*
-
-        
-
-
-        if ($scope.src_id==="undefined") {$scope.src_id=0;}
-        if ($scope.dest_id==="undefined") {$scope.dest_id=0;}
-
-        //HACK: loaded everything form rootScope
-        $scope.matches = $rootScope.matches;
-        $scope.partial_matches = $rootScope.partial_matches;
-        $scope.src = $rootScope.src;
-        $scope.dest = $rootScope.dest;
-        $scope.lookup = $rootScope.lookup;
-
-        if ($scope.section==="demographics"){
-            $scope.src_el=$scope.src[$scope.section];
-            //$scope.dest_el=$scope.dest[$scope.section];
-            $scope.new_el=_.clone($scope.dest[$scope.section]);
-        }
-
-        $scope.encounter = $scope.src[$scope.section][$scope.src_id];
-
-
-
-       */
-
 
     }
 ]);

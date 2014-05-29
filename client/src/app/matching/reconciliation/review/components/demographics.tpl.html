@@ -7,29 +7,34 @@
                 <h4>New Entry</h4>
             </td>
             <td class=" col-md-5" style="text-align: center;">
-                <h4>Master Record</h4>
+                <h4>Master Record <a ng-click="reset()" class="pull-right" ><i class="glyphicon glyphicon-refresh"></i></a></h4>
             </td>
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.name==='new'">Different</span>
                 <strong>Name:</strong>
             </td>
             <td>{{src_el.name | bb_name}}
+                <a ng-click="merge('name')" class="pull-right" ng-if="diff.name==='new'"><i class="glyphicon glyphicon-import"></i></a>
             </td>
             <td>{{dest_el.name | bb_name}}
             </td>
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.dob==='new'">Different</span>
                 <strong>Date of Birth:</strong>
             </td>
             <td>{{src_el.dob[0] | bb_date }}
+                <a ng-click="merge('dob')" class="pull-right" ng-if="diff.dob==='new'"><i class="glyphicon glyphicon-import"></i></a>
             </td>
             <td>{{dest_el.dob[0] | bb_date }}
             </td>
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.gender==='new'">Different</span>
                 <strong>Gender:</strong>
             </td>
             <td>{{src_el.gender}}
@@ -39,6 +44,7 @@
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.marital_status==='new'">Different</span>
                 <strong>Marital Status:</strong>
             </td>
             <td>{{src_el.marital_status}}
@@ -48,6 +54,7 @@
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.race_ethnicity==='new'">Different</span>
                 <strong>Race/Ethnicity:</strong>
             </td>
             <td>{{src_el.race_ethnicity}}
@@ -57,6 +64,7 @@
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.religion==='new'">Different</span>
                 <strong>Religion:</strong>
             </td>
             <td>{{src_el.religion}}
@@ -66,6 +74,7 @@
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.birthplace==='new'">Different</span>
                 <strong>Birthplace:</strong>
             </td>
             <td>{{src_el.birthplace | bb_address}}
@@ -75,6 +84,7 @@
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.address==='new'">Different</span>
                 <strong>Address:</strong>
             </td>
             <td>{{src_el.addresses[0] | bb_address}}
@@ -84,11 +94,11 @@
         </tr>
         <tr>
             <td style="text-align: right;">
-                <span class="label label-info">Different</span>
+                <span class="label label-info" ng-if="diff.phone==='new'">Different</span>
                 <strong>Phone:</strong>
             </td>
             <td>{{src_el.phone[0].number}}
-                <a href="" class="pull-right"><i class="glyphicon glyphicon-import"></i></a>
+                <a ng-click="merge('phone')" class="pull-right" ng-if="diff.phone==='new'"><i class="glyphicon glyphicon-import"></i></a>
             </td>
             <td>{{dest_el.phone[0].number}}
                 <a href="" class="pull-right"><i class="glyphicon glyphicon-remove-circle"></i></a>
@@ -96,6 +106,7 @@
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.email==='new'">Different</span>
                 <strong>Email:</strong>
             </td>
             <td>{{src_el.email[0].number}}
@@ -105,6 +116,7 @@
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.languages==='new'">Different</span>            
                 <strong>Languages:</strong>
             </td>
             <td>
@@ -120,6 +132,7 @@
         </tr>
         <tr>
             <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.guardians==='new'">Different</span>
                 <strong>Guardians:</strong>
             </td>
             <td>
