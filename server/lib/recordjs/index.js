@@ -22,7 +22,7 @@ var typeToSection = exports.typeToSection = {
     result: 'results',
     social: 'socialHistory',
     immunization: 'immunizations',
-    demographics: 'demographics',
+    demographic: 'demographics',
     problem: 'problems'
 };
 
@@ -35,7 +35,7 @@ var sectionToType = exports.sectionToType = {
     results: 'result',
     socialHistory: 'social',
     immunizations: 'immunization',
-    demographics: 'demographics',
+    demographics: 'demographic',
     problems: 'problem'
 };
 
