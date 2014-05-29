@@ -239,7 +239,7 @@ describe('Encounters API - Test New/Dupe Mix:', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.encounters, null, 10));
-				expect(res.body.encounters.length).to.equal(3);
+				expect(res.body.encounters.length).to.equal(4);
 				done();
 			});
 	});
@@ -278,8 +278,8 @@ describe('Encounters API - Test New/Dupe Mix:', function() {
 					expect(res.body.merges[i].entry_id._id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(3);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(4);
+				expect(dupCnt).to.equal(1);
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
 			});
@@ -307,7 +307,7 @@ describe('Encounters API - Test Partial Matches:', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.encounters.length).to.equal(3);
+				expect(res.body.encounters.length).to.equal(4);
 				done();
 			});
 	});
@@ -323,15 +323,15 @@ describe('Encounters API - Test Partial Matches:', function() {
 			});
 	});
 
-	xit('Get Encounter Merge Records', function(done) {
-		api.get('/api/v1/merges/allergies')
+	it('Get Encounter Merge Records', function(done) {
+		api.get('/api/v1/merges/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(11);
+				expect(res.body.merges.length).to.equal(5);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -341,27 +341,27 @@ describe('Encounters API - Test Partial Matches:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('allergy');
+					expect(res.body.merges[i].entry_type).to.equal('encounter');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(5);
-				expect(dupCnt).to.equal(6);
+				expect(newCnt).to.equal(4);
+				expect(dupCnt).to.equal(1);
 				done();
 			});
 	});
 
-	xit('Get Encounter Match Records', function(done) {
-		api.get('/api/v1/matches/allergies')
+	it('Get Encounter Match Records', function(done) {
+		api.get('/api/v1/matches/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
 				expect(res.body.matches.length).to.equal(3);
 				for (var i in res.body.matches) {
 					expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
-					expect(res.body.matches[i].entry_type).to.equal('allergy');
+					expect(res.body.matches[i].entry_type).to.equal('encounter');
 				}
 				done();
 			});
@@ -369,14 +369,14 @@ describe('Encounters API - Test Partial Matches:', function() {
 
 });
 
-xdescribe('Encounters API - Test Added Matches', function() {
+describe('Encounters API - Test Added Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
 
 	it('Update Encounter Match Records', function(done) {
 
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -384,7 +384,7 @@ xdescribe('Encounters API - Test Added Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/allergies/' + update_id)
+					api.post('/api/v1/matches/encounters/' + update_id)
 						.send({
 							determination: "added"
 						})
@@ -402,42 +402,42 @@ xdescribe('Encounters API - Test Added Matches', function() {
 	});
 
 	it('Get Encounter Records', function(done) {
-		api.get('/api/v1/record/allergies')
+		api.get('/api/v1/record/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.allergies.length).to.equal(6);
-				var total_allergies = 0;
-				for (var iEntry in res.body.allergies) {
-					if (res.body.allergies[iEntry]._id === match_id) {
+				expect(res.body.encounters.length).to.equal(5);
+				var total_encounters = 0;
+				for (var iEntry in res.body.encounters) {
+					if (res.body.encounters[iEntry]._id === match_id) {
 						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
-						total_allergies++;
+						total_encounters++;
 					}
 				}
-				expect(total_allergies).to.equal(1);
+				expect(total_encounters).to.equal(1);
 				done();
 			});
 	});
 
 	it('Get Partial Encounter Records', function(done) {
-		api.get('/api/v1/record/partial/allergies')
+		api.get('/api/v1/record/partial/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.allergies.length).to.equal(2);
+				expect(res.body.encounters.length).to.equal(2);
 				done();
 			});
 	});
 
 	it('Get Encounter Merge Records Post Added', function(done) {
-		api.get('/api/v1/merges/allergies')
+		api.get('/api/v1/merges/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(12);
+				expect(res.body.merges.length).to.equal(6);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -447,20 +447,20 @@ xdescribe('Encounters API - Test Added Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('allergy');
+					expect(res.body.merges[i].entry_type).to.equal('encounter');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(6);
-				expect(dupCnt).to.equal(6);
+				expect(newCnt).to.equal(5);
+				expect(dupCnt).to.equal(1);
 				done();
 			});
 	});
 
 	it('Get Encounter Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/encounters')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
@@ -477,13 +477,13 @@ xdescribe('Encounters API - Test Added Matches', function() {
 
 
 
-xdescribe('Encounters API - Test Ignored Matches', function() {
+describe('Encounters API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
 
 	it('Update Encounter Match Records Ignored', function(done) {
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -491,7 +491,7 @@ xdescribe('Encounters API - Test Ignored Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/allergies/' + update_id)
+					api.post('/api/v1/matches/encounters/' + update_id)
 						.send({
 							determination: "ignored"
 						})
@@ -508,42 +508,42 @@ xdescribe('Encounters API - Test Ignored Matches', function() {
 	});
 
 	it('Get Encounter Records', function(done) {
-		api.get('/api/v1/record/allergies')
+		api.get('/api/v1/record/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.allergies.length).to.equal(6);
-				var total_allergies = 0;
-				for (var iEntry in res.body.allergies) {
-					if (res.body.allergies[iEntry]._id === match_id) {
+				expect(res.body.encounters.length).to.equal(5);
+				var total_encounters = 0;
+				for (var iEntry in res.body.encounters) {
+					if (res.body.encounters[iEntry]._id === match_id) {
 						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
-						total_allergies++;
+						total_encounters++;
 					}
 				}
-				expect(total_allergies).to.equal(0);
+				expect(total_encounters).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Partial Encounter Records', function(done) {
-		api.get('/api/v1/record/partial/allergies')
+		api.get('/api/v1/record/partial/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.allergies.length).to.equal(1);
+				expect(res.body.encounters.length).to.equal(1);
 				done();
 			});
 	});
 
 	it('Get Encounter Merge Records Post Added', function(done) {
-		api.get('/api/v1/merges/allergies')
+		api.get('/api/v1/merges/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(12);
+				expect(res.body.merges.length).to.equal(6);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -553,20 +553,20 @@ xdescribe('Encounters API - Test Ignored Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('allergy');
+					expect(res.body.merges[i].entry_type).to.equal('encounter');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(6);
-				expect(dupCnt).to.equal(6);
+				expect(newCnt).to.equal(5);
+				expect(dupCnt).to.equal(1);
 				done();
 			});
 	});
 
 	it('Get Encounter Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/encounters')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
@@ -581,7 +581,7 @@ xdescribe('Encounters API - Test Ignored Matches', function() {
 });
 
 
-xdescribe('Encounters API - Test Merged Matches', function() {
+describe('Encounters API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var base_id = '';
@@ -589,7 +589,7 @@ xdescribe('Encounters API - Test Merged Matches', function() {
 
 	it('Update Encounter Match Records Merged', function(done) {
 
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -598,7 +598,7 @@ xdescribe('Encounters API - Test Merged Matches', function() {
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/allergies/' + update_id)
+					api.post('/api/v1/matches/encounters/' + update_id)
 						.send({
 							determination: "merged"
 						})
@@ -615,44 +615,44 @@ xdescribe('Encounters API - Test Merged Matches', function() {
 	});
 
 	it('Get Encounter Records', function(done) {
-		api.get('/api/v1/record/allergies')
+		api.get('/api/v1/record/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.allergies.length).to.equal(6);
-				var total_allergies = 0;
-				for (var iEntry in res.body.allergies) {
-					if (res.body.allergies[iEntry]._id === match_id) {
+				expect(res.body.encounters.length).to.equal(5);
+				var total_encounters = 0;
+				for (var iEntry in res.body.encounters) {
+					if (res.body.encounters[iEntry]._id === match_id) {
 
 						//TODO:  CHECK ATTRIBUTION ACCURACY.
 						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
-						total_allergies++;
+						total_encounters++;
 					}
 				}
-				expect(total_allergies).to.equal(0);
+				expect(total_encounters).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Partial Encounter Records', function(done) {
-		api.get('/api/v1/record/partial/allergies')
+		api.get('/api/v1/record/partial/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.allergies.length).to.equal(0);
+				expect(res.body.encounters.length).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Encounter Merge Records Post Merged', function(done) {
-		api.get('/api/v1/merges/allergies')
+		api.get('/api/v1/merges/encounters')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.merges,null, 10));
-				expect(res.body.merges.length).to.equal(13);
+				expect(res.body.merges.length).to.equal(7);
 				var newCnt = 0;
 				var dupCnt = 0;
 				var mrgCnt = 0
@@ -674,15 +674,15 @@ xdescribe('Encounters API - Test Merged Matches', function() {
 					expect(res.body.merges[i].entry_id._id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(6);
-				expect(dupCnt).to.equal(6);
+				expect(newCnt).to.equal(5);
+				expect(dupCnt).to.equal(1);
 				expect(mrgCnt).to.equal(1);
 				done();
 			});
 	});
 
 	it('Get Encounter Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/allergies')
+		api.get('/api/v1/matches/encounters')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
