@@ -1,61 +1,63 @@
 
-<table class="col-md-12 table">
+<table class="col-md-12 table  table-condensed table-striped table-bordered">
 	<tbody>
 		<tr>
-			<td class="info" style="text-align: center;"><h4>New Entry</h4>
+			<td class="col-md-2" style="text-align: center;">
 			</td>
-			<td class="active" style="text-align: center;"><h4>Master Record</h4>
+			<td class=" col-md-5" style="text-align: center;"><h4>New Entry</h4>
+			</td>
+			<td class=" col-md-5" style="text-align: center;"><h4>Master Record</h4>
 			</td>
 		</tr>
-		<tr><td class="col-md-6">
+		<tr>
+			<td style="text-align: right;"><strong>Allergen:</strong></td>
+			<td>{{src_el.name}}
+			</td>
+			<td>{{dest_el.name}}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><strong>Severity:</strong></td>
+			<td>{{src_el.severity}}
+			</td>
+			<td>{{dest_el.severity}}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right;">
+			<span class="label label-info">Different</span>
+			<strong>Date:</strong></td>
+			<td>{{src_el.date[0] | bb_date }}
+				<a href="" class="pull-right"><i class="glyphicon glyphicon-import"></i></a>
+			</td>
+			<td>{{dest_el.date[0] | bb_date }}
+  				<a href="" class="pull-right"><i class="glyphicon glyphicon-remove-circle"></i></a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><strong>Status:</strong></td>
+			<td>{{src_el.status}}
+			</td>
+			<td>{{dest_el.status}}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><strong>Reactions:</strong></td>
+			<td>
+				<div ng-repeat="reaction in src_el.reaction">
+						<div><strong>Reaction:</strong> {{reaction.name}} 
+						<strong>Severity:</strong> {{reaction.severity}} </div>
+				</div>
+			</td>
+			<td>
+				<div ng-repeat="reaction in dest_el.reaction">
+						<div><strong>Reaction:</strong> {{reaction.name}} 
+						<strong>Severity:</strong> {{reaction.severity}} </div>
+				</div>
+			</td>
+		</tr>
 
 
-			<table class="table col-md-6">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{src_el.severity}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Started:</strong></td><td>{{src_el.date[0].date | date: 'mediumDate'}}</td></tr>
-						<tr><td><strong>Ended:</strong></td><td>{{src_el.date[1].date | date: 'mediumDate'}}</td></tr>
 
-
-						<tr><td><strong>Status:</strong></td><td>{{src_el.status}}</td></tr>
-
-						<tr><td><strong>Reactions:</strong></td><td></td></tr>
-
-
-						<tr ng-repeat="reaction in src_el.reaction">
-						<td><strong>Reaction:</strong> {{reaction.name}}</td>
-						<td><strong>Severity:</strong> {{reaction.severity}} <span class="label label-primary pull-right">New</span></td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ src_el | json}}
-		</td>
-		<td class="col-md-6">
-			<table class="table col-md-6 table-hover">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{dest_el.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{dest_el.severity}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Started:</strong></td><td>{{dest_el.date[0].date | date: 'mediumDate'}}</td></tr>
-						<tr><td><strong>Ended:</strong></td><td>{{dest_el.date[1].date | date: 'mediumDate'}}</td></tr>
-
-
-						<tr><td><strong>Status:</strong></td><td>{{dest_el.status}}</td></tr>
-
-						<tr><td><strong>Reactions:</strong></td><td></td></tr>
-
-
-						<tr ng-repeat="reaction in dest_el.reaction">
-						<td><strong>Reaction:</strong> {{reaction.name}}</td>
-						<td><strong>Severity:</strong> {{reaction.severity}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ dest[section][dest_id] | json }}
-		</td></tr>
 	</tbody>
 </table>
