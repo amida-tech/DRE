@@ -2658,8 +2658,8 @@
 								displayName="Concern"/>
 							<statusCode code="completed"/>
 							<effectiveTime>
-								<low value="200801031212"/>
-								<high value="200801031212"/>
+								<low value="200801"/>
+								<high value="200801"/>
 							</effectiveTime>
 							<entryRelationship typeCode="SUBJ">
 								<observation classCode="OBS" moodCode="EVN">
@@ -2673,8 +2673,8 @@
 									</text>
 									<statusCode code="completed"/>
 									<effectiveTime>
-										<low value="200801031212"/>
-										<high value="200801031212"/>
+										<low value="200801"/>
+										<high value="200801"/>
 									</effectiveTime>
 									<value xsi:type="CD" code="233604007"
 										codeSystem="2.16.840.1.113883.6.96" displayName="Pneumonia"/>

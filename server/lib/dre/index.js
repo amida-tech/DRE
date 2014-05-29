@@ -183,7 +183,7 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     //console.log(JSON.stringify(newObjectForParsing, null, 10));
     //console.log(JSON.stringify(baseObjectForParsing, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-    console.log(JSON.stringify(matchResult, null, 10));
+    //console.log(JSON.stringify(matchResult, null, 10));
 
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
