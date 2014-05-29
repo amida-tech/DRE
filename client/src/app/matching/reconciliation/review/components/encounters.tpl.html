@@ -1,101 +1,89 @@
-<table class="col-md-12 table">
+<table class="col-md-12 table  table-condensed table-striped table-bordered">
     <tbody>
         <tr>
-            <td class="info" style="text-align: center;">
+            <td class="col-md-2" style="text-align: center;">
+            </td>
+            <td class=" col-md-5" style="text-align: center;">
                 <h4>New Entry</h4>
             </td>
-            <td class="active" style="text-align: center;">
+            <td class=" col-md-5" style="text-align: center;">
                 <h4>Master Record <a ng-click="reset()" class="pull-right"><i class="glyphicon glyphicon-refresh"></i></a>
                 </h4>
+
             </td>
         </tr>
         <tr>
-            <td class="col-md-6">
-
-
-                <table class="table col-md-6">
-                    <thead>
-                        <tr>
-                            <td colspan="2">
-                                <span style="text-transform:uppercase;">{{src_el.name}}</span>
-                                <span class="pull-right" style="text-transform:uppercase;">{{src_el.date[0].date | date: 'mediumDate'}}</span>
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <tr>
-                                <td>
-                                    <strong>Started:</strong>
-                                </td>
-                                <td>{{src_el.date[0].date | date: 'mediumDate'}}</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>Ended:</strong>
-                                </td>
-                                <td>{{src_el.date[1].date | date: 'mediumDate'}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <strong>Findings:</strong>
-                                </td>
-                                <td></td>
-                            </tr>
-
-
-                            <tr ng-repeat="finding in src_el.findings">
-                                <td>
-                                    <strong>Name:</strong>{{finding.name}}</td>
-                                <td></td>
-                            </tr>
-                    </tbody>
-                </table>
-                {{ src[section][src_id] | json }}
+            <td style="text-align: right;">
+                <strong>Encounter:</strong>
             </td>
-            <td class="col-md-6">
-                <table class="table col-md-6 table-hover">
-                    <thead>
-                        <tr>
-                            <td colspan="2">
-                                <span style="text-transform:uppercase;">{{dest_el.name}}</span>
-                                <span class="pull-right" style="text-transform:uppercase;">{{dest_el.date[0].date | date: 'mediumDate'}}</span>
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <tr>
-                                <td>
-                                    <strong>Started:</strong>
-                                </td>
-                                <td>{{dest_el.date[0].date | date: 'mediumDate'}}</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>Ended:</strong>
-                                </td>
-                                <td>{{dest_el.date[1].date | date: 'mediumDate'}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <strong>Findings:</strong>
-                                </td>
-                                <td></td>
-                            </tr>
-
-
-                            <tr ng-repeat="finding in dest_el.findings">
-                                <td>
-                                    <strong>Name:</strong>{{finding.name}}</td>
-                                <td></td>
-                            </tr>
-                    </tbody>
-                </table>
-                {{ dest[section][dest_id] | json }}
+            <td>{{src_el.name}}<br/>
+            <strong>Another Name:</strong> {{src_el.translations[0].name}}
             </td>
-            </tr>
+            <td>{{dest_el.name}}<br/>
+            <strong>Another Name:</strong> {{dest_el.translations[0].name}}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.date==='new'">Different</span>
+                <strong>Date:</strong>
+            </td>
+            <td>{{src_el.date[0] | bb_date }}
+                <a ng-click="merge('date')" class="pull-right" ng-if="diff.date==='new'"><i class="glyphicon glyphicon-import"></i></a> 
+            </td>
+            <td>{{dest_el.date[0] | bb_date }}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.locations==='new'">Different</span>
+                <strong>Location:</strong>
+            </td>
+            <td>
+                {{src_el.locations[0].name }}
+                <br/>
+                {{src_el.locations[0].addresses[0] |bb_address }}
+                <br/>
+                {{src_el.locations[0].telecom.value }}
+                <a ng-click="merge('locations')" class="pull-right" ng-if="diff.locations==='new'"><i class="glyphicon glyphicon-import"></i></a>
+            </td>
+            <td>
+                {{dest_el.locations[0].name }}
+                <br/>
+                {{dest_el.locations[0].addresses[0] |bb_address }}
+                <br/>
+                {{dest_el.locations[0].telecom.value }}
+            </td>
+        </tr>
+
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.findings==='new'">Different</span>
+                <strong>Findings:</strong>
+            </td>
+            <td>
+
+
+
+                <div ng-repeat="finding in src_el.findings">
+                    <div>
+                        <strong>Name:</strong> {{finding.name}}
+
+                        <a ng-click="merge_sub('findings', $index)" class="pull-right" ng-if="diff.findings==='new'"><i class="glyphicon glyphicon-import"></i></a> 
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div ng-repeat="finding in dest_el.findings">
+                    <div>
+                        <strong>Name:</strong> {{finding.name}}
+
+                        <a ng-click="remove_sub('findings', $index)" class="pull-right" ng-if="diff.findings==='new'"><i class="glyphicon glyphicon-remove-circle"></i></a> 
+                    </div>
+                </div>
+            </td>
+        </tr>
     </tbody>
 </table>

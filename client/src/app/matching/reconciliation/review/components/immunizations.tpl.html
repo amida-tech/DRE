@@ -78,14 +78,14 @@
             <td>
                 <strong>Route:</strong> {{src_el.administration.route.name}}
                 <br/>
-                <strong>Quantity:</strong> {{src_el.administration.quantity.value}} / {{src_el.administration.quantity.unit}}
+                <strong>Quantity:</strong> {{src_el.administration.quantity.value}} {{src_el.administration.quantity.unit}}
 
                 <a ng-click="merge('administration')" class="pull-right" ng-if="diff.administration==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
             </td>
             <td>
                 <strong>Route:</strong> {{dest_el.administration.route.name}}
                 <br/>
-                <strong>Quantity:</strong> {{dest_el.administration.quantity.value}} / {{dest_el.administration.quantity.unit}}
+                <strong>Quantity:</strong> {{dest_el.administration.quantity.value}} {{dest_el.administration.quantity.unit}}
             </td>
         </tr>
 
