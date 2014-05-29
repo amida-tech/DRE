@@ -1,48 +1,62 @@
 
-<table class="col-md-12 table">
+<table class="col-md-12 table  table-condensed">
 	<tbody>
 		<tr>
-			<td class="info" style="text-align: center;"><h4>New Entry</h4>
+			<td class="col-md-2" style="text-align: center;">
 			</td>
-			<td class="active" style="text-align: center;"><h4>Master Record</h4>
+			<td class="info col-md-4" style="text-align: center;"><h4>New Entry</h4>
+			</td>
+			<td class="active col-md-4" style="text-align: center;"><h4>Master Record</h4>
+			</td>
+			<td class="info col-md-2" style="text-align: center;">
 			</td>
 		</tr>
-		<tr><td>
+		<tr>
+			<td style="text-align: right;"><strong>Name:</strong></td>
+			<td>{{src_el.name}}
+			</td>
+			<td>{{dest_el.name}}
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;">
+			<span class="label label-info">Different</span>
+			<strong>Date:</strong></td>
+			<td>{{src_el.date[0] | bb_date }}
+			</td>
+			<td>{{dest_el.date[0] | bb_date }}
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><strong>Value:</strong></td>
+			<td>{{src_el.value}}
+			</td>
+			<td>{{dest_el.value}}
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><strong>Unit:</strong></td>
+			<td>{{src_el.unit}}
+			</td>
+			<td>{{dest_el.unit}}
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><strong>Intrepretation:</strong></td>
+			<td>{{src_el.interpretations[0]}}
+				<a href="" class="pull-right"><i class="glyphicon glyphicon-import"></i></a>
+			</td>
+			<td>{{dest_el.interpretations[0]}}
+  				<a href="" class="pull-right"><i class="glyphicon glyphicon-remove-circle"></i></a>
+			</td>
+			<td></td>
+		</tr>
 
 
 
-			<table class="table col-md-6">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{src_el.date[0]| bb_date}} </span>
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Name:</strong></td><td>{{src_el.name}}</td></tr>
-						<tr><td><strong>Date:</strong></td><td>{{src_el.date[0] | bb_date }} <span class="label label-info pull-right">Different</span></td></tr>
-						<tr><td><strong>Value:</strong></td><td>{{src_el.value}}</td></tr>
-						<tr><td><strong>Unit:</strong></td><td>{{src_el.unit}}</td></tr>
-						<tr><td><strong>Intrepretation:</strong></td><td>{{src_el.interpretations[0]}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ recordFunctions.formatDate(src_el.date) | json }}
-		</td>
-		<td>
-			<table class="table col-md-6 table-hover">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{dest_el.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{dest_el.date[0]| bb_date}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Name:</strong></td><td>{{dest_el.name}}</td></tr>
-						<tr><td><strong>Date:</strong></td><td>{{dest_el.date[0] | bb_date }}</td></tr>
-						<tr><td><strong>Value:</strong></td><td>{{dest_el.value}}</td></tr>
-						<tr><td><strong>Unit:</strong></td><td>{{dest_el.unit}}</td></tr>
-						<tr><td><strong>Intrepretation:</strong></td><td>{{dest_el.interpretations[0]}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ dest[section][dest_id] | json }}
-		</td></tr>
 	</tbody>
 </table>

@@ -54,6 +54,12 @@
 
 					</div>
 				</div>
+
+				<!-- debug JSON output -->
+				<table ng-if="debug" class="table col-md-12">
+					<tr><td class="col-md-6">{{src_el | json}}</td><td class="col-md-6">{{dest_el |json}}</td></tr>
+					<tr><td colspan="2">{{partial_matches |json}}</td></tr>
+				</table>
 			</div>
 		</div>
 
