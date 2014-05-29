@@ -15,27 +15,71 @@ limitations under the License.
 ======================================================================*/
 
 var dre = angular
-  .module('dre', [
-    'ngRoute',
-    'dre.record',
-    'dre.storage',
-    'dre.dashboard',
-    'dre.demographics',
-    'dre.match',
-    'dre.match.review',
-    'directives.fileModel',
-    'services.fileUpload',
-    'services.getNotifications',
-    'services.recordFunctions'
-  ])
-  .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    $routeProvider.when('/', {
-        templateUrl: 'templates/dashboard/dashboard.tpl.html',
-        controller: 'dashboardCtrl'
-    });
-      
-  }])
-    // Note TabService is included but not used to ensure its been instantiated
-  .run(['$rootScope', '$location', function ($rootScope, $location) {
+    .module('dre', [
+        'ngRoute',
+        'dre.record',
+        'dre.storage',
+        'dre.dashboard',
+        'dre.demographics',
+        'dre.match',
+        'dre.match.review',
+        'directives.fileModel',
+        'services.fileUpload',
+        'services.getNotifications',
+        'services.recordFunctions'
+    ])
+    .filter('bb_date', function($filter) {
+      //Format Blue Button date JSON struct into string (with precision)
 
-  }]);
+        return function(input_date) {
+            if (typeof input_date ==="undefined") {return "";}
+
+            var tmpDateArr;
+            if (input_date.precision === "year") {
+                tmpDateArr = $filter('date')(input_date.date, 'yyyy');
+                //input_date.displayDate = tmpDateArr;
+            }
+            if (input_date.precision === "month") {
+                tmpDateArr = $filter('date')(input_date.date, 'MMM, yyyy');
+                //input_date.displayDate = tmpDateArr;
+            }
+            if (input_date.precision === "day") {
+                tmpDateArr = $filter('date')(input_date.date, 'mediumDate');
+                //input_date.displayDate = tmpDateArr;
+            }
+            if (input_date.precision === "hour") {
+                tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                //input_date.displayDate = tmpDateArr;
+            }
+            if (input_date.precision === "minute") {
+                tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                //input_date.displayDate = tmpDateArr;
+            }
+            if (input_date.precision === "second") {
+                tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                //input_date.displayDate = tmpDateArr;
+            }
+            if (input_date.precision === "subsecond") {
+                tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                //input_date.displayDate = tmpDateArr;
+            }
+            
+            return tmpDateArr;
+        };
+    })
+
+.config(['$routeProvider', '$locationProvider',
+    function($routeProvider, $locationProvider) {
+        $routeProvider.when('/', {
+            templateUrl: 'templates/dashboard/dashboard.tpl.html',
+            controller: 'dashboardCtrl'
+        });
+
+    }
+])
+// Note TabService is included but not used to ensure its been instantiated
+.run(['$rootScope', '$location',
+    function($rootScope, $location) {
+
+    }
+]);

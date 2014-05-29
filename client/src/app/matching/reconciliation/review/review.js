@@ -31,8 +31,11 @@ angular.module('dre.match.review', [])
     }
 ])
 
-.controller('reviewCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', '$rootScope',
-    function($scope, $http, $location, $route, $routeParams, $rootScope) {
+.controller('reviewCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', '$rootScope', 'recordFunctions',
+    function($scope, $http, $location, $route, $routeParams, $rootScope, recordFunctions) {
+
+        //set to false to hide JSON debug output in UI/templates
+        $scope.debug=true;
 
         $scope.section = $routeParams["section"];
         $scope.index = $routeParams["index"];
@@ -61,10 +64,11 @@ angular.module('dre.match.review', [])
     };
 
      $scope.navPath = "templates/nav/nav.tpl.html";
+
     $scope.dynamicTemplatePath = "templates/matching/reconciliation/review/components/"+$scope.convertTense($scope.section)+".tpl.html";
 
     $scope.getMatch = function(matchSection) {
-        console.log(matchSection);
+        console.log(">>",matchSection);
             $http({
                 method: 'GET',
                 url: '/api/v1/matches/' + matchSection

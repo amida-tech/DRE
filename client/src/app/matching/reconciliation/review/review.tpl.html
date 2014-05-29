@@ -11,19 +11,22 @@
 				<div class="panel panel-default" style="overflow: visible;">
 					<div class="panel-heading ">
 						<div class="panel-title">
-							<h4 ng-if="partial_matches.percent">Partial ({{partial_matches[index].percent}}%) Match</h4>
-							<h4 ng-if="partial_matches.diff">Updated (Different) Information</h4>
+							<h4 ng-if="partial_matches.entry_type!=='demographics' && partial_matches.entry_type!=='social'">Partial ({{partial_matches.percent}}%) Match</h4>
+							<h4 ng-if="partial_matches.entry_type==='demographics' || partial_matches.entry_type==='social'">Updated (Different) Information</h4>
 						</div>
 					</div>
 					<div class="panel-body">
 						<!--Header-->
 						<ng-include src="dynamicTemplatePath"></ng-include>
 
-						<div ng-if="partial_matches.percent && !partial_matches.subelements"> 
 							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record with New Entry</button>
 							<button type="button" class="btn btn-warning" ng-click="ignoreReview()">New Entry doesn't match Master Record</button>
 
 							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+
+						<!--
+						<div ng-if="partial_matches.percent && !partial_matches.subelements"> 
+						
 						</div>
 
 						<div ng-if="partial_matches.percent && partial_matches.subelements"> 
@@ -36,7 +39,7 @@
 
 						<div ng-if="partial_matches.diff"> 
 							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record</button>
-							<button type="button" class="btn btn-warning" ng-click="saveReview()">Ignore New Entry</button>
+							<button type="button" class="btn btn-warning" ng-click="saveReview()">Add New Entry as separate record</button>
 
 							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
 						</div>
@@ -46,6 +49,7 @@
 
 							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
 						</div>
+						-->
 
 
 					</div>
