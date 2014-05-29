@@ -199,6 +199,17 @@ angular.module('dre.match.review', [])
         };
 
 
+        //merges fields from New Entry into Master Record
+        $scope.merge_sub = function(name, index){
+            console.log(name, index);
+            $scope.dest_el[name].push($scope.src_el[name][index]);
+        };
+        $scope.remove_sub = function(name, index){
+            console.log(name, index);
+            $scope.dest_el[name].splice(index,1);
+        };
+
+
         $scope.reconciliationClick = function() {
             $location.path("match/reconciliation");
         };
