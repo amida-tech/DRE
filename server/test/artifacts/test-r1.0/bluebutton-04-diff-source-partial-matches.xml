@@ -1563,12 +1563,100 @@
 							</tbody>
 						</table>
 					</text>
+
+								<!-- ADDED IMMUNIZATION -->
+               <entry>
+                  <substanceAdministration classCode="SBADM" negationInd="true" moodCode="EVN">
+                     <templateId root="2.16.840.1.113883.10.20.22.4.52" />
+                     <id extension="1049280" root="1.3.6.1.4.1.22812.4.111.0.4.4" />
+                     <text mediaType="text/xml">
+                        <reference value="#ID0EBKABA" />
+                     </text>
+                     <statusCode code="completed" />
+                     <effectiveTime value="20120806" />
+                     <routeCode codeSystem="2.16.840.1.113883.3.26.1.1" codeSystemName="NCI Thesaurus" code="C28161" displayName="INTRAMUSCULAR" />
+                     <doseQuantity value="0.5" unit="ml" />
+                     <consumable typeCode="CSM">
+                        <manufacturedProduct classCode="MANU">
+                           <templateId root="2.16.840.1.113883.10.20.22.4.54" />
+                           <manufacturedMaterial>
+                              <code code="33" codeSystem="2.16.840.1.113883.12.292" codeSystemName="CVX" displayName="Pneumococcal (2 years and up)">
+                                 <originalText>
+                                    <reference value="#ID0EEBKABA" />
+                                 </originalText>
+                              </code>
+                              <lotNumberText>MK456987</lotNumberText>
+                           </manufacturedMaterial>
+                           <manufacturerOrganization>
+                              <name>Merck and Co., Inc.</name>
+                              <telecom nullFlavor="UNK" />
+                              <addr nullFlavor="NI" />
+                           </manufacturerOrganization>
+                        </manufacturedProduct>
+                     </consumable>
+                     <performer typeCode="PRF">
+                        <assignedEntity>
+                           <id extension="1569874562" root="2.16.840.1.113883.4.6" />
+                           <addr>
+                              <streetAddressLine>1002 Healthcare Dr.</streetAddressLine>
+                              <city>Portland</city>
+                              <state>OR</state>
+                              <postalCode>97005</postalCode>
+                              <country>US</country>
+                           </addr>
+                           <telecom value="tel:+1-(555)555-1002" />
+                           <assignedPerson>
+                              <name>
+                                 <family>Seven</family>
+                                 <given>Henry</given>
+                              </name>
+                           </assignedPerson>
+                        </assignedEntity>
+                     </performer>
+                     <author>
+                        <time value="20120806160645-0400" />
+                        <assignedAuthor>
+                           <id extension="1569874562" root="2.16.840.1.113883.4.6" />
+                           <addr>
+                              <streetAddressLine>1002 Healthcare Dr.</streetAddressLine>
+                              <city>Portland</city>
+                              <state>OR</state>
+                              <postalCode>97005</postalCode>
+                              <country>US</country>
+                           </addr>
+                           <telecom value="tel:+1-(555)555-1002" />
+                           <assignedPerson>
+                              <name>
+                                 <family>Seven</family>
+                                 <given>Henry</given>
+                              </name>
+                           </assignedPerson>
+                        </assignedAuthor>
+                     </author>
+                     <entryRelationship typeCode="SUBJ" inversionInd="true">
+                        <act classCode="ACT" moodCode="EVN">
+                           <templateId root="2.16.840.1.113883.10.20.22.4.64" />
+                           <code code="48767-8" displayName="Annotation Comment" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" />
+                           <text>
+                              <reference value="#ID0ECKBKABA" />
+                           </text>
+                           <statusCode code="completed" />
+                        </act>
+                     </entryRelationship>
+                     <entryRelationship typeCode="SUBJ">
+                        <encounter classCode="ENC" moodCode="EVN">
+                           <id extension="10043698" root="1.3.6.1.4.1.22812.4.111.0.3.4" />
+                        </encounter>
+                     </entryRelationship>
+                  </substanceAdministration>
+               </entry>
+
 					<entry typeCode="DRIV">
 						<substanceAdministration classCode="SBADM" moodCode="EVN"
 							negationInd="false">
 							<!-- ** Immunization activity ** -->
 							<templateId root="2.16.840.1.113883.10.20.22.4.52"/>
-							<id root="e6f1ba43-c0ed-4b9b-9f12-f435d8ad8f92"/>
+							<id root="e6f1ba43-c0ed-4b9b-9f12-f435d8ad8f91"/>
 							<text>
 								<reference value="#immun1"/>
 							</text>
@@ -1644,7 +1732,7 @@
 						<substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="true">
 							<!-- ** Immunization activity ** -->
 							<templateId root="2.16.840.1.113883.10.20.22.4.52"/>
-							<id root="e6f1ba43-c0ed-4b9b-9f12-f435d8ad8f92"/>
+							<id root="e6f1ba43-c0ed-4b9b-9f12-f435d8ad8f98"/>
 							<text>
 								<reference value="#immun2"/>
 							</text>
@@ -1855,6 +1943,9 @@
 							</entryRelationship>
 						</substanceAdministration>
 					</entry>
+
+
+
 				</section>
 			</component>
 			<!-- ************************************ INTERVENTIONS ************************************ -->

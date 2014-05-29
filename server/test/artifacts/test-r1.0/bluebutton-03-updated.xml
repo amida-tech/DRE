@@ -1827,7 +1827,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 
 					<!-- ADDED IMMUNIZATION -->
                <entry>
-                  <substanceAdministration classCode="SBADM" negationInd="false" moodCode="EVN">
+                  <substanceAdministration classCode="SBADM" negationInd="true" moodCode="EVN">
                      <templateId root="2.16.840.1.113883.10.20.22.4.52" />
                      <id extension="1049280" root="1.3.6.1.4.1.22812.4.111.0.4.4" />
                      <text mediaType="text/xml">
