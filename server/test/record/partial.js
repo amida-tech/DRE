@@ -19,7 +19,8 @@ var util = require('util')
 var path = require('path');
 var ObjectId = require('mongodb').ObjectID;
 var db = require('../../lib/recordjs/db');
-var section = require('../../lib/recordjs/section')
+var section = require('../../lib/recordjs/section');
+var storage = require('../../lib/storage');
 
 var expect = chai.expect;
 var assert = chai.assert;
@@ -76,7 +77,10 @@ describe('Save Partial Records:', function() {
 
     xit('Save Test Partial Record', function(done) {
         var test_partial_entry = [{
-            name: 'fake_record'
+            partial_array: [{
+                name: 'fake_record'
+            }]
+            
         }];
         var test_patient = 'test';
         var filename = 'test_filename';
