@@ -64,7 +64,29 @@ exports.getMerges = function(dbinfo, type, typeFields, recordFields, callback) {
 
 exports.count = function(dbinfo, type, conditions, callback) {
     var model = dbinfo.mergeModels[type];
-    model.count(conditions, function(err, count) {
-        callback(err, count);
+    //model.count(conditions, function(err, count) {
+    //    callback(err, count);
+    //});
+
+    var recCount = 0;
+
+    var query = model.find({});
+    query.where(conditions);
+    query.populate('entry_id record_id');
+    query.exec(function(err, mergeResults) {
+
+        //console.log(mergeResults);
+        for (var i in mergeResults) {
+            if (mergeResults[i].entry_id.reviewed) {
+            recCount++;
+            }    
+        }
+        //console.log(conditions);        
+        //console.log(recCount);
+
+        callback(null, recCount);
     });
+
+
+
 };

@@ -22,7 +22,7 @@ var typeToSection = exports.typeToSection = {
     result: 'results',
     social: 'socialHistory',
     immunization: 'immunizations',
-    demographics: 'demographics',
+    demographic: 'demographics',
     problem: 'problems'
 };
 
@@ -35,7 +35,7 @@ var sectionToType = exports.sectionToType = {
     results: 'result',
     socialHistory: 'social',
     immunizations: 'immunization',
-    demographics: 'demographics',
+    demographics: 'demographic',
     problems: 'problem'
 };
 
@@ -118,6 +118,10 @@ exports.getMatch = function(type, matchId, callback) {
 exports.updateMatch = function(type, identifier, updateFields, callback) {
     match.updateMatch(dbinfo, sectionToType[type], identifier, updateFields, callback);   
 }
+
+exports.matchCount = function(type, conditions, callback) {
+    match.count(dbinfo, type, conditions, callback);
+};
 
 // Sections
 var capitalize = function(value) {
