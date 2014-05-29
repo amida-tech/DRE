@@ -62,7 +62,7 @@ angular.module('dre.match.review', [])
             'problem': 'problems',
             'procedure': 'procedures',
             'vital': 'vitals',
-            'demographics': 'demographics',
+            'demographic': 'demographics',
             'social': 'socialHistory'
         };
         return lookup[inputSection];
