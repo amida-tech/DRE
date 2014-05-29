@@ -88,7 +88,7 @@ describe('Pre Test Cleanup 2', function() {
 		results: 'result',
 		socialhistories: 'social',
 		immunizations: 'immunization',
-		demographics: 'demographics',
+		demographics: 'demographic',
 		problems: 'problem'
 	};
 
@@ -223,7 +223,7 @@ describe('Count API - Test New/Dupe Mix:', function() {
 				}
 				expect(res.body.notifications.unreviewed_merges).to.equal(0);
 				expect(res.body.notifications.new_merges).to.equal(44);
-				expect(res.body.notifications.duplicate_merges).to.equal(41);
+				expect(res.body.notifications.duplicate_merges).to.equal(40);
 				expect(res.body.notifications.file_count).to.equal(3);
 				done();
 			});
@@ -251,9 +251,9 @@ describe('Count API - Test Partial Matches:', function() {
 				if (err) {
 					return done(err);
 				}
-				expect(res.body.notifications.unreviewed_merges).to.equal(22);
-				expect(res.body.notifications.new_merges).to.equal(66);
-				expect(res.body.notifications.duplicate_merges).to.equal(64);
+				expect(res.body.notifications.unreviewed_merges).to.equal(23);
+				expect(res.body.notifications.new_merges).to.equal(67);
+				expect(res.body.notifications.duplicate_merges).to.equal(63);
 				expect(res.body.notifications.file_count).to.equal(4);
 				done();
 			});
@@ -301,8 +301,8 @@ describe('Count API - Test Added Matches via Allergies', function() {
 					return done(err);
 				}
 				expect(res.body.notifications.unreviewed_merges).to.equal(22);
-				expect(res.body.notifications.new_merges).to.equal(66);
-				expect(res.body.notifications.duplicate_merges).to.equal(64);
+				expect(res.body.notifications.new_merges).to.equal(67);
+				expect(res.body.notifications.duplicate_merges).to.equal(63);
 				expect(res.body.notifications.file_count).to.equal(4);
 				done();
 			});

@@ -177,17 +177,42 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
         }
     }
 
+
+    //BB Matching library expects object for demographics.
+    function prepDemographics () {
+        if (baseObjectForParsing.demographics instanceof Array) {
+            if (baseObjectForParsing.demographics.length > 0) {
+                baseObjectForParsing.demographics = baseObjectForParsing.demographics[0];    
+            }
+        }
+        if (newObjectForParsing.demographics instanceof Array) {
+            if (newObjectForParsing.demographics.length > 0) {
+                newObjectForParsing.demographics = newObjectForParsing.demographics[0];    
+            }
+        }
+    }
+    prepDemographics();
+
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
 
-    //console.log(JSON.stringify(newObjectForParsing, null, 10));
-    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
+    //console.log(JSON.stringify(newObjectForParsing.demographics, null, 10));
+    //console.log(JSON.stringify(baseObjectForParsing.demographics, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
     //console.log(JSON.stringify(matchResult, null, 10));
 
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
 
+    function revertDemographics () {
+        if (_.isObject(newObjectForParsing.demographics) === true && _.isArray(newObjectForParsing.demographics) === false) {
+            newObjectForParsing.demographics = new Array(newObjectForParsing.demographics);
+        }
+        if (_.isObject(baseObjectForParsing.demographics) === true && _.isArray(baseObjectForParsing.demographics) === false) {
+            baseObjectForParsing.demographics = new Array(baseObjectForParsing.demographics);
+        }
+    }
+    revertDemographics();
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
         //console.log(JSON.stringify(newObjectPostMatch, null, 10));

@@ -27,7 +27,7 @@ var record = require('../recordjs');
     results: 'result',
     socialhistories: 'social',
     immunizations: 'immunization',
-    demographics: 'demographics',
+    demographics: 'demographic',
     problems: 'problem'
   };
 
