@@ -1,50 +1,74 @@
-
 <table class="col-md-12 table">
-	<tbody>
-		<tr>
-			<td class="info" style="text-align: center;"><h4>New Entry</h4>
-			</td>
-			<td class="active" style="text-align: center;"><h4>Master Record</h4>
-			</td>
-		</tr>
-		<tr><td>
+    <tbody>
+        <tr>
+            <td class="info" style="text-align: center;">
+                <h4>New Entry</h4>
+            </td>
+            <td class="active" style="text-align: center;">
+                <h4>Master Record <a ng-click="reset()" class="pull-right"><i class="glyphicon glyphicon-refresh"></i></a>
+                </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
 
 
 
-			<table class="table col-md-6">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{src_el.date[0].date | date: 'mediumDate'}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr ng-repeat="result_value in src_el.results">
-						<td><strong>Name:</strong> {{result_value.name}} <br/>
-						<strong>Intrepretation:</strong> {{result_value.interpretations[0]}} <br/>
-						<strong>Date:</strong> {{result_value.date[0].date | date: 'mediumDate'}}</td>
+                <table class="table col-md-6">
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                <span style="text-transform:uppercase;">{{src_el.name}}</span>
+                                <span class="pull-right" style="text-transform:uppercase;">{{src_el.date[0].date | date: 'mediumDate'}}</span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="result_value in src_el.results">
+                            <td>
+                                <strong>Name:</strong>{{result_value.name}}
+                                <br/>
+                                <strong>Intrepretation:</strong>{{result_value.interpretations[0]}}
+                                <br/>
+                                <strong>Date:</strong>{{result_value.date[0].date | date: 'mediumDate'}}</td>
 
-						<td><strong>Value:</strong> {{result_value.value}}<br/>
-						<strong>Unit:</strong> {{result_value.unit}}</td>
-					</tr>
-				</tbody>
-			</table>
-			{{ src[section][src_id] | json }}
-		</td>
-		<td>
-			<table class="table col-md-6 table-hover">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{dest_el.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{dest_el.date[0].date | date: 'mediumDate'}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr ng-repeat="result_value in dest_el.results">
-						<td><strong>Name:</strong> {{result_value.name}} <br/>
-						<strong>Intrepretation:</strong> {{result_value.interpretations[0]}} <br/>
-						<strong>Date:</strong> {{result_value.date[0].date | date: 'mediumDate'}}</td>
+                            <td>
+                                <strong>Value:</strong>{{result_value.value}}
+                                <br/>
+                                <strong>Unit:</strong>{{result_value.unit}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {{ src[section][src_id] | json }}
+            </td>
+            <td>
+                <table class="table col-md-6 table-hover">
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                <span style="text-transform:uppercase;">{{dest_el.name}}</span>
+                                <span class="pull-right" style="text-transform:uppercase;">{{dest_el.date[0].date | date: 'mediumDate'}}</span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="result_value in dest_el.results">
+                            <td>
+                                <strong>Name:</strong>{{result_value.name}}
+                                <br/>
+                                <strong>Intrepretation:</strong>{{result_value.interpretations[0]}}
+                                <br/>
+                                <strong>Date:</strong>{{result_value.date[0].date | date: 'mediumDate'}}</td>
 
-						<td><strong>Value:</strong> {{result_value.value}}<br/>
-						<strong>Unit:</strong> {{result_value.unit}}</td>
-					</tr>
-				</tbody>
-			</table>
-			{{ dest[section][dest_id] | json }}
-		</td></tr>
-	</tbody>
+                            <td>
+                                <strong>Value:</strong>{{result_value.value}}
+                                <br/>
+                                <strong>Unit:</strong>{{result_value.unit}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {{ dest[section][dest_id] | json }}
+            </td>
+        </tr>
+    </tbody>
 </table>

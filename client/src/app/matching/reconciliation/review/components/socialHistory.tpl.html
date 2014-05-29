@@ -1,41 +1,79 @@
-
 <table class="col-md-12 table">
-	<tbody>
-		<tr>
-			<td class="info" style="text-align: center;"><h4>New Entry</h4>
-			</td>
-			<td class="active" style="text-align: center;"><h4>Master Record</h4>
-			</td>
-		</tr>
-		<tr><td>
+    <tbody>
+        <tr>
+            <td class="info" style="text-align: center;">
+                <h4>New Entry</h4>
+            </td>
+            <td class="active" style="text-align: center;">
+                <h4>Master Record <a ng-click="reset()" class="pull-right"><i class="glyphicon glyphicon-refresh"></i></a>
+                </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
 
 
 
-			<table class="table col-md-6">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.value}}</span>
-					
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Start Date:</strong></td><td>{{src_el.dateRange[0].date | date: mediumDate}}<span class="label label-info pull-right">Different</span></td></tr>
-						<tr><td><strong>End Date:</strong></td><td>{{src_el.dateRange[1].date | date: mediumDate}}<span class="label label-primary pull-right">New</span></td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{src_el}}
-		</td>
-		<td>
-			<table class="table col-md-6 table-hover">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{dest_el.value}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Start Date:</strong></td><td>{{dest_el.dateRange[0].date | date: mediumDate}}</td></tr>
-						<tr><td><strong>End Date:</strong></td><td>{{dest_el.dateRange[1].date | date: mediumDate}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{dest_el}}
-		</td></tr>
-	</tbody>
+                <table class="table col-md-6">
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                <span style="text-transform:uppercase;">{{src_el.value}}</span>
+
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <tr>
+                                <td>
+                                    <strong>Start Date:</strong>
+                                </td>
+                                <td>{{src_el.dateRange[0].date | date: mediumDate}}
+                                    <span class="label label-info pull-right">Different</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>End Date:</strong>
+                                </td>
+                                <td>{{src_el.dateRange[1].date | date: mediumDate}}
+                                    <span class="label label-primary pull-right">New</span>
+                                </td>
+                            </tr>
+                        </tr>
+                    </tbody>
+                </table>
+                {{src_el}}
+            </td>
+            <td>
+                <table class="table col-md-6 table-hover">
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                <span style="text-transform:uppercase;">{{dest_el.value}}</span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <tr>
+                                <td>
+                                    <strong>Start Date:</strong>
+                                </td>
+                                <td>{{dest_el.dateRange[0].date | date: mediumDate}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>End Date:</strong>
+                                </td>
+                                <td>{{dest_el.dateRange[1].date | date: mediumDate}}</td>
+                            </tr>
+                        </tr>
+                    </tbody>
+                </table>
+                {{dest_el}}
+            </td>
+        </tr>
+    </tbody>
 </table>

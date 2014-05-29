@@ -1,63 +1,77 @@
-
 <table class="col-md-12 table  table-condensed table-striped table-bordered">
-	<tbody>
-		<tr>
-			<td class="col-md-2" style="text-align: center;">
-			</td>
-			<td class=" col-md-5" style="text-align: center;"><h4>New Entry</h4>
-			</td>
-			<td class=" col-md-5" style="text-align: center;"><h4>Master Record</h4>
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align: right;"><strong>Allergen:</strong></td>
-			<td>{{src_el.name}}
-			</td>
-			<td>{{dest_el.name}}
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align: right;"><strong>Severity:</strong></td>
-			<td>{{src_el.severity}}
-			</td>
-			<td>{{dest_el.severity}}
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align: right;">
-			<span class="label label-info">Different</span>
-			<strong>Date:</strong></td>
-			<td>{{src_el.date[0] | bb_date }}
-				<a href="" class="pull-right"><i class="glyphicon glyphicon-import"></i></a>
-			</td>
-			<td>{{dest_el.date[0] | bb_date }}
-  				<a href="" class="pull-right"><i class="glyphicon glyphicon-remove-circle"></i></a>
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align: right;"><strong>Status:</strong></td>
-			<td>{{src_el.status}}
-			</td>
-			<td>{{dest_el.status}}
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align: right;"><strong>Reactions:</strong></td>
-			<td>
-				<div ng-repeat="reaction in src_el.reaction">
-						<div><strong>Reaction:</strong> {{reaction.name}} 
-						<strong>Severity:</strong> {{reaction.severity}} </div>
-				</div>
-			</td>
-			<td>
-				<div ng-repeat="reaction in dest_el.reaction">
-						<div><strong>Reaction:</strong> {{reaction.name}} 
-						<strong>Severity:</strong> {{reaction.severity}} </div>
-				</div>
-			</td>
-		</tr>
+    <tbody>
+        <tr>
+            <td class="col-md-2" style="text-align: center;">
+            </td>
+            <td class=" col-md-5" style="text-align: center;">
+                <h4>New Entry</h4>
+            </td>
+            <td class=" col-md-5" style="text-align: center;">
+                <h4>Master Record <a ng-click="reset()" class="pull-right"><i class="glyphicon glyphicon-refresh"></i></a>
+                </h4>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <strong>Allergen:</strong>
+            </td>
+            <td>{{src_el.name}}
+            </td>
+            <td>{{dest_el.name}}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <strong>Severity:</strong>
+            </td>
+            <td>{{src_el.severity}}
+            </td>
+            <td>{{dest_el.severity}}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info">Different</span>
+                <strong>Date:</strong>
+            </td>
+            <td>{{src_el.date[0] | bb_date }}
+                <a href="" class="pull-right"><i class="glyphicon glyphicon-import"></i></a>
+            </td>
+            <td>{{dest_el.date[0] | bb_date }}
+                <a href="" class="pull-right"><i class="glyphicon glyphicon-remove-circle"></i></a>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <strong>Status:</strong>
+            </td>
+            <td>{{src_el.status}}
+            </td>
+            <td>{{dest_el.status}}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <strong>Reactions:</strong>
+            </td>
+            <td>
+                <div ng-repeat="reaction in src_el.reaction">
+                    <div>
+                        <strong>Reaction:</strong>{{reaction.name}}
+                        <strong>Severity:</strong>{{reaction.severity}}</div>
+                </div>
+            </td>
+            <td>
+                <div ng-repeat="reaction in dest_el.reaction">
+                    <div>
+                        <strong>Reaction:</strong>{{reaction.name}}
+                        <strong>Severity:</strong>{{reaction.severity}}</div>
+                </div>
+            </td>
+        </tr>
 
 
 
-	</tbody>
+    </tbody>
 </table>

@@ -1,54 +1,122 @@
-
 <table class="col-md-12 table">
-	<tbody>
-		<tr>
-			<td class="info" style="text-align: center;"><h4>New Entry</h4>
-			</td>
-			<td class="active" style="text-align: center;"><h4>Master Record</h4>
-			</td>
-		</tr>
-		<tr><td>
+    <tbody>
+        <tr>
+            <td class="info" style="text-align: center;">
+                <h4>New Entry</h4>
+            </td>
+            <td class="active" style="text-align: center;">
+                <h4>Master Record <a ng-click="reset()" class="pull-right"><i class="glyphicon glyphicon-refresh"></i></a>
+                </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
 
 
-			<table class="table col-md-6">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{src_el.status}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Started:</strong></td><td>{{src_el.date[0].date | date: 'mediumDate'}}</td></tr>
-						<tr><td><strong>Ended:</strong></td><td>{{src_el.date[1].date | date: 'mediumDate'}}</td></tr>
+                <table class="table col-md-6">
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                <span style="text-transform:uppercase;">{{src_el.name}}</span>
+                                <span class="pull-right" style="text-transform:uppercase;">{{src_el.status}}</span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <tr>
+                                <td>
+                                    <strong>Started:</strong>
+                                </td>
+                                <td>{{src_el.date[0].date | date: 'mediumDate'}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Ended:</strong>
+                                </td>
+                                <td>{{src_el.date[1].date | date: 'mediumDate'}}</td>
+                            </tr>
 
 
-						<tr><td><strong>Onset Age:</strong></td><td>{{src_el.onset_age}}<span class="label label-primary pull-right">New</span></td></tr>
-						<tr><td><strong>Onset Age Unit:</strong></td><td>{{src_el.onset_age_unit}}<span class="label label-primary pull-right">New</span></td></tr>
+                            <tr>
+                                <td>
+                                    <strong>Onset Age:</strong>
+                                </td>
+                                <td>{{src_el.onset_age}}
+                                    <span class="label label-primary pull-right">New</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Onset Age Unit:</strong>
+                                </td>
+                                <td>{{src_el.onset_age_unit}}
+                                    <span class="label label-primary pull-right">New</span>
+                                </td>
+                            </tr>
 
 
-						<tr><td><strong>Reported Status:</strong></td><td>{{src_el.patient_status}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ src[section][src_id] | json }}
-		</td>
-		<td>
-			<table class="table col-md-6 table-hover">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{dest_el.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{dest_el.status}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Started:</strong></td><td>{{dest_el.date[0].date | date: 'mediumDate'}}</td></tr>
-						<tr><td><strong>Ended:</strong></td><td>{{dest_el.date[1].date | date: 'mediumDate'}}</td></tr>
+                            <tr>
+                                <td>
+                                    <strong>Reported Status:</strong>
+                                </td>
+                                <td>{{src_el.patient_status}}</td>
+                            </tr>
+                        </tr>
+                    </tbody>
+                </table>
+                {{ src[section][src_id] | json }}
+            </td>
+            <td>
+                <table class="table col-md-6 table-hover">
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                <span style="text-transform:uppercase;">{{dest_el.name}}</span>
+                                <span class="pull-right" style="text-transform:uppercase;">{{dest_el.status}}</span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <tr>
+                                <td>
+                                    <strong>Started:</strong>
+                                </td>
+                                <td>{{dest_el.date[0].date | date: 'mediumDate'}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Ended:</strong>
+                                </td>
+                                <td>{{dest_el.date[1].date | date: 'mediumDate'}}</td>
+                            </tr>
 
 
-						<tr><td><strong>Onset Age:</strong></td><td>{{dest_el.onset_age}}</td></tr>
-						<tr><td><strong>Onset Age Unit:</strong></td><td>{{dest_el.onset_age_unit}}</td></tr>
+                            <tr>
+                                <td>
+                                    <strong>Onset Age:</strong>
+                                </td>
+                                <td>{{dest_el.onset_age}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Onset Age Unit:</strong>
+                                </td>
+                                <td>{{dest_el.onset_age_unit}}</td>
+                            </tr>
 
-						<tr><td><strong>Reported Status:</strong></td><td>{{dest_el.patient_status}}</td></tr>
-					</tr>
-				</tbody>
-			</table>
-			{{ dest[section][dest_id] | json }}
-		</td></tr>
-	</tbody>
+                            <tr>
+                                <td>
+                                    <strong>Reported Status:</strong>
+                                </td>
+                                <td>{{dest_el.patient_status}}</td>
+                            </tr>
+                        </tr>
+                    </tbody>
+                </table>
+                {{ dest[section][dest_id] | json }}
+            </td>
+        </tr>
+    </tbody>
 </table>
