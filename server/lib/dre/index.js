@@ -27,6 +27,9 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
         function updateDuplicate(iter, section, update_id, callback) {
 
+            //console.log(section);
+            //console.log(iter);
+
             var mergeInfo = {
                 record_id: newSourceID,
                 merge_reason: 'duplicate'
@@ -40,18 +43,19 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
             });
         }
 
+
         function checkLoopComplete(iteration, length) {
 
             if (iteration === length) {
-                //console.log(returnPartialArray);
                 callback(null, section, returnArray, returnPartialArray);
             }
         }
 
         for (var i = 0; i < srcMatches.length; i++) {
+            //console.log(section);
+            //console.log(srcMatches[i]);
             if (srcMatches[i].match === 'duplicate') {
                 //If duplicate, don't push to save array and make duplicate entry in log.
-                //Need section, db id of match, return iter for loop check.
                 var matchIndex = srcMatches[i].dest_id || 0;
                 updateDuplicate(i, section, baseArray[matchIndex]._id, function(err, resIter) {
                     if (err) {
@@ -123,7 +127,9 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
     var newPartialObject = {};
 
     function checkSectionLoopComplete(iteration, totalSections) {
-        if (iteration === (sectionTotal - 1)) {
+        if (iteration === (sectionTotal)) {
+            //console.log('newObject');
+            //console.log(newObject);
             callback(null, newObject, newPartialObject);
         }
     }
@@ -133,9 +139,11 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         //console.log(JSON.stringify(newObject[iSec], null, 10));
 
         var currentMatchResult = matchResults.match[iSec];
-
         if (currentMatchResult.length > 0) {
             removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries, newPartialEntries) {
+                //New entries is fine...
+                //console.log('newEntries');
+                //console.log(newEntries);
                 newObject[returnSection] = newEntries;
                 if (newPartialEntries.length > 0) {
                     newPartialObject[returnSection] = {};
@@ -182,7 +190,7 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
 
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
-        //console.log(JSON.stringify(newPartialObjectPostMatch, null, 10));
+        //console.log(JSON.stringify(newObjectPostMatch, null, 10));
         callback(null, newObjectPostMatch, newPartialObjectPostMatch);
     });
 }

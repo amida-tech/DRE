@@ -275,7 +275,7 @@ app.get('/api/v1/matches/:component', function(req, res) {
 });
 
 
-//Get all merges API.
+//Post partial record updates.
 app.post('/api/v1/matches/:component/:record_id', function(req, res) {
 
     if (_.contains(supportedComponents, req.params.component) === false) {
