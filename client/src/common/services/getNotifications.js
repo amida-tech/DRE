@@ -18,7 +18,7 @@ angular.module('services.getNotifications', [])
                 } else {
                     data.notifications.displayNotifications = false;
                 }
-                console.log(data.notifications);
+                //console.log(data.notifications);
                 callback(null, data.notifications);
             }).
             error(function(data, status, headers, config) {
