@@ -19,13 +19,26 @@
 						<!--Header-->
 						<ng-include src="dynamicTemplatePath"></ng-include>
 
+
+						<table class="col-md-12 ">
+							<tbody>
+								<tr>
+									<td class="col-md-2" style="text-align: center;"><button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+									</td>
+									<td class=" col-md-5" style="text-align: center;"><button type="button" class="btn btn-warning" ng-click="saveReview()">Create New</button>
+									</td>
+									<td class=" col-md-5" style="text-align: center;"><button type="button" class="btn btn-success" ng-click="saveReview()">Merge</button>
+									</td>
+								</tr>
+						</tbody>
+						</table>
+
+						<!--
+						<div ng-if="partial_matches.percent && !partial_matches.subelements"> 
 							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record with New Entry</button>
 							<button type="button" class="btn btn-warning" ng-click="ignoreReview()">New Entry doesn't match Master Record</button>
 
 							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
-
-						<!--
-						<div ng-if="partial_matches.percent && !partial_matches.subelements"> 
 						
 						</div>
 
@@ -56,10 +69,14 @@
 				</div>
 
 				<!-- debug JSON output -->
-				<table ng-if="debug" class="table col-md-12">
+				<div ng-if="debug">
+				<br/>
+				<br/>
+				<table  class="table col-md-12">
 					<tr><td class="col-md-6">{{src_el | json}}</td><td class="col-md-6">{{dest_el |json}}</td></tr>
 					<tr><td colspan="2">{{partial_matches |json}}</td></tr>
 				</table>
+				</div>
 			</div>
 		</div>
 
