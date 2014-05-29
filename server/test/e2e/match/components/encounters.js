@@ -239,7 +239,7 @@ describe('Encounters API - Test New/Dupe Mix:', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.encounters, null, 10));
-				expect(res.body.encounters.length).to.equal(2);
+				expect(res.body.encounters.length).to.equal(3);
 				done();
 			});
 	});
@@ -262,7 +262,7 @@ describe('Encounters API - Test New/Dupe Mix:', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(4);
+				expect(res.body.merges.length).to.equal(5);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -278,7 +278,7 @@ describe('Encounters API - Test New/Dupe Mix:', function() {
 					expect(res.body.merges[i].entry_id._id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(2);
+				expect(newCnt).to.equal(3);
 				expect(dupCnt).to.equal(2);
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
@@ -286,8 +286,8 @@ describe('Encounters API - Test New/Dupe Mix:', function() {
 	});
 });
 
-//Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
-xdescribe('Encounters API - Test Partial Matches:', function() {
+
+describe('Encounters API - Test Partial Matches:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
@@ -307,7 +307,7 @@ xdescribe('Encounters API - Test Partial Matches:', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.encounters.length).to.equal(4);
+				expect(res.body.encounters.length).to.equal(3);
 				done();
 			});
 	});
