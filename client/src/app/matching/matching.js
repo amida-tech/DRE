@@ -25,8 +25,8 @@ angular.module('dre.match', ['dre.match.reconciliation'])
   }
 ])
 
-.controller('matchCtrl', ['$scope', '$http', '$location', 'getNotifications',
-  function($scope, $http, $location, getNotifications) {
+.controller('matchCtrl', ['$scope', '$http', '$location', 'getNotifications', 'recordFunctions',
+  function($scope, $http, $location, getNotifications, recordFunctions) {
 
     $scope.navPath = "templates/nav/nav.tpl.html";
     $scope.notifications = {};
@@ -41,6 +41,41 @@ angular.module('dre.match', ['dre.match.reconciliation'])
     $scope.predicate = "-merged";
     $scope.displayMerges = false;
 
+    $scope.updateSort = function () {
+      if ($scope.predicate.substring(0,1) === "-") {
+        if ($scope.predicate.substring(1) === "entry_type") {
+          $scope.predicate = "entry_type";
+        } else {
+          $scope.predicate = "-entry_type";
+        }
+      } else {
+        $scope.predicate = "-entry_type";
+      }
+    };
+
+    $scope.elementSort = function () {
+      if ($scope.predicate.substring(0,1) === "-") {
+        if ($scope.predicate.substring(1) === "entry_id.name") {
+          $scope.predicate = "entry_id.name";
+        } else {
+          $scope.predicate = "-entry_id.name";
+        }
+      } else {
+        $scope.predicate = "-entry_id.name";
+      }
+    };
+
+    $scope.dateSort = function () {
+      if ($scope.predicate.substring(0,1) === "-") {
+        if ($scope.predicate.substring(1) === "merged") {
+          $scope.predicate = "merged";
+        } else {
+          $scope.predicate = "-merged";
+        }
+      } else {
+        $scope.predicate = "-merged";
+      }
+    };
 
     $scope.getUnresolvedUpdates = function() {
 
@@ -52,6 +87,43 @@ angular.module('dre.match', ['dre.match.reconciliation'])
 
 
     };
+
+    function formatMerges (inputMerge) {
+      var trimLength = 35;
+      for (var iMerge in inputMerge) {
+        //Give Immunizations a name
+        if (inputMerge[iMerge].entry_type === 'immunization') {
+          if (inputMerge[iMerge].entry_id.product.name) {
+            inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.product.name;
+          }
+        }
+        //Give Medications a name
+        if (inputMerge[iMerge].entry_type === 'medication') {
+          if (inputMerge[iMerge].entry_id.product.name) {
+            inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.product.name;
+          }
+        }
+        //Give Socials a name
+        if (inputMerge[iMerge].entry_type === 'social') {
+          if (inputMerge[iMerge].entry_id.value) {
+            inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.value;
+          }
+        }
+        //Give Demographics a name
+        if (inputMerge[iMerge].entry_type === 'demographics') {
+          if (inputMerge[iMerge].entry_id.name) {
+            var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry_id.name).displayName;
+            inputMerge[iMerge].entry_id.name = tmpName;
+          }
+        }
+        //Trim long strings.
+        if (inputMerge[iMerge].entry_id.name && typeof inputMerge[iMerge].entry_id.name === 'string') {
+          if (inputMerge[iMerge].entry_id.name.length > trimLength) {
+                inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.name.substring(0, trimLength) + "...";
+          }
+        }
+      }
+    }
 
 
 
@@ -74,13 +146,15 @@ angular.module('dre.match', ['dre.match.reconciliation'])
 
 
       for (var i = 0; i < data.merges.length; i++) {
-        console.log(data.merges);
-        if (data.merges[i].merge_reason === "new") {
-          $scope.new_merges.push(data.merges[i]);
-        } else if (data.merges[i].merge_reason === "duplicate") {
+        //console.log(data.merges);
+        if (data.merges[i].merge_reason === "duplicate") {
           $scope.duplicate_merges.push(data.merges[i]);
+        } else {
+          $scope.new_merges.push(data.merges[i]);
         }
       }
+
+      formatMerges($scope.new_merges);
 
     }).
     error(function(data, status, headers, config) {
