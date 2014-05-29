@@ -3387,6 +3387,232 @@
 							</tbody>
 						</table>
 					</text>
+					<!-- BUNCH OF NEW RESULTS -->
+               <entry typeCode="DRIV">
+                  <organizer classCode="BATTERY" moodCode="EVN">
+                     <!-- Result organizer template -->
+                     <templateId root="2.16.840.1.113883.10.20.22.4.1"/>
+                     <id root="ce19d2be-3d3b-44ea-95f1-5a0a04586377"/>
+                     <code code="11579-0" displayName="Thyrotropin [Units/volume] in Serum or Plasma by Detection limit less than or equal to 0.05 mIU/L" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                     <statusCode code="completed"/>
+                     <component>
+                        <observation classCode="OBS" moodCode="EVN">
+                           <!-- Result observation template -->
+                           <templateId root="2.16.840.1.113883.10.20.22.4.2"/>
+                           <id root="1331eea1-3efe-497e-96bc-de56796a253d"/>
+                           <code xsi:type="CE" code="3016-3"
+                              displayName="Thyrotropin [Units/volume] in Serum or Plasma"
+                              codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                           <text>
+                              <reference value="#result1"/>
+                           </text>
+                           <statusCode code="completed"/>
+                           <effectiveTime value="20121126"/>
+                           <value xsi:type="PQ" value="17" unit="m[IU]/L"/>
+                           <interpretationCode code="A" displayName="abnormal"
+                              codeSystem="2.16.840.1.113883.5.83"
+                              codeSystemName="ObservationInterpretation"/>
+                           <interpretationCode code="HH" displayName="high alert"
+                              codeSystem="2.16.840.1.113883.5.83"
+                              codeSystemName="ObservationInterpretation"/>
+                           <referenceRange>
+                              <observationRange>
+                                 <text>normal: 0.29–5.11 IU/ml</text>
+                              </observationRange>
+                           </referenceRange>
+                        </observation>
+                     </component>
+                  </organizer>
+               </entry>
+               <entry typeCode="DRIV">
+                  <organizer classCode="BATTERY" moodCode="EVN">
+                     <!-- Result organizer template -->
+                     <templateId root="2.16.840.1.113883.10.20.22.4.1"/>
+                     <id root="ce19d2be-3d3b-44ea-95f1-5a0a04586377"/>
+                     <code code="4548-4" displayName="Hemoglobin A1c/Hemoglobin.total in Blood" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                     <statusCode code="completed"/>
+                     <component>
+                        <observation classCode="OBS" moodCode="EVN">
+                           <!-- Result observation template -->
+                           <templateId root="2.16.840.1.113883.10.20.22.4.2"/>
+                           <id root="dc16a671-c8f7-4125-a3f6-c8787606f576"/>
+                           <code xsi:type="CE" code="4548-4"
+                              displayName="Hemoglobin A1c/Hemoglobin.total in Blood"
+                              codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                           <text>
+                              <reference value="#result2"/>
+                           </text>
+                           <statusCode code="completed"/>
+                           <effectiveTime value="20121126"/>
+                           <value xsi:type="PQ" value="10" unit="%"/>
+                           <interpretationCode code="A" displayName="abnormal"
+                              codeSystem="2.16.840.1.113883.5.83"
+                              codeSystemName="ObservationInterpretation"/>
+                           <interpretationCode code="HH" displayName="high alert"
+                              codeSystem="2.16.840.1.113883.5.83"
+                              codeSystemName="ObservationInterpretation"/>
+                           <referenceRange>
+                              <observationRange>
+                                 <text>normal: 4.0-5.6%</text>
+                              </observationRange>
+                           </referenceRange>
+                        </observation>
+                     </component>
+                  </organizer>
+               </entry>
+               <entry typeCode="DRIV">
+                  <organizer classCode="BATTERY" moodCode="EVN">
+                     <!-- Result organizer template -->
+                     <templateId root="2.16.840.1.113883.10.20.22.4.1"/>
+                     <id root="ce19d2be-3d3b-44ea-95f1-5a0a04586377"/>
+                     <code code="2160-0" displayName="Creatinine [Mass/volume] in Serum or Plasma" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                     <statusCode code="completed"/>
+                     <component>
+                        <observation classCode="OBS" moodCode="EVN">
+                           <!-- Result observation template -->
+                           <templateId root="2.16.840.1.113883.10.20.22.4.2"/>
+                           <id root="9cd43fa7-db31-4c29-ab30-83f92fdcaa20"/>
+                           <code xsi:type="CE" code="2160-0"
+                              displayName="Creatinine [Mass/volume] in Serum or Plasma"
+                              codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                           <text>
+                              <reference value="#result3"/>
+                           </text>
+                           <statusCode code="completed"/>
+                           <effectiveTime value="20121126"/>
+                           <value xsi:type="PQ" value="1.8" unit="mg/dL"/>
+                           <interpretationCode code="A" displayName="abnormal"
+                              codeSystem="2.16.840.1.113883.5.83"
+                              codeSystemName="ObservationInterpretation"/>
+                           <referenceRange>
+                              <observationRange>
+                                 <text>normal: below 1.5 mg/dL</text>
+                              </observationRange>
+                           </referenceRange>
+                        </observation>
+                     </component>
+                  </organizer>
+               </entry>
+               <entry typeCode="DRIV">
+                  <organizer classCode="BATTERY" moodCode="EVN">
+                     <!-- Result organizer template -->
+                     <templateId root="2.16.840.1.113883.10.20.22.4.1"/>
+                     <id root="ce19d2be-3d3b-44ea-95f1-5a0a04586377"/>
+                     <code code="6301-6" displayName="INR in Platelet poor plasma by Coagulation assay" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                     <statusCode code="completed"/>
+                     <component>
+                        <observation classCode="OBS" moodCode="EVN">
+                           <!-- Result observation template -->
+                           <templateId root="2.16.840.1.113883.10.20.22.4.2"/>
+                           <id root="78df60b1-daf7-4838-b509-ec3a3f4116c1"/>
+                           <code xsi:type="CE" code="6301-6"
+                              displayName="INR in Platelet poor plasma by Coagulation assay"
+                              codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                           <text>
+                              <reference value="#result4"/>
+                           </text>
+                           <statusCode code="completed"/>
+                           <effectiveTime value="20121126"/>
+                           <value xsi:type="PQ" value="1.5" unit="1"/>
+                           <interpretationCode code="A" displayName="abnormal"
+                              codeSystem="2.16.840.1.113883.5.83"
+                              codeSystemName="ObservationInterpretation"/>
+                           <interpretationCode code="HH" displayName="high alert"
+                              codeSystem="2.16.840.1.113883.5.83"
+                              codeSystemName="ObservationInterpretation"/>
+                           <referenceRange>
+                              <observationRange>
+                                 <text>Normal reference range 1.0-1.5; Targeted INR 2.0-3.0</text>
+                              </observationRange>
+                           </referenceRange>
+                        </observation>
+                     </component>
+                  </organizer>
+               </entry>
+               <entry typeCode="DRIV">
+                  <organizer classCode="BATTERY" moodCode="EVN">
+                     <!-- Result organizer template -->
+                     <templateId root="2.16.840.1.113883.10.20.22.4.1"/>
+                     <id root="ce19d2be-3d3b-44ea-95f1-5a0a04586377"/>
+                     <code code="34552-0" displayName="2D echocardiogram panel" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                     <statusCode code="completed"/>
+                     <component>
+                        <observation classCode="OBS" moodCode="EVN">
+                           <!-- Result observation template -->
+                           <templateId root="2.16.840.1.113883.10.20.22.4.2"/>
+                           <id root="aaa00f9e-0154-4eaa-be85-aeb34169f06a"/>
+                           <code xsi:type="CE" code="18041-4"
+                              displayName="Aortic valve Ejection [Time] by US.doppler"
+                              codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                           <text>
+                              <reference value="#result5"/>
+                           </text>
+                           <statusCode code="completed"/>
+                           <effectiveTime value="20121126"/>
+                           <value xsi:type="PQ" value="55" unit="%"/>
+                           <interpretationCode code="N" displayName="normal"
+                              codeSystem="2.16.840.1.113883.5.83"
+                              codeSystemName="ObservationInterpretation"/>
+                           <referenceRange>
+                              <observationRange>
+                                 <text>Normal: 50-75%</text>
+                              </observationRange>
+                           </referenceRange>
+                        </observation>
+                     </component>
+                     <component>
+                        <observation classCode="OBS" moodCode="EVN">
+                           <!-- Result observation template -->
+                           <templateId root="2.16.840.1.113883.10.20.22.4.2"/>
+                           <id root="347f958c-9b6b-4eeb-848d-624567117cb7"/>
+                           <code xsi:type="CE" code="18089-3"
+                              displayName="AV Orifice Area US"
+                              codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                           <text>
+                              <reference value="#result6"/>
+                           </text>
+                           <statusCode code="completed"/>
+                           <effectiveTime value="20121126"/>
+                           <value xsi:type="PQ" value="1.5" unit="cm2"/>
+                           <interpretationCode code="A" displayName="abnormal"
+                              codeSystem="2.16.840.1.113883.5.83"
+                              codeSystemName="ObservationInterpretation"/>
+                           <referenceRange>
+                              <observationRange>
+                                 <text>Normal (3.0-4.0 cm2), mild (1.5–2.0 cm2), moderate (1.0–1.5 cm2), severe (less than 1.0 cm2)</text>
+                              </observationRange>
+                           </referenceRange>
+                        </observation>
+                     </component>
+                  </organizer>
+               </entry>
+               <entry typeCode="DRIV">
+                  <organizer classCode="BATTERY" moodCode="EVN">
+                     <!-- Result organizer template -->
+                     <templateId root="2.16.840.1.113883.10.20.22.4.1"/>
+                     <id root="ce19d2be-3d3b-44ea-95f1-5a0a04586377"/>
+                     <code code="34534-8" displayName="EKG 12 channel panel" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                     <statusCode code="completed"/>
+                     <component>
+                        <observation classCode="OBS" moodCode="EVN">
+                           <!-- Result observation template -->
+                           <templateId root="2.16.840.1.113883.10.20.22.4.2"/>
+                           <id root="ba4f85fa-586c-4898-9aad-b592d4c2c383"/>
+                           <code xsi:type="CE" code="18844-1"
+                              displayName="EKG impression Narrative"
+                              codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                           <text>
+                              <reference value="#result7"/>
+                           </text>
+                           <statusCode code="completed"/>
+                           <effectiveTime value="20121126"/>
+                           <value xsi:type="ST">EKG rate 60s, A fib, LBBB</value>
+                        </observation>
+                     </component>
+                  </organizer>
+               </entry>
+
+
 					<entry typeCode="DRIV">
 						<organizer classCode="BATTERY" moodCode="EVN">
 							<!-- ** Result organizer ** -->
