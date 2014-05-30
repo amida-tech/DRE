@@ -1,59 +1,117 @@
+<table class="col-md-12 table  table-condensed table-striped table-bordered">
+    <tbody>
+        <tr>
+            <td class="col-md-2" style="text-align: center;">
+            </td>
+            <td class=" col-md-5" style="text-align: center;">
+                <h4>New Entry</h4>
+            </td>
+            <td class=" col-md-5" style="text-align: center;">
+                <h4>Master Record <a ng-click="reset()" class="pull-right"><i class="glyphicon glyphicon-refresh"></i></a>
+                </h4>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <strong>Name:</strong>
+            </td>
+            <td>{{src_el.product.name }}
+            </td>
+            <td>{{dest_el.product.name }}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.date==='new'">Different</span>
+                <strong>Date:</strong>
+            </td>
+            <td>{{src_el.date[0] | bb_date }}
+                <a ng-click="merge('date')" class="pull-right" ng-if="diff.date==='new'"><i class="glyphicon glyphicon-import"></i></a>
+            </td>
+            <td>{{dest_el.date[0] | bb_date }}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.status==='new'">Different</span>
+                <strong>Status:</strong>
+            </td>
+            <td>{{src_el.status}}
+                <a ng-click="merge('status')" class="pull-right" ng-if="diff.status==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
+            </td>
+            <td>{{dest_el.status}}
+            </td>
+        </tr>
 
-<table class="col-md-12 table">
-	<tbody>
-		<tr>
-			<td class="info" style="text-align: center;"><h4>New Entry</h4>
-			</td>
-			<td class="active" style="text-align: center;"><h4>Master Record</h4>
-			</td>
-		</tr>
-		<tr><td>
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.product==='new'">Different</span>
+                <strong>Product:</strong>
+            </td>
+            <td>
+                <strong>Name:</strong> {{src_el.product.name}}
+                <br/>
+                <strong>Alternative Name:</strong> {{src_el.product.translations[0].name}}
+                <br/>
+                <strong>Manufacturer:</strong> {{src_el.product.manufacturer}}
+                <br/>
+                <strong>Lot Number:</strong> {{src_el.product.lot_number}}
+
+                <a ng-click="merge('product')" class="pull-right" ng-if="diff.product==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
+            </td>
+            <td>
+                <strong>Name:</strong> {{dest_el.product.name}}
+                <br/>
+                <strong>Alternative Name:</strong> {{dest_el.product.translations[0].name}}
+                <br/>
+                <strong>Manufacturer:</strong> {{dest_el.product.manufacturer}}
+                <br/>
+                <strong>Lot Number:</strong> {{dest_el.product.lot_number}}
+            </td>
+        </tr>
+
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.administration==='new'">Different</span>
+                <strong>Administration:</strong>
+            </td>
+            <td>
+                <strong>Route:</strong> {{src_el.administration.route.name}}
+                <br/>
+                <strong>Quantity:</strong> {{src_el.administration.quantity.value}} {{src_el.administration.quantity.unit}}
+
+                <a ng-click="merge('administration')" class="pull-right" ng-if="diff.administration==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
+            </td>
+            <td>
+                <strong>Route:</strong> {{dest_el.administration.route.name}}
+                <br/>
+                <strong>Quantity:</strong> {{dest_el.administration.quantity.value}} {{dest_el.administration.quantity.unit}}
+            </td>
+        </tr>
+
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.performer==='new'">Different</span>
+                <strong>Performer:</strong>
+            </td>
+            <td>
+                <strong>Organization:</strong> {{src_el.performer.organization[0].name[0]}}
+                <br/>
+                <!--strong>Address:</strong--> {{src_el.performer.address[0] | bb_address}}
+                <br/>
+                <strong>Name:</strong> {{src_el.performer.name[0] | bb_name}}
+                <a ng-click="merge('performer')" class="pull-right" ng-if="diff.performer==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
+            </td>
+            <td>
+                <strong>Organization:</strong> {{dest_el.performer.organization[0].name[0]}}
+                <br/>
+                <!--strong>Address:</strong--> {{dest_el.performer.address[0] | bb_address}}
+                <br/>
+                <strong>Name:</strong> {{dest_el.performer.name[0] | bb_name}}
+            </td>
+        </tr>
 
 
-			<table class="table col-md-6">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{src_el.product.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{src_el.date[0].date | date: 'mediumDate'}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Date:</strong></td><td>{{src_el.date[0].date | date: 'mediumDate'}}</td></tr>
 
-						<tr><td><strong>Status:</strong></td><td>{{src_el.status}}</td></tr>
-
-						<tr><td><strong>Route:</strong></td><td>{{src_el.administration.route.name}}</td></tr>
-						<tr><td><strong>Quantity:</strong></td><td>{{src_el.administration.quantity.value}}</td></tr>
-						<tr><td><strong>Units:</strong></td><td>{{src_el.administration.quantity.unit}}</td></tr>
-
-						<tr><td><strong>Manufacturer:</strong></td><td>{{src_el.product.manufacturer}}</td></tr>
-						<tr><td><strong>Lot Number:</strong></td><td>{{src_el.product.lot_number}}</td></tr>
-
-					</tr>
-				</tbody>
-			</table>
-			{{ src[section][src_id] | json }}
-		</td>
-		<td>
-			<table class="table col-md-6 table-hover">
-				<thead><tr><td colspan="2"><span style="text-transform:uppercase;">{{dest_el.product.name}}</span>
-					<span class="pull-right"  style="text-transform:uppercase;">{{dest_el.date[0].date | date: 'mediumDate'}}</span>
-				</td></tr></thead>
-				<tbody>
-					<tr>
-						<tr><td><strong>Date:</strong></td><td>{{dest_el.date[0].date | date: 'mediumDate'}}</td></tr>
-
-						<tr><td><strong>Status:</strong></td><td>{{dest_el.status}}</td></tr>
-
-						<tr><td><strong>Route:</strong></td><td>{{dest_el.administration.route.name}}</td></tr>
-						<tr><td><strong>Quantity:</strong></td><td>{{dest_el.administration.quantity.value}}</td></tr>
-						<tr><td><strong>Units:</strong></td><td>{{dest_el.administration.quantity.unit}}</td></tr>
-
-						<tr><td><strong>Manufacturer:</strong></td><td>{{dest_el.product.manufacturer}}</td></tr>
-						<tr><td><strong>Lot Number:</strong></td><td>{{dest_el.product.lot_number}}</td></tr>
-
-					</tr>
-				</tbody>
-			</table>
-			{{ dest[section][dest_id] | json }}
-		</td></tr>
-	</tbody>
+    </tbody>
 </table>
