@@ -91,7 +91,15 @@ record.getAllergies('patientKey', function(err, result) {
 
 ```
 Result is an array of allergies.  Each entry includes metadata and property '_id" which you can later to access
-specific allergy.  You can clean up metadata and other non blue-button data which is comparable to ccd.allergies
+specific allergy and update
+
+``` javascript
+record.updateAllergy('patientKey', id0, updateData, function(err, updatedRecord) {
+  if (err) throw(err);
+};
+```
+
+You can clean up metadata and other non blue-button data which is comparable to ccd.allergies
 
 ``` javascript
 var cleanResult = record.cleanSectionEntries(result);
