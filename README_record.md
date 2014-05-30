@@ -160,3 +160,31 @@ record.recordCount('patientKey', function(err, count) {
 });
 ```
 
+## Schemas
+
+Underlying MongoDB collections can be classified into four categories
+
+- Patient data and metadata
+- Merge history
+- Partial match history
+- Source file storage
+
+### Source file storage
+
+This is a single collection named 'storage.files'.  It contains file content and few additional file metadata fields.  This collection is used through MongoDB GridFS specification since the content can be larger than the MongoDB 16M size limit.  The schema is as follows and ignores GridFS related fields
+
+``` javascript
+var schema = {
+  filename: String,
+  contentType: String,
+  uploadDate: Date,
+  metadata: {
+    patKey: String,
+    fileClass: String
+  }
+};
+```
+
+'contentType' is the file MIME type such as 'application/xml'.  'patKey' is used to identify the file patient belongs to.  If it exists 'fileClass' can only have the value of 'ccda' and indicates that file was read as a ccda document succesfully.  
+
+
