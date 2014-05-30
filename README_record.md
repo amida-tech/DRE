@@ -171,7 +171,7 @@ Underlying MongoDB collections can be classified into four categories
 
 ### Source file storage
 
-This is a single collection named 'storage.files'.  It contains file content and few additional file metadata fields.  This collection is used through MongoDB GridFS specification since the content can be larger than the MongoDB 16M size limit.  The schema is as follows and ignores GridFS related fields
+This is a single collection named 'storage.files'.  It contains file content and few additional file metadata fields.  This collection is used through MongoDB GridFS specification since the content can be larger than the MongoDB 16M size limit.  The schema is as follows (GridFS specific schema fields are not shown)
 
 ``` javascript
 var schema = {
@@ -222,4 +222,24 @@ var schema = {
 All the fields before 'patKey' directly comes from [blue-button](https://github.com/amida-tech/blue-button) models and is documented there.  Remaining fields are identical for all collections.  'patKey' is the key for the patient whom this entry belongs.  'metadata.attribution' links patient data collections to merge history collections that are explained in the next section. '__index' is used internally to record the order entries in the source file to ease testing.  'reviewed=false' identifies all entries that are queued for patient review.  'archieved=true' identifies all entries that are created for patient review and later is ignored or merged and is not part of the health record.
 
 Since schema for all other collections follows the same pattern they will not be explicitly shown here.
+
+### Merge History
+
+Collections for merge history hold information on where and how a patient data entry is added to the health record.  There is one merge history collection for each patient data collection: 'allergymerges', 'demographicmerges', 'encountermerges', 'socialmerges', 'vitalmerges', 'immunizationmerges', 'medicationmerges', 'proceduremerges', and 'resultmerges'.  The schema for each follows a general pattern and shown for 'allergiesmerges' below
+
+``` javascript
+var schema = {
+  entry_type: String,
+  patKey: String,
+  entry_id: {type: ObjectId, ref: allergies},
+  record_id: {type: ObjectId, ref: 'storage.files'},
+  merged: Date,
+  merge_reason: String,
+  archived: Boolean
+};
+```
+
+'entry_type' is a convenience field and holds the type of the entry.  It can have the values: 'allergy', 'demographic', 'social', 'problem', 'procedure', 'medication', 'vital', 'immunization', or 'encounter'.  'patKey' is the patient key.  'entry_id' and 'record_id' respectively link the merge history to patient data and source file.  'merged' is the time that the merge history record is created.  'merge_reason' can currently be either 'new' or 'duplicate'.  'new' describes new patient data entries that are added to the health record and 'duplicate' describes patient data that  already existed in the health record.  'archived=true' identifies all the merge history entries that is linked to patient data collections that has the same flag and is an another convenience field.  
+
+
 
