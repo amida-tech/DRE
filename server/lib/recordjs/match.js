@@ -72,7 +72,7 @@ exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) 
     var model = dbinfo.matchModels[type];
     var allFields = typeFields + ' ' + recordFields;
 
-    var query = model.find().populate('entry_id match_entry_id', allFields);
+    var query = model.find().populate('entry_id match_entry_id', allFields).lean();
     query.exec(function (err, matchResults) {
         if (err) {
             callback(err);

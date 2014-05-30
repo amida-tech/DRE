@@ -625,6 +625,8 @@ describe('Immunizations API - Test Merged Matches', function() {
 					}
 					if (res.body.immunizations[iEntry]._id === base_id) {
 						//console.log(res.body.immunizations[iEntry]);
+
+
 						expect(res.body.immunizations[iEntry].date[0].precision).to.equal('day');
 						expect(res.body.immunizations[iEntry].metadata.attribution.length).to.equal(4);
 					}
