@@ -1,19 +1,3 @@
-/*=======================================================================
-Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-======================================================================*/
-
 var express = require('express');
 var app = module.exports = express();
 var record = require('../recordjs');
@@ -21,11 +5,10 @@ var _ = require('underscore');
 
 var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'socialHistory', 'demographics', 'problems'];
 
-
-
 function updateAdded(updateId, updateComponent, callback) {
 
     function getPartialMatch(matchEntryId, callback) {
+
         record["getPartial" + record.capitalize(updateComponent)]('test', function(err, results) {
             for (var iRecord in results) {
                 if (results[iRecord]._id.toString() === matchEntryId.toString()) {
@@ -36,7 +19,7 @@ function updateAdded(updateId, updateComponent, callback) {
     }
 
     function updatePartialMatch(partialMatch, callback) {
-        //Flag record as reviewed so it is visible.
+
         record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', partialMatch._id, {
             reviewed: true
         }, function(err, updateResults) {
@@ -67,10 +50,9 @@ function updateAdded(updateId, updateComponent, callback) {
                 }
 
             });
-
         }
-
     });
+
 }
 
 
@@ -88,14 +70,13 @@ function updateIgnored(updateId, updateComponent, callback) {
                 }
             });
         }
-
     });
 }
+
+
 function updateMerged(updateId, updateComponent, callback) {
 
-
     function updateMainObject(updateComponent, entry_id, updateJSON, recordId, callback) {
-
 
         //First create merge entry.
         var mergeObject = {
@@ -106,6 +87,7 @@ function updateMerged(updateId, updateComponent, callback) {
             merged: new Date(),
             merge_reason: 'update'
         };
+
         record.setMerge(mergeObject, function(err, mergeResult) {
             if (err) {
                 callback(err);
@@ -113,19 +95,13 @@ function updateMerged(updateId, updateComponent, callback) {
                 updateJSON.metadata.attribution = [mergeResult._id];
                 record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', entry_id, updateJSON, function(err, updateResults) {
                     if (err) {
-                        console.error(err);
                         callback(err);
                     } else {
                         callback(null, err);
-
                     }
                 });
             }
         });
-
-
-
-
 
     }
 
@@ -141,21 +117,14 @@ function updateMerged(updateId, updateComponent, callback) {
 
     }
 
-
-    //console.log(updateComponent);
-    //console.log(updateId);
     record.getMatch(updateComponent, updateId, function(err, resultComponent) {
         if (err) {
             callback(err);
         } else {
-            //console.log(resultComponent);
-            //Getting the partial record here.
             record["get" + record.capitalize(record.sectionToType[updateComponent])](resultComponent.match_entry_id._id, function(err, recordResults) {
                 if (err) {
                     callback(err);
                 } else {
-
-
 
                     //Used to populate merge attribution element.
                     var recordId = recordResults.metadata.attribution[0].record_id;
@@ -179,7 +148,6 @@ function updateMerged(updateId, updateComponent, callback) {
                                 } else {
                                     callback(null);
                                 }
-
                             });
                             
                         }
@@ -196,16 +164,17 @@ function updateMerged(updateId, updateComponent, callback) {
 
 function processUpdate(updateId, updateComponent, updateParameters, callback) {
 
-    console.log(updateComponent);
 
     //Clean parameters.
     var cleanParameters = {};
     cleanParameters.determination = updateParameters.determination;
 
     //Can be 1) Merged, 2) Added, 3) Ignored.
+
     if (cleanParameters.determination === 'added') {
+        //TODO:  Add filter to reject added demographics.
         updateAdded(updateId, updateComponent, function(err, results) {
-            saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
+            saveMatchRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
                 if (err) {
                     callback(err);
                 } else {
@@ -213,13 +182,12 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
                 }
             });
         });
-
     }
 
     if (cleanParameters.determination === 'merged') {
         //If determination is merged, overwrite original record, drop source object, and update merge history of object.
         updateMerged(updateId, updateComponent, function(err, results) {
-            saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
+            saveMatchRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
                 if (err) {
                     callback(err);
                 } else {
@@ -232,7 +200,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
     if (cleanParameters.determination === 'ignored') {
         //If determination is ignored, dump the object from the database.
         updateIgnored(updateId, updateComponent, function(err, results) {
-            saveRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
+            saveMatchRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
                 if (err) {
                     callback(err);
                 } else {
@@ -245,7 +213,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
 }
 
 
-function saveRecord(updateId, updateComponent, updateParameters, callback) {
+function saveMatchRecord(updateId, updateComponent, updateParameters, callback) {
     record.updateMatch(updateComponent, updateId, updateParameters, function(err, updateResults) {
         if (err) {
             callback(err);
@@ -255,19 +223,87 @@ function saveRecord(updateId, updateComponent, updateParameters, callback) {
     });
 }
 
+function formatName(inputName) {
+    var outputName = "";
+
+    if (inputName.last && inputName.first) {
+        outputName = inputName.first + " " + inputName.last;
+    } else if (inputName.first) {
+        outputName = inputName.first;
+    } else if (inputName.last) {
+        outputName = inputName.last;
+    }
+    //TODO:  Add middle name handler, prefix, and suffix.
+    inputName.displayName = outputName;
+
+    return inputName;
+};
+
+
+
+function formatMerges(inputMerge) {
+    for (var iMerge in inputMerge) {
+        //Give Immunizations a name
+        if (inputMerge[iMerge].entry_type === 'immunization') {
+            if (inputMerge[iMerge].entry_id.product.name) {
+                inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.product.name;
+            }
+            if (inputMerge[iMerge].match_entry_id.product.name) {
+                inputMerge[iMerge].match_entry_id.name = inputMerge[iMerge].match_entry_id.product.name;
+            }
+
+        }
+        //Give Medications a name
+        if (inputMerge[iMerge].entry_type === 'medication') {
+            if (inputMerge[iMerge].entry_id.product.name) {
+                inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.product.name;
+            }
+            if (inputMerge[iMerge].match_entry_id.product.name) {
+                inputMerge[iMerge].match_entry_id.name = inputMerge[iMerge].match_entry_id.product.name;
+            }
+        }
+        //Give Socials a name
+        if (inputMerge[iMerge].entry_type === 'social') {
+            if (inputMerge[iMerge].entry_id.value) {
+                inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.value;
+            }
+            if (inputMerge[iMerge].match_entry_id.value) {
+                inputMerge[iMerge].match_entry_id.name = inputMerge[iMerge].match_entry_id.value;
+            }
+        }
+        //Give Demographics a name
+        if (inputMerge[iMerge].entry_type === 'demographic') {
+            if (inputMerge[iMerge].entry_id.name) {
+                var tmpName = formatName(inputMerge[iMerge].entry_id.name).displayName;
+                inputMerge[iMerge].entry_id.name = tmpName;
+            }
+            if (inputMerge[iMerge].match_entry_id.name) {
+                var tmpName = formatName(inputMerge[iMerge].match_entry_id.name).displayName;
+                inputMerge[iMerge].match_entry_id.name = tmpName;
+            }
+        }
+    }
+}
+
+
+
+
 //Get all merges API.
 app.get('/api/v1/matches/:component', function(req, res) {
 
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
-        record.getMatches(req.params.component, 'name severity', 'filename uploadDate', function(err, matchList) {
+        record.getMatches(req.params.component, 'name severity product.name value', 'filename uploadDate', function(err, matchList) {
             if (err) {
                 console.error(err);
                 res.send(400, err);
             } else {
                 var matchJSON = {};
                 matchJSON.matches = matchList;
+                formatMerges(matchJSON.matches);
+
+                console.log(JSON.stringify(matchJSON, null, 10));
                 res.send(matchJSON);
             }
         });

@@ -293,7 +293,7 @@ describe('Demographic API - Test Partial Matches:', function() {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
 				expect(res.body.matches.length).to.equal(1);
 				for (var i in res.body.matches) {
-					//expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
+					expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
 					expect(res.body.matches[i].entry_type).to.equal('demographic');
 				}
 				done();
