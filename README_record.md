@@ -166,7 +166,7 @@ Underlying MongoDB collections can be classified into four categories
 
 - Patient data and metadata
 - Merge history
-- Partial match history
+- Partial match
 - Source file storage
 
 ### Source file storage
@@ -225,7 +225,7 @@ Since schema for all other collections follows the same pattern they will not be
 
 ### Merge History
 
-Collections for merge history hold information on where and how a patient data entry is added to the health record.  There is one merge history collection for each patient data collection: 'allergymerges', 'demographicmerges', 'encountermerges', 'socialmerges', 'vitalmerges', 'immunizationmerges', 'medicationmerges', 'proceduremerges', and 'resultmerges'.  The schema for each follows a general pattern and shown for 'allergiesmerges' below
+Collections for merge history hold information on where and how a patient data entry is added to the health record.  There is one merge history collection for each patient data collection: 'allergymerges', 'demographicmerges', 'encountermerges', 'socialmerges', 'vitalmerges', 'immunizationmerges', 'medicationmerges', 'proceduremerges', and 'resultmerges'.  The schema for each follows a general pattern and shown for 'allergymerges' below
 
 ``` javascript
 var schema = {
@@ -241,5 +241,22 @@ var schema = {
 
 'entry_type' is a convenience field and holds the type of the entry.  It can have the values: 'allergy', 'demographic', 'social', 'problem', 'procedure', 'medication', 'vital', 'immunization', or 'encounter'.  'patKey' is the patient key.  'entry_id' and 'record_id' respectively link the merge history to patient data and source file.  'merged' is the time that the merge history record is created.  'merge_reason' can currently be either 'new' or 'duplicate'.  'new' describes new patient data entries that are added to the health record and 'duplicate' describes patient data that  already existed in the health record.  'archived=true' identifies all the merge history entries that is linked to patient data collections that has the same flag and is an another convenience field.  
 
+### Partial Match
 
+Collections for partial match history describe partial matches and the action that the patient took.  There is one partial match history collection for each patient data collection: 'allergymatches', 'demographicmatches', 'encountermatches', 'socialmatches', 'vitalmatches', 'immunizationmatches', 'medicationmatches', 'procedurematches', and 'resultmatches'.  The schema for each follows a general pattern and shown for 'allergymatches' below
+
+``` javascript
+var schema = {
+  entry_type: String,
+  patKey: String,
+  entry_id: {type: ObjectId, ref: allergies},
+  record_id: {type: ObjectId, ref: 'storage.files'},
+  determination: String,
+  percent: Number,
+  diff: {},
+  subelements: {}
+};
+```
+
+All the fields until the percent has identical descriptions to corresponding merge history collection ('allergymerges' for 'allergymatches'). 'percent', 'diff' and 'subelements' describe the details of the partial match for which detailed information can be found in [blue-button-match](https://github.com/amida-tech/blue-button-match).  'determination' describes the action that user took and can be 'merged', 'added', or 'ignored'.
 
