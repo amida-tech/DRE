@@ -679,7 +679,7 @@ describe('Encounters API - Test Merged Matches', function() {
 		api.get('/api/v1/record/encounters')
 			.expect(200)
 			.end(function(err, res) {
-				console.log(JSON.stringify(res.body, null, 10));
+				//console.log(JSON.stringify(res.body, null, 10));
 				expect(res.body.encounters.length).to.equal(5);
 				var total_encounters = 0;
 				for (var iEntry in res.body.encounters) {
