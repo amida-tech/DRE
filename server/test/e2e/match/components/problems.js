@@ -592,17 +592,17 @@ describe('Problems API - Test Merged Matches', function() {
 		"code_system_name": "SNOMED CT",
 		"date": [{
 			"date": "2012-09-01T00:00:00.000Z",
-			"precision": "month"
+			"precision": "day"
 		}],
 		"identifiers": [{
 			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
-			"identifier_type": "615028800003"
+			"identifier_type": "1234556"
 		}, {
 			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
-			"identifier_type": "659935200001"
+			"identifier_type": "6599352434300001"
 		}],
-		"name": "Sinusitis",
-		"negation_indicator": false,
+		"name": "Hepatitus",
+		"negation_indicator": true,
 		"source_list_identifiers": [{
 			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
 			"identifier_type": "615028800003"
@@ -610,7 +610,7 @@ describe('Problems API - Test Merged Matches', function() {
 			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
 			"identifier_type": "659935200001"
 		}],
-		"status": "Active",
+		"status": "Inactive",
 		"translations": []
 	}
 
