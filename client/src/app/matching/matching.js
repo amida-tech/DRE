@@ -110,7 +110,7 @@ angular.module('dre.match', ['dre.match.reconciliation'])
           }
         }
         //Give Demographics a name
-        if (inputMerge[iMerge].entry_type === 'demographics') {
+        if (inputMerge[iMerge].entry_type === 'demographic') {
           if (inputMerge[iMerge].entry_id.name) {
             var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry_id.name).displayName;
             inputMerge[iMerge].entry_id.name = tmpName;
