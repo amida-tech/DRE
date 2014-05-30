@@ -8,22 +8,6 @@
 		<div class="col-md-9" ng-controller="reconciliationCtrl">
 			<br/>
 			<h5 class="lead">Unreviewed Updates</h5>
-						<!--div class="panel panel-default">
-							<div class="panel-body">
-							<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick()">Review</button></div>
-							<h4>Allergy Update</h4>
-							<h5>One of your files may have an update to your EGG allergy.</h5>
-							</div>
-						</div>
-
-						<div class="panel panel-default">
-							<div class="panel-body">
-							<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick()">Review</button></div>
-							<h4>Allergy Update</h4>
-							<h5>One of your files may have an update to your EGG allergy.</h5>
-							</div>
-						</div-->
-
 
 						<div class="panel panel-default" ng-repeat="match_section in matches" ng-show="match_section">
 							<div class="panel-body" >
@@ -31,9 +15,10 @@
 
 							<div class="well" ng-repeat="new_match in match_section">
 								<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick(new_match)">Review</button></div>
-								<h5 ng-if="new_match.percent">Partial ({{new_match.percent}}%) Match with Master Health Record</h5>
 
-								<h5 ng-if="new_match.diff">Updated (Different) Information </h5>
+								<h5 ng-if="new_match.entry_type!=='demographic' && new_match.entry_type!=='social'">Partial ({{new_match.percent}}%) Match with "{{new_match.entry_id.name}}" on Master Health Record</h5>
+
+								<h5 ng-if="new_match.entry_type==='demographic' || new_match.entry_type==='social'">Updated (Different) Information </h5>
 
 								</div>
 
