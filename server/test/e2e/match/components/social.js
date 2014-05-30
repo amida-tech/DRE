@@ -593,9 +593,6 @@ describe('Social API - Test Ignored Matches', function() {
 
 describe('Social API - Test Merged Matches', function() {
 
-	var update_id = '';
-	var base_id = '';
-	var match_id = '';
 
 	before(function(done) {
 		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
@@ -606,6 +603,22 @@ describe('Social API - Test Merged Matches', function() {
 			}
 		});
 	});
+	var match_id = '';
+
+	var base_id = '';
+	var base_object = {};
+
+	var update_id = '';
+	var tmp_updated_entry = {
+		"dateRange": [{
+			"date": "2005-05-01T00:00:00.000Z",
+			"precision": "day"
+		}, {
+			"date": "2012-02-27T13:00:00.000Z",
+			"precision": "subsecond"
+		}],
+		"value": "Heavy smoker"
+	}
 
 	it('Update Social Match Records Merged', function(done) {
 
@@ -615,19 +628,35 @@ describe('Social API - Test Merged Matches', function() {
 				if (err) {
 					done(err);
 				} else {
+					//console.log(JSON.stringify(res.body.matches, null, 10));
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/socialHistory/' + update_id)
-						.send({
-							determination: "merged"
-						})
+					//Still need this object to check metadata.
+					api.get('/api/v1/record/socialHistory')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								done();
+								for (var i = 0; i < res.body.socialHistory.length; i++) {
+									if (res.body.socialHistory[i]._id === base_id) {
+										base_object = res.body.socialHistory[i];
+									}
+								}
+								api.post('/api/v1/matches/socialHistory/' + update_id)
+									.send({
+										determination: "merged",
+										updated_entry: tmp_updated_entry
+									})
+									.expect(200)
+									.end(function(err, res) {
+										if (err) {
+											done(err);
+										} else {
+											done();
+										}
+									});
 							}
 						});
 				}
@@ -640,16 +669,25 @@ describe('Social API - Test Merged Matches', function() {
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
 				expect(res.body.socialHistory.length).to.equal(2);
-				var total_allergies = 0;
-				for (var iEntry in res.body.allergies) {
+				var total_socials = 0;
+				for (var iEntry in res.body.socialHistory) {
 					if (res.body.socialHistory[iEntry]._id === match_id) {
+						total_socials++;
+					}
+					if (res.body.socialHistory[iEntry]._id === base_id) {
 
-						//TODO:  CHECK ATTRIBUTION ACCURACY.
-						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
-						total_allergies++;
+						//console.log(res.body.socialHistory[iEntry]);
+						//console.log(tmp_updated_entry);
+
+						//Test each component.
+						expect(res.body.socialHistory[iEntry].dateRange).to.deep.equal(tmp_updated_entry.dateRange);
+						expect(res.body.socialHistory[iEntry].value).to.deep.equal(tmp_updated_entry.value);
+						//Metadata slightly different test.
+						expect(res.body.socialHistory[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+
 					}
 				}
-				expect(total_allergies).to.equal(0);
+				expect(total_socials).to.equal(0);
 				done();
 			});
 	});
