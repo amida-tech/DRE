@@ -185,6 +185,41 @@ var schema = {
 };
 ```
 
-'contentType' is the file MIME type such as 'application/xml'.  'patKey' is used to identify the file patient belongs to.  If it exists 'fileClass' can only have the value of 'ccda' and indicates that file was read as a ccda document succesfully.  
+'contentType' is the file MIME type such as 'application/xml'.  'patKey' is used to identify the patient file belongs to.  If it exists 'fileClass' can only have the value of 'ccda' and indicates that file was read as a ccda document succesfully.  
 
+### Patient data and metadata
+
+Patient data collections closely follows [blue-button](https://github.com/amida-tech/blue-button) models that implement CCDA header or sections.  Collection 'demographics' store CCDA header data.  Currently there are eight collections for supported CCDA sections: 'medications', 'procedures', 'socialHistories', 'problems', 'allergies', 'results', 'vitals', and 'encounters'.  Each element in the collections is a single entry in a CCDA section.  Allergy schema is
+
+``` javascript
+var schema = {
+  name: String,
+  code: String,
+  code_system_name: String,
+  date: [{date: Date, precision: String}],
+  identifiers: [{
+     identifier:String,
+     identifier_type: String
+  }],
+  severity: String,
+  reaction: [{
+     code: String, 
+     name: String, 
+     code_system_name: String, 
+     severity: String
+  }],
+  
+  patKey: String,
+  metadata: {
+    attribution: [{type: ObjectId, ref: 'allergymerges'}]
+  },
+  __index: Number,
+  reviewed: Boolean,
+  archived: Boolean
+};
+```
+
+All the fields before 'patKey' directly comes from [blue-button](https://github.com/amida-tech/blue-button) models and is documented there.  Remaining fields are identical for all collections.  'patKey' is the key for the patient whom this entry belongs.  'metadata.attribution' links patient data collections to merge history collections that are explained in the next section. '__index' is used internally to record the order entries in the source file to ease testing.  'reviewed=false' identifies all entries that are queued for patient review.  'archieved=true' identifies all entries that are created for patient review and later is ignored or merged and is not part of the health record.
+
+Since schema for all other collections follows the same pattern they will not be explicitly shown here.
 
