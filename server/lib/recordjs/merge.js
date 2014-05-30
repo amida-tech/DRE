@@ -30,12 +30,12 @@ exports.saveMerge = function(dbinfo, mergeObject, callback) {
     });
 };
 
-exports.getMerges = function(dbinfo, type, typeFields, recordFields, callback) {
+exports.getMerges = function(dbinfo, patientKey, type, typeFields, recordFields, callback) {
     var model = dbinfo.mergeModels[type];
     var allFields = typeFields + ' ' + recordFields + ' reviewed';
     //var query = model.find({entry_type: type, archived: false}).populate('entry_id record_id', allFields);
 
-    var query = model.find({});
+    var query = model.find({patKey: patientKey});
     query.where('archived').in([null, false]);
     query.where('entry_type', type);
     query.lean()
