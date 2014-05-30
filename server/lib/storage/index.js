@@ -1,19 +1,3 @@
-/*=======================================================================
-Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-======================================================================*/
-
 var express = require('express');
 var fs = require('fs');
 var app = module.exports = express();
@@ -26,9 +10,6 @@ var record = require('../recordjs');
 //Wrapper function to save all components of an incoming object.
 function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
 
-        //console.log(masterObject);
-
-    //console.log(masterPartialObject);
     var masterComplete = false;
     var masterPartialComplete = false;
 
@@ -49,7 +30,6 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
 
         function checkSaveMasterComponentsComplete () {
             savedSections++;
-            //console.log(savedSections);
             if (savedSections === totalSections) {
                 masterComplete = true;
                 checkComponentsComplete();
@@ -95,15 +75,12 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
         }
 
         for (var secName in masterPartialObject) {
-
-            //console.log(JSON.stringify(masterPartialObject[secName], null, 10));
             var saveArray = masterPartialObject[secName];
 
             if (saveArray.length === 0) {
                 checkSavePartialComponentsComplete();
             } else {
                 record["savePartial" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
-
                     if (err) {
                         callback(err);
                     } else {
@@ -111,42 +88,6 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
                     }
                 });
 
-
-
-                /*function savePartialComponent(thisPartialObject, section_name) {
-                    record["savePartial" + record.capitalize(section_name)]('test', saveArray, sourceID, function(err, save_partial_id) {
-                            if (err) {
-                                callback(err);
-                            } else {
-
-                                var tmpMatch = {
-                                    entry_type: section_name,
-                                    entry_id: thisPartialObject[0].match_record_id,
-                                    match_entry_id: save_partial_id
-                                }
-
-                                //Conditionally take diff/partial.
-                                if (thisPartialObject[0].partial_match.match === 'diff') {
-                                    tmpMatch.diff = thisPartialObject[0].partial_match.diff;
-                                } else {
-                                    tmpMatch.percent = thisPartialObject[0].partial_match.percent;
-                                }
-
-                                record["add" + record.capitalize(section_name) + "MatchEntry"]('test', tmpMatch, function(err, save_match_response) {
-                                if (err) {
-                                    callback(err);
-                                } else {
-                                    savedSections++;
-                                    if (totalSections === savedSections) {
-                                        masterPartialComplete = true;
-                                        checkComponentsComplete();
-                                    }
-                                }
-                            });
-                        }
-                    });
-            }
-            savePartialComponent(masterPartialObject[secName], secName);*/
         }
     }
 }
@@ -157,31 +98,41 @@ savePartialComponents();
 }
 
 //Pull saved records from db for reconciliation.
-function getSavedRecord(saved_sections, callback) {
+function getSavedRecords(saved_sections, callback) {
+
     var responseObject = {};
     var responseIter = 0;
+    var responseLength = saved_sections.length;
+
+    //TODO:  Factor patient ID further up stack.
     var patient_id = 'test';
 
     function checkComplete(current_iteration) {
-        if (current_iteration == (saved_sections.length - 1)) {
+        responseIter++;
+        if (responseIter === responseLength) {
             callback(null, responseObject);
         }
     }
 
-    function getSavedSection(iteration, section) {
-        try {
-            record["get" + record.capitalize(section)](patient_id, function(err, savedObj) {
-                //console.log('hit');
+    function getSavedSection(section, callback) {
+        record["get" + record.capitalize(section)](patient_id, function(err, savedObj) {
+            if (err) {
+                callback(err);
+            } else {
                 responseObject[section] = savedObj;
-                checkComplete(iteration);
-            });
-        } catch (section_err) {
-            console.log(section_err);
-        }
+                callback(null);    
+            }       
+        });
     }
 
     for (var iSection in saved_sections) {
-        getSavedSection(iSection, saved_sections[iSection]);
+        getSavedSection(saved_sections[iSection], function(err) {
+            if (err) {
+                callback(err);
+            } else {
+                checkComplete();    
+            }
+        });
     }
 }
 
@@ -189,14 +140,11 @@ function getSavedRecord(saved_sections, callback) {
 function parseRecord(record_type, record_data, callback) {
     if (record_type === 'application/xml' || record_type === 'text/xml') {
         extractRecord(record_data, function(err, xml_type, parsed_record) {
-
             if (err) {
                 callback(err);
             } else {
                 if (xml_type === 'ccda') {
-
                     callback(null, xml_type, parsed_record);
-
                 } else {
                     callback(null, null);
                 }
@@ -210,17 +158,14 @@ function parseRecord(record_type, record_data, callback) {
 //Pulls saved components from DB, reconciles with incoming.
 function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
 
-
     var sectionArray = [];
 
     for (var parsed_section in parsed_record) {
         sectionArray.push(parsed_section);
     }
 
-    //console.log(sectionArray);
-
-
-    getSavedRecord(sectionArray, function(err, saved_record) {
+    //Get Saved Records.
+    getSavedRecords(sectionArray, function(err, saved_record) {
         if (err) {
             callback(err);
         } else {
@@ -314,8 +259,7 @@ function processUpload(recordUpload, callback) {
     }
 }
 
-//Routes.
-
+//Retrieves a specific file for download.
 app.get('/api/v1/storage/record/:identifier', function(req, res) {
     record.getRecord(req.params.identifier, function(err, filename, returnFile) {
         if (err) {
