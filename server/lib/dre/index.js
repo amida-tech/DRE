@@ -13,22 +13,14 @@ var _ = require("underscore");
 //This new object should have a reviewed flag on it.
 //On review, a flag toggle needs to be set up to enable one view or disable the other.
 
-
-
 function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
 
-
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
-
-        //console.log(srcArray);
 
         var returnArray = [];
         var returnPartialArray = [];
 
-        function updateDuplicate(iter, section, update_id, callback) {
-
-            //console.log(section);
-            //console.log(iter);
+        function updateDuplicate(section, update_id, callback) {
 
             var mergeInfo = {
                 record_id: newSourceID,
@@ -38,33 +30,39 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 if (err) {
                     callback(err);
                 } else {
-                    callback(null, iter);
+                    callback(null);
                 }
             });
+
         }
 
+        var loopCount = 0;
+        var loopTotal = srcMatches.length;
 
-        function checkLoopComplete(iteration, length) {
+        function checkLoopComplete() {
 
-            if (iteration === length) {
+            if (loopCount === loopTotal) {
                 callback(null, section, returnArray, returnPartialArray);
             }
         }
 
         for (var i = 0; i < srcMatches.length; i++) {
-            //console.log(section);
-            //console.log(srcMatches[i]);
+
             if (srcMatches[i].match === 'duplicate') {
+
                 //If duplicate, don't push to save array and make duplicate entry in log.
                 var matchIndex = srcMatches[i].dest_id || 0;
-                updateDuplicate(i, section, baseArray[matchIndex]._id, function(err, resIter) {
+                updateDuplicate(section, baseArray[matchIndex]._id, function(err, resIter) {
                     if (err) {
                         console.error(err);
                     } else {
-                        checkLoopComplete(resIter, (srcMatches.length - 1));
+                        loopCount++;
+                        checkLoopComplete();
                     }
                 });
+
             } else if (srcMatches[i].match === 'new') {
+
                 //If new, push the object to the return.
                 var tmpSrcIndex = 0;
                 if (srcMatches[i].src_id === undefined) {
@@ -73,21 +71,20 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 }
 
                 returnArray.push(srcArray[tmpSrcIndex]);
-                checkLoopComplete(i, (srcMatches.length - 1));
+
+                loopCount++;
+                checkLoopComplete();
+
             } else if (srcMatches[i].match === 'diff') {
 
-                //If diff, need to save source record for diff.
-                //Added conditional logic to override only 'diff' return.
-
                 //SHIM:  Holder for 'New' Demographics fix.
-
                 var tmpMatchRecId
                 if (baseArray.length === 0) {
                     tmpMatchRecId = null;
                 } else {
                     tmpMatchRecId = baseArray[0]._id;
                 }
-                //console.log(srcArray);
+
                 //Diffs always zero, can take only array object.
                 returnPartialArray.push({
                     partial_array: srcArray[0],
@@ -95,22 +92,19 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                     match_record_id: tmpMatchRecId
                 });
                 
-                checkLoopComplete(i, (srcMatches.length - 1));
-
-                
-
+                loopCount++;
+                checkLoopComplete();
 
             } else if (srcMatches[i].match === 'partial') {
-                //If partial, save partial.
-                //TODO:  Inject partial save.
-
 
                 returnPartialArray.push({
                     partial_array: srcArray[srcMatches[i].src_id],
                     partial_match: srcMatches[i],
                     match_record_id: baseArray[srcMatches[i].dest_id]._id
                 });
-                checkLoopComplete(i, (srcMatches.length - 1));
+
+                loopCount++;
+                checkLoopComplete();
             }
         }
 
@@ -162,7 +156,6 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
 
 //Main function, performs match and dedupes.
-
 function reconcile(newObject, baseObject, newSourceID, callback) {
 
     newObjectForParsing = newObject;
@@ -177,17 +170,42 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
         }
     }
 
+
+    //BB Matching library expects object for demographics.
+    function prepDemographics () {
+        if (baseObjectForParsing.demographics instanceof Array) {
+            if (baseObjectForParsing.demographics.length > 0) {
+                baseObjectForParsing.demographics = baseObjectForParsing.demographics[0];    
+            }
+        }
+        if (newObjectForParsing.demographics instanceof Array) {
+            if (newObjectForParsing.demographics.length > 0) {
+                newObjectForParsing.demographics = newObjectForParsing.demographics[0];    
+            }
+        }
+    }
+    prepDemographics();
+
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
 
-    //console.log(JSON.stringify(newObjectForParsing, null, 10));
-    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
+    //console.log(JSON.stringify(newObjectForParsing.demographics, null, 10));
+    //console.log(JSON.stringify(baseObjectForParsing.demographics, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
     //console.log(JSON.stringify(matchResult, null, 10));
 
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
 
+    function revertDemographics () {
+        if (_.isObject(newObjectForParsing.demographics) === true && _.isArray(newObjectForParsing.demographics) === false) {
+            newObjectForParsing.demographics = new Array(newObjectForParsing.demographics);
+        }
+        if (_.isObject(baseObjectForParsing.demographics) === true && _.isArray(baseObjectForParsing.demographics) === false) {
+            baseObjectForParsing.demographics = new Array(baseObjectForParsing.demographics);
+        }
+    }
+    revertDemographics();
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
         //console.log(JSON.stringify(newObjectPostMatch, null, 10));

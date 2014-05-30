@@ -17,9 +17,6 @@ limitations under the License.
 exports.saveMatch = function(dbinfo, matchObject, callback) {
     var Model = dbinfo.matchModels[matchObject.entry_type];
     var saveMatch = new Model(matchObject);
-
-    //console.log(JSON.stringify(matchObject, null, 4));
-
     saveMatch.save(function(err, saveResults) {
         if (err) {
             callback(err);
@@ -44,8 +41,10 @@ exports.getMatch = function(dbinfo, type, matchId, callback) {
 
 exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback) {
     var model = dbinfo.matchModels[type];
-    var query = model.findOne({_id: identifier});
-    query.exec(function (err, update_record) {
+    var query = model.findOne({
+        _id: identifier
+    });
+    query.exec(function(err, update_record) {
         if (err) {
             callback(err);
         } else {
@@ -61,18 +60,16 @@ exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback)
             } else {
                 callback('No update determination found.');
             }
-            callback(null, update_record);
         }
     });
 }
 
 exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) {
 
-
     var model = dbinfo.matchModels[type];
     var allFields = typeFields + ' ' + recordFields;
 
-    var query = model.find().populate('entry_id match_entry_id', allFields);
+    var query = model.find().populate('entry_id match_entry_id', allFields).lean();
     query.exec(function (err, matchResults) {
         if (err) {
             callback(err);
@@ -89,10 +86,13 @@ exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) 
     });
 };
 
-/*
 exports.count = function(dbinfo, type, conditions, callback) {
-    var model = dbinfo.mergeModels[type];
-    model.count(conditions, function(err, count) {
+    var model = dbinfo.matchModels[type];
+    var query = model.count()
+    query.where('determination').in([null, false]);
+    //Ignoring Conditions
+    //query.where(conditions);
+    query.exec(conditions, function(err, count) {
         callback(err, count);
     });
-};*/
+};

@@ -109,9 +109,9 @@ describe('CCD_1', function() {
     
     it('saveDemographics/getDemographics', function(done) {
         var demographics = ccd.demographics;
-        section.saveNewEntries(dbinfo, 'demographics', 'pat1', demographics, fileId, function(err) {
+        section.saveNewEntries(dbinfo, 'demographic', 'pat1', demographics, fileId, function(err) {
             assert.notOk(err, 'saveProcedures failed');
-            section.getSection(dbinfo, 'demographics', 'pat1', function(err, results) {
+            section.getSection(dbinfo, 'demographic', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
                 assert.deepEqual(cleanResults[0], demographics, 'write, read failed');
                 done();

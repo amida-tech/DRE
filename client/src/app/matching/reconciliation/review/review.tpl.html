@@ -11,19 +11,35 @@
 				<div class="panel panel-default" style="overflow: visible;">
 					<div class="panel-heading ">
 						<div class="panel-title">
-							<h4 ng-if="partial_matches.percent">Partial ({{partial_matches[index].percent}}%) Match</h4>
-							<h4 ng-if="partial_matches.diff">Updated (Different) Information</h4>
+							<h4 ng-if="partial_matches.entry_type!=='demographic' && partial_matches.entry_type!=='social'">Partial ({{partial_matches.percent}}%) Match</h4>
+							<h4 ng-if="partial_matches.entry_type==='demographic' || partial_matches.entry_type==='social'">Updated (Different) Information</h4>
 						</div>
 					</div>
 					<div class="panel-body">
 						<!--Header-->
 						<ng-include src="dynamicTemplatePath"></ng-include>
 
+
+						<table class="col-md-12 ">
+							<tbody>
+								<tr>
+									<td class="col-md-2" style="text-align: center;"><button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+									</td>
+									<td class=" col-md-5" style="text-align: center;"><button type="button" class="btn btn-warning" ng-click="saveReview()" ng-if="partial_matches.entry_type!=='demographic' && partial_matches.entry_type!=='social'">Create New</button>
+									</td>
+									<td class=" col-md-5" style="text-align: center;"><button type="button" class="btn btn-success" ng-click="saveReview()">Merge</button>
+									</td>
+								</tr>
+						</tbody>
+						</table>
+
+						<!--
 						<div ng-if="partial_matches.percent && !partial_matches.subelements"> 
 							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record with New Entry</button>
 							<button type="button" class="btn btn-warning" ng-click="ignoreReview()">New Entry doesn't match Master Record</button>
 
 							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+						
 						</div>
 
 						<div ng-if="partial_matches.percent && partial_matches.subelements"> 
@@ -36,7 +52,7 @@
 
 						<div ng-if="partial_matches.diff"> 
 							<button type="button" class="btn btn-success" ng-click="saveReview()">Update Master Record</button>
-							<button type="button" class="btn btn-warning" ng-click="saveReview()">Ignore New Entry</button>
+							<button type="button" class="btn btn-warning" ng-click="saveReview()">Add New Entry as separate record</button>
 
 							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
 						</div>
@@ -46,9 +62,20 @@
 
 							<button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
 						</div>
+						-->
 
 
 					</div>
+				</div>
+
+				<!-- debug JSON output -->
+				<div ng-if="debug">
+				<br/>
+				<br/>
+				<table  class="table col-md-12">
+					<tr><td class="col-md-6">{{src_el | json}}</td><td class="col-md-6">{{dest_el |json}}</td></tr>
+					<tr><td colspan="2">{{partial_matches |json}}</td></tr>
+				</table>
 				</div>
 			</div>
 		</div>
