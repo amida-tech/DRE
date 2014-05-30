@@ -90,7 +90,17 @@
                 <strong>Route:</strong> {{dest_el.administration.route.name}}
             </td>
         </tr>
-
+        <tr>
+            <td style="text-align: right;">
+                <span class="label label-info" ng-if="diff.precondition==='new'">Different</span>
+                <strong>Precondition:</strong>
+            </td>
+            <td>{{src_el.precondition.value.name}}
+                <a ng-click="merge('precondition')" class="pull-right" ng-if="diff.precondition==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
+            </td>
+            <td>{{dest_el.precondition.value.name}}
+            </td>
+        </tr>
     </tbody>
 </table>
 
