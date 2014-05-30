@@ -585,6 +585,49 @@ describe('Results API - Test Merged Matches', function() {
 	var base_id = '';
 	var match_id = '';
 
+	var match_id = '';
+
+	var base_id = '';
+	var base_object = {};
+
+	var update_id = '';
+	var tmp_updated_entry = {
+    "code" : "2160-1",
+    "code_system_name" : "LOINC",
+    "identifiers" : [ 
+        {
+            "identifier" : "ce19d2be-3d3b-44ea-95f1-5a0a04586377",
+        }
+    ],
+    "name" : "Creatinine [Mass/volume] in Serum or Plasma STuff",
+    "results" : [ 
+        {
+            "freeTextValue" : "PLT (135-145 meq/l)",
+            "name" : "Creatinine [Mass/volume] in Serum or Plasma",
+            "code" : "2160-0",
+            "code_system_name" : "LOINC",
+            "value" : 12.0,
+            "unit" : "mg/dL",
+            "translations" : [],
+            "interpretations" : [ 
+                "abnormal"
+            ],
+            "date" : [ 
+                {
+                    "date" : "2012-11-16T00:00:00.000Z",
+                    "precision" : "year"
+                }
+            ],
+            "identifiers" : [ 
+                {
+                    "identifier" : "9cd43fa7-db31-4c29-ab30-83f92fdcaa20",
+                }
+            ]
+        }
+    ],
+    "translations" : []
+}
+
 	it('Update Result Match Records Merged', function(done) {
 
 		api.get('/api/v1/matches/results')
@@ -593,19 +636,35 @@ describe('Results API - Test Merged Matches', function() {
 				if (err) {
 					done(err);
 				} else {
+					//console.log(JSON.stringify(res.body.matches, null, 10));
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/results/' + update_id)
-						.send({
-							determination: "merged"
-						})
+					//Still need this object to check metadata.
+					api.get('/api/v1/record/results')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								done();
+								for (var i = 0; i < res.body.results.length; i++) {
+									if (res.body.results[i]._id === base_id) {
+										base_object = res.body.results[i];
+									}
+								}
+								api.post('/api/v1/matches/results/' + update_id)
+									.send({
+										determination: "merged",
+										updated_entry: tmp_updated_entry
+									})
+									.expect(200)
+									.end(function(err, res) {
+										if (err) {
+											done(err);
+										} else {
+											done();
+										}
+									});
 							}
 						});
 				}
@@ -624,14 +683,36 @@ describe('Results API - Test Merged Matches', function() {
 						total_results++;
 					}
 					if (res.body.results[iEntry]._id === base_id) {
+
 						//console.log(res.body.results[iEntry]);
-						//expect(res.body.results[iEntry].date[0].precision).to.equal('month');
-						expect(res.body.results[iEntry].metadata.attribution.length).to.equal(2);
+						//console.log(tmp_updated_entry);
+
+						//SHIM in empty arrays.
+
+						for (var iFind in res.body.results[iEntry].results) {
+							if (res.body.results[iEntry].results[iFind].translations === undefined) {
+								res.body.results[iEntry].results[iFind].translations = [];
+							}
+						}
+
+
+						if (res.body.results[iEntry].translations === undefined) {
+							res.body.results[iEntry].translations = [];
+						}
+
+						//Test each component.
+						expect(res.body.results[iEntry].code).to.deep.equal(tmp_updated_entry.code);
+						expect(res.body.results[iEntry].code_system_name).to.deep.equal(tmp_updated_entry.code_system_name);
+						expect(res.body.results[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
+						expect(res.body.results[iEntry].name).to.deep.equal(tmp_updated_entry.name);
+						expect(res.body.results[iEntry].results).to.deep.equal(tmp_updated_entry.results);
+						expect(res.body.results[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
+						//Metadata slightly different test.
+						expect(res.body.results[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+
 					}
 				}
 				expect(total_results).to.equal(0);
-				//console.log(base_id);
-
 				done();
 			});
 	});
