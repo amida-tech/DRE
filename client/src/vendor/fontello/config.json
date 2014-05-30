@@ -1,0 +1,34 @@
+{
+  "name": "merging",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "4bcb3aaa98736be3027bef7c76c55021",
+      "css": "flow-branch",
+      "code": 59393,
+      "src": "entypo"
+    },
+    {
+      "uid": "5f88095dc5e638863a0c733e99c32568",
+      "css": "flow-parallel",
+      "code": 59392,
+      "src": "entypo"
+    },
+    {
+      "uid": "c1bea2b4c01d1d4bd1e4e1f79e51cdd2",
+      "css": "flow-merge",
+      "code": 59394,
+      "src": "typicons"
+    },
+    {
+      "uid": "ccfaa7f5fe179987bd366051345ba985",
+      "css": "flow-parallel-1",
+      "code": 59395,
+      "src": "typicons"
+    }
+  ]
+}

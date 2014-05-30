@@ -13,7 +13,7 @@ module.exports = function(grunt) {
   // Default task.
 
   grunt.registerTask('default', ['jshint', 'build']);
-  grunt.registerTask('build', ['clean', 'copy:assets', 'copy:partials', 'copy:vendor', 'concat']);
+  grunt.registerTask('build', ['clean', 'copy:assets', 'copy:partials', 'copy:vendor', 'copy:license', 'concat']);
   //grunt.registerTask('default', ['jshint','build','karma:unit']);
   //grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy:assets']);
   //grunt.registerTask('release', ['clean','html2js','uglify','jshint','karma:unit','concat:index', 'recess:min','copy:assets']);
@@ -69,7 +69,16 @@ module.exports = function(grunt) {
       vendor: {
         files: [{
           dest: '<%= distdir %>/fonts',
-          src: ['bootstrap/fonts/*'],
+          src: ['bootstrap/fonts/*', 'fontello/font/*'],
+          expand: true,
+          flatten: true,
+          cwd: 'src/vendor'
+        }]
+      },
+      license: {
+        files: [{
+          dest: '<%= distdir %>',
+          src: ['fontello/LICENSE.txt'],
           expand: true,
           flatten: true,
           cwd: 'src/vendor'
@@ -92,7 +101,7 @@ module.exports = function(grunt) {
         }
       },
       css: {
-        src: ['src/vendor/bootstrap/css/bootstrap.min.css', 'src/vendor/font-awesome/font-awesome.min.css'],
+        src: ['src/vendor/bootstrap/css/bootstrap.min.css', 'src/vendor/font-awesome/font-awesome.min.css', 'src/vendor/fontello/css/merging.css'],
         dest: '<%= distdir %>/<%= pkg.name %>.css'
       },
       angular: {

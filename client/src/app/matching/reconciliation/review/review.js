@@ -41,7 +41,7 @@ angular.module('dre.match.review', [])
         });
 
         //set to false to hide JSON debug output in UI/templates
-        $scope.debug=true;
+        $scope.debug=false;
 
         $scope.section = $routeParams["section"];
         $scope.index = $routeParams["index"];
