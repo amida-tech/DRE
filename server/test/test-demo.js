@@ -112,7 +112,7 @@ describe('Verifying demo R1.0 sample xml files', function() {
         //console.log(JSON.stringify(m,null,4));
 
         for (var section in lookup) {
-            for (el in m0.match[lookup[section]]) {
+            for (var el in m0.match[lookup[section]]) {
                 expect(m0.match[lookup[section]][el].match).to.equal("new");
             }
         }
@@ -129,7 +129,7 @@ describe('Verifying demo R1.0 sample xml files', function() {
         //console.log(JSON.stringify(m,null,4));
 
         for (var section in lookup) {
-            for (el in m.match[lookup[section]]) {
+            for (var el in m.match[lookup[section]]) {
                 expect(m.match[lookup[section]][el].match).to.equal("duplicate");
             }
         }
@@ -146,7 +146,7 @@ describe('Verifying demo R1.0 sample xml files', function() {
         for (var section in lookup) {
             //console.log(lookup[section]);
             //console.log(m2.match[lookup[section]]);
-            for (el in m2.match[lookup[section]]) {
+            for (var el in m2.match[lookup[section]]) {
                 expect(m2.match[lookup[section]][el].match).to.not.equal("partial");
                 assert.include(["duplicate", "new"], m2.match[lookup[section]][el].match);
             }

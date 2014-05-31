@@ -14,8 +14,9 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     jshint: {
-      files: [],
+      files: [],//['gruntFile.js', 'package.json', '*.js', './lib/*.js','./lib/**/*.js', './test/*.js', './test/**/*.js'],
       options: {
+        browser: true,
         curly: true,
         eqeqeq: true,
         immed: true,
@@ -23,10 +24,11 @@ module.exports = function(grunt) {
         newcap: true,
         noarg: true,
         sub: true,
-        undef: true,
+        undef: false,
         boss: true,
         eqnull: true,
         node: true,
+        expr:true,
         globals: {
           'it': true,
           'describe': true,
