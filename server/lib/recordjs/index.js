@@ -94,8 +94,8 @@ exports.recordCount = function(patKey, callback) {
 
 // Merges
 
-exports.getMerges = function(type, typeFields, recordFields, callback) {
-    merge.getMerges(dbinfo, sectionToType[type], typeFields, recordFields, callback);
+exports.getMerges = function(patientKey, type, typeFields, recordFields, callback) {
+    merge.getMerges(dbinfo, patientKey, sectionToType[type], typeFields, recordFields, callback);
 };
 
 exports.setMerge = function(mergeObject, callback) {
