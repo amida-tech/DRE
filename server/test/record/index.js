@@ -15,7 +15,7 @@ limitations under the License.
 ======================================================================*/
 
 var chai = require('chai');
-var util = require('util')
+var util = require('util');
 var path = require('path');
 var bb = require('blue-button');
 var fs = require('fs');
@@ -38,7 +38,6 @@ describe('CCD_1', function() {
     var fileId = null;
     var allergies = null;
     var storedAllergies = null;
-    var dbinfo = null;
     
     before(function(done) {
         var filepath  = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
@@ -107,11 +106,11 @@ describe('CCD_1', function() {
         });
     });
     
-    xit('saveDemographics/getDemographics', function(done) {
+    it('saveDemographics/getDemographics', function(done) {
         var demographics = ccd.demographics;
-        section.saveNewEntries(dbinfo, 'demographics', 'pat1', demographics, fileId, function(err) {
+        section.saveNewEntries(dbinfo, 'demographic', 'pat1', demographics, fileId, function(err) {
             assert.notOk(err, 'saveProcedures failed');
-            section.getSection(dbinfo, 'demographics', 'pat1', function(err, results) {
+            section.getSection(dbinfo, 'demographic', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
                 assert.deepEqual(cleanResults[0], demographics, 'write, read failed');
                 done();
@@ -178,7 +177,7 @@ describe('CCD_1', function() {
     });
     
     it('getMerges', function(done) {
-        merge.getMerges(dbinfo, 'allergy', 'name severity', 'filename uploadDate', function(err, mergeList) {
+        merge.getMerges(dbinfo, 'pat1', 'allergy', 'name severity', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 done(err);
             } else {
@@ -188,7 +187,7 @@ describe('CCD_1', function() {
                     order[allergies[i].name] = i;
                 }
                 expect(n).to.equal(mergeList.length);
-                for (var i=0; i<n; ++i) {
+                for (i=0; i<n; ++i) {
                     var mergeRecord = mergeList[i];
                     var index = order[mergeRecord.entry_id.name];
                     expect(index).to.exist;

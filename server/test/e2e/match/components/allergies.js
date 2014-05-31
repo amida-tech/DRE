@@ -606,7 +606,7 @@ describe('Allergies API - Test Merged Matches', function() {
     "severity" : "Moderate to severe",
     "status" : "Inactive",
     "translations" : []
-}
+};
 
 	it('Update Allergies Match Records Merged', function(done) {
 
@@ -716,7 +716,7 @@ describe('Allergies API - Test Merged Matches', function() {
 				expect(res.body.merges.length).to.equal(13);
 				var newCnt = 0;
 				var dupCnt = 0;
-				var mrgCnt = 0
+				var mrgCnt = 0;
 				for (var i in res.body.merges) {
 					if (res.body.merges[i].merge_reason === 'new') {
 						newCnt++;

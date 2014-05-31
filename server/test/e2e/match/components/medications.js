@@ -625,7 +625,7 @@ describe('Medications API - Test Merged Matches', function() {
         "translations" : []
     },
     "status" : "Prescribed"
-}
+};
 
 	it('Update Medication Match Records Merged', function(done) {
 
@@ -757,7 +757,7 @@ describe('Medications API - Test Merged Matches', function() {
 				expect(res.body.merges.length).to.equal(7);
 				var newCnt = 0;
 				var dupCnt = 0;
-				var mrgCnt = 0
+				var mrgCnt = 0;
 				for (var i in res.body.merges) {
 					if (res.body.merges[i].merge_reason === 'new') {
 						newCnt++;

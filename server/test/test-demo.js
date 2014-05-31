@@ -1,3 +1,5 @@
+"use strict";
+
 /*jshint -W117 */
 // relaxed JSHint to allow use of xit and xdescribe to disable some test cases (make them pending)
 

@@ -42,7 +42,7 @@ var sectionToType = exports.sectionToType = {
 var typeToSchemaDesc = {};
 Object.keys(typeToSection).forEach(function(type) {
     var desc = models.modelDescription('ccda_' + typeToSection[type]);
-    if (!desc) throw new Error('cannot get schema for ' + 'ccda_' + typeToSection[type]);
+    if (!desc) {throw new Error('cannot get schema for ' + 'ccda_' + typeToSection[type]);}
     typeToSchemaDesc[type] = desc;
 });
 //typeToSchemaDesc.medication.date = typeToSchemaDesc.medication.date[0];
@@ -94,8 +94,8 @@ exports.recordCount = function(patKey, callback) {
 
 // Merges
 
-exports.getMerges = function(type, typeFields, recordFields, callback) {
-    merge.getMerges(dbinfo, sectionToType[type], typeFields, recordFields, callback);
+exports.getMerges = function(patientKey, type, typeFields, recordFields, callback) {
+    merge.getMerges(dbinfo, patientKey, sectionToType[type], typeFields, recordFields, callback);
 };
 
 exports.setMerge = function(mergeObject, callback) {

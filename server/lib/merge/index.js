@@ -11,7 +11,7 @@ app.get('/api/v1/merges/:component', function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
-        record.getMerges(req.params.component, 'name severity', 'filename uploadDate', function(err, mergeList) {
+        record.getMerges('test', req.params.component, 'name severity', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 res.send(400, err);
             } else {
@@ -38,7 +38,7 @@ app.get('/api/v1/merges', function(req, res) {
 
 
     for (var iMerge in supportedComponents) {
-        record.getMerges(supportedComponents[iMerge], 'name severity product.name value', 'filename uploadDate', function(err, mergeList) {
+        record.getMerges('test', supportedComponents[iMerge], 'name severity product.name value', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 res.send(400, err);
             } else {
