@@ -9,6 +9,17 @@ angular.module('services.recordFunctions', [])
             return sortedArray[0];
         };
 
+
+        this.truncateName = function(inputName) {
+            console.log(inputName.length);
+            if (inputName.length > 47) {
+                inputName = inputName.substring(0, 47) + "...";
+                console.log(inputName);
+            }
+            return inputName;
+        };
+
+
         //Returns printable array from address.
         this.formatAddress = function(address) {
             var displayAddress = [];

@@ -53,6 +53,7 @@ angular.module('dre.record.encounters', [])
 
     $scope.updateFields = function() {
       for (var i in $scope.encounters) {
+        $scope.encounters[i].name = recordFunctions.truncateName($scope.encounters[i].name);
         recordFunctions.formatDate($scope.encounters[i].date);
         $scope.encounters[i].date_weight = $scope.encounters[i].date[0].date;
         for (var ii in $scope.encounters[i].locations) {

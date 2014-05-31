@@ -76,9 +76,11 @@ angular.module('dre.record.results', [])
 
     $scope.updateField = function() {
       for (var i in $scope.results) {
+
         resultDate($scope.results[i]);
 
         recordFunctions.formatDate($scope.results[i].minDate);
+        $scope.results[i].name = recordFunctions.truncateName($scope.results[i].name);
 
         for (var iRes in $scope.results[i].results) {
           recordFunctions.formatQuantity($scope.results[i].results[iRes]);

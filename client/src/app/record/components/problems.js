@@ -104,6 +104,7 @@ angular.module('dre.record.problems', [])
 
     $scope.updateFields = function() {
       for (var i in $scope.problems) {
+        $scope.problems[i].name = recordFunctions.truncateName($scope.problems[i].name);
         problemStatus($scope.problems[i]);
         onsetAge($scope.problems[i]);
         recordFunctions.formatDate($scope.problems[i].date);
