@@ -57,6 +57,7 @@ angular.module('dre.record.immunizations', [])
         recordFunctions.formatDate($scope.immunizations[i].date);
   
         $scope.immunizations[i].date_weight = $scope.immunizations[i].date[0].date;
+        $scope.immunizations[i].name = recordFunctions.truncateName($scope.immunizations[i].product.name);
   
         if ($scope.immunizations[i].administration.quantity) {
           recordFunctions.formatQuantity($scope.immunizations[i].administration.quantity);

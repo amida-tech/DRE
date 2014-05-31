@@ -39,8 +39,10 @@
 			<a data-toggle="collapse" data-parent="#accordian-problems" data-target="#problem-{{$index}}">
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
-					<span style="text-transform:uppercase;">{{problem.name}} - {{problem.status}}</span>
-					<span style="text-transform:uppercase;" ng-show="problem.negation_indicator">NO - </span>
+					<span style="text-transform:uppercase;" ng-show="problem.negation_indicator">NO </span>
+					<span style="text-transform:uppercase;">{{problem.name}}</span>
+					<span style="text-transform:uppercase;" ng-show="problem.negation_indicator">FOUND</span>
+					<span style="text-transform:uppercase;">- {{problem.status}}</span>
 					<span class="pull-right" style="text-transform:uppercase;" ng-show="problem.statusFlag">{{problem.date[0].displayDate}}</span>
 					<span class="pull-right" style="text-transform:uppercase;" ng-hide="problem.statusFlag">{{problem.date[1].displayDate}}</span>
 				</div>
