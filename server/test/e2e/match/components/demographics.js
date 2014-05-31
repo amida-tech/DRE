@@ -23,8 +23,6 @@ var fs = require('fs');
 var path = require('path');
 var database = require('mongodb').Db;
 
-var record_id = '';
-
 function removeCollection(inputCollection, callback) {
 	var db;
 	database.connect(databaseLocation, function(err, dbase) {
