@@ -24,15 +24,14 @@ cd client
 npm install
 grunt
 
-#run server
-cd ..
-npm install
-node server/server.js
-
 #run server side tests
+cd ..
 cd server
 npm install
 grunt
+
+#run server
+node server.js
 
 # go to localhost:3000 in your browser
 ```
