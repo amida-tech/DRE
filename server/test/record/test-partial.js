@@ -1,25 +1,11 @@
-/*=======================================================================
-Copyright 2014 Amida Technology Solutions (http://amida-tech.com)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-======================================================================*/
+"use strict";
 
 var chai = require('chai');
-var util = require('util')
+var util = require('util');
 var path = require('path');
 var ObjectId = require('mongodb').ObjectID;
 var db = require('../../lib/recordjs/db');
-var section = require('../../lib/recordjs/section')
+var section = require('../../lib/recordjs/section');
 
 var expect = chai.expect;
 var assert = chai.assert;
@@ -37,13 +23,13 @@ function getDBConnection(callback) {
     typeToSection.testallergy = 'testallergies';
     options.typeToSection = typeToSection;
 
-    var typeToSchemaDesc = {}
+    var typeToSchemaDesc = {};
     typeToSchemaDesc.testallergy = {
         date: Date,
         name: String,
         severity: String,
         reviewed: Boolean
-    }
+    };
 
     options.typeToSchemaDesc = typeToSchemaDesc;
 
@@ -86,7 +72,7 @@ describe('Save Partial Records:', function() {
         });
     });
 
-        xit('Save Test New Record', function(done) {
+    xit('Save Test New Record', function(done) {
         var test_partial_entry = [{
             name: 'fake_record'
         }];
@@ -106,15 +92,15 @@ describe('Get Partial Records:', function(done) {
 
     before(function(done) {
         if (db_connection === undefined) {
-        getDBConnection(function(err, conn) {
-            if (err) {
-                done(err);
-            } else {
-                //console.log(conn);
-                db_connection = conn;
-                done();
-            }
-        });
+            getDBConnection(function(err, conn) {
+                if (err) {
+                    done(err);
+                } else {
+                    //console.log(conn);
+                    db_connection = conn;
+                    done();
+                }
+            });
         } else {
             done();
         }

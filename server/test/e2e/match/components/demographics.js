@@ -410,7 +410,7 @@ describe('Demographic API - Test Merged Matches', function() {
 				done();
 			}
 		});
-	})
+	});
 
 	var match_id = '';
 
@@ -495,7 +495,7 @@ describe('Demographic API - Test Merged Matches', function() {
 		}],
 		"race_ethnicity": "White",
 		"religion": "Christian (non-Catholic, non-specific)"
-	}
+	};
 
 	it('Update Demographic Match Records Merged', function(done) {
 
@@ -620,7 +620,7 @@ describe('Demographic API - Test Merged Matches', function() {
 				expect(res.body.merges.length).to.equal(3);
 				var newCnt = 0;
 				var dupCnt = 0;
-				var mrgCnt = 0
+				var mrgCnt = 0;
 				for (var i in res.body.merges) {
 					if (res.body.merges[i].merge_reason === 'new') {
 						newCnt++;
