@@ -128,13 +128,13 @@
                 <strong>Languages:</strong>
             </td>
             <td>
-                {{src_el.languages[0].language}}
+                {{src_el.languages[0].language |bb_language}}
                 <br/>{{src_el.languages[0].mode}}
                 <br/>{{src_el.languages[0].proficiency}}
                 <a ng-click="merge('languages')" class="pull-right" ng-if="diff.languages==='new'"><i class="glyphicon glyphicon-import"></i>           </a> 
             </td>
             <td>
-                {{dest_el.languages[0].language}}
+                {{dest_el.languages[0].language |bb_language}}
                 <br/>{{dest_el.languages[0].mode}}
                 <br/>{{dest_el.languages[0].proficiency}}
             </td>
