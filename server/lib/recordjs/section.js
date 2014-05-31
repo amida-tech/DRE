@@ -165,11 +165,12 @@ exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, cal
 };
 
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
+    var Model = dbinfo.models[type];
 
     //This seems to be returning before all saves are complete.
 
     function saveEntry(entryObject, inputSourceID, callback) {
-        var tempEntry = new model(entryObject);
+        var tempEntry = new Model(entryObject);
 
         tempEntry.save(function(err, saveResults) {
             if (err) {
@@ -204,7 +205,6 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
         });
     }
 
-    var model = dbinfo.models[type];
     var saveLoopLength = 0;
     var saveLoopIter = 0;
 
@@ -232,16 +232,14 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
                 //I have no idea what this things point is.
                 entryObject.__index = count + i;
                 entryObject.reviewed = true;
-                saveEntry(entryObject, sourceID, function(err) {
-                    checkLoopComplete();
-                });
+                saveEntry(entryObject, sourceID, checkLoopComplete);
             }
         }
     } else {
-        var entryObject = _.clone(inputArray);
-        entryObject.__index = count;
-        entryObject.reviewed = true;
-        saveEntry(entryObject, sourceID, function(err) {
+        var newEntryObject = _.clone(inputArray);
+        newEntryObject.__index = count;
+        newEntryObject.reviewed = true;
+        saveEntry(newEntryObject, sourceID, function(err) {
             if (err) {
                 callback(err);
             } else {
@@ -296,9 +294,27 @@ exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callba
     });
 };
 
+var saveMatchEntries = exports.saveMatchEntries = function(dbinfo, type, patKey, inputObject, callback) {
+
+    var Model = dbinfo.matchModels[type];
+
+    var tempEntry = new Model(inputObject);
+
+    tempEntry.save(function(err, saveResults) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, saveResults);
+
+        }
+    });
+
+};
+
 //Needs investigation as well as to premature return
 
 exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
+    var Model = dbinfo.models[type];
 
     function saveEntry(entryObject, entryMatch, entrySourceId, sourceRecId, callback) {
 
@@ -369,7 +385,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
         }
 
         //console.log(entryObject);
-        var tempEntry = new model(entryObject);
+        var tempEntry = new Model(entryObject);
         tempEntry.save(function(err, saveResults) {
             if (err) {
                 callback(err);
@@ -394,7 +410,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
     }
 
 
-    var model = dbinfo.models[type];
     var saveLoopLength = 0;
     var saveLoopIter = 0;
 
@@ -425,18 +440,16 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                 entryObject.patKey = patKey;
                 var entryPartialMatch = inputArray[i].partial_match;
                 var entryPartialMatchRecordId = inputArray[i].match_record_id;
-                saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, sourceID, function(err) {
-                    checkLoopComplete();
-                });
+                saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, sourceID, checkLoopComplete);
             }
         }
     } else {
-        var entryObject = _.clone(inputArray);
-        entryObject.__index = count;
-        entryObject.reviewed = false;
-        var entryPartialMatch = inputArray[i].partial_match;
-        var entryPartialMatchRecordId = inputArray[i].match_record_id;
-        saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, function(err) {
+        var newEntryObject = _.clone(inputArray);
+        newEntryObject.__index = count;
+        newEntryObject.reviewed = false;
+        var newEntryPartialMatch = inputArray.partial_match;
+        var newEntryPartialMatchRecordId = inputArray.match_record_id;
+        saveEntry(newEntryObject, newEntryPartialMatch, newEntryPartialMatchRecordId, function(err) {
             if (err) {
                 callback(err);
             } else {
@@ -481,19 +494,3 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
     });
 };
 
-var saveMatchEntries = exports.saveMatchEntries = function(dbinfo, type, patKey, inputObject, callback) {
-
-    var model = dbinfo.matchModels[type];
-
-    var tempEntry = new model(inputObject);
-
-    tempEntry.save(function(err, saveResults) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null, saveResults);
-
-        }
-    });
-
-};
