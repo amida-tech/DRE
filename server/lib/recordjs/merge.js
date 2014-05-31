@@ -17,7 +17,7 @@ exports.getMerges = function(dbinfo, patientKey, type, typeFields, recordFields,
     var query = model.find({patKey: patientKey});
     query.where('archived').in([null, false]);
     query.where('entry_type', type);
-    query.lean()
+    query.lean();
     query.populate('entry_id record_id', allFields);
 
     query.exec(function (err, mergeResults) {

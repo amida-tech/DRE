@@ -604,7 +604,7 @@ describe('Vitals API - Test Merged Matches', function() {
     "translations" : [],
     "unit" : "[lb_av]",
     "value" : 178
-}
+};
 
 	it('Update Vital Match Records Merged', function(done) {
 
@@ -715,7 +715,7 @@ describe('Vitals API - Test Merged Matches', function() {
 				expect(res.body.merges.length).to.equal(33);
 				var newCnt = 0;
 				var dupCnt = 0;
-				var mrgCnt = 0
+				var mrgCnt = 0;
 				for (var i in res.body.merges) {
 					if (res.body.merges[i].merge_reason === 'new') {
 						newCnt++;

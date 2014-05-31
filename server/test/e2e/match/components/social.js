@@ -610,7 +610,7 @@ describe('Social API - Test Merged Matches', function() {
 			"precision": "subsecond"
 		}],
 		"value": "Heavy smoker"
-	}
+	};
 
 	it('Update Social Match Records Merged', function(done) {
 
@@ -705,7 +705,7 @@ describe('Social API - Test Merged Matches', function() {
 				expect(res.body.merges.length).to.equal(5);
 				var newCnt = 0;
 				var dupCnt = 0;
-				var mrgCnt = 0
+				var mrgCnt = 0;
 				for (var i in res.body.merges) {
 					if (res.body.merges[i].merge_reason === 'new') {
 						newCnt++;

@@ -54,7 +54,7 @@ exports.saveAllSectionsAsNew = function(dbinfo, patientKey, patientRecord, fileI
         if (count === sectionCount) {
             callback(null);
         }
-    }
+    };
     
     types.forEach(function(type) {
         var sectionName = record.typeToSection[type];

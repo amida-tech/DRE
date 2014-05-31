@@ -42,7 +42,7 @@ var sectionToType = exports.sectionToType = {
 var typeToSchemaDesc = {};
 Object.keys(typeToSection).forEach(function(type) {
     var desc = models.modelDescription('ccda_' + typeToSection[type]);
-    if (!desc) throw new Error('cannot get schema for ' + 'ccda_' + typeToSection[type]);
+    if (!desc) {throw new Error('cannot get schema for ' + 'ccda_' + typeToSection[type]);}
     typeToSchemaDesc[type] = desc;
 });
 //typeToSchemaDesc.medication.date = typeToSchemaDesc.medication.date[0];
@@ -55,7 +55,7 @@ exports.connectDatabase = function connectDatabase(server, dbName, callback) {
         callback = dbName;
         dbName = 'dre';
     }
-    if (dbinfo != null) {
+    if (dbinfo !== null) {
         callback();
         return;
     }
@@ -109,15 +109,15 @@ exports.mergeCount = function(type, conditions, callback) {
 // Matches
 exports.getMatches = function(type, typeFields, recordFields, callback) {
     match.getMatches(dbinfo, sectionToType[type], typeFields, recordFields, callback);
-}
+};
 
 exports.getMatch = function(type, matchId, callback) {
     match.getMatch(dbinfo, sectionToType[type], matchId, callback);
-}
+};
 
 exports.updateMatch = function(type, identifier, updateFields, callback) {
     match.updateMatch(dbinfo, sectionToType[type], identifier, updateFields, callback);   
-}
+};
 
 exports.matchCount = function(type, conditions, callback) {
     match.count(dbinfo, type, conditions, callback);

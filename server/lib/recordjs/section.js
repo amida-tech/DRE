@@ -67,7 +67,7 @@ exports.removeEntry = function(dbinfo, type, patKey, recordId, callback) {
             });
         }
     });
-}
+};
 
 exports.getSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
@@ -83,7 +83,7 @@ exports.getSection = function(dbinfo, type, patKey, callback) {
     query.where('reviewed', true);
     query.where('patKey', patKey);
     query.sort('__index');
-    query.lean()
+    query.lean();
     query.populate('metadata.attribution', 'record_id merge_reason merged');
 
     query.exec(function(err, results) {
@@ -162,7 +162,7 @@ exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, cal
         }
     });
 
-}
+};
 
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
 
@@ -339,7 +339,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     entry_type: type,
                     entry_id: entryId,
                     match_entry_id: matchEntryId
-                }
+                };
 
                 //HACK: extending saving of partial matches
 
@@ -387,7 +387,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                             }
                         });
                     }
-                })
+                });
 
             }
         });
@@ -456,7 +456,7 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
     query.where('reviewed', false);
     query.where('patKey', patKey);
     query.sort('__index');
-    query.lean()
+    query.lean();
     query.populate('metadata.attribution', 'record_id merge_reason merged');
 
 

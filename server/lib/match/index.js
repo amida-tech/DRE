@@ -183,7 +183,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
     if (cleanParameters.determination === 'added') {
         if (updateComponent === 'demographics') {
             callback('Only one demographic accepted');
-        };
+        }
         updateAdded(updateId, updateComponent, function(err, results) {
             saveMatchRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
                 if (err) {
@@ -248,7 +248,7 @@ function formatName(inputName) {
     inputName.displayName = outputName;
 
     return inputName;
-};
+}
 
 
 
@@ -284,12 +284,13 @@ function formatMerges(inputMerge) {
         }
         //Give Demographics a name
         if (inputMerge[iMerge].entry_type === 'demographic') {
+            var tmpName;
             if (inputMerge[iMerge].entry_id.name) {
-                var tmpName = formatName(inputMerge[iMerge].entry_id.name).displayName;
+                tmpName = formatName(inputMerge[iMerge].entry_id.name).displayName;
                 inputMerge[iMerge].entry_id.name = tmpName;
             }
             if (inputMerge[iMerge].match_entry_id.name) {
-                var tmpName = formatName(inputMerge[iMerge].match_entry_id.name).displayName;
+                tmpName = formatName(inputMerge[iMerge].match_entry_id.name).displayName;
                 inputMerge[iMerge].match_entry_id.name = tmpName;
             }
         }
