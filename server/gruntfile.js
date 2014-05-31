@@ -59,7 +59,7 @@ module.exports = function(grunt) {
                     reporter: 'spec',
                     timeout: '10000'
                 },
-                src: ['test/api/*.js', 'test/api/**/*.js', 'test/unit/*.js', 'test/record/*.js', 'test/*.js', 'test/e2e/match/components/*.js', 'test/e2e/match/*.js']
+                src: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
             }
         }
     });
