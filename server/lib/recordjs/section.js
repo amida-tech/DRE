@@ -165,11 +165,12 @@ exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, cal
 };
 
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
+    var Model = dbinfo.models[type];
 
     //This seems to be returning before all saves are complete.
 
     function saveEntry(entryObject, inputSourceID, callback) {
-        var tempEntry = new model(entryObject);
+        var tempEntry = new Model(entryObject);
 
         tempEntry.save(function(err, saveResults) {
             if (err) {
@@ -204,7 +205,6 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
         });
     }
 
-    var model = dbinfo.models[type];
     var saveLoopLength = 0;
     var saveLoopIter = 0;
 
@@ -294,9 +294,27 @@ exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callba
     });
 };
 
+var saveMatchEntries = exports.saveMatchEntries = function(dbinfo, type, patKey, inputObject, callback) {
+
+    var Model = dbinfo.matchModels[type];
+
+    var tempEntry = new Model(inputObject);
+
+    tempEntry.save(function(err, saveResults) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, saveResults);
+
+        }
+    });
+
+};
+
 //Needs investigation as well as to premature return
 
 exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
+    var Model = dbinfo.models[type];
 
     function saveEntry(entryObject, entryMatch, entrySourceId, sourceRecId, callback) {
 
@@ -367,7 +385,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
         }
 
         //console.log(entryObject);
-        var tempEntry = new model(entryObject);
+        var tempEntry = new Model(entryObject);
         tempEntry.save(function(err, saveResults) {
             if (err) {
                 callback(err);
@@ -392,7 +410,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
     }
 
 
-    var model = dbinfo.models[type];
     var saveLoopLength = 0;
     var saveLoopIter = 0;
 
@@ -477,19 +494,3 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
     });
 };
 
-var saveMatchEntries = exports.saveMatchEntries = function(dbinfo, type, patKey, inputObject, callback) {
-
-    var model = dbinfo.matchModels[type];
-
-    var tempEntry = new model(inputObject);
-
-    tempEntry.save(function(err, saveResults) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null, saveResults);
-
-        }
-    });
-
-};
