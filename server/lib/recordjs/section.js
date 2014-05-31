@@ -67,7 +67,7 @@ exports.removeEntry = function(dbinfo, type, patKey, recordId, callback) {
             });
         }
     });
-}
+};
 
 exports.getSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
@@ -83,7 +83,7 @@ exports.getSection = function(dbinfo, type, patKey, callback) {
     query.where('reviewed', true);
     query.where('patKey', patKey);
     query.sort('__index');
-    query.lean()
+    query.lean();
     query.populate('metadata.attribution', 'record_id merge_reason merged');
 
     query.exec(function(err, results) {
@@ -162,7 +162,7 @@ exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, cal
         }
     });
 
-}
+};
 
 exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
 
@@ -232,16 +232,14 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
                 //I have no idea what this things point is.
                 entryObject.__index = count + i;
                 entryObject.reviewed = true;
-                saveEntry(entryObject, sourceID, function(err) {
-                    checkLoopComplete();
-                });
+                saveEntry(entryObject, sourceID, checkLoopComplete);
             }
         }
     } else {
-        var entryObject = _.clone(inputArray);
-        entryObject.__index = count;
-        entryObject.reviewed = true;
-        saveEntry(entryObject, sourceID, function(err) {
+        var newEntryObject = _.clone(inputArray);
+        newEntryObject.__index = count;
+        newEntryObject.reviewed = true;
+        saveEntry(newEntryObject, sourceID, function(err) {
             if (err) {
                 callback(err);
             } else {
@@ -339,7 +337,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     entry_type: type,
                     entry_id: entryId,
                     match_entry_id: matchEntryId
-                }
+                };
 
                 //HACK: extending saving of partial matches
 
@@ -387,7 +385,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                             }
                         });
                     }
-                })
+                });
 
             }
         });
@@ -425,18 +423,16 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                 entryObject.patKey = patKey;
                 var entryPartialMatch = inputArray[i].partial_match;
                 var entryPartialMatchRecordId = inputArray[i].match_record_id;
-                saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, sourceID, function(err) {
-                    checkLoopComplete();
-                });
+                saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, sourceID, checkLoopComplete);
             }
         }
     } else {
-        var entryObject = _.clone(inputArray);
-        entryObject.__index = count;
-        entryObject.reviewed = false;
-        var entryPartialMatch = inputArray[i].partial_match;
-        var entryPartialMatchRecordId = inputArray[i].match_record_id;
-        saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, function(err) {
+        var newEntryObject = _.clone(inputArray);
+        newEntryObject.__index = count;
+        newEntryObject.reviewed = false;
+        var newEntryPartialMatch = inputArray.partial_match;
+        var newEntryPartialMatchRecordId = inputArray.match_record_id;
+        saveEntry(newEntryObject, newEntryPartialMatch, newEntryPartialMatchRecordId, function(err) {
             if (err) {
                 callback(err);
             } else {
@@ -456,7 +452,7 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
     query.where('reviewed', false);
     query.where('patKey', patKey);
     query.sort('__index');
-    query.lean()
+    query.lean();
     query.populate('metadata.attribution', 'record_id merge_reason merged');
 
 

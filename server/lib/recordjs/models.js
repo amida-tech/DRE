@@ -52,7 +52,7 @@ var bbToMongoose = function(description) {
 exports.modelDescription = function(name) {
     var bbd = bb.generateSchema(name);
     var bbdc = (name === 'ccda_demographics') ? bbd : bbd[0];
-    var d = bbToMongoose(bbdc)
+    var d = bbToMongoose(bbdc);
     return d;
 };
 

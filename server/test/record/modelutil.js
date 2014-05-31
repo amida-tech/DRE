@@ -19,7 +19,7 @@ var assert = chai.assert;
 describe('modelutil.js', function() {
     it('empty array/inside object/inside object', function(done) {
         var input = [{
-            //"patKey": "pat1",
+            "patKey": "pat1",
             "precondition": {
                 "value": {
                     "translations": []
@@ -28,10 +28,10 @@ describe('modelutil.js', function() {
                     "translations": []
                 }
             }
-    }];
-    modelutil.mongooseCleanSection(input);
-    expect(input.precondition).to.not.exist;
-    done();
+        }];
+        modelutil.mongooseCleanSection(input);
+        expect(input.precondition).to.not.exist;
+        done();
     });
 });
 

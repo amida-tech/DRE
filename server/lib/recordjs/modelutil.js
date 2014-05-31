@@ -27,7 +27,7 @@ var mongooseCleanDocument = exports.mongooseCleanDocument = function(doc) {
     jsutil.deepEmptyArrayDelete(doc);
     jsutil.deepDeleteEmpty(doc);
     doc._id = id;
-}
+};
 
 var mongooseCleanSection = exports.mongooseCleanSection = function(section) {
     if (Array.isArray(section)) { // all but demographics
@@ -39,11 +39,11 @@ var mongooseCleanSection = exports.mongooseCleanSection = function(section) {
     } else {
         mongooseCleanDocument(section);
     }
-}
+};
 
 exports.mongooseCleanFullRecord = function(record) {
     Object.keys(record).forEach(function(sectionKey) {
-        var section = record[sectionKey]
+        var section = record[sectionKey];
         mongooseCleanSection(section);
     });
 };
@@ -54,7 +54,7 @@ var mongooseToBBModelDocument = exports.mongooseCleanDocument = function(doc) {
         delete result[prop];
     });
     return result;
-}
+};
 
 var mongooseToBBModelSection = exports.mongooseToBBModelSection = function(section) {
     if (Array.isArray(section)) { // all but demographics
@@ -73,16 +73,16 @@ var mongooseToBBModelSection = exports.mongooseToBBModelSection = function(secti
     } else {
         return mongooseToBBModelDocument(section);
     }
-}
+};
 
 exports.mongooseToBBModelFullRecord = function(record) {
     var result = {};
     Object.keys(record).forEach(function(sectionKey) {
-        var section = record[sectionKey]
+        var section = record[sectionKey];
         if (section) {
             section = mongooseToBBModelSection(section);
         }
         result[sectionKey] = section;
     });
     return result;
-}
+};
