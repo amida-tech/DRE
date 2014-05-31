@@ -6,7 +6,7 @@
 		<div class="col-md-9">
 			<div class="col-md-12">
 					<br/>
-					<span class="lead">Storage</span>
+					<span class="lead">My Files</span>
 					<button type="button" class="btn btn-info pull-right" data-target="#uploadModal" data-toggle="modal"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</button>
 					<br/>
 					<br/>
@@ -32,7 +32,7 @@
 				</div>
 			</div>
 
-			<div ng-hide="displayRecords" class="panel-title">No records are currently in storage.</div>
+			<div ng-hide="displayRecords" class="panel-title">No files are currently in storage.</div>
 			<div class="panel-group" ng-show="displayRecords">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -54,21 +54,5 @@
 					</div>
 				</div>
 			</div>
-
-			<!--<div class="panel-group" ng-repeat="file in file_array | orderBy:predicate">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<a>
-							<div class="panel-title">
-								<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
-								<span style="text-transform:lowercase;">{{file.file_name}}</span>
-								<span class="pull-right" style="text-transform:lowercase;">{{file.file_upload_date | date: 'short'}}</span>
-							</div>
-						</a>
-					</div>
-				</div>
-			</div>-->
-
-
 		</div>
 	</div>
