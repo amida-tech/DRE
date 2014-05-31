@@ -65,8 +65,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
                 //If new, push the object to the return.
                 var tmpSrcIndex = 0;
-                if (srcMatches[i].src_id === undefined) {
-                } else {
+                if (srcMatches[i].src_id === undefined) {} else {
                     tmpSrcIndex = srcMatches[i].src_id;
                 }
 
@@ -78,7 +77,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
             } else if (srcMatches[i].match === 'diff') {
 
                 //SHIM:  Holder for 'New' Demographics fix.
-                var tmpMatchRecId
+                var tmpMatchRecId;
                 if (baseArray.length === 0) {
                     tmpMatchRecId = null;
                 } else {
@@ -91,7 +90,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                     partial_match: srcMatches[i],
                     match_record_id: tmpMatchRecId
                 });
-                
+
                 loopCount++;
                 checkLoopComplete();
 
@@ -156,6 +155,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
 
 //Main function, performs match and dedupes.
+
 function reconcile(newObject, baseObject, newSourceID, callback) {
 
     newObjectForParsing = newObject;
@@ -172,15 +172,16 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
 
 
     //BB Matching library expects object for demographics.
-    function prepDemographics () {
+
+    function prepDemographics() {
         if (baseObjectForParsing.demographics instanceof Array) {
             if (baseObjectForParsing.demographics.length > 0) {
-                baseObjectForParsing.demographics = baseObjectForParsing.demographics[0];    
+                baseObjectForParsing.demographics = baseObjectForParsing.demographics[0];
             }
         }
         if (newObjectForParsing.demographics instanceof Array) {
             if (newObjectForParsing.demographics.length > 0) {
-                newObjectForParsing.demographics = newObjectForParsing.demographics[0];    
+                newObjectForParsing.demographics = newObjectForParsing.demographics[0];
             }
         }
     }
@@ -197,7 +198,7 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
 
-    function revertDemographics () {
+    function revertDemographics() {
         if (_.isObject(newObjectForParsing.demographics) === true && _.isArray(newObjectForParsing.demographics) === false) {
             newObjectForParsing.demographics = new Array(newObjectForParsing.demographics);
         }

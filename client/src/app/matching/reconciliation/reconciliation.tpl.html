@@ -11,7 +11,7 @@
 
 						<div class="panel panel-default" ng-repeat="match_section in matches" ng-show="match_section">
 							<div class="panel-body" >
-							<h4>{{capitalize(match_section[0].entry_type)}} Update(s)</h4>
+							<h4> <span style=""text-transform:capitalize;"">{{match_section[0].entry_type}}</span> Update(s)</h4>
 
 							<div class="well" ng-repeat="new_match in match_section">
 								<div class="pull-right"><button type="button" class="btn btn-success" ng-click="reviewClick(new_match)">Review</button></div>

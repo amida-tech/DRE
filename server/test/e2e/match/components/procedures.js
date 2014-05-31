@@ -23,8 +23,6 @@ var fs = require('fs');
 var path = require('path');
 var database = require('mongodb').Db;
 
-var record_id = '';
-
 function removeCollection(inputCollection, callback) {
 	var db;
 	database.connect(databaseLocation, function(err, dbase) {
@@ -142,7 +140,6 @@ describe('Procedures API - Test New:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
@@ -207,7 +204,6 @@ describe('Procedures API - Test Duplicate:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(3);
 				expect(dupCnt).to.equal(3);
@@ -274,7 +270,6 @@ describe('Procedures API - Test New/Dupe Mix:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(4);
 				expect(dupCnt).to.equal(6);
@@ -285,7 +280,7 @@ describe('Procedures API - Test New/Dupe Mix:', function() {
 });
 
 //Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
-xdescribe('Procedures API - Test Partial Matches:', function() {
+describe('Procedures API - Test Partial Matches:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
@@ -305,7 +300,7 @@ xdescribe('Procedures API - Test Partial Matches:', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.procedures.length).to.equal(3);
+				expect(res.body.procedures.length).to.equal(4);
 				done();
 			});
 	});
@@ -329,7 +324,7 @@ xdescribe('Procedures API - Test Partial Matches:', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(7);
+				expect(res.body.merges.length).to.equal(11);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -343,10 +338,9 @@ xdescribe('Procedures API - Test Partial Matches:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(3);
-				expect(dupCnt).to.equal(4);
+				expect(newCnt).to.equal(4);
+				expect(dupCnt).to.equal(7);
 				done();
 			});
 	});
@@ -367,7 +361,7 @@ xdescribe('Procedures API - Test Partial Matches:', function() {
 
 });
 
-xdescribe('Procedures API - Test Added Matches', function() {
+describe('Procedures API - Test Added Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -404,7 +398,7 @@ xdescribe('Procedures API - Test Added Matches', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.procedures.length).to.equal(4);
+				expect(res.body.procedures.length).to.equal(5);
 				var total_procedures = 0;
 				for (var iEntry in res.body.procedures) {
 					if (res.body.procedures[iEntry]._id === match_id) {
@@ -435,7 +429,7 @@ xdescribe('Procedures API - Test Added Matches', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(8);
+				expect(res.body.merges.length).to.equal(12);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -449,10 +443,9 @@ xdescribe('Procedures API - Test Added Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(4);
-				expect(dupCnt).to.equal(4);
+				expect(newCnt).to.equal(5);
+				expect(dupCnt).to.equal(7);
 				done();
 			});
 	});
@@ -475,7 +468,7 @@ xdescribe('Procedures API - Test Added Matches', function() {
 
 
 
-xdescribe('Procedures API - Test Ignored Matches', function() {
+describe('Procedures API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -510,7 +503,7 @@ xdescribe('Procedures API - Test Ignored Matches', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.procedures.length).to.equal(4);
+				expect(res.body.procedures.length).to.equal(5);
 				var total_procedures = 0;
 				for (var iEntry in res.body.procedures) {
 					if (res.body.procedures[iEntry]._id === match_id) {
@@ -541,7 +534,7 @@ xdescribe('Procedures API - Test Ignored Matches', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(8);
+				expect(res.body.merges.length).to.equal(12);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -555,10 +548,9 @@ xdescribe('Procedures API - Test Ignored Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(4);
-				expect(dupCnt).to.equal(4);
+				expect(newCnt).to.equal(5);
+				expect(dupCnt).to.equal(7);
 				done();
 			});
 	});
@@ -579,11 +571,81 @@ xdescribe('Procedures API - Test Ignored Matches', function() {
 });
 
 
-xdescribe('Procedures API - Test Merged Matches', function() {
+describe('Procedures API - Test Merged Matches', function() {
+
+	var match_id = '';
+
+	var base_id = '';
+	var base_object = {};
 
 	var update_id = '';
-	var base_id = '';
-	var match_id = '';
+	var tmp_updated_entry = {
+    "bodysite" : [],
+    "code" : "274025005",
+    "code_system_name" : "SNOMED CT",
+    "date" : [ 
+        {
+            "date" : "2011-02-03T00:00:00.000Z",
+            "precision" : "day"
+        }
+    ],
+    "identifiers" : [ 
+        {
+            "identifier" : "1.2.3.4.5.6.7.8",
+            "identifier_type" : "1234567"
+        }
+    ],
+    "locations" : [ 
+        {
+            "name" : "Community Gastroenterology Clinic",
+            "phones" : [],
+            "addresses" : [ 
+                {
+                    "city" : "Blue Bell",
+                    "state" : "MA",
+                    "zip" : "02368",
+                    "country" : "US",
+                    "streetLines" : [ 
+                        "17 Daws Rd."
+                    ]
+                }
+            ],
+            "loc_type" : {
+                "name" : "Gastroenterology Clinic",
+                "code" : "1118-9",
+                "code_system_name" : "HealthcareServiceLocation",
+                "translations" : []
+            }
+        }
+    ],
+    "name" : "Colonic knifing",
+    "proc_type" : "act",
+    "providers" : [ 
+        {
+            "organization" : {
+                "name" : "Community Health ",
+                "address" : {
+                    "streetLines" : []
+                }
+            },
+            "telecom" : {
+                "value" : "(555)523-555-1234",
+                "use" : "work place"
+            },
+            "address" : {
+                "city" : "Baltimore",
+                "state" : "MD",
+                "zip" : "02368",
+                "country" : "US",
+                "streetLines" : [ 
+                    "17 Daws Rd."
+                ]
+            }
+        }
+    ],
+    "status" : "Completed",
+    "translations" : []
+}
 
 	it('Update Procedure Match Records Merged', function(done) {
 
@@ -593,19 +655,35 @@ xdescribe('Procedures API - Test Merged Matches', function() {
 				if (err) {
 					done(err);
 				} else {
+					//console.log(JSON.stringify(res.body.matches, null, 10));
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/procedures/' + update_id)
-						.send({
-							determination: "merged"
-						})
+					//Still need this object to check metadata.
+					api.get('/api/v1/record/procedures')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								done();
+								for (var i = 0; i < res.body.procedures.length; i++) {
+									if (res.body.procedures[i]._id === base_id) {
+										base_object = res.body.procedures[i];
+									}
+								}
+								api.post('/api/v1/matches/procedures/' + update_id)
+									.send({
+										determination: "merged",
+										updated_entry: tmp_updated_entry
+									})
+									.expect(200)
+									.end(function(err, res) {
+										if (err) {
+											done(err);
+										} else {
+											done();
+										}
+									});
 							}
 						});
 				}
@@ -617,21 +695,64 @@ xdescribe('Procedures API - Test Merged Matches', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.procedures.length).to.equal(4);
+				expect(res.body.procedures.length).to.equal(5);
 				var total_procedures = 0;
 				for (var iEntry in res.body.procedures) {
 					if (res.body.procedures[iEntry]._id === match_id) {
 						total_procedures++;
 					}
 					if (res.body.procedures[iEntry]._id === base_id) {
-						//console.log(res.body.procedures[iEntry]);
-						expect(res.body.procedures[iEntry].date[0].precision).to.equal('month');
-						expect(res.body.procedures[iEntry].metadata.attribution.length).to.equal(4);
+
+						//console.log(JSON.stringify(res.body.procedures[iEntry], null, 10));
+						//console.log(JSON.stringify(tmp_updated_entry, null, 10));
+
+						//SHIM in empty arrays.
+						if (res.body.procedures[iEntry].bodysite === undefined) {
+							res.body.procedures[iEntry].bodysite = [];
+						}
+
+						if (res.body.procedures[iEntry].translations === undefined) {
+							res.body.procedures[iEntry].translations = [];
+						}
+
+						for (var iFind in res.body.procedures[iEntry].locations) {
+							if (res.body.procedures[iEntry].locations[iFind].phones === undefined) {
+								res.body.procedures[iEntry].locations[iFind].phones = [];
+							}
+							if (res.body.procedures[iEntry].locations[iFind].loc_type === undefined) {
+								res.body.procedures[iEntry].locations[iFind].loc_type = {};
+							}
+							res.body.procedures[iEntry].locations[iFind].loc_type.translations = [];
+
+						}
+
+						for (var iFind in res.body.procedures[iEntry].providers) {
+							if (res.body.procedures[iEntry].providers[iFind].organization.address === undefined) {
+								res.body.procedures[iEntry].providers[iFind].organization.address = {};
+								res.body.procedures[iEntry].providers[iFind].organization.address.streetLines = [];
+							}
+						}
+
+
+						//Test each component.
+						expect(res.body.procedures[iEntry].bodysite).to.deep.equal(tmp_updated_entry.bodysite);
+						expect(res.body.procedures[iEntry].code).to.deep.equal(tmp_updated_entry.code);
+						expect(res.body.procedures[iEntry].code_system_name).to.deep.equal(tmp_updated_entry.code_system_name);
+						expect(res.body.procedures[iEntry].date).to.deep.equal(tmp_updated_entry.date);
+						expect(res.body.procedures[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
+						expect(res.body.procedures[iEntry].locations).to.deep.equal(tmp_updated_entry.locations);
+						expect(res.body.procedures[iEntry].name).to.deep.equal(tmp_updated_entry.name);
+						expect(res.body.procedures[iEntry].proc_type).to.deep.equal(tmp_updated_entry.proc_type);
+						expect(res.body.procedures[iEntry].providers).to.deep.equal(tmp_updated_entry.providers);
+						expect(res.body.procedures[iEntry].status).to.deep.equal(tmp_updated_entry.status);
+						expect(res.body.procedures[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
+
+						//Metadata slightly different test.
+						expect(res.body.procedures[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+
 					}
 				}
 				expect(total_procedures).to.equal(0);
-				//console.log(base_id);
-
 				done();
 			});
 	});
@@ -654,7 +775,7 @@ xdescribe('Procedures API - Test Merged Matches', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.merges,null, 10));
-				expect(res.body.merges.length).to.equal(9);
+				expect(res.body.merges.length).to.equal(13);
 				var newCnt = 0;
 				var dupCnt = 0;
 				var mrgCnt = 0
@@ -674,10 +795,9 @@ xdescribe('Procedures API - Test Merged Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(4);
-				expect(dupCnt).to.equal(4);
+				expect(newCnt).to.equal(5);
+				expect(dupCnt).to.equal(7);
 				expect(mrgCnt).to.equal(1);
 				done();
 			});

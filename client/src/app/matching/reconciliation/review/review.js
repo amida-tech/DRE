@@ -35,6 +35,8 @@ angular.module('dre.match.review', [])
     function($scope, $http, $location, $route, $routeParams, $rootScope, recordFunctions, getNotifications) {
         $scope.notifications = {};
 
+        $scope.modified=false;
+
 
         getNotifications.getUpdate(function(err, notifications) {
           $scope.notifications = notifications;
@@ -144,6 +146,62 @@ angular.module('dre.match.review', [])
         getPartialSections($scope.convertTense($scope.section));
         getMasterSections($scope.convertTense($scope.section));
 
+
+        //close match, save new entry as separate entry from master entry
+        $scope.createNew = function() {
+            //console.log($scope.partial_matches._id);
+            var updateSection = $scope.convertTense($scope.section);
+
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/' + updateSection + '/' + $scope.partial_matches._id,
+                data: {determination: 'added'}
+            }).
+            success(function(data, status, headers, config) {
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        };
+
+        //close match, ignore new entry, update master entry with user's changes (based on new entry)
+        $scope.saveUpdate = function() {
+            //console.log($scope.partial_matches._id);
+            var updateSection = $scope.convertTense($scope.section);
+
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/' + updateSection + '/' + $scope.partial_matches._id,
+                data: {determination: 'merged', updated_entry: $scope.dest_el} //TODO: need value for update entry (using dest_el for now)
+            }).
+            success(function(data, status, headers, config) {
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        };
+
+        //close match, ignore new entry, keep master entry same
+        $scope.ignoreUpdate = function() {
+            //console.log($scope.partial_matches._id);
+            var updateSection = $scope.convertTense($scope.section);
+
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/' + updateSection + '/' + $scope.partial_matches._id,
+                data: {determination: 'ignored'}
+            }).
+            success(function(data, status, headers, config) {
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        };
+        
+        //This call is discontinued in favor of cancelReview, createNew, ignoreUpdate, saveUpdate
         $scope.saveReview = function() {
             //console.log($scope.partial_matches._id);
             var updateSection = $scope.convertTense($scope.section);
@@ -161,6 +219,7 @@ angular.module('dre.match.review', [])
             });
         };
 
+        //This call is discontinued in favor of cancelReview, createNew, ignoreUpdate, saveUpdate
         $scope.ignoreReview = function() {
             //console.log($scope.partial_matches._id);
             var updateSection = $scope.convertTense($scope.section);
@@ -178,6 +237,7 @@ angular.module('dre.match.review', [])
             });
         };
 
+        //go back to list of all partial matches
         $scope.cancelReview = function() {
             $location.path("match/reconciliation");
         };
@@ -186,16 +246,19 @@ angular.module('dre.match.review', [])
         $scope.merge = function(name){
             console.log(name);
             $scope.dest_el[name]=$scope.src_el[name];
+            $scope.modified=true;
         };
 
         //merges fields from New Entry into Master Record
         $scope.merge_date = function(date, index){
             $scope.dest_el[date][index]=$scope.src_el[date][index];
+            $scope.modified=true;
         };
 
         //resets Master Record from copy
         $scope.reset = function(){
             $scope.dest_el=angular.copy($scope.dest_copy_el);
+            $scope.modified=false;
         };
 
 
@@ -203,10 +266,12 @@ angular.module('dre.match.review', [])
         $scope.merge_sub = function(name, index){
             console.log(name, index);
             $scope.dest_el[name].push($scope.src_el[name][index]);
+            $scope.modified=true;
         };
         $scope.remove_sub = function(name, index){
             console.log(name, index);
             $scope.dest_el[name].splice(index,1);
+            $scope.modified=true;
         };
 
 
