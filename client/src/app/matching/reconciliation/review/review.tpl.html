@@ -1,61 +1,69 @@
 <div class="fluid-container col-md-12">
-	<div class="row">
-		<div ng-include="navPath"></div>
-		<div class="col-md-9" ng-controller="reviewCtrl">
-			<br/>
-			<h5 class="lead">Review Update</h5>
-			<div class="panel-group col-md-12">
+    <div class="row">
+        <div ng-include="navPath"></div>
+        <div class="col-md-9" ng-controller="reviewCtrl">
+            <br/>
+            <h5 class="lead">Review Update</h5>
+            <div class="panel-group col-md-12">
 
 
 
-				<div class="panel panel-default" style="overflow: visible;">
-					<div class="panel-heading ">
-						<div class="panel-title">
-							<h4 ng-if="partial_matches.entry_type!=='demographic' && partial_matches.entry_type!=='social'">Partial ({{partial_matches.percent}}%) Match</h4>
-							<h4 ng-if="partial_matches.entry_type==='demographic' || partial_matches.entry_type==='social'">Updated (Different) Information</h4>
-						</div>
-					</div>
-					<div class="panel-body">
-						<!--Header-->
-						<ng-include src="dynamicTemplatePath"></ng-include>
+                <div class="panel panel-default" style="overflow: visible;">
+                    <div class="panel-heading ">
+                        <div class="panel-title">
+                            <h4 ng-if="partial_matches.entry_type!=='demographic' && partial_matches.entry_type!=='social'">Partial ({{partial_matches.percent}}%) Match</h4>
+                            <h4 ng-if="partial_matches.entry_type==='demographic' || partial_matches.entry_type==='social'">Updated (Different) Information</h4>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <!--Header-->
+                        <ng-include src="dynamicTemplatePath"></ng-include>
 
 
-						<table class="col-md-12 ">
-							<tbody>
-								<tr>
-									<td class="col-md-2" style="text-align: center;"><button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
-									</td>
-									<td class=" col-md-5" style="text-align: center;"><button type="button" class="btn btn-warning" ng-click="saveReview()" ng-if="partial_matches.entry_type!=='demographic' && partial_matches.entry_type!=='social'"> 
+                        <table class="col-md-12 ">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-2" style="text-align: center;">
+                                        <button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
+                                    </td>
+                                    <td class=" col-md-5" style="text-align: center;">
+                                        <button type="button" class="btn btn-warning" ng-click="createNew()" 
+                                        ng-if="partial_matches.entry_type!=='demographic' && partial_matches.entry_type!=='social'">
 
-									<i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i>  Create New</button>
-									</td>
-									<td class=" col-md-5" style="text-align: center;">
-										<button type="button" class="btn btn-primary" ng-click="saveReview()" ng-if="!modified"> 
-										<i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
-										<button type="button" class="btn btn-primary" ng-click="saveReview()" ng-if="modified"> 
-										<i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
+                                            <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New</button>
+                                    </td>
+                                    <td class=" col-md-5" style="text-align: center;">
+                                        <button type="button" class="btn btn-primary" ng-click="ignoreUpdate()" ng-if="!modified">
+                                            <i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
+                                        <button type="button" class="btn btn-primary" ng-click="saveUpdate()" ng-if="modified">
+                                            <i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
 
-									</td>
-								</tr>
-						</tbody>
-						</table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-					</div>
-				</div>
+                    </div>
+                </div>
 
-				<!-- debug JSON output -->
-				<div ng-if="debug">
-				<br/>
-				<br/>
-				<table  class="table col-md-12">
-					<tr><td class="col-md-6">{{src_el | json}}</td><td class="col-md-6">{{dest_el |json}}</td></tr>
-					<tr><td colspan="2">{{partial_matches |json}}</td></tr>
-				</table>
-				</div>
-			</div>
-		</div>
+                <!-- debug JSON output -->
+                <div ng-if="debug">
+                    <br/>
+                    <br/>
+                    <table class="table col-md-12">
+                        <tr>
+                            <td class="col-md-6">{{src_el | json}}</td>
+                            <td class="col-md-6">{{dest_el |json}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{partial_matches |json}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-	</div>
+    </div>
 </div>
 </div>
 </div>
