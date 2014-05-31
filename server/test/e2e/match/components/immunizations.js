@@ -581,10 +581,90 @@ describe('Immunizations API - Test Ignored Matches', function() {
 
 describe('Immunizations API - Test Merged Matches', function() {
 
-	var update_id = '';
+	var match_id = '';
+
 	var base_id = '';
 	var base_object = {};
-	var match_id = '';
+
+	var update_id = '';
+	var tmp_updated_entry = {
+    "administration" : {
+        "form" : {
+            "translations" : []
+        },
+        "quantity" : {
+            "value" : 0.8,
+            "unit" : "ml"
+        },
+        "body_site" : {
+            "translations" : []
+        },
+        "route" : {
+            "name" : "FACIAL",
+            "code" : "C28161",
+            "code_system_name" : "Medication Route FDA",
+            "translations" : []
+        }
+    },
+    "date" : [ 
+        {
+            "date" : "2012-08-06T00:00:00.000Z",
+            "precision" : "hour"
+        }
+    ],
+    "identifiers" : [ 
+        {
+            "identifier" : "1.3.6.1.4.1.22812.4.111.0.4.4",
+            "identifier_type" : "1049280"
+        }
+    ],
+    "performer" : {
+        "organization" : [],
+        "phone" : [ 
+            {
+                "number" : "+1-(535)555-1002"
+            }
+        ],
+        "email" : [ 
+            {
+                "address" : "hank@somewhere.com"
+            }
+        ],
+        "address" : [ 
+            {
+                "city" : "Portland",
+                "state" : "OR",
+                "zip" : "97005",
+                "country" : "US",
+                "streetLines" : [ 
+                    "1002 Healthcare Dr."
+                ]
+            }
+        ],
+        "name" : [ 
+            {
+                "last" : "Seven",
+                "first" : "Henry",
+                "middle" : ["Delta"]
+            }
+        ],
+        "identifiers" : [ 
+            {
+                "identifier" : "2.16.840.1.113883.4.6",
+                "identifier_type" : "1569874562"
+            }
+        ]
+    },
+    "product" : {
+        "lot_number" : "MK456987",
+        "manufacturer" : "Merck and Co., Inc.",
+        "name" : "Pneumococcal (2 years and up)",
+        "code" : "23",
+        "code_system_name" : "CVX",
+        "translations" : []
+    },
+    "status" : "refused"
+}
 
 	it('Update Immunization Match Records Merged', function(done) {
 
@@ -598,23 +678,22 @@ describe('Immunizations API - Test Merged Matches', function() {
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.get('/api/v1/record/partial/immunizations')
+					//Still need this object to check metadata.
+					api.get('/api/v1/record/immunizations')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
 								for (var i = 0; i < res.body.immunizations.length; i++) {
-									//console.log(res.body.immunizations[i]);
-									//console.log(match_id);
-									//console.log(res.body.immunizations[i]._id);
-									if (res.body.immunizations[i]._id === match_id) {
+									if (res.body.immunizations[i]._id === base_id) {
 										base_object = res.body.immunizations[i];
 									}
 								}
 								api.post('/api/v1/matches/immunizations/' + update_id)
 									.send({
-										determination: "merged"
+										determination: "merged",
+										updated_entry: tmp_updated_entry
 									})
 									.expect(200)
 									.end(function(err, res) {
@@ -642,19 +721,64 @@ describe('Immunizations API - Test Merged Matches', function() {
 						total_immunizations++;
 					}
 					if (res.body.immunizations[iEntry]._id === base_id) {
-						//console.log(JSON.stringify(res.body.immunizations[iEntry], null, 10));
 
-						//These are the two failing cases.
+						//console.log(res.body.immunizations[iEntry]);
+						//console.log(tmp_updated_entry);
 
-						//Test cases are going through random pulls in testing process; depending on which match gets held 
-						//until the end, the precision may be variable.  Same with the length of the attribution.
-						console.log();
-						expect(res.body.immunizations[iEntry].date[0].precision).to.equal(base_object.date[0].precision);
+						//SHIM in empty arrays.
+						for (var iFind in res.body.immunizations[iEntry].findings) {
+							if (res.body.immunizations[iEntry].findings[iFind].translations === undefined) {
+								res.body.immunizations[iEntry].findings[iFind].translations = [];
+							}
+						}
+
+						if (res.body.immunizations[iEntry].administration.form === undefined) {
+							res.body.immunizations[iEntry].administration.form = {};
+						}
+						if (res.body.immunizations[iEntry].administration.form.translations === undefined) {
+							res.body.immunizations[iEntry].administration.form.translations = [];
+						}
+						if (res.body.immunizations[iEntry].administration.body_site === undefined) {
+							res.body.immunizations[iEntry].administration.body_site = {};
+						}
+						if (res.body.immunizations[iEntry].administration.body_site.translations === undefined) {
+							res.body.immunizations[iEntry].administration.body_site.translations = [];
+						}
+						if (res.body.immunizations[iEntry].administration.route === undefined) {
+							res.body.immunizations[iEntry].administration.route = {};
+						}
+						if (res.body.immunizations[iEntry].administration.route.translations === undefined) {
+							res.body.immunizations[iEntry].administration.route.translations = [];
+						}
+						if (res.body.immunizations[iEntry].performer.organization === undefined) {
+							res.body.immunizations[iEntry].performer.organization = [];
+						}
+						if (res.body.immunizations[iEntry].performer.organization === undefined) {
+							res.body.immunizations[iEntry].performer.organization = [];
+						}
+						if (res.body.immunizations[iEntry].product.translations === undefined) {
+							res.body.immunizations[iEntry].product.translations = [];
+						}
+
+						for (var iFind in res.body.immunizations[iEntry].performer.name) {
+							if (res.body.immunizations[iEntry].performer.name[iFind].middle === undefined) {
+								res.body.immunizations[iEntry].performer.name[iFind].middle = [];
+							}
+						}
+
+						//Test each component.
+						expect(res.body.immunizations[iEntry].administration).to.deep.equal(tmp_updated_entry.administration);
+						expect(res.body.immunizations[iEntry].date).to.deep.equal(tmp_updated_entry.date);
+						expect(res.body.immunizations[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
+						expect(res.body.immunizations[iEntry].performer).to.deep.equal(tmp_updated_entry.performer);
+						expect(res.body.immunizations[iEntry].product).to.deep.equal(tmp_updated_entry.product);
+						expect(res.body.immunizations[iEntry].status).to.deep.equal(tmp_updated_entry.status);
+						//Metadata slightly different test.
+						expect(res.body.immunizations[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+
 					}
 				}
 				expect(total_immunizations).to.equal(0);
-				//console.log(base_id);
-
 				done();
 			});
 	});

@@ -581,9 +581,38 @@ describe('Problems API - Test Ignored Matches', function() {
 
 describe('Problems API - Test Merged Matches', function() {
 
-	var update_id = '';
-	var base_id = '';
 	var match_id = '';
+
+	var base_id = '';
+	var base_object = {};
+
+	var update_id = '';
+	var tmp_updated_entry = {
+		"code": "36971009",
+		"code_system_name": "SNOMED CT",
+		"date": [{
+			"date": "2012-09-01T00:00:00.000Z",
+			"precision": "day"
+		}],
+		"identifiers": [{
+			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
+			"identifier_type": "1234556"
+		}, {
+			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
+			"identifier_type": "6599352434300001"
+		}],
+		"name": "Hepatitus",
+		"negation_indicator": true,
+		"source_list_identifiers": [{
+			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
+			"identifier_type": "615028800003"
+		}, {
+			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
+			"identifier_type": "659935200001"
+		}],
+		"status": "Inactive",
+		"translations": []
+	}
 
 	it('Update Problem Match Records Merged', function(done) {
 
@@ -593,19 +622,35 @@ describe('Problems API - Test Merged Matches', function() {
 				if (err) {
 					done(err);
 				} else {
+					//console.log(JSON.stringify(res.body.matches, null, 10));
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/problems/' + update_id)
-						.send({
-							determination: "merged"
-						})
+					//Still need this object to check metadata.
+					api.get('/api/v1/record/problems')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								done();
+								for (var i = 0; i < res.body.problems.length; i++) {
+									if (res.body.problems[i]._id === base_id) {
+										base_object = res.body.problems[i];
+									}
+								}
+								api.post('/api/v1/matches/problems/' + update_id)
+									.send({
+										determination: "merged",
+										updated_entry: tmp_updated_entry
+									})
+									.expect(200)
+									.end(function(err, res) {
+										if (err) {
+											done(err);
+										} else {
+											done();
+										}
+									});
 							}
 						});
 				}
@@ -624,14 +669,32 @@ describe('Problems API - Test Merged Matches', function() {
 						total_problems++;
 					}
 					if (res.body.problems[iEntry]._id === base_id) {
+
 						//console.log(res.body.problems[iEntry]);
-						expect(res.body.problems[iEntry].date[0].precision).to.equal('month');
-						expect(res.body.problems[iEntry].metadata.attribution.length).to.equal(4);
+						//console.log(tmp_updated_entry);
+
+						//SHIM in empty arrays.
+
+						if (res.body.problems[iEntry].translations === undefined) {
+							res.body.problems[iEntry].translations = [];
+						}
+
+						//Test each component.
+						expect(res.body.problems[iEntry].code).to.deep.equal(tmp_updated_entry.code);
+						expect(res.body.problems[iEntry].code_system_name).to.deep.equal(tmp_updated_entry.code_system_name);
+						expect(res.body.problems[iEntry].date).to.deep.equal(tmp_updated_entry.date);
+						expect(res.body.problems[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
+						expect(res.body.problems[iEntry].name).to.deep.equal(tmp_updated_entry.name);
+						expect(res.body.problems[iEntry].negation_indicator).to.deep.equal(tmp_updated_entry.negation_indicator);
+						expect(res.body.problems[iEntry].source_list_identifiers).to.deep.equal(tmp_updated_entry.source_list_identifiers);
+						expect(res.body.problems[iEntry].status).to.deep.equal(tmp_updated_entry.status);
+						expect(res.body.problems[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
+						//Metadata slightly different test.
+						expect(res.body.problems[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+
 					}
 				}
 				expect(total_problems).to.equal(0);
-				//console.log(base_id);
-
 				done();
 			});
 	});

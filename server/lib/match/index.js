@@ -74,7 +74,7 @@ function updateIgnored(updateId, updateComponent, callback) {
 }
 
 
-function updateMerged(updateId, updateComponent, callback) {
+function updateMerged(updateId, updateComponent, updateParameters, callback) {
 
     function updateMainObject(updateComponent, entry_id, updateJSON, recordId, callback) {
 
@@ -117,26 +117,37 @@ function updateMerged(updateId, updateComponent, callback) {
 
     }
 
+    //Entry point here.
+    console.log(updateParameters);
+
+    //Gather full match object by ID.
     record.getMatch(updateComponent, updateId, function(err, resultComponent) {
         if (err) {
             callback(err);
         } else {
+            //Gather partial record from db.
             record["get" + record.capitalize(record.sectionToType[updateComponent])](resultComponent.match_entry_id._id, function(err, recordResults) {
                 if (err) {
                     callback(err);
                 } else {
 
-                    //Used to populate merge attribution element.
+                    var updateJSON = {};
+
+                    //NOTE:  Only one attribution merge since a partial.
                     var recordId = recordResults.metadata.attribution[0].record_id;
 
-                    var updateJSON = {};
-                    for (var iUpdate in resultComponent.match_entry_id) {
-                        //Filter metadata.
+                    //Pull update data.
+                    for (var iUpdate in updateParameters) {
+                        //Filter inbound metadata and attribution.
                         if (iUpdate.substring(0, 1) !== "_") {
-                            updateJSON[iUpdate] = resultComponent.match_entry_id[iUpdate];
+                            if(iUpdate !== 'metadata' && iUpdate !== 'reviewed' && iUpdate !== 'archived' && iUpdate !== 'patKey') {
+                                updateJSON[iUpdate] = updateParameters[iUpdate];
+                            }   
                         }
                     }
+
                     updateJSON.reviewed = true;
+                    updateJSON.metadata = {};
 
                     updateMainObject(updateComponent, resultComponent.entry_id, updateJSON, recordId, function(err, results) {
                         if (err) {
@@ -168,6 +179,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
     //Clean parameters.
     var cleanParameters = {};
     cleanParameters.determination = updateParameters.determination;
+    cleanParameters.updated_entry = updateParameters.updated_entry;
 
     //Can be 1) Merged, 2) Added, 3) Ignored.
 
@@ -186,7 +198,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
 
     if (cleanParameters.determination === 'merged') {
         //If determination is merged, overwrite original record, drop source object, and update merge history of object.
-        updateMerged(updateId, updateComponent, function(err, results) {
+        updateMerged(updateId, updateComponent, cleanParameters.updated_entry, function(err, results) {
             saveMatchRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
                 if (err) {
                     callback(err);
