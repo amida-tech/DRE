@@ -63,6 +63,11 @@ angular.module('dre.record.problems', [])
         inputObject.statusFlag = false;
       }
 
+      //added inactive per raccoon-149 report
+      if(inputObject.status.toLowerCase() === 'inactive') {
+        inputObject.statusFlag = true;
+      }
+
     }
 
     function onsetAge (inputObject) {

@@ -35,6 +35,8 @@ angular.module('dre.match.review', [])
     function($scope, $http, $location, $route, $routeParams, $rootScope, recordFunctions, getNotifications) {
         $scope.notifications = {};
 
+        $scope.modified=false;
+
 
         getNotifications.getUpdate(function(err, notifications) {
           $scope.notifications = notifications;
@@ -186,16 +188,19 @@ angular.module('dre.match.review', [])
         $scope.merge = function(name){
             console.log(name);
             $scope.dest_el[name]=$scope.src_el[name];
+            $scope.modified=true;
         };
 
         //merges fields from New Entry into Master Record
         $scope.merge_date = function(date, index){
             $scope.dest_el[date][index]=$scope.src_el[date][index];
+            $scope.modified=true;
         };
 
         //resets Master Record from copy
         $scope.reset = function(){
             $scope.dest_el=angular.copy($scope.dest_copy_el);
+            $scope.modified=false;
         };
 
 
@@ -203,10 +208,12 @@ angular.module('dre.match.review', [])
         $scope.merge_sub = function(name, index){
             console.log(name, index);
             $scope.dest_el[name].push($scope.src_el[name][index]);
+            $scope.modified=true;
         };
         $scope.remove_sub = function(name, index){
             console.log(name, index);
             $scope.dest_el[name].splice(index,1);
+            $scope.modified=true;
         };
 
 
