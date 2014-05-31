@@ -47,48 +47,7 @@ function getDBConnection(callback) {
 
 
 
-describe('Save Partial Records:', function() {
 
-    before(function(done) {
-        getDBConnection(function(err, conn) {
-            if (err) {
-                done(err);
-            } else {
-                //console.log(conn);
-                db_connection = conn;
-                done();
-            }
-        });
-    });
-
-    xit('Save Test Partial Record', function(done) {
-        var test_partial_entry = [{
-            partial_array: [{
-                name: 'fake_record'
-            }]
-
-        }];
-        var test_patient = 'test';
-        var filename = 'test_filename';
-        //var par_source_id = new ObjectId().toString();
-        section.savePartialEntries(db_connection, 'testallergy', test_patient, test_partial_entry, 'par_source_id', function(err, partial_save_result) {
-            done();
-        });
-    });
-
-    xit('Save Test New Record', function(done) {
-        var test_partial_entry = [{
-            name: 'fake_record'
-        }];
-        var test_patient = 'test';
-        var filename = 'test_filename';
-        var new_source_id = new ObjectId().toString();
-        section.saveNewEntries(db_connection, 'testallergy', test_patient, test_partial_entry, new_source_id, function(err, partial_save_result) {
-            done();
-        });
-    });
-
-});
 
 //Need to test exclusion between reviewed and unreviewed.
 

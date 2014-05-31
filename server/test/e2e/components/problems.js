@@ -1,19 +1,3 @@
-/*=======================================================================
-Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-======================================================================*/
-
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
@@ -46,7 +30,7 @@ function removeCollection(inputCollection, callback) {
 }
 
 function loadTestRecord(fileName, callback) {
-	var filepath = path.join(__dirname, '../../../artifacts/test-r1.0/' + fileName);
+	var filepath = path.join(__dirname, '../../artifacts/test-r1.0/' + fileName);
 	api.put('/api/v1/storage')
 		.attach('file', filepath)
 		.expect(200)
@@ -61,16 +45,16 @@ function loadTestRecord(fileName, callback) {
 
 describe('Pre Test Cleanup', function() {
 
-	it('Remove Social Collections', function(done) {
-		removeCollection('socialhistories', function(err) {
+	it('Remove Problem Collections', function(done) {
+		removeCollection('problems', function(err) {
 			if (err) {
 				done(err);
 			}
-			removeCollection('socialmerges', function(err) {
+			removeCollection('problemmerges', function(err) {
 				if (err) {
 					done(err);
 				}
-				removeCollection('socialmatches', function(err) {
+				removeCollection('problemmatches', function(err) {
 					if (err) {
 						done(err);
 					}
@@ -92,7 +76,7 @@ describe('Pre Test Cleanup', function() {
 
 });
 
-describe('Social API - Test New:', function() {
+describe('Problems API - Test New:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-01-original.xml', function(err) {
@@ -104,39 +88,39 @@ describe('Social API - Test New:', function() {
 		});
 	});
 
-	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+	it('Get Problem Records', function(done) {
+		api.get('/api/v1/record/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.socialHistory, null, 10));
-				expect(res.body.socialHistory.length).to.equal(1);
+				expect(res.body.problems.length).to.equal(2);
+				//console.log(JSON.stringify(res.body.problems, null, 10));
 				done();
 			});
 	});
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+	it('Get Partial Problem Records', function(done) {
+		api.get('/api/v1/record/partial/problems')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.problems.length).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Social Merge Records', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+	it('Get Problem Merge Records', function(done) {
+		api.get('/api/v1/merges/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				expect(res.body.merges.length).to.equal(1);
+				expect(res.body.merges.length).to.equal(2);
 				for (var i in res.body.merges) {
 					expect(res.body.merges[i].merge_reason).to.equal('new');
-					expect(res.body.merges[i].entry_type).to.equal('social');
+					expect(res.body.merges[i].entry_type).to.equal('problem');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
@@ -148,7 +132,7 @@ describe('Social API - Test New:', function() {
 
 });
 
-describe('Social API - Test Duplicate:', function() {
+describe('Problems API - Test Duplicate:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-02-duplicate.xml', function(err) {
@@ -160,37 +144,37 @@ describe('Social API - Test Duplicate:', function() {
 		});
 	});
 
-	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+	it('Get Problem Records', function(done) {
+		api.get('/api/v1/record/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.socialHistory.length).to.equal(1);
+				//console.log(JSON.stringify(res.body.problems, null, 10));
+				expect(res.body.problems.length).to.equal(2);
 				done();
 			});
 	});
 
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+	it('Get Partial Problem Records', function(done) {
+		api.get('/api/v1/record/partial/problems')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.problems.length).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Social Merge Records', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+	it('Get Problem Merge Records', function(done) {
+		api.get('/api/v1/merges/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				expect(res.body.merges.length).to.equal(2);
+				expect(res.body.merges.length).to.equal(4);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -200,13 +184,13 @@ describe('Social API - Test Duplicate:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
+					expect(res.body.merges[i].entry_type).to.equal('problem');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(1);
-				expect(dupCnt).to.equal(1);
+				expect(newCnt).to.equal(2);
+				expect(dupCnt).to.equal(2);
 				done();
 			});
 	});
@@ -214,7 +198,7 @@ describe('Social API - Test Duplicate:', function() {
 
 });
 
-describe('Social API - Test New/Dupe Mix:', function() {
+describe('Problems API - Test New/Dupe Mix:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-03-updated.xml', function(err) {
@@ -226,38 +210,37 @@ describe('Social API - Test New/Dupe Mix:', function() {
 		});
 	});
 
-	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+	it('Get Problems Records', function(done) {
+		api.get('/api/v1/record/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(res.body.socialHistory);
-				expect(res.body.socialHistory.length).to.equal(1);
+				expect(res.body.problems.length).to.equal(3);
 				done();
 			});
 	});
 
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+	it('Get Partial Problem Records', function(done) {
+		api.get('/api/v1/record/partial/problems')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.problems.length).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Social Merge Records', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+	it('Get Problem Merge Records', function(done) {
+		api.get('/api/v1/merges/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(3);
+				expect(res.body.merges.length).to.equal(7);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -267,22 +250,21 @@ describe('Social API - Test New/Dupe Mix:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
+					expect(res.body.merges[i].entry_type).to.equal('problem');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
+				expect(newCnt).to.equal(3);
+				expect(dupCnt).to.equal(4);
 				//console.log(JSON.stringify(res.body.merges, null, 10));
-				expect(newCnt).to.equal(1);
-				expect(dupCnt).to.equal(2);
-				
 				done();
 			});
 	});
 });
 
-//Modified 1 allergy's date range.
-describe('Social API - Test Partial Matches:', function() {
+//Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
+describe('Problems API - Test Partial Matches:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
@@ -294,39 +276,39 @@ describe('Social API - Test Partial Matches:', function() {
 		});
 	});
 
-	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+	it('Get Problem Records', function(done) {
+		api.get('/api/v1/record/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.socialHistory, null, 10));
-				expect(res.body.socialHistory.length).to.equal(1);
+				//console.log(JSON.stringify(res.body.allergies, null, 10));
+				expect(res.body.problems.length).to.equal(3);
 				done();
 			});
 	});
 
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+	it('Get Partial Problem Records', function(done) {
+		api.get('/api/v1/record/partial/problems')
 			.expect(200)
 			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.socialHistory, null, 10));
-				expect(res.body.socialHistory.length).to.equal(1);
+				//console.log(JSON.stringify(res.body.allergies, null, 10));
+				expect(res.body.problems.length).to.equal(3);
 				done();
 			});
 	});
 
-	it('Get Social Merge Records', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+	it('Get Problem Merge Records', function(done) {
+		api.get('/api/v1/merges/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(3);
+				expect(res.body.merges.length).to.equal(7);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -336,26 +318,26 @@ describe('Social API - Test Partial Matches:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
+					expect(res.body.merges[i].entry_type).to.equal('problem');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(1);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(3);
+				expect(dupCnt).to.equal(4);
 				done();
 			});
 	});
 
-	it('Get Social Match Records', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+	it('Get Problem Match Records', function(done) {
+		api.get('/api/v1/matches/problems')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
-				expect(res.body.matches.length).to.equal(1);
+				expect(res.body.matches.length).to.equal(3);
 				for (var i in res.body.matches) {
 					expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
-					expect(res.body.matches[i].entry_type).to.equal('social');
+					expect(res.body.matches[i].entry_type).to.equal('problem');
 				}
 				done();
 			});
@@ -363,14 +345,14 @@ describe('Social API - Test Partial Matches:', function() {
 
 });
 
-describe('Social API - Test Added Matches', function() {
+describe('Problems API - Test Added Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
 
-	it('Update Social Match Records', function(done) {
+	it('Update Problem Match Records', function(done) {
 
-		api.get('/api/v1/matches/socialHistory')
+		api.get('/api/v1/matches/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -378,7 +360,7 @@ describe('Social API - Test Added Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/socialHistory/' + update_id)
+					api.post('/api/v1/matches/problems/' + update_id)
 						.send({
 							determination: "added"
 						})
@@ -395,43 +377,43 @@ describe('Social API - Test Added Matches', function() {
 			});
 	});
 
-	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+	it('Get Problem Records', function(done) {
+		api.get('/api/v1/record/problems')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.socialHistory.length).to.equal(2);
-				var total_allergies = 0;
-				for (var iEntry in res.body.socialHistory) {
-					if (res.body.socialHistory[iEntry]._id === match_id) {
+				expect(res.body.problems.length).to.equal(4);
+				var total_problems = 0;
+				for (var iEntry in res.body.problems) {
+					if (res.body.problems[iEntry]._id === match_id) {
 						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
-						total_allergies++;
+						total_problems++;
 					}
 				}
-				expect(total_allergies).to.equal(1);
+				expect(total_problems).to.equal(1);
 				done();
 			});
 	});
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+	it('Get Partial Problem Records', function(done) {
+		api.get('/api/v1/record/partial/problems')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.problems.length).to.equal(2);
 				done();
 			});
 	});
 
-	it('Get Social Merge Records Post Added', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+	it('Get Problem Merge Records Post Added', function(done) {
+		api.get('/api/v1/merges/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(4);
+				expect(res.body.merges.length).to.equal(8);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -441,26 +423,26 @@ describe('Social API - Test Added Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
+					expect(res.body.merges[i].entry_type).to.equal('problem');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(2);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(4);
+				expect(dupCnt).to.equal(4);
 				done();
 			});
 	});
 
-	it('Get Social Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+	it('Get Problem Match Records Post Added', function(done) {
+		api.get('/api/v1/matches/problems')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(0);
+			expect(res.body.matches.length).to.equal(2);
 			done();
 		});
 	});
@@ -470,23 +452,13 @@ describe('Social API - Test Added Matches', function() {
 
 
 
-describe('Social API - Test Ignored Matches', function() {
+describe('Problems API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
 
-	before(function(done) {
-		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
-			if (err) {
-				done(err);
-			} else {
-				done();
-			}
-		});
-	});
-
-	it('Update Social Match Records Ignored', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+	it('Update Problem Match Records Ignored', function(done) {
+		api.get('/api/v1/matches/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -494,7 +466,7 @@ describe('Social API - Test Ignored Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/socialHistory/' + update_id)
+					api.post('/api/v1/matches/problems/' + update_id)
 						.send({
 							determination: "ignored"
 						})
@@ -510,43 +482,43 @@ describe('Social API - Test Ignored Matches', function() {
 			});
 	});
 
-	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+	it('Get Problem Records', function(done) {
+		api.get('/api/v1/record/problems')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.socialHistory.length).to.equal(2);
-				var total_allergies = 0;
-				for (var iEntry in res.body.socialHistory) {
-					if (res.body.socialHistory[iEntry]._id === match_id) {
+				expect(res.body.problems.length).to.equal(4);
+				var total_problems = 0;
+				for (var iEntry in res.body.problems) {
+					if (res.body.problems[iEntry]._id === match_id) {
 						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
-						total_allergies++;
+						total_problems++;
 					}
 				}
-				expect(total_allergies).to.equal(0);
+				expect(total_problems).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+	it('Get Partial Problem Records', function(done) {
+		api.get('/api/v1/record/partial/problems')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.problems.length).to.equal(1);
 				done();
 			});
 	});
 
-	it('Get Social Merge Records Post Added', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+	it('Get Problem Merge Records Post Added', function(done) {
+		api.get('/api/v1/merges/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(4);
+				expect(res.body.merges.length).to.equal(8);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -556,26 +528,26 @@ describe('Social API - Test Ignored Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
+					expect(res.body.merges[i].entry_type).to.equal('problem');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(2);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(4);
+				expect(dupCnt).to.equal(4);
 				done();
 			});
 	});
 
-	it('Get Social Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+	it('Get Problem Match Records Post Added', function(done) {
+		api.get('/api/v1/matches/problems')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(0);
+			expect(res.body.matches.length).to.equal(1);
 			done();
 		});
 	});
@@ -583,18 +555,8 @@ describe('Social API - Test Ignored Matches', function() {
 });
 
 
-describe('Social API - Test Merged Matches', function() {
+describe('Problems API - Test Merged Matches', function() {
 
-
-	before(function(done) {
-		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
-			if (err) {
-				done(err);
-			} else {
-				done();
-			}
-		});
-	});
 	var match_id = '';
 
 	var base_id = '';
@@ -602,19 +564,35 @@ describe('Social API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var tmp_updated_entry = {
-		"dateRange": [{
-			"date": "2005-05-01T00:00:00.000Z",
+		"code": "36971009",
+		"code_system_name": "SNOMED CT",
+		"date": [{
+			"date": "2012-09-01T00:00:00.000Z",
 			"precision": "day"
-		}, {
-			"date": "2012-02-27T13:00:00.000Z",
-			"precision": "subsecond"
 		}],
-		"value": "Heavy smoker"
+		"identifiers": [{
+			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
+			"identifier_type": "1234556"
+		}, {
+			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
+			"identifier_type": "6599352434300001"
+		}],
+		"name": "Hepatitus",
+		"negation_indicator": true,
+		"source_list_identifiers": [{
+			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
+			"identifier_type": "615028800003"
+		}, {
+			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
+			"identifier_type": "659935200001"
+		}],
+		"status": "Inactive",
+		"translations": []
 	};
 
-	it('Update Social Match Records Merged', function(done) {
+	it('Update Problem Match Records Merged', function(done) {
 
-		api.get('/api/v1/matches/socialHistory')
+		api.get('/api/v1/matches/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -625,18 +603,18 @@ describe('Social API - Test Merged Matches', function() {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
 					//Still need this object to check metadata.
-					api.get('/api/v1/record/socialHistory')
+					api.get('/api/v1/record/problems')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								for (var i = 0; i < res.body.socialHistory.length; i++) {
-									if (res.body.socialHistory[i]._id === base_id) {
-										base_object = res.body.socialHistory[i];
+								for (var i = 0; i < res.body.problems.length; i++) {
+									if (res.body.problems[i]._id === base_id) {
+										base_object = res.body.problems[i];
 									}
 								}
-								api.post('/api/v1/matches/socialHistory/' + update_id)
+								api.post('/api/v1/matches/problems/' + update_id)
 									.send({
 										determination: "merged",
 										updated_entry: tmp_updated_entry
@@ -655,54 +633,67 @@ describe('Social API - Test Merged Matches', function() {
 			});
 	});
 
-	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+	it('Get Problem Records', function(done) {
+		api.get('/api/v1/record/problems')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.socialHistory.length).to.equal(2);
-				var total_socials = 0;
-				for (var iEntry in res.body.socialHistory) {
-					if (res.body.socialHistory[iEntry]._id === match_id) {
-						total_socials++;
+				expect(res.body.problems.length).to.equal(4);
+				var total_problems = 0;
+				for (var iEntry in res.body.problems) {
+					if (res.body.problems[iEntry]._id === match_id) {
+						total_problems++;
 					}
-					if (res.body.socialHistory[iEntry]._id === base_id) {
+					if (res.body.problems[iEntry]._id === base_id) {
 
-						//console.log(res.body.socialHistory[iEntry]);
+						//console.log(res.body.problems[iEntry]);
 						//console.log(tmp_updated_entry);
 
+						//SHIM in empty arrays.
+
+						if (res.body.problems[iEntry].translations === undefined) {
+							res.body.problems[iEntry].translations = [];
+						}
+
 						//Test each component.
-						expect(res.body.socialHistory[iEntry].dateRange).to.deep.equal(tmp_updated_entry.dateRange);
-						expect(res.body.socialHistory[iEntry].value).to.deep.equal(tmp_updated_entry.value);
+						expect(res.body.problems[iEntry].code).to.deep.equal(tmp_updated_entry.code);
+						expect(res.body.problems[iEntry].code_system_name).to.deep.equal(tmp_updated_entry.code_system_name);
+						expect(res.body.problems[iEntry].date).to.deep.equal(tmp_updated_entry.date);
+						expect(res.body.problems[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
+						expect(res.body.problems[iEntry].name).to.deep.equal(tmp_updated_entry.name);
+						expect(res.body.problems[iEntry].negation_indicator).to.deep.equal(tmp_updated_entry.negation_indicator);
+						expect(res.body.problems[iEntry].source_list_identifiers).to.deep.equal(tmp_updated_entry.source_list_identifiers);
+						expect(res.body.problems[iEntry].status).to.deep.equal(tmp_updated_entry.status);
+						expect(res.body.problems[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
 						//Metadata slightly different test.
-						expect(res.body.socialHistory[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+						expect(res.body.problems[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
 
 					}
 				}
-				expect(total_socials).to.equal(0);
+				expect(total_problems).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+	it('Get Partial Problem Records', function(done) {
+		api.get('/api/v1/record/partial/problems')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.problems.length).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Social Merge Records Post Merged', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+	it('Get Problem Merge Records Post Merged', function(done) {
+		api.get('/api/v1/merges/problems')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.merges,null, 10));
-				expect(res.body.merges.length).to.equal(5);
+				expect(res.body.merges.length).to.equal(9);
 				var newCnt = 0;
 				var dupCnt = 0;
 				var mrgCnt = 0;
@@ -723,15 +714,15 @@ describe('Social API - Test Merged Matches', function() {
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(2);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(4);
+				expect(dupCnt).to.equal(4);
 				expect(mrgCnt).to.equal(1);
 				done();
 			});
 	});
 
-	it('Get Social Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+	it('Get Problem Match Records Post Added', function(done) {
+		api.get('/api/v1/matches/problems')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {

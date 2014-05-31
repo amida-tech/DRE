@@ -1,19 +1,3 @@
-/*=======================================================================
-Copyright 2013 Amida Technology Solutions (http://amida-tech.com)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-======================================================================*/
-
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
@@ -46,7 +30,7 @@ function removeCollection(inputCollection, callback) {
 }
 
 function loadTestRecord(fileName, callback) {
-	var filepath = path.join(__dirname, '../../../artifacts/test-r1.0/' + fileName);
+	var filepath = path.join(__dirname, '../../artifacts/test-r1.0/' + fileName);
 	api.put('/api/v1/storage')
 		.attach('file', filepath)
 		.expect(200)
@@ -61,16 +45,16 @@ function loadTestRecord(fileName, callback) {
 
 describe('Pre Test Cleanup', function() {
 
-	it('Remove Problem Collections', function(done) {
-		removeCollection('problems', function(err) {
+	it('Remove Medication Collections', function(done) {
+		removeCollection('medications', function(err) {
 			if (err) {
 				done(err);
 			}
-			removeCollection('problemmerges', function(err) {
+			removeCollection('medicationmerges', function(err) {
 				if (err) {
 					done(err);
 				}
-				removeCollection('problemmatches', function(err) {
+				removeCollection('medicationmatches', function(err) {
 					if (err) {
 						done(err);
 					}
@@ -92,7 +76,7 @@ describe('Pre Test Cleanup', function() {
 
 });
 
-describe('Problems API - Test New:', function() {
+describe('Medications API - Test New:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-01-original.xml', function(err) {
@@ -104,39 +88,39 @@ describe('Problems API - Test New:', function() {
 		});
 	});
 
-	it('Get Problem Records', function(done) {
-		api.get('/api/v1/record/problems')
+	it('Get Medication Records', function(done) {
+		api.get('/api/v1/record/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				expect(res.body.problems.length).to.equal(2);
-				//console.log(JSON.stringify(res.body.problems, null, 10));
+				expect(res.body.medications.length).to.equal(1);
+				//console.log(JSON.stringify(res.body.medications, null, 10));
 				done();
 			});
 	});
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Partial Medication Records', function(done) {
+		api.get('/api/v1/record/partial/medications')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.problems.length).to.equal(0);
+				expect(res.body.medications.length).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Problem Merge Records', function(done) {
-		api.get('/api/v1/merges/problems')
+	it('Get Medication Merge Records', function(done) {
+		api.get('/api/v1/merges/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				expect(res.body.merges.length).to.equal(2);
+				expect(res.body.merges.length).to.equal(1);
 				for (var i in res.body.merges) {
 					expect(res.body.merges[i].merge_reason).to.equal('new');
-					expect(res.body.merges[i].entry_type).to.equal('problem');
+					expect(res.body.merges[i].entry_type).to.equal('medication');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
@@ -148,7 +132,7 @@ describe('Problems API - Test New:', function() {
 
 });
 
-describe('Problems API - Test Duplicate:', function() {
+describe('Medications API - Test Duplicate:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-02-duplicate.xml', function(err) {
@@ -160,37 +144,37 @@ describe('Problems API - Test Duplicate:', function() {
 		});
 	});
 
-	it('Get Problem Records', function(done) {
-		api.get('/api/v1/record/problems')
+	it('Get Medication Records', function(done) {
+		api.get('/api/v1/record/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.problems, null, 10));
-				expect(res.body.problems.length).to.equal(2);
+				//console.log(JSON.stringify(res.body.medications, null, 10));
+				expect(res.body.medications.length).to.equal(1);
 				done();
 			});
 	});
 
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Partial Medication Records', function(done) {
+		api.get('/api/v1/record/partial/medications')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.problems.length).to.equal(0);
+				expect(res.body.medications.length).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Problem Merge Records', function(done) {
-		api.get('/api/v1/merges/problems')
+	it('Get Medication Merge Records', function(done) {
+		api.get('/api/v1/merges/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				expect(res.body.merges.length).to.equal(4);
+				expect(res.body.merges.length).to.equal(2);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -200,13 +184,13 @@ describe('Problems API - Test Duplicate:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('problem');
+					expect(res.body.merges[i].entry_type).to.equal('medication');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
-				expect(newCnt).to.equal(2);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(1);
+				expect(dupCnt).to.equal(1);
 				done();
 			});
 	});
@@ -214,7 +198,7 @@ describe('Problems API - Test Duplicate:', function() {
 
 });
 
-describe('Problems API - Test New/Dupe Mix:', function() {
+describe('Medications API - Test New/Dupe Mix:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-03-updated.xml', function(err) {
@@ -226,37 +210,37 @@ describe('Problems API - Test New/Dupe Mix:', function() {
 		});
 	});
 
-	it('Get Problems Records', function(done) {
-		api.get('/api/v1/record/problems')
+	it('Get Medications Records', function(done) {
+		api.get('/api/v1/record/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				expect(res.body.problems.length).to.equal(3);
+				expect(res.body.medications.length).to.equal(3);
 				done();
 			});
 	});
 
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Partial Medication Records', function(done) {
+		api.get('/api/v1/record/partial/medications')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.problems.length).to.equal(0);
+				expect(res.body.medications.length).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Problem Merge Records', function(done) {
-		api.get('/api/v1/merges/problems')
+	it('Get Medication Merge Records', function(done) {
+		api.get('/api/v1/merges/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(7);
+				//console.log(JSON.stringify(res.body.merges, null, 10));
+				expect(res.body.merges.length).to.equal(5);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -266,13 +250,13 @@ describe('Problems API - Test New/Dupe Mix:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('problem');
+					expect(res.body.merges[i].entry_type).to.equal('medication');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(3);
-				expect(dupCnt).to.equal(4);
+				expect(dupCnt).to.equal(2);
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
 			});
@@ -280,7 +264,7 @@ describe('Problems API - Test New/Dupe Mix:', function() {
 });
 
 //Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
-describe('Problems API - Test Partial Matches:', function() {
+describe('Medications API - Test Partial Matches:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
@@ -292,39 +276,39 @@ describe('Problems API - Test Partial Matches:', function() {
 		});
 	});
 
-	it('Get Problem Records', function(done) {
-		api.get('/api/v1/record/problems')
+	it('Get Medication Records', function(done) {
+		api.get('/api/v1/record/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.problems.length).to.equal(3);
+				//console.log(JSON.stringify(res.body.medications, null, 10));
+				expect(res.body.medications.length).to.equal(3);
 				done();
 			});
 	});
 
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Partial Medication Records', function(done) {
+		api.get('/api/v1/record/partial/medications')
 			.expect(200)
 			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.problems.length).to.equal(3);
+				//console.log(JSON.stringify(res.body.medications, null, 10));
+				expect(res.body.medications.length).to.equal(3);
 				done();
 			});
 	});
 
-	it('Get Problem Merge Records', function(done) {
-		api.get('/api/v1/merges/problems')
+	it('Get Medication Merge Records', function(done) {
+		api.get('/api/v1/merges/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(7);
+				expect(res.body.merges.length).to.equal(5);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -334,26 +318,26 @@ describe('Problems API - Test Partial Matches:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('problem');
+					expect(res.body.merges[i].entry_type).to.equal('medication');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(3);
-				expect(dupCnt).to.equal(4);
+				expect(dupCnt).to.equal(2);
 				done();
 			});
 	});
 
-	it('Get Problem Match Records', function(done) {
-		api.get('/api/v1/matches/problems')
+	it('Get Medication Match Records', function(done) {
+		api.get('/api/v1/matches/medications')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
 				expect(res.body.matches.length).to.equal(3);
 				for (var i in res.body.matches) {
 					expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
-					expect(res.body.matches[i].entry_type).to.equal('problem');
+					expect(res.body.matches[i].entry_type).to.equal('medication');
 				}
 				done();
 			});
@@ -361,14 +345,14 @@ describe('Problems API - Test Partial Matches:', function() {
 
 });
 
-describe('Problems API - Test Added Matches', function() {
+describe('Medications API - Test Added Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
 
-	it('Update Problem Match Records', function(done) {
+	it('Update Medication Match Records', function(done) {
 
-		api.get('/api/v1/matches/problems')
+		api.get('/api/v1/matches/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -376,7 +360,7 @@ describe('Problems API - Test Added Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/problems/' + update_id)
+					api.post('/api/v1/matches/medications/' + update_id)
 						.send({
 							determination: "added"
 						})
@@ -393,43 +377,43 @@ describe('Problems API - Test Added Matches', function() {
 			});
 	});
 
-	it('Get Problem Records', function(done) {
-		api.get('/api/v1/record/problems')
+	it('Get Medication Records', function(done) {
+		api.get('/api/v1/record/medications')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.problems.length).to.equal(4);
-				var total_problems = 0;
-				for (var iEntry in res.body.problems) {
-					if (res.body.problems[iEntry]._id === match_id) {
-						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
-						total_problems++;
+				expect(res.body.medications.length).to.equal(4);
+				var total_medications = 0;
+				for (var iEntry in res.body.medications) {
+					if (res.body.medications[iEntry]._id === match_id) {
+						//console.log(JSON.stringify(res.body.medications[iEntry], null, 10));
+						total_medications++;
 					}
 				}
-				expect(total_problems).to.equal(1);
+				expect(total_medications).to.equal(1);
 				done();
 			});
 	});
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Partial Medication Records', function(done) {
+		api.get('/api/v1/record/partial/medications')
 			.expect(200)
 			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.problems.length).to.equal(2);
+				//console.log(JSON.stringify(res.body.medications, null, 10));
+				expect(res.body.medications.length).to.equal(2);
 				done();
 			});
 	});
 
-	it('Get Problem Merge Records Post Added', function(done) {
-		api.get('/api/v1/merges/problems')
+	it('Get Medication Merge Records Post Added', function(done) {
+		api.get('/api/v1/merges/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(8);
+				expect(res.body.merges.length).to.equal(6);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -439,19 +423,19 @@ describe('Problems API - Test Added Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('problem');
+					expect(res.body.merges[i].entry_type).to.equal('medication');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(4);
-				expect(dupCnt).to.equal(4);
+				expect(dupCnt).to.equal(2);
 				done();
 			});
 	});
 
-	it('Get Problem Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/problems')
+	it('Get Medication Match Records Post Added', function(done) {
+		api.get('/api/v1/matches/medications')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
@@ -468,13 +452,13 @@ describe('Problems API - Test Added Matches', function() {
 
 
 
-describe('Problems API - Test Ignored Matches', function() {
+describe('Medications API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
 
-	it('Update Problem Match Records Ignored', function(done) {
-		api.get('/api/v1/matches/problems')
+	it('Update Medication Match Records Ignored', function(done) {
+		api.get('/api/v1/matches/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -482,7 +466,7 @@ describe('Problems API - Test Ignored Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/problems/' + update_id)
+					api.post('/api/v1/matches/medications/' + update_id)
 						.send({
 							determination: "ignored"
 						})
@@ -498,43 +482,43 @@ describe('Problems API - Test Ignored Matches', function() {
 			});
 	});
 
-	it('Get Problem Records', function(done) {
-		api.get('/api/v1/record/problems')
+	it('Get Medication Records', function(done) {
+		api.get('/api/v1/record/medications')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.problems.length).to.equal(4);
-				var total_problems = 0;
-				for (var iEntry in res.body.problems) {
-					if (res.body.problems[iEntry]._id === match_id) {
-						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
-						total_problems++;
+				expect(res.body.medications.length).to.equal(4);
+				var total_medications = 0;
+				for (var iEntry in res.body.medications) {
+					if (res.body.medications[iEntry]._id === match_id) {
+						//console.log(JSON.stringify(res.body.medications[iEntry], null, 10));
+						total_medications++;
 					}
 				}
-				expect(total_problems).to.equal(0);
+				expect(total_medications).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Partial Medication Records', function(done) {
+		api.get('/api/v1/record/partial/medications')
 			.expect(200)
 			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.problems.length).to.equal(1);
+				//console.log(JSON.stringify(res.body.medications, null, 10));
+				expect(res.body.medications.length).to.equal(1);
 				done();
 			});
 	});
 
-	it('Get Problem Merge Records Post Added', function(done) {
-		api.get('/api/v1/merges/problems')
+	it('Get Medication Merge Records Post Added', function(done) {
+		api.get('/api/v1/merges/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(8);
+				expect(res.body.merges.length).to.equal(6);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -544,19 +528,19 @@ describe('Problems API - Test Ignored Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('problem');
+					expect(res.body.merges[i].entry_type).to.equal('medication');
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(4);
-				expect(dupCnt).to.equal(4);
+				expect(dupCnt).to.equal(2);
 				done();
 			});
 	});
 
-	it('Get Problem Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/problems')
+	it('Get Medication Match Records Post Added', function(done) {
+		api.get('/api/v1/matches/medications')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
@@ -571,7 +555,7 @@ describe('Problems API - Test Ignored Matches', function() {
 });
 
 
-describe('Problems API - Test Merged Matches', function() {
+describe('Medications API - Test Merged Matches', function() {
 
 	var match_id = '';
 
@@ -580,35 +564,56 @@ describe('Problems API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var tmp_updated_entry = {
-		"code": "36971009",
-		"code_system_name": "SNOMED CT",
-		"date": [{
-			"date": "2012-09-01T00:00:00.000Z",
-			"precision": "day"
-		}],
-		"identifiers": [{
-			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
-			"identifier_type": "1234556"
-		}, {
-			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
-			"identifier_type": "6599352434300001"
-		}],
-		"name": "Hepatitus",
-		"negation_indicator": true,
-		"source_list_identifiers": [{
-			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
-			"identifier_type": "615028800003"
-		}, {
-			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",
-			"identifier_type": "659935200001"
-		}],
-		"status": "Inactive",
-		"translations": []
-	};
+    "administration" : {
+        "form" : {
+            "name" : "SOLUTION",
+            "code" : "C42986",
+            "code_system_name" : "Medication Route FDA",
+            "translations" : []
+        },
+        "site" : {
+            "translations" : []
+        },
+        "route" : {
+            "translations" : []
+        }
+    },
+    "date" : [ 
+        {
+            "date" : "2012-10-01T00:00:00.000Z",
+            "precision" : "hour"
+        }
+    ],
+    "identifiers" : [ 
+        {
+            "identifier" : "1.3.6.1.4.1.22812.3.99930.3.4.9",
+            "identifier_type" : "8"
+        }, 
+        {
+            "identifier" : "1.3.6.1.4.1.22812.3.99930.3.4.9",
+            "identifier_type" : "123"
+        }
+    ],
+    "precondition" : {
+        "value" : {
+            "translations" : []
+        },
+        "code" : {
+            "translations" : []
+        }
+    },
+    "product" : {
+        "name" : "Cefepime 200 MG/ML",
+        "code" : "1232",
+        "code_system_name" : "RXNORM",
+        "translations" : []
+    },
+    "status" : "Prescribed"
+};
 
-	it('Update Problem Match Records Merged', function(done) {
+	it('Update Medication Match Records Merged', function(done) {
 
-		api.get('/api/v1/matches/problems')
+		api.get('/api/v1/matches/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -619,18 +624,18 @@ describe('Problems API - Test Merged Matches', function() {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
 					//Still need this object to check metadata.
-					api.get('/api/v1/record/problems')
+					api.get('/api/v1/record/medications')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								for (var i = 0; i < res.body.problems.length; i++) {
-									if (res.body.problems[i]._id === base_id) {
-										base_object = res.body.problems[i];
+								for (var i = 0; i < res.body.medications.length; i++) {
+									if (res.body.medications[i]._id === base_id) {
+										base_object = res.body.medications[i];
 									}
 								}
-								api.post('/api/v1/matches/problems/' + update_id)
+								api.post('/api/v1/matches/medications/' + update_id)
 									.send({
 										determination: "merged",
 										updated_entry: tmp_updated_entry
@@ -649,67 +654,91 @@ describe('Problems API - Test Merged Matches', function() {
 			});
 	});
 
-	it('Get Problem Records', function(done) {
-		api.get('/api/v1/record/problems')
+	it('Get Medication Records', function(done) {
+		api.get('/api/v1/record/medications')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.problems.length).to.equal(4);
-				var total_problems = 0;
-				for (var iEntry in res.body.problems) {
-					if (res.body.problems[iEntry]._id === match_id) {
-						total_problems++;
+				expect(res.body.medications.length).to.equal(4);
+				var total_medications = 0;
+				for (var iEntry in res.body.medications) {
+					if (res.body.medications[iEntry]._id === match_id) {
+						total_medications++;
 					}
-					if (res.body.problems[iEntry]._id === base_id) {
+					if (res.body.medications[iEntry]._id === base_id) {
 
-						//console.log(res.body.problems[iEntry]);
+						//console.log(res.body.medications[iEntry]);
 						//console.log(tmp_updated_entry);
 
 						//SHIM in empty arrays.
-
-						if (res.body.problems[iEntry].translations === undefined) {
-							res.body.problems[iEntry].translations = [];
+						if (res.body.medications[iEntry].administration.form === undefined) {
+							res.body.medications[iEntry].administration.form = {};
 						}
+						if (res.body.medications[iEntry].administration.form.translations === undefined) {
+							res.body.medications[iEntry].administration.form.translations = [];
+						}
+						if (res.body.medications[iEntry].administration.site === undefined) {
+							res.body.medications[iEntry].administration.site = {};
+						}
+						if (res.body.medications[iEntry].administration.site.translations === undefined) {
+							res.body.medications[iEntry].administration.site.translations = [];
+						}
+						if (res.body.medications[iEntry].administration.route === undefined) {
+							res.body.medications[iEntry].administration.route = {};
+						}
+						if (res.body.medications[iEntry].administration.route.translations === undefined) {
+							res.body.medications[iEntry].administration.route.translations = [];
+						}
+						if (res.body.medications[iEntry].precondition === undefined) {
+							res.body.medications[iEntry].precondition = {};
+							res.body.medications[iEntry].precondition.value = {};
+							res.body.medications[iEntry].precondition.value.translations = [];
+							res.body.medications[iEntry].precondition.code = {};
+							res.body.medications[iEntry].precondition.code.translations = [];
+						}
+						if (res.body.medications[iEntry].product.translations === undefined) {
+							res.body.medications[iEntry].product.translations = [];
+						}
+						
+
+						
 
 						//Test each component.
-						expect(res.body.problems[iEntry].code).to.deep.equal(tmp_updated_entry.code);
-						expect(res.body.problems[iEntry].code_system_name).to.deep.equal(tmp_updated_entry.code_system_name);
-						expect(res.body.problems[iEntry].date).to.deep.equal(tmp_updated_entry.date);
-						expect(res.body.problems[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
-						expect(res.body.problems[iEntry].name).to.deep.equal(tmp_updated_entry.name);
-						expect(res.body.problems[iEntry].negation_indicator).to.deep.equal(tmp_updated_entry.negation_indicator);
-						expect(res.body.problems[iEntry].source_list_identifiers).to.deep.equal(tmp_updated_entry.source_list_identifiers);
-						expect(res.body.problems[iEntry].status).to.deep.equal(tmp_updated_entry.status);
-						expect(res.body.problems[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
+						expect(res.body.medications[iEntry].administration).to.deep.equal(tmp_updated_entry.administration);
+						expect(res.body.medications[iEntry].date).to.deep.equal(tmp_updated_entry.date);
+						expect(res.body.medications[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
+						expect(res.body.medications[iEntry].precondition).to.deep.equal(tmp_updated_entry.precondition);
+						expect(res.body.medications[iEntry].product).to.deep.equal(tmp_updated_entry.product);
+						expect(res.body.medications[iEntry].status).to.deep.equal(tmp_updated_entry.status);
 						//Metadata slightly different test.
-						expect(res.body.problems[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+						expect(res.body.medications[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
 
 					}
 				}
-				expect(total_problems).to.equal(0);
+				expect(total_medications).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Partial Medication Records', function(done) {
+		api.get('/api/v1/record/partial/medications')
 			.expect(200)
 			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.problems.length).to.equal(0);
+				//console.log(JSON.stringify(res.body.medications, null, 10));
+				expect(res.body.medications.length).to.equal(0);
 				done();
 			});
 	});
 
-	it('Get Problem Merge Records Post Merged', function(done) {
-		api.get('/api/v1/merges/problems')
+	it('Get Medication Merge Records Post Merged', function(done) {
+		api.get('/api/v1/merges/medications')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.merges,null, 10));
-				expect(res.body.merges.length).to.equal(9);
+				expect(res.body.merges.length).to.equal(7);
 				var newCnt = 0;
 				var dupCnt = 0;
 				var mrgCnt = 0;
@@ -731,14 +760,14 @@ describe('Problems API - Test Merged Matches', function() {
 					expect(res.body.merges[i].entry_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(4);
-				expect(dupCnt).to.equal(4);
+				expect(dupCnt).to.equal(2);
 				expect(mrgCnt).to.equal(1);
 				done();
 			});
 	});
 
-	it('Get Problem Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/problems')
+	it('Get Medication Match Records Post Added', function(done) {
+		api.get('/api/v1/matches/medications')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
