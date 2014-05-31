@@ -35,7 +35,7 @@ exports.deepEmptyArrayDelete = function deepEmptyArrayDelete(obj) {
             }
         });
     }
-}
+};
 
 exports.deepDeleteEmpty = function deepDeleteEmpty(obj) {
     if (_.isObject(obj)) {
@@ -50,6 +50,6 @@ exports.deepDeleteEmpty = function deepDeleteEmpty(obj) {
             }
         });
     }
-}
+};
 
 

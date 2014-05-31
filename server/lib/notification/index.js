@@ -34,15 +34,15 @@ function getNotifications (callback) {
         new_merges: newCount,
         duplicate_merges: dupeCount,
         file_count: fileCount,
-      }
+      };
       callback(null, recCount);
     }
   }
 
   function getPartialCount(callback) {
-    var secIteration = 0
-    var secTotal = 0
-    for (iComponent in supportedComponents) {
+    var secIteration = 0;
+    var secTotal = 0;
+    for (var iComponent in supportedComponents) {
       secTotal++;
     }
 
@@ -73,9 +73,9 @@ function getNotifications (callback) {
   });
 
   function getNewMergeCount(callback) {
-    var secIteration = 0
-    var secTotal = 0
-    for (iComponent in supportedComponents) {
+    var secIteration = 0;
+    var secTotal = 0;
+    for (var iComponent in supportedComponents) {
       secTotal++;
     }
 
@@ -107,9 +107,9 @@ function getNotifications (callback) {
   });
 
   function getDupeMergeCount(callback) {
-    var secIteration = 0
-    var secTotal = 0
-    for (iComponent in supportedComponents) {
+    var secIteration = 0;
+    var secTotal = 0;
+    for (var iComponent in supportedComponents) {
       secTotal++;
     }
 

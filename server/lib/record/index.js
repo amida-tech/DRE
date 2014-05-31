@@ -12,11 +12,11 @@ function formatResponse(srcComponent, srcResponse) {
         if (srcResponse[ir].__v >= 0) {
             delete srcResponse[ir].__v;
         }
-    };
+    }
 
     srcReturn[srcComponent] = srcResponse;
     return srcReturn;
-};
+}
 
 app.get('/api/v1/record/:component', function(req, res) {
 
