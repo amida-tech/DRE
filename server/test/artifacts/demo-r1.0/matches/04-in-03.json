@@ -166,9 +166,9 @@
         "medications": [
             {
                 "match": "partial",
-                "percent": 90,
+                "percent": 80,
                 "diff": {
-                    "date": "duplicate",
+                    "date": "new",
                     "identifiers": "duplicate",
                     "status": "duplicate",
                     "sig": "duplicate",

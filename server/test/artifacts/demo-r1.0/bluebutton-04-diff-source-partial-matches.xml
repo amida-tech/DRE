@@ -2264,7 +2264,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 								<reference value="#MedSec_1"/> Proventil HFA</text>
 							<statusCode code="completed"/>
 							<effectiveTime xsi:type="IVL_TS">
-								<low value="20070103"/>
+								<low value="200701031430"/>
 								<high value="20120515"/>
 							</effectiveTime>
 							<effectiveTime xsi:type="PIVL_TS" institutionSpecified="true"
