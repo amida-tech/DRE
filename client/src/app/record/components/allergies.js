@@ -62,6 +62,7 @@ angular.module('dre.record.allergies', [])
 
   $scope.updateFields = function() {
     for (var i in $scope.allergies) {
+      $scope.allergies[i].name = recordFunctions.truncateName($scope.allergies[i].name);
       var a = $scope.allergies[i];
       recordFunctions.formatDate(a.date);
       var sev = a.severity;

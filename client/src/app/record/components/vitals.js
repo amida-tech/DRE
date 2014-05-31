@@ -53,6 +53,7 @@ angular.module('dre.record.vitals', [])
 
     $scope.updateFields = function() {
         for (var iRec in $scope.vitals) {
+            $scope.vitals[iRec].name = recordFunctions.truncateName($scope.vitals[iRec].name);
             var d = $scope.vitals[iRec].date;
             recordFunctions.formatDate(d);
             $scope.vitals[iRec].date_weight = d && d[0] && d[0].date;
