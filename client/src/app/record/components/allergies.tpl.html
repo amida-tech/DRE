@@ -47,38 +47,38 @@
 								<div id="myTabContent" >
 									<div class="col-md-12">
 										<h4>Details</h4>
-										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="allergy.status">
 											<div class="pull-left col-md-12"><strong>Status:</strong></div><br/>
 											<div class="pull-left col-md-12">{{allergy.status}}</div>
 										</div>
-										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="allergy.date[0].displayDate">
 											<div class="pull-left col-md-12"><strong>Start:</strong></div><br/>
 											<div class="pull-left col-md-12">{{allergy.date[0].displayDate}}</div>
 										</div>
-										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="allergy.code">
 											<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
 											<div class="pull-left col-md-12">{{allergy.code}}</div>
 										</div>
-										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="allergy.code_system_name">
 											<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
 											<div class="pull-left col-md-12">{{allergy.code_system_name}}</div>
 										</div>
 									</div>
 									<div class="col-md-12" ng-repeat="reaction in allergy.reaction">
 										<h4>Reactions</h4>
-										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="reaction.name">
 											<div class="pull-left col-md-12"><strong>Reaction:</strong></div><br/>
 											<div class="pull-left col-md-12">{{reaction.name}}</div>
 										</div>
-										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="reaction.severity">
 											<div class="pull-left col-md-12"><strong>Severity:</strong></div><br/>
 											<div class="pull-left col-md-12">{{reaction.severity}}</div>
 										</div>
-										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="reaction.code">
 											<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
 											<div class="pull-left col-md-12">{{reaction.code}}</div>
 										</div>
-										<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+										<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="reaction.code_system_name">
 											<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
 											<div class="pull-left col-md-12">{{reaction.code_system_name}}</div>
 										</div>
