@@ -1,5 +1,5 @@
 var chai = require('chai');
-var util = require('util')
+var util = require('util');
 var path = require('path');
 var bb = require('blue-button');
 var fs = require('fs');

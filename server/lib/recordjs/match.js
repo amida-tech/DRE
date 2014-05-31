@@ -37,7 +37,7 @@ exports.getMatch = function(dbinfo, type, matchId, callback) {
             callback(null, matchResults);
         }
     });
-}
+};
 
 exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback) {
     var model = dbinfo.matchModels[type];
@@ -62,7 +62,7 @@ exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback)
             }
         }
     });
-}
+};
 
 exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) {
 
@@ -88,7 +88,7 @@ exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) 
 
 exports.count = function(dbinfo, type, conditions, callback) {
     var model = dbinfo.matchModels[type];
-    var query = model.count()
+    var query = model.count();
     query.where('determination').in([null, false]);
     //Ignoring Conditions
     //query.where(conditions);

@@ -17,7 +17,7 @@ function extractRecord(inputRecord, callback) {
 	}
 
 	if (bbRecordType.type = 'ccda') {
-		callback(null, 'ccda', bbRecord.data)
+		callback(null, 'ccda', bbRecord.data);
 	} else {
 		callback(null);
 	}

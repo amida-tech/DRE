@@ -656,7 +656,7 @@ describe('Immunizations API - Test Merged Matches', function() {
         "translations" : []
     },
     "status" : "refused"
-}
+};
 
 	it('Update Immunization Match Records Merged', function(done) {
 
@@ -752,7 +752,7 @@ describe('Immunizations API - Test Merged Matches', function() {
 							res.body.immunizations[iEntry].product.translations = [];
 						}
 
-						for (var iFind in res.body.immunizations[iEntry].performer.name) {
+						for (iFind in res.body.immunizations[iEntry].performer.name) {
 							if (res.body.immunizations[iEntry].performer.name[iFind].middle === undefined) {
 								res.body.immunizations[iEntry].performer.name[iFind].middle = [];
 							}
@@ -796,7 +796,7 @@ describe('Immunizations API - Test Merged Matches', function() {
 				expect(res.body.merges.length).to.equal(17);
 				var newCnt = 0;
 				var dupCnt = 0;
-				var mrgCnt = 0
+				var mrgCnt = 0;
 				for (var i in res.body.merges) {
 					if (res.body.merges[i].merge_reason === 'new') {
 						newCnt++;

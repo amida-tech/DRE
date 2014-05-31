@@ -35,66 +35,66 @@ function loadSampleRecord(callback) {
 
 
 describe('Storage API', function() {
-  var sampleFile = '';
+    var sampleFile = '';
 
-  before(function(done) {
-    loadSampleRecord(function(err, file) {
-      if (err) {
-        done(err);
-      } else {
-          sampleFile = file;
-          done();
-      }
+    before(function(done) {
+        loadSampleRecord(function(err, file) {
+            if (err) {
+                done(err);
+            } else {
+                sampleFile = file;
+                done();
+            }
+        });
     });
-  });
 
-  it('File Endpoint PUT', function(done) {
-    var filepath = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
-    api.put('/api/v1/storage')
-      .attach('file', filepath)
-      .expect(200)
-      .end(function(err, res) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
-  });
+    it('File Endpoint PUT', function(done) {
+        var filepath = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
+        api.put('/api/v1/storage')
+            .attach('file', filepath)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) {
+                    return done(err);
+                }
+                done();
+            });
+    });
 
 });
 
 describe('Storage API Get list', function() {
 
-  it('File Endpoint GET', function(done) {
-    api.get('/api/v1/storage')
-      .expect(200)
-      .end(function(err, res) {
-        if (err) {
-          return done(err);
-        } else {
-          done();
-        }
-      });
-  });
+    it('File Endpoint GET', function(done) {
+        api.get('/api/v1/storage')
+            .expect(200)
+            .end(function(err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    done();
+                }
+            });
+    });
 
-  it('Download File GET', function(done) {
-    api.get('/api/v1/storage')
-      .expect(200)
-      .end(function(err, res) {
-        if (err) {
-          return done(err);
-        } else {
-          api.get('/api/v1/storage/record/' + res.body.storage[0].file_id)
-          .expect(200)
-          .end(function(err, res) {
-            if (err) {
-              return done(err);
-            } else {
-              done();
-            }
-          });
-        }
-      });
-  });
+    it('Download File GET', function(done) {
+        api.get('/api/v1/storage')
+            .expect(200)
+            .end(function(err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    api.get('/api/v1/storage/record/' + res.body.storage[0].file_id)
+                        .expect(200)
+                        .end(function(err, res) {
+                            if (err) {
+                                return done(err);
+                            } else {
+                                done();
+                            }
+                        });
+                }
+            });
+    });
 
 });

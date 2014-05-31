@@ -622,7 +622,7 @@ describe('Encounters API - Test Merged Matches', function() {
 			"code": "AMB",
 			"code_system_name": "HL7ActCode",
 		}]
-	}
+	};
 
 	it('Update Encounter Match Records Merged', function(done) {
 
@@ -748,7 +748,7 @@ describe('Encounters API - Test Merged Matches', function() {
 				expect(res.body.merges.length).to.equal(7);
 				var newCnt = 0;
 				var dupCnt = 0;
-				var mrgCnt = 0
+				var mrgCnt = 0;
 				for (var i in res.body.merges) {
 					if (res.body.merges[i].merge_reason === 'new') {
 						newCnt++;

@@ -1,6 +1,18 @@
 {
- 	"browser": false,     // Standard browser globals e.g. `window`, `document`.
+    "browser": false, // Standard browser globals e.g. `window`, `document`.
 
-	"node": true,    // Enable globals available when code is running inside of the NodeJS runtime environment.
-	"indent": 4         // Specify indentation spacing
+    "node": true, // Enable globals available when code is running inside of the NodeJS runtime environment.
+    "indent": 4, // Specify indentation spacing
+
+    "expr": true,
+    "quotmark":false,
+    "globals": {
+        'it': true,
+        'describe': true,
+        'xit': true,
+        'xdescribe': true,
+        'before': true,
+        'after': true,
+        'done': true
+    }
 }

@@ -220,7 +220,7 @@ function importRecord(record_metadata, record_data, callback) {
                         } else {
                             callback(null, fileInfo);
                         }
-                    })
+                    });
                 }
             });
         }
