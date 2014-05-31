@@ -1,8 +1,8 @@
 {
-    "author": "Dmitry Kachaev and Matthew McCall",
+    "author": "Dmitry Kachaev, Matthew McCall and Afsin Ustundag",
     "name": "DRE-Server",
     "description": "Data Reconcilliation Engine (Server).",
-    "version": "0.0.2",
+    "version": "0.0.9",
     "repository": {
         "type": "git",
         "url": "git@github.com:amida-tech/DRE-UX.git"
@@ -14,9 +14,6 @@
         "type": "Apache 2.0",
         "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }],
-    "engines": {
-        "node": "0.10.x"
-    },
     "dependencies": {
         "express": "3.4.x",
         "request": "2.33.x",
