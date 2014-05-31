@@ -117,9 +117,6 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
 
     }
 
-    //Entry point here.
-    console.log(updateParameters);
-
     //Gather full match object by ID.
     record.getMatch(updateComponent, updateId, function(err, resultComponent) {
         if (err) {
@@ -184,7 +181,9 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
     //Can be 1) Merged, 2) Added, 3) Ignored.
 
     if (cleanParameters.determination === 'added') {
-        //TODO:  Add filter to reject added demographics.
+        if (updateComponent === 'demographics') {
+            callback('Only one demographic accepted');
+        };
         updateAdded(updateId, updateComponent, function(err, results) {
             saveMatchRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
                 if (err) {
@@ -314,8 +313,6 @@ app.get('/api/v1/matches/:component', function(req, res) {
                 var matchJSON = {};
                 matchJSON.matches = matchList;
                 formatMerges(matchJSON.matches);
-
-                console.log(JSON.stringify(matchJSON, null, 10));
                 res.send(matchJSON);
             }
         });
