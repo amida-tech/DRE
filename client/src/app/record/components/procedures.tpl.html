@@ -49,19 +49,23 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.date[0].displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
 							<div class="pull-left col-md-12">{{procedure.date[0].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.date[1].displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
 							<div class="pull-left col-md-12">{{procedure.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.proc_type">
+							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
+							<div class="pull-left col-md-12">{{procedure.proc_type}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
 							<div class="pull-left col-md-12">{{procedure.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
 							<div class="pull-left col-md-12">{{procedure.code_system_name}}</div>
 						</div>
@@ -69,31 +73,27 @@
 
 					<div class="col-md-12 pull-left" ng-repeat="provider in procedure.providers">
 						<h4>Provider</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="provider.organization.name">
 							<div class="pull-left col-md-12"><strong>Provider:</strong></div><br/>
 							<div class="pull-left col-md-12">{{provider.organization.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="provider.address.displayAddress">
 							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
 							<div class="pull-left col-md-12" ng-repeat="provider_address in provider.address.displayAddress">{{provider_address}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
-							<div class="pull-left col-md-12"><strong>Phone:</strong></div><br/>
-							<div class="pull-left col-md-12" ng-repeat="phone_number in provider.telecom">{{phone_number}}</div>
-						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="location in procedure.locations">
+					<div class="col-md-12 pull-left" ng-repeat="location in procedure.locations" ng-show="procedure.locations">
 						<h4>Location</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="location.name">
 							<div class="pull-left col-md-12"><strong>Provider:</strong></div><br/>
 							<div class="pull-left col-md-12">{{location.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="location.loc_type.name">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
 							<div class="pull-left col-md-12">{{location.loc_type.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="location.addresses[0].displayAddress">
 							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
 							<div class="pull-left col-md-12" ng-repeat="location_address in location.addresses[0].displayAddress">{{location_address}}</div>
 						</div>
@@ -101,20 +101,19 @@
 
 					<div class="col-md-12 pull-left" ng-repeat="body_site in procedure.bodysite">
 						<h4>Body Site</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="body_site.name">
 							<div class="pull-left col-md-12"><strong>Location:</strong></div><br/>
 							<div class="pull-left col-md-12">{{body_site.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="body_site.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
 							<div class="pull-left col-md-12">{{body_site.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="body_site.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
 							<div class="pull-left col-md-12">{{body_site.code_system_name}}</div>
 						</div>
 					</div>
-
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
 				</div>
 			</div>

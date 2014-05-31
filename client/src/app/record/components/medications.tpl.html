@@ -49,23 +49,23 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.date[0].displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.date[0].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.date[1].displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.sig">
 							<div class="pull-left col-md-12"><strong>Sig:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.sig}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.product.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.product.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.product.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.product.code_system_name}}</div>
 						</div>
@@ -73,44 +73,59 @@
 
 					<div class="col-md-12 pull-left">
 						<h4>Administration</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.administration.route.name">
 							<div class="pull-left col-md-12"><strong>Route:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.administration.route.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.administration.form.name">
 							<div class="pull-left col-md-12"><strong>Form:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.administration.form.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.administration.dose.value">
 							<div class="pull-left col-md-12"><strong>Dose:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.administration.dose.value}} {{medication.administration.dose.unit}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.administration.rate.value">
 							<div class="pull-left col-md-12"><strong>Rate:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.administration.rate.value}} {{medication.administration.rate.unit}}</div>
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left">
+					<div class="col-md-12 pull-left" ng-show="medication.precondition">
 						<h4>Precondition</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.precondition.code.code">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.precondition.code.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.precondition.value.name">
 							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.precondition.value.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.precondition.value.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.precondition.value.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.precondition.value.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.precondition.value.code_system_name}}</div>
 						</div>
 					</div>
 
+					<div class="col-md-12 pull-left" ng-repeat="medtranslation in medication.product.translations" ng-show="medication.product.translations">
+						<h4>Other Descriptions</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medtranslation.name">
+							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
+							<div class="pull-left col-md-12">{{medtranslation.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medtranslation.code">
+							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{medtranslation.code}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medtranslation.code_system_name">
+							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{medtranslation.code_system_name}}</div>
+						</div>
+					</div>
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
 				</div>
 			</div>

@@ -40,6 +40,7 @@
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
 					<span style="text-transform:uppercase;">{{problem.name}} - {{problem.status}}</span>
+					<span style="text-transform:uppercase;" ng-show="problem.negation_indicator">NO - </span>
 					<span class="pull-right" style="text-transform:uppercase;" ng-show="problem.statusFlag">{{problem.date[0].displayDate}}</span>
 					<span class="pull-right" style="text-transform:uppercase;" ng-hide="problem.statusFlag">{{problem.date[1].displayDate}}</span>
 				</div>
@@ -50,32 +51,31 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.date[0].displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
 							<div class="pull-left col-md-12">{{problem.date[0].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.date[1].displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
 							<div class="pull-left col-md-12">{{problem.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.onsetAgeDisplay">
 							<div class="pull-left col-md-12"><strong>Onset Age:</strong></div><br/>
 							<div class="pull-left col-md-12">{{problem.onsetAgeDisplay}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.code">
 							<div class="pull-left col-md-12"><strong>Problem Code:</strong></div><br/>
 							<div class="pull-left col-md-12">{{problem.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.code_system_name">
 							<div class="pull-left col-md-12"><strong>Problem Code System:</strong></div><br/>
 							<div class="pull-left col-md-12">{{problem.code_system_name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.patient_status">
 							<div class="pull-left col-md-12"><strong>Reported Status:</strong></div><br/>
 							<div class="pull-left col-md-12">{{problem.patient_status}}</div>
 						</div>
 					</div>
-
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
 				</div>
 			</div>
