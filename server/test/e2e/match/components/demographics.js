@@ -550,7 +550,7 @@ describe('Demographic API - Test Merged Matches', function() {
 		api.get('/api/v1/record/demographics')
 			.expect(200)
 			.end(function(err, res) {
-				console.log(JSON.stringify(res.body, null, 10));
+				//console.log(JSON.stringify(res.body, null, 10));
 				expect(res.body.demographics.length).to.equal(1);
 				var total_demographics = 0;
 				for (var iEntry in res.body.demographics) {
