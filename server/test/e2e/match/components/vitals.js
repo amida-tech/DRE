@@ -142,7 +142,6 @@ describe('Vitals API - Test New:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
@@ -207,7 +206,6 @@ describe('Vitals API - Test Duplicate:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(6);
 				expect(dupCnt).to.equal(6);
@@ -274,7 +272,6 @@ describe('Vitals API - Test New/Dupe Mix:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(11);
 				expect(dupCnt).to.equal(12);
@@ -343,7 +340,6 @@ describe('Vitals API - Test Partial Matches:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(11);
 				expect(dupCnt).to.equal(20);
@@ -449,7 +445,6 @@ describe('Vitals API - Test Added Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(12);
 				expect(dupCnt).to.equal(20);
@@ -555,7 +550,6 @@ describe('Vitals API - Test Ignored Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(12);
 				expect(dupCnt).to.equal(20);
@@ -740,7 +734,6 @@ describe('Vitals API - Test Merged Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(12);
 				expect(dupCnt).to.equal(20);

@@ -142,7 +142,6 @@ describe('Immunizations API - Test New:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
@@ -207,7 +206,6 @@ describe('Immunizations API - Test Duplicate:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(4);
 				expect(dupCnt).to.equal(4);
@@ -274,7 +272,6 @@ describe('Immunizations API - Test New/Dupe Mix:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(5);
 				expect(dupCnt).to.equal(8);
@@ -343,7 +340,6 @@ describe('Immunizations API - Test Partial Matches:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(5);
 				expect(dupCnt).to.equal(10);
@@ -449,7 +445,6 @@ describe('Immunizations API - Test Added Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(6);
 				expect(dupCnt).to.equal(10);
@@ -555,7 +550,6 @@ describe('Immunizations API - Test Ignored Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(6);
 				expect(dupCnt).to.equal(10);
@@ -821,7 +815,6 @@ describe('Immunizations API - Test Merged Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(6);
 				expect(dupCnt).to.equal(10);

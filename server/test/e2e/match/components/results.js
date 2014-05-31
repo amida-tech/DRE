@@ -142,7 +142,6 @@ describe('Results API - Test New:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
@@ -207,7 +206,6 @@ describe('Results API - Test Duplicate:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(1);
 				expect(dupCnt).to.equal(1);
@@ -274,7 +272,6 @@ describe('Results API - Test New/Dupe Mix:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(7);
 				expect(dupCnt).to.equal(2);
@@ -343,7 +340,6 @@ describe('Results API - Test Partial Matches:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(7);
 				expect(dupCnt).to.equal(6);
@@ -449,7 +445,6 @@ describe('Results API - Test Added Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(8);
 				expect(dupCnt).to.equal(6);
@@ -555,7 +550,6 @@ describe('Results API - Test Ignored Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(8);
 				expect(dupCnt).to.equal(6);
@@ -755,7 +749,6 @@ describe('Results API - Test Merged Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(8);
 				expect(dupCnt).to.equal(6);

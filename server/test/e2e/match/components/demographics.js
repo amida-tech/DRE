@@ -142,7 +142,6 @@ describe('Demographic API - Test New:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
@@ -207,7 +206,6 @@ describe('Demographic API - Test Duplicate:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(1);
 				expect(dupCnt).to.equal(1);
@@ -278,7 +276,6 @@ describe('Demographic API - Test Partial Matches:', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(1);
 				expect(dupCnt).to.equal(1);
@@ -382,7 +379,6 @@ describe('Demographic API - Test Ignored Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(1);
 				expect(dupCnt).to.equal(1);
@@ -643,7 +639,6 @@ describe('Demographic API - Test Merged Matches', function() {
 					expect(res.body.merges[i].record_id).to.exist;
 					expect(res.body.merges[i].record_id._id).to.exist;
 					expect(res.body.merges[i].entry_id._id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
 				}
 				expect(newCnt).to.equal(1);
 				expect(dupCnt).to.equal(1);
