@@ -408,10 +408,6 @@ describe('Demographic API - Test Ignored Matches', function() {
 
 describe('Demographic API - Test Merged Matches', function() {
 
-	var update_id = '';
-	var base_id = '';
-	var match_id = '';
-
 	before(function(done) {
 		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
 			if (err) {
@@ -420,7 +416,92 @@ describe('Demographic API - Test Merged Matches', function() {
 				done();
 			}
 		});
-	});
+	})
+
+	var match_id = '';
+
+	var base_id = '';
+	var base_object = {};
+
+	var update_id = '';
+	var tmp_updated_entry = {
+		"addresses": [{
+			"city": "Beaverzone",
+			"state": "AL",
+			"zip": "97867",
+			"country": "US",
+			"use": "primary home",
+			"streetLines": [
+				"1352 Amber Drive"
+			]
+		}],
+		"birthplace": {
+			"city": "Beaverlandia",
+			"state": "AL",
+			"zip": "97867",
+			"country": "US",
+			"streetLines": []
+		},
+		"dob": [{
+			"date": "1976-05-01T00:00:00.000Z",
+			"precision": "month"
+		}],
+		"email": [{"address":"bz@test.com"}],
+		"gender": "Male",
+		"guardians": [{
+			"relation": "Parent",
+			"email": [],
+			"phone": [{
+				"number": "(816)276-6909",
+				"type": "primary home"
+			}],
+			"names": [{
+				"last": "Jones",
+				"first": "Ralph",
+				"middle": []
+			}],
+			"addresses": [{
+				"city": "Beaverton",
+				"state": "OR",
+				"zip": "97867",
+				"country": "US",
+				"use": "primary home",
+				"streetLines": [
+					"1357 Amber Drive"
+				]
+			}]
+		}],
+		"identifiers": [{
+			"identifier": "2.16.840.1.113883.19.5.99999.2",
+			"identifier_type": "998991"
+		}, {
+			"identifier": "2.16.840.1.113883.4.1",
+			"identifier_type": "111-00-2330"
+		}],
+		"languages": [{
+			"language": "fr",
+			"preferred": true,
+			"mode": "Expressed spoken",
+			"proficiency": "decent"
+		}],
+		"marital_status": "Divorced",
+		"name": {
+			"last": "Jones",
+			"first": "Isabella",
+			"middle": [
+				"Isa"
+			]
+		},
+		"phone": [{
+			"number": "(816)276-6909",
+			"type": "primary home"
+		},{
+			"number": "(813)276-6909",
+			"type": "primary work"
+		}],
+		"race_ethnicity": "White",
+		"religion": "Christian (non-Catholic, non-specific)"
+	}
 
 	it('Update Demographic Match Records Merged', function(done) {
 
@@ -430,19 +511,35 @@ describe('Demographic API - Test Merged Matches', function() {
 				if (err) {
 					done(err);
 				} else {
+					//console.log(JSON.stringify(res.body.matches, null, 10));
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/demographics/' + update_id)
-						.send({
-							determination: "merged"
-						})
+					//Still need this object to check metadata.
+					api.get('/api/v1/record/demographics')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								done();
+								for (var i = 0; i < res.body.demographics.length; i++) {
+									if (res.body.demographics[i]._id === base_id) {
+										base_object = res.body.demographics[i];
+									}
+								}
+								api.post('/api/v1/matches/demographics/' + update_id)
+									.send({
+										determination: "merged",
+										updated_entry: tmp_updated_entry
+									})
+									.expect(200)
+									.end(function(err, res) {
+										if (err) {
+											done(err);
+										} else {
+											done();
+										}
+									});
 							}
 						});
 				}
@@ -458,14 +555,49 @@ describe('Demographic API - Test Merged Matches', function() {
 				var total_demographics = 0;
 				for (var iEntry in res.body.demographics) {
 					if (res.body.demographics[iEntry]._id === match_id) {
-
-						//TODO:  CHECK ATTRIBUTION ACCURACY.
-						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
 						total_demographics++;
 					}
 					if (res.body.demographics[iEntry]._id === base_id) {
-						expect(res.body.demographics[iEntry].addresses[0].streetLines[0]).to.equal('1350 Amber Drive');
-						expect(res.body.demographics[iEntry].metadata.attribution.length).to.equal(3);
+
+						//console.log(res.body.demographics[iEntry]);
+						//console.log(tmp_updated_entry);
+
+						//SHIM in empty arrays.
+						if (res.body.demographics[iEntry].birthplace.streetLines === undefined) {
+							res.body.demographics[iEntry].birthplace.streetLines = [];
+						}
+						if (res.body.demographics[iEntry].email === undefined) {
+							res.body.demographics[iEntry].email = [];
+						}
+
+						for (var iGuard in res.body.demographics[iEntry].guardians) {
+							if (res.body.demographics[iEntry].guardians[iGuard].email === undefined) {
+								res.body.demographics[iEntry].guardians[iGuard].email = [];
+							}
+							for (var iName in res.body.demographics[iEntry].guardians[iGuard].names) {
+								if (res.body.demographics[iEntry].guardians[iGuard].names[iName].middle === undefined) {
+									res.body.demographics[iEntry].guardians[iGuard].names[iName].middle = [];
+								}
+							}
+						}
+						
+						//Test each component.
+						expect(res.body.demographics[iEntry].addresses).to.deep.equal(tmp_updated_entry.addresses);
+						expect(res.body.demographics[iEntry].birthplace).to.deep.equal(tmp_updated_entry.birthplace);
+						expect(res.body.demographics[iEntry].dob).to.deep.equal(tmp_updated_entry.dob);
+						expect(res.body.demographics[iEntry].email).to.deep.equal(tmp_updated_entry.email);
+						expect(res.body.demographics[iEntry].gender).to.deep.equal(tmp_updated_entry.gender);
+						expect(res.body.demographics[iEntry].guardians).to.deep.equal(tmp_updated_entry.guardians);
+						expect(res.body.demographics[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
+						expect(res.body.demographics[iEntry].languages).to.deep.equal(tmp_updated_entry.languages);
+						expect(res.body.demographics[iEntry].marital_status).to.deep.equal(tmp_updated_entry.marital_status);
+						expect(res.body.demographics[iEntry].name).to.deep.equal(tmp_updated_entry.name);
+						expect(res.body.demographics[iEntry].phone).to.deep.equal(tmp_updated_entry.phone);
+						expect(res.body.demographics[iEntry].race_ethnicity).to.deep.equal(tmp_updated_entry.race_ethnicity);
+						expect(res.body.demographics[iEntry].religion).to.deep.equal(tmp_updated_entry.religion);
+						//Metadata slightly different test.
+						expect(res.body.demographics[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+						
 					}
 				}
 				expect(total_demographics).to.equal(0);

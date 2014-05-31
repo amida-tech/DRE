@@ -581,9 +581,38 @@ describe('Vitals API - Test Ignored Matches', function() {
 
 describe('Vitals API - Test Merged Matches', function() {
 
-	var update_id = '';
-	var base_id = '';
 	var match_id = '';
+
+	var base_id = '';
+	var base_object = {};
+
+	var update_id = '';
+	var tmp_updated_entry = {
+    "code" : "3141-9",
+    "code_system_name" : "LOINC",
+    "date" : [ 
+        {
+            "date" : "2012-10-01T00:00:00.000Z",
+            "precision" : "day"
+        }
+    ],
+    "identifiers" : [ 
+        {
+            "identifier" : "1.3.6.1.4.1.22812.3.99930.3.4.6",
+            "identifier_type" : "1166602190002918"
+        }, 
+        {
+            "identifier" : "1.3.6.1.4.1.22812.3.99930.3.4.6",
+            "identifier_type" : "1166602190003518"
+        }
+    ],
+    "interpretations" : [],
+    "name" : "Weight",
+    "status" : "completed",
+    "translations" : [],
+    "unit" : "[lb_av]",
+    "value" : 178
+}
 
 	it('Update Vital Match Records Merged', function(done) {
 
@@ -593,19 +622,35 @@ describe('Vitals API - Test Merged Matches', function() {
 				if (err) {
 					done(err);
 				} else {
+					//console.log(JSON.stringify(res.body.matches, null, 10));
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/vitals/' + update_id)
-						.send({
-							determination: "merged"
-						})
+					//Still need this object to check metadata.
+					api.get('/api/v1/record/vitals')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								done();
+								for (var i = 0; i < res.body.vitals.length; i++) {
+									if (res.body.vitals[i]._id === base_id) {
+										base_object = res.body.vitals[i];
+									}
+								}
+								api.post('/api/v1/matches/vitals/' + update_id)
+									.send({
+										determination: "merged",
+										updated_entry: tmp_updated_entry
+									})
+									.expect(200)
+									.end(function(err, res) {
+										if (err) {
+											done(err);
+										} else {
+											done();
+										}
+									});
 							}
 						});
 				}
@@ -624,14 +669,35 @@ describe('Vitals API - Test Merged Matches', function() {
 						total_vitals++;
 					}
 					if (res.body.vitals[iEntry]._id === base_id) {
+
 						//console.log(res.body.vitals[iEntry]);
-						expect(res.body.vitals[iEntry].date[0].precision).to.equal('month');
-						expect(res.body.vitals[iEntry].metadata.attribution.length).to.equal(2);
+						//console.log(tmp_updated_entry);
+
+						//SHIM in empty arrays.
+
+						if (res.body.vitals[iEntry].interpretations === undefined) {
+							res.body.vitals[iEntry].interpretations = [];
+						}
+
+						if (res.body.vitals[iEntry].translations === undefined) {
+							res.body.vitals[iEntry].translations = [];
+						}
+
+						//Test each component.
+						expect(res.body.vitals[iEntry].code).to.deep.equal(tmp_updated_entry.code);
+						expect(res.body.vitals[iEntry].code_system_name).to.deep.equal(tmp_updated_entry.code_system_name);
+						expect(res.body.vitals[iEntry].date).to.deep.equal(tmp_updated_entry.date);
+						expect(res.body.vitals[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
+						expect(res.body.vitals[iEntry].name).to.deep.equal(tmp_updated_entry.name);
+						expect(res.body.vitals[iEntry].status).to.deep.equal(tmp_updated_entry.status);
+						expect(res.body.vitals[iEntry].unit).to.deep.equal(tmp_updated_entry.unit);
+						expect(res.body.vitals[iEntry].value).to.deep.equal(tmp_updated_entry.value);
+						//Metadata slightly different test.
+						expect(res.body.vitals[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+
 					}
 				}
 				expect(total_vitals).to.equal(0);
-				//console.log(base_id);
-
 				done();
 			});
 	});

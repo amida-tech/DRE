@@ -2130,7 +2130,7 @@
 							</text>
 							<statusCode code="completed"/>
 							<effectiveTime xsi:type="IVL_TS">
-								<low value="20121002"/>
+								<low value="201210"/>
 								<high nullFlavor="UNK"/>
 							</effectiveTime>
 							<effectiveTime xsi:type="PIVL_TS" institutionSpecified="false" operator="A">
@@ -2176,7 +2176,7 @@
 							</text>
 							<statusCode code="completed"/>
 							<effectiveTime xsi:type="IVL_TS">
-								<low value="20120920"/>
+								<low value="201209"/>
 								<high nullFlavor="UNK"/>
 							</effectiveTime>
 							<effectiveTime xsi:type="PIVL_TS" institutionSpecified="true" operator="A">
@@ -2264,8 +2264,8 @@
 								<reference value="#MedSec_1"/> Proventil HFA</text>
 							<statusCode code="completed"/>
 							<effectiveTime xsi:type="IVL_TS">
-								<low value="20070103"/>
-								<high value="20120515"/>
+								<low value="200701"/>
+								<high value="201205"/>
 							</effectiveTime>
 							<effectiveTime xsi:type="PIVL_TS" institutionSpecified="true"
 								operator="A">
@@ -3079,7 +3079,7 @@
 							</code>
 							<statusCode code="active"/>
 							<effectiveTime>
-								<low value="20121002"/>
+								<low value="201210"/>
 							</effectiveTime>
 							<value xsi:type="ST">Normal</value>
 							<targetSiteCode code="82094008" codeSystem="2.16.840.1.113883.6.96" codeSystemName="Body Site" displayName="Lower Respiratory Tract Structure"/>
@@ -3137,7 +3137,7 @@
 								<assignedEntity>
 									<id root="2.16.840.1.113883.19.5.9999.456" extension="2981823"/>
 									<addr>
-										<streetAddressLine>1001 Village Avenue</streetAddressLine>
+										<streetAddressLine>1002 Village Avenue</streetAddressLine>
 										<city>Portland</city>
 										<state>OR</state>
 										<postalCode>99123</postalCode>
@@ -3193,7 +3193,7 @@
 							<value xsi:type="CD"/>
 							<methodCode nullFlavor="UNK"/>
 							<targetSiteCode code="416949008" codeSystem="2.16.840.1.113883.6.96"
-								codeSystemName="SNOMED CT" displayName="Abdomen and pelvis"/>
+								codeSystemName="SNOMED CT" displayName="Hip"/>
 							<performer>
 								<assignedEntity>
 									<id root="2.16.840.1.113883.19.5" extension="1234"/>

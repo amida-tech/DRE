@@ -581,11 +581,42 @@ describe('Allergies API - Test Ignored Matches', function() {
 
 describe('Allergies API - Test Merged Matches', function() {
 
-	var update_id = '';
-	var base_id = '';
 	var match_id = '';
 
-	it('Update Allergy Match Records Merged', function(done) {
+	var base_id = '';
+	var base_object = {};
+
+	var update_id = '';
+	var tmp_updated_entry = {
+    "code" : "314422",
+    "code_system_name" : "RXNORM",
+    "date" : [ 
+        {
+            "date" : "2007-05-01T00:00:00.000Z",
+            "precision" : "day",
+        }
+    ],
+    "identifiers" : [ 
+        {
+            "identifier" : "4adc1020-7b14-11db-9fe1-0800200c9a66"
+        }
+    ],
+    "name" : "ALLERGENIC EXTRACT, PENICILLIN",
+    "reaction" : [ 
+        {
+            "severity" : "Mild",
+            "name" : "Nausea",
+            "code" : "422587007",
+            "code_system_name" : "SNOMED CT",
+            "translations" : []
+        }
+    ],
+    "severity" : "Moderate to severe",
+    "status" : "Inactive",
+    "translations" : []
+}
+
+	it('Update Allergies Match Records Merged', function(done) {
 
 		api.get('/api/v1/matches/allergies')
 			.expect(200)
@@ -593,19 +624,35 @@ describe('Allergies API - Test Merged Matches', function() {
 				if (err) {
 					done(err);
 				} else {
+					//console.log(JSON.stringify(res.body.matches, null, 10));
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/allergies/' + update_id)
-						.send({
-							determination: "merged"
-						})
+					//Still need this object to check metadata.
+					api.get('/api/v1/record/allergies')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								done();
+								for (var i = 0; i < res.body.allergies.length; i++) {
+									if (res.body.allergies[i]._id === base_id) {
+										base_object = res.body.allergies[i];
+									}
+								}
+								api.post('/api/v1/matches/allergies/' + update_id)
+									.send({
+										determination: "merged",
+										updated_entry: tmp_updated_entry
+									})
+									.expect(200)
+									.end(function(err, res) {
+										if (err) {
+											done(err);
+										} else {
+											done();
+										}
+									});
 							}
 						});
 				}
@@ -624,12 +671,34 @@ describe('Allergies API - Test Merged Matches', function() {
 						total_allergies++;
 					}
 					if (res.body.allergies[iEntry]._id === base_id) {
-						expect(res.body.allergies[iEntry].metadata.attribution.length).to.equal(4);
+
+						//SHIM in empty translation objects.
+						if (res.body.allergies[iEntry].translations === undefined) {
+							res.body.allergies[iEntry].translations = [];
+						}
+
+						for (var iReaction in res.body.allergies[iEntry].reactions) {
+							if (res.body.allergies[iEntry].reactions[iReaction].translations === undefined) {
+								res.body.allergies[iEntry].reactions[iReaction].translations = [];
+							}
+						}
+						
+						//Test each component.
+						expect(res.body.allergies[iEntry].code).to.equal(tmp_updated_entry.code);
+						expect(res.body.allergies[iEntry].code_system_name).to.equal(tmp_updated_entry.code_system_name);
+						expect(res.body.allergies[iEntry].date[0]).to.deep.equal(tmp_updated_entry.date[0]);
+						expect(res.body.allergies[iEntry].identifiers[0]).to.deep.equal(tmp_updated_entry.identifiers[0]);
+						expect(res.body.allergies[iEntry].name).to.equal(tmp_updated_entry.name);
+						expect(res.body.allergies[iEntry].severity).to.equal(tmp_updated_entry.severity);
+						expect(res.body.allergies[iEntry].reactions).to.equal(tmp_updated_entry.reactions);
+						expect(res.body.allergies[iEntry].status).to.equal(tmp_updated_entry.status);
+						expect(res.body.allergies[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
+
+						//Metadata slightly different test.
+						expect(res.body.allergies[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
 					}
 				}
 				expect(total_allergies).to.equal(0);
-				//console.log(base_id);
-
 				done();
 			});
 	});
