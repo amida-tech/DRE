@@ -19,14 +19,20 @@ DRE-UX is demo frontend for Raccoon. [Raccoon](https://github.com/amida-tech/Rac
 # you need Node.js and Grunt.js installed
 # and MongoDB runnning
 
+#build client app
 cd client
 npm install
 grunt
 
+#run server
 cd ..
 npm install
-
 node server/server.js
+
+#run server side tests
+cd server
+npm install
+grunt
 
 # go to localhost:3000 in your browser
 ```
