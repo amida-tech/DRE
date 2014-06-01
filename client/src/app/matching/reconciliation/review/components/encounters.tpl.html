@@ -71,7 +71,7 @@
                     <div>
                         <strong>Name:</strong> {{finding.name}}
 
-                        <a ng-click="merge_sub('findings', $index)" class="pull-right" ng-if="is_new($index)==='new'"><i class="glyphicon glyphicon-import"></i></a> 
+                        <a ng-click="merge_sub('findings', $index)" class="pull-right" ng-if="is_new($index)==='new' && added_subelements[$index]!==true"><i class="glyphicon glyphicon-import"></i></a> 
                     </div>
                 </div>
             </td>

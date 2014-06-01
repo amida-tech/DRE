@@ -36,6 +36,7 @@ angular.module('dre.match.review', [])
         $scope.notifications = {};
 
         $scope.modified=false;
+        $scope.added_subelements={};
 
         getNotifications.getUpdate(function(err, notifications) {
           $scope.notifications = notifications;
@@ -78,7 +79,7 @@ angular.module('dre.match.review', [])
     $scope.dynamicTemplatePath = "templates/matching/reconciliation/review/components/"+$scope.convertTense($scope.section)+".tpl.html";
 
     $scope.getMatch = function(matchSection) {
-        console.log(">>",matchSection);
+        //console.log(">>",matchSection);
             $http({
                 method: 'GET',
                 url: '/api/v1/matches/' + matchSection
@@ -103,14 +104,14 @@ angular.module('dre.match.review', [])
 
         //load partials and pull right one from url string param.
         function getPartialSections(loadsec) {
-            console.log(loadsec);
+            //console.log(loadsec);
             $http({
                 method: 'GET',
                 url: '/api/v1/record/partial/' + loadsec
             }).
             success(function(data, status, headers, config) {
                 for (var i in data[loadsec]) {
-                    console.log(data[loadsec][i]._id);
+                    //console.log(data[loadsec][i]._id);
                     //console.log($scope.dest_id);
                     if (data[loadsec][i]._id === $scope.dest_id) {
                             $scope.src_el = data[loadsec][i];    
@@ -245,7 +246,7 @@ angular.module('dre.match.review', [])
 
         //merges fields from New Entry into Master Record
         $scope.merge = function(name){
-            console.log(name);
+            //console.log(name);
             $scope.dest_el[name]=$scope.src_el[name];
             $scope.modified=true;
         };
@@ -261,17 +262,20 @@ angular.module('dre.match.review', [])
             $scope.dest_el=angular.copy($scope.dest_copy_el);
             $scope.src_el=angular.copy($scope.src_copy_el);
             $scope.modified=false;
+            $scope.added_subelements={};
         };
 
 
         //merges fields from New Entry into Master Record
         $scope.merge_sub = function(name, index){
-            console.log(name, index);
+            //console.log(name, index);
             $scope.dest_el[name].push($scope.src_el[name][index]);
             $scope.modified=true;
+            $scope.added_subelements[index]=true;
+
         };
         $scope.remove_sub = function(name, index){
-            console.log(name, index);
+            //console.log(name, index);
             $scope.dest_el[name].splice(index,1);
             $scope.modified=true;
         };

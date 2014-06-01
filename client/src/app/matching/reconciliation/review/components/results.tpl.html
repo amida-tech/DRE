@@ -41,7 +41,7 @@
                         <br/>
                         <strong>Intrepretation:</strong> {{result_value.interpretations[0]}}
 
-                        <a ng-click="merge_sub('results', $index)" class="pull-right" ng-if="is_new($index)!=='duplicate'"><i class="glyphicon glyphicon-import"></i></a> 
+                        <a ng-click="merge_sub('results', $index)" class="pull-right" ng-if="is_new($index)!=='duplicate' && added_subelements[$index]!==true"><i class="glyphicon glyphicon-import"></i></a> 
                         <br/>
                         <br/>
                     </div>
