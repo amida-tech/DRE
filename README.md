@@ -11,14 +11,14 @@ aka. Raccoon - Data Raccoonciliation Engine for Health Data.
 
 High Level Overview
 ===================
-![Raccoon High Level Diagram](docs/img/dre_overview.png)
+![Raccoon High Level Diagram](docs/images/dre_overview.png)
 
 Purpose of Data Raccoonciliation Engine is to take personal health data in variety of formats (starting with BlueButton/CCDA) from multiple sources and parse/normalize/de-duplicate/merge it into single Patient's Master Health Record with patient's assistance (thou, most of hard work will be done automagically).
 
 
 Raccoon's components
 =================
-![Raccoon Components Diagram](docs/img/dre_steps_mvp.png)
+![Raccoon Components Diagram](docs/images/dre_steps_mvp.png)
 
 Raccoon has 4 primary elements
 
