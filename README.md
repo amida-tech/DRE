@@ -24,7 +24,9 @@ Raccoon has 4 primary elements
 
 #### 1 - Parsing and Normalization Library.
 
-This parses incoming data into a homogenous, simplified data model. Parsing library code: [amida-tech/blue-button](https://github.com/amida-tech/blue-button)
+This parses incoming data into a homogenous, simplified and normalized data model in JSON format. 
+
+Parsing library code: [amida-tech/blue-button](https://github.com/amida-tech/blue-button)
 
 
 #### 2 - Matching Library.
