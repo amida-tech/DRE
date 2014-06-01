@@ -3,8 +3,8 @@ DRE-UX
 
 DRE-UX is demo frontend for Raccoon. [Raccoon](https://github.com/amida-tech/Raccoon) is a node.js Data Raccoonciliation Engine for Health Data.
 
-[![Build Status](https://travis-ci.org/amida-tech/DRE-UX.svg)](https://travis-ci.org/amida-tech/DRE-UX)
-[![Coverage Status](https://coveralls.io/repos/amida-tech/DRE-UX/badge.png)](https://coveralls.io/r/amida-tech/DRE-UX)
+[![Build Status](https://travis-ci.org/amida-tech/DRE.svg)](https://travis-ci.org/amida-tech/DRE)
+[![Coverage Status](https://coveralls.io/repos/amida-tech/DRE/badge.png)](https://coveralls.io/r/amida-tech/DRE)
 
 
 ###Prerequisites
@@ -46,7 +46,7 @@ node server.js
 
 ## Contributing
 
-Contributors are welcome. See issues https://github.com/amida-tech/DRE-UX/issues
+Contributors are welcome. See issues https://github.com/amida-tech/DRE/issues
 
 ## Release Notes
 

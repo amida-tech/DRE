@@ -5,10 +5,10 @@
     "version": "1.0.0",
     "repository": {
         "type": "git",
-        "url": "git@github.com:amida-tech/DRE-UX.git"
+        "url": "git@github.com:amida-tech/DRE.git"
     },
     "bugs": {
-        "url": "https://github.com/amida-tech/DRE-UX/issues"
+        "url": "https://github.com/amida-tech/DRE/issues"
     },
     "licenses": [{
         "type": "Apache 2.0",
