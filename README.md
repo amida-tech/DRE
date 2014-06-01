@@ -1,4 +1,4 @@
-DRE
+Data Reconciliation Engine (DRE)
 =========
 
 DRE is demo frontend and Node.js server for reconciling health data.
