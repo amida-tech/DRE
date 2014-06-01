@@ -1,7 +1,7 @@
-dre-record
+blue-button-record.js
 ==================
 
-Data Raconciliation Engine Persistance Layer (MongoDB)
+Master Health Record and Data Reconciliation Engine Persistance Layer (MongoDB)
 
 ## Library interfaces/APIs
 

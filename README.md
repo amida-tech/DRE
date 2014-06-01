@@ -3,11 +3,11 @@ DRE
 
 DRE is demo frontend and Node.js server for reconciling health data.
 
-[![Build Status](https://travis-ci.org/amida-tech/DRE.svg)](https://travis-ci.org/amida-tech/DRE)
-
 aka. Raccoon - Data Raccoonciliation Engine for Health Data.
 
 ![Raccoon](http://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Yawning_Raccoon.jpg/976px-Yawning_Raccoon.jpg)
+
+[![Build Status](https://travis-ci.org/amida-tech/DRE.svg)](https://travis-ci.org/amida-tech/DRE)
 
 High Level Overview
 ===================
@@ -80,10 +80,13 @@ Master Record library is in process of refactoring and temporarily is part of [a
 
 ###Screenshots of demo app
 
-![Dashboard](./docs/images/dashboard.png)
-![Storage](./docs/images/storage.png)
-![Allergies Section](./docs/images/allergies.png)
-![Updates](./docs/images/updates.png)
+![Home Screen](./docs/images/dre_01.png)
+![Master Health Record View](./docs/images/dre_02.png)
+![Files Upload](./docs/images/dre_03.png)
+![Notifications](./docs/images/dre_04.png)
+![Updates](./docs/images/dre_05.png)
+![Updates Review](./docs/images/dre_06.png)
+![Partial Match Review](./docs/images/dre_07.png)
 
 
 ##Quick up and running quide
