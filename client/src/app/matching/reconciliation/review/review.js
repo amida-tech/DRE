@@ -37,13 +37,12 @@ angular.module('dre.match.review', [])
 
         $scope.modified=false;
 
-
         getNotifications.getUpdate(function(err, notifications) {
           $scope.notifications = notifications;
         });
 
         //set to false to hide JSON debug output in UI/templates
-        $scope.debug=false;
+        $scope.debug=true;
 
         $scope.section = $routeParams["section"];
         $scope.index = $routeParams["index"];
@@ -53,6 +52,7 @@ angular.module('dre.match.review', [])
         $scope.dest_el = {};
         $scope.dest_copy_el = {}; //copy of master for reset purposes (in merge)
         $scope.src_el = {};
+        $scope.src_copy_el = {}; //copy of new entry for reset purposes (in merge)
         $scope.partial_matches = {};
         $scope.diff = {};
 
@@ -114,6 +114,7 @@ angular.module('dre.match.review', [])
                     //console.log($scope.dest_id);
                     if (data[loadsec][i]._id === $scope.dest_id) {
                             $scope.src_el = data[loadsec][i];    
+                            $scope.src_copy_el = angular.copy($scope.src_el);
                     }
                 }
             }).
@@ -258,6 +259,7 @@ angular.module('dre.match.review', [])
         //resets Master Record from copy
         $scope.reset = function(){
             $scope.dest_el=angular.copy($scope.dest_copy_el);
+            $scope.src_el=angular.copy($scope.src_copy_el);
             $scope.modified=false;
         };
 
@@ -274,6 +276,10 @@ angular.module('dre.match.review', [])
             $scope.modified=true;
         };
 
+        //return info about subelements, e.g. if index is new or duplicate
+        $scope.is_new=function(index){
+            return _.where($scope.partial_matches.subelements,{src_id:""+index})[0].match;
+        };
 
         $scope.reconciliationClick = function() {
             $location.path("match/reconciliation");

@@ -64,7 +64,7 @@
                     <div>
                         <strong>Reaction:</strong>{{reaction.name}}
                         <strong>Severity:</strong>{{reaction.severity}}
-                        <a ng-click="merge_sub('reaction', $index)" class="pull-right" ng-if="diff.reaction==='new'"><i class="glyphicon glyphicon-import"></i></a> 
+                        <a ng-click="merge_sub('reaction', $index)" class="pull-right" ng-if="is_new($index)==='new'"><i class="glyphicon glyphicon-import"></i></a> 
                     </div>
                 </div>
             </td>
