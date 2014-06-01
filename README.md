@@ -24,19 +24,22 @@ Raccoon has 4 primary elements
 
 #### 1 - Parsing and Normalization Library.
 
-This parses incoming data into a homogenous, simplified data model.  Currently, this is served by bluebutton.js; however this will be refactored into a more efficient, server-only model.
+This parses incoming data into a homogenous, simplified data model. Parsing library code: [amida-tech/blue-button](https://github.com/amida-tech/blue-button)
+
 
 #### 2 - Matching Library.
 
 This takes the standardized data elements and flags probable duplicates values. New patient's records are compared against existing Master Health Record and automatically matched with result produced as all elements of a new record are flagged as duplicates, new and % of match (to be reconciled by patient in a next step).
 
+Matching library code: [amida-tech/blue-button-match](https://github.com/amida-tech/blue-button-match)
+
 #### 3 - Reconciliation Interface.
 
-This provides a RESTful API for review and evaluation of duplicates.
+This provides a RESTful API and UI for review and evaluation of duplicates.
 
 #### 4 - Master Record Interface.
 
-This provides a RESTful API for interaction with and access to the aggregated health record.
+This provides a API for interaction with and access to the aggregated health record.
 
 Documentation for record.js [API](./docs/recordjs.md)
 
@@ -61,22 +64,6 @@ Release 1.0 (end of May, 2014)
 - Reconciliation UI support reconciliation of % matched entries (e.g. partial match)
 - Master Health Record library supports persistence and full validation of CCDA JSON into MongoDB
 
-
-Components Documentation
-========================
-
-UNDER CONSTRUCTION!!!
-
-Parsing library is refactored and lives at [amida-tech/blue-button](https://github.com/amida-tech/blue-button)
-[![NPM](https://nodei.co/npm/blue-button.png)](https://nodei.co/npm/blue-button/)
-
-
-Matching library is refactored and lives at [amida-tech/blue-button-match](https://github.com/amida-tech/blue-button-match)
-[![NPM](https://nodei.co/npm/blue-button-match.png)](https://nodei.co/npm/blue-button-match/)
-
-Reconciliation interface lives at [amida-tech/DRE](https://github.com/amida-tech/DRE)
-
-Master Record library is in process of refactoring and temporarily is part of [amida-tech/DRE](https://github.com/amida-tech/DRE)
 
 ###Screenshots of demo app
 
