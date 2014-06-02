@@ -8,7 +8,6 @@ var mongooseCleanDocument = exports.mongooseCleanDocument = function(doc) {
         delete doc[prop];
     });
     jsutil.deepDelete(doc, '_id');
-    jsutil.deepEmptyArrayDelete(doc);
     jsutil.deepDeleteEmpty(doc);
     doc._id = id;
 };
