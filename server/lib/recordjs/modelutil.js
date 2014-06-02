@@ -25,13 +25,6 @@ var mongooseCleanSection = exports.mongooseCleanSection = function(section) {
     }
 };
 
-exports.mongooseCleanFullRecord = function(record) {
-    Object.keys(record).forEach(function(sectionKey) {
-        var section = record[sectionKey];
-        mongooseCleanSection(section);
-    });
-};
-
 var mongooseToBBModelDocument = exports.mongooseCleanDocument = function(doc) {
     var result = _.clone(doc);
     ['_id', 'patKey', 'metadata'].forEach(function(prop) {
