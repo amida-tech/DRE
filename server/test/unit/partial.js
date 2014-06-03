@@ -15,23 +15,31 @@ var refModel = require('./refModel')
 var expect = chai.expect;
 var assert = chai.assert;
 
+chai.config.includeStack = true;
+
 describe('partial methods', function() {
-    var dbinfo = null;
+    var context = {};
 
     before(function(done) {
-        var options = refModel.geConnectionOptions('partialtest');
-        db.connect('localhost', options, function(err, result) {
-            if (err) {
-                done(err);
-            } else {
-                dbinfo = result;
-                done();
-            }
-        });
+        refModel.setConnectionContext('partialtest', context, done)
     });
 
+    beforeEach(function(done) {
+        this.dbinfo = context.dbinfo;
+        done();
+    });
+
+    refModel.testConnectionModels();
+
+    it('connection match models', function(done) {
+        expect(this.dbinfo.matchModels).to.exist;
+        expect(this.dbinfo.matchModels.testallergy).to.exist;
+        expect(this.dbinfo.matchModels.testprocedure).to.exist;
+        done();
+    });
+    
     after(function(done) {
-        dbinfo.db.dropDatabase();
+        context.dbinfo.db.dropDatabase();
         done();
     });
 });

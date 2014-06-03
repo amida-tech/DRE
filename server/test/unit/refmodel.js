@@ -1,11 +1,12 @@
 "use strict";
 
-var options = {
-    dbName: 'mergestest',
-    typeToSection: {},
-            typeToSchemaDesc: {}
-        };
-        
+var chai = require('chai');
+
+var db = require('../../lib/recordjs/db');
+
+var expect = chai.expect;
+chai.config.includeStack = true;
+
 var typeToSection = {
     testallergy: 'testallergies',
     testprocedure: 'testprocedures'    
@@ -30,10 +31,34 @@ var typeToSchemaDesc = {
     }
 };
 
-exports.getConnectionOptions = function(dbName) {
+var getConnectionOptions = function(dbName) {
     return {
         dbName: dbName,
         typeToSection: typeToSection,
         typeToSchemaDesc: typeToSchemaDesc
     };
 };
+
+exports.setConnectionContext = function(dbName, context, callback) {
+    var options = getConnectionOptions(dbName);
+    db.connect('localhost', options, function(err, result) {
+        if (err) {
+            callback(err);
+        } else {
+            context.dbinfo = result;
+            callback();
+        }
+    });
+};
+
+exports.testConnectionModels = function() {
+    it('connection and models', function(done) {
+        expect(this.dbinfo).to.exist;
+        expect(this.dbinfo.db).to.exist;
+        expect(this.dbinfo.grid).to.exist;
+        expect(this.dbinfo.models).to.exist;
+        expect(this.dbinfo.models.testallergy).to.exist;
+        expect(this.dbinfo.models.testprocedure).to.exist;
+        done();
+    });
+}
