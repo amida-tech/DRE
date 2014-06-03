@@ -1,3 +1,5 @@
+"use strict";
+
 var chai = require('chai');
 var util = require('util')
 var path = require('path');
@@ -8,16 +10,19 @@ var merge = require('../../lib/recordjs/merge');
 var section = require('../../lib/recordjs/section');
 var storage = require('../../lib/recordjs/storage');
 
+var refModel = require('./refModel');
+
 var expect = chai.expect;
 var assert = chai.assert;
 
 describe('merges', function() {
-    var dbinfo = null;
+    var context = {};
+    //var dbinfo = null;
     var storageIds = {};
     var newMergeIds = {};
 
     var createStorage = function(pat, filename, index, callback) {
-        storage.saveRecord(dbinfo, pat, 'content', {type: 'text/xml', name: filename}, 'ccda', function(err, result) {
+        storage.saveRecord(context.dbinfo, pat, 'content', {type: 'text/xml', name: filename}, 'ccda', function(err, result) {
             if (err) {
                 callback(err);
             } else {
@@ -40,7 +45,7 @@ describe('merges', function() {
                 value: {code: 'code' + suffix, display: 'display' + suffix}
             }    
         };
-        section.saveNewEntries(dbinfo, 'testallergy', patKey, data, storageIds[recordIndex], callback);
+        section.saveNewEntries(context.dbinfo, 'testallergy', patKey, data, storageIds[recordIndex], callback);
     };
     
     var createProcedures = function(patKey, recordIndex, count, callback) {
@@ -53,15 +58,15 @@ describe('merges', function() {
                 proc_value: {code: 'code' + suffix, display: 'display' + suffix}
             }    
         };
-        section.saveNewEntries(dbinfo, 'testprocedure', patKey, data, storageIds[recordIndex], callback);
+        section.saveNewEntries(context.dbinfo, 'testprocedure', patKey, data, storageIds[recordIndex], callback);
     };
     
     var updateDuplicate = function(patKey, type, recordIndex, callback) {
-        section.getSection(dbinfo, type, patKey, function(err, docs) {
+        section.getSection(context.dbinfo, type, patKey, function(err, docs) {
             var fs = [];
             var rid = storageIds[recordIndex];
             docs.forEach(function(doc) {
-                var f = function(cb) {section.addEntryMergeEntry(dbinfo, type, doc._id, {record_id: rid, merge_reason: 'duplicate'}, cb)};
+                var f = function(cb) {section.addEntryMergeEntry(context.dbinfo, type, doc._id, {record_id: rid, merge_reason: 'duplicate'}, cb)};
                 fs.push(f);
             });
             async.parallel(fs, function(err) {callback(err);});
@@ -69,56 +74,33 @@ describe('merges', function() {
     };
     
     before(function(done) {
-        var options = {
-            dbName: 'mergestest',
-            typeToSection: {},
-            typeToSchemaDesc: {}
-        };
-        
-        var typeToSection = {};
-        typeToSection.testallergy = 'testallergies';
-        typeToSection.testprocedure = 'testprocedures';
-        options.typeToSection = typeToSection;
-        
-        var typeToSchemaDesc = {}
-        typeToSchemaDesc.testallergy = {
-            name: String,
-            severity: String,
-            value: {code: String, display: String}
-        }
-        typeToSchemaDesc.testprocedure = {
-            name: String,
-            proc_type: String,
-            proc_value: {code: String, display: String}
-        }
-        options.typeToSchemaDesc = typeToSchemaDesc;
-        
+        var options = refModel.getConnectionOptions('mergestest');
         db.connect('localhost', options, function(err, result) {
             if (err) {
                 done(err);
             } else {
-                dbinfo = result;
+                context.dbinfo = result;
                 done();
             }
         });
     });
 
     it('dbinfo check', function(done) {
-        assert.ok(dbinfo, 'no dbinfo');
-        assert.ok(dbinfo.db, 'no dbinfo.db');
-        assert.ok(dbinfo.grid, 'no dbinfo');
-        assert.ok(dbinfo.models, 'no dbinfo.models');
-        assert.ok(dbinfo.mergeModels, 'no dbinfo.mergeModels');
-        assert.ok(dbinfo.storageModel, 'no dbinfo.storageModel');
-        assert.ok(dbinfo.models.testallergy, 'no dbinfo.models.testallergy');
-        assert.ok(dbinfo.mergeModels.testallergy, 'no dbinfo.mergeModels.testallergy');
-        assert.ok(dbinfo.models.testprocedure, 'no dbinfo.models.testprocedure');
-        assert.ok(dbinfo.mergeModels.testprocedure, 'no dbinfo.mergeModels.testprocedure');
+        assert.ok(context.dbinfo, 'no dbinfo');
+        assert.ok(context.dbinfo.db, 'no dbinfo.db');
+        assert.ok(context.dbinfo.grid, 'no dbinfo');
+        assert.ok(context.dbinfo.models, 'no dbinfo.models');
+        assert.ok(context.dbinfo.mergeModels, 'no dbinfo.mergeModels');
+        assert.ok(context.dbinfo.storageModel, 'no dbinfo.storageModel');
+        assert.ok(context.dbinfo.models.testallergy, 'no dbinfo.models.testallergy');
+        assert.ok(context.dbinfo.mergeModels.testallergy, 'no dbinfo.mergeModels.testallergy');
+        assert.ok(context.dbinfo.models.testprocedure, 'no dbinfo.models.testprocedure');
+        assert.ok(context.dbinfo.mergeModels.testprocedure, 'no dbinfo.mergeModels.testprocedure');
         done();
     });
     
     it('count empty testallergy', function(done) {
-        merge.count(dbinfo, 'testallergy', {}, function(err, count) {
+        merge.count(context.dbinfo, 'testallergy', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -129,7 +111,7 @@ describe('merges', function() {
      });
     
     it('count empty testprocedure', function(done) {
-        merge.count(dbinfo, 'testprocedure', {}, function(err, count) {
+        merge.count(context.dbinfo, 'testprocedure', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -165,12 +147,12 @@ describe('merges', function() {
     
     it ('merge.getMerges (new)', function(done) {
         async.parallel([
-            function(callback) {merge.getMerges(dbinfo, 'pat0', 'testallergy', 'name severity', 'filename', callback);},
-            function(callback) {merge.getMerges(dbinfo, 'pat1', 'testallergy', 'name', 'filename', callback);},
-            function(callback) {merge.getMerges(dbinfo, 'pat2', 'testallergy', 'name value.code',  'filename metadata.fileClass', callback);},
-            function(callback) {merge.getMerges(dbinfo, 'pat0', 'testprocedure', 'name proc_type', 'filename', callback);},
-            function(callback) {merge.getMerges(dbinfo, 'pat1', 'testprocedure', 'name proc_value.display', 'filename', callback);},
-            function(callback) {merge.getMerges(dbinfo, 'pat2', 'testprocedure', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'pat0', 'testallergy', 'name severity', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'pat1', 'testallergy', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'pat2', 'testallergy', 'name value.code',  'filename metadata.fileClass', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'pat0', 'testprocedure', 'name proc_type', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'pat1', 'testprocedure', 'name proc_value.display', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'pat2', 'testprocedure', 'name', 'filename', callback);},
             ],
             function(err, results) {
                 if (err) {
@@ -246,8 +228,8 @@ describe('merges', function() {
     
     it ('merge.getMerges (duplicate)', function(done) {
         async.parallel([
-            function(callback) {merge.getMerges(dbinfo, 'pat0', 'testallergy', 'name', 'filename', callback);},
-            function(callback) {merge.getMerges(dbinfo, 'pat0', 'testprocedure', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'pat0', 'testallergy', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'pat0', 'testprocedure', 'name', 'filename', callback);},
             ],
             function(err, results) {
                 if (err) {
@@ -278,7 +260,7 @@ describe('merges', function() {
     });
     
     after(function(done) {
-        dbinfo.db.dropDatabase();
+        context.dbinfo.db.dropDatabase();
         done();
     });
 });
