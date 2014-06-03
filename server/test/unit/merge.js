@@ -10,59 +10,21 @@ var merge = require('../../lib/recordjs/merge');
 var section = require('../../lib/recordjs/section');
 var storage = require('../../lib/recordjs/storage');
 
-var refModel = require('./refModel');
+var refmodel = require('./refModel');
 
 var expect = chai.expect;
 chai.config.includeStack = true;
 
 describe('merges', function() {
-    var context = {};
-    var storageIds = {};
+    var context = {
+        storageIds: {}
+    };
     var newMergeIds = {};
 
-    var createStorage = function(pat, filename, index, callback) {
-        storage.saveRecord(context.dbinfo, pat, 'content', {type: 'text/xml', name: filename}, 'ccda', function(err, result) {
-            if (err) {
-                callback(err);
-            } else {
-                expect(result).to.exist;
-                expect(result._id).to.exist;
-                storageIds[index] = result._id;
-                callback();
-            }
-        });
-    };
-    
-    var createAllergies = function(patKey, recordIndex, count, callback) {
-        var data = [];
-        for (var i=0; i<count; ++i) {
-            var suffix = '_' + recordIndex + '.' + i;
-            data[i] = {
-                name: 'name' + suffix,
-                severity: 'severity' + suffix,
-                value: {code: 'code' + suffix, display: 'display' + suffix}
-            }    
-        };
-        section.saveNewEntries(context.dbinfo, 'testallergy', patKey, data, storageIds[recordIndex], callback);
-    };
-    
-    var createProcedures = function(patKey, recordIndex, count, callback) {
-        var data = [];
-        for (var i=0; i<count; ++i) {
-            var suffix = '_' + recordIndex + '.' + i;
-            data[i] = {
-                name: 'name' + suffix,
-                proc_type: 'proc_type' + suffix,
-                proc_value: {code: 'code' + suffix, display: 'display' + suffix}
-            }    
-        };
-        section.saveNewEntries(context.dbinfo, 'testprocedure', patKey, data, storageIds[recordIndex], callback);
-    };
-    
     var updateDuplicate = function(patKey, type, recordIndex, callback) {
         section.getSection(context.dbinfo, type, patKey, function(err, docs) {
             var fs = [];
-            var rid = storageIds[recordIndex];
+            var rid = context.storageIds[recordIndex];
             docs.forEach(function(doc) {
                 var f = function(cb) {section.addEntryMergeEntry(context.dbinfo, type, doc._id, {record_id: rid, merge_reason: 'duplicate'}, cb)};
                 fs.push(f);
@@ -72,15 +34,17 @@ describe('merges', function() {
     };
     
     before(function(done) {
-        refModel.setConnectionContext('mergestest', context, done)
+        refmodel.setConnectionContext('mergestest', context, done)
     });
 
     beforeEach(function(done) {
         this.dbinfo = context.dbinfo;
+        this.context = context;
+        this.storageIds = context.storageIds;
         done();
     });
 
-    refModel.testConnectionModels();
+    refmodel.testConnectionModels();
 
     it('connection match models', function(done) {
         expect(this.dbinfo.mergeModels).to.exist;
@@ -109,33 +73,11 @@ describe('merges', function() {
                 done();
             }
         });
-     });
-    
-    it('storage creation', function(done) {
-        async.parallel([
-            function(callback) {createStorage('pat0', 'c00.xml', '0.0', callback);},
-            function(callback) {createStorage('pat0', 'c01.xml', '0.1', callback);},
-            function(callback) {createStorage('pat0', 'c02.xml', '0.2', callback);},
-            function(callback) {createStorage('pat1', 'c10.xml', '1.0', callback);},
-            function(callback) {createStorage('pat1', 'c11.xml', '1.1', callback);},
-            function(callback) {createStorage('pat2', 'c20.xml', '2.0', callback);}
-            ], 
-            function(err) {done(err);}
-        );
     });
     
-    it('allergy/procedure add new', function(done) {
-        async.parallel([
-            function(callback) {createAllergies('pat0', '0.0', 2, callback);},
-            function(callback) {createAllergies('pat2', '2.0', 3, callback);},
-            function(callback) {createProcedures('pat0', '0.0', 2, callback);},
-            function(callback) {createProcedures('pat1', '1.0', 3, callback);},
-            ], 
-            function(err) {done(err);}
-        );
-    });
+    refmodel.addNewData();
     
-    it ('merge.getMerges (new)', function(done) {
+    it('merge.getMerges (new)', function(done) {
         var that = this;
         async.parallel([
             function(callback) {merge.getMerges(that.dbinfo, 'pat0', 'testallergy', 'name severity', 'filename', callback);},

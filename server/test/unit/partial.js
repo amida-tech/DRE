@@ -10,7 +10,7 @@ var merge = require('../../lib/recordjs/merge');
 var section = require('../../lib/recordjs/section');
 var storage = require('../../lib/recordjs/storage');
 
-var refModel = require('./refModel')
+var refmodel = require('./refModel')
 
 var expect = chai.expect;
 var assert = chai.assert;
@@ -18,18 +18,21 @@ var assert = chai.assert;
 chai.config.includeStack = true;
 
 describe('partial methods', function() {
-    var context = {};
+    var context = {
+        storageIds: {}
+    };
 
     before(function(done) {
-        refModel.setConnectionContext('partialtest', context, done)
+        refmodel.setConnectionContext('partialtest', context, done)
     });
 
     beforeEach(function(done) {
         this.dbinfo = context.dbinfo;
+        this.context = context;
         done();
     });
 
-    refModel.testConnectionModels();
+    refmodel.testConnectionModels();
 
     it('connection match models', function(done) {
         expect(this.dbinfo.matchModels).to.exist;
@@ -37,6 +40,8 @@ describe('partial methods', function() {
         expect(this.dbinfo.matchModels.testprocedure).to.exist;
         done();
     });
+    
+    refmodel.addNewData();
     
     after(function(done) {
         context.dbinfo.db.dropDatabase();
