@@ -73,8 +73,20 @@ describe('CCD_1', function() {
                 done(err);
             } else {
                 var cleanResult = modelutil.mongooseToBBModelFullRecord(result);
-                cleanResult.demographics = cleanResult.demographics[0];
-                expect(cleanResult).to.deep.equal(ccd);
+                expect(cleanResult.demographics[0]).to.deep.equal(ccd.demographics);
+                var ccdKeys = Object.keys(ccd).sort();
+                var cleanResultKeys = Object.keys(cleanResult).sort();
+                expect(ccdKeys).to.deep.equal(cleanResultKeys);
+                ccdKeys.splice(ccdKeys.indexOf('demographics'), 1);
+                ccdKeys.forEach(function(key) {
+                    var a = ccd[key];
+                    var b = cleanResult[key];
+                    expect(b).to.deep.include.members(a);
+                    expect(a).to.deep.include.members(b);
+                });
+
+                //cleanResult.demographics = cleanResult.demographics[0];
+                //expect(cleanResult).to.deep.equal(ccd);
                 done();
             }
         });

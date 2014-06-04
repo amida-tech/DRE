@@ -1,3 +1,5 @@
+"use strict";
+
 var chai = require('chai');
 var util = require('util');
 var path = require('path');
@@ -15,6 +17,8 @@ var jsutil = require('../../lib/recordjs/jsutil');
 var expect = chai.expect;
 var assert = chai.assert;
 
+chai.config.includeStack = true;
+
 describe('CCD_1', function() {
     var dbinfo = null;
     var xml = null;
@@ -28,7 +32,7 @@ describe('CCD_1', function() {
         xml = fs.readFileSync(filepath, 'utf-8');
         var result = bb.parseString(xml);
         ccd = result.data;
-        options = {
+        var options = {
             dbName: 'indextest',
             typeToSection: record.typeToSection,
             typeToSchemaDesc: record.typeToSchemaDesc
@@ -71,7 +75,8 @@ describe('CCD_1', function() {
             section.getSection(dbinfo, 'allergy', 'pat1', function(err, results) {
                 storedAllergies = results;
                 var cleanResults = record.cleanSectionEntries(results);
-                assert.deepEqual(cleanResults, allergies, 'write, read failed');
+                expect(cleanResults).to.deep.include.members(allergies);
+                expect(allergies).to.deep.include.members(cleanResults);
                 done();
             });
         });
@@ -84,7 +89,8 @@ describe('CCD_1', function() {
             assert.notOk(err, 'saveProcedures failed');
             section.getSection(dbinfo, 'procedure', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
-                assert.deepEqual(cleanResults, procedures, 'write, read failed');
+                expect(cleanResults).to.deep.include.members(procedures);
+                expect(procedures).to.deep.include.members(cleanResults);
                 done();
             });
         });
@@ -108,7 +114,8 @@ describe('CCD_1', function() {
             assert.notOk(err, 'saveMedication failed');
             section.getSection(dbinfo, 'medication', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
-                assert.deepEqual(cleanResults, medications, 'write, read failed');
+                expect(cleanResults).to.deep.include.members(medications);
+                expect(medications).to.deep.include.members(cleanResults);
                 done();
             });
         });
@@ -120,7 +127,8 @@ describe('CCD_1', function() {
             assert.notOk(err, 'saveProblems failed');
             section.getSection(dbinfo, 'problem', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
-                assert.deepEqual(cleanResults, problems, 'write, read failed');
+                expect(cleanResults).to.deep.include.members(problems);
+                expect(problems).to.deep.include.members(cleanResults);
                 done();
             });
         });
@@ -132,7 +140,8 @@ describe('CCD_1', function() {
             assert.notOk(err, 'saveImmunizations failed');
             section.getSection(dbinfo, 'immunization', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
-                assert.deepEqual(cleanResults, immunizations, 'write, read failed');
+                expect(cleanResults).to.deep.include.members(immunizations);
+                expect(immunizations).to.deep.include.members(cleanResults);
                 done();
             });
         });
@@ -218,7 +227,7 @@ describe('CCD_1', function() {
         });
     });
     
-    it('mergeCount duplidate', function(done) {
+    it('mergeCount duplicate', function(done) {
         merge.count(dbinfo, 'allergy', {merge_reason: 'duplicate'}, function(err, count) {
             if (err) {
                 done(err);
