@@ -1,5 +1,7 @@
-var merge = require('./merge');
 var _ = require('underscore');
+var async = require('async');
+
+var merge = require('./merge');
 var modelutil = require('./modelutil');
 
 
@@ -153,83 +155,62 @@ exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, ca
 
     //This seems to be returning before all saves are complete.
 
-    function saveEntry(entryObject, inputSourceID, callback) {
+    var saveEntry = function(entryObject, cb) {
         var tempEntry = new Model(entryObject);
 
         tempEntry.save(function(err, saveResults) {
             if (err) {
-                callback(err);
+                cb(err);
             } else {
                 var tmpMergeEntry = {
                     entry_type: type,
                     patKey: patKey,
                     entry_id: saveResults._id,
-                    record_id: inputSourceID,
+                    record_id: sourceID,
                     merged: new Date(),
                     merge_reason: 'new'
                 };
 
                 merge.saveMerge(dbinfo, tmpMergeEntry, function(err, mergeResults) {
                     if (err) {
-                        callback(err);
+                        cb(err);
                     } else {
                         tempEntry.metadata = {};
                         tempEntry.metadata.attribution = [mergeResults._id];
                         tempEntry.patKey = patKey;
-                        tempEntry.save(function(err, saveResults) {
+                        tempEntry.save(function(err, saveResult) {
                             if (err) {
-                                callback(err);
+                                cb(err);
                             } else {
-                                callback(null);
+                                cb(null, saveResult._id);
                             }
                         });
                     }
                 });
             }
         });
-    }
-
-    var saveLoopLength = 0;
-    var saveLoopIter = 0;
-
-    if (_.isArray(inputArray)) {
-        saveLoopLength = inputArray.length;
-    }
-
-    function checkLoopComplete() {
-        saveLoopIter++;
-        if (saveLoopIter === saveLoopLength) {
-            callback(null);
-        }
-
-    }
+    };
 
     var count = 0;
+
+    var prepForDb = function(input, index) {
+        var r = _.clone(input);
+        r.__index = count + index;
+        r.reviewed = true;
+        return r;
+    };
+
 
     if (_.isArray(inputArray)) {
         if (inputArray.length === 0) {
             callback(new Error('no data'));
         } else {
-            for (var i = 0; i < inputArray.length; i++) {
-
-                var entryObject = _.clone(inputArray[i]);
-                //I have no idea what this things point is.
-                entryObject.__index = count + i;
-                entryObject.reviewed = true;
-                saveEntry(entryObject, sourceID, checkLoopComplete);
-            }
+            var inputArrayForDb = inputArray.map(prepForDb);
+            async.map(inputArrayForDb, saveEntry, callback);
         }
     } else {
-        var newEntryObject = _.clone(inputArray);
-        newEntryObject.__index = count;
-        newEntryObject.reviewed = true;
-        saveEntry(newEntryObject, sourceID, function(err) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null);
-            }
-        });
+        var inputForDb1 = prepForDb(inputArray, 0);
+        saveEntry(inputForDb1, callback);
     }
 };
 
