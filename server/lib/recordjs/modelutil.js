@@ -4,7 +4,7 @@ var _ = require('underscore');
 var mongooseCleanDocument = exports.mongooseCleanDocument = function(doc) {
 
     var id = doc._id;
-    ['__index', '__v', 'reviewed'].forEach(function(prop) {
+    ['__v', 'reviewed'].forEach(function(prop) {
         delete doc[prop];
     });
     jsutil.deepDelete(doc, '_id');

@@ -108,7 +108,6 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
 
         var desc = typeToSchemaDesc[type];
         desc.patKey = String;
-        desc.__index = Number;
         desc.metadata = {
             attribution: [{
                 type: ObjectId,

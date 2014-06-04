@@ -84,10 +84,7 @@ describe('CCD_1', function() {
                     expect(b).to.deep.include.members(a);
                     expect(a).to.deep.include.members(b);
                 });
-
-                //cleanResult.demographics = cleanResult.demographics[0];
-                //expect(cleanResult).to.deep.equal(ccd);
-                done();
+               done();
             }
         });
     });

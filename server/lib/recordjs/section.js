@@ -58,17 +58,10 @@ exports.removeEntry = function(dbinfo, type, patKey, recordId, callback) {
 exports.getSection = function(dbinfo, type, patKey, callback) {
     var model = dbinfo.models[type];
 
-    /*var query = model.find({
-        patKey: patKey,
-        reviewed: true,
-        archived: false
-    }).sort('__index').lean().populate('metadata.attribution', 'record_id merge_reason merged');*/
-
     var query = model.find({});
     query.where('archived').in([null, false]);
     query.where('reviewed', true);
     query.where('patKey', patKey);
-    query.sort('__index');
     query.lean();
     query.populate('metadata.attribution', 'record_id merge_reason merged');
 
@@ -186,7 +179,6 @@ exports.saveNewEntries = function(dbinfo, type, patKey, input, sourceID, callbac
     var prepForDb = function(entryObject, index) {
         var r = _.clone(entryObject);
         r.patKey = patKey;
-        r.__index = index; // to keep order when retrieval, eases testing
         r.reviewed = true;
         return r;
     };
@@ -389,8 +381,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
         } else {
             for (var i = 0; i < inputArray.length; i++) {
                 var entryObject = _.clone(inputArray[i].partial_array);
-                //I have no idea what this things point is.
-                entryObject.__index = count + i;
                 entryObject.reviewed = false;
                 entryObject.patKey = patKey;
                 var entryPartialMatch = inputArray[i].partial_match;
@@ -400,7 +390,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
         }
     } else {
         var newEntryObject = _.clone(inputArray);
-        newEntryObject.__index = count;
         newEntryObject.reviewed = false;
         var newEntryPartialMatch = inputArray.partial_match;
         var newEntryPartialMatchRecordId = inputArray.match_record_id;
@@ -423,7 +412,6 @@ exports.getPartialSection = function(dbinfo, type, patKey, callback) {
     query.where('archived').in([null, false]);
     query.where('reviewed', false);
     query.where('patKey', patKey);
-    query.sort('__index');
     query.lean();
     query.populate('metadata.attribution', 'record_id merge_reason merged');
 
