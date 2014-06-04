@@ -150,67 +150,57 @@ exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, cal
 
 };
 
-exports.saveNewEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
-    var Model = dbinfo.models[type];
+exports.saveNewEntries = function(dbinfo, type, patKey, input, sourceID, callback) {
+    var saveNewEntry = function(entryObject, cb) {
+        var entryModel = new dbinfo.models[type](entryObject);
 
-    //This seems to be returning before all saves are complete.
+        var saveEntry = function(cb) {
+            entryModel.save(function(err, saveResult) {
+                cb(err, saveResult); // needed bacause model.save cb has 3 parameters
+            });
+        };
 
-    var saveEntry = function(entryObject, cb) {
-        var tempEntry = new Model(entryObject);
+        var saveMerge = function(saveResult, cb) {
+            var mergeEntry = {
+                entry_type: type,
+                patKey: patKey,
+                entry_id: saveResult._id,
+                record_id: sourceID,
+                merged: new Date(),
+                merge_reason: 'new'
+            };
 
-        tempEntry.save(function(err, saveResults) {
-            if (err) {
-                cb(err);
-            } else {
-                var tmpMergeEntry = {
-                    entry_type: type,
-                    patKey: patKey,
-                    entry_id: saveResults._id,
-                    record_id: sourceID,
-                    merged: new Date(),
-                    merge_reason: 'new'
-                };
+            merge.saveMerge(dbinfo, mergeEntry, cb);           
+        };
 
-                merge.saveMerge(dbinfo, tmpMergeEntry, function(err, mergeResults) {
-                    if (err) {
-                        cb(err);
-                    } else {
-                        tempEntry.metadata = {};
-                        tempEntry.metadata.attribution = [mergeResults._id];
-                        tempEntry.patKey = patKey;
-                        tempEntry.save(function(err, saveResult) {
-                            if (err) {
-                                cb(err);
-                            } else {
-                                cb(null, saveResult._id);
-                            }
-                        });
-                    }
-                });
-            }
-        });
+        var updateEntry = function(saveMergeResult, cb) {
+            entryModel.metadata = {attribution: [saveMergeResult._id]};
+            entryModel.save(function(err, saveResult) {
+                cb(err, saveResult && saveResult._id);
+            });
+        };
+
+        async.waterfall([saveEntry, saveMerge, updateEntry], cb);
     };
 
-    var count = 0;
-
-    var prepForDb = function(input, index) {
-        var r = _.clone(input);
-        r.__index = count + index;
+    var prepForDb = function(entryObject, index) {
+        var r = _.clone(entryObject);
+        r.patKey = patKey;
+        r.__index = index; // to keep order when retrieval, eases testing
         r.reviewed = true;
         return r;
     };
 
-
-    if (_.isArray(inputArray)) {
-        if (inputArray.length === 0) {
+    if (_.isArray(input)) {
+        if (input.length === 0) {
             callback(new Error('no data'));
         } else {
-            var inputArrayForDb = inputArray.map(prepForDb);
-            async.map(inputArrayForDb, saveEntry, callback);
+            var inputArrayForDb = input.map(prepForDb);
+            async.map(inputArrayForDb, saveNewEntry, callback);
         }
     } else {
-        var inputForDb1 = prepForDb(inputArray, 0);
-        saveEntry(inputForDb1, callback);
+        var inputForDb = prepForDb(input, 0);
+        saveNewEntry(inputForDb, callback);
     }
 };
 
