@@ -3,6 +3,7 @@
 var chai = require('chai');
 var async = require('async');
 var _ = require('underscore');
+var util = require('util');
 
 var db = require('../../lib/recordjs/db');
 var section = require('../../lib/recordjs/section');
@@ -43,6 +44,60 @@ var getConnectionOptions = function(dbName) {
     };
 };
 
+var testObjectInstance = {
+    testallergy: function(suffix) {
+        return {
+            name: 'name' + suffix,
+            severity: 'severity' + suffix,
+            value: {
+                code: 'code' + suffix, 
+                display: 'display' + suffix
+            }
+        };
+    },
+    testprocedure: function(suffix) {
+        return {
+            name: 'name' + suffix,
+            proc_type: 'proc_type' + suffix,
+            proc_value: {
+                code: 'code' + suffix, 
+                display: 'display' + suffix
+            }
+        };
+    }
+};
+
+var matchObjectInstance = {
+    diff: function(suffix, entryIndex) {
+        return {
+            match: 'diff',
+            diff: 'diff' + suffix
+        }
+    },
+    partial: function(suffix, entryIndex) {
+        return {
+            match: 'partial',
+            percent: (entryIndex + 1) * 10,
+            diff: 'diff' + suffix            
+        }
+    },
+   diffsub: function(suffix, entryIndex) {
+        return {
+            match: 'diff',
+            diff: 'diff' + suffix,
+            subelements: 'subelements' + suffix
+        }
+    },
+    partialsub: function(suffix, entryIndex) {
+        return {
+            match: 'partial',
+            percent: (entryIndex + 1) * 10,
+            diff: 'diff' + suffix,
+            subelements: 'subelements' + suffix
+        }
+    }    
+};
+
 var createStorage = function(context, pat, filename, index, callback) {
     storage.saveRecord(context.dbinfo, pat, 'content', {type: 'text/xml', name: filename}, 'ccda', function(err, result) {
         if (err) {
@@ -56,46 +111,32 @@ var createStorage = function(context, pat, filename, index, callback) {
     });
 };
 
-var createTestAllergySection = exports.createTestAllergySection = function(recordIndex, count) {
+var createTestSection = exports.createTestSection = function(type, recordIndex, count) {
     return _.range(count).reduce(function(r, i) {
         var suffix = '_' + recordIndex + '.' + i;
-        r[i] = {
-            name: 'name' + suffix,
-            severity: 'severity' + suffix,
-            value: {
-                code: 'code' + suffix, 
-                display: 'display' + suffix
-            }
-        };
+        r[i] = testObjectInstance[type](suffix);
         return r;            
     }, []);
 };
 
-var createAllergies = function(context, patKey, recordIndex, count, callback) {
-    var data = createTestAllergySection(recordIndex, count);
-    section.saveNewEntries(context.dbinfo, 'testallergy', patKey, data, context.storageIds[recordIndex], callback);
+var newEntriesContextKey = exports.newEntriesContextKey = function(type, recordIndex) {
+    return util.format("%s.%s", type, recordIndex);   
 };
 
-var createTestProcedureSection = exports.createProcedureSection = function(recordIndex, count) {
-    return _.range(count).reduce(function(r, i) {
-        var suffix = '_' + recordIndex + '.' + i;
-        r[i] = {
-            name: 'name' + suffix,
-            proc_type: 'proc_type' + suffix,
-            proc_value: {
-                code: 'code' + suffix, 
-                display: 'display' + suffix
-            }
-        };
-        return r;            
-    }, []);
+var saveNewTestSection = exports.saveNewTestSection = function(context, type, patKey, recordIndex, count, callback) {
+    var data = createTestSection(type, recordIndex, count);
+    var sourceId = context.storageIds[recordIndex];
+    section.saveNewEntries(context.dbinfo, type, patKey, data, sourceId, function(err, ids) {
+        if (ids && ! err) {
+            var key = newEntriesContextKey(type, recordIndex);
+            var r = context[key];
+            if (! r) r = context[key] = [];
+            Array.prototype.push.apply(r, ids);
+        }
+        callback(err);
+    });
 };
 
-var createProcedures = function(context, patKey, recordIndex, count, callback) {
-    var data = createTestProcedureSection(recordIndex, count);
-    section.saveNewEntries(context.dbinfo, 'testprocedure', patKey, data, context.storageIds[recordIndex], callback);
-};
-    
 exports.setConnectionContext = function(dbName, context, callback) {
     var options = getConnectionOptions(dbName);
     db.connect('localhost', options, function(err, result) {
@@ -120,30 +161,31 @@ exports.testConnectionModels = function() {
     });
 };
 
-exports.addNewData = function() {
-    it('add new storage', function(done) {
-        var that = this;
-        async.parallel([
-            function(callback) {createStorage(that.context, 'pat0', 'c00.xml', '0.0', callback);},
-            function(callback) {createStorage(that.context, 'pat0', 'c01.xml', '0.1', callback);},
-            function(callback) {createStorage(that.context, 'pat0', 'c02.xml', '0.2', callback);},
-            function(callback) {createStorage(that.context, 'pat1', 'c10.xml', '1.0', callback);},
-            function(callback) {createStorage(that.context, 'pat1', 'c11.xml', '1.1', callback);},
-            function(callback) {createStorage(that.context, 'pat2', 'c20.xml', '2.0', callback);}
-            ], 
-            function(err) {done(err);}
-        );
-    });
-    
-    it('add allergies and procedures', function(done) {
-        var that = this;
-        async.parallel([
-            function(callback) {createAllergies(that.context, 'pat0', '0.0', 2, callback);},
-            function(callback) {createAllergies(that.context, 'pat2', '2.0', 3, callback);},
-            function(callback) {createProcedures(that.context, 'pat0', '0.0', 2, callback);},
-            function(callback) {createProcedures(that.context, 'pat1', '1.0', 3, callback);},
-            ], 
-            function(err) {done(err);}
-        );
-    });
-};
+var addStoragePerPatient = exports.addStoragePerPatient = function(context, countPerPatient, callback) {
+    var fs = countPerPatient.reduce(function(r, fileCount, i) {
+        var patKey = util.format('pat%d', i);
+        return _.range(fileCount).reduce(function(q, j) {
+            var filename = util.format('c%d%d.xml', i, j);
+            var recordIndex = util.format('%d.%d', i, j);
+            var f = function(cb) {createStorage(context, patKey, filename, recordIndex, cb);};
+            q.push(f);
+            return q;
+        }, r);
+        return r;
+    }, []);
+
+    async.parallel(fs, callback);
+}
+
+exports.createMatchInformation = function(recordIndex, destIndices, matchTypes) {
+    return matchTypes.reduce(function(r, matchType, index) {
+        var destIndex = destIndices[index];
+        var suffix = '_' + recordIndex + '.' + destIndex;
+        var v = {
+            matchObject: matchObjectInstance[matchType](suffix, destIndex),
+            destIndex: destIndex
+        };
+        r.push(v);
+        return r;
+    }, []);
+}

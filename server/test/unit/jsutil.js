@@ -42,6 +42,29 @@ describe('underscore sanity checks', function() {
    });
 });
 
+describe('chai sanity checks', function() {
+    it('shufled array deep equal', function() {
+        function f(r, index) {
+            var v = {
+                a: index,
+                b: {
+                    c: index + 1
+                }
+            }
+            r.push(v);
+            return r;
+        }
+        var a0 = [0, 1, 2, 3].reduce(f, []);     
+        var a1 = [2, 0, 1, 3].reduce(f, []);
+        expect(a0).to.deep.include.members(a1);
+        expect(a1).to.deep.include.members(a0);
+        a0[2].b.c = -1;
+        expect(a0).to.not.deep.include.members(a1);
+        a1[0].b.c = -1;
+        expect(a0).to.deep.include.members(a1);
+   });
+});
+
 describe('deep delete named property', function() {
     it('level 1', function(done) {
         var input = {
