@@ -2,6 +2,7 @@
 
 var chai = require('chai');
 var async = require('async');
+var _ = require('underscore');
 
 var db = require('../../lib/recordjs/db');
 var section = require('../../lib/recordjs/section');
@@ -42,7 +43,7 @@ var getConnectionOptions = function(dbName) {
     };
 };
 
-var createStorage = exports.createStorage = function(context, pat, filename, index, callback) {
+var createStorage = function(context, pat, filename, index, callback) {
     storage.saveRecord(context.dbinfo, pat, 'content', {type: 'text/xml', name: filename}, 'ccda', function(err, result) {
         if (err) {
             callback(err);
@@ -55,29 +56,43 @@ var createStorage = exports.createStorage = function(context, pat, filename, ind
     });
 };
 
-var createAllergies = exports.createAllergies = function(context, patKey, recordIndex, count, callback) {
-    var data = [];
-    for (var i=0; i<count; ++i) {
+var createTestAllergySection = exports.createTestAllergySection = function(recordIndex, count) {
+    return _.range(count).reduce(function(r, i) {
         var suffix = '_' + recordIndex + '.' + i;
-        data[i] = {
+        r[i] = {
             name: 'name' + suffix,
             severity: 'severity' + suffix,
-            value: {code: 'code' + suffix, display: 'display' + suffix}
-        }    
-    };
+            value: {
+                code: 'code' + suffix, 
+                display: 'display' + suffix
+            }
+        };
+        return r;            
+    }, []);
+};
+
+var createAllergies = function(context, patKey, recordIndex, count, callback) {
+    var data = createTestAllergySection(recordIndex, count);
     section.saveNewEntries(context.dbinfo, 'testallergy', patKey, data, context.storageIds[recordIndex], callback);
 };
 
-var createProcedures = exports.createProcedures = function(context, patKey, recordIndex, count, callback) {
-    var data = [];
-    for (var i=0; i<count; ++i) {
+var createTestProcedureSection = exports.createProcedureSection = function(recordIndex, count) {
+    return _.range(count).reduce(function(r, i) {
         var suffix = '_' + recordIndex + '.' + i;
-        data[i] = {
+        r[i] = {
             name: 'name' + suffix,
             proc_type: 'proc_type' + suffix,
-            proc_value: {code: 'code' + suffix, display: 'display' + suffix}
-        }    
-    };
+            proc_value: {
+                code: 'code' + suffix, 
+                display: 'display' + suffix
+            }
+        };
+        return r;            
+    }, []);
+};
+
+var createProcedures = function(context, patKey, recordIndex, count, callback) {
+    var data = createTestProcedureSection(recordIndex, count);
     section.saveNewEntries(context.dbinfo, 'testprocedure', patKey, data, context.storageIds[recordIndex], callback);
 };
     
