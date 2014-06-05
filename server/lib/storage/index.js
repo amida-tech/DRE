@@ -41,7 +41,8 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             if (saveArray.length === 0) {
                 checkSaveMasterComponentsComplete();
             } else {
-                record["saveNew" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
+                var type = record.sectionToType[secName];
+                record.saveNewSection(type, 'test', saveArray, sourceID, function(err) {
                     if (err) {
                         callback(err);
                     } else {
@@ -80,7 +81,8 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             if (saveArray.length === 0) {
                 checkSavePartialComponentsComplete();
             } else {
-                record["savePartial" + record.capitalize(secName)]('test', saveArray, sourceID, function(err) {
+                var type = record.sectionToType[secName];
+                record.savePartialSection(type, 'test', saveArray, sourceID, function(err) {
                     if (err) {
                         callback(err);
                     } else {

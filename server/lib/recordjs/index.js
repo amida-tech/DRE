@@ -130,24 +130,24 @@ var capitalize = function(value) {
 
 module.exports.capitalize = capitalize;
 
+exports.saveNewSection = function(type, patKey, inputArray, sourceID, callback) {
+    section.saveNewEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+};
+
+exports.savePartialSection = function(type, patKey, inputArray, sourceID, callback) {
+    section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+};
+
 Object.keys(typeToSection).forEach(function(type) {
     var sectionName = capitalize(typeToSection[type]);
     var typeName = capitalize(type);
     
-    exports['saveNew' + sectionName] = function(patKey, inputArray, sourceID, callback) {
-        section.saveNewEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
-    };
-
     exports['update' + typeName] = function(patKey, recordId, recordUpdate, callback) {
         section.updateEntry(dbinfo, type, patKey, recordId, recordUpdate, callback);
     };
 
     exports['get' + typeName] = function(recordId, callback) {
         section.getEntry(dbinfo, type, recordId, callback);
-    };
-
-    exports['savePartial' + sectionName] = function(patKey, inputArray, sourceID, callback) {
-        section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
     };
 
     exports['removePartial' + typeName] = function(patKey, partialID, callback) {
