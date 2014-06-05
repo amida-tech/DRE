@@ -1,3 +1,5 @@
+"use strict";
+
 var _ = require('underscore');
 var async = require('async');
 
@@ -176,7 +178,7 @@ exports.saveNewEntries = function(dbinfo, type, patKey, input, sourceID, callbac
         async.waterfall([saveEntry, saveMerge, updateEntry], cb);
     };
 
-    var prepForDb = function(entryObject, index) {
+    var prepForDb = function(entryObject) {
         var r = _.clone(entryObject);
         r.patKey = patKey;
         r.reviewed = true;
@@ -191,7 +193,7 @@ exports.saveNewEntries = function(dbinfo, type, patKey, input, sourceID, callbac
             async.map(inputArrayForDb, saveNewEntry, callback);
         }
     } else {
-        var inputForDb = prepForDb(input, 0);
+        var inputForDb = prepForDb(input);
         saveNewEntry(inputForDb, callback);
     }
 };
@@ -263,7 +265,10 @@ var saveMatchEntries = exports.saveMatchEntries = function(dbinfo, type, patKey,
 exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID, callback) {
     var Model = dbinfo.models[type];
 
-    function saveEntry(entryObject, entryMatch, entrySourceId, sourceRecId, callback) {
+    var saveEntry = function(saveInput, callback) {
+        var entryObject = saveInput.object;
+        var entryMatch = saveInput.match;
+        var entrySourceId = saveInput.matchRecordId;
 
         function savePartialMerge (type, patKey, fileId, entryId, matchId, callback) {
 
@@ -342,7 +347,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
                     if (err) {
                         callback(err);
                     } else {
-                        savePartialMerge(type, patKey, sourceRecId, saveResults._id, partialMatchResults._id, function(err, partialMergeResults) {
+                        savePartialMerge(type, patKey, sourceID, saveResults._id, partialMatchResults._id, function(err, partialMergeResults) {
                             if (err) {
                                 callback(err);
                             } else {
@@ -354,50 +359,29 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
 
             }
         });
-    }
+    };
 
-
-    var saveLoopLength = 0;
-    var saveLoopIter = 0;
-
-    if (_.isArray(inputArray)) {
-        saveLoopLength = inputArray.length;
-    }
-
-    function checkLoopComplete() {
-        saveLoopIter++;
-        if (saveLoopIter === saveLoopLength) {
-            callback(null);
-        }
-
-    }
+    var prepForDb = function(entry) {
+        var r = {};        
+        var entryForDb = _.clone(entry.partial_array);
+        entryForDb.reviewed = false;
+        entryForDb.patKey = patKey;
+        r.object = entryForDb;
+        r.match = entry.partial_match;
+        r.matchRecordId = entry.match_record_id;
+        return r;
+    };
 
     if (_.isArray(inputArray)) {
-
         if (inputArray.length === 0) {
             callback(new Error('no data'));
         } else {
-            for (var i = 0; i < inputArray.length; i++) {
-                var entryObject = _.clone(inputArray[i].partial_array);
-                entryObject.reviewed = false;
-                entryObject.patKey = patKey;
-                var entryPartialMatch = inputArray[i].partial_match;
-                var entryPartialMatchRecordId = inputArray[i].match_record_id;
-                saveEntry(entryObject, entryPartialMatch, entryPartialMatchRecordId, sourceID, checkLoopComplete);
-            }
+            var inputArrayForDb = inputArray.map(prepForDb);
+            async.map(inputArrayForDb, saveEntry, callback);
         }
     } else {
-        var newEntryObject = _.clone(inputArray);
-        newEntryObject.reviewed = false;
-        var newEntryPartialMatch = inputArray.partial_match;
-        var newEntryPartialMatchRecordId = inputArray.match_record_id;
-        saveEntry(newEntryObject, newEntryPartialMatch, newEntryPartialMatchRecordId, function(err) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null);
-            }
-        });
+        var inputForDb = prepForDb(inputArray);
+        saveEntry(inputForDb, callback);
     }
 
 };
