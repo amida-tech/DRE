@@ -146,6 +146,10 @@ exports.getPartialSection = function(type, patKey, callback) {
     section.getPartialSection(dbinfo, type, patKey, callback);
 };
 
+exports.removeEntry = function(type, patKey, partialID, callback) {
+    section.removeEntry(dbinfo, type, patKey, partialID, callback);
+};
+
 Object.keys(typeToSection).forEach(function(type) {
     var sectionName = capitalize(typeToSection[type]);
     var typeName = capitalize(type);
@@ -156,10 +160,6 @@ Object.keys(typeToSection).forEach(function(type) {
 
     exports['get' + typeName] = function(recordId, callback) {
         section.getEntry(dbinfo, type, recordId, callback);
-    };
-
-    exports['removePartial' + typeName] = function(patKey, partialID, callback) {
-        section.removeEntry(dbinfo, type, patKey, partialID, callback);
     };
 
     exports['add' + sectionName + 'MatchEntry'] = function(patKey, inputArray, callback) {

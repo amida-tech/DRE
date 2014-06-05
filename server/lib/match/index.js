@@ -61,7 +61,8 @@ function updateIgnored(updateId, updateComponent, callback) {
         if (err) {
             callback(err);
         } else {
-            record["removePartial" + record.capitalize(record.sectionToType[updateComponent])]('test', resultComponent.match_entry_id._id, function(err, removalResults) {
+            var type = record.sectionToType[updateComponent];
+            record.removeEntry(type, 'test', resultComponent.match_entry_id._id, function(err, removalResults) {
                 if (err) {
                     callback(err);
                 } else {
@@ -105,8 +106,8 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
     }
 
     function removeMergedObject(updateId, updateComponent, callback) {
-
-        record["removePartial" + record.capitalize(record.sectionToType[updateComponent])]('test', updateId, function(err, removalResults) {
+        var type = record.sectionToType[updateComponent];
+        record.removeEntry(type, 'test', updateId, function(err, removalResults) {
                 if (err) {
                     callback(err);
                 } else {
