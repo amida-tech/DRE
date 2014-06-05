@@ -123,6 +123,11 @@ var newEntriesContextKey = exports.newEntriesContextKey = function(type, recordI
     return util.format("%s.%s", type, recordIndex);   
 };
 
+exports.propertyToFilename = function(value) {
+    var n = value.length;
+    return util.format('c%s%s.xml', value.charAt(n-5), value.charAt(n-3));
+}
+
 var saveNewTestSection = exports.saveNewTestSection = function(context, type, patKey, recordIndex, count, callback) {
     var data = createTestSection(type, recordIndex, count);
     var sourceId = context.storageIds[recordIndex];

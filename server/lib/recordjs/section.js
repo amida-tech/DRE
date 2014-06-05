@@ -372,8 +372,6 @@ exports.savePartialEntries = function(dbinfo, type, patKey, inputArray, sourceID
 
     }
 
-    var count = 0;
-
     if (_.isArray(inputArray)) {
 
         if (inputArray.length === 0) {

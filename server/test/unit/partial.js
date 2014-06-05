@@ -91,8 +91,6 @@ describe('partial methods', function() {
         );
     });
 
-
-
     it('get partial allergies and procedures', function(done) {
         async.parallel([
             function(callback) {section.getPartialSection(context.dbinfo, 'testallergy', 'pat0', callback);},
@@ -112,6 +110,44 @@ describe('partial methods', function() {
                 var piece11 = refmodel.createTestSection('testprocedure', '1.1', 2);
                 var piece12 = refmodel.createTestSection('testprocedure', '1.2', 2);
                 checkBBData(results[3], piece11.concat(piece12));
+
+                results.forEach(function(result) {
+                    result.forEach(function(entry) {
+                        expect(entry.archived).to.not.be.ok;
+                        expect(entry.reviewed).to.not.be.ok;
+                        expect(entry.metadata).to.exist;
+                        expect(entry.metadata.attribution).to.exist;
+                        expect(entry.metadata.attribution).to.have.length(1);
+                        expect(entry.metadata.attribution[0].merge_reason).to.equal('new');
+                        expect(entry.metadata.attribution[0].record_id).to.exist;                       
+                    });
+                });
+
+                var checkPatientNFile = function(result, ptKey, filename) {
+                    result.forEach(function(entry) {
+                        expect(entry.patKey).to.equal(ptKey);
+                        expect(entry.metadata.attribution[0].record_id.filename).to.equal(filename);                       
+                    });
+                };
+
+                checkPatientNFile(results[0], 'pat0', 'c01.xml');
+                checkPatientNFile(results[1], 'pat2', 'c21.xml');
+                checkPatientNFile(results[2], 'pat0', 'c01.xml');
+
+                var cntFilename = {};
+                results[3].forEach(function(entry) {
+                    expect(entry.patKey).to.equal('pat1');
+                    var filename = refmodel.propertyToFilename(entry.name);
+                    expect(entry.metadata.attribution[0].record_id.filename).to.equal(filename);                       
+                    cntFilename[filename] = (cntFilename[filename] || 0) + 1; 
+                });
+                expect(cntFilename['c11.xml']).to.equal(2);
+                expect(cntFilename['c12.xml']).to.equal(2);
+
+                expect(results[0]).to.have.length(3);
+                expect(results[1]).to.have.length(1);
+                expect(results[2]).to.have.length(1);
+                expect(results[3]).to.have.length(4);
 
                 done(err);
             }
