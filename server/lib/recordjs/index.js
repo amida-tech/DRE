@@ -138,6 +138,14 @@ exports.savePartialSection = function(type, patKey, inputArray, sourceID, callba
     section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
 };
 
+exports.getSection = function(type, patKey, callback) {
+    section.getSection(dbinfo, type, patKey, callback);
+};
+
+exports.getPartialSection = function(type, patKey, callback) {
+    section.getPartialSection(dbinfo, type, patKey, callback);
+};
+
 Object.keys(typeToSection).forEach(function(type) {
     var sectionName = capitalize(typeToSection[type]);
     var typeName = capitalize(type);
@@ -158,13 +166,6 @@ Object.keys(typeToSection).forEach(function(type) {
         section.saveMatchEntries(dbinfo, type, patKey, inputArray, callback);
     };
 
-    exports['get' + sectionName] = function(patKey, callback) {
-        section.getSection(dbinfo, type, patKey, callback);
-    };
-
-    exports['getPartial' + sectionName] = function(patKey, callback) {
-        section.getPartialSection(dbinfo, type, patKey, callback);
-    };
 
     exports['add' + typeName + 'MergeEntry'] = function(update_id, mergeInfo, callback) {
         section.addEntryMergeEntry(dbinfo, type, update_id, mergeInfo, callback);

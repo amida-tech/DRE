@@ -117,7 +117,8 @@ function getSavedRecords(saved_sections, callback) {
     }
 
     function getSavedSection(section, callback) {
-        record["get" + record.capitalize(section)](patient_id, function(err, savedObj) {
+        var type = record.sectionToType[section];
+        record.getSection(type, patient_id, function(err, savedObj) {
             if (err) {
                 callback(err);
             } else {

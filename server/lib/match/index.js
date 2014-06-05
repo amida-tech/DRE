@@ -8,8 +8,8 @@ var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medicati
 function updateAdded(updateId, updateComponent, callback) {
 
     function getPartialMatch(matchEntryId, callback) {
-
-        record["getPartial" + record.capitalize(updateComponent)]('test', function(err, results) {
+        var type = record.sectionToType[updateComponent];
+        record.getPartialSection(type, 'test', function(err, results) {
             for (var iRecord in results) {
                 if (results[iRecord]._id.toString() === matchEntryId.toString()) {
                     callback(null, results[iRecord]);
@@ -19,7 +19,6 @@ function updateAdded(updateId, updateComponent, callback) {
     }
 
     function updatePartialMatch(partialMatch, callback) {
-
         record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', partialMatch._id, {
             reviewed: true
         }, function(err, updateResults) {
