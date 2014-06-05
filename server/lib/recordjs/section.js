@@ -5,7 +5,7 @@ var async = require('async');
 
 var merge = require('./merge');
 var modelutil = require('./modelutil');
-
+var match = require('./match');
 
 exports.removeEntry = function(dbinfo, type, patKey, recordId, callback) {
     
@@ -199,14 +199,6 @@ exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callba
     });
 };
 
-var saveMatchEntries = exports.saveMatchEntries = function(dbinfo, type, patKey, inputObject, callback) {
-    var Model = dbinfo.matchModels[type];
-    var tempEntry = new Model(inputObject);
-    tempEntry.save(callback);
-};
-
-//Needs investigation as well as to premature return
-
 exports.savePartialEntries = function(dbinfo, type, patKey, input, sourceID, callback) {
     var savePartialEntry = function(entryObject, cb) {
         var localSaveNewEntry = function(cb2) {
@@ -238,7 +230,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, input, sourceID, cal
                 tmpMatch.subelements = matchObject.subelements;
             }
 
-            saveMatchEntries(dbinfo, type, patKey, tmpMatch, cb2);
+            match.saveMatch(dbinfo, tmpMatch, cb2);
         }
 
         async.waterfall([localSaveNewEntry, savePartialMatch], cb);
@@ -266,5 +258,4 @@ exports.savePartialEntries = function(dbinfo, type, patKey, input, sourceID, cal
         var inputForDb = prepForDb(input);
         savePartialEntry(inputForDb, callback);
     }
-
 };

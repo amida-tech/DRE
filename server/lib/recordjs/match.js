@@ -1,13 +1,7 @@
 exports.saveMatch = function(dbinfo, matchObject, callback) {
     var Model = dbinfo.matchModels[matchObject.entry_type];
-    var saveMatch = new Model(matchObject);
-    saveMatch.save(function(err, saveResults) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null, saveResults);
-        }
-    });
+    var matchDb = new Model(matchObject);
+    matchDb.save(callback);
 };
 
 exports.getMatch = function(dbinfo, type, matchId, callback) {
