@@ -120,7 +120,11 @@ var createTestSection = exports.createTestSection = function(type, recordIndex, 
 };
 
 var newEntriesContextKey = exports.newEntriesContextKey = function(type, recordIndex) {
-    return util.format("%s.%s", type, recordIndex);   
+    return util.format("new.%s.%s", type, recordIndex);   
+};
+
+var partialEntriesContextKey = exports.partialEntriesContextKey = function(type, recordIndex) {
+    return util.format("partial.%s.%s", type, recordIndex);   
 };
 
 exports.propertyToFilename = function(value) {
@@ -128,15 +132,21 @@ exports.propertyToFilename = function(value) {
     return util.format('c%s%s.xml', value.charAt(n-5), value.charAt(n-3));
 }
 
+var pushToContext = exports.pushToContext = function(context, keyGen, type, recordIndex, values) {
+    if (values) {
+        var key = keyGen(type, recordIndex);
+        var r = context[key];
+        if (! r) r = context[key] = [];
+        Array.prototype.push.apply(r, values);
+    }
+};
+
 var saveNewTestSection = exports.saveNewTestSection = function(context, type, patKey, recordIndex, count, callback) {
     var data = createTestSection(type, recordIndex, count);
     var sourceId = context.storageIds[recordIndex];
     section.saveNewEntries(context.dbinfo, type, patKey, data, sourceId, function(err, ids) {
-        if (ids && ! err) {
-            var key = newEntriesContextKey(type, recordIndex);
-            var r = context[key];
-            if (! r) r = context[key] = [];
-            Array.prototype.push.apply(r, ids);
+        if (! err) {
+            pushToContext(context, newEntriesContextKey, type, recordIndex, ids);
         }
         callback(err);
     });
