@@ -67,7 +67,7 @@ var testObjectInstance = {
     }
 };
 
-var matchObjectInstance = {
+var matchObjectInstance = exports.matchObjectInstance = {
     diff: function(suffix, entryIndex) {
         return {
             match: 'diff',

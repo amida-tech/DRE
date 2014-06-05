@@ -10,6 +10,7 @@ var merge = require('../../lib/recordjs/merge');
 var section = require('../../lib/recordjs/section');
 var storage = require('../../lib/recordjs/storage');
 var modelutil = require('../../lib/recordjs/modelutil');
+var match = require('../../lib/recordjs/match');
 
 var refmodel = require('./refModel')
 
@@ -94,6 +95,57 @@ describe('partial methods', function() {
             ], 
             function(err) {done(err);}
         );
+    });
+
+    it('verify matches', function(done) {
+        function verify(resultsById, recordIndex, index, destRecordIndex, destIndex, type, diffType) {
+            var key = refmodel.partialEntriesContextKey(type, recordIndex);
+            var id = context[key][index]._id;
+            var result = resultsById[id];
+            expect(result).to.exist;
+        
+            var suffix = '_' + recordIndex + '.' + index;
+            expect(result.match_entry_id.name).to.equal('name' + suffix);
+            var destSuffix = '_' + destRecordIndex + '.' + destIndex;
+            expect(result.entry_id.name).to.equal('name' + destSuffix);
+            expect(result.entry_type).to.equal(type);
+
+            ['_id', '__v', 'entry_type', 'entry_id', 'match_entry_id'].forEach(function(p) {
+                delete result[p];
+            });
+            
+            var diffSuffix = '_' + recordIndex + '.' + destIndex;
+            var diffExpect = refmodel.matchObjectInstance[diffType](diffSuffix, destIndex);
+            delete diffExpect.match;
+            expect(result).to.deep.equal(diffExpect);
+        };
+
+        async.parallel([
+            function(callback) {match.getMatches(context.dbinfo, 'testallergy', 'name severity', 'filename', callback)},
+            function(callback) {match.getMatches(context.dbinfo, 'testprocedure', 'name proc_type', 'filename', callback)},
+            ],  
+            function(err, results) {
+                if (! err) {
+                    var allResults = results[0].concat(results[1]);
+                    expect(allResults).to.have.length(9);
+                    var resultsById = allResults.reduce(function(r, result) {
+                        r[result._id] = result;
+                        return r;
+                    }, {});
+                    verify(resultsById, '0.1', 0, '0.0', 4, 'testallergy', 'diff');
+                    verify(resultsById, '0.1', 1, '0.0', 0, 'testallergy', 'partial');
+                    verify(resultsById, '0.1', 2, '0.0', 2, 'testallergy', 'diffsub');
+                    verify(resultsById, '2.1', 0, '2.0', 1, 'testallergy', 'diffsub');
+
+                    verify(resultsById, '0.1', 0, '0.0', 2, 'testprocedure', 'partialsub');
+                    verify(resultsById, '1.1', 0, '1.0', 1, 'testprocedure', 'partial');
+                    verify(resultsById, '1.1', 1, '1.0', 3, 'testprocedure', 'diff');
+                    verify(resultsById, '1.2', 0, '1.0', 2, 'testprocedure', 'partialsub');
+                    verify(resultsById, '1.2', 1, '1.0', 4, 'testprocedure', 'diffsub');
+                }
+                done(err);
+            }
+        );    
     });
 
     it('get partials', function(done) {
