@@ -158,24 +158,13 @@ exports.getEntry = function(type, recordId, callback) {
     section.getEntry(dbinfo, type, recordId, callback);
 };
 
-Object.keys(typeToSection).forEach(function(type) {
-    var sectionName = capitalize(typeToSection[type]);
-    var typeName = capitalize(type);
-    
-    exports['add' + sectionName + 'MatchEntry'] = function(patKey, inputArray, callback) {
-        section.saveMatchEntries(dbinfo, type, patKey, inputArray, callback);
-    };
+exports.addMergeEntry = function(type, update_id, mergeInfo, callback) {
+    section.addEntryMergeEntry(dbinfo, type, update_id, mergeInfo, callback);
+};
 
-
-    exports['add' + typeName + 'MergeEntry'] = function(update_id, mergeInfo, callback) {
-        section.addEntryMergeEntry(dbinfo, type, update_id, mergeInfo, callback);
-    };
-
-    exports[type + 'Count'] = function(conditions, callback) {
-        section.sectionEntryCount(dbinfo, type, conditions, callback);
-    };
-
-});
+//exports.entryCount = function(type, conditions, callback) {
+//    section.sectionEntryCount(dbinfo, type, conditions, callback);
+//};
 
 exports.getAllSections = function(patientKey, callback) {
     allsections.getAllSections(dbinfo, patientKey, callback);

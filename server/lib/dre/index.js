@@ -26,7 +26,8 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 record_id: newSourceID,
                 merge_reason: 'duplicate'
             };
-            record["add" + record.capitalize(record.sectionToType[section]) + "MergeEntry"](update_id, mergeInfo, function(err) {
+            var type = record.sectionToType[section];
+            record.addMergeEntry(type, update_id, mergeInfo, function(err) {
                 if (err) {
                     callback(err);
                 } else {
