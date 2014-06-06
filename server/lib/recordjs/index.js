@@ -154,14 +154,14 @@ exports.updateEntry = function(type, patKey, recordId, recordUpdate, callback) {
     section.updateEntry(dbinfo, type, patKey, recordId, recordUpdate, callback);
 };
 
+exports.getEntry = function(type, recordId, callback) {
+    section.getEntry(dbinfo, type, recordId, callback);
+};
+
 Object.keys(typeToSection).forEach(function(type) {
     var sectionName = capitalize(typeToSection[type]);
     var typeName = capitalize(type);
     
-    exports['get' + typeName] = function(recordId, callback) {
-        section.getEntry(dbinfo, type, recordId, callback);
-    };
-
     exports['add' + sectionName + 'MatchEntry'] = function(patKey, inputArray, callback) {
         section.saveMatchEntries(dbinfo, type, patKey, inputArray, callback);
     };
@@ -190,10 +190,3 @@ exports.saveAllSectionsAsNew = function(patientKey, patientRecord, fileId, callb
 exports.cleanSectionEntries = function(input) {
     return modelutil.mongooseToBBModelSection(input);
 };
-
-// Matches
-
-//Will need a get 
-
-
-

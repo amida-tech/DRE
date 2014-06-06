@@ -125,7 +125,8 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
             callback(err);
         } else {
             //Gather partial record from db.
-            record["get" + record.capitalize(record.sectionToType[updateComponent])](resultComponent.match_entry_id._id, function(err, recordResults) {
+            var type = record.sectionToType[updateComponent];
+            record.getEntry(type, resultComponent.match_entry_id._id, function(err, recordResults) {
                 if (err) {
                     callback(err);
                 } else {
