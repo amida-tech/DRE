@@ -7,26 +7,19 @@ var merge = require('./merge');
 var modelutil = require('./modelutil');
 var match = require('./match');
 
-exports.removeEntry = function(dbinfo, type, patKey, recordId, callback) {
+exports.removeEntry = function(dbinfo, type, recordId, callback) {
     
-    function removeModel (callback) {
+    var removeModel = function(callback) {
         var model = dbinfo.models[type];
-        var query = model.update({
-            patKey: patKey,
-            _id: recordId
-        }, {archived: true});
-
+        var query = model.update({_id: recordId}, {archived: true});
         query.exec(callback);
-    }
+    };
 
-    function removeMerge (callback) {
+    var removeMerge = function(callback) {
         var model = dbinfo.mergeModels[type];
-        var query = model.update({
-            entry_id: recordId
-        }, {archived: true});
-
+        var query = model.update({entry_id: recordId}, {archived: true});
         query.exec(callback);
-    }
+    };
 
     async.series([removeMerge, removeModel], callback);
 };

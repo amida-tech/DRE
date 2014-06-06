@@ -218,8 +218,8 @@ describe('partial methods', function() {
         var key1 = refmodel.partialEntriesContextKey('testprocedure', '1.2');
         var id1 = context[key1][1].match_entry_id
         async.parallel([
-            function(callback) {section.removeEntry(context.dbinfo, 'testallergy', 'pat2', id0, callback);},
-            function(callback) {section.removeEntry(context.dbinfo, 'testprocedure', 'pat1', id1, callback);},
+            function(callback) {section.removeEntry(context.dbinfo, 'testallergy', id0, callback);},
+            function(callback) {section.removeEntry(context.dbinfo, 'testprocedure', id1, callback);},
             ], 
             function(err) {done(err);}
         );
