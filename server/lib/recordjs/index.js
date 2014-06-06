@@ -123,6 +123,10 @@ exports.matchCount = function(type, conditions, callback) {
     match.count(dbinfo, sectionToType[type], conditions, callback);
 };
 
+exports.cancelMatch = function(type, id, reason, callback) {
+    match.cancel(dbinfo, sectionToType[type], id, reason, callback);
+};
+
 // Sections
 
 exports.saveNewSection = function(type, patKey, inputArray, sourceID, callback) {

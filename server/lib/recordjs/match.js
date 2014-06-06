@@ -1,10 +1,12 @@
+var section = require('./section');
+
 exports.saveMatch = function(dbinfo, matchObject, callback) {
     var Model = dbinfo.matchModels[matchObject.entry_type];
     var matchDb = new Model(matchObject);
     matchDb.save(callback);
 };
 
-exports.getMatch = function(dbinfo, type, matchId, callback) {
+var getMatch = exports.getMatch = function(dbinfo, type, matchId, callback) {
     var model = dbinfo.matchModels[type];
     var query = model.findOne({_id: matchId}).populate('entry_id match_entry_id').lean();
     query.exec(function (err, matchResults) {
@@ -17,7 +19,7 @@ exports.getMatch = function(dbinfo, type, matchId, callback) {
     });
 };
 
-exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback) {
+var updateMatch = exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback) {
     var model = dbinfo.matchModels[type];
     var query = model.findOne({
         _id: identifier
@@ -72,5 +74,34 @@ exports.count = function(dbinfo, type, conditions, callback) {
     //query.where(conditions);
     query.exec(conditions, function(err, count) {
         callback(err, count);
+    });
+};
+
+var updateIgnored = function(dbinfo, type, id, callback) {
+    getMatch(dbinfo, type, id, function(err, result) {
+        if (err) {
+            callback(err);
+        } else {
+            section.removeEntry(dbinfo, type, result.match_entry_id._id, function(err, removalResults) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null);
+                }
+            });
+        }
+    });
+};
+
+exports.cancel = function(dbinfo, type, id, reason, callback) {
+    //If determination is ignored, dump the object from the database.
+    updateIgnored(dbinfo, type, id, function(err, results) {
+        updateMatch(dbinfo, type, id, {determination: reason}, function(err, updateResults) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null);
+            }
+        });
     });
 };

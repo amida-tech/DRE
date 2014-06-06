@@ -54,24 +54,6 @@ function updateAdded(updateId, updateComponent, callback) {
 }
 
 
-function updateIgnored(updateId, updateComponent, callback) {
-
-    record.getMatch(updateComponent, updateId, function(err, resultComponent) {
-        if (err) {
-            callback(err);
-        } else {
-            record.removeEntry(updateComponent, resultComponent.match_entry_id._id, function(err, removalResults) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
-        }
-    });
-}
-
-
 function updateMerged(updateId, updateComponent, updateParameters, callback) {
 
     function updateMainObject(updateComponent, entry_id, updateJSON, recordId, callback) {
@@ -206,16 +188,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
     }
 
     if (cleanParameters.determination === 'ignored') {
-        //If determination is ignored, dump the object from the database.
-        updateIgnored(updateId, updateComponent, function(err, results) {
-            saveMatchRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
-        });
+        record.cancelMatch(updateComponent, updateId, 'ignored', callback)
     }
 
 }
