@@ -124,11 +124,6 @@ exports.matchCount = function(type, conditions, callback) {
 };
 
 // Sections
-var capitalize = function(value) {
-    return value.charAt(0).toUpperCase() + value.slice(1);
-};
-
-module.exports.capitalize = capitalize;
 
 exports.saveNewSection = function(type, patKey, inputArray, sourceID, callback) {
     section.saveNewEntries(dbinfo, sectionToType[type], patKey, inputArray, sourceID, callback);
@@ -146,8 +141,8 @@ exports.getPartialSection = function(type, patKey, callback) {
     section.getPartialSection(dbinfo, sectionToType[type], patKey, callback);
 };
 
-exports.removeEntry = function(type, patKey, partialID, callback) {
-    section.removeEntry(dbinfo, sectionToType[type], patKey, partialID, callback);
+exports.removeEntry = function(type, partialID, callback) {
+    section.removeEntry(dbinfo, sectionToType[type], partialID, callback);
 };
 
 exports.updateEntry = function(type, patKey, recordId, recordUpdate, callback) {
