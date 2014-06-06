@@ -19,7 +19,8 @@ function updateAdded(updateId, updateComponent, callback) {
     }
 
     function updatePartialMatch(partialMatch, callback) {
-        record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', partialMatch._id, {
+        var type = record.sectionToType[updateComponent];
+        record.updateEntry(type, 'test', partialMatch._id, {
             reviewed: true
         }, function(err, updateResults) {
             if (err) {
@@ -92,8 +93,9 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
             if (err) {
                 callback(err);
             } else {
+                var type = record.sectionToType[updateComponent];
                 updateJSON.metadata.attribution = [mergeResult._id];
-                record["update" + record.capitalize(record.sectionToType[updateComponent])]('test', entry_id, updateJSON, function(err, updateResults) {
+                record.updateEntry(type, 'test', entry_id, updateJSON, function(err, updateResults) {
                     if (err) {
                         callback(err);
                     } else {

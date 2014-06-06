@@ -150,14 +150,14 @@ exports.removeEntry = function(type, patKey, partialID, callback) {
     section.removeEntry(dbinfo, type, patKey, partialID, callback);
 };
 
+exports.updateEntry = function(type, patKey, recordId, recordUpdate, callback) {
+    section.updateEntry(dbinfo, type, patKey, recordId, recordUpdate, callback);
+};
+
 Object.keys(typeToSection).forEach(function(type) {
     var sectionName = capitalize(typeToSection[type]);
     var typeName = capitalize(type);
     
-    exports['update' + typeName] = function(patKey, recordId, recordUpdate, callback) {
-        section.updateEntry(dbinfo, type, patKey, recordId, recordUpdate, callback);
-    };
-
     exports['get' + typeName] = function(recordId, callback) {
         section.getEntry(dbinfo, type, recordId, callback);
     };
