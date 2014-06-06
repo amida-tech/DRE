@@ -3,16 +3,16 @@ var app = module.exports = express();
 var record = require('../recordjs');
 
   var supportedComponents = {
-    allergies: 'allergy',
-    procedures: 'procedure',
-    medications: 'medication',
-    encounters: 'encounter',
-    vitals: 'vital',
-    results: 'result',
-    socialhistories: 'social',
-    immunizations: 'immunization',
-    demographics: 'demographic',
-    problems: 'problem'
+    allergies: 'allergies',
+    procedures: 'procedures',
+    medications: 'medications',
+    encounters: 'encounters',
+    vitals: 'vitals',
+    results: 'results',
+    socialhistories: 'socialHistory',
+    immunizations: 'immunizations',
+    demographics: 'demographics',
+    problems: 'problems'
   };
 
 function getNotifications (callback) {

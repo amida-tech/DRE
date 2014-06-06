@@ -8,8 +8,7 @@ var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medicati
 function updateAdded(updateId, updateComponent, callback) {
 
     function getPartialMatch(matchEntryId, callback) {
-        var type = record.sectionToType[updateComponent];
-        record.getPartialSection(type, 'test', function(err, results) {
+        record.getPartialSection(updateComponent, 'test', function(err, results) {
             for (var iRecord in results) {
                 if (results[iRecord]._id.toString() === matchEntryId.toString()) {
                     callback(null, results[iRecord]);
@@ -19,8 +18,7 @@ function updateAdded(updateId, updateComponent, callback) {
     }
 
     function updatePartialMatch(partialMatch, callback) {
-        var type = record.sectionToType[updateComponent];
-        record.updateEntry(type, 'test', partialMatch._id, {
+        record.updateEntry(updateComponent, 'test', partialMatch._id, {
             reviewed: true
         }, function(err, updateResults) {
             if (err) {
@@ -62,8 +60,7 @@ function updateIgnored(updateId, updateComponent, callback) {
         if (err) {
             callback(err);
         } else {
-            var type = record.sectionToType[updateComponent];
-            record.removeEntry(type, 'test', resultComponent.match_entry_id._id, function(err, removalResults) {
+            record.removeEntry(updateComponent, 'test', resultComponent.match_entry_id._id, function(err, removalResults) {
                 if (err) {
                     callback(err);
                 } else {
@@ -93,9 +90,8 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
             if (err) {
                 callback(err);
             } else {
-                var type = record.sectionToType[updateComponent];
                 updateJSON.metadata.attribution = [mergeResult._id];
-                record.updateEntry(type, 'test', entry_id, updateJSON, function(err, updateResults) {
+                record.updateEntry(updateComponent, 'test', entry_id, updateJSON, function(err, updateResults) {
                     if (err) {
                         callback(err);
                     } else {
@@ -108,8 +104,7 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
     }
 
     function removeMergedObject(updateId, updateComponent, callback) {
-        var type = record.sectionToType[updateComponent];
-        record.removeEntry(type, 'test', updateId, function(err, removalResults) {
+        record.removeEntry(updateComponent, 'test', updateId, function(err, removalResults) {
                 if (err) {
                     callback(err);
                 } else {
@@ -125,8 +120,7 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
             callback(err);
         } else {
             //Gather partial record from db.
-            var type = record.sectionToType[updateComponent];
-            record.getEntry(type, resultComponent.match_entry_id._id, function(err, recordResults) {
+            record.getEntry(updateComponent, resultComponent.match_entry_id._id, function(err, recordResults) {
                 if (err) {
                     callback(err);
                 } else {

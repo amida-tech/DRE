@@ -103,7 +103,7 @@ exports.setMerge = function(mergeObject, callback) {
 };
 
 exports.mergeCount = function(type, conditions, callback) {
-    merge.count(dbinfo, type, conditions, callback);
+    merge.count(dbinfo, sectionToType[type], conditions, callback);
 };
 
 // Matches
@@ -120,7 +120,7 @@ exports.updateMatch = function(type, identifier, updateFields, callback) {
 };
 
 exports.matchCount = function(type, conditions, callback) {
-    match.count(dbinfo, type, conditions, callback);
+    match.count(dbinfo, sectionToType[type], conditions, callback);
 };
 
 // Sections
@@ -131,40 +131,36 @@ var capitalize = function(value) {
 module.exports.capitalize = capitalize;
 
 exports.saveNewSection = function(type, patKey, inputArray, sourceID, callback) {
-    section.saveNewEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+    section.saveNewEntries(dbinfo, sectionToType[type], patKey, inputArray, sourceID, callback);
 };
 
 exports.savePartialSection = function(type, patKey, inputArray, sourceID, callback) {
-    section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
+    section.savePartialEntries(dbinfo, sectionToType[type], patKey, inputArray, sourceID, callback);
 };
 
 exports.getSection = function(type, patKey, callback) {
-    section.getSection(dbinfo, type, patKey, callback);
+    section.getSection(dbinfo, sectionToType[type], patKey, callback);
 };
 
 exports.getPartialSection = function(type, patKey, callback) {
-    section.getPartialSection(dbinfo, type, patKey, callback);
+    section.getPartialSection(dbinfo, sectionToType[type], patKey, callback);
 };
 
 exports.removeEntry = function(type, patKey, partialID, callback) {
-    section.removeEntry(dbinfo, type, patKey, partialID, callback);
+    section.removeEntry(dbinfo, sectionToType[type], patKey, partialID, callback);
 };
 
 exports.updateEntry = function(type, patKey, recordId, recordUpdate, callback) {
-    section.updateEntry(dbinfo, type, patKey, recordId, recordUpdate, callback);
+    section.updateEntry(dbinfo, sectionToType[type], patKey, recordId, recordUpdate, callback);
 };
 
 exports.getEntry = function(type, recordId, callback) {
-    section.getEntry(dbinfo, type, recordId, callback);
+    section.getEntry(dbinfo, sectionToType[type], recordId, callback);
 };
 
 exports.addMergeEntry = function(type, update_id, mergeInfo, callback) {
-    section.addEntryMergeEntry(dbinfo, type, update_id, mergeInfo, callback);
+    section.addEntryMergeEntry(dbinfo, sectionToType[type], update_id, mergeInfo, callback);
 };
-
-//exports.entryCount = function(type, conditions, callback) {
-//    section.sectionEntryCount(dbinfo, type, conditions, callback);
-//};
 
 exports.getAllSections = function(patientKey, callback) {
     allsections.getAllSections(dbinfo, patientKey, callback);

@@ -25,8 +25,7 @@ app.get('/api/v1/record/:component', function(req, res) {
     } else {
 
         function sendResponse(componentName) {
-            var type = record.sectionToType[req.params.component];
-            record.getSection(type, 'test', function(err, componentList) {
+            record.getSection(req.params.component, 'test', function(err, componentList) {
                 if (err) {
                     res.send(500);
                 } else {
@@ -47,8 +46,7 @@ app.get('/api/v1/record/partial/:component', function(req, res) {
     } else {
 
         function sendResponse(componentName) {
-            var type = record.sectionToType[req.params.component];
-            record.getPartialSection(type, 'test', function(err, componentList) {
+            record.getPartialSection(req.params.component, 'test', function(err, componentList) {
                 if (err) {
                     res.send(500);
                 } else {

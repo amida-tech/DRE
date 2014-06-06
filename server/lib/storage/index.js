@@ -41,8 +41,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             if (saveArray.length === 0) {
                 checkSaveMasterComponentsComplete();
             } else {
-                var type = record.sectionToType[secName];
-                record.saveNewSection(type, 'test', saveArray, sourceID, function(err) {
+                record.saveNewSection(secName, 'test', saveArray, sourceID, function(err) {
                     if (err) {
                         callback(err);
                     } else {
@@ -81,8 +80,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             if (saveArray.length === 0) {
                 checkSavePartialComponentsComplete();
             } else {
-                var type = record.sectionToType[secName];
-                record.savePartialSection(type, 'test', saveArray, sourceID, function(err) {
+                record.savePartialSection(secName, 'test', saveArray, sourceID, function(err) {
                     if (err) {
                         callback(err);
                     } else {
@@ -117,8 +115,7 @@ function getSavedRecords(saved_sections, callback) {
     }
 
     function getSavedSection(section, callback) {
-        var type = record.sectionToType[section];
-        record.getSection(type, patient_id, function(err, savedObj) {
+        record.getSection(section, patient_id, function(err, savedObj) {
             if (err) {
                 callback(err);
             } else {
