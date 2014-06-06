@@ -2,18 +2,18 @@ var express = require('express');
 var app = module.exports = express();
 var record = require('../recordjs');
 
-  var supportedComponents = {
-    allergies: 'allergies',
-    procedures: 'procedures',
-    medications: 'medications',
-    encounters: 'encounters',
-    vitals: 'vitals',
-    results: 'results',
-    socialhistories: 'socialHistory',
-    immunizations: 'immunizations',
-    demographics: 'demographics',
-    problems: 'problems'
-  };
+  var supportedComponents = [
+    'allergies',
+    'procedures',
+    'medications',
+    'encounters',
+    'vitals',
+    'results',
+    'socialHistory',
+    'immunizations',
+    'demographics',
+    'problems'
+  ];
 
 function getNotifications (callback) {
 
@@ -41,10 +41,7 @@ function getNotifications (callback) {
 
   function getPartialCount(callback) {
     var secIteration = 0;
-    var secTotal = 0;
-    for (var iComponent in supportedComponents) {
-      secTotal++;
-    }
+    var secTotal = supportedComponents.length;
 
     function checkCountComplete() {
       secIteration++;
@@ -54,9 +51,8 @@ function getNotifications (callback) {
       }
     }
 
-    for (var iSection in supportedComponents) {
-      //console.log(supportedComponents[iSection]);
-      record.matchCount(supportedComponents[iSection], {}, function(err, count) {
+    supportedComponents.forEach(function(component) {
+      record.matchCount(component, {}, function(err, count) {
         if (err) {
           callback(err);
         } else {
@@ -65,7 +61,7 @@ function getNotifications (callback) {
           checkCountComplete();
         }
       });
-    }
+    });
   }
 
   getPartialCount(function(err) {
@@ -74,11 +70,8 @@ function getNotifications (callback) {
 
   function getNewMergeCount(callback) {
     var secIteration = 0;
-    var secTotal = 0;
-    for (var iComponent in supportedComponents) {
-      secTotal++;
-    }
-
+    var secTotal = supportedComponents.length;
+  
     function checkCountComplete() {
       secIteration++;
       if (secIteration === secTotal) {
@@ -87,10 +80,8 @@ function getNotifications (callback) {
       }
     }
 
-    for (var iSection in supportedComponents) {
-
-
-      record.mergeCount(supportedComponents[iSection], {merge_reason: "new"}, function(err, count) {
+    supportedComponents.forEach(function(component) {
+      record.mergeCount(component, {merge_reason: "new"}, function(err, count) {
         if (err) {
           callback(err);
         } else {
@@ -98,8 +89,7 @@ function getNotifications (callback) {
           checkCountComplete();
         }
       });
-
-    }
+    });
   }
 
   getNewMergeCount(function(err) {
@@ -108,10 +98,7 @@ function getNotifications (callback) {
 
   function getDupeMergeCount(callback) {
     var secIteration = 0;
-    var secTotal = 0;
-    for (var iComponent in supportedComponents) {
-      secTotal++;
-    }
+    var secTotal = supportedComponents.length;
 
     function checkCountComplete() {
       secIteration++;
@@ -121,8 +108,8 @@ function getNotifications (callback) {
       }
     }
 
-    for (var iSection in supportedComponents) {
-      record.mergeCount(supportedComponents[iSection], {merge_reason: "duplicate"}, function(err, count) {
+    supportedComponents.forEach(function(component) {
+      record.mergeCount(component, {merge_reason: "duplicate"}, function(err, count) {
         if (err) {
           callback(err);
         } else {
@@ -130,7 +117,7 @@ function getNotifications (callback) {
           checkCountComplete();
         }
       });
-    }
+    });
   }
 
   getDupeMergeCount(function(err) {
