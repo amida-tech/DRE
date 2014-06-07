@@ -76,29 +76,42 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
     query.exec(callback);
 };
 
-exports.updateEntry = function(dbinfo, type, patKey, recordId, recordUpdate, callback) {
+exports.updateEntry = function(dbinfo, type, recordId, fileId, recordUpdate, callback) {
     var model = dbinfo.models[type];
-    var query = model.findOne({
-        "_id": recordId
-    });
+    var query = model.findOne({"_id": recordId});
 
     query.exec(function(err, entry) {
         if (err) {
             callback(err);
         } else {
+            //First create merge entry.
+            var mergeObject = {
+                entry_type: type,
+                patKey: entry.patKey,
+                entry_id: recordId,
+                record_id: fileId,
+                merged: new Date(),
+                merge_reason: 'update'
+            };
 
-            //Perform Update.
-            for (var iLine in recordUpdate) {
-                if (iLine === 'metadata') {
-                    for (var iAttribution in recordUpdate[iLine].attribution) {
-                        entry[iLine].attribution.push(recordUpdate[iLine].attribution[iAttribution]);
-                    }
+            merge.saveMerge(dbinfo, mergeObject, function(err, mergeResult) {
+                if (err) {
+                    callback(err);
                 } else {
-                    entry[iLine] = recordUpdate[iLine];     
-                }
-            }
+                    //Perform Update.
+                    entry.metadata.attribution.push(mergeResult._id);
+                    entry.reviewed = true;
+                    for (var iLine in recordUpdate) {
+                        if (iLine.substring(0, 1) !== "_") {
+                            if(iLine !== 'metadata' && iLine !== 'reviewed' && iLine !== 'archived' && iLine !== 'patKey') {
+                                entry[iLine] = recordUpdate[iLine];     
+                            }
+                        }
+                    }
 
-            entry.save(callback);
+                    entry.save(callback);
+                }
+            });
         }
     });
 };

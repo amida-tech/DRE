@@ -153,8 +153,8 @@ exports.removeEntry = function(type, partialID, callback) {
     section.removeEntry(dbinfo, sectionToType[type], partialID, callback);
 };
 
-exports.updateEntry = function(type, patKey, recordId, recordUpdate, callback) {
-    section.updateEntry(dbinfo, sectionToType[type], patKey, recordId, recordUpdate, callback);
+exports.updateEntry = function(type, recordId, fileId, recordUpdate, callback) {
+    section.updateEntry(dbinfo, sectionToType[type], recordId, fileId, recordUpdate, callback);
 };
 
 exports.getEntry = function(type, recordId, callback) {

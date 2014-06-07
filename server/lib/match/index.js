@@ -8,43 +8,13 @@ var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medicati
 function updateMerged(updateId, updateComponent, updateParameters, callback) {
 
     function updateMainObject(updateComponent, entry_id, updateJSON, recordId, callback) {
-
-        //First create merge entry.
-        var mergeObject = {
-            entry_type: record.sectionToType[updateComponent],
-            patKey: 'test',
-            entry_id: entry_id._id,
-            record_id: recordId,
-            merged: new Date(),
-            merge_reason: 'update'
-        };
-
-        record.setMerge(mergeObject, function(err, mergeResult) {
+        record.updateEntry(updateComponent, entry_id, recordId, updateJSON, function(err, updateResults) {
             if (err) {
                 callback(err);
             } else {
-                updateJSON.metadata.attribution = [mergeResult._id];
-                record.updateEntry(updateComponent, 'test', entry_id, updateJSON, function(err, updateResults) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        callback(null, err);
-                    }
-                });
+                callback(null);
             }
         });
-
-    }
-
-    function removeMergedObject(updateId, updateComponent, callback) {
-        record.removeEntry(updateComponent, updateId, function(err, removalResults) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
-
     }
 
     //Gather full match object by ID.
@@ -57,26 +27,9 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
                 if (err) {
                     callback(err);
                 } else {
-
-                    var updateJSON = {};
-
                     //NOTE:  Only one attribution merge since a partial.
                     var recordId = recordResults.metadata.attribution[0].record_id;
-
-                    //Pull update data.
-                    for (var iUpdate in updateParameters) {
-                        //Filter inbound metadata and attribution.
-                        if (iUpdate.substring(0, 1) !== "_") {
-                            if(iUpdate !== 'metadata' && iUpdate !== 'reviewed' && iUpdate !== 'archived' && iUpdate !== 'patKey') {
-                                updateJSON[iUpdate] = updateParameters[iUpdate];
-                            }   
-                        }
-                    }
-
-                    updateJSON.reviewed = true;
-                    updateJSON.metadata = {};
-
-                    updateMainObject(updateComponent, resultComponent.entry_id, updateJSON, recordId, function(err, results) {
+                    updateMainObject(updateComponent, resultComponent.entry_id, updateParameters, recordId, function(err, results) {
                         if (err) {
                             callback(err);
                         } else {
