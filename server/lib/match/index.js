@@ -129,14 +129,7 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
                         if (err) {
                             callback(err);
                         } else {
-                            removeMergedObject(resultComponent.match_entry_id._id, updateComponent, function(err, results) {
-                                if (err) {
-                                    callback(err);
-                                } else {
-                                    callback(null);
-                                }
-                            });
-                            
+                            record.cancelMatch(updateComponent, updateId, 'merged', callback);
                         }
                     });
                 }
@@ -177,13 +170,11 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
     if (cleanParameters.determination === 'merged') {
         //If determination is merged, overwrite original record, drop source object, and update merge history of object.
         updateMerged(updateId, updateComponent, cleanParameters.updated_entry, function(err, results) {
-            saveMatchRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
+            if (err) {
+                callback(err);
+            } else {
+                callback(null);
+            }
         });
     }
 
