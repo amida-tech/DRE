@@ -98,8 +98,8 @@ exports.getMerges = function(type, patientKey, typeFields, recordFields, callbac
     merge.getMerges(dbinfo, sectionToType[type], patientKey, typeFields, recordFields, callback);
 };
 
-exports.mergeCount = function(type, conditions, callback) {
-    merge.count(dbinfo, sectionToType[type], conditions, callback);
+exports.mergeCount = function(type, patientKey, conditions, callback) {
+    merge.count(dbinfo, sectionToType[type], patientKey, conditions, callback);
 };
 
 // Matches

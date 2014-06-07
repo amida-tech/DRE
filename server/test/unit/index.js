@@ -159,7 +159,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount', function(done) {
-        merge.count(dbinfo, 'allergy', {}, function(err, count) {
+        merge.count(dbinfo, 'allergy', 'pat1', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -206,7 +206,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount all', function(done) {
-        merge.count(dbinfo, 'allergy', {}, function(err, count) {
+        merge.count(dbinfo, 'allergy', 'pat1', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -217,7 +217,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount new', function(done) {
-        merge.count(dbinfo, 'allergy', {merge_reason: 'new'}, function(err, count) {
+        merge.count(dbinfo, 'allergy', 'pat1', {merge_reason: 'new'}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -228,7 +228,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount duplicate', function(done) {
-        merge.count(dbinfo, 'allergy', {merge_reason: 'duplicate'}, function(err, count) {
+        merge.count(dbinfo, 'allergy', 'pat1', {merge_reason: 'duplicate'}, function(err, count) {
             if (err) {
                 done(err);
             } else {

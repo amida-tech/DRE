@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 exports.saveMerge = function(dbinfo, mergeObject, callback) {
     var Model = dbinfo.mergeModels[mergeObject.entry_type];
     var saveMerge = new Model(mergeObject);
@@ -38,21 +40,20 @@ exports.getMerges = function(dbinfo, type, patientKey, typeFields, recordFields,
     });
 };
 
-exports.count = function(dbinfo, type, conditions, callback) {
+exports.count = function(dbinfo, type, patKey, conditions, callback) {
     var model = dbinfo.mergeModels[type];
-    var recCount = 0;
-
+    var condsWPat = _.clone(conditions);
+    condsWPat.patKey = patKey;
     var query = model.find({});
-    query.where(conditions);
-    query.populate('entry_id record_id');
+    query.where(condsWPat);
+    query.populate('entry_id');
     query.exec(function(err, mergeResults) {
-
-        for (var i in mergeResults) {
-            if (mergeResults[i].entry_id.reviewed) {
-            recCount++;
-            }    
-        }
-
+        var recCount = mergeResults.reduce(function(r, mergeResult) {
+            if (mergeResult.entry_id.reviewed) {
+                r++;
+            }
+            return r;    
+        }, 0);
         callback(null, recCount);
     });
 };

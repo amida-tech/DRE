@@ -54,7 +54,7 @@ describe('merges', function() {
     });
     
     it('count empty testallergy', function(done) {
-        merge.count(this.dbinfo, 'testallergy', {}, function(err, count) {
+        merge.count(this.dbinfo, 'testallergy', 'pat0', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -65,7 +65,7 @@ describe('merges', function() {
      });
     
     it('count empty testprocedure', function(done) {
-        merge.count(this.dbinfo, 'testprocedure', {}, function(err, count) {
+        merge.count(this.dbinfo, 'testprocedure', 'pat0', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {

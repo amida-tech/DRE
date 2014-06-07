@@ -81,7 +81,7 @@ function getNotifications (callback) {
     }
 
     supportedComponents.forEach(function(component) {
-      record.mergeCount(component, {merge_reason: "new"}, function(err, count) {
+      record.mergeCount(component, 'test', {merge_reason: "new"}, function(err, count) {
         if (err) {
           callback(err);
         } else {
@@ -109,7 +109,7 @@ function getNotifications (callback) {
     }
 
     supportedComponents.forEach(function(component) {
-      record.mergeCount(component, {merge_reason: "duplicate"}, function(err, count) {
+      record.mergeCount(component, 'test', {merge_reason: "duplicate"}, function(err, count) {
         if (err) {
           callback(err);
         } else {
