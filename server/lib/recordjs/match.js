@@ -105,3 +105,47 @@ exports.cancel = function(dbinfo, type, id, reason, callback) {
         });
     });
 };
+
+
+
+
+
+
+var updateAdded = function(dbinfo, type, id, callback) {
+    getMatch(dbinfo, type, id, function(err, resultComponent) {
+        if (err) {
+            callback(err);
+        } else {
+            var recordId = resultComponent.match_entry_id._id;
+            var model = dbinfo.models[type];
+            var query = model.findOne({"_id": recordId});
+            query.exec(function(err, entry) {
+                if (err) {
+                    callback(err);
+                } else {
+                    entry.reviewed = true;
+                    entry.save(function(err, updateResults) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            callback(null, updateResults);
+                        }
+                    });
+                }
+
+            });
+        }
+    });
+};
+
+exports.accept = function(dbinfo, type, id, reason, callback) {
+    updateAdded(dbinfo, type, id, function(err, results) {
+        updateMatch(dbinfo, type, id, {determination: reason}, function(err, updateResults) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null);
+            }
+        });
+    });
+};

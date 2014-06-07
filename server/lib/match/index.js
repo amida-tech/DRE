@@ -5,55 +5,6 @@ var _ = require('underscore');
 
 var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'socialHistory', 'demographics', 'problems'];
 
-function updateAdded(updateId, updateComponent, callback) {
-
-    function getPartialMatch(matchEntryId, callback) {
-        record.getPartialSection(updateComponent, 'test', function(err, results) {
-            for (var iRecord in results) {
-                if (results[iRecord]._id.toString() === matchEntryId.toString()) {
-                    callback(null, results[iRecord]);
-                }
-            }
-        });
-    }
-
-    function updatePartialMatch(partialMatch, callback) {
-        record.updateEntry(updateComponent, 'test', partialMatch._id, {
-            reviewed: true
-        }, function(err, updateResults) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null, err);
-            }
-        });
-
-    }
-
-    record.getMatch(updateComponent, updateId, function(err, resultComponent) {
-        if (err) {
-            callback(err);
-        } else {
-            getPartialMatch(resultComponent.match_entry_id._id, function(err, results) {
-                if (err) {
-                    callback(err);
-                } else {
-                    updatePartialMatch(results, function(err, updateResults) {
-                        if (err) {
-                            callback(err);
-                        } else {
-                            callback(null, updateResults);
-                        }
-                    });
-                }
-
-            });
-        }
-    });
-
-}
-
-
 function updateMerged(updateId, updateComponent, updateParameters, callback) {
 
     function updateMainObject(updateComponent, entry_id, updateJSON, recordId, callback) {
@@ -156,15 +107,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
         if (updateComponent === 'demographics') {
             callback('Only one demographic accepted');
         }
-        updateAdded(updateId, updateComponent, function(err, results) {
-            saveMatchRecord(updateId, updateComponent, cleanParameters, function(err, saveResults) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
-        });
+        record.acceptMatch(updateComponent, updateId, 'added', callback);
     }
 
     if (cleanParameters.determination === 'merged') {
