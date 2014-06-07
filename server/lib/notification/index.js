@@ -52,7 +52,7 @@ function getNotifications (callback) {
     }
 
     supportedComponents.forEach(function(component) {
-      record.matchCount(component, {}, function(err, count) {
+      record.matchCount(component, 'test', {}, function(err, count) {
         if (err) {
           callback(err);
         } else {

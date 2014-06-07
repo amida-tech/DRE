@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 var section = require('./section');
 
 exports.saveMatch = function(dbinfo, matchObject, callback) {
@@ -66,13 +68,14 @@ exports.getMatches = function(dbinfo, type, patKey, typeFields, recordFields, ca
     });
 };
 
-exports.count = function(dbinfo, type, conditions, callback) {
+exports.count = function(dbinfo, type, patKey, conditions, callback) {
     var model = dbinfo.matchModels[type];
     var query = model.count();
     query.where('determination').in([null, false]);
-    //Ignoring Conditions
-    //query.where(conditions);
-    query.exec(conditions, function(err, count) {
+    var condWPat = _.clone(conditions);
+    condWPat.patKey = patKey;
+    query.where(condWPat);
+    query.exec(function(err, count) {
         callback(err, count);
     });
 };

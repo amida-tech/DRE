@@ -111,8 +111,8 @@ exports.getMatch = function(type, matchId, callback) {
     match.getMatch(dbinfo, sectionToType[type], matchId, callback);
 };
 
-exports.matchCount = function(type, conditions, callback) {
-    match.count(dbinfo, sectionToType[type], conditions, callback);
+exports.matchCount = function(type, patKey, conditions, callback) {
+    match.count(dbinfo, sectionToType[type], patKey, conditions, callback);
 };
 
 exports.cancelMatch = function(type, id, reason, callback) {
