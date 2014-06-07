@@ -6,17 +6,6 @@ var _ = require('underscore');
 var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'socialHistory', 'demographics', 'problems'];
 
 function updateMerged(updateId, updateComponent, updateParameters, callback) {
-
-    function updateMainObject(updateComponent, entry_id, updateJSON, recordId, callback) {
-        record.updateEntry(updateComponent, entry_id, recordId, updateJSON, function(err, updateResults) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null);
-            }
-        });
-    }
-
     //Gather full match object by ID.
     record.getMatch(updateComponent, updateId, function(err, resultComponent) {
         if (err) {
@@ -29,7 +18,7 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
                 } else {
                     //NOTE:  Only one attribution merge since a partial.
                     var recordId = recordResults.metadata.attribution[0].record_id;
-                    updateMainObject(updateComponent, resultComponent.entry_id, updateParameters, recordId, function(err, results) {
+                    record.updateEntry(updateComponent, resultComponent.entry_id, recordId, updateParameters, function(err, updateResults) {
                         if (err) {
                             callback(err);
                         } else {
@@ -38,34 +27,23 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
                     });
                 }
             });
-
-
-
         }
-
     });
 }
 
 function processUpdate(updateId, updateComponent, updateParameters, callback) {
-
-
-    //Clean parameters.
-    var cleanParameters = {};
-    cleanParameters.determination = updateParameters.determination;
-    cleanParameters.updated_entry = updateParameters.updated_entry;
-
     //Can be 1) Merged, 2) Added, 3) Ignored.
 
-    if (cleanParameters.determination === 'added') {
+    if (updateParameters.determination === 'added') {
         if (updateComponent === 'demographics') {
             callback('Only one demographic accepted');
         }
         record.acceptMatch(updateComponent, updateId, 'added', callback);
     }
 
-    if (cleanParameters.determination === 'merged') {
+    if (updateParameters.determination === 'merged') {
         //If determination is merged, overwrite original record, drop source object, and update merge history of object.
-        updateMerged(updateId, updateComponent, cleanParameters.updated_entry, function(err, results) {
+        updateMerged(updateId, updateComponent, updateParameters.updated_entry, function(err, results) {
             if (err) {
                 callback(err);
             } else {
@@ -74,21 +52,9 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
         });
     }
 
-    if (cleanParameters.determination === 'ignored') {
+    if (updateParameters.determination === 'ignored') {
         record.cancelMatch(updateComponent, updateId, 'ignored', callback)
     }
-
-}
-
-
-function saveMatchRecord(updateId, updateComponent, updateParameters, callback) {
-    record.updateMatch(updateComponent, updateId, updateParameters, function(err, updateResults) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null, updateResults);
-        }
-    });
 }
 
 function formatName(inputName) {
@@ -106,7 +72,6 @@ function formatName(inputName) {
 
     return inputName;
 }
-
 
 
 function formatMerges(inputMerge) {
@@ -153,9 +118,6 @@ function formatMerges(inputMerge) {
         }
     }
 }
-
-
-
 
 //Get all merges API.
 app.get('/api/v1/matches/:component', function(req, res) {
