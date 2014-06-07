@@ -93,12 +93,12 @@ describe('merges', function() {
     it('merge.getMerges (new)', function(done) {
         var that = this;
         async.parallel([
-            function(callback) {merge.getMerges(context.dbinfo, 'pat0', 'testallergy', 'name severity', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'pat1', 'testallergy', 'name', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'pat2', 'testallergy', 'name value.code',  'filename metadata.fileClass', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'pat0', 'testprocedure', 'name proc_type', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'pat1', 'testprocedure', 'name proc_value.display', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'pat2', 'testprocedure', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testallergy', 'pat0', 'name severity', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testallergy', 'pat1', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testallergy', 'pat2', 'name value.code',  'filename metadata.fileClass', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testprocedure', 'pat0', 'name proc_type', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testprocedure', 'pat1', 'name proc_value.display', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testprocedure', 'pat2', 'name', 'filename', callback);},
             ],
             function(err, results) {
                 if (err) {
@@ -175,8 +175,8 @@ describe('merges', function() {
     it ('merge.getMerges (duplicate)', function(done) {
         var that = this;
         async.parallel([
-            function(callback) {merge.getMerges(that.dbinfo, 'pat0', 'testallergy', 'name', 'filename', callback);},
-            function(callback) {merge.getMerges(that.dbinfo, 'pat0', 'testprocedure', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(that.dbinfo, 'testallergy', 'pat0', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(that.dbinfo, 'testprocedure', 'pat0', 'name', 'filename', callback);},
             ],
             function(err, results) {
                 if (err) {

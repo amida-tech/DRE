@@ -170,7 +170,7 @@ describe('CCD_1', function() {
     });
     
     it('getMerges', function(done) {
-        merge.getMerges(dbinfo, 'pat1', 'allergy', 'name severity', 'filename uploadDate', function(err, mergeList) {
+        merge.getMerges(dbinfo, 'allergy', 'pat1', 'name severity', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 done(err);
             } else {

@@ -11,7 +11,7 @@ exports.saveMerge = function(dbinfo, mergeObject, callback) {
     });
 };
 
-exports.getMerges = function(dbinfo, patientKey, type, typeFields, recordFields, callback) {
+exports.getMerges = function(dbinfo, type, patientKey, typeFields, recordFields, callback) {
     var model = dbinfo.mergeModels[type];
     var allFields = typeFields + ' ' + recordFields + ' reviewed';
     var query = model.find({patKey: patientKey});
