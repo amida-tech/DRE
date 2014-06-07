@@ -44,12 +44,12 @@ var updateMatch = exports.updateMatch = function(dbinfo, type, identifier, updat
     });
 };
 
-exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) {
+exports.getMatches = function(dbinfo, type, patKey, typeFields, recordFields, callback) {
 
     var model = dbinfo.matchModels[type];
     var allFields = typeFields + ' ' + recordFields;
 
-    var query = model.find().populate('entry_id match_entry_id', allFields).lean();
+    var query = model.find({patKey: patKey}).populate('entry_id match_entry_id', allFields).lean();
     query.exec(function (err, matchResults) {
         if (err) {
             callback(err);

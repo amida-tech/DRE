@@ -110,7 +110,7 @@ describe('partial methods', function() {
             expect(result.entry_id.name).to.equal('name' + destSuffix);
             expect(result.entry_type).to.equal(type);
 
-            ['_id', '__v', 'entry_type', 'entry_id', 'match_entry_id'].forEach(function(p) {
+            ['_id', '__v', 'entry_type', 'entry_id', 'match_entry_id', 'patKey'].forEach(function(p) {
                 delete result[p];
             });
             
@@ -121,12 +121,15 @@ describe('partial methods', function() {
         };
 
         async.parallel([
-            function(callback) {match.getMatches(context.dbinfo, 'testallergy', 'name severity', 'filename', callback)},
-            function(callback) {match.getMatches(context.dbinfo, 'testprocedure', 'name proc_type', 'filename', callback)},
-            ],  
+            function(callback) {match.getMatches(context.dbinfo, 'testallergy', 'pat0', 'name severity', 'filename', callback)},
+            function(callback) {match.getMatches(context.dbinfo, 'testallergy', 'pat2', 'name severity', 'filename', callback)},
+            function(callback) {match.getMatches(context.dbinfo, 'testprocedure', 'pat0', 'name proc_type', 'filename', callback)},
+            function(callback) {match.getMatches(context.dbinfo, 'testprocedure', 'pat1', 'name proc_type', 'filename', callback)},
+            function(callback) {match.getMatches(context.dbinfo, 'testprocedure', 'pat2', 'name proc_type', 'filename', callback)}
+            ],   
             function(err, results) {
                 if (! err) {
-                    var allResults = results[0].concat(results[1]);
+                    var allResults = results[0].concat(results[1]).concat(results[2]).concat(results[3]).concat(results[4]);
                     expect(allResults).to.have.length(9);
                     var resultsById = allResults.reduce(function(r, result) {
                         r[result._id] = result;

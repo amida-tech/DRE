@@ -125,7 +125,7 @@ app.get('/api/v1/matches/:component', function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
-        record.getMatches(req.params.component, 'name severity product.name value', 'filename uploadDate', function(err, matchList) {
+        record.getMatches(req.params.component, 'test', 'name severity product.name value', 'filename uploadDate', function(err, matchList) {
             if (err) {
                 console.error(err);
                 res.send(400, err);

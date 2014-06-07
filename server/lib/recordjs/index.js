@@ -103,8 +103,8 @@ exports.mergeCount = function(type, patientKey, conditions, callback) {
 };
 
 // Matches
-exports.getMatches = function(type, typeFields, recordFields, callback) {
-    match.getMatches(dbinfo, sectionToType[type], typeFields, recordFields, callback);
+exports.getMatches = function(type, patientKey, typeFields, recordFields, callback) {
+    match.getMatches(dbinfo, sectionToType[type], patientKey, typeFields, recordFields, callback);
 };
 
 exports.getMatch = function(type, matchId, callback) {
