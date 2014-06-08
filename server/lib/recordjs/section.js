@@ -84,34 +84,16 @@ exports.updateEntry = function(dbinfo, type, recordId, fileId, recordUpdate, cal
         if (err) {
             callback(err);
         } else {
-            //First create merge entry.
-            var mergeObject = {
-                entry_type: type,
-                patKey: entry.patKey,
-                entry_id: recordId,
-                record_id: fileId,
-                merged: new Date(),
-                merge_reason: 'update'
-            };
-
-            merge.saveMerge(dbinfo, mergeObject, function(err, mergeResult) {
-                if (err) {
-                    callback(err);
-                } else {
-                    //Perform Update.
-                    entry.metadata.attribution.push(mergeResult._id);
-                    entry.reviewed = true;
-                    for (var iLine in recordUpdate) {
-                        if (iLine.substring(0, 1) !== "_") {
-                            if(iLine !== 'metadata' && iLine !== 'reviewed' && iLine !== 'archived' && iLine !== 'patKey') {
-                                entry[iLine] = recordUpdate[iLine];     
-                            }
-                        }
+            entry.reviewed = true;
+            for (var iLine in recordUpdate) {
+                if (iLine.substring(0, 1) !== "_") {
+                    if(iLine !== 'metadata' && iLine !== 'reviewed' && iLine !== 'archived' && iLine !== 'patKey') {
+                        entry[iLine] = recordUpdate[iLine];     
                     }
-
-                    entry.save(callback);
                 }
-            });
+            }
+            var mergeInfo = {record_id: fileId, merge_reason: 'update'};
+            merge.save(dbinfo, type, entry, mergeInfo, callback);
         }
     });
 };
@@ -126,26 +108,11 @@ var saveNewEntry = function(dbinfo, type, patKey, entryObject, sourceID, callbac
     };
 
     var saveMerge = function(saveResult, callback) {
-        var mergeEntry = {
-            entry_type: type,
-            patKey: patKey,
-            entry_id: saveResult._id,
-            record_id: sourceID,
-            merged: new Date(),
-            merge_reason: 'new'
-        };
-
-        merge.saveMerge(dbinfo, mergeEntry, callback);           
+        var mergeInfo = {record_id: sourceID, merge_reason: 'new'};
+        merge.save(dbinfo, type, saveResult, mergeInfo, callback);
     };
 
-    var updateEntry = function(saveMergeResult, callback) {
-        entryModel.metadata = {attribution: [saveMergeResult._id]};
-        entryModel.save(function(err, saveResult) {
-            callback(err, saveResult && saveResult._id);
-        });
-    };
-
-    async.waterfall([saveEntry, saveMerge, updateEntry], callback);
+    async.waterfall([saveEntry, saveMerge], callback);
 };
 
 exports.saveNewEntries = function(dbinfo, type, patKey, input, sourceID, callback) {
@@ -173,35 +140,9 @@ exports.saveNewEntries = function(dbinfo, type, patKey, input, sourceID, callbac
     }
 };
 
-var updateEntryAndMerge = function(dbinfo, type, input_entry, mergeInfo, callback) {
-    var tmpMergeEntry = {
-        entry_type: type,
-        patKey: input_entry.patKey,
-        entry_id: input_entry._id,
-        record_id: mergeInfo.record_id,
-        merged: new Date(),
-        merge_reason: mergeInfo.merge_reason
-    };
-
-    merge.saveMerge(dbinfo, tmpMergeEntry, function(err, saveResults) {
-        if (err) {
-            callback(err);
-        } else {
-            input_entry.metadata.attribution.push(saveResults._id);
-            input_entry.save(function(err, saveObject) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
-        }
-    });
-};
-
 exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callback) {
     getEntry(dbinfo, type, update_id, function(err, current) {
-        updateEntryAndMerge(dbinfo, type, current, mergeInfo, callback);
+        merge.save(dbinfo, type, current, mergeInfo, callback);
     });
 };
 

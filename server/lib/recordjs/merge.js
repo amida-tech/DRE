@@ -1,14 +1,34 @@
 var _ = require('underscore');
 
-exports.saveMerge = function(dbinfo, mergeObject, callback) {
-    var Model = dbinfo.mergeModels[mergeObject.entry_type];
-    var saveMerge = new Model(mergeObject);
+exports.save = function(dbinfo, type, input_entry, mergeInfo, callback) {
+    var Model = dbinfo.mergeModels[type];
+    var mergeObject = new Model({
+        entry_type: type,
+        patKey: input_entry.patKey,
+        entry_id: input_entry._id,
+        record_id: mergeInfo.record_id,
+        merged: new Date(),
+        merge_reason: mergeInfo.merge_reason
+    });
 
-    saveMerge.save(function(err, saveResults) {
+    mergeObject.save(function(err, saveResults) {
         if (err) {
             callback(err);
-        } else {  
-            callback(null, saveResults);
+        } else {
+            if (! input_entry.metadata) {
+                input_entry.metadata = {};
+            }
+            if (! input_entry.metadata.attribution) {
+                input_entry.metadata.attribution = [];
+            }
+            input_entry.metadata.attribution.push(saveResults._id);
+            input_entry.save(function(err, saveObject) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null, saveObject._id);
+                }
+            });
         }
     });
 };
