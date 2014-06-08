@@ -26,7 +26,7 @@ describe('merges', function() {
             var fs = [];
             var rid = context.storageIds[recordIndex];
             docs.forEach(function(doc) {
-                var f = function(cb) {section.addEntryMergeEntry(context.dbinfo, type, doc._id, {record_id: rid, merge_reason: 'duplicate'}, cb)};
+                var f = function(cb) {section.duplicateEntry(context.dbinfo, type, doc._id, rid, cb)};
                 fs.push(f);
             });
             async.parallel(fs, function(err) {callback(err);});

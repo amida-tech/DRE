@@ -153,8 +153,8 @@ exports.getEntry = function(type, recordId, callback) {
     section.getEntry(dbinfo, sectionToType[type], recordId, callback);
 };
 
-exports.addMergeEntry = function(type, update_id, mergeInfo, callback) {
-    section.addEntryMergeEntry(dbinfo, sectionToType[type], update_id, mergeInfo, callback);
+exports.duplicateEntry = function(type, update_id, sourceID, callback) {
+    section.duplicateEntry(dbinfo, sectionToType[type], update_id, sourceID, callback);
 };
 
 exports.getAllSections = function(patientKey, callback) {

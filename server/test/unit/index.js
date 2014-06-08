@@ -195,8 +195,7 @@ describe('CCD_1', function() {
     
     it('addAllergyMergeEntry', function(done) {
         var id = storedAllergies[0]._id;
-        var info = {record_id: fileId, merge_reason: 'duplicate'};
-        section.addEntryMergeEntry(dbinfo, 'allergy', id, info, function(err) {
+        section.duplicateEntry(dbinfo, 'allergy', id, fileId, function(err) {
             if (err) {
                 done(err);
             } else {

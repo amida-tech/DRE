@@ -140,8 +140,12 @@ exports.saveNewEntries = function(dbinfo, type, patKey, input, sourceID, callbac
     }
 };
 
-exports.addEntryMergeEntry = function(dbinfo, type, update_id, mergeInfo, callback) {
+exports.duplicateEntry = function(dbinfo, type, update_id, sourceID, callback) {
     getEntry(dbinfo, type, update_id, function(err, current) {
+        var mergeInfo = {
+            record_id: sourceID,
+            merge_reason: 'duplicate'
+        };
         merge.save(dbinfo, type, current, mergeInfo, callback);
     });
 };

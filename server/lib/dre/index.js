@@ -21,12 +21,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         var returnPartialArray = [];
 
         function updateDuplicate(section, update_id, callback) {
-
-            var mergeInfo = {
-                record_id: newSourceID,
-                merge_reason: 'duplicate'
-            };
-            record.addMergeEntry(section, update_id, mergeInfo, function(err) {
+            record.duplicateEntry(section, update_id, newSourceID, function(err) {
                 if (err) {
                     callback(err);
                 } else {
