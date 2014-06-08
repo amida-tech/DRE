@@ -13,62 +13,18 @@ var jsutil = require('./jsutil');
 var modelutil = require('./modelutil');
 var allsections = require('./allsections');
 
-var typeToSection = exports.typeToSection = {
-    allergy: 'allergies',
-    procedure: 'procedures',
-    medication: 'medications',
-    encounter: 'encounters',
-    vital: 'vitals',
-    result: 'results',
-    social: 'socialHistory',
-    immunization: 'immunizations',
-    demographic: 'demographics',
-    problem: 'problems'
-};
-
-var sectionToType = exports.sectionToType = {
-    allergies: 'allergy',
-    procedures: 'procedure',
-    medications: 'medication',
-    encounters: 'encounter',
-    vitals: 'vital',
-    results: 'result',
-    socialHistory: 'social',
-    immunizations: 'immunization',
-    demographics: 'demographic',
-    problems: 'problem'
-};
-
-var typeToSchemaDesc = {};
-Object.keys(typeToSection).forEach(function(type) {
-    var desc = models.modelDescription('ccda_' + typeToSection[type]);
-    if (!desc) {throw new Error('cannot get schema for ' + 'ccda_' + typeToSection[type]);}
-    typeToSchemaDesc[type] = desc;
-});
-//typeToSchemaDesc.medication.date = typeToSchemaDesc.medication.date[0];
-exports.typeToSchemaDesc = typeToSchemaDesc;
-
 var dbinfo = null;
 
-exports.connectDatabase = function connectDatabase(server, dbName, callback) {
+exports.connectDatabase = function connectDatabase(server, options, callback) {
     if (! callback) {
-        callback = dbName;
-        dbName = 'dre';
+        callback = options;
+        options = {};
     }
-    if (dbinfo !== null) {
-        callback();
-        return;
-    }
-    options = {
-        dbName: dbName,
-        typeToSection: typeToSection,
-        typeToSchemaDesc: typeToSchemaDesc
-    };
-    db.connect(server, options, function(err, dbinfoin) {
+    db.connect(server, options, function(err, result) {
         if (err) {
             callback(err);
         } else {
-            dbinfo = dbinfoin;
+            dbinfo = result;
             callback(null, dbinfo);
         }    
     });
@@ -95,66 +51,66 @@ exports.recordCount = function(patKey, callback) {
 // Merges
 
 exports.getMerges = function(type, patientKey, typeFields, recordFields, callback) {
-    merge.getMerges(dbinfo, sectionToType[type], patientKey, typeFields, recordFields, callback);
+    merge.getMerges(dbinfo, dbinfo.sectionToType[type], patientKey, typeFields, recordFields, callback);
 };
 
 exports.mergeCount = function(type, patientKey, conditions, callback) {
-    merge.count(dbinfo, sectionToType[type], patientKey, conditions, callback);
+    merge.count(dbinfo, dbinfo.sectionToType[type], patientKey, conditions, callback);
 };
 
 // Matches
 exports.getMatches = function(type, patientKey, typeFields, recordFields, callback) {
-    match.getMatches(dbinfo, sectionToType[type], patientKey, typeFields, recordFields, callback);
+    match.getMatches(dbinfo, dbinfo.sectionToType[type], patientKey, typeFields, recordFields, callback);
 };
 
 exports.getMatch = function(type, matchId, callback) {
-    match.getMatch(dbinfo, sectionToType[type], matchId, callback);
+    match.getMatch(dbinfo, dbinfo.sectionToType[type], matchId, callback);
 };
 
 exports.matchCount = function(type, patKey, conditions, callback) {
-    match.count(dbinfo, sectionToType[type], patKey, conditions, callback);
+    match.count(dbinfo, dbinfo.sectionToType[type], patKey, conditions, callback);
 };
 
 exports.cancelMatch = function(type, id, reason, callback) {
-    match.cancel(dbinfo, sectionToType[type], id, reason, callback);
+    match.cancel(dbinfo, dbinfo.sectionToType[type], id, reason, callback);
 };
 
 exports.acceptMatch = function(type, id, reason, callback) {
-    match.accept(dbinfo, sectionToType[type], id, reason, callback);
+    match.accept(dbinfo, dbinfo.sectionToType[type], id, reason, callback);
 };
 
 // Sections
 
 exports.saveNewSection = function(type, patKey, inputArray, sourceID, callback) {
-    section.saveNewEntries(dbinfo, sectionToType[type], patKey, inputArray, sourceID, callback);
+    section.saveNewEntries(dbinfo, dbinfo.sectionToType[type], patKey, inputArray, sourceID, callback);
 };
 
 exports.savePartialSection = function(type, patKey, inputArray, sourceID, callback) {
-    section.savePartialEntries(dbinfo, sectionToType[type], patKey, inputArray, sourceID, callback);
+    section.savePartialEntries(dbinfo, dbinfo.sectionToType[type], patKey, inputArray, sourceID, callback);
 };
 
 exports.getSection = function(type, patKey, callback) {
-    section.getSection(dbinfo, sectionToType[type], patKey, callback);
+    section.getSection(dbinfo, dbinfo.sectionToType[type], patKey, callback);
 };
 
 exports.getPartialSection = function(type, patKey, callback) {
-    section.getPartialSection(dbinfo, sectionToType[type], patKey, callback);
+    section.getPartialSection(dbinfo, dbinfo.sectionToType[type], patKey, callback);
 };
 
 exports.removeEntry = function(type, partialID, callback) {
-    section.removeEntry(dbinfo, sectionToType[type], partialID, callback);
+    section.removeEntry(dbinfo, dbinfo.sectionToType[type], partialID, callback);
 };
 
 exports.updateEntry = function(type, recordId, fileId, recordUpdate, callback) {
-    section.updateEntry(dbinfo, sectionToType[type], recordId, fileId, recordUpdate, callback);
+    section.updateEntry(dbinfo, dbinfo.sectionToType[type], recordId, fileId, recordUpdate, callback);
 };
 
 exports.getEntry = function(type, recordId, callback) {
-    section.getEntry(dbinfo, sectionToType[type], recordId, callback);
+    section.getEntry(dbinfo, dbinfo.sectionToType[type], recordId, callback);
 };
 
 exports.duplicateEntry = function(type, update_id, sourceID, callback) {
-    section.duplicateEntry(dbinfo, sectionToType[type], update_id, sourceID, callback);
+    section.duplicateEntry(dbinfo, dbinfo.sectionToType[type], update_id, sourceID, callback);
 };
 
 exports.getAllSections = function(patientKey, callback) {

@@ -1,9 +1,10 @@
+"use strict";
+
 var section = require('./section');
-var record = require('./index');
 var async = require('async');
 
 exports.getAllSections = function(dbinfo, ptKey, callback) {
-    var types = Object.keys(record.typeToSection);
+    var types = Object.keys(dbinfo.typeToSection);
     var f = function(type, cb) {
         section.getSection(dbinfo, type, ptKey, cb);
     };
@@ -12,7 +13,7 @@ exports.getAllSections = function(dbinfo, ptKey, callback) {
             callback(err);
         } else {
             var accumulator = function(r, type, index) {
-                var name = record.typeToSection[type];
+                var name = dbinfo.typeToSection[type];
                 r[name] = sections[index];
                 return r;
             };
@@ -23,9 +24,9 @@ exports.getAllSections = function(dbinfo, ptKey, callback) {
 };
 
 exports.saveAllSectionsAsNew = function(dbinfo, ptKey, master, fileId, callback) {
-    var types = Object.keys(record.typeToSection);
+    var types = Object.keys(dbinfo.typeToSection);
     var f = function(type, cb) {
-        var name = record.typeToSection[type];
+        var name = dbinfo.typeToSection[type];
         section.saveNewEntries(dbinfo, type, ptKey, master[name], fileId, cb);
     };
     async.map(types, f, callback);

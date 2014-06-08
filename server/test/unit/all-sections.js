@@ -6,8 +6,6 @@ var path = require('path');
 var bb = require('blue-button');
 var fs = require('fs');
 
-var record = require('../../lib/recordjs');
-
 var storage = require('../../lib/recordjs/storage');
 var db = require('../../lib/recordjs/db');
 var modelutil = require('../../lib/recordjs/modelutil');
@@ -28,9 +26,7 @@ describe('CCD_1', function() {
         var parseResult = bb.parseString(xml);
         ccd = parseResult.data;
         var options = {
-            dbName: 'allsectionstest',
-            typeToSection: record.typeToSection,
-            typeToSchemaDesc: record.typeToSchemaDesc
+            dbName: 'allsectionstest'
         };
         db.connect('localhost', options, function(err, dbinfoin) {
             if (err) {

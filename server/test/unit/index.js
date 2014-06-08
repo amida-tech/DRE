@@ -34,8 +34,6 @@ describe('CCD_1', function() {
         ccd = result.data;
         var options = {
             dbName: 'indextest',
-            typeToSection: record.typeToSection,
-            typeToSchemaDesc: record.typeToSchemaDesc
         };
         db.connect('localhost', options, function(err, dbinfoin) {
             if (err) {
