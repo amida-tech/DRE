@@ -17,9 +17,10 @@ var expect = chai.expect;
 chai.config.includeStack = true;
 
 describe('merges', function() {
-    var context = {
-        storageIds: {}
-    };
+    var context = {};
+
+    var testConnectionModels = refmodel.testConnectionModels(context);
+
     var newMergeIds = {};
 
     var updateDuplicate = function(patKey, type, recordIndex, callback) {
@@ -45,7 +46,7 @@ describe('merges', function() {
         done();
     });
 
-    refmodel.testConnectionModels();
+    testConnectionModels();
 
     it('connection match models', function(done) {
         expect(this.dbinfo.mergeModels).to.exist;

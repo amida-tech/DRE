@@ -105,6 +105,9 @@ var createStorage = function(context, pat, filename, index, callback) {
         } else {
             expect(result).to.exist;
             expect(result._id).to.exist;
+            if (! context.storageIds) {
+                context.storageIds = {};
+            }
             context.storageIds[index] = result._id;
             callback();
         }
@@ -152,6 +155,27 @@ var saveNewTestSection = exports.saveNewTestSection = function(context, type, pa
     });
 };
 
+exports.saveNewPartialSection = function(context, type, patKey, recordIndex, destRecordIndex, extraContent, callback) {
+    var data = createTestSection(type, recordIndex, extraContent.length);
+    var sourceId = context.storageIds[recordIndex];
+    var key = newEntriesContextKey(type, destRecordIndex);
+    var extendedData = data.reduce(function(r, e, index) {
+        var v = {
+            partial_array: e,
+            partial_match: extraContent[index].matchObject,
+            match_record_id: context[key][extraContent[index].destIndex]
+        };
+        r.push(v);
+        return r;
+    }, []);
+    section.savePartial(context.dbinfo, type, patKey, extendedData, sourceId, function(err, result) {
+        if (! err) {
+            pushToContext(context, partialEntriesContextKey, type, recordIndex, result);
+        }
+        callback(err);
+    });
+};
+
 exports.setConnectionContext = function(dbName, context, callback) {
     var options = getConnectionOptions(dbName);
     db.connect('localhost', options, function(err, result) {
@@ -164,16 +188,18 @@ exports.setConnectionContext = function(dbName, context, callback) {
     });
 };
 
-exports.testConnectionModels = function() {
-    it('connection and models', function(done) {
-        expect(this.dbinfo).to.exist;
-        expect(this.dbinfo.db).to.exist;
-        expect(this.dbinfo.grid).to.exist;
-        expect(this.dbinfo.models).to.exist;
-        expect(this.dbinfo.models.testallergies).to.exist;
-        expect(this.dbinfo.models.testprocedures).to.exist;
-        done();
-    });
+exports.testConnectionModels = function(context) {
+    return function() {
+        it('check connection and models', function(done) {
+            expect(context.dbinfo).to.exist;
+            expect(context.dbinfo.db).to.exist;
+            expect(context.dbinfo.grid).to.exist;
+            expect(context.dbinfo.models).to.exist;
+            expect(context.dbinfo.models.testallergies).to.exist;
+            expect(context.dbinfo.models.testprocedures).to.exist;
+            done();
+        });
+    }
 };
 
 var addStoragePerPatient = exports.addStoragePerPatient = function(context, countPerPatient, callback) {
