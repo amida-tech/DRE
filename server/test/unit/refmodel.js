@@ -12,18 +12,13 @@ var storage = require('../../lib/recordjs/storage');
 var expect = chai.expect;
 chai.config.includeStack = true;
 
-var typeToSection = {
-    testallergy: 'testallergies',
-    testprocedure: 'testprocedures'    
-};
-
 var sectionToType = exports.sectionToType = {
     testallergies: 'testallergy',
     testprocedures: 'testprocedure'    
 };
 
-var typeToSchemaDesc = {
-    testallergy: {
+var schemas = {
+    testallergies: {
         name: String,
         severity: String,
         value: {
@@ -31,7 +26,7 @@ var typeToSchemaDesc = {
             display: String
         }
     },
-    testprocedure : {
+    testprocedures : {
         name: String,
         proc_type: String,
         proc_value: {
@@ -44,9 +39,8 @@ var typeToSchemaDesc = {
 var getConnectionOptions = function(dbName) {
     return {
         dbName: dbName,
-        typeToSection: typeToSection,
         sectionToType: sectionToType,
-        typeToSchemaDesc: typeToSchemaDesc
+        schemas: schemas
     };
 };
 

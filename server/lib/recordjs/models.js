@@ -56,7 +56,7 @@ exports.modelDescription = function(name) {
 
 var storageColName = 'storage.files';
 
-exports.models = function(connection, typeToSection, typeToSchemaDesc) {
+exports.models = function(connection, sectionToType, schemas) {
     if (!connection) {
         connection = mongoose;
     }
@@ -66,8 +66,8 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
         clinical: {},
         match: {}
     };
-    Object.keys(typeToSection).forEach(function(type) {
-        var colName = typeToSection[type];
+    Object.keys(sectionToType).forEach(function(secName) {
+        var type = sectionToType[secName];
 
         var mergeColName = type + 'merges';
         var mergeSchema = new Schema({
@@ -75,7 +75,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
             patKey: String,
             entry_id: {
                 type: ObjectId,
-                ref: colName
+                ref: secName
             },
             record_id: {
                 type: ObjectId,
@@ -85,7 +85,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
             merge_reason: String,
             archived: Boolean
         });
-        result.merge[colName] = connection.model(mergeColName, mergeSchema);
+        result.merge[secName] = connection.model(mergeColName, mergeSchema);
 
         var matchColName = type + 'matches';
         var matchSchema = new Schema({
@@ -93,20 +93,20 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
             patKey: String,
             entry_id: {
                 type: ObjectId,
-                ref: colName
+                ref: secName
             },
             match_entry_id: {
                 type: ObjectId,
-                ref: colName
+                ref: secName
             },
             percent: Number,
             determination: String, //Can be 1) Merged, 2) Added, 3) Ignored.
             diff: {},
             subelements: {}
         });
-        result.match[colName] = connection.model(matchColName, matchSchema);
+        result.match[secName] = connection.model(matchColName, matchSchema);
 
-        var desc = typeToSchemaDesc[type];
+        var desc = schemas[secName];
         desc.patKey = String;
         desc.metadata = {
             attribution: [{
@@ -118,7 +118,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
         desc.archived = Boolean;
         var schema = new Schema(desc);
 
-        result.clinical[colName] = connection.model(colName, schema);
+        result.clinical[secName] = connection.model(secName, schema);
     });
     return result;
 };

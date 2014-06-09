@@ -107,7 +107,7 @@ exports.savePartial = function(dbinfo, secName, patKey, input, sourceID, callbac
                 tmpMatch.subelements = matchObject.subelements;
             }
 
-            match.saveMatch(dbinfo, tmpMatch, cb2);
+            match.save(dbinfo, secName, tmpMatch, cb2);
         }
 
         async.waterfall([localSaveNewEntry, savePartialMatch], cb);

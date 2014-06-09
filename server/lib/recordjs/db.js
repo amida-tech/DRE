@@ -4,19 +4,6 @@ var _ = require('underscore');
 
 var models = require('./models');
 
-var typeToSection = exports.typeToSection = {
-    allergy: 'allergies',
-    procedure: 'procedures',
-    medication: 'medications',
-    encounter: 'encounters',
-    vital: 'vitals',
-    result: 'results',
-    social: 'socialHistory',
-    immunization: 'immunizations',
-    demographic: 'demographics',
-    problem: 'problems'
-};
-
 var sectionToType = exports.sectionToType = {
     allergies: 'allergy',
     procedures: 'procedure',
@@ -35,20 +22,16 @@ var fillOptions = function(options) {
         options.dbName = 'dre';
     }
 
-    if (! options.typeToSection) {
-        options.typeToSection = typeToSection;
-    }
-
     if (! options.sectionToType) {
         options.sectionToType = sectionToType;
     }
 
-   if (! options.typeToSchemaDesc) {
-        options.typeToSchemaDesc = {};
-        Object.keys(typeToSection).forEach(function(type) {
-        var desc = models.modelDescription('ccda_' + typeToSection[type]);
-            if (!desc) {throw new Error('cannot get schema for ' + 'ccda_' + typeToSection[type]);}
-            options.typeToSchemaDesc[type] = desc;
+   if (! options.schemas) {
+        options.schemas = {};
+        Object.keys(sectionToType).forEach(function(secName) {
+        var desc = models.modelDescription('ccda_' + secName);
+            if (!desc) {throw new Error('cannot get schema for ' + 'ccda_' + secName);}
+            options.schemas[secName] = desc;
         });
     }
 };
@@ -68,15 +51,18 @@ exports.connect = function connectDatabase(server, inputOptions, callback) {
             var c = mongoose.createConnection('mongodb://' + server + '/'+ dbName);
             dbinfo.storageModel = models.storageModel(c);
             
-            var r = models.models(c, options.typeToSection, options.typeToSchemaDesc);
+            var r = models.models(c, options.sectionToType, options.schemas);
             if (! r) {
                 callback(new Error('models cannot be generated'));
             } else {
                 dbinfo.models = r.clinical;
                 dbinfo.mergeModels = r.merge;
                 dbinfo.matchModels = r.match;
-                dbinfo.typeToSection = options.typeToSection;
                 dbinfo.sectionToType = options.sectionToType;
+
+                dbinfo.sectionNames = function() {
+                    return Object.keys(dbinfo.sectionToType);
+                };
             
                 callback(null, dbinfo);
             }

@@ -4,7 +4,7 @@ var section = require('./section');
 var async = require('async');
 
 exports.get = function(dbinfo, ptKey, callback) {
-    var secNames = Object.keys(dbinfo.sectionToType);
+    var secNames = dbinfo.sectionNames();
     var f = function(secName, cb) {
         section.get(dbinfo, secName, ptKey, cb);
     };
@@ -23,9 +23,8 @@ exports.get = function(dbinfo, ptKey, callback) {
 };
 
 exports.save = function(dbinfo, ptKey, master, fileId, callback) {
-    var secNames = Object.keys(dbinfo.sectionToType);
     var f = function(name, cb) {
         section.save(dbinfo, name, ptKey, master[name], fileId, cb);
     };
-    async.map(secNames, f, callback);
+    async.map(dbinfo.sectionNames(), f, callback);
 };

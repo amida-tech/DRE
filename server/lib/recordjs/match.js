@@ -3,8 +3,8 @@ var _ = require('underscore');
 var section = require('./section');
 var entry = require('./entry');
 
-exports.saveMatch = function(dbinfo, matchObject, callback) {
-    var Model = dbinfo.matchModels[dbinfo.typeToSection[matchObject.entry_type]];
+exports.save = function(dbinfo, secName, matchObject, callback) {
+    var Model = dbinfo.matchModels[secName];
     var matchDb = new Model(matchObject);
     matchDb.save(callback);
 };
