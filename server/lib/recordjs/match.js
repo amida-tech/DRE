@@ -1,6 +1,7 @@
 var _ = require('underscore');
 
 var section = require('./section');
+var entry = require('./entry');
 
 exports.saveMatch = function(dbinfo, matchObject, callback) {
     var Model = dbinfo.matchModels[dbinfo.typeToSection[matchObject.entry_type]];
@@ -8,7 +9,7 @@ exports.saveMatch = function(dbinfo, matchObject, callback) {
     matchDb.save(callback);
 };
 
-var getMatch = exports.getMatch = function(dbinfo, secName, matchId, callback) {
+var get = exports.get = function(dbinfo, secName, matchId, callback) {
     var model = dbinfo.matchModels[secName];
     var query = model.findOne({_id: matchId}).populate('entry_id match_entry_id').lean();
     query.exec(function (err, matchResults) {
@@ -46,7 +47,7 @@ var updateMatch = exports.updateMatch = function(dbinfo, secName, identifier, up
     });
 };
 
-exports.getMatches = function(dbinfo, secName, patKey, typeFields, recordFields, callback) {
+exports.getAll = function(dbinfo, secName, patKey, typeFields, recordFields, callback) {
 
     var model = dbinfo.matchModels[secName];
     var allFields = typeFields + ' ' + recordFields;
@@ -81,11 +82,11 @@ exports.count = function(dbinfo, secName, patKey, conditions, callback) {
 };
 
 var updateIgnored = function(dbinfo, secName, id, callback) {
-    getMatch(dbinfo, secName, id, function(err, result) {
+    get(dbinfo, secName, id, function(err, result) {
         if (err) {
             callback(err);
         } else {
-            section.removeEntry(dbinfo, secName, result.match_entry_id._id, function(err, removalResults) {
+            entry.remove(dbinfo, secName, result.match_entry_id._id, function(err, removalResults) {
                 if (err) {
                     callback(err);
                 } else {
@@ -115,7 +116,7 @@ exports.cancel = function(dbinfo, secName, id, reason, callback) {
 
 
 var updateAdded = function(dbinfo, secName, id, callback) {
-    getMatch(dbinfo, secName, id, function(err, resultComponent) {
+    get(dbinfo, secName, id, function(err, resultComponent) {
         if (err) {
             callback(err);
         } else {

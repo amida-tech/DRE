@@ -1,17 +1,16 @@
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectID;
-var _ = require('underscore');
+"use strict";
 
 var db = require('./db');
-var models = require('./models');
+
 var storage = require('./storage');
 var merge = require('./merge');
 var match = require('./match');
 var section = require('./section');
-var jsutil = require('./jsutil');
-var modelutil = require('./modelutil');
+var entry = require('./entry');
 var allsections = require('./allsections');
+var modelutil = require('./modelutil');
+
+// db
 
 var dbinfo = null;
 
@@ -30,45 +29,46 @@ exports.connectDatabase = function connectDatabase(server, options, callback) {
     });
 };
 
-// Records
+// records
 
-exports.saveRecord = function(patKey, inboundFile, inboundFileInfo, inboundXMLType, callback) {
-    storage.saveRecord(dbinfo, patKey, inboundFile, inboundFileInfo, inboundXMLType, callback);
+exports.saveRecord = function(ptKey, content, sourceInfo, contentType, callback) {
+    storage.saveRecord(dbinfo, ptKey, content, sourceInfo, contentType, callback);
 };
 
-exports.getRecordList = function(patKey, callback) {
-    storage.getRecordList(dbinfo, patKey, callback);
+exports.getRecordList = function(ptKey, callback) {
+    storage.getRecordList(dbinfo, ptKey, callback);
 };
 
-exports.getRecord = function(fileId, callback) {
-    storage.getRecord(dbinfo, fileId, callback);
+exports.getRecord = function(sourceId, callback) {
+    storage.getRecord(dbinfo, sourceId, callback);
 };
 
-exports.recordCount = function(patKey, callback) {
-    storage.recordCount(dbinfo, patKey, callback);
+exports.recordCount = function(ptKey, callback) {
+    storage.recordCount(dbinfo, ptKey, callback);
 };
 
-// Merges
+// merges
 
-exports.getMerges = function(secName, patientKey, typeFields, recordFields, callback) {
-    merge.getMerges(dbinfo, secName, patientKey, typeFields, recordFields, callback);
+exports.getMerges = function(secName, ptKey, entryFields, recordFields, callback) {
+    merge.getAll(dbinfo, secName, ptKey, entryFields, recordFields, callback);
 };
 
-exports.mergeCount = function(secName, patientKey, conditions, callback) {
-    merge.count(dbinfo, secName, patientKey, conditions, callback);
+exports.mergeCount = function(secName, ptKey, conditions, callback) {
+    merge.count(dbinfo, secName, ptKey, conditions, callback);
 };
 
-// Matches
-exports.getMatches = function(secName, patientKey, typeFields, recordFields, callback) {
-    match.getMatches(dbinfo, secName, patientKey, typeFields, recordFields, callback);
+// matches
+
+exports.getMatches = function(secName, ptKey, entryFields, recordFields, callback) {
+    match.getAll(dbinfo, secName, ptKey, entryFields, recordFields, callback);
 };
 
-exports.getMatch = function(secName, matchId, callback) {
-    match.getMatch(dbinfo, secName, matchId, callback);
+exports.getMatch = function(secName, id, callback) {
+    match.get(dbinfo, secName, id, callback);
 };
 
-exports.matchCount = function(secName, patKey, conditions, callback) {
-    match.count(dbinfo, secName, patKey, conditions, callback);
+exports.matchCount = function(secName, ptKey, conditions, callback) {
+    match.count(dbinfo, secName, ptKey, conditions, callback);
 };
 
 exports.cancelMatch = function(secName, id, reason, callback) {
@@ -79,50 +79,54 @@ exports.acceptMatch = function(secName, id, reason, callback) {
     match.accept(dbinfo, secName, id, reason, callback);
 };
 
-// Sections
+// section
 
-exports.saveNewSection = function(secName, patKey, inputArray, sourceID, callback) {
-    section.saveNewEntries(dbinfo, secName, patKey, inputArray, sourceID, callback);
+exports.getSection = function(secName, ptKey, callback) {
+    section.get(dbinfo, secName, ptKey, callback);
 };
 
-exports.savePartialSection = function(secName, patKey, inputArray, sourceID, callback) {
-    section.savePartialEntries(dbinfo, secName, patKey, inputArray, sourceID, callback);
+exports.saveSection = function(secName, ptKey, inputSection, sourceId, callback) {
+    section.save(dbinfo, secName, ptKey, inputSection, sourceId, callback);
 };
 
-exports.getSection = function(secName, patKey, callback) {
-    section.getSection(dbinfo, secName, patKey, callback);
+exports.getAllSections = function(ptKey, callback) {
+    allsections.get(dbinfo, ptKey, callback);
 };
 
-exports.getPartialSection = function(secName, patKey, callback) {
-    section.getPartialSection(dbinfo, secName, patKey, callback);
+exports.saveAllSections = function(ptKey, ptRecord, fileId, callback) {
+    allsections.save(dbinfo, ptKey, ptRecord, fileId, callback);
 };
 
-exports.removeEntry = function(secName, partialID, callback) {
-    section.removeEntry(dbinfo, secName, partialID, callback);
+// partial section
+
+exports.getPartialSection = function(secName, ptKey, callback) {
+    section.getPartial(dbinfo, secName, ptKey, callback);
 };
 
-exports.updateEntry = function(secName, recordId, fileId, recordUpdate, callback) {
-    section.updateEntry(dbinfo, secName, recordId, fileId, recordUpdate, callback);
+exports.savePartialSection = function(secName, ptKey, inputSection, sourceId, callback) {
+    section.savePartial(dbinfo, secName, ptKey, inputSection, sourceId, callback);
 };
 
-exports.getEntry = function(secName, recordId, callback) {
-    section.getEntry(dbinfo, secName, recordId, callback);
+// entry
+
+exports.getEntry = function(secName, id, callback) {
+    entry.get(dbinfo, secName, id, callback);
 };
 
-exports.duplicateEntry = function(secName, update_id, sourceID, callback) {
-    section.duplicateEntry(dbinfo, secName, update_id, sourceID, callback);
+exports.updateEntry = function(secName, id, sourceId, updateObject, callback) {
+    entry.update(dbinfo, secName, id, sourceId, updateObject, callback);
 };
 
-exports.getAllSections = function(patientKey, callback) {
-    allsections.getAllSections(dbinfo, patientKey, callback);
+exports.duplicateEntry = function(secName, id, sourceId, callback) {
+    entry.duplicate(dbinfo, secName, id, sourceId, callback);
 };
 
-exports.saveAllSectionsAsNew = function(patientKey, patientRecord, fileId, callback) {
-    allsections.saveAllSectionsAsNew(dbinfo, patientKey, patientRecord, fileId, callback);
+exports.removeEntry = function(secName, id, callback) {
+    entry.remove(dbinfo, secName, id, callback);
 };
 
-// Utility
+// utility
 
-exports.cleanSectionEntries = function(input) {
+exports.cleanSection = function(input) {
     return modelutil.mongooseToBBModelSection(input);
 };

@@ -3,10 +3,10 @@
 var section = require('./section');
 var async = require('async');
 
-exports.getAllSections = function(dbinfo, ptKey, callback) {
+exports.get = function(dbinfo, ptKey, callback) {
     var secNames = Object.keys(dbinfo.sectionToType);
     var f = function(secName, cb) {
-        section.getSection(dbinfo, secName, ptKey, cb);
+        section.get(dbinfo, secName, ptKey, cb);
     };
     async.map(secNames, f, function(err, sections) {
         if (err) {
@@ -22,10 +22,10 @@ exports.getAllSections = function(dbinfo, ptKey, callback) {
     });
 };
 
-exports.saveAllSectionsAsNew = function(dbinfo, ptKey, master, fileId, callback) {
+exports.save = function(dbinfo, ptKey, master, fileId, callback) {
     var secNames = Object.keys(dbinfo.sectionToType);
     var f = function(name, cb) {
-        section.saveNewEntries(dbinfo, name, ptKey, master[name], fileId, cb);
+        section.save(dbinfo, name, ptKey, master[name], fileId, cb);
     };
     async.map(secNames, f, callback);
 };

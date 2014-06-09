@@ -58,13 +58,13 @@ describe('CCD_1', function() {
     });
     
     it('saveAllSectionsAsNew', function(done) {
-        allsections.saveAllSectionsAsNew(dbinfo, 'patientKey', ccd, fileId, function(err) {
+        allsections.save(dbinfo, 'patientKey', ccd, fileId, function(err) {
             done(err);
         });
     });
     
     it('getAllSections', function(done) {
-        allsections.getAllSections(dbinfo, 'patientKey', function(err, result) {
+        allsections.get(dbinfo, 'patientKey', function(err, result) {
             if (err) {
                 done(err);
             } else {

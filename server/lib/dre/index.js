@@ -158,7 +158,7 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     var baseObjectForParsing = {};
     for (var iObj in baseObject) {
         baseObjectForParsing[iObj] = {};
-        baseObjectForParsing[iObj] = record.cleanSectionEntries(baseObject[iObj]);
+        baseObjectForParsing[iObj] = record.cleanSection(baseObject[iObj]);
 
         if (baseObjectForParsing[iObj] === undefined) {
             delete baseObjectForParsing[iObj];

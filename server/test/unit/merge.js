@@ -8,6 +8,7 @@ var async = require('async');
 var db = require('../../lib/recordjs/db');
 var merge = require('../../lib/recordjs/merge');
 var section = require('../../lib/recordjs/section');
+var entry = require('../../lib/recordjs/entry');
 var storage = require('../../lib/recordjs/storage');
 
 var refmodel = require('./refModel');
@@ -22,11 +23,11 @@ describe('merges', function() {
     var newMergeIds = {};
 
     var updateDuplicate = function(patKey, type, recordIndex, callback) {
-        section.getSection(context.dbinfo, type, patKey, function(err, docs) {
+        section.get(context.dbinfo, type, patKey, function(err, docs) {
             var fs = [];
             var rid = context.storageIds[recordIndex];
             docs.forEach(function(doc) {
-                var f = function(cb) {section.duplicateEntry(context.dbinfo, type, doc._id, rid, cb)};
+                var f = function(cb) {entry.duplicate(context.dbinfo, type, doc._id, rid, cb)};
                 fs.push(f);
             });
             async.parallel(fs, function(err) {callback(err);});
@@ -90,15 +91,15 @@ describe('merges', function() {
         );
     });
     
-    it('merge.getMerges (new)', function(done) {
+    it('merge.getAll (new)', function(done) {
         var that = this;
         async.parallel([
-            function(callback) {merge.getMerges(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testallergies', 'pat1', 'name', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testallergies', 'pat2', 'name value.code',  'filename metadata.fileClass', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testprocedures', 'pat1', 'name proc_value.display', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testprocedures', 'pat2', 'name', 'filename', callback);},
+            function(callback) {merge.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback);},
+            function(callback) {merge.getAll(context.dbinfo, 'testallergies', 'pat1', 'name', 'filename', callback);},
+            function(callback) {merge.getAll(context.dbinfo, 'testallergies', 'pat2', 'name value.code',  'filename metadata.fileClass', callback);},
+            function(callback) {merge.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', 'filename', callback);},
+            function(callback) {merge.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name proc_value.display', 'filename', callback);},
+            function(callback) {merge.getAll(context.dbinfo, 'testprocedures', 'pat2', 'name', 'filename', callback);},
             ],
             function(err, results) {
                 if (err) {
@@ -172,11 +173,11 @@ describe('merges', function() {
         );
     });
     
-    it ('merge.getMerges (duplicate)', function(done) {
+    it ('merge.getAll (duplicate)', function(done) {
         var that = this;
         async.parallel([
-            function(callback) {merge.getMerges(that.dbinfo, 'testallergies', 'pat0', 'name', 'filename', callback);},
-            function(callback) {merge.getMerges(that.dbinfo, 'testprocedures', 'pat0', 'name', 'filename', callback);},
+            function(callback) {merge.getAll(that.dbinfo, 'testallergies', 'pat0', 'name', 'filename', callback);},
+            function(callback) {merge.getAll(that.dbinfo, 'testprocedures', 'pat0', 'name', 'filename', callback);},
             ],
             function(err, results) {
                 if (err) {

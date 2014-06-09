@@ -150,7 +150,7 @@ var pushToContext = exports.pushToContext = function(context, keyGen, type, reco
 var saveNewTestSection = exports.saveNewTestSection = function(context, type, patKey, recordIndex, count, callback) {
     var data = createTestSection(type, recordIndex, count);
     var sourceId = context.storageIds[recordIndex];
-    section.saveNewEntries(context.dbinfo, type, patKey, data, sourceId, function(err, ids) {
+    section.save(context.dbinfo, type, patKey, data, sourceId, function(err, ids) {
         if (! err) {
             pushToContext(context, newEntriesContextKey, type, recordIndex, ids);
         }

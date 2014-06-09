@@ -41,7 +41,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             if (saveArray.length === 0) {
                 checkSaveMasterComponentsComplete();
             } else {
-                record.saveNewSection(secName, 'test', saveArray, sourceID, function(err) {
+                record.saveSection(secName, 'test', saveArray, sourceID, function(err) {
                     if (err) {
                         callback(err);
                     } else {

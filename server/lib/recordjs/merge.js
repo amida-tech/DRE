@@ -33,7 +33,7 @@ exports.save = function(dbinfo, secName, input_entry, mergeInfo, callback) {
     });
 };
 
-exports.getMerges = function(dbinfo, secName, patientKey, typeFields, recordFields, callback) {
+exports.getAll = function(dbinfo, secName, patientKey, typeFields, recordFields, callback) {
     var model = dbinfo.mergeModels[secName];
     var allFields = typeFields + ' ' + recordFields + ' reviewed';
     var query = model.find({patKey: patientKey});
