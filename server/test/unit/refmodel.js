@@ -144,7 +144,7 @@ var pushToContext = exports.pushToContext = function(context, keyGen, type, reco
     }
 };
 
-var saveNewTestSection = exports.saveNewTestSection = function(context, type, patKey, recordIndex, count, callback) {
+var saveSection = exports.saveSection = function(context, type, patKey, recordIndex, count, callback) {
     var data = createTestSection(type, recordIndex, count);
     var sourceId = context.storageIds[recordIndex];
     section.save(context.dbinfo, type, patKey, data, sourceId, function(err, ids) {

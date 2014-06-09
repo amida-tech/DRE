@@ -70,10 +70,10 @@ describe('merges', function() {
     
     it('add allergies and procedures', function(done) {
         async.parallel([
-            function(callback) {refmodel.saveNewTestSection(context, 'testallergies', 'pat0', '0.0', 2, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testallergies', 'pat2', '2.0', 3, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testprocedures', 'pat0', '0.0', 2, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testprocedures', 'pat1', '1.0', 3, callback);},
+            function(callback) {refmodel.saveSection(context, 'testallergies', 'pat0', '0.0', 2, callback);},
+            function(callback) {refmodel.saveSection(context, 'testallergies', 'pat2', '2.0', 3, callback);},
+            function(callback) {refmodel.saveSection(context, 'testprocedures', 'pat0', '0.0', 2, callback);},
+            function(callback) {refmodel.saveSection(context, 'testprocedures', 'pat1', '1.0', 3, callback);},
             ], 
             function(err) {done(err);}
         );

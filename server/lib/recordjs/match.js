@@ -16,13 +16,12 @@ var get = exports.get = function(dbinfo, secName, matchId, callback) {
         if (err) {
             callback(err);
         } else {
-            //console.log(matchResults);
             callback(null, matchResults);
         }
     });
 };
 
-var updateMatch = exports.updateMatch = function(dbinfo, secName, identifier, updateFields, callback) {
+var updateMatch = function(dbinfo, secName, identifier, updateFields, callback) {
     var model = dbinfo.matchModels[secName];
     var query = model.findOne({
         _id: identifier
@@ -109,11 +108,6 @@ exports.cancel = function(dbinfo, secName, id, reason, callback) {
         });
     });
 };
-
-
-
-
-
 
 var updateAdded = function(dbinfo, secName, id, callback) {
     get(dbinfo, secName, id, function(err, resultComponent) {

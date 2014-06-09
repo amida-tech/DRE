@@ -27,10 +27,10 @@ describe('partial methods', function() {
     
     it('save news', function(done) {
         async.parallel([
-            function(callback) {refmodel.saveNewTestSection(context, 'testallergies', 'pat0', '0.0', 5, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testallergies', 'pat2', '2.0', 3, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testprocedures', 'pat0', '0.0', 3, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testprocedures', 'pat1', '1.0', 5, callback);},
+            function(callback) {refmodel.saveSection(context, 'testallergies', 'pat0', '0.0', 5, callback);},
+            function(callback) {refmodel.saveSection(context, 'testallergies', 'pat2', '2.0', 3, callback);},
+            function(callback) {refmodel.saveSection(context, 'testprocedures', 'pat0', '0.0', 3, callback);},
+            function(callback) {refmodel.saveSection(context, 'testprocedures', 'pat1', '1.0', 5, callback);},
             ], 
             function(err) {done(err);}
         );
@@ -52,60 +52,6 @@ describe('partial methods', function() {
             ], 
             function(err) {done(err);}
         );
-    });
-
-    it('verify matches', function(done) {
-        function verify(resultsById, recordIndex, index, destRecordIndex, destIndex, type, diffType) {
-            var key = refmodel.partialEntriesContextKey(type, recordIndex);
-            var id = context[key][index]._id;
-            var result = resultsById[id];
-            expect(result).to.exist;
-        
-            var suffix = '_' + recordIndex + '.' + index;
-            expect(result.match_entry_id.name).to.equal('name' + suffix);
-            var destSuffix = '_' + destRecordIndex + '.' + destIndex;
-            expect(result.entry_id.name).to.equal('name' + destSuffix);
-            expect(result.entry_type).to.equal(refmodel.sectionToType[type]);
-
-            ['_id', '__v', 'entry_type', 'entry_id', 'match_entry_id', 'patKey'].forEach(function(p) {
-                delete result[p];
-            });
-            
-            var diffSuffix = '_' + recordIndex + '.' + destIndex;
-            var diffExpect = refmodel.matchObjectInstance[diffType](diffSuffix, destIndex);
-            delete diffExpect.match;
-            expect(result).to.deep.equal(diffExpect);
-        };
-
-        async.parallel([
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat2', 'name severity', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name proc_type', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat2', 'name proc_type', 'filename', callback)}
-            ],   
-            function(err, results) {
-                if (! err) {
-                    var allResults = results[0].concat(results[1]).concat(results[2]).concat(results[3]).concat(results[4]);
-                    expect(allResults).to.have.length(9);
-                    var resultsById = allResults.reduce(function(r, result) {
-                        r[result._id] = result;
-                        return r;
-                    }, {});
-                    verify(resultsById, '0.1', 0, '0.0', 4, 'testallergies', 'diff');
-                    verify(resultsById, '0.1', 1, '0.0', 0, 'testallergies', 'partial');
-                    verify(resultsById, '0.1', 2, '0.0', 2, 'testallergies', 'diffsub');
-                    verify(resultsById, '2.1', 0, '2.0', 1, 'testallergies', 'diffsub');
-
-                    verify(resultsById, '0.1', 0, '0.0', 2, 'testprocedures', 'partialsub');
-                    verify(resultsById, '1.1', 0, '1.0', 1, 'testprocedures', 'partial');
-                    verify(resultsById, '1.1', 1, '1.0', 3, 'testprocedures', 'diff');
-                    verify(resultsById, '1.2', 0, '1.0', 2, 'testprocedures', 'partialsub');
-                    verify(resultsById, '1.2', 1, '1.0', 4, 'testprocedures', 'diffsub');
-                }
-                done(err);
-            }
-        );    
     });
 
     it('get partials', function(done) {
