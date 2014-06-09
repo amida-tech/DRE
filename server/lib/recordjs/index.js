@@ -93,8 +93,8 @@ exports.getAllSections = function(ptKey, callback) {
     allsections.get(dbinfo, ptKey, callback);
 };
 
-exports.saveAllSections = function(ptKey, ptRecord, fileId, callback) {
-    allsections.save(dbinfo, ptKey, ptRecord, fileId, callback);
+exports.saveAllSections = function(ptKey, ptRecord, sourceId, callback) {
+    allsections.save(dbinfo, ptKey, ptRecord, sourceId, callback);
 };
 
 // partial section

@@ -8,13 +8,13 @@ var modelutil = require('./modelutil');
 var match = require('./match');
 var entry = require('./entry');
 
-var auxGetSection = function(dbinfo, secName, patKey, reviewed, callback) {
+var localGet = function(dbinfo, secName, ptKey, reviewed, callback) {
     var model = dbinfo.models[secName];
 
     var query = model.find({});
     query.where('archived').in([null, false]);
     query.where('reviewed', reviewed);
-    query.where('patKey', patKey);
+    query.where('patKey', ptKey);
     query.lean();
     query.populate('metadata.attribution', 'record_id merge_reason merged');
 
@@ -37,27 +37,22 @@ var auxGetSection = function(dbinfo, secName, patKey, reviewed, callback) {
     });
 };
 
-exports.get = function(dbinfo, secName, patKey, callback) {
-    auxGetSection(dbinfo, secName, patKey, true, callback);
+exports.get = function(dbinfo, secName, ptKey, callback) {
+    localGet(dbinfo, secName, ptKey, true, callback);
 };
 
-exports.getPartial = function(dbinfo, secName, patKey, callback) {
-    auxGetSection(dbinfo, secName, patKey, false, callback);
+exports.getPartial = function(dbinfo, secName, ptKey, callback) {
+    localGet(dbinfo, secName, ptKey, false, callback);
 };
 
-exports.sectionEntryCount = exports.sectionEntryCount = function(dbinfo, secName, conditions, callback) {
-    var model = dbinfo.models[secName];
-    model.count(conditions, callback);
-};
-
-exports.save = function(dbinfo, secName, patKey, input, sourceID, callback) {
+exports.save = function(dbinfo, secName, ptKey, input, sourceID, callback) {
     var localSaveNewEntry = function(entryObject, cb) {
-        entry.save(dbinfo, secName, patKey, entryObject, sourceID, cb);    
+        entry.save(dbinfo, secName, ptKey, entryObject, sourceID, cb);    
     };
 
     var prepForDb = function(entryObject) {
         var r = _.clone(entryObject);
-        r.patKey = patKey;
+        r.patKey = ptKey;
         r.reviewed = true;
         return r;
     };

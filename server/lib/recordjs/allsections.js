@@ -12,19 +12,18 @@ exports.get = function(dbinfo, ptKey, callback) {
         if (err) {
             callback(err);
         } else {
-            var accumulator = function(r, secName, index) {
+            var result = secNames.reduce(function(r, secName, index) {
                 r[secName] = sections[index];
                 return r;
-            };
-            var result = secNames.reduce(accumulator, {});
+            }, {});
             callback(null, result);
         }
     });
 };
 
-exports.save = function(dbinfo, ptKey, master, fileId, callback) {
+exports.save = function(dbinfo, ptKey, ptRecord, sourceId, callback) {
     var f = function(name, cb) {
-        section.save(dbinfo, name, ptKey, master[name], fileId, cb);
+        section.save(dbinfo, name, ptKey, ptRecord[name], sourceId, cb);
     };
     async.map(dbinfo.sectionNames(), f, callback);
 };

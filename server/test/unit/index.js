@@ -146,17 +146,6 @@ describe('CCD_1', function() {
         });
     });
     
-    it('allergyCount', function(done) {
-        section.sectionEntryCount(dbinfo, 'allergies', {patKey: 'pat1'}, function(err, count) {
-            if (err) {
-                done(err);
-            } else {
-                expect(3).to.equal(count);
-                done();
-            }
-        });
-    });
-    
     it('mergeCount', function(done) {
         merge.count(dbinfo, 'allergies', 'pat1', {}, function(err, count) {
             if (err) {
