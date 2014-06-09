@@ -176,7 +176,7 @@ exports.saveNewPartialSection = function(context, type, patKey, recordIndex, des
     });
 };
 
-exports.setConnectionContext = function(dbName, context, callback) {
+var setConnectionContext = exports.setConnectionContext = function(dbName, context, callback) {
     var options = getConnectionOptions(dbName);
     db.connect('localhost', options, function(err, result) {
         if (err) {
@@ -188,8 +188,12 @@ exports.setConnectionContext = function(dbName, context, callback) {
     });
 };
 
-exports.testConnectionModels = function(context) {
+exports.prepareConnection = function(dbname, context) {
     return function() {
+        before(function(done) {
+            setConnectionContext(dbname, context, done)
+        });
+
         it('check connection and models', function(done) {
             expect(context.dbinfo).to.exist;
             expect(context.dbinfo.db).to.exist;
@@ -202,7 +206,7 @@ exports.testConnectionModels = function(context) {
     }
 };
 
-var addStoragePerPatient = exports.addStoragePerPatient = function(context, countPerPatient, callback) {
+var addRecordsPerPatient = exports.addRecordsPerPatient = function(context, countPerPatient, callback) {
     var fs = countPerPatient.reduce(function(r, fileCount, i) {
         var patKey = util.format('pat%d', i);
         return _.range(fileCount).reduce(function(q, j) {

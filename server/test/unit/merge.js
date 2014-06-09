@@ -19,8 +19,6 @@ chai.config.includeStack = true;
 describe('merges', function() {
     var context = {};
 
-    var testConnectionModels = refmodel.testConnectionModels(context);
-
     var newMergeIds = {};
 
     var updateDuplicate = function(patKey, type, recordIndex, callback) {
@@ -35,28 +33,17 @@ describe('merges', function() {
         });
     };
     
-    before(function(done) {
-        refmodel.setConnectionContext('mergestest', context, done)
-    });
-
-    beforeEach(function(done) {
-        this.dbinfo = context.dbinfo;
-        this.context = context;
-        this.storageIds = context.storageIds;
-        done();
-    });
-
-    testConnectionModels();
+    refmodel.prepareConnection('mergetest', context)();
 
     it('connection match models', function(done) {
-        expect(this.dbinfo.mergeModels).to.exist;
-        expect(this.dbinfo.mergeModels.testallergies).to.exist;
-        expect(this.dbinfo.mergeModels.testprocedures).to.exist;
+        expect(context.dbinfo.mergeModels).to.exist;
+        expect(context.dbinfo.mergeModels.testallergies).to.exist;
+        expect(context.dbinfo.mergeModels.testprocedures).to.exist;
         done();
     });
     
     it('count empty testallergies', function(done) {
-        merge.count(this.dbinfo, 'testallergies', 'pat0', {}, function(err, count) {
+        merge.count(context.dbinfo, 'testallergies', 'pat0', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -67,7 +54,7 @@ describe('merges', function() {
      });
     
     it('count empty testprocedures', function(done) {
-        merge.count(this.dbinfo, 'testprocedures', 'pat0', {}, function(err, count) {
+        merge.count(context.dbinfo, 'testprocedures', 'pat0', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -78,7 +65,7 @@ describe('merges', function() {
     });
     
     it('add new storage', function(done) {
-        refmodel.addStoragePerPatient(context, [3, 2, 1], done);
+        refmodel.addRecordsPerPatient(context, [3, 2, 1], done);
     });
     
     it('add allergies and procedures', function(done) {
@@ -93,7 +80,6 @@ describe('merges', function() {
     });
     
     it('merge.getAll (new)', function(done) {
-        var that = this;
         async.parallel([
             function(callback) {merge.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback);},
             function(callback) {merge.getAll(context.dbinfo, 'testallergies', 'pat1', 'name', 'filename', callback);},
@@ -175,10 +161,9 @@ describe('merges', function() {
     });
     
     it ('merge.getAll (duplicate)', function(done) {
-        var that = this;
         async.parallel([
-            function(callback) {merge.getAll(that.dbinfo, 'testallergies', 'pat0', 'name', 'filename', callback);},
-            function(callback) {merge.getAll(that.dbinfo, 'testprocedures', 'pat0', 'name', 'filename', callback);},
+            function(callback) {merge.getAll(context.dbinfo, 'testallergies', 'pat0', 'name', 'filename', callback);},
+            function(callback) {merge.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name', 'filename', callback);},
             ],
             function(err, results) {
                 if (err) {

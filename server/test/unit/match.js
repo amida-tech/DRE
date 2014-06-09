@@ -12,13 +12,7 @@ chai.config.includeStack = true;
 describe('match.js methods', function() {
 	var context = {}; // populated by refmodel common methods
 
-    var testConnectionModels = refmodel.testConnectionModels(context);
-
-    before(function(done) {
-        refmodel.setConnectionContext('matchtest', context, done)
-    });
-
-    testConnectionModels();
+    refmodel.prepareConnection('matchtest', context)();
 
     it('check match models', function(done) {
         expect(context.dbinfo.matchModels).to.exist;
@@ -26,6 +20,13 @@ describe('match.js methods', function() {
         expect(context.dbinfo.matchModels.testprocedures).to.exist;
         done();
     });
+
+    it('add records', function(done) {
+        refmodel.addRecordsPerPatient(context, [4, 4, 2], done);
+    });
+    
+
+
 
     after(function(done) {
         context.dbinfo.db.dropDatabase();

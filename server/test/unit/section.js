@@ -19,23 +19,10 @@ chai.config.includeStack = true;
 describe('partial methods', function() {
     var context = {};
 
-    var testConnectionModels = refmodel.testConnectionModels(context);
+    refmodel.prepareConnection('sectiontest', context)();
 
-    before(function(done) {
-        refmodel.setConnectionContext('partialtest', context, done)
-    });
-
-    testConnectionModels();
-
-    it('connection match models', function(done) {
-        expect(context.dbinfo.matchModels).to.exist;
-        expect(context.dbinfo.matchModels.testallergies).to.exist;
-        expect(context.dbinfo.matchModels.testprocedures).to.exist;
-        done();
-    });
-    
     it('add new storage', function(done) {
-        refmodel.addStoragePerPatient(context, [3, 3, 2], done);
+        refmodel.addRecordsPerPatient(context, [3, 3, 2], done);
     });
     
     it('save news', function(done) {
