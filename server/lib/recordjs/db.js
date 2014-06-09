@@ -34,6 +34,14 @@ var fillOptions = function(options) {
             options.schemas[secName] = desc;
         });
     }
+
+    if (! options.matchFields) {
+        options.matchFields = {
+            percent: "number",
+            diff: null,
+            subelements: null
+        };
+    }
 };
 
 exports.connect = function connectDatabase(server, inputOptions, callback) {
@@ -51,7 +59,7 @@ exports.connect = function connectDatabase(server, inputOptions, callback) {
             var c = mongoose.createConnection('mongodb://' + server + '/'+ dbName);
             dbinfo.storageModel = models.storageModel(c);
             
-            var r = models.models(c, options.sectionToType, options.schemas);
+            var r = models.models(c, options.sectionToType, options.schemas, options.matchFields);
             if (! r) {
                 callback(new Error('models cannot be generated'));
             } else {
@@ -59,11 +67,13 @@ exports.connect = function connectDatabase(server, inputOptions, callback) {
                 dbinfo.mergeModels = r.merge;
                 dbinfo.matchModels = r.match;
                 dbinfo.sectionToType = options.sectionToType;
-
+                var mf = options.matchFields;
                 dbinfo.sectionNames = function() {
                     return Object.keys(dbinfo.sectionToType);
                 };
-            
+                dbinfo.matchFieldNames = function() {
+                    return Object.keys(mf);
+                };            
                 callback(null, dbinfo);
             }
         }

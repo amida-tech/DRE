@@ -56,7 +56,7 @@ exports.modelDescription = function(name) {
 
 var storageColName = 'storage.files';
 
-exports.models = function(connection, sectionToType, schemas) {
+exports.models = function(connection, sectionToType, schemas, matchFields) {
     if (!connection) {
         connection = mongoose;
     }
@@ -88,7 +88,7 @@ exports.models = function(connection, sectionToType, schemas) {
         result.merge[secName] = connection.model(mergeColName, mergeSchema);
 
         var matchColName = type + 'matches';
-        var matchSchema = new Schema({
+        var matchSchemaDesc = {
             entry_type: String,
             patKey: String,
             entry_id: {
@@ -99,11 +99,21 @@ exports.models = function(connection, sectionToType, schemas) {
                 type: ObjectId,
                 ref: secName
             },
-            percent: Number,
-            determination: String, //Can be 1) Merged, 2) Added, 3) Ignored.
-            diff: {},
-            subelements: {}
+            determination: String //Can be 1) Merged, 2) Added, 3) Ignored.
+        };
+        Object.keys(matchFields).forEach(function(matchFieldKey) {
+            var matchFieldType = matchFields[matchFieldKey];
+            if (matchFieldType) {
+                if (matchFieldType === 'number') {
+                    matchSchemaDesc[matchFieldKey] = Number;
+                } else if (matchFieldType === 'string') {
+                    matchSchemaDesc[matchFieldKey] = String;
+                }
+            } else {
+                matchSchemaDesc[matchFieldKey] = {};
+            }
         });
+        var matchSchema = new Schema(matchSchemaDesc);
         result.match[secName] = connection.model(matchColName, matchSchema);
 
         var desc = schemas[secName];

@@ -79,10 +79,17 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                     tmpMatchRecId = baseArray[0]._id;
                 }
 
+                var matchObject = srcMatches[i];
+                var matchObjForDb = {};
+                matchObjForDb.diff = matchObject.diff;
+                if (matchObject.subelements) {
+                    matchObjForDb.subelements = matchObject.subelements;
+                }
+
                 //Diffs always zero, can take only array object.
                 returnPartialArray.push({
                     partial_array: srcArray[0],
-                    partial_match: srcMatches[i],
+                    partial_match: matchObjForDb,
                     match_record_id: tmpMatchRecId
                 });
 
@@ -91,9 +98,17 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
             } else if (srcMatches[i].match === 'partial') {
 
+                var matchObject = srcMatches[i];
+                var matchObjForDb = {};
+                matchObjForDb.diff = matchObject.diff;
+                matchObjForDb.percent = matchObject.percent;                
+                if (matchObject.subelements) {
+                    matchObjForDb.subelements = matchObject.subelements;
+                }
+
                 returnPartialArray.push({
                     partial_array: srcArray[srcMatches[i].src_id],
-                    partial_match: srcMatches[i],
+                    partial_match: matchObjForDb,
                     match_record_id: baseArray[srcMatches[i].dest_id]._id
                 });
 

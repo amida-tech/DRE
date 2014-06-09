@@ -85,22 +85,11 @@ exports.savePartial = function(dbinfo, secName, patKey, input, sourceID, callbac
             };
 
             var matchObject = entryObject.match;
-                
-            //HACK: extending saving of partial matches
-
-            //Conditionally take diff/partial.
-            if (matchObject.match === 'diff' ) {
-                tmpMatch.diff = matchObject.diff;
-            } else if (matchObject.match === 'partial'){
-                tmpMatch.diff = matchObject.diff;
-                tmpMatch.percent = matchObject.percent;
-                tmpMatch.diff = matchObject.diff;
-            }
-
-            //Passing on sublements
-            if (matchObject.subelements) {
-                tmpMatch.subelements = matchObject.subelements;
-            }
+            dbinfo.matchFieldNames().forEach(function(key) {
+                if (matchObject[key]) {
+                    tmpMatch[key] = matchObject[key];
+                }
+            }); 
 
             match.save(dbinfo, secName, tmpMatch, cb2);
         }
