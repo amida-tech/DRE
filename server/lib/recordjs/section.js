@@ -7,16 +7,16 @@ var merge = require('./merge');
 var modelutil = require('./modelutil');
 var match = require('./match');
 
-exports.removeEntry = function(dbinfo, type, recordId, callback) {
+exports.removeEntry = function(dbinfo, secName, recordId, callback) {
     
     var removeModel = function(callback) {
-        var model = dbinfo.models[type];
+        var model = dbinfo.models[secName];
         var query = model.update({_id: recordId}, {archived: true});
         query.exec(callback);
     };
 
     var removeMerge = function(callback) {
-        var model = dbinfo.mergeModels[type];
+        var model = dbinfo.mergeModels[secName];
         var query = model.update({entry_id: recordId}, {archived: true});
         query.exec(callback);
     };
@@ -24,8 +24,8 @@ exports.removeEntry = function(dbinfo, type, recordId, callback) {
     async.series([removeMerge, removeModel], callback);
 };
 
-var auxGetSection = function(dbinfo, type, patKey, reviewed, callback) {
-    var model = dbinfo.models[type];
+var auxGetSection = function(dbinfo, secName, patKey, reviewed, callback) {
+    var model = dbinfo.models[secName];
 
     var query = model.find({});
     query.where('archived').in([null, false]);
@@ -53,21 +53,21 @@ var auxGetSection = function(dbinfo, type, patKey, reviewed, callback) {
     });
 };
 
-exports.getSection = function(dbinfo, type, patKey, callback) {
-    auxGetSection(dbinfo, type, patKey, true, callback);
+exports.getSection = function(dbinfo, secName, patKey, callback) {
+    auxGetSection(dbinfo, secName, patKey, true, callback);
 };
 
-exports.getPartialSection = function(dbinfo, type, patKey, callback) {
-    auxGetSection(dbinfo, type, patKey, false, callback);
+exports.getPartialSection = function(dbinfo, secName, patKey, callback) {
+    auxGetSection(dbinfo, secName, patKey, false, callback);
 };
 
-exports.sectionEntryCount = exports.sectionEntryCount = function(dbinfo, type, conditions, callback) {
-    var model = dbinfo.models[type];
+exports.sectionEntryCount = exports.sectionEntryCount = function(dbinfo, secName, conditions, callback) {
+    var model = dbinfo.models[secName];
     model.count(conditions, callback);
 };
 
-var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
-    var model = dbinfo.models[type];
+var getEntry = exports.getEntry = function(dbinfo, secName, input_id, callback) {
+    var model = dbinfo.models[secName];
 
     var query = model.findOne({
         "_id": input_id
@@ -76,8 +76,8 @@ var getEntry = exports.getEntry = function(dbinfo, type, input_id, callback) {
     query.exec(callback);
 };
 
-exports.updateEntry = function(dbinfo, type, recordId, fileId, recordUpdate, callback) {
-    var model = dbinfo.models[type];
+exports.updateEntry = function(dbinfo, secName, recordId, fileId, recordUpdate, callback) {
+    var model = dbinfo.models[secName];
     var query = model.findOne({"_id": recordId});
 
     query.exec(function(err, entry) {
@@ -93,13 +93,13 @@ exports.updateEntry = function(dbinfo, type, recordId, fileId, recordUpdate, cal
                 }
             }
             var mergeInfo = {record_id: fileId, merge_reason: 'update'};
-            merge.save(dbinfo, type, entry, mergeInfo, callback);
+            merge.save(dbinfo, secName, entry, mergeInfo, callback);
         }
     });
 };
 
-var saveNewEntry = function(dbinfo, type, patKey, entryObject, sourceID, callback) {
-    var entryModel = new dbinfo.models[type](entryObject);
+var saveNewEntry = function(dbinfo, secName, patKey, entryObject, sourceID, callback) {
+    var entryModel = new dbinfo.models[secName](entryObject);
 
     var saveEntry = function(callback) {
         entryModel.save(function(err, saveResult) {
@@ -109,15 +109,15 @@ var saveNewEntry = function(dbinfo, type, patKey, entryObject, sourceID, callbac
 
     var saveMerge = function(saveResult, callback) {
         var mergeInfo = {record_id: sourceID, merge_reason: 'new'};
-        merge.save(dbinfo, type, saveResult, mergeInfo, callback);
+        merge.save(dbinfo, secName, saveResult, mergeInfo, callback);
     };
 
     async.waterfall([saveEntry, saveMerge], callback);
 };
 
-exports.saveNewEntries = function(dbinfo, type, patKey, input, sourceID, callback) {
+exports.saveNewEntries = function(dbinfo, secName, patKey, input, sourceID, callback) {
     var localSaveNewEntry = function(entryObject, cb) {
-        saveNewEntry(dbinfo, type, patKey, entryObject, sourceID, cb);    
+        saveNewEntry(dbinfo, secName, patKey, entryObject, sourceID, cb);    
     };
 
     var prepForDb = function(entryObject) {
@@ -140,26 +140,26 @@ exports.saveNewEntries = function(dbinfo, type, patKey, input, sourceID, callbac
     }
 };
 
-exports.duplicateEntry = function(dbinfo, type, update_id, sourceID, callback) {
-    getEntry(dbinfo, type, update_id, function(err, current) {
+exports.duplicateEntry = function(dbinfo, secName, update_id, sourceID, callback) {
+    getEntry(dbinfo, secName, update_id, function(err, current) {
         var mergeInfo = {
             record_id: sourceID,
             merge_reason: 'duplicate'
         };
-        merge.save(dbinfo, type, current, mergeInfo, callback);
+        merge.save(dbinfo, secName, current, mergeInfo, callback);
     });
 };
 
-exports.savePartialEntries = function(dbinfo, type, patKey, input, sourceID, callback) {
+exports.savePartialEntries = function(dbinfo, secName, patKey, input, sourceID, callback) {
     var savePartialEntry = function(entryObject, cb) {
         var localSaveNewEntry = function(cb2) {
-            saveNewEntry(dbinfo, type, patKey, entryObject.entry, sourceID, cb2);    
+            saveNewEntry(dbinfo, secName, patKey, entryObject.entry, sourceID, cb2);    
         };
 
         function savePartialMatch (matchEntryId, cb2) {
             var tmpMatch = {
                 patKey: patKey,
-                entry_type: dbinfo.sectionToType[type],
+                entry_type: dbinfo.sectionToType[secName],
                 entry_id: entryObject.matchRecordId,
                 match_entry_id: matchEntryId
             };

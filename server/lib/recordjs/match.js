@@ -8,8 +8,8 @@ exports.saveMatch = function(dbinfo, matchObject, callback) {
     matchDb.save(callback);
 };
 
-var getMatch = exports.getMatch = function(dbinfo, type, matchId, callback) {
-    var model = dbinfo.matchModels[type];
+var getMatch = exports.getMatch = function(dbinfo, secName, matchId, callback) {
+    var model = dbinfo.matchModels[secName];
     var query = model.findOne({_id: matchId}).populate('entry_id match_entry_id').lean();
     query.exec(function (err, matchResults) {
         if (err) {
@@ -21,8 +21,8 @@ var getMatch = exports.getMatch = function(dbinfo, type, matchId, callback) {
     });
 };
 
-var updateMatch = exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback) {
-    var model = dbinfo.matchModels[type];
+var updateMatch = exports.updateMatch = function(dbinfo, secName, identifier, updateFields, callback) {
+    var model = dbinfo.matchModels[secName];
     var query = model.findOne({
         _id: identifier
     });
@@ -46,9 +46,9 @@ var updateMatch = exports.updateMatch = function(dbinfo, type, identifier, updat
     });
 };
 
-exports.getMatches = function(dbinfo, type, patKey, typeFields, recordFields, callback) {
+exports.getMatches = function(dbinfo, secName, patKey, typeFields, recordFields, callback) {
 
-    var model = dbinfo.matchModels[type];
+    var model = dbinfo.matchModels[secName];
     var allFields = typeFields + ' ' + recordFields;
 
     var query = model.find({patKey: patKey}).populate('entry_id match_entry_id', allFields).lean();
@@ -68,8 +68,8 @@ exports.getMatches = function(dbinfo, type, patKey, typeFields, recordFields, ca
     });
 };
 
-exports.count = function(dbinfo, type, patKey, conditions, callback) {
-    var model = dbinfo.matchModels[type];
+exports.count = function(dbinfo, secName, patKey, conditions, callback) {
+    var model = dbinfo.matchModels[secName];
     var query = model.count();
     query.where('determination').in([null, false]);
     var condWPat = _.clone(conditions);
@@ -80,12 +80,12 @@ exports.count = function(dbinfo, type, patKey, conditions, callback) {
     });
 };
 
-var updateIgnored = function(dbinfo, type, id, callback) {
-    getMatch(dbinfo, type, id, function(err, result) {
+var updateIgnored = function(dbinfo, secName, id, callback) {
+    getMatch(dbinfo, secName, id, function(err, result) {
         if (err) {
             callback(err);
         } else {
-            section.removeEntry(dbinfo, type, result.match_entry_id._id, function(err, removalResults) {
+            section.removeEntry(dbinfo, secName, result.match_entry_id._id, function(err, removalResults) {
                 if (err) {
                     callback(err);
                 } else {
@@ -96,10 +96,10 @@ var updateIgnored = function(dbinfo, type, id, callback) {
     });
 };
 
-exports.cancel = function(dbinfo, type, id, reason, callback) {
+exports.cancel = function(dbinfo, secName, id, reason, callback) {
     //If determination is ignored, dump the object from the database.
-    updateIgnored(dbinfo, type, id, function(err, results) {
-        updateMatch(dbinfo, type, id, {determination: reason}, function(err, updateResults) {
+    updateIgnored(dbinfo, secName, id, function(err, results) {
+        updateMatch(dbinfo, secName, id, {determination: reason}, function(err, updateResults) {
             if (err) {
                 callback(err);
             } else {
@@ -114,13 +114,13 @@ exports.cancel = function(dbinfo, type, id, reason, callback) {
 
 
 
-var updateAdded = function(dbinfo, type, id, callback) {
-    getMatch(dbinfo, type, id, function(err, resultComponent) {
+var updateAdded = function(dbinfo, secName, id, callback) {
+    getMatch(dbinfo, secName, id, function(err, resultComponent) {
         if (err) {
             callback(err);
         } else {
             var recordId = resultComponent.match_entry_id._id;
-            var model = dbinfo.models[type];
+            var model = dbinfo.models[secName];
             var query = model.findOne({"_id": recordId});
             query.exec(function(err, entry) {
                 if (err) {
@@ -141,9 +141,9 @@ var updateAdded = function(dbinfo, type, id, callback) {
     });
 };
 
-exports.accept = function(dbinfo, type, id, reason, callback) {
-    updateAdded(dbinfo, type, id, function(err, results) {
-        updateMatch(dbinfo, type, id, {determination: reason}, function(err, updateResults) {
+exports.accept = function(dbinfo, secName, id, reason, callback) {
+    updateAdded(dbinfo, secName, id, function(err, results) {
+        updateMatch(dbinfo, secName, id, {determination: reason}, function(err, updateResults) {
             if (err) {
                 callback(err);
             } else {

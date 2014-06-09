@@ -1,9 +1,9 @@
 var _ = require('underscore');
 
-exports.save = function(dbinfo, type, input_entry, mergeInfo, callback) {
-    var Model = dbinfo.mergeModels[type];
+exports.save = function(dbinfo, secName, input_entry, mergeInfo, callback) {
+    var Model = dbinfo.mergeModels[secName];
     var mergeObject = new Model({
-        entry_type: dbinfo.sectionToType[type],
+        entry_type: dbinfo.sectionToType[secName],
         patKey: input_entry.patKey,
         entry_id: input_entry._id,
         record_id: mergeInfo.record_id,
@@ -33,12 +33,12 @@ exports.save = function(dbinfo, type, input_entry, mergeInfo, callback) {
     });
 };
 
-exports.getMerges = function(dbinfo, type, patientKey, typeFields, recordFields, callback) {
-    var model = dbinfo.mergeModels[type];
+exports.getMerges = function(dbinfo, secName, patientKey, typeFields, recordFields, callback) {
+    var model = dbinfo.mergeModels[secName];
     var allFields = typeFields + ' ' + recordFields + ' reviewed';
     var query = model.find({patKey: patientKey});
     query.where('archived').in([null, false]);
-    query.where('entry_type', dbinfo.sectionToType[type]);
+    query.where('entry_type', dbinfo.sectionToType[secName]);
     query.lean();
     query.populate('entry_id record_id', allFields);
 
@@ -60,8 +60,8 @@ exports.getMerges = function(dbinfo, type, patientKey, typeFields, recordFields,
     });
 };
 
-exports.count = function(dbinfo, type, patKey, conditions, callback) {
-    var model = dbinfo.mergeModels[type];
+exports.count = function(dbinfo, secName, patKey, conditions, callback) {
+    var model = dbinfo.mergeModels[secName];
     var condsWPat = _.clone(conditions);
     condsWPat.patKey = patKey;
     var query = model.find({});
