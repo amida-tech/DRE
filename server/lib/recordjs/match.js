@@ -3,7 +3,7 @@ var _ = require('underscore');
 var section = require('./section');
 
 exports.saveMatch = function(dbinfo, matchObject, callback) {
-    var Model = dbinfo.matchModels[matchObject.entry_type];
+    var Model = dbinfo.matchModels[dbinfo.typeToSection[matchObject.entry_type]];
     var matchDb = new Model(matchObject);
     matchDb.save(callback);
 };

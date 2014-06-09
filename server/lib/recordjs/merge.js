@@ -3,7 +3,7 @@ var _ = require('underscore');
 exports.save = function(dbinfo, type, input_entry, mergeInfo, callback) {
     var Model = dbinfo.mergeModels[type];
     var mergeObject = new Model({
-        entry_type: type,
+        entry_type: dbinfo.sectionToType[type],
         patKey: input_entry.patKey,
         entry_id: input_entry._id,
         record_id: mergeInfo.record_id,
@@ -38,7 +38,7 @@ exports.getMerges = function(dbinfo, type, patientKey, typeFields, recordFields,
     var allFields = typeFields + ' ' + recordFields + ' reviewed';
     var query = model.find({patKey: patientKey});
     query.where('archived').in([null, false]);
-    query.where('entry_type', type);
+    query.where('entry_type', dbinfo.sectionToType[type]);
     query.lean();
     query.populate('entry_id record_id', allFields);
 

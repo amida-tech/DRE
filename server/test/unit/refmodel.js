@@ -17,6 +17,11 @@ var typeToSection = {
     testprocedure: 'testprocedures'    
 };
 
+var sectionToType = exports.sectionToType = {
+    testallergies: 'testallergy',
+    testprocedures: 'testprocedure'    
+};
+
 var typeToSchemaDesc = {
     testallergy: {
         name: String,
@@ -40,12 +45,13 @@ var getConnectionOptions = function(dbName) {
     return {
         dbName: dbName,
         typeToSection: typeToSection,
+        sectionToType: sectionToType,
         typeToSchemaDesc: typeToSchemaDesc
     };
 };
 
 var testObjectInstance = {
-    testallergy: function(suffix) {
+    testallergies: function(suffix) {
         return {
             name: 'name' + suffix,
             severity: 'severity' + suffix,
@@ -55,7 +61,7 @@ var testObjectInstance = {
             }
         };
     },
-    testprocedure: function(suffix) {
+    testprocedures: function(suffix) {
         return {
             name: 'name' + suffix,
             proc_type: 'proc_type' + suffix,
@@ -170,8 +176,8 @@ exports.testConnectionModels = function() {
         expect(this.dbinfo.db).to.exist;
         expect(this.dbinfo.grid).to.exist;
         expect(this.dbinfo.models).to.exist;
-        expect(this.dbinfo.models.testallergy).to.exist;
-        expect(this.dbinfo.models.testprocedure).to.exist;
+        expect(this.dbinfo.models.testallergies).to.exist;
+        expect(this.dbinfo.models.testprocedures).to.exist;
         done();
     });
 };

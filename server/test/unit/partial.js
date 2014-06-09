@@ -59,8 +59,8 @@ describe('partial methods', function() {
 
     it('connection match models', function(done) {
         expect(this.dbinfo.matchModels).to.exist;
-        expect(this.dbinfo.matchModels.testallergy).to.exist;
-        expect(this.dbinfo.matchModels.testprocedure).to.exist;
+        expect(this.dbinfo.matchModels.testallergies).to.exist;
+        expect(this.dbinfo.matchModels.testprocedures).to.exist;
         done();
     });
     
@@ -70,10 +70,10 @@ describe('partial methods', function() {
     
     it('save news', function(done) {
         async.parallel([
-            function(callback) {refmodel.saveNewTestSection(context, 'testallergy', 'pat0', '0.0', 5, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testallergy', 'pat2', '2.0', 3, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testprocedure', 'pat0', '0.0', 3, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testprocedure', 'pat1', '1.0', 5, callback);},
+            function(callback) {refmodel.saveNewTestSection(context, 'testallergies', 'pat0', '0.0', 5, callback);},
+            function(callback) {refmodel.saveNewTestSection(context, 'testallergies', 'pat2', '2.0', 3, callback);},
+            function(callback) {refmodel.saveNewTestSection(context, 'testprocedures', 'pat0', '0.0', 3, callback);},
+            function(callback) {refmodel.saveNewTestSection(context, 'testprocedures', 'pat1', '1.0', 5, callback);},
             ], 
             function(err) {done(err);}
         );
@@ -87,11 +87,11 @@ describe('partial methods', function() {
         var matchInfo4 = refmodel.createMatchInformation('1.2', [2, 4], ['partialsub', 'diffsub']);
 
         async.parallel([
-            function(callback) {saveNewPartialSection(context, 'testallergy', 'pat0', '0.1', '0.0', matchInfo0, callback);},
-            function(callback) {saveNewPartialSection(context, 'testallergy', 'pat2', '2.1', '2.0', matchInfo1, callback);},
-            function(callback) {saveNewPartialSection(context, 'testprocedure', 'pat0', '0.1', '0.0', matchInfo2, callback);},
-            function(callback) {saveNewPartialSection(context, 'testprocedure', 'pat1', '1.1', '1.0', matchInfo3, callback);},
-            function(callback) {saveNewPartialSection(context, 'testprocedure', 'pat1', '1.2', '1.0', matchInfo4, callback);},
+            function(callback) {saveNewPartialSection(context, 'testallergies', 'pat0', '0.1', '0.0', matchInfo0, callback);},
+            function(callback) {saveNewPartialSection(context, 'testallergies', 'pat2', '2.1', '2.0', matchInfo1, callback);},
+            function(callback) {saveNewPartialSection(context, 'testprocedures', 'pat0', '0.1', '0.0', matchInfo2, callback);},
+            function(callback) {saveNewPartialSection(context, 'testprocedures', 'pat1', '1.1', '1.0', matchInfo3, callback);},
+            function(callback) {saveNewPartialSection(context, 'testprocedures', 'pat1', '1.2', '1.0', matchInfo4, callback);},
             ], 
             function(err) {done(err);}
         );
@@ -108,7 +108,7 @@ describe('partial methods', function() {
             expect(result.match_entry_id.name).to.equal('name' + suffix);
             var destSuffix = '_' + destRecordIndex + '.' + destIndex;
             expect(result.entry_id.name).to.equal('name' + destSuffix);
-            expect(result.entry_type).to.equal(type);
+            expect(result.entry_type).to.equal(refmodel.sectionToType[type]);
 
             ['_id', '__v', 'entry_type', 'entry_id', 'match_entry_id', 'patKey'].forEach(function(p) {
                 delete result[p];
@@ -121,11 +121,11 @@ describe('partial methods', function() {
         };
 
         async.parallel([
-            function(callback) {match.getMatches(context.dbinfo, 'testallergy', 'pat0', 'name severity', 'filename', callback)},
-            function(callback) {match.getMatches(context.dbinfo, 'testallergy', 'pat2', 'name severity', 'filename', callback)},
-            function(callback) {match.getMatches(context.dbinfo, 'testprocedure', 'pat0', 'name proc_type', 'filename', callback)},
-            function(callback) {match.getMatches(context.dbinfo, 'testprocedure', 'pat1', 'name proc_type', 'filename', callback)},
-            function(callback) {match.getMatches(context.dbinfo, 'testprocedure', 'pat2', 'name proc_type', 'filename', callback)}
+            function(callback) {match.getMatches(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback)},
+            function(callback) {match.getMatches(context.dbinfo, 'testallergies', 'pat2', 'name severity', 'filename', callback)},
+            function(callback) {match.getMatches(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', 'filename', callback)},
+            function(callback) {match.getMatches(context.dbinfo, 'testprocedures', 'pat1', 'name proc_type', 'filename', callback)},
+            function(callback) {match.getMatches(context.dbinfo, 'testprocedures', 'pat2', 'name proc_type', 'filename', callback)}
             ],   
             function(err, results) {
                 if (! err) {
@@ -135,16 +135,16 @@ describe('partial methods', function() {
                         r[result._id] = result;
                         return r;
                     }, {});
-                    verify(resultsById, '0.1', 0, '0.0', 4, 'testallergy', 'diff');
-                    verify(resultsById, '0.1', 1, '0.0', 0, 'testallergy', 'partial');
-                    verify(resultsById, '0.1', 2, '0.0', 2, 'testallergy', 'diffsub');
-                    verify(resultsById, '2.1', 0, '2.0', 1, 'testallergy', 'diffsub');
+                    verify(resultsById, '0.1', 0, '0.0', 4, 'testallergies', 'diff');
+                    verify(resultsById, '0.1', 1, '0.0', 0, 'testallergies', 'partial');
+                    verify(resultsById, '0.1', 2, '0.0', 2, 'testallergies', 'diffsub');
+                    verify(resultsById, '2.1', 0, '2.0', 1, 'testallergies', 'diffsub');
 
-                    verify(resultsById, '0.1', 0, '0.0', 2, 'testprocedure', 'partialsub');
-                    verify(resultsById, '1.1', 0, '1.0', 1, 'testprocedure', 'partial');
-                    verify(resultsById, '1.1', 1, '1.0', 3, 'testprocedure', 'diff');
-                    verify(resultsById, '1.2', 0, '1.0', 2, 'testprocedure', 'partialsub');
-                    verify(resultsById, '1.2', 1, '1.0', 4, 'testprocedure', 'diffsub');
+                    verify(resultsById, '0.1', 0, '0.0', 2, 'testprocedures', 'partialsub');
+                    verify(resultsById, '1.1', 0, '1.0', 1, 'testprocedures', 'partial');
+                    verify(resultsById, '1.1', 1, '1.0', 3, 'testprocedures', 'diff');
+                    verify(resultsById, '1.2', 0, '1.0', 2, 'testprocedures', 'partialsub');
+                    verify(resultsById, '1.2', 1, '1.0', 4, 'testprocedures', 'diffsub');
                 }
                 done(err);
             }
@@ -153,10 +153,10 @@ describe('partial methods', function() {
 
     it('get partials', function(done) {
         async.parallel([
-            function(callback) {section.getPartialSection(context.dbinfo, 'testallergy', 'pat0', callback);},
-            function(callback) {section.getPartialSection(context.dbinfo, 'testallergy', 'pat2', callback);},
-            function(callback) {section.getPartialSection(context.dbinfo, 'testprocedure', 'pat0', callback);},
-            function(callback) {section.getPartialSection(context.dbinfo, 'testprocedure', 'pat1', callback);},
+            function(callback) {section.getPartialSection(context.dbinfo, 'testallergies', 'pat0', callback);},
+            function(callback) {section.getPartialSection(context.dbinfo, 'testallergies', 'pat2', callback);},
+            function(callback) {section.getPartialSection(context.dbinfo, 'testprocedures', 'pat0', callback);},
+            function(callback) {section.getPartialSection(context.dbinfo, 'testprocedures', 'pat1', callback);},
             ], 
             function(err, results) {
                 if (! err) {
@@ -165,11 +165,11 @@ describe('partial methods', function() {
                         expect(original).to.deep.include.members(bbClean);
                         expect(bbClean).to.deep.include.members(original);
                     };
-                    checkBBData(results[0], refmodel.createTestSection('testallergy', '0.1', 3));
-                    checkBBData(results[1], refmodel.createTestSection('testallergy', '2.1', 1));
-                    checkBBData(results[2], refmodel.createTestSection('testprocedure', '0.1', 1));
-                    var piece11 = refmodel.createTestSection('testprocedure', '1.1', 2);
-                    var piece12 = refmodel.createTestSection('testprocedure', '1.2', 2);
+                    checkBBData(results[0], refmodel.createTestSection('testallergies', '0.1', 3));
+                    checkBBData(results[1], refmodel.createTestSection('testallergies', '2.1', 1));
+                    checkBBData(results[2], refmodel.createTestSection('testprocedures', '0.1', 1));
+                    var piece11 = refmodel.createTestSection('testprocedures', '1.1', 2);
+                    var piece12 = refmodel.createTestSection('testprocedures', '1.2', 2);
                     checkBBData(results[3], piece11.concat(piece12));
     
                     results.forEach(function(result) {
@@ -216,13 +216,13 @@ describe('partial methods', function() {
     });
 
     it('remove partials', function(done) {
-        var key0 = refmodel.partialEntriesContextKey('testallergy', '2.1');
+        var key0 = refmodel.partialEntriesContextKey('testallergies', '2.1');
         var id0 = context[key0][0].match_entry_id;
-        var key1 = refmodel.partialEntriesContextKey('testprocedure', '1.2');
+        var key1 = refmodel.partialEntriesContextKey('testprocedures', '1.2');
         var id1 = context[key1][1].match_entry_id
         async.parallel([
-            function(callback) {section.removeEntry(context.dbinfo, 'testallergy', id0, callback);},
-            function(callback) {section.removeEntry(context.dbinfo, 'testprocedure', id1, callback);},
+            function(callback) {section.removeEntry(context.dbinfo, 'testallergies', id0, callback);},
+            function(callback) {section.removeEntry(context.dbinfo, 'testprocedures', id1, callback);},
             ], 
             function(err) {done(err);}
         );
@@ -230,8 +230,8 @@ describe('partial methods', function() {
 
     it('get partials post remove', function(done) {
         async.parallel([
-            function(callback) {section.getPartialSection(context.dbinfo, 'testallergy', 'pat2', callback);},
-            function(callback) {section.getPartialSection(context.dbinfo, 'testprocedure', 'pat1', callback);},
+            function(callback) {section.getPartialSection(context.dbinfo, 'testallergies', 'pat2', callback);},
+            function(callback) {section.getPartialSection(context.dbinfo, 'testprocedures', 'pat1', callback);},
             ], 
             function(err, results) {
                 if (! err) {

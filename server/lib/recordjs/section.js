@@ -159,7 +159,7 @@ exports.savePartialEntries = function(dbinfo, type, patKey, input, sourceID, cal
         function savePartialMatch (matchEntryId, cb2) {
             var tmpMatch = {
                 patKey: patKey,
-                entry_type: type,
+                entry_type: dbinfo.sectionToType[type],
                 entry_id: entryObject.matchRecordId,
                 match_entry_id: matchEntryId
             };

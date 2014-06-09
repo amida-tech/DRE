@@ -39,6 +39,10 @@ var fillOptions = function(options) {
         options.typeToSection = typeToSection;
     }
 
+    if (! options.sectionToType) {
+        options.sectionToType = sectionToType;
+    }
+
    if (! options.typeToSchemaDesc) {
         options.typeToSchemaDesc = {};
         Object.keys(typeToSection).forEach(function(type) {
@@ -72,7 +76,7 @@ exports.connect = function connectDatabase(server, inputOptions, callback) {
                 dbinfo.mergeModels = r.merge;
                 dbinfo.matchModels = r.match;
                 dbinfo.typeToSection = options.typeToSection;
-                dbinfo.sectionToType = sectionToType;
+                dbinfo.sectionToType = options.sectionToType;
             
                 callback(null, dbinfo);
             }

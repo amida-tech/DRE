@@ -48,13 +48,13 @@ describe('merges', function() {
 
     it('connection match models', function(done) {
         expect(this.dbinfo.mergeModels).to.exist;
-        expect(this.dbinfo.mergeModels.testallergy).to.exist;
-        expect(this.dbinfo.mergeModels.testprocedure).to.exist;
+        expect(this.dbinfo.mergeModels.testallergies).to.exist;
+        expect(this.dbinfo.mergeModels.testprocedures).to.exist;
         done();
     });
     
-    it('count empty testallergy', function(done) {
-        merge.count(this.dbinfo, 'testallergy', 'pat0', {}, function(err, count) {
+    it('count empty testallergies', function(done) {
+        merge.count(this.dbinfo, 'testallergies', 'pat0', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -64,8 +64,8 @@ describe('merges', function() {
         });
      });
     
-    it('count empty testprocedure', function(done) {
-        merge.count(this.dbinfo, 'testprocedure', 'pat0', {}, function(err, count) {
+    it('count empty testprocedures', function(done) {
+        merge.count(this.dbinfo, 'testprocedures', 'pat0', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -81,10 +81,10 @@ describe('merges', function() {
     
     it('add allergies and procedures', function(done) {
         async.parallel([
-            function(callback) {refmodel.saveNewTestSection(context, 'testallergy', 'pat0', '0.0', 2, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testallergy', 'pat2', '2.0', 3, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testprocedure', 'pat0', '0.0', 2, callback);},
-            function(callback) {refmodel.saveNewTestSection(context, 'testprocedure', 'pat1', '1.0', 3, callback);},
+            function(callback) {refmodel.saveNewTestSection(context, 'testallergies', 'pat0', '0.0', 2, callback);},
+            function(callback) {refmodel.saveNewTestSection(context, 'testallergies', 'pat2', '2.0', 3, callback);},
+            function(callback) {refmodel.saveNewTestSection(context, 'testprocedures', 'pat0', '0.0', 2, callback);},
+            function(callback) {refmodel.saveNewTestSection(context, 'testprocedures', 'pat1', '1.0', 3, callback);},
             ], 
             function(err) {done(err);}
         );
@@ -93,12 +93,12 @@ describe('merges', function() {
     it('merge.getMerges (new)', function(done) {
         var that = this;
         async.parallel([
-            function(callback) {merge.getMerges(context.dbinfo, 'testallergy', 'pat0', 'name severity', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testallergy', 'pat1', 'name', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testallergy', 'pat2', 'name value.code',  'filename metadata.fileClass', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testprocedure', 'pat0', 'name proc_type', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testprocedure', 'pat1', 'name proc_value.display', 'filename', callback);},
-            function(callback) {merge.getMerges(context.dbinfo, 'testprocedure', 'pat2', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testallergies', 'pat1', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testallergies', 'pat2', 'name value.code',  'filename metadata.fileClass', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testprocedures', 'pat1', 'name proc_value.display', 'filename', callback);},
+            function(callback) {merge.getMerges(context.dbinfo, 'testprocedures', 'pat2', 'name', 'filename', callback);},
             ],
             function(err, results) {
                 if (err) {
@@ -165,8 +165,8 @@ describe('merges', function() {
     
     it('allergy/procedure add duplicates', function(done) {
         async.parallel([
-            function(callback) {updateDuplicate('pat0', 'testallergy', '0.1', callback);},
-            function(callback) {updateDuplicate('pat0', 'testprocedure', '0.1', callback);},
+            function(callback) {updateDuplicate('pat0', 'testallergies', '0.1', callback);},
+            function(callback) {updateDuplicate('pat0', 'testprocedures', '0.1', callback);},
             ], 
             function(err) {done(err);}
         );
@@ -175,8 +175,8 @@ describe('merges', function() {
     it ('merge.getMerges (duplicate)', function(done) {
         var that = this;
         async.parallel([
-            function(callback) {merge.getMerges(that.dbinfo, 'testallergy', 'pat0', 'name', 'filename', callback);},
-            function(callback) {merge.getMerges(that.dbinfo, 'testprocedure', 'pat0', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(that.dbinfo, 'testallergies', 'pat0', 'name', 'filename', callback);},
+            function(callback) {merge.getMerges(that.dbinfo, 'testprocedures', 'pat0', 'name', 'filename', callback);},
             ],
             function(err, results) {
                 if (err) {

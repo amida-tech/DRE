@@ -85,7 +85,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
             merge_reason: String,
             archived: Boolean
         });
-        result.merge[type] = connection.model(mergeColName, mergeSchema);
+        result.merge[colName] = connection.model(mergeColName, mergeSchema);
 
         var matchColName = type + 'matches';
         var matchSchema = new Schema({
@@ -104,7 +104,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
             diff: {},
             subelements: {}
         });
-        result.match[type] = connection.model(matchColName, matchSchema);
+        result.match[colName] = connection.model(matchColName, matchSchema);
 
         var desc = typeToSchemaDesc[type];
         desc.patKey = String;
@@ -118,9 +118,7 @@ exports.models = function(connection, typeToSection, typeToSchemaDesc) {
         desc.archived = Boolean;
         var schema = new Schema(desc);
 
-
-
-        result.clinical[type] = connection.model(colName, schema);
+        result.clinical[colName] = connection.model(colName, schema);
     });
     return result;
 };

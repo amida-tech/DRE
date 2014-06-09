@@ -4,30 +4,28 @@ var section = require('./section');
 var async = require('async');
 
 exports.getAllSections = function(dbinfo, ptKey, callback) {
-    var types = Object.keys(dbinfo.typeToSection);
-    var f = function(type, cb) {
-        section.getSection(dbinfo, type, ptKey, cb);
+    var secNames = Object.keys(dbinfo.sectionToType);
+    var f = function(secName, cb) {
+        section.getSection(dbinfo, secName, ptKey, cb);
     };
-    async.map(types, f, function(err, sections) {
+    async.map(secNames, f, function(err, sections) {
         if (err) {
             callback(err);
         } else {
-            var accumulator = function(r, type, index) {
-                var name = dbinfo.typeToSection[type];
-                r[name] = sections[index];
+            var accumulator = function(r, secName, index) {
+                r[secName] = sections[index];
                 return r;
             };
-            var result = types.reduce(accumulator, {});
+            var result = secNames.reduce(accumulator, {});
             callback(null, result);
         }
     });
 };
 
 exports.saveAllSectionsAsNew = function(dbinfo, ptKey, master, fileId, callback) {
-    var types = Object.keys(dbinfo.typeToSection);
-    var f = function(type, cb) {
-        var name = dbinfo.typeToSection[type];
-        section.saveNewEntries(dbinfo, type, ptKey, master[name], fileId, cb);
+    var secNames = Object.keys(dbinfo.sectionToType);
+    var f = function(name, cb) {
+        section.saveNewEntries(dbinfo, name, ptKey, master[name], fileId, cb);
     };
-    async.map(types, f, callback);
+    async.map(secNames, f, callback);
 };

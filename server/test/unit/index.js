@@ -68,9 +68,9 @@ describe('CCD_1', function() {
     it('saveAllergies/getAllergies', function(done) {
         allergies = ccd.allergies;
         var n = allergies.length;
-        section.saveNewEntries(dbinfo, 'allergy', 'pat1', allergies, fileId, function(err) {
+        section.saveNewEntries(dbinfo, 'allergies', 'pat1', allergies, fileId, function(err) {
             assert.notOk(err, 'saveAllergies failed');
-            section.getSection(dbinfo, 'allergy', 'pat1', function(err, results) {
+            section.getSection(dbinfo, 'allergies', 'pat1', function(err, results) {
                 storedAllergies = results;
                 var cleanResults = record.cleanSectionEntries(results);
                 expect(cleanResults).to.deep.include.members(allergies);
@@ -83,9 +83,9 @@ describe('CCD_1', function() {
     it('saveProcedures/getProcedures', function(done) {
         var procedures = ccd.procedures;
         var n = procedures.length;
-        section.saveNewEntries(dbinfo, 'procedure', 'pat1', procedures, fileId, function(err) {
+        section.saveNewEntries(dbinfo, 'procedures', 'pat1', procedures, fileId, function(err) {
             assert.notOk(err, 'saveProcedures failed');
-            section.getSection(dbinfo, 'procedure', 'pat1', function(err, results) {
+            section.getSection(dbinfo, 'procedures', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
                 expect(cleanResults).to.deep.include.members(procedures);
                 expect(procedures).to.deep.include.members(cleanResults);
@@ -96,9 +96,9 @@ describe('CCD_1', function() {
     
     it('saveDemographics/getDemographics', function(done) {
         var demographics = ccd.demographics;
-        section.saveNewEntries(dbinfo, 'demographic', 'pat1', demographics, fileId, function(err) {
+        section.saveNewEntries(dbinfo, 'demographics', 'pat1', demographics, fileId, function(err) {
             assert.notOk(err, 'saveProcedures failed');
-            section.getSection(dbinfo, 'demographic', 'pat1', function(err, results) {
+            section.getSection(dbinfo, 'demographics', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
                 assert.deepEqual(cleanResults[0], demographics, 'write, read failed');
                 done();
@@ -108,9 +108,9 @@ describe('CCD_1', function() {
     
     it('saveMedication/getMedication', function(done) {
         var medications = ccd.medications;
-        section.saveNewEntries(dbinfo, 'medication', 'pat1', medications, fileId, function(err) {
+        section.saveNewEntries(dbinfo, 'medications', 'pat1', medications, fileId, function(err) {
             assert.notOk(err, 'saveMedication failed');
-            section.getSection(dbinfo, 'medication', 'pat1', function(err, results) {
+            section.getSection(dbinfo, 'medications', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
                 expect(cleanResults).to.deep.include.members(medications);
                 expect(medications).to.deep.include.members(cleanResults);
@@ -121,9 +121,9 @@ describe('CCD_1', function() {
     
     it('saveProblems/getProblems', function(done) {
         var problems = ccd.problems;
-        section.saveNewEntries(dbinfo, 'problem', 'pat1', problems, fileId, function(err) {
+        section.saveNewEntries(dbinfo, 'problems', 'pat1', problems, fileId, function(err) {
             assert.notOk(err, 'saveProblems failed');
-            section.getSection(dbinfo, 'problem', 'pat1', function(err, results) {
+            section.getSection(dbinfo, 'problems', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
                 expect(cleanResults).to.deep.include.members(problems);
                 expect(problems).to.deep.include.members(cleanResults);
@@ -134,9 +134,9 @@ describe('CCD_1', function() {
     
     it('saveImmunizations/getImmunizations', function(done) {
         var immunizations = ccd.immunizations;
-        section.saveNewEntries(dbinfo, 'immunization', 'pat1', immunizations, fileId, function(err) {
+        section.saveNewEntries(dbinfo, 'immunizations', 'pat1', immunizations, fileId, function(err) {
             assert.notOk(err, 'saveImmunizations failed');
-            section.getSection(dbinfo, 'immunization', 'pat1', function(err, results) {
+            section.getSection(dbinfo, 'immunizations', 'pat1', function(err, results) {
                 var cleanResults = record.cleanSectionEntries(results);
                 expect(cleanResults).to.deep.include.members(immunizations);
                 expect(immunizations).to.deep.include.members(cleanResults);
@@ -146,7 +146,7 @@ describe('CCD_1', function() {
     });
     
     it('allergyCount', function(done) {
-        section.sectionEntryCount(dbinfo, 'allergy', {patKey: 'pat1'}, function(err, count) {
+        section.sectionEntryCount(dbinfo, 'allergies', {patKey: 'pat1'}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -157,7 +157,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount', function(done) {
-        merge.count(dbinfo, 'allergy', 'pat1', {}, function(err, count) {
+        merge.count(dbinfo, 'allergies', 'pat1', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -168,7 +168,7 @@ describe('CCD_1', function() {
     });
     
     it('getMerges', function(done) {
-        merge.getMerges(dbinfo, 'allergy', 'pat1', 'name severity', 'filename uploadDate', function(err, mergeList) {
+        merge.getMerges(dbinfo, 'allergies', 'pat1', 'name severity', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 done(err);
             } else {
@@ -193,7 +193,7 @@ describe('CCD_1', function() {
     
     it('addAllergyMergeEntry', function(done) {
         var id = storedAllergies[0]._id;
-        section.duplicateEntry(dbinfo, 'allergy', id, fileId, function(err) {
+        section.duplicateEntry(dbinfo, 'allergies', id, fileId, function(err) {
             if (err) {
                 done(err);
             } else {
@@ -203,7 +203,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount all', function(done) {
-        merge.count(dbinfo, 'allergy', 'pat1', {}, function(err, count) {
+        merge.count(dbinfo, 'allergies', 'pat1', {}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -214,7 +214,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount new', function(done) {
-        merge.count(dbinfo, 'allergy', 'pat1', {merge_reason: 'new'}, function(err, count) {
+        merge.count(dbinfo, 'allergies', 'pat1', {merge_reason: 'new'}, function(err, count) {
             if (err) {
                 done(err);
             } else {
@@ -225,7 +225,7 @@ describe('CCD_1', function() {
     });
     
     it('mergeCount duplicate', function(done) {
-        merge.count(dbinfo, 'allergy', 'pat1', {merge_reason: 'duplicate'}, function(err, count) {
+        merge.count(dbinfo, 'allergies', 'pat1', {merge_reason: 'duplicate'}, function(err, count) {
             if (err) {
                 done(err);
             } else {
