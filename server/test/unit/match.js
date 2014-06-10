@@ -4,8 +4,9 @@ var chai = require('chai');
 var async = require('async');
 
 var match = require('../../lib/recordjs/match');
+var modelutil = require('../../lib/recordjs/modelutil');
 
-var refmodel = require('./refModel')
+var refmodel = require('./refmodel')
 
 var expect = chai.expect;
 chai.config.includeStack = true;
@@ -198,7 +199,7 @@ describe('match.js methods', function() {
     var cancelMatch = function(context, secName, recordKey, index, callback) {
         var key = refmodel.partialEntriesContextKey(secName, recordKey);
         var id = context[key][index]._id;
-        match.cancel(context.dbinfo, secName, id, 'cancel' + recordKey + index, callback);
+        match.cancel(context.dbinfo, secName, id, 'cancel_' + recordKey + '.' + index, callback);
     }
 
     it('cancel', function(done) {
@@ -247,7 +248,7 @@ describe('match.js methods', function() {
     var acceptMatch = function(context, secName, recordKey, index, callback) {
         var key = refmodel.partialEntriesContextKey(secName, recordKey);
         var id = context[key][index]._id;
-        match.accept(context.dbinfo, secName, id, 'accept' + recordKey + index, callback);
+        match.accept(context.dbinfo, secName, id, 'accept_' + recordKey + '.' + index, callback);
     }
 
     it('accept', function(done) {
@@ -284,6 +285,79 @@ describe('match.js methods', function() {
                 done();
             }
         });
+    });
+
+    var callGet = function(type, recordIndex, index, callback) {
+        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+        var id = context[key][index]._id;
+        match.get(context.dbinfo, type, id, callback);
+    };
+
+    var verifyGetContent = function(result, recordIndex, index, destRecordIndex, destIndex, type, diffType, reason) {
+        expect(result).to.exist;
+    
+        var suffix = '_' + recordIndex + '.' + index;
+        var entry = refmodel.testObjectInstance[type](suffix);
+        var resultEntry = modelutil.mongooseToBBModelDocument(result.match_entry_id);
+        delete resultEntry.__v;
+        delete resultEntry.reviewed;
+        delete resultEntry.archived;
+        expect(resultEntry).to.deep.equal(entry);
+
+        var destSuffix = '_' + destRecordIndex + '.' + destIndex;
+        var destEntry = refmodel.testObjectInstance[type](destSuffix);
+        var destResultEntry = modelutil.mongooseToBBModelDocument(result.entry_id);
+        delete destResultEntry.__v;
+        delete destResultEntry.reviewed;
+        delete resultEntry.archived;        
+        expect(destResultEntry).to.deep.equal(destEntry);
+
+        if (reason) {
+            expect(result.determination).to.equal(reason + suffix);
+        } else {
+            expect(result.determination).to.not.exist;
+        }
+
+        ['_id', '__v', 'entry_type', 'entry_id', 'match_entry_id', 'patKey', 'determination'].forEach(function(p) {
+            delete result[p];
+        });
+        
+        var diffSuffix = '_' + recordIndex + '.' + destIndex;
+        var diffExpect = refmodel.matchObjectInstance[diffType](diffSuffix, destIndex);
+        delete diffExpect.match;
+        expect(result).to.deep.equal(diffExpect);
+    };
+
+    it('get', function(done) {
+        async.parallel([
+            function(callback) {callGet('testallergies', '0.1', 0, callback);},
+            function(callback) {callGet('testallergies', '0.1', 1, callback);},
+            function(callback) {callGet('testallergies', '0.1', 2, callback);},
+            function(callback) {callGet('testallergies', '2.1', 0, callback);},
+            function(callback) {callGet('testprocedures', '0.1', 0, callback);},
+            function(callback) {callGet('testprocedures', '1.1', 0, callback);},
+            function(callback) {callGet('testprocedures', '1.1', 1, callback);},
+            function(callback) {callGet('testprocedures', '1.2', 0, callback);},
+            function(callback) {callGet('testprocedures', '1.2', 1, callback);},
+            ], 
+            function(err, results) {
+                if (err) {
+                    done(err);
+                } else {
+                    verifyGetContent(results[0], '0.1', 0, '0.0', 4, 'testallergies', 'diff');
+                    verifyGetContent(results[1], '0.1', 1, '0.0', 0, 'testallergies', 'partial');
+                    verifyGetContent(results[2], '0.1', 2, '0.0', 2, 'testallergies', 'diffsub', 'cancel');
+                    verifyGetContent(results[3], '2.1', 0, '2.0', 1, 'testallergies', 'diffsub', 'accept');
+                    verifyGetContent(results[4], '0.1', 0, '0.0', 2, 'testprocedures', 'partialsub');
+                    verifyGetContent(results[5], '1.1', 0, '1.0', 1, 'testprocedures', 'partial', 'cancel');
+                    verifyGetContent(results[6], '1.1', 1, '1.0', 3, 'testprocedures', 'diff');
+                    verifyGetContent(results[7], '1.2', 0, '1.0', 2, 'testprocedures', 'partialsub');
+                    verifyGetContent(results[8], '1.2', 1, '1.0', 4, 'testprocedures', 'diffsub', 'accept');
+                    
+                    done();
+                }
+            }
+        );
     });
 
     after(function(done) {

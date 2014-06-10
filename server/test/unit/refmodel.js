@@ -44,7 +44,7 @@ var getConnectionOptions = function(dbName) {
     };
 };
 
-var testObjectInstance = {
+var testObjectInstance = exports.testObjectInstance = {
     testallergies: function(suffix) {
         return {
             name: 'name' + suffix,

@@ -24,7 +24,7 @@ var mongooseCleanSection = exports.mongooseCleanSection = function(section) {
     }
 };
 
-var mongooseToBBModelDocument = exports.mongooseCleanDocument = function(doc) {
+var mongooseToBBModelDocument = exports.mongooseToBBModelDocument = function(doc) {
     var result = _.clone(doc);
     ['_id', 'patKey', 'metadata'].forEach(function(prop) {
         delete result[prop];
