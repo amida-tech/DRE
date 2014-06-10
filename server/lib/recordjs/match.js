@@ -22,24 +22,17 @@ exports.get = function(dbinfo, secName, id, callback) {
     });
 };
 
-exports.getAll = function(dbinfo, secName, patKey, typeFields, recordFields, callback) {
-
+exports.getAll = function(dbinfo, secName, ptKey, fields, callback) {
     var model = dbinfo.matchModels[secName];
-    var allFields = typeFields + ' ' + recordFields;
-
-    var query = model.find({patKey: patKey}).populate('entry_id match_entry_id', allFields).lean();
-    query.exec(function (err, matchResults) {
+    var query = model.find({patKey: ptKey}).populate('entry_id match_entry_id', fields).lean();
+    query.exec(function (err, results) {
         if (err) {
             callback(err);
         } else {
-            var returnMatches = [];
-            for (var iMatch in matchResults) {
-                //Filter to undetermined records.
-                if (matchResults[iMatch].determination === undefined) {
-                    returnMatches.push(matchResults[iMatch]);
-                }
-            }
-            callback(null, returnMatches);
+            var filteredResults = results.filter(function(result) {
+                return result.determination === undefined;
+            });
+            callback(null, filteredResults);
         }
     });
 };

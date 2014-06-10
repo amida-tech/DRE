@@ -53,10 +53,10 @@ describe('match.js methods', function() {
 
     it('getAll (empty db)', function(done) {
         async.parallel([
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback);},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', 'filename', callback);},
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat1', 'name severity', 'filename', callback);},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name severity', 'filename', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat1', 'name severity', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name severity', callback);},
             ], 
             function(err, results) {
                 if (err) {
@@ -90,10 +90,10 @@ describe('match.js methods', function() {
 
     it('getAll (db sections no partial sections)', function(done) {
         async.parallel([
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat1', 'name severity', 'filename', callback);},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name proc_type', 'filename', callback);},
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat2', 'name severity', 'filename', callback);},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat2', 'name severity', 'filename', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat1', 'name severity', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name proc_type', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat2', 'name severity', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat2', 'name severity', callback);},
             ], 
             function(err, results) {
                 if (err) {
@@ -152,11 +152,11 @@ describe('match.js methods', function() {
 
     var callGetAll = function(callback) {
         async.parallel([
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat2', 'name severity', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name proc_type', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat2', 'name proc_type', 'filename', callback)}
+            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', callback)},
+            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat2', 'name severity', callback)},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', callback)},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name proc_type', callback)},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat2', 'name proc_type', callback)}
             ],   
             function(err, results) {
                 if (err) {
