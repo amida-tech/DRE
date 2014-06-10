@@ -10,6 +10,7 @@ var merge = require('../../lib/recordjs/merge');
 var section = require('../../lib/recordjs/section');
 var entry = require('../../lib/recordjs/entry');
 var storage = require('../../lib/recordjs/storage');
+var modelutil = require('../../lib/recordjs/modelutil');
 
 var refmodel = require('./refModel');
 
@@ -168,7 +169,7 @@ describe('merge.js methods', function() {
                         var mr = result.merge_reason;
                         r[mr][result.entry_id._id] = result;
                         return r;
-                    }, {new: {}, duplicate:{}});
+                    }, {new: {}, duplicate:{}, update:{}});
                     callback(null, resultsById);
                 }
             }
@@ -310,6 +311,7 @@ describe('merge.js methods', function() {
             } else {
                 verifyGetAll(context, resultsById.new, 'testallergies', '0.0', 0);
                 verifyGetAllNegative(context, resultsById.duplicate, 'testallergies', '0.0', 0);
+                verifyGetAllNegative(context, resultsById.update, 'testallergies', '0.0', 0);
                 verifyGetAll(context, resultsById.new, 'testallergies', '0.0', 1);
                 verifyGetAll(context, resultsById.duplicate, 'testallergies', '0.0', 1);
                 verifyGetAll(context, resultsById.new, 'testallergies', '2.0', 0);
@@ -319,6 +321,7 @@ describe('merge.js methods', function() {
                 verifyGetAll(context, resultsById.new, 'testprocedures', '0.0', 1);
                 verifyGetAll(context, resultsById.new, 'testprocedures', '1.0', 0);
                 verifyGetAll(context, resultsById.duplicate, 'testprocedures', '1.0', 0);
+                verifyGetAllNegative(context, resultsById.update, 'testprocedures', '1.0', 0);
                 verifyGetAll(context, resultsById.new, 'testprocedures', '1.0', 1);
                 verifyGetAll(context, resultsById.new, 'testprocedures', '1.0', 2);
                 verifyGetAllNegative(context, resultsById.new, 'testprocedures', '1.0', 3);
@@ -326,10 +329,150 @@ describe('merge.js methods', function() {
                 verifyGetAllPartialNegative(context, resultsById.new, 'testprocedures', '1.1', 0);
                 verifyGetAllPartial(context, resultsById.new, 'testprocedures', '0.1', 0);
                 verifyGetAllPartial(context, resultsById.new, 'testprocedures', '1.2', 0);
+                verifyGetAllPartialNegative(context, resultsById.update, 'testprocedures', '1.2', 0);
                 done();
             }
         });
     });
+    
+    var updateEntry = function(context, type, recordIndex, index, updateObject, callback) {
+        var key = refmodel.newEntriesContextKey(type, recordIndex);
+        var id = context[key][index];
+        var rid = context.storageIds[recordIndex];
+        entry.update(context.dbinfo, type, id, rid, updateObject, callback);
+    };
+
+    var updateEntryPartial = function(context, type, recordIndex, index, updateObject, callback) {
+        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+        var id = context[key][index].match_entry_id;
+        var rid = context.storageIds[recordIndex];
+        entry.update(context.dbinfo, type, id, rid, updateObject, callback);
+    };
+
+    it('entry.update', function(done) {
+        var updObj0 = {
+            name: "name_upd_0.0.0",
+            value: {code: 'code_upd_0.0.0'}
+        };
+        var updObj1 = {
+            name: "name_upd_1.0.0",
+            value: {code: 'code_upd_1.0.0'}
+        };
+        var updObj2 = {
+            name: "name_upd2",
+            value: {code: 'code_upd_1.2.0'}
+        };
+        async.parallel([
+            function(callback) {updateEntry(context, 'testallergies', '0.0', 0, updObj0, callback);},
+            function(callback) {updateEntry(context, 'testprocedures', '1.0', 0, updObj1, callback);},
+            function(callback) {updateEntryPartial(context, 'testprocedures', '1.2', 0, updObj2, callback);}
+            ],
+            function(err) {
+                done(err);
+            }
+        );
+    });
+    
+    it('getAll (after entry.update)', function(done) {
+        callGetAll(function(err, resultsById) {
+            if (err) {
+                done(err);
+            } else {
+                verifyGetAll(context, resultsById.new, 'testallergies', '0.0', 0);
+                verifyGetAllNegative(context, resultsById.duplicate, 'testallergies', '0.0', 0);
+                verifyGetAll(context, resultsById.update, 'testallergies', '0.0', 0);
+                verifyGetAll(context, resultsById.new, 'testallergies', '0.0', 1);
+                verifyGetAll(context, resultsById.duplicate, 'testallergies', '0.0', 1);
+                verifyGetAll(context, resultsById.new, 'testallergies', '2.0', 0);
+                verifyGetAll(context, resultsById.new, 'testallergies', '2.0', 1);
+                verifyGetAll(context, resultsById.new, 'testallergies', '2.0', 2);
+                verifyGetAll(context, resultsById.new, 'testprocedures', '0.0', 0);
+                verifyGetAll(context, resultsById.new, 'testprocedures', '0.0', 1);
+                verifyGetAll(context, resultsById.new, 'testprocedures', '1.0', 0);
+                verifyGetAll(context, resultsById.duplicate, 'testprocedures', '1.0', 0);
+                verifyGetAll(context, resultsById.update, 'testprocedures', '1.0', 0);
+                verifyGetAll(context, resultsById.new, 'testprocedures', '1.0', 1);
+                verifyGetAll(context, resultsById.new, 'testprocedures', '1.0', 2);
+                verifyGetAllNegative(context, resultsById.new, 'testprocedures', '1.0', 3);
+                verifyGetAllPartialNegative(context, resultsById.new, 'testallergies', '0.1', 0);
+                verifyGetAllPartialNegative(context, resultsById.new, 'testprocedures', '1.1', 0);
+                verifyGetAllPartial(context, resultsById.new, 'testprocedures', '0.1', 0);
+                verifyGetAllPartial(context, resultsById.new, 'testprocedures', '1.2', 0);
+                verifyGetAllPartial(context, resultsById.update, 'testprocedures', '1.2', 0);
+                done();
+            }
+        });
+    });
+    
+    var getEntry = function(context, type, recordIndex, index, callback) {
+        var key = refmodel.newEntriesContextKey(type, recordIndex);
+        var id = context[key][index];
+        entry.get(context.dbinfo, type, id, callback);
+    };
+
+    var getEntryPartial = function(context, type, recordIndex, index, callback) {
+        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+        var id = context[key][index].match_entry_id;
+        entry.get(context.dbinfo, type, id, callback);
+    };
+
+    var verifyEntryGet = function(context, result, type, recordIndex, index) {
+        var key = refmodel.newEntriesContextKey(type, recordIndex);
+        var id = context[key][index];
+
+        expect(result.entry_id.toString()).to.equal(id.toString());
+        expect(result.record_id.toString()).to.equal(context.storageIds[recordIndex].toString());
+    };
+
+    var verifyMergeReason = function(attr, expectedReasons) {
+        expect(attr).to.exist;
+        expect(attr).to.have.length(expectedReasons.length);
+        var reasons = attr.reduce(function(r, e) {
+            r.push(e.merge_reason);
+            return r;
+        }, []);
+        expect(reasons).to.deep.equal(expectedReasons);
+    };
+
+    var verifyEntryGetContent = function(context, result, type, recordIndex, index, updRecordIndex, updIndex) {
+        expect(result).to.exist;
+        var r = modelutil.mongooseToBBModelDocument(result);
+    
+        //console.log(r);
+
+        var suffix = '_' + recordIndex + '.' + index;
+        var expected = refmodel.testObjectInstance[type](suffix);
+        //expect(r).to.deep.equal(expected);
+    };
+
+    xit('entry.get', function(done) {
+      async.parallel([
+            function(callback) {getEntry(context, 'testallergies', '0.0', 0, callback);},
+            function(callback) {getEntry(context, 'testprocedures', '1.0', 0, callback);},
+            function(callback) {getEntryPartial(context, 'testprocedures', '1.2', 0, callback);}
+            ],
+            function(err, results) {
+                if (err) {
+                    done(err);
+                } else {
+                    var result0 = results[0];
+                    verifyEntryGetContent(context, results[0], 'testallergies', '0.0', 0, '0.0', 0);
+                    expect(result0.metadata).to.exist;
+                    var attr0 = result0.metadata.attribution;
+                    verifyMergeReason(attr0, ['new', 'update']);
+                    verifyEntryGet(context, attr0[0], 'testallergies', '0.0', 0);
+                    verifyEntryGet(context, attr0[1], 'testallergies', '0.0', 0);
+
+
+
+                    done();
+                }
+            }
+        );
+    });
+    
+
+
 
     after(function(done) {
         context.dbinfo.db.dropDatabase();

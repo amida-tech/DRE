@@ -121,10 +121,6 @@ exports.duplicateEntry = function(secName, id, sourceId, callback) {
     entry.duplicate(dbinfo, secName, id, sourceId, callback);
 };
 
-exports.removeEntry = function(secName, id, callback) {
-    entry.remove(dbinfo, secName, id, callback);
-};
-
 // utility
 
 exports.cleanSection = function(input) {

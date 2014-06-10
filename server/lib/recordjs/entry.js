@@ -22,14 +22,17 @@ exports.remove = function(dbinfo, secName, recordId, callback) {
     async.series([removeMerge, removeModel], callback);
 };
 
-var get = exports.get = function(dbinfo, secName, input_id, callback) {
+exports.get = function(dbinfo, secName, id, callback) {
     var model = dbinfo.models[secName];
-
-    var query = model.findOne({
-        "_id": input_id
-    }).populate('metadata.attribution');
-
-    query.exec(callback);
+    var query = model.findOne({"_id": id});
+    query.populate('metadata.attribution').lean();
+    query.exec(function(err, result) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    });
 };
 
 exports.update = function(dbinfo, secName, recordId, fileId, recordUpdate, callback) {
@@ -72,7 +75,10 @@ exports.save = function(dbinfo, secName, patKey, entryObject, sourceID, callback
 };
 
 exports.duplicate = function(dbinfo, secName, update_id, sourceID, callback) {
-    get(dbinfo, secName, update_id, function(err, current) {
+    var model = dbinfo.models[secName];
+
+    var query = model.findOne({"_id": update_id});
+    query.exec(function(err, current) {
         var mergeInfo = {
             record_id: sourceID,
             merge_reason: 'duplicate'
