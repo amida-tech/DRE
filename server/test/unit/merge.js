@@ -52,7 +52,7 @@ describe('merge.js methods', function() {
     });
     
     it('add records', function(done) {
-        refmodel.addRecordsPerPatient(context, [3, 3, 1], done);
+        refmodel.addRecordsPerPatient(context, [3, 5, 1], done);
     });
     
     it('add sections', function(done) {
@@ -351,16 +351,13 @@ describe('merge.js methods', function() {
 
     it('entry.update', function(done) {
         var updObj0 = {
-            name: "name_upd_0.0.0",
-            value: {code: 'code_upd_0.0.0'}
+            name: "name_upd_0.0.0"
         };
         var updObj1 = {
-            name: "name_upd_1.0.0",
-            value: {code: 'code_upd_1.0.0'}
+            name: "name_upd_1.0.0"
         };
         var updObj2 = {
-            name: "name_upd2",
-            value: {code: 'code_upd_1.2.0'}
+            name: "name_upd_1.2.0"
         };
         async.parallel([
             function(callback) {updateEntry(context, 'testallergies', '0.0', 0, updObj0, callback);},
@@ -424,6 +421,14 @@ describe('merge.js methods', function() {
         expect(result.record_id.toString()).to.equal(context.storageIds[recordIndex].toString());
     };
 
+    var verifyEntryGetPartial = function(context, result, type, recordIndex, index) {
+        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+        var id = context[key][index].match_entry_id;
+
+        expect(result.entry_id.toString()).to.equal(id.toString());
+        expect(result.record_id.toString()).to.equal(context.storageIds[recordIndex].toString());
+    };
+
     var verifyMergeReason = function(attr, expectedReasons) {
         expect(attr).to.exist;
         expect(attr).to.have.length(expectedReasons.length);
@@ -437,15 +442,20 @@ describe('merge.js methods', function() {
     var verifyEntryGetContent = function(context, result, type, recordIndex, index, updRecordIndex, updIndex) {
         expect(result).to.exist;
         var r = modelutil.mongooseToBBModelDocument(result);
-    
-        //console.log(r);
+        delete r.reviewed;
+        delete r.__v;
 
         var suffix = '_' + recordIndex + '.' + index;
         var expected = refmodel.testObjectInstance[type](suffix);
-        //expect(r).to.deep.equal(expected);
+        if (updRecordIndex && updIndex !== null) {
+            var updSuffix = '_upd_' + updRecordIndex + '.' + updIndex;
+            expected.name = 'name' + updSuffix;
+        }
+
+        expect(r).to.deep.equal(expected);
     };
 
-    xit('entry.get', function(done) {
+    it('entry.get', function(done) {
       async.parallel([
             function(callback) {getEntry(context, 'testallergies', '0.0', 0, callback);},
             function(callback) {getEntry(context, 'testprocedures', '1.0', 0, callback);},
@@ -463,7 +473,21 @@ describe('merge.js methods', function() {
                     verifyEntryGet(context, attr0[0], 'testallergies', '0.0', 0);
                     verifyEntryGet(context, attr0[1], 'testallergies', '0.0', 0);
 
+                    var result1 = results[1];
+                    verifyEntryGetContent(context, results[1], 'testprocedures', '1.0', 0, '1.0', 0);
+                    expect(result1.metadata).to.exist;
+                    var attr1 = result1.metadata.attribution;
+                    verifyMergeReason(attr1, ['new', 'duplicate', 'update']);
+                    verifyEntryGet(context, attr1[0], 'testprocedures', '1.0', 0);
+                    verifyEntryGet(context, attr1[1], 'testprocedures', '1.0', 0);
 
+                    var result2 = results[2];
+                    verifyEntryGetContent(context, results[2], 'testprocedures', '1.2', 0, '1.2', 0);
+                    expect(result2.metadata).to.exist;
+                    var attr2 = result2.metadata.attribution;
+                    verifyMergeReason(attr2, ['new', 'update']);
+                    verifyEntryGetPartial(context, attr2[0], 'testprocedures', '1.2', 0);
+                    verifyEntryGetPartial(context, attr2[1], 'testprocedures', '1.2', 0);
 
                     done();
                 }
@@ -471,9 +495,6 @@ describe('merge.js methods', function() {
         );
     });
     
-
-
-
     after(function(done) {
         context.dbinfo.db.dropDatabase();
         done();
