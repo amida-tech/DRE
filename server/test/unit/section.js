@@ -16,16 +16,16 @@ var refmodel = require('./refModel')
 var expect = chai.expect;
 chai.config.includeStack = true;
 
-describe('partial methods', function() {
-    var context = {};
+describe('section.js methods', function() {
+    var context = {}; // populated by refmodel common methods
 
     refmodel.prepareConnection('sectiontest', context)();
 
-    it('add new storage', function(done) {
+    it('add records', function(done) {
         refmodel.addRecordsPerPatient(context, [3, 3, 2], done);
     });
     
-    it('save news', function(done) {
+    it('save', function(done) {
         async.parallel([
             function(callback) {refmodel.saveSection(context, 'testallergies', 'pat0', '0.0', 5, callback);},
             function(callback) {refmodel.saveSection(context, 'testallergies', 'pat2', '2.0', 3, callback);},
@@ -36,7 +36,7 @@ describe('partial methods', function() {
         );
     });
 
-    it('save partials', function(done) {
+    it('savePartial', function(done) {
         var matchInfo0 = refmodel.createMatchInformation('0.1', [4, 0, 2], ['diff', 'partial', 'diffsub']);
         var matchInfo1 = refmodel.createMatchInformation('2.1', [1], ['diffsub']);
         var matchInfo2 = refmodel.createMatchInformation('0.1', [2], ['partialsub']);
@@ -54,7 +54,61 @@ describe('partial methods', function() {
         );
     });
 
-    it('get partials', function(done) {
+    var checkBBData = function(getResult, original) {
+        var bbClean = modelutil.mongooseToBBModelSection(getResult);
+        expect(original).to.deep.include.members(bbClean);
+        expect(bbClean).to.deep.include.members(original);
+    };
+
+    var checkPatientNFile = function(result, ptKey, filename) {
+        result.forEach(function(entry) {
+            expect(entry.patKey).to.equal(ptKey);
+            expect(entry.metadata.attribution[0].record_id.filename).to.equal(filename);                       
+        });
+    };
+    
+   it('get', function(done) {
+        async.parallel([
+            function(callback) {section.get(context.dbinfo, 'testallergies', 'pat0', callback);},
+            function(callback) {section.get(context.dbinfo, 'testallergies', 'pat2', callback);},
+            function(callback) {section.get(context.dbinfo, 'testprocedures', 'pat0', callback);},
+            function(callback) {section.get(context.dbinfo, 'testprocedures', 'pat1', callback);},
+            ], 
+            function(err, results) {
+                if (! err) {
+                    checkBBData(results[0], refmodel.createTestSection('testallergies', '0.0', 5));
+                    checkBBData(results[1], refmodel.createTestSection('testallergies', '2.0', 3));
+                    checkBBData(results[2], refmodel.createTestSection('testprocedures', '0.0', 3));
+                    checkBBData(results[3], refmodel.createTestSection('testprocedures', '1.0', 5));
+                        
+                    results.forEach(function(result) {
+                        result.forEach(function(entry) {
+                            expect(entry.archived).to.not.be.ok;
+                            expect(entry.reviewed).to.not.be.ok;
+                            expect(entry.metadata).to.exist;
+                            expect(entry.metadata.attribution).to.exist;
+                            expect(entry.metadata.attribution).to.have.length(1);
+                            expect(entry.metadata.attribution[0].merge_reason).to.equal('new');
+                            expect(entry.metadata.attribution[0].record_id).to.exist;                       
+                        });
+                    });
+    
+                    checkPatientNFile(results[0], 'pat0', 'c00.xml');
+                    checkPatientNFile(results[1], 'pat2', 'c20.xml');
+                    checkPatientNFile(results[2], 'pat0', 'c00.xml');
+                    checkPatientNFile(results[3], 'pat1', 'c10.xml');
+    
+                    expect(results[0]).to.have.length(5);
+                    expect(results[1]).to.have.length(3);
+                    expect(results[2]).to.have.length(3);
+                    expect(results[3]).to.have.length(5);
+                }
+                done(err);
+            }
+        );
+    });
+
+   it('getPartial', function(done) {
         async.parallel([
             function(callback) {section.getPartial(context.dbinfo, 'testallergies', 'pat0', callback);},
             function(callback) {section.getPartial(context.dbinfo, 'testallergies', 'pat2', callback);},
@@ -63,11 +117,6 @@ describe('partial methods', function() {
             ], 
             function(err, results) {
                 if (! err) {
-                    var checkBBData = function(getResult, original) {
-                        var bbClean = modelutil.mongooseToBBModelSection(getResult);
-                        expect(original).to.deep.include.members(bbClean);
-                        expect(bbClean).to.deep.include.members(original);
-                    };
                     checkBBData(results[0], refmodel.createTestSection('testallergies', '0.1', 3));
                     checkBBData(results[1], refmodel.createTestSection('testallergies', '2.1', 1));
                     checkBBData(results[2], refmodel.createTestSection('testprocedures', '0.1', 1));
@@ -86,13 +135,6 @@ describe('partial methods', function() {
                             expect(entry.metadata.attribution[0].record_id).to.exist;                       
                         });
                     });
-    
-                    var checkPatientNFile = function(result, ptKey, filename) {
-                        result.forEach(function(entry) {
-                            expect(entry.patKey).to.equal(ptKey);
-                            expect(entry.metadata.attribution[0].record_id.filename).to.equal(filename);                       
-                        });
-                    };
     
                     checkPatientNFile(results[0], 'pat0', 'c01.xml');
                     checkPatientNFile(results[1], 'pat2', 'c21.xml');
@@ -118,7 +160,7 @@ describe('partial methods', function() {
         );
     });
 
-    it('remove partials', function(done) {
+    it('entry.remove', function(done) {
         var key0 = refmodel.partialEntriesContextKey('testallergies', '2.1');
         var id0 = context[key0][0].match_entry_id;
         var key1 = refmodel.partialEntriesContextKey('testprocedures', '1.2');
@@ -131,7 +173,7 @@ describe('partial methods', function() {
         );
     });
 
-    it('get partials post remove', function(done) {
+    it('getPartial (after remove)', function(done) {
         async.parallel([
             function(callback) {section.getPartial(context.dbinfo, 'testallergies', 'pat2', callback);},
             function(callback) {section.getPartial(context.dbinfo, 'testprocedures', 'pat1', callback);},
