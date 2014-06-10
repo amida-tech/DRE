@@ -44,11 +44,11 @@ describe('partial methods', function() {
         var matchInfo4 = refmodel.createMatchInformation('1.2', [2, 4], ['partialsub', 'diffsub']);
 
         async.parallel([
-            function(callback) {refmodel.saveNewPartialSection(context, 'testallergies', 'pat0', '0.1', '0.0', matchInfo0, callback);},
-            function(callback) {refmodel.saveNewPartialSection(context, 'testallergies', 'pat2', '2.1', '2.0', matchInfo1, callback);},
-            function(callback) {refmodel.saveNewPartialSection(context, 'testprocedures', 'pat0', '0.1', '0.0', matchInfo2, callback);},
-            function(callback) {refmodel.saveNewPartialSection(context, 'testprocedures', 'pat1', '1.1', '1.0', matchInfo3, callback);},
-            function(callback) {refmodel.saveNewPartialSection(context, 'testprocedures', 'pat1', '1.2', '1.0', matchInfo4, callback);},
+            function(callback) {refmodel.savePartialSection(context, 'testallergies', 'pat0', '0.1', '0.0', matchInfo0, callback);},
+            function(callback) {refmodel.savePartialSection(context, 'testallergies', 'pat2', '2.1', '2.0', matchInfo1, callback);},
+            function(callback) {refmodel.savePartialSection(context, 'testprocedures', 'pat0', '0.1', '0.0', matchInfo2, callback);},
+            function(callback) {refmodel.savePartialSection(context, 'testprocedures', 'pat1', '1.1', '1.0', matchInfo3, callback);},
+            function(callback) {refmodel.savePartialSection(context, 'testprocedures', 'pat1', '1.2', '1.0', matchInfo4, callback);},
             ], 
             function(err) {done(err);}
         );

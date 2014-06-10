@@ -161,7 +161,7 @@ var saveSection = exports.saveSection = function(context, type, patKey, recordIn
     });
 };
 
-exports.saveNewPartialSection = function(context, type, patKey, recordIndex, destRecordIndex, extraContent, callback) {
+exports.savePartialSection = function(context, type, patKey, recordIndex, destRecordIndex, extraContent, callback) {
     var data = createTestSection(type, recordIndex, extraContent.length);
     var sourceId = context.storageIds[recordIndex];
     var key = newEntriesContextKey(type, destRecordIndex);

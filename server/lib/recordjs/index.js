@@ -59,8 +59,8 @@ exports.mergeCount = function(secName, ptKey, conditions, callback) {
 
 // matches
 
-exports.getMatches = function(secName, ptKey, entryFields, recordFields, callback) {
-    match.getAll(dbinfo, secName, ptKey, entryFields, recordFields, callback);
+exports.getMatches = function(secName, ptKey, fields, callback) {
+    match.getAll(dbinfo, secName, ptKey, fields, callback);
 };
 
 exports.getMatch = function(secName, id, callback) {
