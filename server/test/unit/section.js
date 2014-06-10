@@ -4,12 +4,10 @@ var chai = require('chai');
 var async = require('async');
 
 var db = require('../../lib/recordjs/db');
-var merge = require('../../lib/recordjs/merge');
 var section = require('../../lib/recordjs/section');
 var entry = require('../../lib/recordjs/entry');
 var storage = require('../../lib/recordjs/storage');
 var modelutil = require('../../lib/recordjs/modelutil');
-var match = require('../../lib/recordjs/match');
 
 var refmodel = require('./refModel')
 

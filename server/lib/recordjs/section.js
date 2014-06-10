@@ -45,9 +45,9 @@ exports.getPartial = function(dbinfo, secName, ptKey, callback) {
     localGet(dbinfo, secName, ptKey, false, callback);
 };
 
-exports.save = function(dbinfo, secName, ptKey, input, sourceID, callback) {
+exports.save = function(dbinfo, secName, ptKey, input, sourceId, callback) {
     var localSaveNewEntry = function(entryObject, cb) {
-        entry.save(dbinfo, secName, entryObject, sourceID, cb);    
+        entry.save(dbinfo, secName, entryObject, sourceId, cb);    
     };
 
     var prepForDb = function(entryObject) {
@@ -70,10 +70,10 @@ exports.save = function(dbinfo, secName, ptKey, input, sourceID, callback) {
     }
 };
 
-exports.savePartial = function(dbinfo, secName, patKey, input, sourceID, callback) {
+exports.savePartial = function(dbinfo, secName, patKey, input, sourceId, callback) {
     var savePartialEntry = function(entryObject, cb) {
         var localSaveNewEntry = function(cb2) {
-            entry.save(dbinfo, secName, entryObject.entry, sourceID, cb2);    
+            entry.save(dbinfo, secName, entryObject.entry, sourceId, cb2);    
         };
 
         function savePartialMatch (matchEntryId, cb2) {
