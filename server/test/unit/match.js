@@ -127,7 +127,7 @@ describe('match.js methods', function() {
 
     verifyMatchCount(' (added partial sections)', [3, 1, 0, 4, 1, 0])();
 
-    var verifyMatch = function(resultsById, recordIndex, index, destRecordIndex, destIndex, type, diffType) {
+    var verifyContent = function(resultsById, recordIndex, index, destRecordIndex, destIndex, type, diffType) {
         var key = refmodel.partialEntriesContextKey(type, recordIndex);
         var id = context[key][index]._id;
         var result = resultsById[id];
@@ -172,36 +172,27 @@ describe('match.js methods', function() {
         );                
     }; 
 
-    it('getAll', function(done) {
-        async.parallel([
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat2', 'name severity', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name proc_type', 'filename', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat2', 'name proc_type', 'filename', callback)}
-            ],   
-            function(err, results) {
-                if (! err) {
-                    var allResults = results[0].concat(results[1]).concat(results[2]).concat(results[3]).concat(results[4]);
-                    expect(allResults).to.have.length(9);
-                    var resultsById = allResults.reduce(function(r, result) {
-                        r[result._id] = result;
-                        return r;
-                    }, {});
-                    verifyMatch(resultsById, '0.1', 0, '0.0', 4, 'testallergies', 'diff');
-                    verifyMatch(resultsById, '0.1', 1, '0.0', 0, 'testallergies', 'partial');
-                    verifyMatch(resultsById, '0.1', 2, '0.0', 2, 'testallergies', 'diffsub');
-                    verifyMatch(resultsById, '2.1', 0, '2.0', 1, 'testallergies', 'diffsub');
-
-                    verifyMatch(resultsById, '0.1', 0, '0.0', 2, 'testprocedures', 'partialsub');
-                    verifyMatch(resultsById, '1.1', 0, '1.0', 1, 'testprocedures', 'partial');
-                    verifyMatch(resultsById, '1.1', 1, '1.0', 3, 'testprocedures', 'diff');
-                    verifyMatch(resultsById, '1.2', 0, '1.0', 2, 'testprocedures', 'partialsub');
-                    verifyMatch(resultsById, '1.2', 1, '1.0', 4, 'testprocedures', 'diffsub');
-                }
+    it('getAll (added partial sections)', function(done) {
+        callGetAll(function(err, totalCount, resultsById) {
+            if (err) {
                 done(err);
+            } else {
+                expect(totalCount).to.equal(9);
+
+                verifyContent(resultsById, '0.1', 0, '0.0', 4, 'testallergies', 'diff');
+                verifyContent(resultsById, '0.1', 1, '0.0', 0, 'testallergies', 'partial');
+                verifyContent(resultsById, '0.1', 2, '0.0', 2, 'testallergies', 'diffsub');
+                verifyContent(resultsById, '2.1', 0, '2.0', 1, 'testallergies', 'diffsub');
+
+                verifyContent(resultsById, '0.1', 0, '0.0', 2, 'testprocedures', 'partialsub');
+                verifyContent(resultsById, '1.1', 0, '1.0', 1, 'testprocedures', 'partial');
+                verifyContent(resultsById, '1.1', 1, '1.0', 3, 'testprocedures', 'diff');
+                verifyContent(resultsById, '1.2', 0, '1.0', 2, 'testprocedures', 'partialsub');
+                verifyContent(resultsById, '1.2', 1, '1.0', 4, 'testprocedures', 'diffsub');
+
+                done();
             }
-        );    
+        });
     });
 
     var cancelMatch = function(context, secName, recordKey, index, callback) {
@@ -223,6 +214,36 @@ describe('match.js methods', function() {
 
     verifyMatchCount(' (some canceled)', [2, 1, 0, 3, 1, 0])();
 
+    var verifyDropped = function(resultsById, recordIndex, index, type) {
+        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+        var id = context[key][index]._id;
+        var result = resultsById[id];
+        expect(result).to.not.exist;
+    };
+
+    it('getAll (some canceled)', function(done) {
+        callGetAll(function(err, totalCount, resultsById) {
+            if (err) {
+                done(err);
+            } else {
+                expect(totalCount).to.equal(7);
+
+                verifyContent(resultsById, '0.1', 0, '0.0', 4, 'testallergies', 'diff');
+                verifyContent(resultsById, '0.1', 1, '0.0', 0, 'testallergies', 'partial');
+                verifyDropped(resultsById, '0.1', 2, 'testallergies');
+                verifyContent(resultsById, '2.1', 0, '2.0', 1, 'testallergies', 'diffsub');
+
+                verifyContent(resultsById, '0.1', 0, '0.0', 2, 'testprocedures', 'partialsub');
+                verifyDropped(resultsById, '1.1', 0, 'testprocedures');
+                verifyContent(resultsById, '1.1', 1, '1.0', 3, 'testprocedures', 'diff');
+                verifyContent(resultsById, '1.2', 0, '1.0', 2, 'testprocedures', 'partialsub');
+                verifyContent(resultsById, '1.2', 1, '1.0', 4, 'testprocedures', 'diffsub');
+
+                done();
+            }
+        });
+    });
+
     var acceptMatch = function(context, secName, recordKey, index, callback) {
         var key = refmodel.partialEntriesContextKey(secName, recordKey);
         var id = context[key][index]._id;
@@ -241,6 +262,29 @@ describe('match.js methods', function() {
     });
 
     verifyMatchCount(' (some accepted)', [2, 1, 0, 2, 0, 0])();
+
+    it('getAll (some accepted)', function(done) {
+        callGetAll(function(err, totalCount, resultsById) {
+            if (err) {
+                done(err);
+            } else {
+                expect(totalCount).to.equal(5);
+
+                verifyContent(resultsById, '0.1', 0, '0.0', 4, 'testallergies', 'diff');
+                verifyContent(resultsById, '0.1', 1, '0.0', 0, 'testallergies', 'partial');
+                verifyDropped(resultsById, '0.1', 2, 'testallergies');
+                verifyDropped(resultsById, '2.1', 0, 'testallergies');
+
+                verifyContent(resultsById, '0.1', 0, '0.0', 2, 'testprocedures', 'partialsub');
+                verifyDropped(resultsById, '1.1', 0, 'testprocedures');
+                verifyContent(resultsById, '1.1', 1, '1.0', 3, 'testprocedures', 'diff');
+                verifyContent(resultsById, '1.2', 0, '1.0', 2, 'testprocedures', 'partialsub');
+                verifyDropped(resultsById, '1.2', 1, 'testprocedures');
+
+                done();
+            }
+        });
+    });
 
     after(function(done) {
         context.dbinfo.db.dropDatabase();
