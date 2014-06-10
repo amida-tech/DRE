@@ -22,6 +22,32 @@ describe('merge.js methods', function() {
 
     refmodel.prepareConnection('mergetest', context)();
 
+    var verifyCount = function(addlMessage, conditions, expected) {
+        return function() {
+            it('count' + addlMessage, function(done) {
+                async.parallel([
+                    function(callback) {merge.count(context.dbinfo, 'testallergies', 'pat0', conditions, callback);},
+                    function(callback) {merge.count(context.dbinfo, 'testprocedures', 'pat0', conditions, callback);},
+                    function(callback) {merge.count(context.dbinfo, 'testallergies', 'pat1', conditions, callback);},
+                    function(callback) {merge.count(context.dbinfo, 'testprocedures', 'pat1', conditions, callback);},
+                    function(callback) {merge.count(context.dbinfo, 'testallergies', 'pat2', conditions, callback);},
+                    function(callback) {merge.count(context.dbinfo, 'testprocedures', 'pat2', conditions, callback);},
+                    ], 
+                    function(err, results) {
+                        if (err) {
+                            done(err);
+                        } else {
+                            results.forEach(function(result, index) {
+                                expect(result).to.equal(expected[index]);
+                            });
+                            done();
+                        }
+                    }
+                );
+            });
+        }
+    };
+
     it('check merge models', function(done) {
         expect(context.dbinfo.mergeModels).to.exist;
         expect(context.dbinfo.mergeModels.testallergies).to.exist;
@@ -29,28 +55,11 @@ describe('merge.js methods', function() {
         done();
     });
     
-    it('count empty testallergies', function(done) {
-        merge.count(context.dbinfo, 'testallergies', 'pat0', {}, function(err, count) {
-            if (err) {
-                done(err);
-            } else {
-                expect(count).to.equal(0);
-                done();
-            }
-        });
-     });
-    
-    it('count empty testprocedures', function(done) {
-        merge.count(context.dbinfo, 'testprocedures', 'pat0', {}, function(err, count) {
-            if (err) {
-                done(err);
-            } else {
-                expect(count).to.equal(0);
-                done();
-            }
-        });
-    });
-    
+    verifyCount(' (empty db)', {}, [0, 0, 0, 0, 0, 0])();
+    verifyCount(' (empty db - new)', {merge_reason: 'new'}, [0, 0, 0, 0, 0, 0])();
+    verifyCount(' (empty db - duplicate)', {merge_reason: 'duplicate'}, [0, 0, 0, 0, 0, 0])();
+    verifyCount(' (empty db - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
+
     it('add records', function(done) {
         refmodel.addRecordsPerPatient(context, [3, 5, 1], done);
     });
@@ -66,6 +75,11 @@ describe('merge.js methods', function() {
         );
     });
     
+    verifyCount(' (section only)', {}, [2, 2, 0, 3, 3, 0])();
+    verifyCount(' (section only - new)', {merge_reason: 'new'}, [2, 2, 0, 3, 3, 0])();
+    verifyCount(' (section only - duplicate)', {merge_reason: 'duplicate'}, [0, 0, 0, 0, 0, 0])();
+    verifyCount(' (section only - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
+
     it('getAll (field specification)', function(done) {
         async.parallel([
             function(callback) {merge.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback);},
@@ -216,6 +230,11 @@ describe('merge.js methods', function() {
         );
     });
 
+    verifyCount(' (with duplicate)', {}, [3, 2, 0, 4, 3, 0])();
+    verifyCount(' (with duplicate - new)', {merge_reason: 'new'}, [2, 2, 0, 3, 3, 0])();
+    verifyCount(' (with duplicate - duplicate)', {merge_reason: 'duplicate'}, [1, 0, 0, 1, 0, 0])();
+    verifyCount(' (with duplicate - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
+
     var verifyWithDuplicate = function(addlMessage) {
         return function() {
             it('getAll' + addlMessage, function(done) {
@@ -262,6 +281,11 @@ describe('merge.js methods', function() {
         );
     });
 
+    verifyCount(' (after partial)', {}, [3, 2, 0, 4, 3, 0])();
+    verifyCount(' (after partial - new)', {merge_reason: 'new'}, [2, 2, 0, 3, 3, 0])();
+    verifyCount(' (after partial - duplicate)', {merge_reason: 'duplicate'}, [1, 0, 0, 1, 0, 0])();
+    verifyCount(' (after partial - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
+
     verifyWithDuplicate(' (after partial)')();
 
     it('cancel some partials', function(done) {
@@ -274,6 +298,11 @@ describe('merge.js methods', function() {
             }
         );
     });
+
+    verifyCount(' (after cancel)', {}, [3, 2, 0, 4, 3, 0])();
+    verifyCount(' (after cancel - new)', {merge_reason: 'new'}, [2, 2, 0, 3, 3, 0])();
+    verifyCount(' (after cancel - duplicate)', {merge_reason: 'duplicate'}, [1, 0, 0, 1, 0, 0])();
+    verifyCount(' (after cancel - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
 
     verifyWithDuplicate(' (after cancel)')();
 
@@ -288,6 +317,11 @@ describe('merge.js methods', function() {
         );
     });
     
+    verifyCount(' (after accept)', {}, [3, 3, 0, 5, 3, 0])();
+    verifyCount(' (after accept - new)', {merge_reason: 'new'}, [2, 3, 0, 4, 3, 0])();
+    verifyCount(' (after accept - duplicate)', {merge_reason: 'duplicate'}, [1, 0, 0, 1, 0, 0])();
+    verifyCount(' (after accept - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
+
     var verifyGetAllPartial = function(context, resultsById, type, recordIndex, index, sourceIndex) {
         var key = refmodel.partialEntriesContextKey(type, recordIndex);
         var id = context[key][index].match_entry_id;
@@ -372,6 +406,11 @@ describe('merge.js methods', function() {
         );
     });
     
+    verifyCount(' (after entry.update)', {}, [4, 3, 0, 7, 3, 0])();
+    verifyCount(' (after entry.update - new)', {merge_reason: 'new'}, [2, 3, 0, 4, 3, 0])();
+    verifyCount(' (after entry.update - duplicate)', {merge_reason: 'duplicate'}, [1, 0, 0, 1, 0, 0])();
+    verifyCount(' (after entry.update - update)', {merge_reason: 'update'}, [1, 0, 0, 2, 0, 0])();
+
     it('getAll (after entry.update)', function(done) {
         callGetAll(function(err, resultsById) {
             if (err) {
