@@ -134,13 +134,14 @@ describe('merge.js methods', function() {
         );
     });
 
-    var verifyGetAll = function(context, resultsById, type, recordIndex, index) {
+    var verifyGetAll = function(context, resultsById, type, recordIndex, index, sourceIndex) {
         var key = refmodel.newEntriesContextKey(type, recordIndex);
         var id = context[key][index];
         var result = resultsById[id];
+        if (! sourceIndex) sourceIndex = recordIndex;
 
         expect(result).to.exist;
-        expect(result.record_id._id.toString()).to.equal(context.storageIds[recordIndex].toString());
+        expect(result.record_id._id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
 
     var verifyGetAllNegative = function(context, resultsById, type, recordIndex, index) {
@@ -287,13 +288,14 @@ describe('merge.js methods', function() {
         );
     });
     
-    var verifyGetAllPartial = function(context, resultsById, type, recordIndex, index) {
+    var verifyGetAllPartial = function(context, resultsById, type, recordIndex, index, sourceIndex) {
         var key = refmodel.partialEntriesContextKey(type, recordIndex);
         var id = context[key][index].match_entry_id;
         var result = resultsById[id];
+        if (! sourceIndex) sourceIndex = recordIndex;
 
         expect(result).to.exist;
-        expect(result.record_id._id.toString()).to.equal(context.storageIds[recordIndex].toString());
+        expect(result.record_id._id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
 
     var verifyGetAllPartialNegative = function(context, resultsById, type, recordIndex, index) {
@@ -335,34 +337,34 @@ describe('merge.js methods', function() {
         });
     });
     
-    var updateEntry = function(context, type, recordIndex, index, updateObject, callback) {
+    var updateEntry = function(context, type, recordIndex, index, updateObject, sourceIndex, callback) {
         var key = refmodel.newEntriesContextKey(type, recordIndex);
         var id = context[key][index];
-        var rid = context.storageIds[recordIndex];
+        var rid = context.storageIds[sourceIndex];
         entry.update(context.dbinfo, type, id, rid, updateObject, callback);
     };
 
-    var updateEntryPartial = function(context, type, recordIndex, index, updateObject, callback) {
+    var updateEntryPartial = function(context, type, recordIndex, index, updateObject, sourceIndex, callback) {
         var key = refmodel.partialEntriesContextKey(type, recordIndex);
         var id = context[key][index].match_entry_id;
-        var rid = context.storageIds[recordIndex];
+        var rid = context.storageIds[sourceIndex];
         entry.update(context.dbinfo, type, id, rid, updateObject, callback);
     };
 
     it('entry.update', function(done) {
         var updObj0 = {
-            name: "name_upd_0.0.0"
+            name: "name_upd_0.2.0"
         };
         var updObj1 = {
-            name: "name_upd_1.0.0"
+            name: "name_upd_1.3.0"
         };
         var updObj2 = {
-            name: "name_upd_1.2.0"
+            name: "name_upd_1.4.0"
         };
         async.parallel([
-            function(callback) {updateEntry(context, 'testallergies', '0.0', 0, updObj0, callback);},
-            function(callback) {updateEntry(context, 'testprocedures', '1.0', 0, updObj1, callback);},
-            function(callback) {updateEntryPartial(context, 'testprocedures', '1.2', 0, updObj2, callback);}
+            function(callback) {updateEntry(context, 'testallergies', '0.0', 0, updObj0, '0.2', callback);},
+            function(callback) {updateEntry(context, 'testprocedures', '1.0', 0, updObj1, '1.3', callback);},
+            function(callback) {updateEntryPartial(context, 'testprocedures', '1.2', 0, updObj2, '1.4', callback);}
             ],
             function(err) {
                 done(err);
@@ -377,7 +379,7 @@ describe('merge.js methods', function() {
             } else {
                 verifyGetAll(context, resultsById.new, 'testallergies', '0.0', 0);
                 verifyGetAllNegative(context, resultsById.duplicate, 'testallergies', '0.0', 0);
-                verifyGetAll(context, resultsById.update, 'testallergies', '0.0', 0);
+                verifyGetAll(context, resultsById.update, 'testallergies', '0.0', 0, '0.2');
                 verifyGetAll(context, resultsById.new, 'testallergies', '0.0', 1);
                 verifyGetAll(context, resultsById.duplicate, 'testallergies', '0.0', 1);
                 verifyGetAll(context, resultsById.new, 'testallergies', '2.0', 0);
@@ -387,7 +389,7 @@ describe('merge.js methods', function() {
                 verifyGetAll(context, resultsById.new, 'testprocedures', '0.0', 1);
                 verifyGetAll(context, resultsById.new, 'testprocedures', '1.0', 0);
                 verifyGetAll(context, resultsById.duplicate, 'testprocedures', '1.0', 0);
-                verifyGetAll(context, resultsById.update, 'testprocedures', '1.0', 0);
+                verifyGetAll(context, resultsById.update, 'testprocedures', '1.0', 0, '1.3');
                 verifyGetAll(context, resultsById.new, 'testprocedures', '1.0', 1);
                 verifyGetAll(context, resultsById.new, 'testprocedures', '1.0', 2);
                 verifyGetAllNegative(context, resultsById.new, 'testprocedures', '1.0', 3);
@@ -395,7 +397,7 @@ describe('merge.js methods', function() {
                 verifyGetAllPartialNegative(context, resultsById.new, 'testprocedures', '1.1', 0);
                 verifyGetAllPartial(context, resultsById.new, 'testprocedures', '0.1', 0);
                 verifyGetAllPartial(context, resultsById.new, 'testprocedures', '1.2', 0);
-                verifyGetAllPartial(context, resultsById.update, 'testprocedures', '1.2', 0);
+                verifyGetAllPartial(context, resultsById.update, 'testprocedures', '1.2', 0, '1.4');
                 done();
             }
         });
@@ -413,20 +415,22 @@ describe('merge.js methods', function() {
         entry.get(context.dbinfo, type, id, callback);
     };
 
-    var verifyEntryGet = function(context, result, type, recordIndex, index) {
+    var verifyEntryGet = function(context, result, type, recordIndex, index, sourceIndex) {
         var key = refmodel.newEntriesContextKey(type, recordIndex);
         var id = context[key][index];
+        if (! sourceIndex) sourceIndex = recordIndex;
 
         expect(result.entry_id.toString()).to.equal(id.toString());
-        expect(result.record_id.toString()).to.equal(context.storageIds[recordIndex].toString());
+        expect(result.record_id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
 
-    var verifyEntryGetPartial = function(context, result, type, recordIndex, index) {
+    var verifyEntryGetPartial = function(context, result, type, recordIndex, index, sourceIndex) {
         var key = refmodel.partialEntriesContextKey(type, recordIndex);
         var id = context[key][index].match_entry_id;
+        if (! sourceIndex) sourceIndex = recordIndex;
 
         expect(result.entry_id.toString()).to.equal(id.toString());
-        expect(result.record_id.toString()).to.equal(context.storageIds[recordIndex].toString());
+        expect(result.record_id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
 
     var verifyMergeReason = function(attr, expectedReasons) {
@@ -466,28 +470,29 @@ describe('merge.js methods', function() {
                     done(err);
                 } else {
                     var result0 = results[0];
-                    verifyEntryGetContent(context, results[0], 'testallergies', '0.0', 0, '0.0', 0);
+                    verifyEntryGetContent(context, results[0], 'testallergies', '0.0', 0, '0.2', 0);
                     expect(result0.metadata).to.exist;
                     var attr0 = result0.metadata.attribution;
                     verifyMergeReason(attr0, ['new', 'update']);
                     verifyEntryGet(context, attr0[0], 'testallergies', '0.0', 0);
-                    verifyEntryGet(context, attr0[1], 'testallergies', '0.0', 0);
+                    verifyEntryGet(context, attr0[1], 'testallergies', '0.0', 0, '0.2');
 
                     var result1 = results[1];
-                    verifyEntryGetContent(context, results[1], 'testprocedures', '1.0', 0, '1.0', 0);
+                    verifyEntryGetContent(context, results[1], 'testprocedures', '1.0', 0, '1.3', 0);
                     expect(result1.metadata).to.exist;
                     var attr1 = result1.metadata.attribution;
                     verifyMergeReason(attr1, ['new', 'duplicate', 'update']);
                     verifyEntryGet(context, attr1[0], 'testprocedures', '1.0', 0);
                     verifyEntryGet(context, attr1[1], 'testprocedures', '1.0', 0);
+                    verifyEntryGet(context, attr1[2], 'testprocedures', '1.0', 0, '1.3');
 
                     var result2 = results[2];
-                    verifyEntryGetContent(context, results[2], 'testprocedures', '1.2', 0, '1.2', 0);
+                    verifyEntryGetContent(context, results[2], 'testprocedures', '1.2', 0, '1.4', 0);
                     expect(result2.metadata).to.exist;
                     var attr2 = result2.metadata.attribution;
                     verifyMergeReason(attr2, ['new', 'update']);
                     verifyEntryGetPartial(context, attr2[0], 'testprocedures', '1.2', 0);
-                    verifyEntryGetPartial(context, attr2[1], 'testprocedures', '1.2', 0);
+                    verifyEntryGetPartial(context, attr2[1], 'testprocedures', '1.2', 0, '1.4');
 
                     done();
                 }
