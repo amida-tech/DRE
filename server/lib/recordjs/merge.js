@@ -1,42 +1,42 @@
 var _ = require('underscore');
 
-exports.save = function(dbinfo, secName, input_entry, mergeInfo, callback) {
+exports.save = function(dbinfo, secName, input, mergeInfo, callback) {
     var Model = dbinfo.mergeModels[secName];
     var mergeObject = new Model({
         entry_type: dbinfo.sectionToType[secName],
-        patKey: input_entry.patKey,
-        entry_id: input_entry._id,
+        patKey: input.patKey,
+        entry_id: input._id,
         record_id: mergeInfo.record_id,
         merged: new Date(),
         merge_reason: mergeInfo.merge_reason
     });
 
-    mergeObject.save(function(err, saveResults) {
+    mergeObject.save(function(err, mergeResult) {
         if (err) {
             callback(err);
         } else {
-            if (! input_entry.metadata) {
-                input_entry.metadata = {};
+            if (! input.metadata) {
+                input.metadata = {};
             }
-            if (! input_entry.metadata.attribution) {
-                input_entry.metadata.attribution = [];
+            if (! input.metadata.attribution) {
+                input.metadata.attribution = [];
             }
-            input_entry.metadata.attribution.push(saveResults._id);
-            input_entry.save(function(err, saveObject) {
+            input.metadata.attribution.push(mergeResult._id);
+            input.save(function(err, result) {
                 if (err) {
                     callback(err);
                 } else {
-                    callback(null, saveObject._id);
+                    callback(null, result._id);
                 }
             });
         }
     });
 };
 
-exports.getAll = function(dbinfo, secName, patientKey, typeFields, recordFields, callback) {
+exports.getAll = function(dbinfo, secName, ptKey, typeFields, recordFields, callback) {
     var model = dbinfo.mergeModels[secName];
     var allFields = typeFields + ' ' + recordFields + ' reviewed';
-    var query = model.find({patKey: patientKey});
+    var query = model.find({patKey: ptKey});
     query.where('archived').in([null, false]);
     query.where('entry_type', dbinfo.sectionToType[secName]);
     query.lean();
@@ -46,7 +46,6 @@ exports.getAll = function(dbinfo, secName, patientKey, typeFields, recordFields,
         if (err) {
             callback(err);
         } else {
-
             //Filter out unreviewed entries.
             var returnMerges = [];
             for (var iMerge in mergeResults) {
@@ -54,16 +53,15 @@ exports.getAll = function(dbinfo, secName, patientKey, typeFields, recordFields,
                     returnMerges.push(mergeResults[iMerge]);
                 }
             }
-
             callback(null, returnMerges);
         }
     });
 };
 
-exports.count = function(dbinfo, secName, patKey, conditions, callback) {
+exports.count = function(dbinfo, secName, ptKey, conditions, callback) {
     var model = dbinfo.mergeModels[secName];
     var condsWPat = _.clone(conditions);
-    condsWPat.patKey = patKey;
+    condsWPat.patKey = ptKey;
     var query = model.find({});
     query.where(condsWPat);
     query.populate('entry_id');

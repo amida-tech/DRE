@@ -3,19 +3,18 @@
 var async = require('async');
 
 var merge = require('./merge');
-var match = require('./match');
 
-exports.remove = function(dbinfo, secName, recordId, callback) {
+exports.remove = function(dbinfo, secName, id, callback) {
     
     var removeModel = function(callback) {
         var model = dbinfo.models[secName];
-        var query = model.update({_id: recordId}, {archived: true});
+        var query = model.update({_id: id}, {archived: true});
         query.exec(callback);
     };
 
     var removeMerge = function(callback) {
         var model = dbinfo.mergeModels[secName];
-        var query = model.update({entry_id: recordId}, {archived: true});
+        var query = model.update({entry_id: id}, {archived: true});
         query.exec(callback);
     };
 
@@ -35,30 +34,30 @@ exports.get = function(dbinfo, secName, id, callback) {
     });
 };
 
-exports.update = function(dbinfo, secName, recordId, fileId, recordUpdate, callback) {
+exports.update = function(dbinfo, secName, id, sourceId, updateObject, callback) {
     var model = dbinfo.models[secName];
-    var query = model.findOne({"_id": recordId});
+    var query = model.findOne({"_id": id});
 
     query.exec(function(err, entry) {
         if (err) {
             callback(err);
         } else {
             entry.reviewed = true;
-            for (var iLine in recordUpdate) {
+            for (var iLine in updateObject) {
                 if (iLine.substring(0, 1) !== "_") {
                     if(iLine !== 'metadata' && iLine !== 'reviewed' && iLine !== 'archived' && iLine !== 'patKey') {
-                        entry[iLine] = recordUpdate[iLine];     
+                        entry[iLine] = updateObject[iLine];     
                     }
                 }
             }
-            var mergeInfo = {record_id: fileId, merge_reason: 'update'};
+            var mergeInfo = {record_id: sourceId, merge_reason: 'update'};
             merge.save(dbinfo, secName, entry, mergeInfo, callback);
         }
     });
 };
 
-exports.save = function(dbinfo, secName, patKey, entryObject, sourceID, callback) {
-    var entryModel = new dbinfo.models[secName](entryObject);
+exports.save = function(dbinfo, secName, input, sourceId, callback) {
+    var entryModel = new dbinfo.models[secName](input);
 
     var saveEntry = function(callback) {
         entryModel.save(function(err, saveResult) {
@@ -67,20 +66,20 @@ exports.save = function(dbinfo, secName, patKey, entryObject, sourceID, callback
     };
 
     var saveMerge = function(saveResult, callback) {
-        var mergeInfo = {record_id: sourceID, merge_reason: 'new'};
+        var mergeInfo = {record_id: sourceId, merge_reason: 'new'};
         merge.save(dbinfo, secName, saveResult, mergeInfo, callback);
     };
 
     async.waterfall([saveEntry, saveMerge], callback);
 };
 
-exports.duplicate = function(dbinfo, secName, update_id, sourceID, callback) {
+exports.duplicate = function(dbinfo, secName, id, sourceId, callback) {
     var model = dbinfo.models[secName];
 
-    var query = model.findOne({"_id": update_id});
+    var query = model.findOne({"_id": id});
     query.exec(function(err, current) {
         var mergeInfo = {
-            record_id: sourceID,
+            record_id: sourceId,
             merge_reason: 'duplicate'
         };
         merge.save(dbinfo, secName, current, mergeInfo, callback);
