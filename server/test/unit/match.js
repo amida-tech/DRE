@@ -194,16 +194,10 @@ describe('match.js methods', function() {
         );
     });
 
-    var cancelMatch = function(context, secName, recordKey, index, callback) {
-        var key = refmodel.partialEntriesContextKey(secName, recordKey);
-        var id = context[key][index]._id;
-        match.cancel(context.dbinfo, secName, id, 'cancel_' + recordKey + '.' + index, callback);
-    }
-
     it('cancel', function(done) {
         async.parallel([
-            function(callback) {cancelMatch(context, 'testallergies', '0.1', 2, callback);},
-            function(callback) {cancelMatch(context, 'testprocedures', '1.1', 0, callback);}
+            function(callback) {refmodel.cancelMatch(context, 'testallergies', '0.1', 2, callback);},
+            function(callback) {refmodel.cancelMatch(context, 'testprocedures', '1.1', 0, callback);}
             ],
             function(err) {
                 done(err);
@@ -243,16 +237,10 @@ describe('match.js methods', function() {
         });
     });
 
-    var acceptMatch = function(context, secName, recordKey, index, callback) {
-        var key = refmodel.partialEntriesContextKey(secName, recordKey);
-        var id = context[key][index]._id;
-        match.accept(context.dbinfo, secName, id, 'accept_' + recordKey + '.' + index, callback);
-    }
-
     it('accept', function(done) {
         async.parallel([
-            function(callback) {acceptMatch(context, 'testallergies', '2.1', 0, callback);},
-            function(callback) {acceptMatch(context, 'testprocedures', '1.2', 1, callback);}
+            function(callback) {refmodel.acceptMatch(context, 'testallergies', '2.1', 0, callback);},
+            function(callback) {refmodel.acceptMatch(context, 'testprocedures', '1.2', 1, callback);}
             ],
             function(err) {
                 done(err);
