@@ -24,7 +24,7 @@ describe('merge.js methods', function() {
 
     var verifyCount = function(addlMessage, conditions, expected) {
         return function() {
-            it('count' + addlMessage, function(done) {
+            it('merge.count' + addlMessage, function(done) {
                 async.parallel([
                     function(callback) {merge.count(context.dbinfo, 'testallergies', 'pat0', conditions, callback);},
                     function(callback) {merge.count(context.dbinfo, 'testprocedures', 'pat0', conditions, callback);},
@@ -80,7 +80,7 @@ describe('merge.js methods', function() {
     verifyCount(' (section only - duplicate)', {merge_reason: 'duplicate'}, [0, 0, 0, 0, 0, 0])();
     verifyCount(' (section only - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
 
-    it('getAll (field specification)', function(done) {
+    it('merge.getAll (field specification)', function(done) {
         async.parallel([
             function(callback) {merge.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', 'filename', callback);},
             function(callback) {merge.getAll(context.dbinfo, 'testallergies', 'pat1', 'name', 'filename', callback);},
@@ -148,8 +148,8 @@ describe('merge.js methods', function() {
         );
     });
 
-    var verifyGetAll = function(context, resultsById, type, recordIndex, index, sourceIndex) {
-        var key = refmodel.newEntriesContextKey(type, recordIndex);
+    var verifyGetAll = function(context, resultsById, secName, recordIndex, index, sourceIndex) {
+        var key = refmodel.newEntriesContextKey(secName, recordIndex);
         var id = context[key][index];
         var result = resultsById[id];
         if (! sourceIndex) sourceIndex = recordIndex;
@@ -158,8 +158,8 @@ describe('merge.js methods', function() {
         expect(result.record_id._id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
 
-    var verifyGetAllNegative = function(context, resultsById, type, recordIndex, index) {
-        var key = refmodel.newEntriesContextKey(type, recordIndex);
+    var verifyGetAllNegative = function(context, resultsById, secName, recordIndex, index) {
+        var key = refmodel.newEntriesContextKey(secName, recordIndex);
         var id = context[key][index];
         var result = resultsById[id];
 
@@ -191,7 +191,7 @@ describe('merge.js methods', function() {
         );
     }
 
-    it('getAll (section only)', function(done) {
+    it('merge.getAll (section only)', function(done) {
         callGetAll(function(err, resultsById) {
             if (err) {
                 done(err);
@@ -214,14 +214,14 @@ describe('merge.js methods', function() {
         });
     });
 
-    var duplicateEntry = function(context, type, recordIndex, index, callback) {
-        var key = refmodel.newEntriesContextKey(type, recordIndex);
+    var duplicateEntry = function(context, secName, recordIndex, index, callback) {
+        var key = refmodel.newEntriesContextKey(secName, recordIndex);
         var id = context[key][index];
         var rid = context.storageIds[recordIndex];
-        entry.duplicate(context.dbinfo, type, id, rid, callback);
+        entry.duplicate(context.dbinfo, secName, id, rid, callback);
     };
 
-    it('add duplicates', function(done) {
+    it('entry.duplicate', function(done) {
         async.parallel([
             function(callback) {duplicateEntry(context, 'testallergies', '0.0', 1, callback);},
             function(callback) {duplicateEntry(context, 'testprocedures', '1.0', 0, callback);},
@@ -230,14 +230,14 @@ describe('merge.js methods', function() {
         );
     });
 
-    verifyCount(' (with duplicate)', {}, [3, 2, 0, 4, 3, 0])();
-    verifyCount(' (with duplicate - new)', {merge_reason: 'new'}, [2, 2, 0, 3, 3, 0])();
-    verifyCount(' (with duplicate - duplicate)', {merge_reason: 'duplicate'}, [1, 0, 0, 1, 0, 0])();
-    verifyCount(' (with duplicate - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
+    verifyCount(' (with entry.duplicate)', {}, [3, 2, 0, 4, 3, 0])();
+    verifyCount(' (with entry.duplicate - new)', {merge_reason: 'new'}, [2, 2, 0, 3, 3, 0])();
+    verifyCount(' (with entry.duplicate - duplicate)', {merge_reason: 'duplicate'}, [1, 0, 0, 1, 0, 0])();
+    verifyCount(' (with entry.duplicate - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
 
     var verifyWithDuplicate = function(addlMessage) {
         return function() {
-            it('getAll' + addlMessage, function(done) {
+            it('merge.getAll' + addlMessage, function(done) {
                 callGetAll(function(err, resultsById) {
                     if (err) {
                         done(err);
@@ -263,7 +263,7 @@ describe('merge.js methods', function() {
         };        
     }
 
-    verifyWithDuplicate(' (with duplicate)')();
+    verifyWithDuplicate(' (with entry.duplicate)')();
 
     it('add partial sections', function(done) {
         var matchInfo0 = refmodel.createMatchInformation('0.1', [0], ['diff']);
@@ -322,8 +322,8 @@ describe('merge.js methods', function() {
     verifyCount(' (after accept - duplicate)', {merge_reason: 'duplicate'}, [1, 0, 0, 1, 0, 0])();
     verifyCount(' (after accept - update)', {merge_reason: 'update'}, [0, 0, 0, 0, 0, 0])();
 
-    var verifyGetAllPartial = function(context, resultsById, type, recordIndex, index, sourceIndex) {
-        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+    var verifyGetAllPartial = function(context, resultsById, secName, recordIndex, index, sourceIndex) {
+        var key = refmodel.partialEntriesContextKey(secName, recordIndex);
         var id = context[key][index].match_entry_id;
         var result = resultsById[id];
         if (! sourceIndex) sourceIndex = recordIndex;
@@ -332,15 +332,15 @@ describe('merge.js methods', function() {
         expect(result.record_id._id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
 
-    var verifyGetAllPartialNegative = function(context, resultsById, type, recordIndex, index) {
-        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+    var verifyGetAllPartialNegative = function(context, resultsById, secName, recordIndex, index) {
+        var key = refmodel.partialEntriesContextKey(secName, recordIndex);
         var id = context[key][index].match_entry_id;
         var result = resultsById[id];
 
         expect(result).to.not.exist;
     };
 
-    it('getAll (after accept)', function(done) {
+    it('merge.getAll (after accept)', function(done) {
         callGetAll(function(err, resultsById) {
             if (err) {
                 done(err);
@@ -371,18 +371,18 @@ describe('merge.js methods', function() {
         });
     });
     
-    var updateEntry = function(context, type, recordIndex, index, updateObject, sourceIndex, callback) {
-        var key = refmodel.newEntriesContextKey(type, recordIndex);
+    var updateEntry = function(context, secName, recordIndex, index, updateObject, sourceIndex, callback) {
+        var key = refmodel.newEntriesContextKey(secName, recordIndex);
         var id = context[key][index];
         var rid = context.storageIds[sourceIndex];
-        entry.update(context.dbinfo, type, id, rid, updateObject, callback);
+        entry.update(context.dbinfo, secName, id, rid, updateObject, callback);
     };
 
-    var updateEntryPartial = function(context, type, recordIndex, index, updateObject, sourceIndex, callback) {
-        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+    var updateEntryPartial = function(context, secName, recordIndex, index, updateObject, sourceIndex, callback) {
+        var key = refmodel.partialEntriesContextKey(secName, recordIndex);
         var id = context[key][index].match_entry_id;
         var rid = context.storageIds[sourceIndex];
-        entry.update(context.dbinfo, type, id, rid, updateObject, callback);
+        entry.update(context.dbinfo, secName, id, rid, updateObject, callback);
     };
 
     it('entry.update', function(done) {
@@ -411,7 +411,7 @@ describe('merge.js methods', function() {
     verifyCount(' (after entry.update - duplicate)', {merge_reason: 'duplicate'}, [1, 0, 0, 1, 0, 0])();
     verifyCount(' (after entry.update - update)', {merge_reason: 'update'}, [1, 0, 0, 2, 0, 0])();
 
-    it('getAll (after entry.update)', function(done) {
+    it('merge.getAll (after entry.update)', function(done) {
         callGetAll(function(err, resultsById) {
             if (err) {
                 done(err);
@@ -442,20 +442,20 @@ describe('merge.js methods', function() {
         });
     });
     
-    var getEntry = function(context, type, recordIndex, index, callback) {
-        var key = refmodel.newEntriesContextKey(type, recordIndex);
+    var getEntry = function(context, secName, recordIndex, index, callback) {
+        var key = refmodel.newEntriesContextKey(secName, recordIndex);
         var id = context[key][index];
-        entry.get(context.dbinfo, type, id, callback);
+        entry.get(context.dbinfo, secName, id, callback);
     };
 
-    var getEntryPartial = function(context, type, recordIndex, index, callback) {
-        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+    var getEntryPartial = function(context, secName, recordIndex, index, callback) {
+        var key = refmodel.partialEntriesContextKey(secName, recordIndex);
         var id = context[key][index].match_entry_id;
-        entry.get(context.dbinfo, type, id, callback);
+        entry.get(context.dbinfo, secName, id, callback);
     };
 
-    var verifyEntryGet = function(context, result, type, recordIndex, index, sourceIndex) {
-        var key = refmodel.newEntriesContextKey(type, recordIndex);
+    var verifyEntryGet = function(context, result, secName, recordIndex, index, sourceIndex) {
+        var key = refmodel.newEntriesContextKey(secName, recordIndex);
         var id = context[key][index];
         if (! sourceIndex) sourceIndex = recordIndex;
 
@@ -463,8 +463,8 @@ describe('merge.js methods', function() {
         expect(result.record_id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
 
-    var verifyEntryGetPartial = function(context, result, type, recordIndex, index, sourceIndex) {
-        var key = refmodel.partialEntriesContextKey(type, recordIndex);
+    var verifyEntryGetPartial = function(context, result, secName, recordIndex, index, sourceIndex) {
+        var key = refmodel.partialEntriesContextKey(secName, recordIndex);
         var id = context[key][index].match_entry_id;
         if (! sourceIndex) sourceIndex = recordIndex;
 
@@ -482,14 +482,14 @@ describe('merge.js methods', function() {
         expect(reasons).to.deep.equal(expectedReasons);
     };
 
-    var verifyEntryGetContent = function(context, result, type, recordIndex, index, updRecordIndex, updIndex) {
+    var verifyEntryGetContent = function(context, result, secName, recordIndex, index, updRecordIndex, updIndex) {
         expect(result).to.exist;
         var r = modelutil.mongooseToBBModelDocument(result);
         delete r.reviewed;
         delete r.__v;
 
         var suffix = '_' + recordIndex + '.' + index;
-        var expected = refmodel.testObjectInstance[type](suffix);
+        var expected = refmodel.testObjectInstance[secName](suffix);
         if (updRecordIndex && updIndex !== null) {
             var updSuffix = '_upd_' + updRecordIndex + '.' + updIndex;
             expected.name = 'name' + updSuffix;
