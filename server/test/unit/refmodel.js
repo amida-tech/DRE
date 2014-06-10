@@ -7,6 +7,7 @@ var util = require('util');
 
 var db = require('../../lib/recordjs/db');
 var section = require('../../lib/recordjs/section');
+var match = require('../../lib/recordjs/match');
 var storage = require('../../lib/recordjs/storage');
 
 var expect = chai.expect;
@@ -240,3 +241,18 @@ exports.createMatchInformation = function(recordIndex, destIndices, matchTypes) 
         return r;
     }, []);
 }
+
+exports.cancelMatch = function(context, secName, recordKey, index, callback) {
+    var key = partialEntriesContextKey(secName, recordKey);
+    var id = context[key][index]._id;
+    match.cancel(context.dbinfo, secName, id, 'cancel_' + recordKey + '.' + index, callback);
+}
+
+exports.acceptMatch = function(context, secName, recordKey, index, callback) {
+    var key = partialEntriesContextKey(secName, recordKey);
+    var id = context[key][index]._id;
+    match.accept(context.dbinfo, secName, id, 'accept_' + recordKey + '.' + index, callback);
+}
+
+
+
