@@ -37,16 +37,14 @@ exports.getAll = function(dbinfo, secName, ptKey, fields, callback) {
     });
 };
 
-exports.count = function(dbinfo, secName, patKey, conditions, callback) {
+exports.count = function(dbinfo, secName, ptKey, conditions, callback) {
     var model = dbinfo.matchModels[secName];
     var query = model.count();
     query.where('determination').in([null, false]);
-    var condWPat = _.clone(conditions);
-    condWPat.patKey = patKey;
-    query.where(condWPat);
-    query.exec(function(err, count) {
-        callback(err, count);
-    });
+    var c = _.clone(conditions);
+    c.patKey = ptKey;
+    query.where(c);
+    query.exec(callback);
 };
 
 exports.cancel = function(dbinfo, secName, id, reason, callback) {

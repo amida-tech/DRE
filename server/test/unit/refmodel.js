@@ -40,7 +40,13 @@ var getConnectionOptions = function(dbName) {
     return {
         dbName: dbName,
         sectionToType: sectionToType,
-        schemas: schemas
+        schemas: schemas,
+        matchFields: {
+            match: "string",
+            percent: "number",
+            diff: "string",
+            subelements: null
+        }
     };
 };
 

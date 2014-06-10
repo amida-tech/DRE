@@ -146,7 +146,6 @@ describe('match.js methods', function() {
         
         var diffSuffix = '_' + recordIndex + '.' + destIndex;
         var diffExpect = refmodel.matchObjectInstance[diffType](diffSuffix, destIndex);
-        delete diffExpect.match;
         expect(result).to.deep.equal(diffExpect);
     };
 
@@ -194,6 +193,23 @@ describe('match.js methods', function() {
                 done();
             }
         });
+    });
+
+    it('count (conditional)', function(done) {
+        async.parallel([
+            function(callback) {match.count(context.dbinfo, 'testallergies', 'pat0', {match: 'diff'}, callback);},
+            function(callback) {match.count(context.dbinfo, 'testprocedures', 'pat1', {match: 'partial'}, callback);}
+            ], 
+            function(err, results) {
+                if (err) {
+                    done(err);
+                } else {
+                    expect(results[0]).to.equal(2);
+                    expect(results[1]).to.equal(2);
+                    done();
+                }
+            }
+        );
     });
 
     var cancelMatch = function(context, secName, recordKey, index, callback) {
@@ -324,7 +340,6 @@ describe('match.js methods', function() {
         
         var diffSuffix = '_' + recordIndex + '.' + destIndex;
         var diffExpect = refmodel.matchObjectInstance[diffType](diffSuffix, destIndex);
-        delete diffExpect.match;
         expect(result).to.deep.equal(diffExpect);
     };
 
