@@ -4,6 +4,7 @@ var chai = require('chai');
 var async = require('async');
 var path = require('path');
 var fs = require('fs');
+var _ = require('underscore');
 
 var bb = require('blue-button');
 
@@ -21,6 +22,7 @@ xdescribe('API', function() {
 	var allergyIds = null;
 	var allergySeverities = null;
 	var allergyNames = null;
+	var partialInput = null;
 
     before(function(done) {
         var filepath  = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
@@ -63,15 +65,17 @@ xdescribe('API', function() {
         	{name: 'ccd_2.xml', type: 'text/xml'},
         	{name: 'ccd_3.xml', type: 'text/xml'},
         	{name: 'ccd_4.xml', type: 'text/xml'},
-        	{name: 'ccd_5.xml', type: 'text/xml'}
+        	{name: 'ccd_5.xml', type: 'text/xml'},
+			{name: 'ccd_6.xml', type: 'text/xml'}
         ];
     	async.parallel([
     		function(cb) {bbr.saveRecord('pat0', 'content0', fileInfo[0], 'ccda', cb);},
     		function(cb) {bbr.saveRecord('pat0', 'content1', fileInfo[1], 'ccda', cb);},
     		function(cb) {bbr.saveRecord('pat0', 'content2', fileInfo[2], 'ccda', cb);},
     		function(cb) {bbr.saveRecord('pat1', 'content3', fileInfo[3], 'ccda', cb);},
-    		function(cb) {bbr.saveRecord('pat2', 'content4', fileInfo[4], 'ccda', cb);},
-    		function(cb) {bbr.saveRecord('pat3', 'content5', fileInfo[5], 'ccda', cb);}
+    		function(cb) {bbr.saveRecord('pat1', 'content4', fileInfo[4], 'ccda', cb);},
+    		function(cb) {bbr.saveRecord('pat1', 'content5', fileInfo[5], 'ccda', cb);},
+    		function(cb) {bbr.saveRecord('pat1', 'content6', fileInfo[6], 'ccda', cb);}
     		],
     		function(err, results) {
     			if (err) {
@@ -82,7 +86,7 @@ xdescribe('API', function() {
     					r.push(v);
     					return r;
     				}, []);
-    				expect(sourceIds).to.have.length(6);
+    				expect(sourceIds).to.have.length(7);
     				sourceIds.forEach(function(sourceId) {
     					expect(sourceId).to.exist;
     				});
@@ -282,5 +286,50 @@ xdescribe('API', function() {
 		);
 	});
 
+	it('savePartialSection', function(done) {
+		var match1 = {
+			diff: {severity: 'new'},
+			percent: 80
+		};
+		var match2 = {
+			diff: {status: 'new'},
+			percent: 90
+		}
+		var allergies1 = _.clone(ccd.allergies[1]);
+		expect(allergies1.severity).to.not.equal('Severe');
+		allergies1.severity = 'Severe';
+		var allergies2 = _.clone(ccd.allergies[2]);
+		expect(allergies2.status).to.not.equal('Inactive');
+		allergies2.status = 'Inactive';
+		partialInput = [
+			{
+				partial_array: allergies1,
+				partial_match: match1,
+				match_record_id: allergyIds[1]	
+			},
+			{
+				partial_array: allergies2,
+				partial_match: match2,
+				match_record_id: allergyIds[2]	
+			}
+		];
+		bbr.savePartialSection('allergies', 'pat1', partialInput, sourceIds[6], function(err, result) {
+			done(err);
+		});
+	});
+
+	it('getPartialSection', function(done) {
+		bbr.getPartialSection('allergies', 'pat1', function(err, result) {
+			if (err) {
+				done(err);
+			} else {
+				var actual = bbr.cleanSection(result);
+				var expected = [partialInput[0].partial_array, partialInput[1].partial_array];
+            	expect(actual).to.deep.include.members(expected);
+            	expect(expected).to.deep.include.members(actual);
+            	done(err);
+            }
+		});
+	});
 
 });
