@@ -15,7 +15,8 @@ chai.config.includeStack = true;
 
 var sectionToType = exports.sectionToType = {
     testallergies: 'testallergy',
-    testprocedures: 'testprocedure'    
+    testprocedures: 'testprocedure',    
+    testdemographics: 'testdemographic'    
 };
 
 var schemas = {
@@ -34,6 +35,10 @@ var schemas = {
             code: String,
             display: String
         }
+    },
+    testdemographics : {
+        name: String,
+        lastname: String,
     }
 };
 
@@ -70,6 +75,12 @@ var testObjectInstance = exports.testObjectInstance = {
                 code: 'code' + suffix, 
                 display: 'display' + suffix
             }
+        };
+    },
+    testdemographics: function(suffix) {
+        return {
+            name: 'name' + suffix,
+            lastname: 'lastname' + suffix
         };
     }
 };

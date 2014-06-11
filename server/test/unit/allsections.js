@@ -24,9 +24,11 @@ describe('allsections.js methods', function() {
     var save = function(ptKey, recordIndex, counts, callback) {
     	var a = refmodel.createTestSection('testallergies', recordIndex, counts[0]);
     	var p = refmodel.createTestSection('testprocedures', recordIndex, counts[1]);
+        var d = refmodel.createTestSection('testdemographics', recordIndex, 1);
     	var r = {
     		testallergies: a,
-    		testprocedures: p
+    		testprocedures: p,
+            testdemographics: d[0]
     	};
     	var sourceId = context.storageIds[recordIndex];
     	allsections.save(context.dbinfo, ptKey, r, sourceId, callback);    	
@@ -64,8 +66,10 @@ describe('allsections.js methods', function() {
     				});
     				verify(actuals[0], 'testallergies', '0.0', 3);
     				verify(actuals[0], 'testprocedures', '0.0', 3);
+                    verify(actuals[0], 'testdemographics', '0.0', 1);
     				verify(actuals[1], 'testallergies', '1.0', 2);
     				verify(actuals[1], 'testprocedures', '1.0', 4);
+                    verify(actuals[1], 'testdemographics', '1.0', 1);
     				done();
     			}
     		}
