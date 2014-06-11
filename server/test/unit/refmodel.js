@@ -132,20 +132,20 @@ var createStorage = function(context, pat, filename, index, callback) {
     });
 };
 
-var createTestSection = exports.createTestSection = function(type, recordIndex, count) {
+var createTestSection = exports.createTestSection = function(secName, recordIndex, count) {
     return _.range(count).reduce(function(r, i) {
         var suffix = '_' + recordIndex + '.' + i;
-        r[i] = testObjectInstance[type](suffix);
+        r[i] = testObjectInstance[secName](suffix);
         return r;            
     }, []);
 };
 
-var newEntriesContextKey = exports.newEntriesContextKey = function(type, recordIndex) {
-    return util.format("new.%s.%s", type, recordIndex);   
+var newEntriesContextKey = exports.newEntriesContextKey = function(secName, recordIndex) {
+    return util.format("new.%s.%s", secName, recordIndex);   
 };
 
-var partialEntriesContextKey = exports.partialEntriesContextKey = function(type, recordIndex) {
-    return util.format("partial.%s.%s", type, recordIndex);   
+var partialEntriesContextKey = exports.partialEntriesContextKey = function(secName, recordIndex) {
+    return util.format("partial.%s.%s", secName, recordIndex);   
 };
 
 exports.propertyToFilename = function(value) {
@@ -153,30 +153,30 @@ exports.propertyToFilename = function(value) {
     return util.format('c%s%s.xml', value.charAt(n-5), value.charAt(n-3));
 }
 
-var pushToContext = exports.pushToContext = function(context, keyGen, type, recordIndex, values) {
+var pushToContext = exports.pushToContext = function(context, keyGen, secName, recordIndex, values) {
     if (values) {
-        var key = keyGen(type, recordIndex);
+        var key = keyGen(secName, recordIndex);
         var r = context[key];
         if (! r) r = context[key] = [];
         Array.prototype.push.apply(r, values);
     }
 };
 
-var saveSection = exports.saveSection = function(context, type, patKey, recordIndex, count, callback) {
-    var data = createTestSection(type, recordIndex, count);
+var saveSection = exports.saveSection = function(context, secName, patKey, recordIndex, count, callback) {
+    var data = createTestSection(secName, recordIndex, count);
     var sourceId = context.storageIds[recordIndex];
-    section.save(context.dbinfo, type, patKey, data, sourceId, function(err, ids) {
+    section.save(context.dbinfo, secName, patKey, data, sourceId, function(err, ids) {
         if (! err) {
-            pushToContext(context, newEntriesContextKey, type, recordIndex, ids);
+            pushToContext(context, newEntriesContextKey, secName, recordIndex, ids);
         }
         callback(err);
     });
 };
 
-exports.savePartialSection = function(context, type, patKey, recordIndex, destRecordIndex, extraContent, callback) {
-    var data = createTestSection(type, recordIndex, extraContent.length);
+exports.savePartialSection = function(context, secName, patKey, recordIndex, destRecordIndex, extraContent, callback) {
+    var data = createTestSection(secName, recordIndex, extraContent.length);
     var sourceId = context.storageIds[recordIndex];
-    var key = newEntriesContextKey(type, destRecordIndex);
+    var key = newEntriesContextKey(secName, destRecordIndex);
     var extendedData = data.reduce(function(r, e, index) {
         var v = {
             partial_array: e,
@@ -186,9 +186,9 @@ exports.savePartialSection = function(context, type, patKey, recordIndex, destRe
         r.push(v);
         return r;
     }, []);
-    section.savePartial(context.dbinfo, type, patKey, extendedData, sourceId, function(err, result) {
+    section.savePartial(context.dbinfo, secName, patKey, extendedData, sourceId, function(err, result) {
         if (! err) {
-            pushToContext(context, partialEntriesContextKey, type, recordIndex, result);
+            pushToContext(context, partialEntriesContextKey, secName, recordIndex, result);
         }
         callback(err);
     });
