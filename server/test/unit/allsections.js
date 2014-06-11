@@ -7,7 +7,7 @@ var db = require('../../lib/recordjs/db');
 var allsections = require('../../lib/recordjs/allsections');
 var modelutil = require('../../lib/recordjs/modelutil');
 
-var refmodel = require('./refModel');
+var refmodel = require('./refmodel');
 
 var expect = chai.expect;
 chai.config.includeStack = true;
