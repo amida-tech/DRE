@@ -22,7 +22,10 @@ xdescribe('API', function() {
 	var allergyIds = null;
 	var allergySeverities = null;
 	var allergyNames = null;
+	var partialAllergyIds = null;
+	var allergyStatuses = null;
 	var partialInput = null;
+	var matchIds = null;
 
     before(function(done) {
         var filepath  = path.join(__dirname, '../artifacts/standard/CCD_demo1.xml');
@@ -206,6 +209,7 @@ xdescribe('API', function() {
                 	expect(ccd.allergies).to.deep.include.members(actual);
 					allergySeverities = results.map(function(result) {return result.severity;});
 					allergyNames = results.map(function(result) {return result.name;});
+					allergyStatuses = results.map(function(result) {return result.status;});
 					done();
 				}
 			}
@@ -327,9 +331,171 @@ xdescribe('API', function() {
 				var expected = [partialInput[0].partial_array, partialInput[1].partial_array];
             	expect(actual).to.deep.include.members(expected);
             	expect(expected).to.deep.include.members(actual);
+            	partialAllergyIds = [result[0]._id, result[1]._id];
             	done(err);
             }
 		});
 	});
 
+	it('getMatches', function(done) {
+		bbr.getMatches('allergies', 'pat1', 'name severity status', function(err, result) {
+			if (err) {
+				done(err);
+			} else {
+				expect(result).to.have.length(2);
+				if (result[0].entry_id.name !== allergyNames[1]) {
+					var temp = result[0];					
+					result[0] = result[1];
+					result[1] = temp;
+				}
+				expect(result[0].entry_id.name).to.equal(allergyNames[1]);
+				expect(result[0].entry_id.severity).to.equal(allergySeverities[1]);
+				expect(result[0].entry_id.status).to.equal(allergyStatuses[1]);
+				expect(result[0].match_entry_id.name).to.equal(allergyNames[1]);
+				expect(result[0].match_entry_id.severity).to.equal('Severe');
+				expect(result[0].match_entry_id.status).to.equal(allergyStatuses[1]);
+
+				expect(result[0].diff.severity).to.equal('new');
+				expect(result[0].percent).to.equal(80);
+
+				expect(result[1].entry_id.name).to.equal(allergyNames[2]);
+				expect(result[1].entry_id.severity).to.equal(allergySeverities[2]);
+				expect(result[1].entry_id.status).to.equal(allergyStatuses[2]);
+				expect(result[1].match_entry_id.name).to.equal(allergyNames[2]);
+				expect(result[1].match_entry_id.severity).to.equal(allergySeverities[2]);
+				expect(result[1].match_entry_id.status).to.equal('Inactive');
+
+				expect(result[1].diff.status).to.equal('new');
+				expect(result[1].percent).to.equal(90);
+
+				matchIds = [result[0]._id, result[1]._id];
+				done();
+			}
+		});
+	});
+
+	it('getMatch', function(done) {
+		bbr.getMatch('allergies', matchIds[0], function(err, result) {
+			if (err) {
+				done(err);
+			} else {
+				expect(result.entry_id._id.toString()).to.equal(allergyIds[1].toString());
+				expect(result.match_entry_id._id.toString()).to.equal(partialAllergyIds[0].toString());
+
+				expect(result.entry_id.name).to.equal(allergyNames[1]);
+				expect(result.entry_id.severity).to.equal(allergySeverities[1]);
+				expect(result.entry_id.status).to.equal(allergyStatuses[1]);
+				expect(result.match_entry_id.name).to.equal(allergyNames[1]);
+				expect(result.match_entry_id.severity).to.equal('Severe');
+				expect(result.match_entry_id.status).to.equal(allergyStatuses[1]);
+				
+				expect(result.diff.severity).to.equal('new');
+				expect(result.percent).to.equal(80);
+
+				done();
+			}
+		});
+	});
+
+	it('matchCount', function(done) {
+		async.parallel([
+			function(cb) {bbr.matchCount('allergies', 'pat1', {}, cb);},
+			function(cb) {bbr.matchCount('allergies', 'pat1', {percent: 80}, cb);},
+			function(cb) {bbr.matchCount('allergies', 'pat1', {percent: 90}, cb);},
+			function(cb) {bbr.matchCount('allergies', 'pat1', {percent: 95}, cb);},
+			], 
+			function(err, results) {
+				if (err) {
+					done(err);
+				} else {
+					expect(results[0]).to.equal(2);
+					expect(results[1]).to.equal(1);
+					expect(results[2]).to.equal(1);
+					expect(results[3]).to.equal(0);
+					done();
+				}
+			}
+		);
+	});
+
+	it('-- verify state', function(done) {
+		async.parallel([
+			function(cb) {bbr.matchCount('allergies', 'pat1', {}, cb);},
+			function(cb) {bbr.mergeCount('allergies', 'pat1', {}, cb);},
+			function(cb) {bbr.getSection('allergies', 'pat1', cb);},
+			function(cb) {bbr.getPartialSection('allergies', 'pat1', cb);},
+			function(cb) {bbr.getMatch('allergies', matchIds[0], cb);}
+			], 
+			function(err, results) {
+				if (err) {
+					done(err)
+				} else {
+					expect(results[0]).to.equal(2);
+					expect(results[1]).to.equal(5);
+					expect(results[2]).to.have.length(3);
+					expect(results[3]).to.have.length(2);
+					expect(results[4].determination).not.to.exist;
+					done();
+				}
+			}
+		);
+	});
+
+	it('cancelMatch', function(done) {
+		bbr.cancelMatch('allergies', matchIds[0], 'ignored', function(err) {
+			done(err);
+		})
+	});
+
+	it('-- verify state', function(done) {
+		async.parallel([
+			function(cb) {bbr.matchCount('allergies', 'pat1', {}, cb);},
+			function(cb) {bbr.mergeCount('allergies', 'pat1', {}, cb);},
+			function(cb) {bbr.getSection('allergies', 'pat1', cb);},
+			function(cb) {bbr.getPartialSection('allergies', 'pat1', cb);},
+			function(cb) {bbr.getMatch('allergies', matchIds[0], cb);}
+			], 
+			function(err, results) {
+				if (err) {
+					done(err)
+				} else {
+					expect(results[0]).to.equal(1);
+					expect(results[1]).to.equal(5);
+					expect(results[2]).to.have.length(3);
+					expect(results[3]).to.have.length(1);
+					expect(results[4].determination).to.equal('ignored');
+					done();
+				}
+			}
+		);
+	});
+
+	it('acceptMatch', function(done) {
+		bbr.acceptMatch('allergies', matchIds[1], 'added', function(err) {
+			done(err);
+		})
+	});
+
+	it('-- verify state', function(done) {
+		async.parallel([
+			function(cb) {bbr.matchCount('allergies', 'pat1', {}, cb);},
+			function(cb) {bbr.mergeCount('allergies', 'pat1', {}, cb);},
+			function(cb) {bbr.getSection('allergies', 'pat1', cb);},
+			function(cb) {bbr.getPartialSection('allergies', 'pat1', cb);},
+			function(cb) {bbr.getMatch('allergies', matchIds[1], cb);}
+			], 
+			function(err, results) {
+				if (err) {
+					done(err)
+				} else {
+					expect(results[0]).to.equal(0);
+					expect(results[1]).to.equal(6);
+					expect(results[2]).to.have.length(4);
+					expect(results[3]).to.have.length(0);
+					expect(results[4].determination).to.equal('added');
+					done();
+				}
+			}
+		);
+	});
 });
