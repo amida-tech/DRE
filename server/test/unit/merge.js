@@ -1,7 +1,7 @@
 "use strict";
 
 var chai = require('chai');
-var util = require('util')
+var util = require('util');
 var path = require('path');
 var async = require('async');
 
@@ -45,7 +45,7 @@ describe('merge.js methods', function() {
                     }
                 );
             });
-        }
+        };
     };
 
     it('check merge models', function(done) {
@@ -93,11 +93,12 @@ describe('merge.js methods', function() {
                 if (err) {
                     done(err);
                 } else {
+                    var i;
                     var r0 = results[0];
                     expect(r0).to.have.length(2);
                     expect([r0[0].entry_id.name, r0[1].entry_id.name]).to.include.members(['name_0.0.0', 'name_0.0.1']);
                     expect([r0[0].entry_id.severity, r0[1].entry_id.severity]).to.include.members(['severity_0.0.0', 'severity_0.0.1']);
-                    for (var i=0; i<2; ++i) {
+                    for (i=0; i<2; ++i) {
                         expect(r0[i].record_id.filename).to.equal('c00.xml');
                         expect(r0[i].entry_type).to.equal('testallergy');
                         expect(r0[i].merge_reason).to.equal('new');
@@ -110,7 +111,7 @@ describe('merge.js methods', function() {
                     expect(r2).to.have.length(3);
                     expect([r2[0].entry_id.name, r2[1].entry_id.name, r2[2].entry_id.name]).to.include.members(['name_2.0.0', 'name_2.0.1', 'name_2.0.2']);
                     expect([r2[0].entry_id.value.code, r2[1].entry_id.value.code, r2[2].entry_id.value.code]).to.include.members(['code_2.0.0', 'code_2.0.1', 'code_2.0.2']);
-                    for (var i=0; i<3; ++i) {
+                    for (i=0; i<3; ++i) {
                         expect(r2[i].record_id.filename).to.equal('c20.xml');
                         expect(r2[i].record_id.metadata.fileClass).to.equal('ccda');
                         expect(r2[i].entry_type).to.equal('testallergy');
@@ -122,7 +123,7 @@ describe('merge.js methods', function() {
                     expect(r3).to.have.length(2);
                     expect([r3[0].entry_id.name, r3[1].entry_id.name]).to.include.members(['name_0.0.0', 'name_0.0.1']);
                     expect([r3[0].entry_id.proc_type, r3[1].entry_id.proc_type]).to.include.members(['proc_type_0.0.0', 'proc_type_0.0.1']);
-                    for (var i=0; i<2; ++i) {
+                    for (i=0; i<2; ++i) {
                         expect(r3[i].record_id.filename).to.equal('c00.xml');
                         expect(r3[i].entry_type).to.equal('testprocedure');
                         expect(r3[i].merge_reason).to.equal('new');
@@ -133,7 +134,7 @@ describe('merge.js methods', function() {
                     expect(r4).to.have.length(3);
                     expect([r4[0].entry_id.name, r4[1].entry_id.name, r4[2].entry_id.name]).to.include.members(['name_1.0.0', 'name_1.0.1', 'name_1.0.2']);
                     expect([r4[0].entry_id.proc_value.display, r4[1].entry_id.proc_value.display, r4[2].entry_id.proc_value.display]).to.include.members(['display_1.0.0', 'display_1.0.1', 'display_1.0.2']);
-                    for (var i=0; i<3; ++i) {
+                    for (i=0; i<3; ++i) {
                         expect(r4[i].record_id.filename).to.equal('c10.xml');
                         expect(r4[i].entry_type).to.equal('testprocedure');
                         expect(r4[i].merge_reason).to.equal('new');
@@ -152,8 +153,9 @@ describe('merge.js methods', function() {
         var key = refmodel.newEntriesContextKey(secName, recordIndex);
         var id = context[key][index];
         var result = resultsById[id];
-        if (! sourceIndex) sourceIndex = recordIndex;
-
+        if (! sourceIndex) {
+            sourceIndex = recordIndex;
+        }
         expect(result).to.exist;
         expect(result.record_id._id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
@@ -189,7 +191,7 @@ describe('merge.js methods', function() {
                 }
             }
         );
-    }
+    };
 
     it('merge.getAll (section only)', function(done) {
         callGetAll(function(err, resultsById) {
@@ -261,7 +263,7 @@ describe('merge.js methods', function() {
                 });
             });
         };        
-    }
+    };
 
     verifyWithDuplicate(' (with entry.duplicate)')();
 
@@ -326,8 +328,9 @@ describe('merge.js methods', function() {
         var key = refmodel.partialEntriesContextKey(secName, recordIndex);
         var id = context[key][index].match_entry_id;
         var result = resultsById[id];
-        if (! sourceIndex) sourceIndex = recordIndex;
-
+        if (! sourceIndex) {
+            sourceIndex = recordIndex;
+        }
         expect(result).to.exist;
         expect(result.record_id._id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
@@ -457,8 +460,9 @@ describe('merge.js methods', function() {
     var verifyEntryGet = function(context, result, secName, recordIndex, index, sourceIndex) {
         var key = refmodel.newEntriesContextKey(secName, recordIndex);
         var id = context[key][index];
-        if (! sourceIndex) sourceIndex = recordIndex;
-
+        if (! sourceIndex) {
+            sourceIndex = recordIndex;
+        }
         expect(result.entry_id.toString()).to.equal(id.toString());
         expect(result.record_id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };
@@ -466,8 +470,9 @@ describe('merge.js methods', function() {
     var verifyEntryGetPartial = function(context, result, secName, recordIndex, index, sourceIndex) {
         var key = refmodel.partialEntriesContextKey(secName, recordIndex);
         var id = context[key][index].match_entry_id;
-        if (! sourceIndex) sourceIndex = recordIndex;
-
+        if (! sourceIndex) {
+            sourceIndex = recordIndex;
+        }
         expect(result.entry_id.toString()).to.equal(id.toString());
         expect(result.record_id.toString()).to.equal(context.storageIds[sourceIndex].toString());
     };

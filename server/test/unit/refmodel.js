@@ -90,21 +90,21 @@ var matchObjectInstance = exports.matchObjectInstance = {
         return {
             match: 'diff',
             diff: 'diff' + suffix
-        }
+        };
     },
     partial: function(suffix, entryIndex) {
         return {
             match: 'partial',
             percent: (entryIndex + 1) * 10,
             diff: 'diff' + suffix            
-        }
+        };
     },
    diffsub: function(suffix, entryIndex) {
         return {
             match: 'diff',
             diff: 'diff' + suffix,
             subelements: 'subelements' + suffix
-        }
+        };
     },
     partialsub: function(suffix, entryIndex) {
         return {
@@ -112,7 +112,7 @@ var matchObjectInstance = exports.matchObjectInstance = {
             percent: (entryIndex + 1) * 10,
             diff: 'diff' + suffix,
             subelements: 'subelements' + suffix
-        }
+        };
     }    
 };
 
@@ -151,13 +151,15 @@ var partialEntriesContextKey = exports.partialEntriesContextKey = function(secNa
 exports.propertyToFilename = function(value) {
     var n = value.length;
     return util.format('c%s%s.xml', value.charAt(n-5), value.charAt(n-3));
-}
+};
 
 var pushToContext = exports.pushToContext = function(context, keyGen, secName, recordIndex, values) {
     if (values) {
         var key = keyGen(secName, recordIndex);
         var r = context[key];
-        if (! r) r = context[key] = [];
+        if (! r) {
+            r = context[key] = [];
+        }
         Array.prototype.push.apply(r, values);
     }
 };
@@ -209,7 +211,7 @@ var setConnectionContext = exports.setConnectionContext = function(dbName, conte
 exports.prepareConnection = function(dbname, context) {
     return function() {
         before(function(done) {
-            setConnectionContext(dbname, context, done)
+            setConnectionContext(dbname, context, done);
         });
 
         it('check connection and models', function(done) {
@@ -221,7 +223,7 @@ exports.prepareConnection = function(dbname, context) {
             expect(context.dbinfo.models.testprocedures).to.exist;
             done();
         });
-    }
+    };
 };
 
 var addRecordsPerPatient = exports.addRecordsPerPatient = function(context, countPerPatient, callback) {
@@ -234,11 +236,10 @@ var addRecordsPerPatient = exports.addRecordsPerPatient = function(context, coun
             q.push(f);
             return q;
         }, r);
-        return r;
     }, []);
 
     async.parallel(fs, callback);
-}
+};
 
 exports.createMatchInformation = function(recordIndex, destIndices, matchTypes) {
     return matchTypes.reduce(function(r, matchType, index) {
@@ -251,19 +252,16 @@ exports.createMatchInformation = function(recordIndex, destIndices, matchTypes) 
         r.push(v);
         return r;
     }, []);
-}
+};
 
 exports.cancelMatch = function(context, secName, recordKey, index, callback) {
     var key = partialEntriesContextKey(secName, recordKey);
     var id = context[key][index]._id;
     match.cancel(context.dbinfo, secName, id, 'cancel_' + recordKey + '.' + index, callback);
-}
+};
 
 exports.acceptMatch = function(context, secName, recordKey, index, callback) {
     var key = partialEntriesContextKey(secName, recordKey);
     var id = context[key][index]._id;
     match.accept(context.dbinfo, secName, id, 'accept_' + recordKey + '.' + index, callback);
-}
-
-
-
+};

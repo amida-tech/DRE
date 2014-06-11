@@ -22,7 +22,9 @@ describe('underscore sanity checks', function() {
         assert.ok(_.isEmpty(new Date()), "new Date()"); // since date has no enumerable property
         
         var a = [0, 1, 2];
-        for (var i=0; i<3; ++i) delete a[i];
+        for (var i=0; i<3; ++i) {
+            delete a[i];
+        }
         assert.notOk(_.isEmpty(a), "array all deleted");
     
         done();
@@ -50,7 +52,7 @@ describe('chai sanity checks', function() {
                 b: {
                     c: index + 1
                 }
-            }
+            };
             r.push(v);
             return r;
         }

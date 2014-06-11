@@ -6,7 +6,7 @@ var async = require('async');
 var match = require('../../lib/recordjs/match');
 var modelutil = require('../../lib/recordjs/modelutil');
 
-var refmodel = require('./refmodel')
+var refmodel = require('./refmodel');
 
 var expect = chai.expect;
 chai.config.includeStack = true;
@@ -46,16 +46,16 @@ describe('match.js methods', function() {
                     }
                 );
             });
-        }
+        };
     };
 
     var callGetAll = function(callback) {
         async.parallel([
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat2', 'name severity', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name proc_type', callback)},
-            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat2', 'name proc_type', callback)}
+            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat0', 'name severity', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testallergies', 'pat2', 'name severity', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat0', 'name proc_type', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat1', 'name proc_type', callback);},
+            function(callback) {match.getAll(context.dbinfo, 'testprocedures', 'pat2', 'name proc_type', callback);}
             ],   
             function(err, results) {
                 if (err) {
