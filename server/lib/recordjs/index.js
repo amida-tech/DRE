@@ -19,6 +19,10 @@ exports.connectDatabase = function connectDatabase(server, options, callback) {
         callback = options;
         options = {};
     }
+    if (dbinfo) { // temporary until moved to it own repo
+        callback(null, dbinfo);
+        return;
+    }
     db.connect(server, options, function(err, result) {
         if (err) {
             callback(err);

@@ -14,7 +14,7 @@ var modelutil = require('../../lib/recordjs/modelutil');
 var expect = chai.expect;
 chai.config.includeStack = true;
 
-xdescribe('API', function() {
+describe('API', function() {
 	var ccd = null;
 	var dbinfo = null;
 
