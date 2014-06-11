@@ -70,7 +70,7 @@ exports.save = function(dbinfo, secName, ptKey, input, sourceId, callback) {
     }
 };
 
-exports.savePartial = function(dbinfo, secName, patKey, input, sourceId, callback) {
+exports.savePartial = function(dbinfo, secName, ptKey, input, sourceId, callback) {
     var savePartialEntry = function(entryObject, cb) {
         var localSaveNewEntry = function(cb2) {
             entry.save(dbinfo, secName, entryObject.entry, sourceId, cb2);    
@@ -78,7 +78,7 @@ exports.savePartial = function(dbinfo, secName, patKey, input, sourceId, callbac
 
         function savePartialMatch (matchEntryId, cb2) {
             var tmpMatch = {
-                patKey: patKey,
+                patKey: ptKey,
                 entry_type: dbinfo.sectionToType[secName],
                 entry_id: entryObject.matchRecordId,
                 match_entry_id: matchEntryId
@@ -101,7 +101,7 @@ exports.savePartial = function(dbinfo, secName, patKey, input, sourceId, callbac
         var r = {};        
         var entryForDb = _.clone(entry.partial_array);
         entryForDb.reviewed = false;
-        entryForDb.patKey = patKey;
+        entryForDb.patKey = ptKey;
         r.entry = entryForDb;
         r.match = entry.partial_match;
         r.matchRecordId = entry.match_record_id;
