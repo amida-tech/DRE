@@ -57,6 +57,7 @@ exports.connect = function connectDatabase(server, inputOptions, callback) {
             dbinfo.db = dbase;
             dbinfo.grid = new mongo.Grid(dbase, 'storage');
             var c = mongoose.createConnection('mongodb://' + server + '/'+ dbName);
+            dbinfo.connection = c;
             dbinfo.storageModel = models.storageModel(c);
             
             var r = models.models(c, options.sectionToType, options.schemas, options.matchFields);
