@@ -185,7 +185,9 @@ describe('API', function() {
                 done(err);
             } else {
                 var actual = bbr.cleanSection(result);
-                expect(actual).to.deep.equal(ccd.allergies);
+                var expected = ccd.allergies;
+                expect(actual).to.deep.include.members(expected);
+                expect(expected).to.deep.include.members(actual);
                 done();
             }
         });
