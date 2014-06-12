@@ -337,13 +337,12 @@ var schema = {
   metadata: {
     attribution: [{type: ObjectId, ref: 'allergymerges'}]
   },
-  __index: Number,
   reviewed: Boolean,
   archived: Boolean
 };
 ```
 
-All the fields before 'patKey' directly comes from [blue-button](https://github.com/amida-tech/blue-button) models and is documented there.  Remaining fields are identical for all collections.  'patKey' is the key for the patient whom this entry belongs.  'metadata.attribution' links patient data collections to merge history collections that are explained in the next section. '__index' is used internally to record the order entries in the source file to ease testing.  'reviewed=false' identifies all entries that are queued for patient review.  'archieved=true' identifies all entries that are created for patient review and later is ignored or merged and is not part of the health record.
+All the fields before 'patKey' directly comes from [blue-button](https://github.com/amida-tech/blue-button) models and is documented there.  Remaining fields are identical for all collections.  'patKey' is the key for the patient whom this entry belongs.  'metadata.attribution' links patient data collections to merge history collections that are explained later in this document.  'reviewed=false' identifies all partial entries that are queued for patient review.  'archieved=true' identifies all partial entries that are ignored or merged and is not part of the health record.
 
 Since schema for all other collections follows the same pattern they will not be explicitly shown here.
 
