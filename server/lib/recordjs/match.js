@@ -1,82 +1,112 @@
-exports.saveMatch = function(dbinfo, matchObject, callback) {
-    var Model = dbinfo.matchModels[matchObject.entry_type];
-    var saveMatch = new Model(matchObject);
-    saveMatch.save(function(err, saveResults) {
+var _ = require('underscore');
+var async = require('async');
+
+var section = require('./section');
+var entry = require('./entry');
+
+exports.save = function(dbinfo, secName, input, callback) {
+    var Model = dbinfo.matchModels[secName];
+    var m = new Model(input);
+    m.save(callback);
+};
+
+exports.get = function(dbinfo, secName, id, callback) {
+    var model = dbinfo.matchModels[secName];
+    var query = model.findOne({_id: id}).populate('entry_id match_entry_id').lean();
+    query.exec(function (err, result) {
         if (err) {
             callback(err);
         } else {
-            callback(null, saveResults);
+            callback(null, result);
         }
     });
 };
 
-exports.getMatch = function(dbinfo, type, matchId, callback) {
-    var model = dbinfo.matchModels[type];
-    var query = model.findOne({_id: matchId}).populate('entry_id match_entry_id').lean();
-    query.exec(function (err, matchResults) {
+exports.getAll = function(dbinfo, secName, ptKey, fields, callback) {
+    var model = dbinfo.matchModels[secName];
+    var query = model.find({patKey: ptKey}).populate('entry_id match_entry_id', fields).lean();
+    query.exec(function (err, results) {
         if (err) {
             callback(err);
         } else {
-            //console.log(matchResults);
-            callback(null, matchResults);
+            var filteredResults = results.filter(function(result) {
+                return result.determination === undefined;
+            });
+            callback(null, filteredResults);
         }
     });
 };
 
-exports.updateMatch = function(dbinfo, type, identifier, updateFields, callback) {
-    var model = dbinfo.matchModels[type];
-    var query = model.findOne({
-        _id: identifier
-    });
-    query.exec(function(err, update_record) {
-        if (err) {
-            callback(err);
-        } else {
-            if (updateFields.determination) {
-                update_record.determination = updateFields.determination;
-                update_record.save(function(err, save_results) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        callback(null, save_results);
-                    }
-                });
-            } else {
-                callback('No update determination found.');
-            }
-        }
-    });
-};
-
-exports.getMatches = function(dbinfo, type, typeFields, recordFields, callback) {
-
-    var model = dbinfo.matchModels[type];
-    var allFields = typeFields + ' ' + recordFields;
-
-    var query = model.find().populate('entry_id match_entry_id', allFields).lean();
-    query.exec(function (err, matchResults) {
-        if (err) {
-            callback(err);
-        } else {
-            var returnMatches = [];
-            for (var iMatch in matchResults) {
-                //Filter to undetermined records.
-                if (matchResults[iMatch].determination === undefined) {
-                    returnMatches.push(matchResults[iMatch]);
-                }
-            }
-            callback(null, returnMatches);
-        }
-    });
-};
-
-exports.count = function(dbinfo, type, conditions, callback) {
-    var model = dbinfo.matchModels[type];
+exports.count = function(dbinfo, secName, ptKey, conditions, callback) {
+    var model = dbinfo.matchModels[secName];
     var query = model.count();
     query.where('determination').in([null, false]);
-    //Ignoring Conditions
-    //query.where(conditions);
-    query.exec(conditions, function(err, count) {
-        callback(err, count);
-    });
+    var c = _.clone(conditions);
+    c.patKey = ptKey;
+    query.where(c);
+    query.exec(callback);
+};
+
+exports.cancel = function(dbinfo, secName, id, reason, callback) {
+    var queryMatch = function(cb) {
+        var model = dbinfo.matchModels[secName];
+        var query = model.findOne({_id: id});
+        query.exec(function(err, result) {
+            cb(err, result);
+        });
+    };
+
+    var removeEntry = function(result, cb) {
+        entry.remove(dbinfo, secName, result.match_entry_id, function(err) {
+            cb(err, result);
+        });
+    };
+
+    var updateMatch = function(result, cb) {
+        result.determination = reason;
+        result.save(function(err) {
+            cb(err);
+        });
+    };
+
+    async.waterfall([queryMatch, removeEntry, updateMatch], callback);
+};
+
+exports.accept = function(dbinfo, secName, id, reason, callback) {
+    var queryMatch = function(cb) {
+        var model = dbinfo.matchModels[secName];
+        var query = model.findOne({_id: id});
+        query.exec(function(err, result) {
+            queryResult = {match: result};
+            cb(err, queryResult);
+        });
+    };
+
+    var queryEntry = function(queryResult, cb) {
+        var entryId = queryResult.match.match_entry_id;
+        var model = dbinfo.models[secName];
+        var query = model.findOne({"_id": entryId});
+        query.exec(function(err, entry) {
+            queryResult.entry = entry;
+            cb(err, queryResult);
+        });
+    };
+
+    var reviewEntry = function(queryResult, cb) {
+        var e = queryResult.entry;
+        e.reviewed = true;
+        e.save(function(err) {
+            cb(err, queryResult);
+        });
+    };
+
+    var updateMatch = function(queryResult, cb) {
+        var m = queryResult.match;
+        m.determination = reason;
+        m.save(function(err) {
+            cb(err);
+        });
+    };
+
+    async.waterfall([queryMatch, queryEntry, reviewEntry, updateMatch], callback);
 };

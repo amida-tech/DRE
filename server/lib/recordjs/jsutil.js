@@ -1,3 +1,5 @@
+"use strict";
+
 var _ = require('underscore');
 
 exports.deepDelete = function deepDelete(obj, prop) {
@@ -9,31 +11,31 @@ exports.deepDelete = function deepDelete(obj, prop) {
     }
 };
 
-exports.deepEmptyArrayDelete = function deepEmptyArrayDelete(obj) {
-    if (_.isObject(obj)) {
-        Object.keys(obj).forEach(function(key) {
-            if (obj[key] && Array.isArray(obj[key]) && obj[key].length === 0) {
-                delete obj[key];
-            } else {
-                deepEmptyArrayDelete(obj[key]);
-            }
-        });
-    }
-};
-
 exports.deepDeleteEmpty = function deepDeleteEmpty(obj) {
     if (_.isObject(obj)) {
         Object.keys(obj).forEach(function(key) {
             if (_.isObject(obj[key])) {
                 deepDeleteEmpty(obj[key]);
-                if (Object.keys(obj[key]).length < 1) {
-                     if (! (obj[key] instanceof Date)) {
+                if (_.isEmpty(obj[key])) {
+                    if (! (obj[key] instanceof Date)) {
                         delete obj[key];
                     }
-                } 
+                } else if (_.isArray(obj[key])) {
+                    var reduced = obj[key].reduce(function(r, v) {
+                        if (v !== undefined) {
+                            r.push(v);
+                        }
+                        return r;
+                    }, []);
+                    if (reduced.length !== obj[key].length) {
+                        if (reduced.length > 0) {
+                            obj[key] = reduced;
+                        } else {
+                            delete obj[key];
+                        }
+                    }
+                }
             }
         });
     }
 };
-
-

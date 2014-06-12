@@ -1,198 +1,132 @@
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectID;
-var _ = require('underscore');
+"use strict";
 
 var db = require('./db');
-var models = require('./models');
+
 var storage = require('./storage');
 var merge = require('./merge');
 var match = require('./match');
 var section = require('./section');
-var jsutil = require('./jsutil');
-var modelutil = require('./modelutil');
+var entry = require('./entry');
 var allsections = require('./allsections');
+var modelutil = require('./modelutil');
 
-var typeToSection = exports.typeToSection = {
-    allergy: 'allergies',
-    procedure: 'procedures',
-    medication: 'medications',
-    encounter: 'encounters',
-    vital: 'vitals',
-    result: 'results',
-    social: 'socialHistory',
-    immunization: 'immunizations',
-    demographic: 'demographics',
-    problem: 'problems'
-};
-
-var sectionToType = exports.sectionToType = {
-    allergies: 'allergy',
-    procedures: 'procedure',
-    medications: 'medication',
-    encounters: 'encounter',
-    vitals: 'vital',
-    results: 'result',
-    socialHistory: 'social',
-    immunizations: 'immunization',
-    demographics: 'demographic',
-    problems: 'problem'
-};
-
-var typeToSchemaDesc = {};
-Object.keys(typeToSection).forEach(function(type) {
-    var desc = models.modelDescription('ccda_' + typeToSection[type]);
-    if (!desc) {throw new Error('cannot get schema for ' + 'ccda_' + typeToSection[type]);}
-    typeToSchemaDesc[type] = desc;
-});
-//typeToSchemaDesc.medication.date = typeToSchemaDesc.medication.date[0];
-exports.typeToSchemaDesc = typeToSchemaDesc;
+// db
 
 var dbinfo = null;
 
-exports.connectDatabase = function connectDatabase(server, dbName, callback) {
+exports.connectDatabase = function connectDatabase(server, options, callback) {
     if (! callback) {
-        callback = dbName;
-        dbName = 'dre';
+        callback = options;
+        options = {};
     }
-    if (dbinfo !== null) {
-        callback();
+    if (dbinfo) { // temporary until moved to it own repo
+        callback(null, dbinfo);
         return;
     }
-    options = {
-        dbName: dbName,
-        typeToSection: typeToSection,
-        typeToSchemaDesc: typeToSchemaDesc
-    };
-    db.connect(server, options, function(err, dbinfoin) {
+    db.connect(server, options, function(err, result) {
         if (err) {
             callback(err);
         } else {
-            dbinfo = dbinfoin;
+            dbinfo = result;
             callback(null, dbinfo);
         }    
     });
 };
 
-// Records
+// records
 
-exports.saveRecord = function(patKey, inboundFile, inboundFileInfo, inboundXMLType, callback) {
-    storage.saveRecord(dbinfo, patKey, inboundFile, inboundFileInfo, inboundXMLType, callback);
+exports.saveRecord = function(ptKey, content, sourceInfo, contentType, callback) {
+    storage.saveRecord(dbinfo, ptKey, content, sourceInfo, contentType, callback);
 };
 
-exports.getRecordList = function(patKey, callback) {
-    storage.getRecordList(dbinfo, patKey, callback);
+exports.getRecordList = function(ptKey, callback) {
+    storage.getRecordList(dbinfo, ptKey, callback);
 };
 
-exports.getRecord = function(fileId, callback) {
-    storage.getRecord(dbinfo, fileId, callback);
+exports.getRecord = function(sourceId, callback) {
+    storage.getRecord(dbinfo, sourceId, callback);
 };
 
-exports.recordCount = function(patKey, callback) {
-    storage.recordCount(dbinfo, patKey, callback);
+exports.recordCount = function(ptKey, callback) {
+    storage.recordCount(dbinfo, ptKey, callback);
 };
 
-// Merges
+// merges
 
-exports.getMerges = function(patientKey, type, typeFields, recordFields, callback) {
-    merge.getMerges(dbinfo, patientKey, sectionToType[type], typeFields, recordFields, callback);
+exports.getMerges = function(secName, ptKey, entryFields, recordFields, callback) {
+    merge.getAll(dbinfo, secName, ptKey, entryFields, recordFields, callback);
 };
 
-exports.setMerge = function(mergeObject, callback) {
-    merge.saveMerge(dbinfo, mergeObject, callback);
+exports.mergeCount = function(secName, ptKey, conditions, callback) {
+    merge.count(dbinfo, secName, ptKey, conditions, callback);
 };
 
-exports.mergeCount = function(type, conditions, callback) {
-    merge.count(dbinfo, type, conditions, callback);
+// matches
+
+exports.getMatches = function(secName, ptKey, fields, callback) {
+    match.getAll(dbinfo, secName, ptKey, fields, callback);
 };
 
-// Matches
-exports.getMatches = function(type, typeFields, recordFields, callback) {
-    match.getMatches(dbinfo, sectionToType[type], typeFields, recordFields, callback);
+exports.getMatch = function(secName, id, callback) {
+    match.get(dbinfo, secName, id, callback);
 };
 
-exports.getMatch = function(type, matchId, callback) {
-    match.getMatch(dbinfo, sectionToType[type], matchId, callback);
+exports.matchCount = function(secName, ptKey, conditions, callback) {
+    match.count(dbinfo, secName, ptKey, conditions, callback);
 };
 
-exports.updateMatch = function(type, identifier, updateFields, callback) {
-    match.updateMatch(dbinfo, sectionToType[type], identifier, updateFields, callback);   
+exports.cancelMatch = function(secName, id, reason, callback) {
+    match.cancel(dbinfo, secName, id, reason, callback);
 };
 
-exports.matchCount = function(type, conditions, callback) {
-    match.count(dbinfo, type, conditions, callback);
+exports.acceptMatch = function(secName, id, reason, callback) {
+    match.accept(dbinfo, secName, id, reason, callback);
 };
 
-// Sections
-var capitalize = function(value) {
-    return value.charAt(0).toUpperCase() + value.slice(1);
+// section
+
+exports.getSection = function(secName, ptKey, callback) {
+    section.get(dbinfo, secName, ptKey, callback);
 };
 
-module.exports.capitalize = capitalize;
-
-Object.keys(typeToSection).forEach(function(type) {
-    var sectionName = capitalize(typeToSection[type]);
-    var typeName = capitalize(type);
-    
-    exports['saveNew' + sectionName] = function(patKey, inputArray, sourceID, callback) {
-        section.saveNewEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
-    };
-
-    exports['update' + typeName] = function(patKey, recordId, recordUpdate, callback) {
-        section.updateEntry(dbinfo, type, patKey, recordId, recordUpdate, callback);
-    };
-
-    exports['get' + typeName] = function(recordId, callback) {
-        section.getEntry(dbinfo, type, recordId, callback);
-    };
-
-    exports['savePartial' + sectionName] = function(patKey, inputArray, sourceID, callback) {
-        section.savePartialEntries(dbinfo, type, patKey, inputArray, sourceID, callback);
-    };
-
-    exports['removePartial' + typeName] = function(patKey, partialID, callback) {
-        section.removeEntry(dbinfo, type, patKey, partialID, callback);
-    };
-
-    exports['add' + sectionName + 'MatchEntry'] = function(patKey, inputArray, callback) {
-        section.saveMatchEntries(dbinfo, type, patKey, inputArray, callback);
-    };
-
-    exports['get' + sectionName] = function(patKey, callback) {
-        section.getSection(dbinfo, type, patKey, callback);
-    };
-
-    exports['getPartial' + sectionName] = function(patKey, callback) {
-        section.getPartialSection(dbinfo, type, patKey, callback);
-    };
-
-    exports['add' + typeName + 'MergeEntry'] = function(update_id, mergeInfo, callback) {
-        section.addEntryMergeEntry(dbinfo, type, update_id, mergeInfo, callback);
-    };
-
-    exports[type + 'Count'] = function(conditions, callback) {
-        section.sectionEntryCount(dbinfo, type, conditions, callback);
-    };
-
-});
-
-exports.getAllSections = function(patientKey, callback) {
-    allsections.getAllSections(dbinfo, patientKey, callback);
+exports.saveSection = function(secName, ptKey, inputSection, sourceId, callback) {
+    section.save(dbinfo, secName, ptKey, inputSection, sourceId, callback);
 };
 
-exports.saveAllSectionsAsNew = function(patientKey, patientRecord, fileId, callback) {
-    allsections.saveAllSectionsAsNew(dbinfo, patientKey, patientRecord, fileId, callback);
+exports.getAllSections = function(ptKey, callback) {
+    allsections.get(dbinfo, ptKey, callback);
 };
 
-// Utility
+exports.saveAllSections = function(ptKey, ptRecord, sourceId, callback) {
+    allsections.save(dbinfo, ptKey, ptRecord, sourceId, callback);
+};
 
-exports.cleanSectionEntries = function(input) {
+// partial section
+
+exports.getPartialSection = function(secName, ptKey, callback) {
+    section.getPartial(dbinfo, secName, ptKey, callback);
+};
+
+exports.savePartialSection = function(secName, ptKey, inputSection, sourceId, callback) {
+    section.savePartial(dbinfo, secName, ptKey, inputSection, sourceId, callback);
+};
+
+// entry
+
+exports.getEntry = function(secName, id, callback) {
+    entry.get(dbinfo, secName, id, callback);
+};
+
+exports.updateEntry = function(secName, id, sourceId, updateObject, callback) {
+    entry.update(dbinfo, secName, id, sourceId, updateObject, callback);
+};
+
+exports.duplicateEntry = function(secName, id, sourceId, callback) {
+    entry.duplicate(dbinfo, secName, id, sourceId, callback);
+};
+
+// utility
+
+exports.cleanSection = function(input) {
     return modelutil.mongooseToBBModelSection(input);
 };
-
-// Matches
-
-//Will need a get 
-
-
-

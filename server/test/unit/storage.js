@@ -11,7 +11,7 @@ var storage = require('../../lib/recordjs/storage');
 
 var expect = chai.expect;
 
-describe('storage.files', function() {
+describe('storage.js methods', function() {
     this.timeout(5000);
     var dbinfo = null;
     var ids = [];
@@ -50,7 +50,7 @@ describe('storage.files', function() {
         }
         var options = {
             dbName: 'storagetest',
-            typeToSection: {},
+            sectionToType: {},
             typeToSchemaDesc: {}
         };
         db.connect('localhost', options, function(err, result) {
@@ -63,7 +63,7 @@ describe('storage.files', function() {
         });
     });
 
-    it('dbinfo check', function(done) {
+    it('check connection and models', function(done) {
         expect(dbinfo).to.exist;
         expect(dbinfo.db).to.exist;
         expect(dbinfo.grid).to.exist;

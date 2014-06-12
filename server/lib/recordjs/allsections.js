@@ -1,61 +1,29 @@
-var section = require('./section');
-var record = require('./index');
+"use strict";
 
-exports.getAllSections = function(dbinfo, patientKey, callback) {
-    var types = Object.keys(record.typeToSection);
-    var sectionCount = types.length;
-    var result = {};
-    var inError = false;
-    var count = 0;
-    types.forEach(function(type) {
-        section.getSection(dbinfo, type, patientKey, function(err, sectionResult) {
-            if (err) {
-                inError = true;
-                callback(err);
-            } else {
-                if (! inError) {
-                    var sectionName = record.typeToSection[type];
-                    result[sectionName] = sectionResult; 
-                    ++count;
-                    if (count === sectionCount) {
-                        callback(null, result);
-                    }
-                }
-            }
-        });
+var section = require('./section');
+var async = require('async');
+
+exports.get = function(dbinfo, ptKey, callback) {
+    var secNames = dbinfo.sectionNames();
+    var f = function(secName, cb) {
+        section.get(dbinfo, secName, ptKey, cb);
+    };
+    async.map(secNames, f, function(err, sections) {
+        if (err) {
+            callback(err);
+        } else {
+            var result = secNames.reduce(function(r, secName, index) {
+                r[secName] = sections[index];
+                return r;
+            }, {});
+            callback(null, result);
+        }
     });
 };
 
-exports.saveAllSectionsAsNew = function(dbinfo, patientKey, patientRecord, fileId, callback) {
-    var types = Object.keys(record.typeToSection);
-    var sectionCount = types.length;
-    var result = {};
-    var inError = false;
-    var count = 0;
-    
-    var onSectionHandled = function() {
-        ++count;
-        if (count === sectionCount) {
-            callback(null);
-        }
+exports.save = function(dbinfo, ptKey, ptRecord, sourceId, callback) {
+    var f = function(name, cb) {
+        section.save(dbinfo, name, ptKey, ptRecord[name], sourceId, cb);
     };
-    
-    types.forEach(function(type) {
-        var sectionName = record.typeToSection[type];
-        var sectionRecord = patientRecord[sectionName];
-        if (! sectionRecord) {
-            onSectionHandled();
-        } else {
-            section.saveNewEntries(dbinfo, type, patientKey, sectionRecord, fileId, function(err) {
-                if (err) {
-                    inError = true;
-                    callback(err);
-                } else {
-                    if (! inError) {
-                        onSectionHandled();
-                    }
-                }
-            });
-        }
-    });
+    async.map(dbinfo.sectionNames(), f, callback);
 };

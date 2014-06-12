@@ -1,28 +1,30 @@
+"use strict";
+
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 //Saves raw file to gridFS.
-exports.saveRecord = function(dbinfo, patKey, inboundFile, inboundFileInfo, inboundXMLType, callback) {
-    var buffer = new Buffer(inboundFile);
+exports.saveRecord = function(dbinfo, ptKey, content, sourceInfo, contentType, callback) {
+    var buffer = new Buffer(content);
 
-    var fileMetadata = {patKey: patKey};
-    if (inboundXMLType) {
-        fileMetadata.fileClass = inboundXMLType;
+    var fileMetadata = {patKey: ptKey};
+    if (contentType) {
+        fileMetadata.fileClass = contentType;
     }
 
     dbinfo.grid.put(buffer, {
         metadata: fileMetadata,
-        filename: inboundFileInfo.name,
-        content_type: inboundFileInfo.type,
+        filename: sourceInfo.name,
+        content_type: sourceInfo.type,
     }, function(err, fileInfo) {
         if (err) {
             console.error(err);
             callback(err);
         } else {
             /*Relax for now pending further investigation, seems to be chunking overhead.*/
-            //if (fileInfo.length !== inboundFileInfo.size) {
+            //if (fileInfo.length !== sourceInfo.size) {
             //  callback('file size mismatch');
             //} else {
             callback(null, fileInfo);
@@ -31,12 +33,12 @@ exports.saveRecord = function(dbinfo, patKey, inboundFile, inboundFileInfo, inbo
     });
 };
 
-exports.getRecordList = function(dbinfo, patKey, callback) {
+exports.getRecordList = function(dbinfo, ptKey, callback) {
     dbinfo.db.collection('storage.files', function(err, recordCollection) {
         if (err) {
             callback(err);
         } else {
-            recordCollection.find({"metadata.patKey": patKey}, function(err, findResults) {
+            recordCollection.find({"metadata.patKey": ptKey}, function(err, findResults) {
                 findResults.toArray(function(err, recordArray) {
                     var recordResponseArray = [];
                     for (var i = 0; i < recordArray.length; i++) {
@@ -63,20 +65,20 @@ exports.getRecordList = function(dbinfo, patKey, callback) {
     });
 };
 
-exports.getRecord = function(dbinfo, fileId, callback) {
+exports.getRecord = function(dbinfo, sourceId, callback) {
     //Removed owner validation for demo purposes.
     dbinfo.db.collection('storage.files', function(err, coll) {
         if (err) {
             callback(err);
         } else {
-            if (typeof fileId === 'string') {
-                fileId = mongoose.Types.ObjectId(fileId);
+            if (typeof sourceId === 'string') {
+                sourceId = mongoose.Types.ObjectId(sourceId);
             }
-            coll.findOne({"_id": fileId}, function(err, results) {
+            coll.findOne({"_id": sourceId}, function(err, results) {
                 if (err) {
                     callback(err);
                 } else if (results) {
-                    dbinfo.grid.get(fileId, function(err, data) {
+                    dbinfo.grid.get(sourceId, function(err, data) {
                         if (err) {
                             callback(err);
                         } else {
@@ -92,8 +94,8 @@ exports.getRecord = function(dbinfo, fileId, callback) {
     });
 };
 
-exports.recordCount = function(dbinfo, patKey, callback) {
-    dbinfo.storageModel.count({"metadata.patKey" : patKey}, function(err, count) {
+exports.recordCount = function(dbinfo, ptKey, callback) {
+    dbinfo.storageModel.count({"metadata.patKey" : ptKey}, function(err, count) {
         callback(err, count);
     });
 };

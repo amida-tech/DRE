@@ -21,12 +21,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         var returnPartialArray = [];
 
         function updateDuplicate(section, update_id, callback) {
-
-            var mergeInfo = {
-                record_id: newSourceID,
-                merge_reason: 'duplicate'
-            };
-            record["add" + record.capitalize(record.sectionToType[section]) + "MergeEntry"](update_id, mergeInfo, function(err) {
+            record.duplicateEntry(section, update_id, newSourceID, function(err) {
                 if (err) {
                     callback(err);
                 } else {
@@ -84,10 +79,17 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                     tmpMatchRecId = baseArray[0]._id;
                 }
 
+                var matchObject = srcMatches[i];
+                var matchObjForDb = {};
+                matchObjForDb.diff = matchObject.diff;
+                if (matchObject.subelements) {
+                    matchObjForDb.subelements = matchObject.subelements;
+                }
+
                 //Diffs always zero, can take only array object.
                 returnPartialArray.push({
                     partial_array: srcArray[0],
-                    partial_match: srcMatches[i],
+                    partial_match: matchObjForDb,
                     match_record_id: tmpMatchRecId
                 });
 
@@ -96,9 +98,17 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
             } else if (srcMatches[i].match === 'partial') {
 
+                var matchObject = srcMatches[i];
+                var matchObjForDb = {};
+                matchObjForDb.diff = matchObject.diff;
+                matchObjForDb.percent = matchObject.percent;                
+                if (matchObject.subelements) {
+                    matchObjForDb.subelements = matchObject.subelements;
+                }
+
                 returnPartialArray.push({
                     partial_array: srcArray[srcMatches[i].src_id],
-                    partial_match: srcMatches[i],
+                    partial_match: matchObjForDb,
                     match_record_id: baseArray[srcMatches[i].dest_id]._id
                 });
 
@@ -163,7 +173,7 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     var baseObjectForParsing = {};
     for (var iObj in baseObject) {
         baseObjectForParsing[iObj] = {};
-        baseObjectForParsing[iObj] = record.cleanSectionEntries(baseObject[iObj]);
+        baseObjectForParsing[iObj] = record.cleanSection(baseObject[iObj]);
 
         if (baseObjectForParsing[iObj] === undefined) {
             delete baseObjectForParsing[iObj];

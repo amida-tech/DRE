@@ -4,11 +4,10 @@ var _ = require('underscore');
 var mongooseCleanDocument = exports.mongooseCleanDocument = function(doc) {
 
     var id = doc._id;
-    ['__index', '__v', 'reviewed'].forEach(function(prop) {
+    ['__v', 'reviewed'].forEach(function(prop) {
         delete doc[prop];
     });
     jsutil.deepDelete(doc, '_id');
-    jsutil.deepEmptyArrayDelete(doc);
     jsutil.deepDeleteEmpty(doc);
     doc._id = id;
 };
@@ -25,14 +24,7 @@ var mongooseCleanSection = exports.mongooseCleanSection = function(section) {
     }
 };
 
-exports.mongooseCleanFullRecord = function(record) {
-    Object.keys(record).forEach(function(sectionKey) {
-        var section = record[sectionKey];
-        mongooseCleanSection(section);
-    });
-};
-
-var mongooseToBBModelDocument = exports.mongooseCleanDocument = function(doc) {
+var mongooseToBBModelDocument = exports.mongooseToBBModelDocument = function(doc) {
     var result = _.clone(doc);
     ['_id', 'patKey', 'metadata'].forEach(function(prop) {
         delete result[prop];

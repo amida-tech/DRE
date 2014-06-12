@@ -22,11 +22,11 @@
         "jsdom": "0.10.5",
         "deep-equal": "0.2.x",
         "underscore": "1.6.x",
+        "async": "0.9.x",
         "blue-button": ">=1.0.0",
         "blue-button-match": ">=1.0.0"
     },
     "devDependencies": {
-        "async":"*",
         "grunt": "0.4.x",
         "grunt-contrib-jshint": "0.8.x",
         "grunt-contrib-watch": "0.6.x",
