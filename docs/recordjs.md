@@ -150,55 +150,42 @@ bbr.duplicateEntry('allergies', id, fileId, function(err) {
   if (err) throw err;
 });
 
-console.log(attribution[12].merge_reason); // 'duplicate'
+console.log(attribution[2].merge_reason); // 'duplicate'
 ```
 
-
-
-
-Once you persists a new entry merge history will be updated with merge_reason: 'new'.  Once you find the same 
-entry in a new file you can update the merge history.  Currently only record_id and merge_reason
-fields are supported
+Whole merge history for a patient is available
 
 ``` javascript
- var mergeInfo = {record_id: newfileId, merge_reason: 'duplicate'};
- record.addAllergyMergeEntry(id0, mergeInfo, function(err) {
-  if (err) throw err;
- });
-```
-
-You can get all the merge history for a section and also specify the fields you want from the section and the 
-storage
-
-``` javascript
-record.getMerges('patientKey', 'allergy', 'name severity', 'filename uploadDate', function(err, mergeList) {
+bbr.getMerges('allergies', 'patientKey', 'name severity', 'filename uploadDate', function(err, mergeList) {
   console.log(mergeList.length);
   var explMerge = mergeList[0];
 });
 ```
 
-You can update a specific merge
+where you can specify blue-button health data fields like allergy name or severity and record fields like filename or uploadDate
 
 ``` javascript
-record.setMerge(explMerge, function(err) {
-  if (err) throw err;
-});
+console.log(explMerge.merge_reason);
+console.log(explMerge.entry_id.name);
+console.log(explMerge.entry_id.severity);
+console.log(explMerge.record_id.filename);
+console.log(explMerge.record_id.uploadDate);
 ```
 
-You can count merge history with various conditions
+You can also count merge history entries with various conditions
 
 ``` javascript
-record.count('allergy', {}, function(err, count) {
+bbr.count('allergies', 'patientKey', {}, function(err, count) {
   console.log(count);
-})
+});
 
-record.count('allergy', {merge_reason: 'new'}, function(err, count) {
+bbr.count('allergies', 'patientKey', {merge_reason: 'new'}, function(err, count) {
   console.log(count);
-})
+});
 
-record.count('allergy', {merge_reason: 'duplicate', patKey: 'patientKey'}, function(err, count) {
+bbr.count('allergies', 'patientKey', {merge_reason: 'duplicate'}, function(err, count) {
   console.log(count);
-})
+});
 
 ```
 
