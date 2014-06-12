@@ -9,24 +9,24 @@ This library provides following functionality
 
 - Persist blue-button data with additional metadata
 - Persist merge histories
-- Persist partial match information
-- Persist patient data files
+- Persist merge candidates with match information
+- Persist blue-button data source content and type
 
-dre-record uses MongoDB.
+This implementation of blue-button-record uses MongoDB.
 
 ### Usage example
 
-Require blue-button and dre-record which currently lives in server/lib/recordjs directory. 
+Require [blue-button](https://github.com/amida-tech/blue-button) and blue-button-record 
 
 ``` javascript
 var bb = require("blue-button");
-var record = require("./server/lib/records");
+var bbr = require("blue-button-record");
 ```
 
-record assumes MongoDB is already running.  Connect to the database
+blue-button-record assumes MongoDB is already running.  Connect to the database
 
 ``` javascript
-record.connectDatabase('localhost', function(err)) {
+bbr.connectDatabase('localhost', function(err)) {
   if (err) throw err;
 }
 ```
@@ -41,7 +41,7 @@ var result = bb.parseString(xmlString);
 var ccdJSON = result.data;
 ```
 
-Persist the file in the database, various properties is the responsibility the caller
+Persist the file in the database as a source of patient data, various properties is the responsibility the caller
 
 ``` javascript
 var fileInfo = {
@@ -49,72 +49,112 @@ var fileInfo = {
   type: 'text/xml'
 };
 var fileId = null;
-record.saveRecord('patientKey', xmlString, fileInfo, 'ccda', function(err, result) {
+bbr.saveRecord('patientKey', xmlString, fileInfo, 'ccda', function(err, result) {
   fileId = result._id;
 });
 ```
 
-Persist sections in the database
+Methods are provided to access patient data source records as a list or individually
 
 ``` javascript
-record.saveNewAllergies('patientKey', ccdJSON.allergies, fileId, function(err) {
-  if (err) throw err;
+bbr.getRecordList('patientKey', function(err, results) {
+  console.log(results.length);
 });
 
-record.saveNewProcedures('patientKey', ccdJSON.procedures, fileId, function(err) {
-  if (err) throw err;
+bbr.getRecord(fileId, function(err, filename, content) {
+  console.log(filename);  
 });
-```
 
-or you can persist the whole record
-
-``` javascript
-record.saveAllSectionsAsNew('patientKey', ccdJSON, fileId, function(err) {
-  if (err) throw err;
-});
-```
-
-you can get the whole record back
-
-``` javascript
-record.getAllSections('patientKey',function(err) {
-  if (err) throw err;
-});
-```
-
-or get the sections individually from the database
-
-``` javascript
-var id0 = null;
-record.getAllergies('patientKey', function(err, result) {
-  if (err) throw err;
-  id0 = result[0]._id;
+bbr.recordCount('patientKey', function(err, count) {
+  console.log(count);
 });
 
 ```
 
-Result is an array of allergies.  Each entry includes metadata and property '_id" which you can later to access
-specific allergy and update
+You can persist all the sections as a whole
 
 ``` javascript
-record.updateAllergy('patientKey', id0, updateData, function(err, updatedRecord) {
+bbr.saveAllSections('patientKey', ccdJSON, fileId, function(err) {
+  if (err) throw err;
+});
+```
+
+or persist a particular section
+
+``` javascript
+bbr.saveSection('allergies', 'patientKey', ccdJSON.allergies, fileId, function(err) {
+  if (err) throw err;
+});
+```
+
+By default all sections supported by [blue-button](https://github.com/amida-tech/blue-button) are also supported by blue-button-record.  Currently these are demographics, allergies, procedures, vitals, medications, results, encounters, immunizations and socialHistory. 
+
+You can get the whole patient record back
+
+``` javascript
+bbr.getAllSections('patientKey',function(err) {
+  if (err) throw err;
+});
+```
+
+or get any section individually
+
+``` javascript
+var id = null;
+bbr.getSection('allergies', 'patientKey', function(err, allergies) {
+  if (err) throw err;
+  id = allergies[0]._id;
+});
+
+```
+
+Result is an array of allergies.  In addition to [blue-button](https://github.com/amida-tech/blue-button) data, each entry also includes metadata and property '_id" which you can later use to access specific allergy and update
+
+``` javascript
+var allergy = null;
+bbr.getEntry('allergies', id, function(err, result) {
+  allergy = result;
+});
+
+bbr.updateEntry('allergies', id, {severity: 'Severe'}, fileId, function(err) {
   if (err) throw(err);
 };
 ```
 
-You can clean up metadata and other non blue-button data which is comparable to ccdJSON.allergies
+You can clean up metadata and other non blue-button data 
 
 ``` javascript
-var cleanResult = record.cleanSectionEntries(result);
+var allergiesBBOnly = bbr.cleanSectionEntries(allergies);
 ```
 
-You can count number of entries for a particular section
+which makes allergiesBBOnly comparable to ccdJSON.allergies.
+
+In addition to blue-button health data individual entries also provide the source of the data as the "merge history"
 
 ``` javascript
-  record.allergyCount({patKey: 'patientKey'}, function(err, count) {
-    console.log(count);
-  });
+var attribution = allergy.metadata.attribution;
+console.log(attribution[0].merge_reason); // merge history starts with 'new'
+console.log(attribution[0].record_id);    // fileId
 ```
+
+Once you persists a new entry (saveSection) merge history will be initiated with merge_reason: 'new'.  Each update (updateEntry) also contributes to merge history
+
+``` javascript
+console.log(attribution[1].merge_reason); // 'update'
+```
+
+In addition to 'new' and 'update', another source can be persisted in merge history to have the duplicate of an existing entry
+
+``` javascript
+bbr.duplicateEntry('allergies', id, fileId, function(err) {
+  if (err) throw err;
+});
+
+console.log(attribution[12].merge_reason); // 'duplicate'
+```
+
+
+
 
 Once you persists a new entry merge history will be updated with merge_reason: 'new'.  Once you find the same 
 entry in a new file you can update the merge history.  Currently only record_id and merge_reason
