@@ -175,104 +175,112 @@ console.log(explMerge.record_id.uploadDate);
 You can also count merge history entries with various conditions
 
 ``` javascript
-bbr.count('allergies', 'patientKey', {}, function(err, count) {
+bbr.mergeCount('allergies', 'patientKey', {}, function(err, count) {
   console.log(count);
 });
 
-bbr.count('allergies', 'patientKey', {merge_reason: 'new'}, function(err, count) {
+bbr.mergeCount('allergies', 'patientKey', {merge_reason: 'new'}, function(err, count) {
   console.log(count);
 });
 
-bbr.count('allergies', 'patientKey', {merge_reason: 'duplicate'}, function(err, count) {
+bbr.mergeCount('allergies', 'patientKey', {merge_reason: 'duplicate'}, function(err, count) {
   console.log(count);
 });
 
 ```
 
-Persisted files are availble
+blue-button-record also stores 'partial entries' which cannot immediately become part of the master health record since they are similar enough to existing entries but not identical to become duplicates.  These are entries that need future decisions to be either accepted as a new entry in master health record, merged to an existing entry, or ignored completely.   In addition to blue-button health data, partial records also include a pointer to the existing entry and match information
 
 ``` javascript
-record.getRecordList('patientKey', function(err, result) {
-    var fileId = result[0]._id;
-    console.log(result.length);
-});
-
-record.getRecord(fileId, function(err, result) {
-    if (err) throw err;
+var partialAllergy = {
+  partial_array: allergy,
+  match_record_id: id,
+  partial_match: {
+    diff: {severity: 'new'},
+    percent: 80,
+    subelements: []
+  }
 };
-
-record.recordCount('patientKey', function(err, count) {
-    console.log(count);
-});
 ```
 
-Partially matched section entries can be persisted
+By default match information is assumed to have three fields: diff, subelements, and percent.  diff and sublements can be of any object and percent must be a number.  This default is to accomodate match information available from [blue-button-match](https://github.com/amida-tech/blue-button-match).  Partial entries are persisted as sections
 
 ``` javascript
-record.savePartialAllergies('patientKey', partialAllergies, fileId, function(err) {
-  if (err) throw err;
-});
-
-record.savePartialAllergies('patientKey', partialProcedures, fileId, function(err) {
+bbr.savePartialSection('allergies', 'patientKey', partialAllergies, fileId, function(err) {
   if (err) throw err;
 });
 ```
 
-Persisted partial match entries can be obtained
+blue-button health data piece of partial entries are available similarly to master health record sections
 
 ``` javascript
-record.getPartialAllergies('patientKey', function(err, result) {
+var partialId = null;
+bbr.getPartialSection('allergies', 'patientKey', function(err, partialAllergies) {
   if (err) throw err;
-  var partialId = result[0]._id;
+  partialId = partialAllergies[0]._id;
 });
 ```
 
-and removed
+the same data together with selected fields from the existing matching entry and the match information is available as a list
 
 ``` javascript
-record.removePartialAllergy('patientKey', partialId, function(err) {
+bbr.getMatches('allergies', 'patientKey', 'name severity', function(err, matches) {
   if (err) throw err;
+  var match = mathches[0];
+  console.log(match.entry_id.name);           // existing
+  console.log(match.entry_id.severity);
+  console.log(match.match_entry_id.name);     // partial
+  console.log(match.match_entry_id.severity);
+  console.log(match.diff.severity);           // match information  
+  console.log(match.percent);
+  var matchId = match._id;
 });
 ```
 
-You can add match entries
+Individual match access is also available and will return the full blue-button data both for the existing entries and the partial entries
 
 ``` javascript
-record.addAllergyMatchEntry('patientKey', inputArray, function(err) {
+bbr.getMatch('allergies', matchId, function(err, match) {
   if (err) throw err;
+  console.log(match.entry_id.name);           // existing
+  console.log(match.entry_id.status);
+  console.log(match.match_entry_id.name);     // partial
+  console.log(match.match_entry_id.status);
+  console.log(match.diff.severity);           // match information  
+  console.log(match.percent);
 });
 ```
 
-You can obtain matches as a list
+Only count of matches can be accessed instead of full list
 
 ``` javascript
-record.getMatches('allergy', 'name severity', 'filename uploadDate', function(err, matchList) {
-  if (err) throw err;
-  var matchId = matchList[0]._id;
+bbr.matchCount('allergies', 'patientKey', {}, function(err, count) {
+  console.log(count);
+});
+
+bbr.matchCount('allergies', 'patientKey', {percent: 90}, function(err, count) {
+  console.log(count);
 });
 ```
 
-or individually
+Matches can be canceled either outright or after contributing some fields to the existing entry
 
 ``` javascript
-record.getMatch('allergy', matchId, function(err, result) {
-  if (err) throw err;
+bbr.cancelMatch('allergies', matchId, 'ignored', function(err, count) {
+  console.log(count);
 });
+
+bbr.cancelMatch('allergies', matchId, 'merged', function(err, count) {
+  console.log(count);
+});
+
 ```
 
-and later update
+or they can be accepted and become part of the master health record.
 
 ``` javascript
-record.updateMatch('allergy', matchId, updateParams, function(err, updateResults) {
-  if (err) throw err;
-});
-```
-
-you can also count matches
-
-``` javascript
-record.countMatch('allergy', {}, function(err, count) {
-   console.log(count);
+bbr.acceptMatch('allergies', matchId, 'added', function(err, count) {
+  console.log(count);
 });
 ```
 
