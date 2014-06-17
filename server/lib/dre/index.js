@@ -183,7 +183,6 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
         }
     }
 
-
     //BB Matching library expects object for demographics.
 
     function prepDemographics() {
@@ -219,6 +218,7 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     newObjectForParsing = {}.data = newObjectForParsing;
 
     //console.log(JSON.stringify(newObjectForParsing, null, 10));
+    //console.log('------------------');
     //console.log(JSON.stringify(baseObjectForParsing, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
     //console.log(JSON.stringify(matchResult, null, 10));
@@ -230,9 +230,6 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
         if (_.isObject(newObjectForParsing.demographics) === true && _.isArray(newObjectForParsing.demographics) === false) {
             newObjectForParsing.demographics = new Array(newObjectForParsing.demographics);
         }
-        if (_.isObject(baseObjectForParsing.demographics) === true && _.isArray(baseObjectForParsing.demographics) === false) {
-            baseObjectForParsing.demographics = new Array(baseObjectForParsing.demographics);
-        }
     }
 
     revertDemographics();
@@ -240,9 +237,6 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     function revertSocial() {
         if (_.isObject(newObjectForParsing.social_history) === true && _.isArray(newObjectForParsing.social_history) === false) {
             newObjectForParsing.social_history = new Array(newObjectForParsing.social_history);
-        }
-        if (_.isObject(baseObjectForParsing.social_history) === true && _.isArray(baseObjectForParsing.social_history) === false) {
-            baseObjectForParsing.social_history = new Array(baseObjectForParsing.social_history);
         }
     }
     revertSocial();
