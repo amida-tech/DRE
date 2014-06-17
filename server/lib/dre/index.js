@@ -15,6 +15,7 @@ var _ = require("underscore");
 
 function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
 
+
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
 
         var returnArray = [];
@@ -59,8 +60,10 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
             } else if (srcMatches[i].match === 'new') {
 
                 //If new, push the object to the return.
+
                 var tmpSrcIndex = 0;
-                if (srcMatches[i].src_id === undefined) {} else {
+                if (srcMatches[i].src_id === undefined) {
+                } else {
                     tmpSrcIndex = srcMatches[i].src_id;
                 }
 
@@ -197,11 +200,26 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     }
     prepDemographics();
 
+    function prepSocial() {
+        if (baseObjectForParsing.social_history instanceof Array) {
+            if (baseObjectForParsing.social_history.length > 0) {
+                baseObjectForParsing.social_history = baseObjectForParsing.social_history[0];
+            }
+        }
+        if (newObjectForParsing.social_history instanceof Array) {
+            if (newObjectForParsing.social_history.length > 0) {
+                newObjectForParsing.social_history = newObjectForParsing.social_history[0];
+            }
+        }
+    }
+
+    prepSocial();
+
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
 
-    //console.log(JSON.stringify(newObjectForParsing.demographics, null, 10));
-    //console.log(JSON.stringify(baseObjectForParsing.demographics, null, 10));
+    //console.log(JSON.stringify(newObjectForParsing, null, 10));
+    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
     //console.log(JSON.stringify(matchResult, null, 10));
 
@@ -216,7 +234,18 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
             baseObjectForParsing.demographics = new Array(baseObjectForParsing.demographics);
         }
     }
+
     revertDemographics();
+
+    function revertSocial() {
+        if (_.isObject(newObjectForParsing.social_history) === true && _.isArray(newObjectForParsing.social_history) === false) {
+            newObjectForParsing.social_history = new Array(newObjectForParsing.social_history);
+        }
+        if (_.isObject(baseObjectForParsing.social_history) === true && _.isArray(baseObjectForParsing.social_history) === false) {
+            baseObjectForParsing.social_history = new Array(baseObjectForParsing.social_history);
+        }
+    }
+    revertSocial();
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
         //console.log(JSON.stringify(newObjectPostMatch, null, 10));

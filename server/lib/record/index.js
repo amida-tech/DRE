@@ -3,7 +3,7 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 
-var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'socialHistory', 'demographics', 'problems'];
+var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
 
 function formatResponse(srcComponent, srcResponse) {
     var srcReturn = {};

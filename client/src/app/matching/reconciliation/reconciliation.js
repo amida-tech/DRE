@@ -50,7 +50,7 @@ angular.module('dre.match.reconciliation', [])
         };
 
         $scope.getMatches = function() {
-            var sections = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'socialHistory', 'demographics', 'problems'];
+            var sections = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
             //var sections = ['allergies'];
 
             function getMatchSections(loadsec) {
