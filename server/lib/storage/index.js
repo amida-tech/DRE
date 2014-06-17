@@ -5,7 +5,7 @@ var parser = require('../parser/index.js');
 var dre = require('../dre/index.js');
 
 var extractRecord = parser.extractRecord;
-var record = require('../recordjs');
+var record = require('blue-button-record');
 
 //Wrapper function to save all components of an incoming object.
 function saveComponents(masterObject, masterPartialObject, sourceID, callback) {

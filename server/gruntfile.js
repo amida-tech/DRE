@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         jshint: {
-            files: ['./lib/recordjs/*.js', './test/unit/*.js'], //['gruntFile.js', 'package.json', '*.js', './lib/*.js','./lib/**/*.js','./test/*.js', './test/**/*.js'],
+            files: ['./test/unit/*.js'], //['gruntFile.js', 'package.json', '*.js', './lib/*.js','./lib/**/*.js','./test/*.js', './test/**/*.js'],
             options: {
                 browser: true,
                 curly: true,
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         },
         watch: {
             all: {
-                files: ['./lib/**/index.js', './lib/recordjs/*.js', 'config.js', 'gruntFile.js', './models/*.js'],
+                files: ['./lib/**/index.js', 'config.js', 'gruntFile.js', './models/*.js'],
                 tasks: ['default']
             }
         },

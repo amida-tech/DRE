@@ -19,7 +19,7 @@ var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var app = express();
-var record = require('./lib/recordjs');
+var record = require('blue-button-record');
 
   app.set('client_location', path.resolve(__dirname, '../client/dist'));
 

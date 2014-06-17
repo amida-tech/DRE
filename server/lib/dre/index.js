@@ -1,6 +1,6 @@
 var express = require('express');
 var app = module.exports = express();
-var record = require('../recordjs');
+var record = require('blue-button-record');
 var bbMatch = require("blue-button-match");
 var _ = require("underscore");
 
