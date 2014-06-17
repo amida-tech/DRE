@@ -603,10 +603,12 @@ describe('Medications API - Test Merged Matches', function() {
         }
     },
     "product" : {
-        "name" : "Cefepime 200 MG/ML",
-        "code" : "1232",
-        "code_system_name" : "RXNORM",
-        "translations" : []
+        "product": {
+        	"name" : "Cefepime 200 MG/ML",
+        	"code" : "1232",
+        	"code_system_name" : "RXNORM",
+        	"translations" : []
+        }
     },
     "status" : "Prescribed"
 };
@@ -623,6 +625,7 @@ describe('Medications API - Test Merged Matches', function() {
 					base_id = res.body.matches[0].entry_id._id;
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
+
 					//Still need this object to check metadata.
 					api.get('/api/v1/record/medications')
 						.expect(200)
@@ -696,8 +699,8 @@ describe('Medications API - Test Merged Matches', function() {
 							res.body.medications[iEntry].precondition.code = {};
 							res.body.medications[iEntry].precondition.code.translations = [];
 						}
-						if (res.body.medications[iEntry].product.translations === undefined) {
-							res.body.medications[iEntry].product.translations = [];
+						if (res.body.medications[iEntry].product.product.translations === undefined) {
+							res.body.medications[iEntry].product.product.translations = [];
 						}
 						
 

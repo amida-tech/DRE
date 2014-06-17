@@ -46,7 +46,7 @@ function loadTestRecord(fileName, callback) {
 describe('Pre Test Cleanup', function() {
 
 	it('Remove Social Collections', function(done) {
-		removeCollection('socialhistories', function(err) {
+		removeCollection('social_histories', function(err) {
 			if (err) {
 				done(err);
 			}
@@ -89,29 +89,29 @@ describe('Social API - Test New:', function() {
 	});
 
 	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+		api.get('/api/v1/record/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.socialHistory, null, 10));
-				expect(res.body.socialHistory.length).to.equal(1);
+				//console.log(JSON.stringify(res.body.social_history, null, 10));
+				expect(res.body.social_history.length).to.equal(1);
 				done();
 			});
 	});
 
 	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+		api.get('/api/v1/record/partial/social_history')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.social_history.length).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Social Merge Records', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+		api.get('/api/v1/merges/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -145,30 +145,30 @@ describe('Social API - Test Duplicate:', function() {
 	});
 
 	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+		api.get('/api/v1/record/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.socialHistory.length).to.equal(1);
+				expect(res.body.social_history.length).to.equal(1);
 				done();
 			});
 	});
 
 
 	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+		api.get('/api/v1/record/partial/social_history')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.social_history.length).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Social Merge Records', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+		api.get('/api/v1/merges/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -211,30 +211,30 @@ describe('Social API - Test New/Dupe Mix:', function() {
 	});
 
 	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+		api.get('/api/v1/record/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(res.body.socialHistory);
-				expect(res.body.socialHistory.length).to.equal(1);
+				//console.log(res.body.social_history);
+				expect(res.body.social_history.length).to.equal(1);
 				done();
 			});
 	});
 
 
 	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+		api.get('/api/v1/record/partial/social_history')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.social_history.length).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Social Merge Records', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+		api.get('/api/v1/merges/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -279,31 +279,31 @@ describe('Social API - Test Partial Matches:', function() {
 	});
 
 	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+		api.get('/api/v1/record/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.socialHistory, null, 10));
-				expect(res.body.socialHistory.length).to.equal(1);
+				//console.log(JSON.stringify(res.body.social_history, null, 10));
+				expect(res.body.social_history.length).to.equal(1);
 				done();
 			});
 	});
 
 
 	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+		api.get('/api/v1/record/partial/social_history')
 			.expect(200)
 			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.socialHistory, null, 10));
-				expect(res.body.socialHistory.length).to.equal(1);
+				//console.log(JSON.stringify(res.body.social_history, null, 10));
+				expect(res.body.social_history.length).to.equal(1);
 				done();
 			});
 	});
 
 	it('Get Social Merge Records', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+		api.get('/api/v1/merges/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -332,7 +332,7 @@ describe('Social API - Test Partial Matches:', function() {
 	});
 
 	it('Get Social Match Records', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+		api.get('/api/v1/matches/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
@@ -354,7 +354,7 @@ describe('Social API - Test Added Matches', function() {
 
 	it('Update Social Match Records', function(done) {
 
-		api.get('/api/v1/matches/socialHistory')
+		api.get('/api/v1/matches/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -362,7 +362,7 @@ describe('Social API - Test Added Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/socialHistory/' + update_id)
+					api.post('/api/v1/matches/social_history/' + update_id)
 						.send({
 							determination: "added"
 						})
@@ -380,14 +380,14 @@ describe('Social API - Test Added Matches', function() {
 	});
 
 	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+		api.get('/api/v1/record/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.socialHistory.length).to.equal(2);
+				expect(res.body.social_history.length).to.equal(2);
 				var total_allergies = 0;
-				for (var iEntry in res.body.socialHistory) {
-					if (res.body.socialHistory[iEntry]._id === match_id) {
+				for (var iEntry in res.body.social_history) {
+					if (res.body.social_history[iEntry]._id === match_id) {
 						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
 						total_allergies++;
 					}
@@ -398,17 +398,17 @@ describe('Social API - Test Added Matches', function() {
 	});
 
 	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+		api.get('/api/v1/record/partial/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.social_history.length).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Social Merge Records Post Added', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+		api.get('/api/v1/merges/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -437,7 +437,7 @@ describe('Social API - Test Added Matches', function() {
 	});
 
 	it('Get Social Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+		api.get('/api/v1/matches/social_history')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
@@ -470,7 +470,7 @@ describe('Social API - Test Ignored Matches', function() {
 	});
 
 	it('Update Social Match Records Ignored', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+		api.get('/api/v1/matches/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -478,7 +478,7 @@ describe('Social API - Test Ignored Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
-					api.post('/api/v1/matches/socialHistory/' + update_id)
+					api.post('/api/v1/matches/social_history/' + update_id)
 						.send({
 							determination: "ignored"
 						})
@@ -495,14 +495,14 @@ describe('Social API - Test Ignored Matches', function() {
 	});
 
 	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+		api.get('/api/v1/record/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.socialHistory.length).to.equal(2);
+				expect(res.body.social_history.length).to.equal(2);
 				var total_allergies = 0;
-				for (var iEntry in res.body.socialHistory) {
-					if (res.body.socialHistory[iEntry]._id === match_id) {
+				for (var iEntry in res.body.social_history) {
+					if (res.body.social_history[iEntry]._id === match_id) {
 						//console.log(JSON.stringify(res.body.allergies[iEntry], null, 10));
 						total_allergies++;
 					}
@@ -513,17 +513,17 @@ describe('Social API - Test Ignored Matches', function() {
 	});
 
 	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+		api.get('/api/v1/record/partial/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.social_history.length).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Social Merge Records Post Added', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+		api.get('/api/v1/merges/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -552,7 +552,7 @@ describe('Social API - Test Ignored Matches', function() {
 	});
 
 	it('Get Social Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+		api.get('/api/v1/matches/social_history')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {
@@ -586,19 +586,21 @@ describe('Social API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var tmp_updated_entry = {
-		"dateRange": [{
-			"date": "2005-05-01T00:00:00.000Z",
-			"precision": "day"
-		}, {
-			"date": "2012-02-27T13:00:00.000Z",
-			"precision": "subsecond"
-		}],
-		"value": "Heavy smoker"
+		"smoking_statuses": [{
+			"date": [{
+				"date": "2005-05-01T00:00:00.000Z",
+				"precision": "day"
+			}, {
+				"date": "2012-02-27T13:00:00.000Z",
+				"precision": "subsecond"
+			}],
+			"value": "Heavy smoker"
+		}]
 	};
 
 	it('Update Social Match Records Merged', function(done) {
 
-		api.get('/api/v1/matches/socialHistory')
+		api.get('/api/v1/matches/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -609,18 +611,18 @@ describe('Social API - Test Merged Matches', function() {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry_id._id;
 					//Still need this object to check metadata.
-					api.get('/api/v1/record/socialHistory')
+					api.get('/api/v1/record/social_history')
 						.expect(200)
 						.end(function(err, res) {
 							if (err) {
 								done(err);
 							} else {
-								for (var i = 0; i < res.body.socialHistory.length; i++) {
-									if (res.body.socialHistory[i]._id === base_id) {
-										base_object = res.body.socialHistory[i];
+								for (var i = 0; i < res.body.social_history.length; i++) {
+									if (res.body.social_history[i]._id === base_id) {
+										base_object = res.body.social_history[i];
 									}
 								}
-								api.post('/api/v1/matches/socialHistory/' + update_id)
+								api.post('/api/v1/matches/social_history/' + update_id)
 									.send({
 										determination: "merged",
 										updated_entry: tmp_updated_entry
@@ -640,26 +642,26 @@ describe('Social API - Test Merged Matches', function() {
 	});
 
 	it('Get Social Records', function(done) {
-		api.get('/api/v1/record/socialHistory')
+		api.get('/api/v1/record/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.socialHistory.length).to.equal(2);
+				expect(res.body.social_history.length).to.equal(2);
 				var total_socials = 0;
-				for (var iEntry in res.body.socialHistory) {
-					if (res.body.socialHistory[iEntry]._id === match_id) {
+				for (var iEntry in res.body.social_history) {
+					if (res.body.social_history[iEntry]._id === match_id) {
 						total_socials++;
 					}
-					if (res.body.socialHistory[iEntry]._id === base_id) {
+					if (res.body.social_history[iEntry]._id === base_id) {
 
-						//console.log(res.body.socialHistory[iEntry]);
+						//console.log(res.body.social_history[iEntry]);
 						//console.log(tmp_updated_entry);
 
 						//Test each component.
-						expect(res.body.socialHistory[iEntry].dateRange).to.deep.equal(tmp_updated_entry.dateRange);
-						expect(res.body.socialHistory[iEntry].value).to.deep.equal(tmp_updated_entry.value);
+						expect(res.body.social_history[iEntry].smoking_statuses[0].date).to.deep.equal(tmp_updated_entry.smoking_statuses[0].date);
+						expect(res.body.social_history[iEntry].smoking_statuses[0].value).to.deep.equal(tmp_updated_entry.smoking_statuses[0].value);
 						//Metadata slightly different test.
-						expect(res.body.socialHistory[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
+						expect(res.body.social_history[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
 
 					}
 				}
@@ -669,17 +671,17 @@ describe('Social API - Test Merged Matches', function() {
 	});
 
 	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/socialHistory')
+		api.get('/api/v1/record/partial/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.socialHistory.length).to.equal(0);
+				expect(res.body.social_history.length).to.equal(0);
 				done();
 			});
 	});
 
 	it('Get Social Merge Records Post Merged', function(done) {
-		api.get('/api/v1/merges/socialHistory')
+		api.get('/api/v1/merges/social_history')
 			.expect(200)
 			.end(function(err, res) {
 				if (err) {
@@ -715,7 +717,7 @@ describe('Social API - Test Merged Matches', function() {
 	});
 
 	it('Get Social Match Records Post Added', function(done) {
-		api.get('/api/v1/matches/socialHistory')
+		api.get('/api/v1/matches/social_history')
 		.expect(200)
 		.end(function(err, res) {
 			if (err)  {

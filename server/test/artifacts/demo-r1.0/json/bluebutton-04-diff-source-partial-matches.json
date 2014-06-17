@@ -93,6 +93,11 @@
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }
             ],
+            "vital": {
+                "name": "Height",
+                "code": "8302-2",
+                "code_system_name": "LOINC"
+            },
             "status": "completed",
             "date": [
                 {
@@ -100,13 +105,9 @@
                     "precision": "minute"
                 }
             ],
-            "freeTextValue": "177 cm",
             "interpretations": [
                 "Normal"
             ],
-            "name": "Height",
-            "code": "8302-2",
-            "code_system_name": "LOINC",
             "value": 177,
             "unit": "cm"
         },
@@ -116,6 +117,11 @@
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }
             ],
+            "vital": {
+                "name": "Patient Body Weight - Measured",
+                "code": "3141-9",
+                "code_system_name": "LOINC"
+            },
             "status": "completed",
             "date": [
                 {
@@ -123,13 +129,9 @@
                     "precision": "day"
                 }
             ],
-            "freeTextValue": "86 kg",
             "interpretations": [
                 "Normal"
             ],
-            "name": "Patient Body Weight - Measured",
-            "code": "3141-9",
-            "code_system_name": "LOINC",
             "value": 86,
             "unit": "kg"
         },
@@ -139,6 +141,11 @@
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }
             ],
+            "vital": {
+                "name": "Intravascular Systolic",
+                "code": "8480-6",
+                "code_system_name": "LOINC"
+            },
             "status": "completed",
             "date": [
                 {
@@ -146,13 +153,9 @@
                     "precision": "day"
                 }
             ],
-            "freeTextValue": "132/86 mmHg",
             "interpretations": [
                 "Normal"
             ],
-            "name": "Intravascular Systolic",
-            "code": "8480-6",
-            "code_system_name": "LOINC",
             "value": 132,
             "unit": "mm[Hg]"
         },
@@ -162,6 +165,11 @@
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }
             ],
+            "vital": {
+                "name": "Height",
+                "code": "8302-2",
+                "code_system_name": "LOINC"
+            },
             "status": "completed",
             "date": [
                 {
@@ -169,13 +177,9 @@
                     "precision": "minute"
                 }
             ],
-            "freeTextValue": "177 cm",
             "interpretations": [
                 "Normal"
             ],
-            "name": "Height",
-            "code": "8302-2",
-            "code_system_name": "LOINC",
             "value": 177,
             "unit": "cm"
         },
@@ -185,6 +189,11 @@
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }
             ],
+            "vital": {
+                "name": "Patient Body Weight - Measured",
+                "code": "3141-9",
+                "code_system_name": "LOINC"
+            },
             "status": "completed",
             "date": [
                 {
@@ -192,13 +201,9 @@
                     "precision": "minute"
                 }
             ],
-            "freeTextValue": "88 kg",
             "interpretations": [
                 "Normal"
             ],
-            "name": "Patient Body Weight - Measured",
-            "code": "3141-9",
-            "code_system_name": "LOINC",
             "value": 88,
             "unit": "kg"
         },
@@ -208,6 +213,11 @@
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }
             ],
+            "vital": {
+                "name": "Intravascular Systolic",
+                "code": "8480-6",
+                "code_system_name": "LOINC"
+            },
             "status": "completed",
             "date": [
                 {
@@ -215,13 +225,9 @@
                     "precision": "day"
                 }
             ],
-            "freeTextValue": "145/88 mmHg",
             "interpretations": [
                 "Normal"
             ],
-            "name": "Intravascular Systolic",
-            "code": "8480-6",
-            "code_system_name": "LOINC",
             "value": 145,
             "unit": "mm[Hg]"
         }
@@ -233,6 +239,11 @@
                     "identifier": "7d5a02b0-67a4-11db-bd13-0800200c9a66"
                 }
             ],
+            "result_set": {
+                "name": "CBC WO DIFFERENTIAL",
+                "code": "43789009",
+                "code_system_name": "SNOMED CT"
+            },
             "results": [
                 {
                     "identifiers": [
@@ -240,19 +251,21 @@
                             "identifier": "107c2dc0-67a5-11db-bd13-0800200c9a66"
                         }
                     ],
+                    "result": {
+                        "name": "HGB",
+                        "code": "30313-1",
+                        "code_system_name": "LOINC"
+                    },
                     "date": [
                         {
                             "date": "2000-03-23T15:00:00.000Z",
                             "precision": "minute"
                         }
                     ],
-                    "freeTextValue": "HGB (M 13-18 g/dl; F 12-16 g/dl)",
+                    "status": "completed",
                     "interpretations": [
                         "Normal"
                     ],
-                    "name": "HGB",
-                    "code": "30313-1",
-                    "code_system_name": "LOINC",
                     "value": 13.2,
                     "unit": "g/dl"
                 },
@@ -262,19 +275,21 @@
                             "identifier": "107c2dc0-67a5-11db-bd13-0800200c9a66"
                         }
                     ],
+                    "result": {
+                        "name": "WBC",
+                        "code": "33765-9",
+                        "code_system_name": "LOINC"
+                    },
                     "date": [
                         {
                             "date": "2000-03-23T14:30:00.000Z",
                             "precision": "minute"
                         }
                     ],
-                    "freeTextValue": "WBC (4.3-10.8 10+3/ul)",
+                    "status": "completed",
                     "interpretations": [
                         "Normal"
                     ],
-                    "name": "WBC",
-                    "code": "33765-9",
-                    "code_system_name": "LOINC",
                     "value": 6.7,
                     "unit": "10+3/ul"
                 },
@@ -284,26 +299,25 @@
                             "identifier": "107c2dc0-67a5-11db-bd13-0800200c9a66"
                         }
                     ],
+                    "result": {
+                        "name": "PLT",
+                        "code": "26515-7",
+                        "code_system_name": "LOINC"
+                    },
                     "date": [
                         {
                             "date": "2000-03-23T14:30:00.000Z",
                             "precision": "minute"
                         }
                     ],
-                    "freeTextValue": "PLT (135-145 meq/l)",
+                    "status": "completed",
                     "interpretations": [
                         "Low"
                     ],
-                    "name": "PLT",
-                    "code": "26515-7",
-                    "code_system_name": "LOINC",
                     "value": 123,
                     "unit": "10+3/ul"
                 }
-            ],
-            "name": "CBC WO DIFFERENTIAL",
-            "code": "43789009",
-            "code_system_name": "SNOMED CT"
+            ]
         }
     ],
     "medications": [
@@ -330,16 +344,18 @@
                     "identifier": "2a620155-9d11-439e-92b3-5d9815ff4ee8"
                 },
                 "unencoded_name": "Proventil HFA ",
-                "name": "Proventil HFA",
-                "code": "219483",
-                "code_system_name": "RXNORM",
-                "translations": [
-                    {
-                        "name": "Proventil 0.09 MG/ACTUAT inhalant solution",
-                        "code": "573621",
-                        "code_system_name": "RXNORM"
-                    }
-                ]
+                "product": {
+                    "name": "Proventil HFA",
+                    "code": "219483",
+                    "code_system_name": "RXNORM",
+                    "translations": [
+                        {
+                            "name": "Proventil 0.09 MG/ACTUAT inhalant solution",
+                            "code": "573621",
+                            "code_system_name": "RXNORM"
+                        }
+                    ]
+                }
             },
             "administration": {
                 "route": {
@@ -365,6 +381,18 @@
     ],
     "encounters": [
         {
+            "encounter": {
+                "name": "Office outpatient visit 15 minutes",
+                "code": "99213",
+                "code_system_name": "CPT",
+                "translations": [
+                    {
+                        "name": "Ambulatory",
+                        "code": "AMB",
+                        "code_system_name": "HL7ActCode"
+                    }
+                ]
+            },
             "identifiers": [
                 {
                     "identifier": "2a620155-9d11-439e-92b3-5d9815ff4de8"
@@ -408,16 +436,6 @@
                     "code": "233604007",
                     "code_system_name": "SNOMED CT"
                 }
-            ],
-            "name": "Office outpatient visit 15 minutes",
-            "code": "99213",
-            "code_system_name": "CPT",
-            "translations": [
-                {
-                    "name": "Ambulatory",
-                    "code": "AMB",
-                    "code_system_name": "HL7ActCode"
-                }
             ]
         }
     ],
@@ -434,25 +452,31 @@
                     "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
                 }
             ],
+            "allergen": {
+                "name": "ALLERGENIC EXTRACT, PENICILLIN",
+                "code": "314422",
+                "code_system_name": "RXNORM"
+            },
             "severity": "Moderate to severe",
             "status": "Inactive",
             "reaction": [
                 {
-                    "severity": "Mild",
-                    "name": "Wheezing",
-                    "code": "56018004",
-                    "code_system_name": "SNOMED CT"
+                    "reaction": {
+                        "name": "Wheezing",
+                        "code": "56018004",
+                        "code_system_name": "SNOMED CT"
+                    },
+                    "severity": "Mild"
                 },
                 {
-                    "severity": "Mild",
-                    "name": "Nausea",
-                    "code": "422587007",
-                    "code_system_name": "SNOMED CT"
+                    "reaction": {
+                        "name": "Nausea",
+                        "code": "422587007",
+                        "code_system_name": "SNOMED CT"
+                    },
+                    "severity": "Mild"
                 }
-            ],
-            "name": "ALLERGENIC EXTRACT, PENICILLIN",
-            "code": "314422",
-            "code_system_name": "RXNORM"
+            ]
         },
         {
             "date": [
@@ -466,19 +490,23 @@
                     "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
                 }
             ],
+            "allergen": {
+                "name": "Codeine",
+                "code": "2670",
+                "code_system_name": "RXNORM"
+            },
             "severity": "Moderate",
             "status": "Active",
             "reaction": [
                 {
-                    "severity": "Mild",
-                    "name": "Wheezing",
-                    "code": "56018004",
-                    "code_system_name": "SNOMED CT"
+                    "reaction": {
+                        "name": "Wheezing",
+                        "code": "56018004",
+                        "code_system_name": "SNOMED CT"
+                    },
+                    "severity": "Mild"
                 }
-            ],
-            "name": "Codeine",
-            "code": "2670",
-            "code_system_name": "RXNORM"
+            ]
         },
         {
             "date": [
@@ -492,23 +520,27 @@
                     "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
                 }
             ],
+            "allergen": {
+                "name": "Eggs",
+                "code": "291P45F896",
+                "code_system_name": "OID 2.16.840.1.113883.4.9",
+                "translations": [
+                    {
+                        "name": "Allergy to eggs",
+                        "code": "V15.03",
+                        "code_system_name": "OID 2.16.840.1.113883.6.2"
+                    }
+                ]
+            },
             "status": "Inactive",
             "reaction": [
                 {
-                    "severity": "Mild",
-                    "name": "Nausea",
-                    "code": "422587007",
-                    "code_system_name": "SNOMED CT"
-                }
-            ],
-            "name": "Eggs",
-            "code": "291P45F896",
-            "code_system_name": "OID 2.16.840.1.113883.4.9",
-            "translations": [
-                {
-                    "name": "Allergy to eggs",
-                    "code": "V15.03",
-                    "code_system_name": "OID 2.16.840.1.113883.6.2"
+                    "reaction": {
+                        "name": "Nausea",
+                        "code": "422587007",
+                        "code_system_name": "SNOMED CT"
+                    },
+                    "severity": "Mild"
                 }
             ]
         },
@@ -524,19 +556,23 @@
                     "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
                 }
             ],
+            "allergen": {
+                "name": "Aspirin",
+                "code": "1191",
+                "code_system_name": "RXNORM"
+            },
             "severity": "Mild to moderate",
             "status": "Active",
             "reaction": [
                 {
-                    "severity": "Mild to moderate",
-                    "name": "Hives",
-                    "code": "247472004",
-                    "code_system_name": "SNOMED CT"
+                    "reaction": {
+                        "name": "Hives",
+                        "code": "247472004",
+                        "code_system_name": "SNOMED CT"
+                    },
+                    "severity": "Mild to moderate"
                 }
-            ],
-            "name": "Aspirin",
-            "code": "1191",
-            "code_system_name": "RXNORM"
+            ]
         },
         {
             "date": [
@@ -550,24 +586,30 @@
                     "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
                 }
             ],
+            "allergen": {
+                "name": "Neomycin Sulfate 500 MG",
+                "code": "866041",
+                "code_system_name": "RXNORM"
+            },
             "status": "Inactive",
             "reaction": [
                 {
-                    "severity": "Mild to moderate",
-                    "name": "Hives",
-                    "code": "247472004",
-                    "code_system_name": "SNOMED CT"
+                    "reaction": {
+                        "name": "Hives",
+                        "code": "247472004",
+                        "code_system_name": "SNOMED CT"
+                    },
+                    "severity": "Mild to moderate"
                 },
                 {
-                    "severity": "Mild",
-                    "name": "Nausea",
-                    "code": "422587007",
-                    "code_system_name": "SNOMED CT"
+                    "reaction": {
+                        "name": "Nausea",
+                        "code": "422587007",
+                        "code_system_name": "SNOMED CT"
+                    },
+                    "severity": "Mild"
                 }
-            ],
-            "name": "Neomycin Sulfate 500 MG",
-            "code": "866041",
-            "code_system_name": "RXNORM"
+            ]
         }
     ],
     "immunizations": [
@@ -585,18 +627,20 @@
             ],
             "status": "complete",
             "product": {
+                "product": {
+                    "name": "Influenza, seasonal, injectable",
+                    "code": "141",
+                    "code_system_name": "CVX",
+                    "translations": [
+                        {
+                            "name": "Influenza virus vaccine",
+                            "code": "88",
+                            "code_system_name": "CVX"
+                        }
+                    ]
+                },
                 "lot_number": "1",
-                "manufacturer": "Health LS - Immuno Inc.",
-                "name": "Influenza, seasonal, injectable",
-                "code": "141",
-                "code_system_name": "CVX",
-                "translations": [
-                    {
-                        "name": "Influenza virus vaccine",
-                        "code": "88",
-                        "code_system_name": "CVX"
-                    }
-                ]
+                "manufacturer": "Health LS - Immuno Inc."
             },
             "administration": {
                 "route": {
@@ -604,7 +648,7 @@
                     "code": "C28161",
                     "code_system_name": "Medication Route FDA"
                 },
-                "quantity": {
+                "dose": {
                     "value": 50,
                     "unit": "mcg"
                 }
@@ -661,18 +705,20 @@
             ],
             "status": "refused",
             "product": {
+                "product": {
+                    "name": "Influenza virus vaccine",
+                    "code": "88",
+                    "code_system_name": "CVX",
+                    "translations": [
+                        {
+                            "name": "Influenza, seasonal, injectable",
+                            "code": "141",
+                            "code_system_name": "CVX"
+                        }
+                    ]
+                },
                 "lot_number": "1",
-                "manufacturer": "Health LS - Immuno Inc.",
-                "name": "Influenza virus vaccine",
-                "code": "88",
-                "code_system_name": "CVX",
-                "translations": [
-                    {
-                        "name": "Influenza, seasonal, injectable",
-                        "code": "141",
-                        "code_system_name": "CVX"
-                    }
-                ]
+                "manufacturer": "Health LS - Immuno Inc."
             },
             "administration": {
                 "route": {
@@ -680,7 +726,7 @@
                     "code": "C28161",
                     "code_system_name": "Medication Route FDA"
                 },
-                "quantity": {
+                "dose": {
                     "value": 50,
                     "unit": "mcg"
                 }
@@ -737,18 +783,20 @@
             ],
             "status": "complete",
             "product": {
+                "product": {
+                    "name": "Pneumococcal polysaccharide vaccine",
+                    "code": "33",
+                    "code_system_name": "CVX",
+                    "translations": [
+                        {
+                            "name": "Pneumococcal NOS",
+                            "code": "109",
+                            "code_system_name": "CVX"
+                        }
+                    ]
+                },
                 "lot_number": "1",
-                "manufacturer": "Health LS - Immuno Inc.",
-                "name": "Pneumococcal polysaccharide vaccine",
-                "code": "33",
-                "code_system_name": "CVX",
-                "translations": [
-                    {
-                        "name": "Pneumococcal NOS",
-                        "code": "109",
-                        "code_system_name": "CVX"
-                    }
-                ]
+                "manufacturer": "Health LS - Immuno Inc."
             },
             "administration": {
                 "route": {
@@ -756,7 +804,7 @@
                     "code": "C28161",
                     "code_system_name": "Medication Route FDA"
                 },
-                "quantity": {
+                "dose": {
                     "value": 50,
                     "unit": "mcg"
                 }
@@ -813,18 +861,20 @@
             ],
             "status": "refused",
             "product": {
+                "product": {
+                    "name": "Tetanus and diphtheria toxoids - preservative free",
+                    "code": "103",
+                    "code_system_name": "CVX",
+                    "translations": [
+                        {
+                            "name": "Tetanus and diphtheria toxoids - preservative free",
+                            "code": "09",
+                            "code_system_name": "CVX"
+                        }
+                    ]
+                },
                 "lot_number": "1",
-                "manufacturer": "Health LS - Immuno Inc.",
-                "name": "Tetanus and diphtheria toxoids - preservative free",
-                "code": "103",
-                "code_system_name": "CVX",
-                "translations": [
-                    {
-                        "name": "Tetanus and diphtheria toxoids - preservative free",
-                        "code": "09",
-                        "code_system_name": "CVX"
-                    }
-                ]
+                "manufacturer": "Health LS - Immuno Inc."
             },
             "administration": {
                 "route": {
@@ -832,7 +882,7 @@
                     "code": "C28161",
                     "code_system_name": "Medication Route FDA"
                 },
-                "quantity": {
+                "dose": {
                     "value": 50,
                     "unit": "mcg"
                 }
@@ -877,21 +927,23 @@
             "refusal_reason": "Patient objection"
         }
     ],
-    "socialHistory": [
-        {
-            "value": "Current every day smoker",
-            "dateRange": [
-                {
-                    "date": "2005-05-01T00:00:00.000Z",
-                    "precision": "day"
-                },
-                {
-                    "date": "2009-02-27T13:00:00.000Z",
-                    "precision": "subsecond"
-                }
-            ]
-        }
-    ],
+    "social_history": {
+        "smoking_statuses": [
+            {
+                "value": "Current every day smoker",
+                "date": [
+                    {
+                        "date": "2005-05-01T00:00:00.000Z",
+                        "precision": "day"
+                    },
+                    {
+                        "date": "2009-02-27T13:00:00.000Z",
+                        "precision": "subsecond"
+                    }
+                ]
+            }
+        ]
+    },
     "problems": [
         {
             "date": [
@@ -910,6 +962,11 @@
                 }
             ],
             "negation_indicator": false,
+            "problem": {
+                "name": "Pneumonia",
+                "code": "233604007",
+                "code_system_name": "SNOMED CT"
+            },
             "onset_age": "57",
             "onset_age_unit": "Year",
             "status": "Resolved",
@@ -918,10 +975,7 @@
                 {
                     "identifier": "ec8a6ff8-ed4b-4f7e-82c3-e98e58b45de7"
                 }
-            ],
-            "name": "Pneumonia",
-            "code": "233604007",
-            "code_system_name": "SNOMED CT"
+            ]
         },
         {
             "date": [
@@ -940,6 +994,11 @@
                 }
             ],
             "negation_indicator": false,
+            "problem": {
+                "name": "Asthma",
+                "code": "195967001",
+                "code_system_name": "SNOMED CT"
+            },
             "onset_age": "57",
             "onset_age_unit": "Year",
             "status": "Active",
@@ -948,14 +1007,16 @@
                 {
                     "identifier": "ec8a6ff8-ed4b-4f7e-82c3-e98e58b45de7"
                 }
-            ],
-            "name": "Asthma",
-            "code": "195967001",
-            "code_system_name": "SNOMED CT"
+            ]
         }
     ],
     "procedures": [
         {
+            "procedure": {
+                "name": "Colonoscopy",
+                "code": "73761001",
+                "code_system_name": "SNOMED CT"
+            },
             "identifiers": [
                 {
                     "identifier": "d68b7e32-7810-4f5b-9cc2-acd54b0fd85d"
@@ -968,7 +1029,7 @@
                     "precision": "minute"
                 }
             ],
-            "bodysite": [
+            "body_sites": [
                 {
                     "name": "colon",
                     "code": "appropriate_code",
@@ -986,10 +1047,18 @@
                         "zip": "99123",
                         "country": "US"
                     },
-                    "telecom": {
-                        "value": "555-555-5000",
-                        "use": "work place"
-                    },
+                    "identifiers": [
+                        {
+                            "identifier": "2.16.840.1.113883.19.5.9999.456",
+                            "identifier_type": "2981823"
+                        }
+                    ],
+                    "phone": [
+                        {
+                            "number": "555-555-5000",
+                            "type": "work place"
+                        }
+                    ],
                     "organization": {
                         "name": "Community Health and Hospitals",
                         "address": {
@@ -1001,19 +1070,28 @@
                             "zip": "99123",
                             "country": "US"
                         },
-                        "telecom": {
-                            "value": "555-555-5000",
-                            "use": "work place"
-                        }
+                        "identifiers": [
+                            {
+                                "identifier": "2.16.840.1.113883.19.5.9999.1393"
+                            }
+                        ],
+                        "phone": [
+                            {
+                                "number": "555-555-5000",
+                                "type": "work place"
+                            }
+                        ]
                     }
                 }
             ],
-            "proc_type": "procedure",
-            "name": "Colonoscopy",
-            "code": "73761001",
-            "code_system_name": "SNOMED CT"
+            "procedure_type": "procedure"
         },
         {
+            "procedure": {
+                "name": "Colonic polypectomy",
+                "code": "274025005",
+                "code_system_name": "SNOMED CT"
+            },
             "identifiers": [
                 {
                     "identifier": "2.16.840.1.113883.19",
@@ -1027,7 +1105,7 @@
                     "precision": "day"
                 }
             ],
-            "bodysite": [
+            "body_sites": [
                 {
                     "name": "Abdomen and pelvis",
                     "code": "416949008",
@@ -1045,12 +1123,25 @@
                         "zip": "02368",
                         "country": "US"
                     },
-                    "telecom": {
-                        "value": "(555)555-555-1234",
-                        "use": "work place"
-                    },
+                    "identifiers": [
+                        {
+                            "identifier": "2.16.840.1.113883.19.5",
+                            "identifier_type": "1234"
+                        }
+                    ],
+                    "phone": [
+                        {
+                            "number": "(555)555-555-1234",
+                            "type": "work place"
+                        }
+                    ],
                     "organization": {
-                        "name": "Community Health and Hospitals"
+                        "name": "Community Health and Hospitals",
+                        "identifiers": [
+                            {
+                                "identifier": "2.16.840.1.113883.19.5"
+                            }
+                        ]
                     }
                 }
             ],
@@ -1075,12 +1166,14 @@
                     ]
                 }
             ],
-            "proc_type": "observation",
-            "name": "Colonic polypectomy",
-            "code": "274025005",
-            "code_system_name": "SNOMED CT"
+            "procedure_type": "observation"
         },
         {
+            "procedure": {
+                "name": "Colonic polypectomy",
+                "code": "274025005",
+                "code_system_name": "SNOMED CT"
+            },
             "identifiers": [
                 {
                     "identifier": "1.2.3.4.5.6.7.8",
@@ -1115,10 +1208,7 @@
                     ]
                 }
             ],
-            "proc_type": "act",
-            "name": "Colonic polypectomy",
-            "code": "274025005",
-            "code_system_name": "SNOMED CT"
+            "procedure_type": "act"
         }
     ]
 }

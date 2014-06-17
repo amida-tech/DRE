@@ -564,9 +564,13 @@ describe('Procedures API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var tmp_updated_entry = {
-    "bodysite" : [],
-    "code" : "274025005",
-    "code_system_name" : "SNOMED CT",
+    "body_sites" : [],
+    "procedure": {
+    	"name" : "Colonic knifing",
+    	"code" : "274025005",
+    	"code_system_name" : "SNOMED CT",
+    	"translations": []
+    },
     "date" : [ 
         {
             "date" : "2011-02-03T00:00:00.000Z",
@@ -602,8 +606,7 @@ describe('Procedures API - Test Merged Matches', function() {
             }
         }
     ],
-    "name" : "Colonic knifing",
-    "proc_type" : "act",
+    "procedure_type" : "act",
     "providers" : [ 
         {
             "organization" : {
@@ -612,10 +615,10 @@ describe('Procedures API - Test Merged Matches', function() {
                     "streetLines" : []
                 }
             },
-            "telecom" : {
-                "value" : "(555)523-555-1234",
-                "use" : "work place"
-            },
+            "phone" : [{
+                "number" : "(555)523-555-1234",
+                "type" : "work place"
+            }],
             "address" : {
                 "city" : "Baltimore",
                 "state" : "MD",
@@ -627,8 +630,7 @@ describe('Procedures API - Test Merged Matches', function() {
             }
         }
     ],
-    "status" : "Completed",
-    "translations" : []
+    "status" : "Completed"
 };
 
 	it('Update Procedure Match Records Merged', function(done) {
@@ -691,12 +693,12 @@ describe('Procedures API - Test Merged Matches', function() {
 						//console.log(JSON.stringify(tmp_updated_entry, null, 10));
 
 						//SHIM in empty arrays.
-						if (res.body.procedures[iEntry].bodysite === undefined) {
-							res.body.procedures[iEntry].bodysite = [];
+						if (res.body.procedures[iEntry].body_sites === undefined) {
+							res.body.procedures[iEntry].body_sites = [];
 						}
 
-						if (res.body.procedures[iEntry].translations === undefined) {
-							res.body.procedures[iEntry].translations = [];
+						if (res.body.procedures[iEntry].procedure.translations === undefined) {
+							res.body.procedures[iEntry].procedure.translations = [];
 						}
 
 						for (var iFind in res.body.procedures[iEntry].locations) {
@@ -719,17 +721,17 @@ describe('Procedures API - Test Merged Matches', function() {
 
 
 						//Test each component.
-						expect(res.body.procedures[iEntry].bodysite).to.deep.equal(tmp_updated_entry.bodysite);
-						expect(res.body.procedures[iEntry].code).to.deep.equal(tmp_updated_entry.code);
-						expect(res.body.procedures[iEntry].code_system_name).to.deep.equal(tmp_updated_entry.code_system_name);
+						expect(res.body.procedures[iEntry].body_sites).to.deep.equal(tmp_updated_entry.body_sites);
+						expect(res.body.procedures[iEntry].procedure.code).to.deep.equal(tmp_updated_entry.procedure.code);
+						expect(res.body.procedures[iEntry].procedure.code_system_name).to.deep.equal(tmp_updated_entry.procedure.code_system_name);
 						expect(res.body.procedures[iEntry].date).to.deep.equal(tmp_updated_entry.date);
 						expect(res.body.procedures[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
 						expect(res.body.procedures[iEntry].locations).to.deep.equal(tmp_updated_entry.locations);
-						expect(res.body.procedures[iEntry].name).to.deep.equal(tmp_updated_entry.name);
-						expect(res.body.procedures[iEntry].proc_type).to.deep.equal(tmp_updated_entry.proc_type);
+						expect(res.body.procedures[iEntry].procedure.name).to.deep.equal(tmp_updated_entry.procedure.name);
+						expect(res.body.procedures[iEntry].procedure_type).to.deep.equal(tmp_updated_entry.procedure_type);
 						expect(res.body.procedures[iEntry].providers).to.deep.equal(tmp_updated_entry.providers);
 						expect(res.body.procedures[iEntry].status).to.deep.equal(tmp_updated_entry.status);
-						expect(res.body.procedures[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
+						expect(res.body.procedures[iEntry].procedure.translations).to.deep.equal(tmp_updated_entry.procedure.translations);
 
 						//Metadata slightly different test.
 						expect(res.body.procedures[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
