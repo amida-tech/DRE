@@ -55,8 +55,9 @@ angular.module('dre.demographics', [])
         } else {
           $scope.displayDemographics = false;
         }
+        console.log(response[1].data);
         var socialData = response[1].data;
-        $scope.demographics.smoking_status = socialData.social_history[0].value;
+        $scope.demographics.smoking_status = socialData.social_history[0].smoking_statuses[0].value;
         
       }, function(response) {
         console.log('error');

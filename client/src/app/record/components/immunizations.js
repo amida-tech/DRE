@@ -54,10 +54,11 @@ angular.module('dre.record.immunizations', [])
     $scope.updateFields = function() {
       for (var i in $scope.immunizations) {
   
+        recordFunctions.extractName($scope.immunizations[i]);
         recordFunctions.formatDate($scope.immunizations[i].date);
   
         $scope.immunizations[i].date_weight = $scope.immunizations[i].date[0].date;
-        $scope.immunizations[i].name = recordFunctions.truncateName($scope.immunizations[i].product.name);
+        $scope.immunizations[i].name = recordFunctions.truncateName($scope.immunizations[i].name);
   
         if ($scope.immunizations[i].administration.quantity) {
           recordFunctions.formatQuantity($scope.immunizations[i].administration.quantity);

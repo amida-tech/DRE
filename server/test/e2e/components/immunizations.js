@@ -227,6 +227,7 @@ describe('Immunizations API - Test New/Dupe Mix:', function() {
 		api.get('/api/v1/record/partial/immunizations')
 			.expect(200)
 			.end(function(err, res) {
+				//console.log(JSON.stringify(res.body, null, 10));
 				expect(res.body.immunizations.length).to.equal(0);
 				done();
 			});

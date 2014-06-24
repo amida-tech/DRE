@@ -19,6 +19,33 @@ angular.module('services.recordFunctions', [])
             return inputName;
         };
 
+        //Builds field displayName attribute.
+        this.extractName = function(inputSection) {
+
+            //console.log(inputSection);
+
+            if (inputSection.allergen) {
+                inputSection.name = inputSection.allergen.name;
+            }
+            if (inputSection.encounter) {
+                inputSection.name = inputSection.encounter.name;
+            }
+            if (inputSection.product) {
+                inputSection.name = inputSection.product.product.name;
+            }
+            if (inputSection.problem) {
+                inputSection.name = inputSection.problem.name;
+            }
+            if (inputSection.results) {
+                inputSection.name = inputSection.result_set.name;
+            }
+            if (inputSection.vital) {
+                inputSection.name = inputSection.vital.name;
+            }
+
+            
+            return inputSection;            
+        };
 
         //Returns printable array from address.
         this.formatAddress = function(address) {
