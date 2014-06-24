@@ -39,6 +39,9 @@ angular.module('services.recordFunctions', [])
             if (inputSection.results) {
                 inputSection.name = inputSection.result_set.name;
             }
+            if (inputSection.procedure) {
+                inputSection.name = inputSection.procedure.name;
+            }
             if (inputSection.vital) {
                 inputSection.name = inputSection.vital.name;
             }
