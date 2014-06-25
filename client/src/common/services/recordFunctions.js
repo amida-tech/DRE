@@ -11,10 +11,10 @@ angular.module('services.recordFunctions', [])
 
 
         this.truncateName = function(inputName) {
-            console.log(inputName.length);
+            //console.log(inputName.length);
             if (inputName.length > 47) {
                 inputName = inputName.substring(0, 47) + "...";
-                console.log(inputName);
+                //console.log(inputName);
             }
             return inputName;
         };
@@ -45,8 +45,10 @@ angular.module('services.recordFunctions', [])
             if (inputSection.vital) {
                 inputSection.name = inputSection.vital.name;
             }
-
-            
+            if (inputSection.smoking_statuses) {
+                inputSection.name = "Smoking Status";
+            }
+   
             return inputSection;            
         };
 
@@ -80,6 +82,7 @@ angular.module('services.recordFunctions', [])
         this.formatName = function(inputName) {
             var outputName = "";
 
+            //console.log(inputName);
             if (inputName.last && inputName.first) {
                 outputName = inputName.first + " " + inputName.last;
             } else if (inputName.first) {
