@@ -25,8 +25,8 @@ angular.module('dre.match.reconciliation', [])
     }
 ])
 
-.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope', 'getNotifications',
-    function($scope, $http, $location, $rootScope, getNotifications) {
+.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope', 'getNotifications', 'recordFunctions',
+    function($scope, $http, $location, $rootScope, getNotifications, recordFunctions) {
 
         $scope.notifications = {};
 
@@ -54,13 +54,20 @@ angular.module('dre.match.reconciliation', [])
             //var sections = ['allergies'];
 
             function getMatchSections(loadsec) {
-                console.log(loadsec);
+                //console.log(loadsec);
                 $http({
                     method: 'GET',
                     url: '/api/v1/matches/' + loadsec
                 }).
                 success(function(data, status, headers, config) {
-                    //console.log(data);
+                    console.log(data.matches);
+
+                    for (var iM in data.matches) {
+                        data.matches[iM].entry_id = recordFunctions.extractName(data.matches[iM].entry_id);
+                        //console.log(data.matches[iM].entry_id);
+
+                    }
+
                     $scope.matches[loadsec] = data.matches;
                     //console.log(JSON.stringify($scope.masterMatch, null, 10));
                 }).
