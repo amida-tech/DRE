@@ -57,13 +57,13 @@
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
 							<div class="pull-left col-md-12">{{encounter.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="encounter.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="encounter.encounter.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{encounter.code}}</div>
+							<div class="pull-left col-md-12">{{encounter.encounter.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="encounter.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="encounter.encounter.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{encounter.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{encounter.encounter.code_system_name}}</div>
 						</div>
 					</div>
 
@@ -98,7 +98,7 @@
 							<div class="pull-left col-md-12" ng-repeat="location_address in location.addresses[0].displayAddress">{{location_address}}</div>
 						</div>
 					</div>
-					<div class="col-md-12 pull-left" ng-repeat="translation in encounter.translations">
+					<div class="col-md-12 pull-left" ng-repeat="translation in encounter.encounter.translations">
 						<h4>Other Descriptions</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
 							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
