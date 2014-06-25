@@ -17,10 +17,10 @@
                 <strong>Encounter:</strong>
             </td>
             <td>{{src_el.name}}<br/>
-            <strong>Another Name:</strong> {{src_el.translations[0].name}}
+            <strong ng-show="src_el.encounter.translations[0].name">Another Name:</strong> {{src_el.encounter.translations[0].name}}
             </td>
             <td>{{dest_el.name}}<br/>
-            <strong>Another Name:</strong> {{dest_el.translations[0].name}}
+            <strong ng-show="src_el.encounter.translations[0].name">Another Name:</strong> {{dest_el.encounter.translations[0].name}}
             </td>
         </tr>
         <tr>

@@ -111,11 +111,14 @@ angular.module('dre.match.review', [])
             }).
             success(function(data, status, headers, config) {
                 for (var i in data[loadsec]) {
-                    //console.log(data[loadsec][i]._id);
+
+                    recordFunctions.extractName(data[loadsec][i]);
+                    //console.log(data[loadsec][i]);
                     //console.log($scope.dest_id);
                     if (data[loadsec][i]._id === $scope.dest_id) {
                             $scope.src_el = data[loadsec][i];    
                             $scope.src_copy_el = angular.copy($scope.src_el);
+
                     }
                 }
             }).
@@ -134,6 +137,7 @@ angular.module('dre.match.review', [])
                 for (var i in data[loadsec]) {
                     //console.log(data[loadsec][i]._id);
                     //console.log($scope.dest_id);
+                    recordFunctions.extractName(data[loadsec][i]);
                     if (data[loadsec][i]._id === $scope.src_id) {
                         $scope.dest_el = data[loadsec][i];
                         $scope.dest_copy_el = angular.copy($scope.dest_el);

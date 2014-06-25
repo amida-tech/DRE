@@ -15,9 +15,9 @@
             <td style="text-align: right;">
                 <strong>Name:</strong>
             </td>
-            <td>{{src_el.product.name }}
+            <td>{{src_el.name}}
             </td>
-            <td>{{dest_el.product.name }}
+            <td>{{dest_el.name}}
             </td>
         </tr>
         <tr>
@@ -49,9 +49,9 @@
                 <strong>Product:</strong>
             </td>
             <td>
-                <strong>Name:</strong> {{src_el.product.name}}
+                <strong>Name:</strong> {{src_el.product.product.name}}
                 <br/>
-                <strong>Alternative Name:</strong> {{src_el.product.translations[0].name}}
+                <strong>Alternative Name:</strong> {{src_el.product.product.translations[0].name}}
                 <br/>
                 <strong>Manufacturer:</strong> {{src_el.product.manufacturer}}
                 <br/>
@@ -60,9 +60,9 @@
                 <a ng-click="merge('product')" class="pull-right" ng-if="diff.product==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
             </td>
             <td>
-                <strong>Name:</strong> {{dest_el.product.name}}
+                <strong>Name:</strong> {{dest_el.product.product.name}}
                 <br/>
-                <strong>Alternative Name:</strong> {{dest_el.product.translations[0].name}}
+                <strong>Alternative Name:</strong> {{dest_el.product.product.translations[0].name}}
                 <br/>
                 <strong>Manufacturer:</strong> {{dest_el.product.manufacturer}}
                 <br/>
@@ -78,14 +78,14 @@
             <td>
                 <strong>Route:</strong> {{src_el.administration.route.name}}
                 <br/>
-                <strong>Quantity:</strong> {{src_el.administration.quantity.value}} {{src_el.administration.quantity.unit}}
+                <strong>Quantity:</strong> {{src_el.administration.dose.value}} {{src_el.administration.dose.unit}}
 
                 <a ng-click="merge('administration')" class="pull-right" ng-if="diff.administration==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
             </td>
             <td>
                 <strong>Route:</strong> {{dest_el.administration.route.name}}
                 <br/>
-                <strong>Quantity:</strong> {{dest_el.administration.quantity.value}} {{dest_el.administration.quantity.unit}}
+                <strong>Quantity:</strong> {{dest_el.administration.dose.value}} {{dest_el.administration.dose.unit}}
             </td>
         </tr>
 
