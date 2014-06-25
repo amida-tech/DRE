@@ -62,7 +62,7 @@
             <td>
                 <div ng-repeat="reaction in src_el.reaction">
                     <div>
-                        <strong>Reaction:</strong>{{reaction.name}}
+                        <strong>Reaction:</strong>{{reaction.reaction.name}}
                         <strong>Severity:</strong>{{reaction.severity}}
                         <a ng-click="merge_sub('reaction', $index)" class="pull-right" ng-if="is_new($index)==='new' && added_subelements[$index]!==true"><i class="glyphicon glyphicon-import"></i></a> 
                     </div>
@@ -71,7 +71,7 @@
             <td>
                 <div ng-repeat="reaction in dest_el.reaction">
                     <div>
-                        <strong>Reaction:</strong>{{reaction.name}}
+                        <strong>Reaction:</strong>{{reaction.reaction.name}}
                         <strong>Severity:</strong>{{reaction.severity}}
                         <a ng-click="remove_sub('reaction', $index)" class="pull-right"><i class="glyphicon glyphicon-remove-circle"></i></a>
                     </div>

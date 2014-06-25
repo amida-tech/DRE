@@ -250,8 +250,15 @@ angular.module('dre.match.review', [])
 
         //merges fields from New Entry into Master Record
         $scope.merge = function(name){
-            //console.log(name);
             $scope.dest_el[name]=$scope.src_el[name];
+            $scope.modified=true;
+        };
+
+        //custom social history merger.
+        $scope.mergeSocial = function(section, component) {
+            //console.log(section);
+            //console.log($scope.src_el[section][0][component]);
+            $scope.dest_el[section][0][component]=$scope.src_el[section][0][component];
             $scope.modified=true;
         };
 

@@ -60,11 +60,11 @@ angular.module('dre.match.reconciliation', [])
                     url: '/api/v1/matches/' + loadsec
                 }).
                 success(function(data, status, headers, config) {
-                    console.log(data.matches);
+                    //console.log(data.matches);
 
                     for (var iM in data.matches) {
                         data.matches[iM].entry_id = recordFunctions.extractName(data.matches[iM].entry_id);
-                        console.log(data.matches[iM]);
+                        //console.log(data.matches[iM]);
 
                     }
 
