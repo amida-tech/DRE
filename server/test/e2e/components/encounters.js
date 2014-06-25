@@ -565,8 +565,16 @@ describe('Encounters API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var tmp_updated_entry = {
-		"code": "99213",
-		"code_system_name": "ICD",
+		"encounter": {
+			"code": "99213",
+			"code_system_name": "ICD",
+			"name": "Office outpatient visit 30 minutes",
+			"translations": [{
+				"name": "Ambulatory",
+				"code": "AMB",
+				"code_system_name": "HL7ActCode"
+			}]
+		},
 		"date": [{
 			"date": "2009-02-24T00:00:00.000Z",
 			"precision": "month",
@@ -599,13 +607,7 @@ describe('Encounters API - Test Merged Matches', function() {
 				"translations": []
 			}
 		}],
-		"name": "Office outpatient visit 30 minutes",
-		"performers": [],
-		"translations": [{
-			"name": "Ambulatory",
-			"code": "AMB",
-			"code_system_name": "HL7ActCode",
-		}]
+		"performers": []
 	};
 
 	it('Update Encounter Match Records Merged', function(done) {
@@ -692,15 +694,15 @@ describe('Encounters API - Test Merged Matches', function() {
 						}
 
 						//Test each component.
-						expect(res.body.encounters[iEntry].code).to.deep.equal(tmp_updated_entry.code);
-						expect(res.body.encounters[iEntry].code_system).to.deep.equal(tmp_updated_entry.code_system);
+						expect(res.body.encounters[iEntry].encounter.code).to.deep.equal(tmp_updated_entry.encounter.code);
+						expect(res.body.encounters[iEntry].encounter.code_system).to.deep.equal(tmp_updated_entry.encounter.code_system);
 						expect(res.body.encounters[iEntry].date).to.deep.equal(tmp_updated_entry.date);
 						expect(res.body.encounters[iEntry].findings).to.deep.equal(tmp_updated_entry.findings);
 						expect(res.body.encounters[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
 						expect(res.body.encounters[iEntry].locations).to.deep.equal(tmp_updated_entry.locations);
-						expect(res.body.encounters[iEntry].name).to.deep.equal(tmp_updated_entry.name);
+						expect(res.body.encounters[iEntry].encounter.name).to.deep.equal(tmp_updated_entry.encounter.name);
 						expect(res.body.encounters[iEntry].performers).to.deep.equal(tmp_updated_entry.performers);
-						expect(res.body.encounters[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
+						expect(res.body.encounters[iEntry].encounter.translations).to.deep.equal(tmp_updated_entry.encounter.translations);
 						//Metadata slightly different test.
 						expect(res.body.encounters[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
 

@@ -9,7 +9,7 @@ var record = require('blue-button-record');
     'encounters',
     'vitals',
     'results',
-    'socialHistory',
+    'social_history',
     'immunizations',
     'demographics',
     'problems'

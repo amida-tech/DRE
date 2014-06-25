@@ -6,24 +6,23 @@
                 "percent": 95,
                 "subelements": [
                     {
-                        "match": "duplicate",
-                        "src_id": "1",
+                        "match": "partial",
+                        "percent": 75,
+                        "src_id": "0",
                         "dest_id": "0"
                     },
                     {
                         "match": "new",
-                        "src_id": "0"
+                        "src_id": "1"
                     }
                 ],
                 "diff": {
                     "date": "duplicate",
                     "identifiers": "duplicate",
+                    "allergen": "duplicate",
                     "severity": "duplicate",
                     "status": "duplicate",
-                    "reaction": "new",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate"
+                    "reaction": "new"
                 },
                 "src_id": "0",
                 "dest_id": "0"
@@ -48,23 +47,22 @@
                 "percent": 95,
                 "subelements": [
                     {
-                        "match": "duplicate",
-                        "src_id": "1",
+                        "match": "partial",
+                        "percent": 50,
+                        "src_id": "0",
                         "dest_id": "0"
                     },
                     {
                         "match": "new",
-                        "src_id": "0"
+                        "src_id": "1"
                     }
                 ],
                 "diff": {
                     "date": "duplicate",
                     "identifiers": "duplicate",
+                    "allergen": "duplicate",
                     "status": "duplicate",
-                    "reaction": "new",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate"
+                    "reaction": "new"
                 },
                 "src_id": "4",
                 "dest_id": "4"
@@ -86,14 +84,11 @@
                     }
                 ],
                 "diff": {
+                    "encounter": "duplicate",
                     "identifiers": "duplicate",
                     "date": "duplicate",
                     "locations": "duplicate",
-                    "findings": "new",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate",
-                    "translations": "duplicate"
+                    "findings": "new"
                 },
                 "src_id": "0",
                 "dest_id": "1"
@@ -154,10 +149,8 @@
                 ],
                 "diff": {
                     "identifiers": "duplicate",
-                    "results": "new",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate"
+                    "result_set": "duplicate",
+                    "results": "new"
                 },
                 "src_id": "0",
                 "dest_id": "6"
@@ -187,14 +180,12 @@
                     "date": "new",
                     "identifiers": "duplicate",
                     "negation_indicator": "new",
+                    "problem": "duplicate",
                     "onset_age": "duplicate",
                     "onset_age_unit": "duplicate",
                     "status": "duplicate",
                     "patient_status": "duplicate",
-                    "source_list_identifiers": "duplicate",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate"
+                    "source_list_identifiers": "duplicate"
                 },
                 "src_id": "0",
                 "dest_id": "1"
@@ -210,15 +201,13 @@
                 "match": "partial",
                 "percent": 65,
                 "diff": {
+                    "procedure": "duplicate",
                     "identifiers": "duplicate",
                     "status": "duplicate",
                     "date": "new",
-                    "bodysite": "duplicate",
+                    "body_sites": "duplicate",
                     "providers": "duplicate",
-                    "proc_type": "duplicate",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate"
+                    "procedure_type": "duplicate"
                 },
                 "src_id": "0",
                 "dest_id": "1"
@@ -232,14 +221,12 @@
                 "match": "partial",
                 "percent": 75,
                 "diff": {
+                    "procedure": "duplicate",
                     "identifiers": "duplicate",
                     "status": "duplicate",
                     "date": "duplicate",
                     "locations": "duplicate",
-                    "proc_type": "duplicate",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate"
+                    "procedure_type": "duplicate"
                 },
                 "src_id": "2",
                 "dest_id": "3"
@@ -251,13 +238,10 @@
                 "percent": 75,
                 "diff": {
                     "identifiers": "duplicate",
+                    "vital": "duplicate",
                     "status": "duplicate",
                     "date": "new",
-                    "freeTextValue": "duplicate",
                     "interpretations": "duplicate",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate",
                     "value": "duplicate",
                     "unit": "duplicate"
                 },
@@ -279,13 +263,10 @@
                 "percent": 75,
                 "diff": {
                     "identifiers": "duplicate",
+                    "vital": "duplicate",
                     "status": "duplicate",
                     "date": "new",
-                    "freeTextValue": "duplicate",
                     "interpretations": "duplicate",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate",
                     "value": "duplicate",
                     "unit": "duplicate"
                 },
@@ -297,13 +278,10 @@
                 "percent": 75,
                 "diff": {
                     "identifiers": "duplicate",
+                    "vital": "duplicate",
                     "status": "duplicate",
                     "date": "new",
-                    "freeTextValue": "duplicate",
                     "interpretations": "duplicate",
-                    "name": "duplicate",
-                    "code": "duplicate",
-                    "code_system_name": "duplicate",
                     "value": "duplicate",
                     "unit": "duplicate"
                 },
@@ -335,18 +313,18 @@
                 }
             }
         ],
-        "socialHistory": [
+        "social_history": [
             {
                 "match": "diff",
                 "diff": {
                     "value": "new",
-                    "dateRange": "duplicate"
+                    "date": "duplicate"
                 }
             }
         ]
     },
     "meta": {
-        "version": "1.0.0"
+        "version": "1.0.1"
     },
     "errors": []
 }

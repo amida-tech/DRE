@@ -46,7 +46,7 @@ angular.module('dre.demographics', [])
         }), 
         $http({
           method: 'GET',
-          url: '/api/v1/record/socialHistory'
+          url: '/api/v1/record/social_history'
         })]).then(function(response) {
         var data = response[0].data;
         $scope.demographics = data.demographics[0];
@@ -55,8 +55,9 @@ angular.module('dre.demographics', [])
         } else {
           $scope.displayDemographics = false;
         }
+        //console.log(response[1].data);
         var socialData = response[1].data;
-        $scope.demographics.smoking_status = socialData.socialHistory[0].value;
+        $scope.demographics.smoking_status = socialData.social_history[0].smoking_statuses[0].value;
         
       }, function(response) {
         console.log('error');

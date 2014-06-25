@@ -15,11 +15,11 @@
             <td style="text-align: right;">
                 <strong>Name:</strong>
             </td>
-            <td>{{src_el.product.name }}<br/>
-                <strong>Alternative Name:</strong> {{src_el.product.translations[0].name}}
+            <td>{{src_el.name }}<br/>
+                <strong>Alternative Name:</strong> {{src_el.product.product.translations[0].name}}
             </td>
-            <td>{{dest_el.product.name }}<br/>
-                <strong>Alternative Name:</strong> {{dest_el.product.translations[0].name}}
+            <td>{{dest_el.name }}<br/>
+                <strong>Alternative Name:</strong> {{dest_el.product.product.translations[0].name}}
             </td>
         </tr>
         <tr>
@@ -51,16 +51,16 @@
                 <strong>Product:</strong>
             </td>
             <td>
-                <strong>Name:</strong> {{src_el.product.name}}
+                <strong>Name:</strong> {{src_el.product.product.name}}
                 <br/>
-                <strong>Alternative Name:</strong> {{src_el.product.translations[0].name}}
+                <strong>Alternative Name:</strong> {{src_el.product.product.translations[0].name}}
 
                 <a ng-click="merge('product')" class="pull-right" ng-if="diff.product==='new'"><i class="glyphicon glyphicon-import"></i>          </a> 
             </td>
             <td>
-                <strong>Name:</strong> {{dest_el.product.name}}
+                <strong>Name:</strong> {{dest_el.product.product.name}}
                 <br/>
-                <strong>Alternative Name:</strong> {{dest_el.product.translations[0].name}}
+                <strong>Alternative Name:</strong> {{dest_el.product.product.translations[0].name}}
             </td>
         </tr>
 

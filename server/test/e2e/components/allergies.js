@@ -564,8 +564,11 @@ describe('Allergies API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var tmp_updated_entry = {
-    "code" : "314422",
-    "code_system_name" : "RXNORM",
+    "allergen":{
+    	"name" : "ALLERGENIC EXTRACT, PENICILLIN",
+    	"code" : "314422",
+    	"code_system_name" : "RXNORM"
+    },
     "date" : [ 
         {
             "date" : "2007-05-01T00:00:00.000Z",
@@ -577,7 +580,6 @@ describe('Allergies API - Test Merged Matches', function() {
             "identifier" : "4adc1020-7b14-11db-9fe1-0800200c9a66"
         }
     ],
-    "name" : "ALLERGENIC EXTRACT, PENICILLIN",
     "reaction" : [ 
         {
             "severity" : "Mild",
@@ -660,15 +662,15 @@ describe('Allergies API - Test Merged Matches', function() {
 						}
 						
 						//Test each component.
-						expect(res.body.allergies[iEntry].code).to.equal(tmp_updated_entry.code);
-						expect(res.body.allergies[iEntry].code_system_name).to.equal(tmp_updated_entry.code_system_name);
+						expect(res.body.allergies[iEntry].allergen.code).to.equal(tmp_updated_entry.allergen.code);
+						expect(res.body.allergies[iEntry].allergen.code_system_name).to.equal(tmp_updated_entry.allergen.code_system_name);
 						expect(res.body.allergies[iEntry].date[0]).to.deep.equal(tmp_updated_entry.date[0]);
 						expect(res.body.allergies[iEntry].identifiers[0]).to.deep.equal(tmp_updated_entry.identifiers[0]);
-						expect(res.body.allergies[iEntry].name).to.equal(tmp_updated_entry.name);
+						expect(res.body.allergies[iEntry].allergen.name).to.equal(tmp_updated_entry.allergen.name);
 						expect(res.body.allergies[iEntry].severity).to.equal(tmp_updated_entry.severity);
 						expect(res.body.allergies[iEntry].reactions).to.equal(tmp_updated_entry.reactions);
 						expect(res.body.allergies[iEntry].status).to.equal(tmp_updated_entry.status);
-						expect(res.body.allergies[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
+						expect(res.body.allergies[iEntry].allergen.translations).to.deep.equal(tmp_updated_entry.allergen.translations);
 
 						//Metadata slightly different test.
 						expect(res.body.allergies[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);

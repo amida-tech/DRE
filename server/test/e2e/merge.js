@@ -68,7 +68,7 @@ describe('Pre Test Cleanup 2', function() {
     encounters: 'encounter',
     vitals: 'vital',
     results: 'result',
-    socialhistories: 'social',
+    social_histories: 'social',
     immunizations: 'immunization',
     demographics: 'demographic',
     problems: 'problem'

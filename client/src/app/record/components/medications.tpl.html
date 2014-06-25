@@ -61,13 +61,13 @@
 							<div class="pull-left col-md-12"><strong>Sig:</strong></div><br/>
 							<div class="pull-left col-md-12">{{medication.sig}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.product.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.product.product.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.product.code}}</div>
+							<div class="pull-left col-md-12">{{medication.product.product.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.product.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.product.product.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.product.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{medication.product.product.code_system_name}}</div>
 						</div>
 					</div>
 
@@ -111,7 +111,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="medtranslation in medication.product.translations" ng-show="medication.product.translations">
+					<div class="col-md-12 pull-left" ng-repeat="medtranslation in medication.product.product.translations" ng-show="medication.product.product.translations">
 						<h4>Other Descriptions</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medtranslation.name">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>

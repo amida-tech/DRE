@@ -227,6 +227,7 @@ describe('Immunizations API - Test New/Dupe Mix:', function() {
 		api.get('/api/v1/record/partial/immunizations')
 			.expect(200)
 			.end(function(err, res) {
+				//console.log(JSON.stringify(res.body, null, 10));
 				expect(res.body.immunizations.length).to.equal(0);
 				done();
 			});
@@ -568,7 +569,7 @@ describe('Immunizations API - Test Merged Matches', function() {
         "form" : {
             "translations" : []
         },
-        "quantity" : {
+        "dose" : {
             "value" : 0.8,
             "unit" : "ml"
         },
@@ -634,10 +635,11 @@ describe('Immunizations API - Test Merged Matches', function() {
     "product" : {
         "lot_number" : "MK456987",
         "manufacturer" : "Merck and Co., Inc.",
-        "name" : "Pneumococcal (2 years and up)",
-        "code" : "23",
-        "code_system_name" : "CVX",
-        "translations" : []
+        "product": {
+        	"name" : "Pneumococcal (2 years and up)",
+        	"code" : "23",
+        	"code_system_name" : "CVX"
+        }
     },
     "status" : "refused"
 };
@@ -731,9 +733,6 @@ describe('Immunizations API - Test Merged Matches', function() {
 						}
 						if (res.body.immunizations[iEntry].performer.organization === undefined) {
 							res.body.immunizations[iEntry].performer.organization = [];
-						}
-						if (res.body.immunizations[iEntry].product.translations === undefined) {
-							res.body.immunizations[iEntry].product.translations = [];
 						}
 
 						for (iFind in res.body.immunizations[iEntry].performer.name) {

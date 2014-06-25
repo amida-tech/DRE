@@ -27,7 +27,7 @@ var lookup = [
     'procedures',
     'vitals',
     'demographics',
-    'socialHistory',
+    'social_history',
 ];
 
 

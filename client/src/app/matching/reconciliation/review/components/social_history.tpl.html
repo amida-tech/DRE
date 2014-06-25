@@ -16,34 +16,34 @@
                 <span class="label label-info" ng-if="diff.value==='new'">Different</span>
                 <strong>Value:</strong>
             </td>
-            <td>{{src_el.value }}
-                <a ng-click="merge('value')" class="pull-right" ng-if="diff.value==='new'"><i class="glyphicon glyphicon-import"></i></a>
+            <td>{{src_el.smoking_statuses[0].value}}
+                <a ng-click="mergeSocial('smoking_statuses', 'value')" class="pull-right" ng-if="diff.value==='new'"><i class="glyphicon glyphicon-import"></i></a>
             </td>
-            <td>{{dest_el.value}}
+            <td>{{dest_el.smoking_statuses[0].value}}
             </td>
         </tr>
 
         <tr>
             <td style="text-align: right;">
-                <span class="label label-info" ng-if="diff.dateRange==='new'">Different</span>
+                <span class="label label-info" ng-if="diff.date==='new'">Different</span>
                 <strong>Start Date:</strong>
             </td>
-            <td>{{src_el.dateRange[0] | bb_date }}
-                <a ng-click="merge_date('dateRange',0)" class="pull-right" ng-if="diff.dateRange==='new'"><i class="glyphicon glyphicon-import"></i></a>
+            <td>{{src_el.smoking_statuses[0].date[0] | bb_date }}
+                <a ng-click="merge_date('date',0)" class="pull-right" ng-if="diff.date==='new'"><i class="glyphicon glyphicon-import"></i></a>
             </td>
-            <td>{{dest_el.dateRange[0] | bb_date }}
+            <td>{{dest_el.smoking_statuses[0].date[0] | bb_date }}
             </td>
         </tr>
 
         <tr>
             <td style="text-align: right;">
-                <span class="label label-info" ng-if="diff.dateRange==='new'">Different</span>
+                <span class="label label-info" ng-if="diff.date==='new'">Different</span>
                 <strong>End Date:</strong>
             </td>
-            <td>{{src_el.dateRange[1] | bb_date }}
-                <a ng-click="merge_date('dateRange',1)" class="pull-right" ng-if="diff.dateRange==='new'"><i class="glyphicon glyphicon-import"></i></a>
+            <td>{{src_el.smoking_statuses[0].date[1] | bb_date }}
+                <a ng-click="merge_date('date',1)" class="pull-right" ng-if="diff.date==='new'"><i class="glyphicon glyphicon-import"></i></a>
             </td>
-            <td>{{dest_el.dateRange[1] | bb_date }}
+            <td>{{dest_el.smoking_statuses[0].date[1] | bb_date }}
             </td>
         </tr>
 

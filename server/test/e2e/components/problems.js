@@ -564,8 +564,11 @@ describe('Problems API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var tmp_updated_entry = {
-		"code": "36971009",
-		"code_system_name": "SNOMED CT",
+		"problem": {
+			"name": "Hepatitus",
+			"code": "36971009",
+			"code_system_name": "SNOMED CT"
+		},
 		"date": [{
 			"date": "2012-09-01T00:00:00.000Z",
 			"precision": "day"
@@ -577,7 +580,6 @@ describe('Problems API - Test Merged Matches', function() {
 			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1.2.1",
 			"identifier_type": "6599352434300001"
 		}],
-		"name": "Hepatitus",
 		"negation_indicator": true,
 		"source_list_identifiers": [{
 			"identifier": "1.3.6.1.4.1.22812.3.99930.3.4.1",

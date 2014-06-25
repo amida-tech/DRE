@@ -564,8 +564,12 @@ describe('Vitals API - Test Merged Matches', function() {
 
 	var update_id = '';
 	var tmp_updated_entry = {
-    "code" : "3141-9",
-    "code_system_name" : "LOINC",
+	"vital": {
+		"name" : "Weight",
+		"code" : "3141-9",
+    	"code_system_name" : "LOINC",
+    	"translations" : []
+	},
     "date" : [ 
         {
             "date" : "2012-10-01T00:00:00.000Z",
@@ -583,9 +587,7 @@ describe('Vitals API - Test Merged Matches', function() {
         }
     ],
     "interpretations" : [],
-    "name" : "Weight",
     "status" : "completed",
-    "translations" : [],
     "unit" : "[lb_av]",
     "value" : 178
 };
@@ -655,16 +657,16 @@ describe('Vitals API - Test Merged Matches', function() {
 							res.body.vitals[iEntry].interpretations = [];
 						}
 
-						if (res.body.vitals[iEntry].translations === undefined) {
-							res.body.vitals[iEntry].translations = [];
+						if (res.body.vitals[iEntry].vital.translations === undefined) {
+							res.body.vitals[iEntry].vital.translations = [];
 						}
 
 						//Test each component.
-						expect(res.body.vitals[iEntry].code).to.deep.equal(tmp_updated_entry.code);
-						expect(res.body.vitals[iEntry].code_system_name).to.deep.equal(tmp_updated_entry.code_system_name);
+						expect(res.body.vitals[iEntry].vital.code).to.deep.equal(tmp_updated_entry.vital.code);
+						expect(res.body.vitals[iEntry].vital.code_system_name).to.deep.equal(tmp_updated_entry.vital.code_system_name);
 						expect(res.body.vitals[iEntry].date).to.deep.equal(tmp_updated_entry.date);
 						expect(res.body.vitals[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
-						expect(res.body.vitals[iEntry].name).to.deep.equal(tmp_updated_entry.name);
+						expect(res.body.vitals[iEntry].vital.name).to.deep.equal(tmp_updated_entry.vital.name);
 						expect(res.body.vitals[iEntry].status).to.deep.equal(tmp_updated_entry.status);
 						expect(res.body.vitals[iEntry].unit).to.deep.equal(tmp_updated_entry.unit);
 						expect(res.body.vitals[iEntry].value).to.deep.equal(tmp_updated_entry.value);

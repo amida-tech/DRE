@@ -11,14 +11,46 @@ angular.module('services.recordFunctions', [])
 
 
         this.truncateName = function(inputName) {
-            console.log(inputName.length);
+            //console.log(inputName.length);
             if (inputName.length > 47) {
                 inputName = inputName.substring(0, 47) + "...";
-                console.log(inputName);
+                //console.log(inputName);
             }
             return inputName;
         };
 
+        //Builds field displayName attribute.
+        this.extractName = function(inputSection) {
+
+            //console.log(inputSection);
+
+            if (inputSection.allergen) {
+                inputSection.name = inputSection.allergen.name;
+            }
+            if (inputSection.encounter) {
+                inputSection.name = inputSection.encounter.name;
+            }
+            if (inputSection.product) {
+                inputSection.name = inputSection.product.product.name;
+            }
+            if (inputSection.problem) {
+                inputSection.name = inputSection.problem.name;
+            }
+            if (inputSection.results) {
+                inputSection.name = inputSection.result_set.name;
+            }
+            if (inputSection.procedure) {
+                inputSection.name = inputSection.procedure.name;
+            }
+            if (inputSection.vital) {
+                inputSection.name = inputSection.vital.name;
+            }
+            if (inputSection.smoking_statuses) {
+                inputSection.name = "Smoking Status";
+            }
+   
+            return inputSection;            
+        };
 
         //Returns printable array from address.
         this.formatAddress = function(address) {
@@ -50,6 +82,7 @@ angular.module('services.recordFunctions', [])
         this.formatName = function(inputName) {
             var outputName = "";
 
+            //console.log(inputName);
             if (inputName.last && inputName.first) {
                 outputName = inputName.first + " " + inputName.last;
             } else if (inputName.first) {

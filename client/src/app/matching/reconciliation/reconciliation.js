@@ -25,8 +25,8 @@ angular.module('dre.match.reconciliation', [])
     }
 ])
 
-.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope', 'getNotifications',
-    function($scope, $http, $location, $rootScope, getNotifications) {
+.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope', 'getNotifications', 'recordFunctions',
+    function($scope, $http, $location, $rootScope, getNotifications, recordFunctions) {
 
         $scope.notifications = {};
 
@@ -39,7 +39,7 @@ angular.module('dre.match.reconciliation', [])
 
         $scope.reviewClick = function(match) {
             //alert(JSON.stringify(match));
-            console.log(match);
+            //console.log(match);
             $location.path("match/reconciliation/review/" + match.entry_type + "/" + match._id + "/" + match.entry_id._id + "/" + match.match_entry_id._id);
         };
 
@@ -50,17 +50,24 @@ angular.module('dre.match.reconciliation', [])
         };
 
         $scope.getMatches = function() {
-            var sections = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'socialHistory', 'demographics', 'problems'];
+            var sections = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
             //var sections = ['allergies'];
 
             function getMatchSections(loadsec) {
-                console.log(loadsec);
+                //console.log(loadsec);
                 $http({
                     method: 'GET',
                     url: '/api/v1/matches/' + loadsec
                 }).
                 success(function(data, status, headers, config) {
-                    //console.log(data);
+                    //console.log(data.matches);
+
+                    for (var iM in data.matches) {
+                        data.matches[iM].entry_id = recordFunctions.extractName(data.matches[iM].entry_id);
+                        //console.log(data.matches[iM]);
+
+                    }
+
                     $scope.matches[loadsec] = data.matches;
                     //console.log(JSON.stringify($scope.masterMatch, null, 10));
                 }).

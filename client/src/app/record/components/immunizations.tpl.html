@@ -57,13 +57,13 @@
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
 							<div class="pull-left col-md-12">{{immunization.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.product.code">
 							<div class="pull-left col-md-12"><strong>Product Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.product.code}}</div>
+							<div class="pull-left col-md-12">{{immunization.product.product.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.product.code_system_name">
 							<div class="pull-left col-md-12"><strong>Product Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.product.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{immunization.product.product.code_system_name}}</div>
 						</div>
 					</div>
 
@@ -85,9 +85,9 @@
 							<div class="pull-left col-md-12"><strong>Route:</strong></div><br/>
 							<div class="pull-left col-md-12">{{immunization.administration.route.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.administration.quantity.displayQuantity">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.administration.dose.displayQuantity">
 							<div class="pull-left col-md-12"><strong>Quantity:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.administration.quantity.displayQuantity}}</div>
+							<div class="pull-left col-md-12">{{immunization.administration.dose.displayQuantity}}</div>
 						</div>
 					</div>
 

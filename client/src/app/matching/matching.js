@@ -91,37 +91,19 @@ angular.module('dre.match', ['dre.match.reconciliation'])
     function formatMerges (inputMerge) {
       var trimLength = 35;
       for (var iMerge in inputMerge) {
-        //Give Immunizations a name
-        if (inputMerge[iMerge].entry_type === 'immunization') {
-          if (inputMerge[iMerge].entry_id.product.name) {
-            inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.product.name;
+        
+          //console.log(inputMerge[iMerge]);
+          if (inputMerge[iMerge].entry_type !== 'demographic') {
+            recordFunctions.extractName(inputMerge[iMerge].entry_id);  
           }
-        }
-        //Give Medications a name
-        if (inputMerge[iMerge].entry_type === 'medication') {
-          if (inputMerge[iMerge].entry_id.product.name) {
-            inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.product.name;
+
+          if (inputMerge[iMerge].entry_type === 'demographic') {
+            var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry_id.name);  
+            inputMerge[iMerge].entry_id.name = tmpName.displayName;
           }
-        }
-        //Give Socials a name
-        if (inputMerge[iMerge].entry_type === 'social') {
-          if (inputMerge[iMerge].entry_id.value) {
-            inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.value;
-          }
-        }
-        //Give Demographics a name
-        if (inputMerge[iMerge].entry_type === 'demographic') {
-          if (inputMerge[iMerge].entry_id.name) {
-            var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry_id.name).displayName;
-            inputMerge[iMerge].entry_id.name = tmpName;
-          }
-        }
-        //Trim long strings.
-        if (inputMerge[iMerge].entry_id.name && typeof inputMerge[iMerge].entry_id.name === 'string') {
-          if (inputMerge[iMerge].entry_id.name.length > trimLength) {
-                inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.name.substring(0, trimLength) + "...";
-          }
-        }
+          
+
+
       }
     }
 

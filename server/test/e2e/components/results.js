@@ -564,20 +564,24 @@ describe('Results API - Test Merged Matches', function() {
     var base_object = {};
 
     var tmp_updated_entry = {
-        "code": "2160-1",
-        "code_system_name": "LOINC",
+        "result_set": {
+            "name": "Creatinine [Mass/volume] in Serum or Plasma STuff",
+            "code": "2160-1",
+            "code_system_name": "LOINC",
+            "translations": []
+        },
         "identifiers": [{
             "identifier": "ce19d2be-3d3b-44ea-95f1-5a0a04586377",
         }],
-        "name": "Creatinine [Mass/volume] in Serum or Plasma STuff",
         "results": [{
-            "freeTextValue": "PLT (135-145 meq/l)",
-            "name": "Creatinine [Mass/volume] in Serum or Plasma",
-            "code": "2160-0",
-            "code_system_name": "LOINC",
+            "result": {
+                "name": "Creatinine [Mass/volume] in Serum or Plasma",
+                "code": "2160-0",
+                "code_system_name": "LOINC",
+                "translations": []
+            },
             "value": 12.0,
             "unit": "mg/dL",
-            "translations": [],
             "interpretations": [
                 "abnormal"
             ],
@@ -588,8 +592,7 @@ describe('Results API - Test Merged Matches', function() {
             "identifiers": [{
                 "identifier": "9cd43fa7-db31-4c29-ab30-83f92fdcaa20",
             }]
-        }],
-        "translations": []
+        }]
     };
 
     it('Update Result Match Records Merged', function(done) {
@@ -654,21 +657,21 @@ describe('Results API - Test Merged Matches', function() {
                         //SHIM in empty arrays.
 
                         for (var iFind in res.body.results[iEntry].results) {
-                            if (res.body.results[iEntry].results[iFind].translations === undefined) {
-                                res.body.results[iEntry].results[iFind].translations = [];
+                            if (res.body.results[iEntry].results[iFind].result.translations === undefined) {
+                                res.body.results[iEntry].results[iFind].result.translations = [];
                             }
                         }
 
 
-                        if (res.body.results[iEntry].translations === undefined) {
-                            res.body.results[iEntry].translations = [];
+                        if (res.body.results[iEntry].result_set.translations === undefined) {
+                            res.body.results[iEntry].result_set.translations = [];
                         }
 
                         //Test each component.
-                        expect(res.body.results[iEntry].code).to.deep.equal(tmp_updated_entry.code);
-                        expect(res.body.results[iEntry].code_system_name).to.deep.equal(tmp_updated_entry.code_system_name);
+                        expect(res.body.results[iEntry].result_set.code).to.deep.equal(tmp_updated_entry.result_set.code);
+                        expect(res.body.results[iEntry].result_set.code_system_name).to.deep.equal(tmp_updated_entry.result_set.code_system_name);
                         expect(res.body.results[iEntry].identifiers).to.deep.equal(tmp_updated_entry.identifiers);
-                        expect(res.body.results[iEntry].name).to.deep.equal(tmp_updated_entry.name);
+                        expect(res.body.results[iEntry].result_set.name).to.deep.equal(tmp_updated_entry.result_set.name);
                         expect(res.body.results[iEntry].results).to.deep.equal(tmp_updated_entry.results);
                         expect(res.body.results[iEntry].translations).to.deep.equal(tmp_updated_entry.translations);
                         //Metadata slightly different test.

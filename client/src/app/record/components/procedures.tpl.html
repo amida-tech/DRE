@@ -57,17 +57,17 @@
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
 							<div class="pull-left col-md-12">{{procedure.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.proc_type">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.procedure_type">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
-							<div class="pull-left col-md-12">{{procedure.proc_type}}</div>
+							<div class="pull-left col-md-12">{{procedure.procedure_type}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.procedure.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{procedure.code}}</div>
+							<div class="pull-left col-md-12">{{procedure.procedure.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.procedure.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{procedure.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{procedure.procedure.code_system_name}}</div>
 						</div>
 					</div>
 
@@ -99,8 +99,8 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="body_site in procedure.bodysite">
-						<h4>Body Site</h4>
+					<div class="col-md-12 pull-left" ng-repeat="body_site in procedure.body_sites">
+						<h4>Body Sites</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="body_site.name">
 							<div class="pull-left col-md-12"><strong>Location:</strong></div><br/>
 							<div class="pull-left col-md-12">{{body_site.name}}</div>
