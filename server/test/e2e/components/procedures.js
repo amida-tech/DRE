@@ -50,11 +50,11 @@ describe('Pre Test Cleanup', function() {
 			if (err) {
 				done(err);
 			}
-			removeCollection('proceduremerges', function(err) {
+			removeCollection('proceduresmerges', function(err) {
 				if (err) {
 					done(err);
 				}
-				removeCollection('procedurematches', function(err) {
+				removeCollection('proceduresmatches', function(err) {
 					if (err) {
 						done(err);
 					}
@@ -120,10 +120,10 @@ describe('Procedures API - Test New:', function() {
 				expect(res.body.merges.length).to.equal(3);
 				for (var i in res.body.merges) {
 					expect(res.body.merges[i].merge_reason).to.equal('new');
-					expect(res.body.merges[i].entry_type).to.equal('procedure');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('procedures');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
@@ -184,10 +184,10 @@ describe('Procedures API - Test Duplicate:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('procedure');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('procedures');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(3);
 				expect(dupCnt).to.equal(3);
@@ -250,10 +250,10 @@ describe('Procedures API - Test New/Dupe Mix:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('procedure');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('procedures');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(4);
 				expect(dupCnt).to.equal(6);
@@ -318,10 +318,10 @@ describe('Procedures API - Test Partial Matches:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('procedure');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('procedures');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(4);
 				expect(dupCnt).to.equal(7);
@@ -336,8 +336,8 @@ describe('Procedures API - Test Partial Matches:', function() {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
 				expect(res.body.matches.length).to.equal(3);
 				for (var i in res.body.matches) {
-					expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
-					expect(res.body.matches[i].entry_type).to.equal('procedure');
+					expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].match_entry.name);
+					expect(res.body.matches[i].entry_type).to.equal('procedures');
 				}
 				done();
 			});
@@ -359,7 +359,7 @@ describe('Procedures API - Test Added Matches', function() {
 					done(err);
 				} else {
 					update_id = res.body.matches[0]._id;
-					match_id = res.body.matches[0].match_entry_id._id;
+					match_id = res.body.matches[0].match_entry._id;
 					api.post('/api/v1/matches/procedures/' + update_id)
 						.send({
 							determination: "added"
@@ -423,10 +423,10 @@ describe('Procedures API - Test Added Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('procedure');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('procedures');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(5);
 				expect(dupCnt).to.equal(7);
@@ -465,7 +465,7 @@ describe('Procedures API - Test Ignored Matches', function() {
 					done(err);
 				} else {
 					update_id = res.body.matches[0]._id;
-					match_id = res.body.matches[0].match_entry_id._id;
+					match_id = res.body.matches[0].match_entry._id;
 					api.post('/api/v1/matches/procedures/' + update_id)
 						.send({
 							determination: "ignored"
@@ -528,10 +528,10 @@ describe('Procedures API - Test Ignored Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('procedure');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('procedures');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(5);
 				expect(dupCnt).to.equal(7);
@@ -642,9 +642,9 @@ describe('Procedures API - Test Merged Matches', function() {
 					done(err);
 				} else {
 					//console.log(JSON.stringify(res.body.matches, null, 10));
-					base_id = res.body.matches[0].entry_id._id;
+					base_id = res.body.matches[0].entry._id;
 					update_id = res.body.matches[0]._id;
-					match_id = res.body.matches[0].match_entry_id._id;
+					match_id = res.body.matches[0].match_entry._id;
 					//Still need this object to check metadata.
 					api.get('/api/v1/record/procedures')
 						.expect(200)
@@ -774,13 +774,13 @@ describe('Procedures API - Test Merged Matches', function() {
 					}
 					if (res.body.merges[i].merge_reason === 'update') {
 						//Get record id off loaded rec, 
-						expect(res.body.merges[i].entry_id._id).to.equal(base_id);
-						expect(res.body.merges[i].record_id.filename).to.equal('bluebutton-04-diff-source-partial-matches.xml');
+						expect(res.body.merges[i].entry._id).to.equal(base_id);
+						expect(res.body.merges[i].record.filename).to.equal('bluebutton-04-diff-source-partial-matches.xml');
 						mrgCnt++;
 					}
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(5);
 				expect(dupCnt).to.equal(7);

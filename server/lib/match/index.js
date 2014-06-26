@@ -12,13 +12,13 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
             callback(err);
         } else {
             //Gather partial record from db.
-            record.getEntry(updateComponent, resultComponent.match_entry_id._id, function(err, recordResults) {
+            record.getEntry(updateComponent, resultComponent.match_entry._id, function(err, recordResults) {
                 if (err) {
                     callback(err);
                 } else {
                     //NOTE:  Only one attribution merge since a partial.
-                    var recordId = recordResults.metadata.attribution[0].record_id;
-                    record.updateEntry(updateComponent, resultComponent.entry_id, recordId, updateParameters, function(err, updateResults) {
+                    var recordId = recordResults.metadata.attribution[0].record._id;
+                    record.updateEntry(updateComponent, resultComponent.entry._id, recordId, updateParameters, function(err, updateResults) {
                         if (err) {
                             callback(err);
                         } else {

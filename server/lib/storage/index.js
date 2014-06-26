@@ -201,7 +201,7 @@ function importRecord(record_metadata, record_data, callback) {
 
             //May need to wrap you.
 
-            record.saveRecord('test', record_data, record_metadata, parsed_record_type, function(err, fileInfo) {
+            record.saveRecord('test', record_data, record_metadata, parsed_record_type, function(err, id) {
                 if (err) {
                     callback(err);
                 } else {
@@ -213,12 +213,12 @@ function importRecord(record_metadata, record_data, callback) {
                         parsed_record.demographics = tmpDemographicsArray;
                     }
 
-                    reconcileRecord(parsed_record, fileInfo._id, function(err) {
+                    reconcileRecord(parsed_record, id, function(err) {
                         if (err) {
                             console.error(err);
                             callback(err);
                         } else {
-                            callback(null, fileInfo);
+                            callback(null, id);
                         }
                     });
                 }

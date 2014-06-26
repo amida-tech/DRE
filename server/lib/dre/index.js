@@ -91,9 +91,9 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
                 //Diffs always zero, can take only array object.
                 returnPartialArray.push({
-                    partial_array: srcArray[0],
+                    partial_entry: srcArray[0],
                     partial_match: matchObjForDb,
-                    match_record_id: tmpMatchRecId
+                    match_entry_id: tmpMatchRecId
                 });
 
                 loopCount++;
@@ -110,9 +110,9 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 }
 
                 returnPartialArray.push({
-                    partial_array: srcArray[srcMatches[i].src_id],
+                    partial_entry: srcArray[srcMatches[i].src_id],
                     partial_match: matchObjForDb,
-                    match_record_id: baseArray[srcMatches[i].dest_id]._id
+                    match_entry_id: baseArray[srcMatches[i].dest_id]._id
                 });
 
                 loopCount++;
