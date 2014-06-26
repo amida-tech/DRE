@@ -129,6 +129,7 @@ angular.module('dre.match', ['dre.match.reconciliation'])
 
       for (var i = 0; i < data.merges.length; i++) {
         //console.log(data.merges);
+        data.merges[i].section_singular = recordFunctions.singularizeSection(data.merges[i].entry_type);
         if (data.merges[i].merge_reason === "duplicate") {
           $scope.duplicate_merges.push(data.merges[i]);
         } else {
