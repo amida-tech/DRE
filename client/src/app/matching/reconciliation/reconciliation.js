@@ -40,7 +40,7 @@ angular.module('dre.match.reconciliation', [])
         $scope.reviewClick = function(match) {
             //alert(JSON.stringify(match));
             //console.log(match);
-            $location.path("match/reconciliation/review/" + match.entry_type + "/" + match._id + "/" + match.entry_id._id + "/" + match.match_entry_id._id);
+            $location.path("match/reconciliation/review/" + match.entry_type + "/" + match._id + "/" + match.entry._id + "/" + match.match_entry._id);
         };
 
         $scope.matches = {};
@@ -63,7 +63,7 @@ angular.module('dre.match.reconciliation', [])
                     //console.log(data.matches);
 
                     for (var iM in data.matches) {
-                        data.matches[iM].entry_id = recordFunctions.extractName(data.matches[iM].entry_id);
+                        data.matches[iM].entry = recordFunctions.extractName(data.matches[iM].entry);
                         //console.log(data.matches[iM]);
 
                     }

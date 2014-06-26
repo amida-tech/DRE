@@ -42,7 +42,7 @@
 						<ul class="list-group" ng-repeat="new_merge in new_merges | orderBy:predicate">
 								<li class="list-group-item" style="text-transform:capitalize;">
 									<span class="col-md-4">{{new_merge.merge_reason}} {{new_merge.entry_type}}</span>
-									<span style="text-transform:uppercase;">{{new_merge.entry_id.name}}</span>
+									<span style="text-transform:uppercase;">{{new_merge.entry.name}}</span>
 									<span class="pull-right" style="text-transform:lowercase;">{{new_merge.merged | date: 'short'}}</span>
 								</li>
 						</ul>

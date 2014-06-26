@@ -30,7 +30,7 @@ angular.module('services.getNotifications', [])
                 var newCount = 0;
                 for (var i in data.merges) {
                     if (data.merges[i].merge_reason === 'new') {
-                        if(data.merges[i].entry_type !== 'demographic' && data.merges[i].entry_type !== 'social') {
+                        if(data.merges[i].entry_type !== 'demographics' && data.merges[i].entry_type !== 'social_history') {
                             var merge_date = data.merges[i].merged;
                             var dateDiff = new Date() - new Date(merge_date);
                             //86400000 <- 24 hrs in milliseconds.

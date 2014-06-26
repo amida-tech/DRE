@@ -11,8 +11,8 @@
                 <div class="panel panel-default" style="overflow: visible;">
                     <div class="panel-heading ">
                         <div class="panel-title">
-                            <h4 ng-if="partial_matches.entry_type!=='demographic' && partial_matches.entry_type!=='social'">Partial ({{partial_matches.percent}}%) Match</h4>
-                            <h4 ng-if="partial_matches.entry_type==='demographic' || partial_matches.entry_type==='social'">Updated (Different) Information</h4>
+                            <h4 ng-if="partial_matches.entry_type!=='demographics' && partial_matches.entry_type!=='social_history'">Partial ({{partial_matches.percent}}%) Match</h4>
+                            <h4 ng-if="partial_matches.entry_type==='demographics' || partial_matches.entry_type==='social_history'">Updated (Different) Information</h4>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -28,7 +28,7 @@
                                     </td>
                                     <td class=" col-md-5" style="text-align: center;">
                                         <button type="button" class="btn btn-warning" ng-click="createNew()" 
-                                        ng-if="partial_matches.entry_type!=='demographic' && partial_matches.entry_type!=='social'">
+                                        ng-if="partial_matches.entry_type!=='demographics' && partial_matches.entry_type!=='social_history'">
 
                                             <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New</button>
                                     </td>

@@ -55,13 +55,13 @@ angular.module('dre.match', ['dre.match.reconciliation'])
 
     $scope.elementSort = function () {
       if ($scope.predicate.substring(0,1) === "-") {
-        if ($scope.predicate.substring(1) === "entry_id.name") {
-          $scope.predicate = "entry_id.name";
+        if ($scope.predicate.substring(1) === "entry.name") {
+          $scope.predicate = "entry.name";
         } else {
-          $scope.predicate = "-entry_id.name";
+          $scope.predicate = "-entry.name";
         }
       } else {
-        $scope.predicate = "-entry_id.name";
+        $scope.predicate = "-entry.name";
       }
     };
 
@@ -93,13 +93,13 @@ angular.module('dre.match', ['dre.match.reconciliation'])
       for (var iMerge in inputMerge) {
         
           //console.log(inputMerge[iMerge]);
-          if (inputMerge[iMerge].entry_type !== 'demographic') {
-            recordFunctions.extractName(inputMerge[iMerge].entry_id);  
+          if (inputMerge[iMerge].entry_type !== 'demographics') {
+            recordFunctions.extractName(inputMerge[iMerge].entry);  
           }
 
-          if (inputMerge[iMerge].entry_type === 'demographic') {
-            var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry_id.name);  
-            inputMerge[iMerge].entry_id.name = tmpName.displayName;
+          if (inputMerge[iMerge].entry_type === 'demographics') {
+            var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry.name);  
+            inputMerge[iMerge].entry.name = tmpName.displayName;
           }
           
 

@@ -57,26 +57,9 @@ angular.module('dre.match.review', [])
         $scope.partial_matches = {};
         $scope.diff = {};
 
-    $scope.convertTense = function(inputSection) {
-        var lookup = {
-            'allergy': 'allergies',
-            'encounter': 'encounters',
-            'immunization': 'immunizations',
-            'result': 'results',
-            'medication': 'medications',
-            'problem': 'problems',
-            'procedure': 'procedures',
-            'vital': 'vitals',
-            'demographic': 'demographics',
-            'social': 'social_history'
-        };
-        return lookup[inputSection];
+    $scope.navPath = "templates/nav/nav.tpl.html";
 
-    };
-
-     $scope.navPath = "templates/nav/nav.tpl.html";
-
-    $scope.dynamicTemplatePath = "templates/matching/reconciliation/review/components/"+$scope.convertTense($scope.section)+".tpl.html";
+    $scope.dynamicTemplatePath = "templates/matching/reconciliation/review/components/"+$scope.section+".tpl.html";
 
     $scope.getMatch = function(matchSection) {
         //console.log(">>",matchSection);
@@ -99,8 +82,7 @@ angular.module('dre.match.review', [])
 
     };
 
-    //console.log($scope.convertTense($scope.section));
-    $scope.getMatch($scope.convertTense($scope.section));
+    $scope.getMatch($scope.section);
 
         //load partials and pull right one from url string param.
         function getPartialSections(loadsec) {
@@ -149,14 +131,14 @@ angular.module('dre.match.review', [])
             });
         }
 
-        getPartialSections($scope.convertTense($scope.section));
-        getMasterSections($scope.convertTense($scope.section));
+        getPartialSections($scope.section);
+        getMasterSections($scope.section);
 
 
         //close match, save new entry as separate entry from master entry
         $scope.createNew = function() {
             //console.log($scope.partial_matches._id);
-            var updateSection = $scope.convertTense($scope.section);
+            var updateSection = $scope.section;
 
             $http({
                 method: 'POST',
@@ -174,7 +156,7 @@ angular.module('dre.match.review', [])
         //close match, ignore new entry, update master entry with user's changes (based on new entry)
         $scope.saveUpdate = function() {
             //console.log($scope.partial_matches._id);
-            var updateSection = $scope.convertTense($scope.section);
+            var updateSection = $scope.section;
 
             $http({
                 method: 'POST',
@@ -192,7 +174,7 @@ angular.module('dre.match.review', [])
         //close match, ignore new entry, keep master entry same
         $scope.ignoreUpdate = function() {
             //console.log($scope.partial_matches._id);
-            var updateSection = $scope.convertTense($scope.section);
+            var updateSection = $scope.section;
 
             $http({
                 method: 'POST',
@@ -210,7 +192,7 @@ angular.module('dre.match.review', [])
         //This call is discontinued in favor of cancelReview, createNew, ignoreUpdate, saveUpdate
         $scope.saveReview = function() {
             //console.log($scope.partial_matches._id);
-            var updateSection = $scope.convertTense($scope.section);
+            var updateSection = $scope.section;
 
             $http({
                 method: 'POST',
@@ -228,7 +210,7 @@ angular.module('dre.match.review', [])
         //This call is discontinued in favor of cancelReview, createNew, ignoreUpdate, saveUpdate
         $scope.ignoreReview = function() {
             //console.log($scope.partial_matches._id);
-            var updateSection = $scope.convertTense($scope.section);
+            var updateSection = $scope.section;
 
             $http({
                 method: 'POST',
