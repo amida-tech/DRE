@@ -1,8 +1,7 @@
-var express = require('express');
-var app = module.exports = express();
 var record = require('blue-button-record');
 var bbMatch = require("blue-button-match");
 var _ = require("underscore");
+var Promise = require('bluebird');
 
 
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
@@ -14,237 +13,133 @@ var _ = require("underscore");
 //On review, a flag toggle needs to be set up to enable one view or disable the other.
 
 function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
+    var newPartialObject = {};
 
-
-    function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
-
-        var returnArray = [];
-        var returnPartialArray = [];
-
-        function updateDuplicate(section, update_id, callback) {
-            record.duplicateEntry(section, update_id, newSourceID, function(err) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
-
-        }
-
-        var loopCount = 0;
-        var loopTotal = srcMatches.length;
-
-        function checkLoopComplete() {
-
-            if (loopCount === loopTotal) {
-                callback(null, section, returnArray, returnPartialArray);
-            }
-        }
-
-        for (var i = 0; i < srcMatches.length; i++) {
-
-            if (srcMatches[i].match === 'duplicate') {
-
-                //If duplicate, don't push to save array and make duplicate entry in log.
-                var matchIndex = srcMatches[i].dest_id || 0;
-                updateDuplicate(section, baseArray[matchIndex]._id, function(err, resIter) {
-                    if (err) {
-                        console.error(err);
-                    } else {
-                        loopCount++;
-                        checkLoopComplete();
+    Promise.map(Object.keys(newObject), function(iSec) {
+        return new Promise(function (resolve) {
+            var currentMatchResult = matchResults.match[iSec];
+            if (currentMatchResult.length > 0) {
+                removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, newSourceID, function(err, returnSection, newEntries, newPartialEntries) {
+                    newObject[returnSection] = newEntries;
+                    if (newPartialEntries.length > 0) {
+                        newPartialObject[returnSection] = {};
+                        newPartialObject[returnSection] = newPartialEntries;
                     }
+                    resolve();
                 });
+            } else {
+                resolve();
+            }
+        });
+    }).then(function(){
+        callback(null, newObject, newPartialObject);
+    });
+}
 
-            } else if (srcMatches[i].match === 'new') {
+function removeMatches(srcMatches, srcArray, baseArray, section, newSourceID, callback) {
 
-                //If new, push the object to the return.
+    var returnArray = [];
+    var returnPartialArray = [];
 
+    return Promise.each(srcMatches, function(srcMatch) {
+        return new Promise(function (resolve) {
+            if (srcMatch.match === 'duplicate') {
+                var matchIndex = srcMatch.dest_id || 0;
+                record.duplicateEntry(section, baseArray[matchIndex]._id, newSourceID, resolve);
+            } else if (srcMatch.match === 'new') {
                 var tmpSrcIndex = 0;
-                if (srcMatches[i].src_id === undefined) {
-                } else {
-                    tmpSrcIndex = srcMatches[i].src_id;
-                }
-
+                if (srcMatch.src_id !== undefined) {
+                    tmpSrcIndex = srcMatch.src_id;
+                } 
                 returnArray.push(srcArray[tmpSrcIndex]);
-
-                loopCount++;
-                checkLoopComplete();
-
-            } else if (srcMatches[i].match === 'diff') {
-
-                //SHIM:  Holder for 'New' Demographics fix.
+                resolve();
+            } else if (srcMatch.match === 'diff') {
                 var tmpMatchRecId;
                 if (baseArray.length === 0) {
                     tmpMatchRecId = null;
                 } else {
                     tmpMatchRecId = baseArray[0]._id;
                 }
-
-                var matchObject = srcMatches[i];
+                var matchObject = srcMatch;
                 var matchObjForDb = {};
                 matchObjForDb.diff = matchObject.diff;
                 if (matchObject.subelements) {
                     matchObjForDb.subelements = matchObject.subelements;
                 }
-
-                //Diffs always zero, can take only array object.
                 returnPartialArray.push({
                     partial_array: srcArray[0],
                     partial_match: matchObjForDb,
                     match_record_id: tmpMatchRecId
                 });
+                resolve();
 
-                loopCount++;
-                checkLoopComplete();
-
-            } else if (srcMatches[i].match === 'partial') {
-
-                var matchObject = srcMatches[i];
+            } else if (srcMatch.match === 'partial') {
+                var matchObject = srcMatch;
                 var matchObjForDb = {};
                 matchObjForDb.diff = matchObject.diff;
                 matchObjForDb.percent = matchObject.percent;                
                 if (matchObject.subelements) {
                     matchObjForDb.subelements = matchObject.subelements;
                 }
-
                 returnPartialArray.push({
-                    partial_array: srcArray[srcMatches[i].src_id],
+                    partial_array: srcArray[srcMatch.src_id],
                     partial_match: matchObjForDb,
-                    match_record_id: baseArray[srcMatches[i].dest_id]._id
+                    match_record_id: baseArray[srcMatch.dest_id]._id
                 });
-
-                loopCount++;
-                checkLoopComplete();
+                resolve();
+            } else {
+                resolve();
             }
-        }
-
-    }
-
-    //Loop all sections.
-    var sectionIter = 0;
-    var sectionTotal = 0;
-    for (var iSecCnt in newObject) {
-        sectionTotal++;
-
-    }
-
-    var newPartialObject = {};
-
-    function checkSectionLoopComplete(iteration, totalSections) {
-        if (iteration === (sectionTotal)) {
-            //console.log('newObject');
-            //console.log(newObject);
-            callback(null, newObject, newPartialObject);
-        }
-    }
-
-    for (var iSec in newObject) {
-
-        //console.log(JSON.stringify(newObject[iSec], null, 10));
-
-        var currentMatchResult = matchResults.match[iSec];
-        if (currentMatchResult.length > 0) {
-            removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries, newPartialEntries) {
-                //New entries is fine...
-                //console.log('newEntries');
-                //console.log(newEntries);
-                newObject[returnSection] = newEntries;
-                if (newPartialEntries.length > 0) {
-                    newPartialObject[returnSection] = {};
-                    newPartialObject[returnSection] = newPartialEntries;
-                }
-                sectionIter++;
-                checkSectionLoopComplete(sectionIter, sectionTotal);
-            });
-        } else {
-            sectionIter++;
-            checkSectionLoopComplete(sectionIter, sectionTotal);
-        }
-    }
+        })
+    }).then(function() {
+        callback(null, section, returnArray, returnPartialArray);
+    });
 }
 
 
-
 //Main function, performs match and dedupes.
-
 function reconcile(newObject, baseObject, newSourceID, callback) {
 
     newObjectForParsing = newObject;
 
     var baseObjectForParsing = {};
-    for (var iObj in baseObject) {
-        baseObjectForParsing[iObj] = {};
+    Promise.each(Object.keys(baseObject), function(iObj) {
         baseObjectForParsing[iObj] = record.cleanSection(baseObject[iObj]);
-
-        if (baseObjectForParsing[iObj] === undefined) {
-            delete baseObjectForParsing[iObj];
-        }
-    }
+    });
 
     //BB Matching library expects object for demographics.
-
-    function prepDemographics() {
-        if (baseObjectForParsing.demographics instanceof Array) {
-            if (baseObjectForParsing.demographics.length > 0) {
-                baseObjectForParsing.demographics = baseObjectForParsing.demographics[0];
-            }
-        }
-        if (newObjectForParsing.demographics instanceof Array) {
-            if (newObjectForParsing.demographics.length > 0) {
-                newObjectForParsing.demographics = newObjectForParsing.demographics[0];
-            }
-        }
+    if (_.isArray(baseObjectForParsing.demographics) && baseObjectForParsing.demographics.length > 0) {
+        baseObjectForParsing.demographics = baseObjectForParsing.demographics[0];
     }
-    prepDemographics();
-
-    function prepSocial() {
-        if (baseObjectForParsing.social_history instanceof Array) {
-            if (baseObjectForParsing.social_history.length > 0) {
-                baseObjectForParsing.social_history = baseObjectForParsing.social_history[0];
-            }
-        }
-        if (newObjectForParsing.social_history instanceof Array) {
-            if (newObjectForParsing.social_history.length > 0) {
-                newObjectForParsing.social_history = newObjectForParsing.social_history[0];
-            }
-        }
+    if (_.isArray(newObjectForParsing.demographics) && newObjectForParsing.demographics.length > 0) {
+        newObjectForParsing.demographics = newObjectForParsing.demographics[0];
     }
 
-    prepSocial();
+    if (_.isArray(baseObjectForParsing.social_history) && baseObjectForParsing.social_history.length > 0) {
+        baseObjectForParsing.social_history = baseObjectForParsing.social_history[0];
+    }
+    if (_.isArray(newObjectForParsing.social_history) && newObjectForParsing.social_history.length > 0) {
+        newObjectForParsing.social_history = newObjectForParsing.social_history[0];
+    }
 
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
 
-    //console.log(JSON.stringify(newObjectForParsing, null, 10));
-    //console.log('------------------');
-    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-    //console.log(JSON.stringify(matchResult, null, 10));
 
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
 
-    function revertDemographics() {
-        if (_.isObject(newObjectForParsing.demographics) === true && _.isArray(newObjectForParsing.demographics) === false) {
-            newObjectForParsing.demographics = new Array(newObjectForParsing.demographics);
-        }
+    if (_.isObject(newObjectForParsing.demographics)  && !_.isArray(newObjectForParsing.demographics)) {
+        newObjectForParsing.demographics = new Array(newObjectForParsing.demographics);
     }
 
-    revertDemographics();
-
-    function revertSocial() {
-        if (_.isObject(newObjectForParsing.social_history) === true && _.isArray(newObjectForParsing.social_history) === false) {
-            newObjectForParsing.social_history = new Array(newObjectForParsing.social_history);
-        }
+    if (_.isObject(newObjectForParsing.social_history) && !_.isArray(newObjectForParsing.social_history)) {
+        newObjectForParsing.social_history = new Array(newObjectForParsing.social_history);
     }
-    revertSocial();
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
-        //console.log(JSON.stringify(newObjectPostMatch, null, 10));
         callback(null, newObjectPostMatch, newPartialObjectPostMatch);
     });
 }
-
 module.exports.reconcile = reconcile;
