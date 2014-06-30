@@ -97,7 +97,7 @@ var formatSectionEntry = {
     }
 }
 
-function formatMerges(secName, inputMerge) {
+function formatSectionEntries(secName, inputMerge) {
     var formatEntry = formatSectionEntry[secName];
     if (formatEntry) {
         for (var iMerge in inputMerge) {
@@ -107,7 +107,7 @@ function formatMerges(secName, inputMerge) {
     }
 }
 
-//Get all merges API.
+// Get all matches API.
 app.get('/api/v1/matches/:component', function(req, res) {
 
     if (_.contains(supportedComponents, req.params.component) === false) {
@@ -120,13 +120,32 @@ app.get('/api/v1/matches/:component', function(req, res) {
             } else {
                 var matchJSON = {};
                 matchJSON.matches = matchList;
-                formatMerges(req.params.component, matchJSON.matches);
+                formatSectionEntries(req.params.component, matchJSON.matches);
                 res.send(matchJSON);
             }
         });
     }
 });
 
+// Get single match API.
+app.get('/api/v1/match/:component/:record_id', function(req, res) {
+    if (_.contains(supportedComponents, req.params.component) === false) {
+        res.send(404);
+    } else {
+        record.getMatch(req.params.component, req.params.record_id, function(err, match) {
+            if (err) {
+                res.send(400, err);
+            } else {
+                var formatEntry = formatSectionEntry[req.params.component];
+                if (formatEntry) {
+                    formatEntry(match.entry);
+                    formatEntry(match.match_entry);
+                }
+                res.send(match);
+            }
+        });
+    }
+});
 
 //Post partial record updates.
 app.post('/api/v1/matches/:component/:record_id', function(req, res) {
