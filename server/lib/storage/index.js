@@ -261,7 +261,7 @@ function processUpload(recordUpload, callback) {
 
 //Retrieves a specific file for download.
 app.get('/api/v1/storage/record/:identifier', function(req, res) {
-    record.getRecord(req.params.identifier, function(err, filename, returnFile) {
+    record.getRecord('test', req.params.identifier, function(err, filename, returnFile) {
         if (err) {
             throw err;
         }
