@@ -136,11 +136,6 @@ app.get('/api/v1/match/:component/:record_id', function(req, res) {
             if (err) {
                 res.send(400, err);
             } else {
-                var formatEntry = formatSectionEntry[req.params.component];
-                if (formatEntry) {
-                    formatEntry(match.entry);
-                    formatEntry(match.match_entry);
-                }
                 res.send(match);
             }
         });
