@@ -73,48 +73,36 @@ function formatName(inputName) {
     return inputName;
 }
 
+var formatSectionEntry = {
+    immunizations: function(entry) {
+        if (entry.product.name) {
+            entry.name = entry.product.name;
+        }
+    },
+    medications: function(entry) {
+        if (entry.product.name) {
+            entry.name = entry.product.name;
+        }
+    },
+    social_history: function(entry) {
+        if (entry.value) {
+            entry.name = entry.value;
+        }
+    },
+    demographics: function(entry) {
+        if (entry.name) {
+            var tmpName = formatName(entry.name).displayName;
+            entry.name = tmpName;
+        }
+    }
+}
 
-function formatMerges(inputMerge) {
-    for (var iMerge in inputMerge) {
-        //Give Immunizations a name
-        if (inputMerge[iMerge].entry_type === 'immunizations') {
-            if (inputMerge[iMerge].entry.product.name) {
-                inputMerge[iMerge].entry.name = inputMerge[iMerge].entry.product.name;
-            }
-            if (inputMerge[iMerge].match_entry.product.name) {
-                inputMerge[iMerge].match_entry.name = inputMerge[iMerge].match_entry.product.name;
-            }
-
-        }
-        //Give Medications a name
-        if (inputMerge[iMerge].entry_type === 'medications') {
-            if (inputMerge[iMerge].entry.product.name) {
-                inputMerge[iMerge].entry.name = inputMerge[iMerge].entry.product.name;
-            }
-            if (inputMerge[iMerge].match_entry.product.name) {
-                inputMerge[iMerge].match_entry.name = inputMerge[iMerge].match_entry.product.name;
-            }
-        }
-        //Give Socials a name
-        if (inputMerge[iMerge].entry_type === 'social_history') {
-            if (inputMerge[iMerge].entry.value) {
-                inputMerge[iMerge].entry.name = inputMerge[iMerge].entry.value;
-            }
-            if (inputMerge[iMerge].match_entry.value) {
-                inputMerge[iMerge].match_entry.name = inputMerge[iMerge].match_entry.value;
-            }
-        }
-        //Give Demographics a name
-        if (inputMerge[iMerge].entry_type === 'demographics') {
-            var tmpName;
-            if (inputMerge[iMerge].entry.name) {
-                tmpName = formatName(inputMerge[iMerge].entry.name).displayName;
-                inputMerge[iMerge].entry.name = tmpName;
-            }
-            if (inputMerge[iMerge].match_entry.name) {
-                tmpName = formatName(inputMerge[iMerge].match_entry.name).displayName;
-                inputMerge[iMerge].match_entry.name = tmpName;
-            }
+function formatMerges(secName, inputMerge) {
+    var formatEntry = formatSectionEntry[secName];
+    if (formatEntry) {
+        for (var iMerge in inputMerge) {
+            formatEntry(inputMerge[iMerge].entry);
+            formatEntry(inputMerge[iMerge].match_entry);
         }
     }
 }
@@ -132,7 +120,7 @@ app.get('/api/v1/matches/:component', function(req, res) {
             } else {
                 var matchJSON = {};
                 matchJSON.matches = matchList;
-                formatMerges(matchJSON.matches);
+                formatMerges(req.params.component, matchJSON.matches);
                 res.send(matchJSON);
             }
         });
