@@ -101,11 +101,11 @@ describe('Demographic API - Test New:', function() {
 			});
 	});
 
-	it('Get Partial Demographic Records', function(done) {
-		api.get('/api/v1/record/partial/demographics')
+	it('Get Match Demographic Records', function(done) {
+		api.get('/api/v1/matches/demographics')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.demographics.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -158,11 +158,11 @@ describe('Demographic API - Test Duplicate:', function() {
 	});
 
 
-	it('Get Partial Demographic Records', function(done) {
-		api.get('/api/v1/record/partial/demographics')
+	it('Get Match Demographic Records', function(done) {
+		api.get('/api/v1/matches/demographics')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.demographics.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -219,17 +219,6 @@ describe('Demographic API - Test Partial Matches:', function() {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.demographics, null, 10));
-				expect(res.body.demographics.length).to.equal(1);
-				done();
-			});
-	});
-
-
-	it('Get Partial Demographic Records', function(done) {
-		api.get('/api/v1/record/partial/demographics')
-			.expect(200)
-			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.demographics, null, 10));
 				expect(res.body.demographics.length).to.equal(1);
 				done();
@@ -324,16 +313,6 @@ describe('Demographic API - Test Ignored Matches', function() {
 					}
 				}
 				expect(total_demographics).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Demographic Records', function(done) {
-		api.get('/api/v1/record/partial/demographics')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.demographics.length).to.equal(0);
 				done();
 			});
 	});
@@ -578,16 +557,6 @@ describe('Demographic API - Test Merged Matches', function() {
 					}
 				}
 				expect(total_demographics).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Demographic Records', function(done) {
-		api.get('/api/v1/record/partial/demographics')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.demographics.length).to.equal(0);
 				done();
 			});
 	});

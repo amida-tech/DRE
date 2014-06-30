@@ -101,11 +101,11 @@ describe('Medications API - Test New:', function() {
 			});
 	});
 
-	it('Get Partial Medication Records', function(done) {
-		api.get('/api/v1/record/partial/medications')
+	it('Get Medication Match Records', function(done) {
+		api.get('/api/v1/matches/medications')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.medications.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -158,11 +158,11 @@ describe('Medications API - Test Duplicate:', function() {
 	});
 
 
-	it('Get Partial Medication Records', function(done) {
-		api.get('/api/v1/record/partial/medications')
+	it('Get Medication Match Records', function(done) {
+		api.get('/api/v1/matches/medications')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.medications.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -223,11 +223,11 @@ describe('Medications API - Test New/Dupe Mix:', function() {
 	});
 
 
-	it('Get Partial Medication Records', function(done) {
-		api.get('/api/v1/record/partial/medications')
+	it('Get Medication Match Records', function(done) {
+		api.get('/api/v1/matches/medications')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.medications.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -289,16 +289,6 @@ describe('Medications API - Test Partial Matches:', function() {
 			});
 	});
 
-
-	it('Get Partial Medication Records', function(done) {
-		api.get('/api/v1/record/partial/medications')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.medications, null, 10));
-				expect(res.body.medications.length).to.equal(3);
-				done();
-			});
-	});
 
 	it('Get Medication Merge Records', function(done) {
 		api.get('/api/v1/merges/medications')
@@ -395,16 +385,6 @@ describe('Medications API - Test Added Matches', function() {
 			});
 	});
 
-	it('Get Partial Medication Records', function(done) {
-		api.get('/api/v1/record/partial/medications')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.medications, null, 10));
-				expect(res.body.medications.length).to.equal(2);
-				done();
-			});
-	});
-
 	it('Get Medication Merge Records Post Added', function(done) {
 		api.get('/api/v1/merges/medications')
 			.expect(200)
@@ -496,16 +476,6 @@ describe('Medications API - Test Ignored Matches', function() {
 					}
 				}
 				expect(total_medications).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Medication Records', function(done) {
-		api.get('/api/v1/record/partial/medications')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.medications, null, 10));
-				expect(res.body.medications.length).to.equal(1);
 				done();
 			});
 	});
@@ -719,16 +689,6 @@ describe('Medications API - Test Merged Matches', function() {
 					}
 				}
 				expect(total_medications).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Medication Records', function(done) {
-		api.get('/api/v1/record/partial/medications')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.medications, null, 10));
-				expect(res.body.medications.length).to.equal(0);
 				done();
 			});
 	});

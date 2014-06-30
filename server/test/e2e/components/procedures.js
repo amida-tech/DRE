@@ -101,11 +101,11 @@ describe('Procedures API - Test New:', function() {
 			});
 	});
 
-	it('Get Partial Procedure Records', function(done) {
-		api.get('/api/v1/record/partial/procedures')
+	it('Get Procedure Match Records', function(done) {
+		api.get('/api/v1/matches/procedures')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.procedures.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -158,11 +158,11 @@ describe('Procedures API - Test Duplicate:', function() {
 	});
 
 
-	it('Get Partial Procedure Records', function(done) {
-		api.get('/api/v1/record/partial/procedures')
+	it('Get Procedure Match Records', function(done) {
+		api.get('/api/v1/matches/procedures')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.procedures.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -223,11 +223,11 @@ describe('Procedures API - Test New/Dupe Mix:', function() {
 	});
 
 
-	it('Get Partial Procedure Records', function(done) {
-		api.get('/api/v1/record/partial/procedures')
+	it('Get Procedure Match Records', function(done) {
+		api.get('/api/v1/matches/procedures')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.procedures.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -285,17 +285,6 @@ describe('Procedures API - Test Partial Matches:', function() {
 				}
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
 				expect(res.body.procedures.length).to.equal(4);
-				done();
-			});
-	});
-
-
-	it('Get Partial Procedure Records', function(done) {
-		api.get('/api/v1/record/partial/procedures')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.procedures.length).to.equal(3);
 				done();
 			});
 	});
@@ -395,16 +384,6 @@ describe('Procedures API - Test Added Matches', function() {
 			});
 	});
 
-	it('Get Partial Procedure Records', function(done) {
-		api.get('/api/v1/record/partial/procedures')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.procedures.length).to.equal(2);
-				done();
-			});
-	});
-
 	it('Get Procedure Merge Records Post Added', function(done) {
 		api.get('/api/v1/merges/procedures')
 			.expect(200)
@@ -496,16 +475,6 @@ describe('Procedures API - Test Ignored Matches', function() {
 					}
 				}
 				expect(total_procedures).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Procedure Records', function(done) {
-		api.get('/api/v1/record/partial/procedures')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.procedures.length).to.equal(1);
 				done();
 			});
 	});
@@ -739,16 +708,6 @@ describe('Procedures API - Test Merged Matches', function() {
 					}
 				}
 				expect(total_procedures).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Procedure Records', function(done) {
-		api.get('/api/v1/record/partial/procedures')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.procedures.length).to.equal(0);
 				done();
 			});
 	});

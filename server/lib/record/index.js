@@ -38,27 +38,3 @@ app.get('/api/v1/record/:component', function(req, res) {
         sendResponse(req.params.component);
     }
 });
-
-app.get('/api/v1/record/partial/:component', function(req, res) {
-
-    if (_.contains(supportedComponents, req.params.component) === false) {
-        res.send(404);
-    } else {
-
-        function sendResponse(componentName) {
-            record.getPartialSection(req.params.component, 'test', function(err, componentList) {
-                if (err) {
-                    res.send(500);
-                } else {
-                    //console.log(componentList);
-                    var apiResponse = formatResponse(componentName, componentList);
-                    res.send(apiResponse);
-                }
-            });
-        }
-
-        sendResponse(req.params.component);
-    }
-});
-
-

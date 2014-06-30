@@ -101,11 +101,11 @@ describe('Results API - Test New:', function() {
             });
     });
 
-    it('Get Partial Result Records', function(done) {
-        api.get('/api/v1/record/partial/results')
+    it('Get Result Match Records', function(done) {
+        api.get('/api/v1/matches/results')
             .expect(200)
             .end(function(err, res) {
-                expect(res.body.results.length).to.equal(0);
+                expect(res.body.matches.length).to.equal(0);
                 done();
             });
     });
@@ -158,11 +158,11 @@ describe('Results API - Test Duplicate:', function() {
     });
 
 
-    it('Get Partial Result Records', function(done) {
-        api.get('/api/v1/record/partial/results')
+    it('Get Result Match Records', function(done) {
+        api.get('/api/v1/matches/results')
             .expect(200)
             .end(function(err, res) {
-                expect(res.body.results.length).to.equal(0);
+                expect(res.body.matches.length).to.equal(0);
                 done();
             });
     });
@@ -223,11 +223,11 @@ describe('Results API - Test New/Dupe Mix:', function() {
     });
 
 
-    it('Get Partial Result Records', function(done) {
-        api.get('/api/v1/record/partial/results')
+    it('Get Result Match Records', function(done) {
+        api.get('/api/v1/matches/results')
             .expect(200)
             .end(function(err, res) {
-                expect(res.body.results.length).to.equal(0);
+                expect(res.body.matches.length).to.equal(0);
                 done();
             });
     });
@@ -285,17 +285,6 @@ describe('Results API - Test Partial Matches:', function() {
                 }
                 //console.log(JSON.stringify(res.body.allergies, null, 10));
                 expect(res.body.results.length).to.equal(7);
-                done();
-            });
-    });
-
-
-    it('Get Partial Result Records', function(done) {
-        api.get('/api/v1/record/partial/results')
-            .expect(200)
-            .end(function(err, res) {
-                //console.log(JSON.stringify(res.body.allergies, null, 10));
-                expect(res.body.results.length).to.equal(3);
                 done();
             });
     });
@@ -395,16 +384,6 @@ describe('Results API - Test Added Matches', function() {
             });
     });
 
-    it('Get Partial Result Records', function(done) {
-        api.get('/api/v1/record/partial/results')
-            .expect(200)
-            .end(function(err, res) {
-                //console.log(JSON.stringify(res.body.allergies, null, 10));
-                expect(res.body.results.length).to.equal(2);
-                done();
-            });
-    });
-
     it('Get Result Merge Records Post Added', function(done) {
         api.get('/api/v1/merges/results')
             .expect(200)
@@ -496,16 +475,6 @@ describe('Results API - Test Ignored Matches', function() {
                     }
                 }
                 expect(total_results).to.equal(0);
-                done();
-            });
-    });
-
-    it('Get Partial Result Records', function(done) {
-        api.get('/api/v1/record/partial/results')
-            .expect(200)
-            .end(function(err, res) {
-                //console.log(JSON.stringify(res.body.allergies, null, 10));
-                expect(res.body.results.length).to.equal(1);
                 done();
             });
     });
@@ -680,16 +649,6 @@ describe('Results API - Test Merged Matches', function() {
                     }
                 }
                 expect(total_results).to.equal(0);
-                done();
-            });
-    });
-
-    it('Get Partial Result Records', function(done) {
-        api.get('/api/v1/record/partial/results')
-            .expect(200)
-            .end(function(err, res) {
-                //console.log(JSON.stringify(res.body.allergies, null, 10));
-                expect(res.body.results.length).to.equal(0);
                 done();
             });
     });
