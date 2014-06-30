@@ -190,7 +190,7 @@ function importRecord(record_metadata, record_data, callback) {
         if (err) {
             callback(err);
         } else if (!parsed_record_type) {
-            record.saveRecord('test', record_data, record_metadata, null, function(err, fileInfo) {
+            record.saveSource('test', record_data, record_metadata, null, function(err, fileInfo) {
                 if (err) {
                     callback(err);
                 } else {
@@ -201,7 +201,7 @@ function importRecord(record_metadata, record_data, callback) {
 
             //May need to wrap you.
 
-            record.saveRecord('test', record_data, record_metadata, parsed_record_type, function(err, id) {
+            record.saveSource('test', record_data, record_metadata, parsed_record_type, function(err, id) {
                 if (err) {
                     callback(err);
                 } else {
@@ -261,7 +261,7 @@ function processUpload(recordUpload, callback) {
 
 //Retrieves a specific file for download.
 app.get('/api/v1/storage/record/:identifier', function(req, res) {
-    record.getRecord('test', req.params.identifier, function(err, filename, returnFile) {
+    record.getSource('test', req.params.identifier, function(err, filename, returnFile) {
         if (err) {
             throw err;
         }
@@ -272,7 +272,7 @@ app.get('/api/v1/storage/record/:identifier', function(req, res) {
 
 //Returns list of records in storage.
 app.get('/api/v1/storage', function(req, res) {
-    record.getRecordList('test', function(err, recordList) {
+    record.getSourceList('test', function(err, recordList) {
         var recordResponse = {};
         recordResponse.storage = recordList;
         res.send(recordResponse);
