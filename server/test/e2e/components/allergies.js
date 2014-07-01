@@ -344,9 +344,6 @@ describe('Allergies API - Test Partial Matches:', function() {
 			.end(function(err, res) {
 				expect(res.body.entry.name).to.equal(exampleMatch.entry.name);
 				expect(res.body.match_entry.name).to.equal(exampleMatch.match_entry.name);
-				expect(res.body.entry.severity).to.exist;
-				expect(res.body.match_entry.severity).to.exist;
-				expect(res.body.entry.severity).to.equal(res.body.match_entry.severity);
 				done();
 			});
 	});
