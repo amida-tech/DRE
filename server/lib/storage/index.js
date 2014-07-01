@@ -80,7 +80,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             if (saveArray.length === 0) {
                 checkSavePartialComponentsComplete();
             } else {
-                record.savePartialSection(secName, 'test', saveArray, sourceID, function(err) {
+                record.saveMatches(secName, 'test', saveArray, sourceID, function(err) {
                     if (err) {
                         callback(err);
                     } else {
