@@ -2,51 +2,50 @@
 
 
 
-<div class="fluid-container col-md-12">
-	<div class="row">
-		<div ng-include="navPath"></div>
-		<div class="col-md-9" ng-controller="allergiesCtrl" >
-			<!-- Unreviewed Updates. -->
-			<div class="col-md-12">
-				<br/>
-				<span class="lead">Unreviewed Updates</span>
-				<br/>
-				<br/>
-				<div class="alert alert-info">There are {{notifications.unreviewed_merges}} record updates awaiting your review.
-					<div class="pull-right" style="margin-top: -7px;">
-						<button type="button" class="btn btn-success" ng-click="reconciliationClick()" ng-show="notifications.unreviewed_merges > 0">Review</button>
-					</div>
+<div class="fluid-container">
+	<div ng-controller="allergiesCtrl" >
+		<!-- Unreviewed Updates. -->
+		<div class="fluid-container col-md-9">
+			<br/>
+			<span class="lead">Unreviewed Updates</span>
+			<br/>
+			<br/>
+			<div class="alert alert-info">There are {{notifications.unreviewed_merges}} record updates awaiting your review.
+				<div class="pull-right" style="margin-top: -7px;">
+					<button type="button" class="btn btn-success" ng-click="reconciliationClick()" ng-show="notifications.unreviewed_merges > 0">Review</button>
 				</div>
 			</div>
+		</div>
 
-			<div class="col-md-12">
+		<div class="row">
+			<div class="fluid-container col-md-9">
 				<br/>
 				<span class="lead">Completed Updates</span>
 				<br/>
 				<br/>
+				</div>
 			</div>
 
 
-			<div ng-hide="displayMerges" class="panel-title">No updates are available at this time.</div>
-			<div class="panel-group" ng-show="displayMerges">
-				<div class="panel panel-default">
-					<div class="panel-heading" style="min-height:45px;">
-						<div class="panel-title">
-							<span style="cursor:pointer;" ng-click="updateSort();" class="col-md-4" style="display:block;"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>Update</span>
-							<span style="cursor:pointer;" ng-click="elementSort();" class="col-md-4"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>Element</span>
-							<span style="cursor:pointer;" ng-click="dateSort();" class="pull-right"><i class="fa fa-sort pull-right" style="margin-right: 10px; line-height: 1.6em;"></i>Date</span>
-						</div>		
-					</div>
-					
-					<div class="panel-body">
-						<ul class="list-group" ng-repeat="new_merge in new_merges | orderBy:predicate">
-								<li class="list-group-item" style="text-transform:capitalize;">
-									<span class="col-md-4">{{new_merge.merge_reason}} {{new_merge.entry_type}}</span>
-									<span style="text-transform:uppercase;">{{new_merge.entry_id.name}}</span>
-									<span class="pull-right" style="text-transform:lowercase;">{{new_merge.merged | date: 'short'}}</span>
-								</li>
-						</ul>
-					</div>
+		<div ng-hide="displayMerges" class="panel-title">No updates are available at this time.</div>
+		<div class="panel-group" ng-show="displayMerges">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="min-height:45px;">
+					<div class="panel-title">
+						<span style="cursor:pointer;" ng-click="updateSort();" class="col-md-4" style="display:block;"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>Update</span>
+						<span style="cursor:pointer;" ng-click="elementSort();" class="col-md-4"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>Element</span>
+						<span style="cursor:pointer;" ng-click="dateSort();" class="pull-right"><i class="fa fa-sort pull-right" style="margin-right: 10px; line-height: 1.6em;"></i>Date</span>
+					</div>		
+				</div>
+				
+				<div class="panel-body">
+					<ul class="list-group" ng-repeat="new_merge in new_merges | orderBy:predicate">
+							<li class="list-group-item" style="text-transform:capitalize;">
+								<span class="col-md-4">{{new_merge.merge_reason}} {{new_merge.entry_type}}</span>
+								<span style="text-transform:uppercase;">{{new_merge.entry_id.name}}</span>
+								<span class="pull-right" style="text-transform:lowercase;">{{new_merge.merged | date: 'short'}}</span>
+							</li>
+					</ul>
 				</div>
 			</div>
 		</div>
