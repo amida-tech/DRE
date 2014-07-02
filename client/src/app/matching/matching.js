@@ -28,7 +28,6 @@ angular.module('dre.match', ['dre.match.reconciliation'])
 .controller('matchCtrl', ['$scope', '$http', '$location', 'getNotifications', 'recordFunctions',
   function($scope, $http, $location, getNotifications, recordFunctions) {
 
-    $scope.navPath = "templates/nav/nav.tpl.html";
     $scope.notifications = {};
 
 

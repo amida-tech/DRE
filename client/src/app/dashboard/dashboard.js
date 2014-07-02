@@ -28,11 +28,13 @@ angular.module('dre.dashboard', [])
 .controller('dashboardCtrl', ['$scope', '$http', '$location', 'getNotifications',
   function($scope, $http, $location, getNotifications) {
 
-    $scope.navPath = "templates/nav/nav.tpl.html";
+
     $scope.notifications = {};
+    
     getNotifications.getUpdate(function(err, notifications) {
       $scope.notifications = notifications;
     });
+
 
   }
 ]);

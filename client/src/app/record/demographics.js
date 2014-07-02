@@ -28,7 +28,6 @@ angular.module('dre.demographics', [])
 .controller('demographicsCtrl', ['$scope', '$http', '$q', '$location', 'getNotifications', 'recordFunctions',
   function($scope, $http, $q, $location, getNotifications, recordFunctions) {
 
-    $scope.navPath = "templates/nav/nav.tpl.html";
     $scope.demographics = [];
     $scope.displayDemographics = false;
     $scope.demographicsPredicate = "-severity_weight";

@@ -35,8 +35,6 @@ angular.module('dre.match.reconciliation', [])
           $scope.notifications = notifications;
         });
 
-        $scope.navPath = "templates/nav/nav.tpl.html";
-
         $scope.reviewClick = function(match) {
             //alert(JSON.stringify(match));
             //console.log(match);

@@ -27,7 +27,6 @@ function($routeProvider) {
   .controller('recordCtrl', ['$scope', '$http', '$location', 'getNotifications',
     function($scope, $http, $location, getNotifications) {
 
-      $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
       $scope.allergiesPath = "templates/record/components/allergies.tpl.html";
       $scope.encountersPath = "templates/record/components/encounters.tpl.html";
