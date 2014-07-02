@@ -71,6 +71,24 @@
 						</div>
 					</div>
 
+					<div class="col-md-12" ng-show="medication.product.product.translations">
+						<h4>Other Descriptions</h4>
+						<div ng-repeat=" translation in medication.product.product.translations" class="col-md-12">
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
+								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.name}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code">
+								<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code_system_name">
+								<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code_system_name}}</div>
+							</div>
+						</div>
+					</div>
+
 					<div class="col-md-12 pull-left">
 						<h4>Administration</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.administration.route.name">
@@ -110,22 +128,7 @@
 							<div class="pull-left col-md-12">{{medication.precondition.value.code_system_name}}</div>
 						</div>
 					</div>
-
-					<div class="col-md-12 pull-left" ng-repeat="medtranslation in medication.product.product.translations" ng-show="medication.product.product.translations">
-						<h4>Other Descriptions</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medtranslation.name">
-							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medtranslation.name}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medtranslation.code">
-							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medtranslation.code}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medtranslation.code_system_name">
-							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medtranslation.code_system_name}}</div>
-						</div>
-					</div>
+					
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
 				</div>
 			</div>
