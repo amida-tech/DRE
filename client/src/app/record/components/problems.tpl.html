@@ -23,7 +23,7 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="attribution in problem.metadata.attribution">
-								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record_id.filename}}</a></td>
+								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
 								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
 								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
 							</tr>

@@ -62,16 +62,16 @@ describe('Pre Test Cleanup 1', function() {
 describe('Pre Test Cleanup 2', function() {
 
     var supportedComponents = {
-        allergies: 'allergy',
-        procedures: 'procedure',
-        medications: 'medication',
-        encounters: 'encounter',
-        vitals: 'vital',
-        results: 'result',
-        social_histories: 'social',
-        immunizations: 'immunization',
-        demographics: 'demographic',
-        problems: 'problem'
+        allergies: 'allergies',
+        procedures: 'procedures',
+        medications: 'medications',
+        encounters: 'encounters',
+        vitals: 'vitals',
+        results: 'results',
+        social_histories: 'social_history',
+        immunizations: 'immunizations',
+        demographics: 'demographics',
+        problems: 'problems'
     };
 
     it('Remove All Collections', function(done) {
@@ -256,7 +256,7 @@ describe('Count API - Test Added Matches via Allergies', function() {
                     done(err);
                 } else {
                     update_id = res.body.matches[0]._id;
-                    match_id = res.body.matches[0].match_entry_id._id;
+                    match_id = res.body.matches[0].match_entry._id;
                     api.post('/api/v1/matches/allergies/' + update_id)
                         .send({
                             determination: "added"

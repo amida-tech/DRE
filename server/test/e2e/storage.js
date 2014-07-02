@@ -49,16 +49,16 @@ describe('Pre Test Cleanup 1', function() {
 describe('Pre Test Cleanup 2', function() {
 
     var supportedComponents = {
-        allergies: 'allergy',
-        procedures: 'procedure',
-        medications: 'medication',
-        encounters: 'encounter',
-        vitals: 'vital',
-        results: 'result',
-        socialhistories: 'social',
-        immunizations: 'immunization',
-        demographics: 'demographic',
-        problems: 'problem'
+        allergies: 'allergies',
+        procedures: 'procedures',
+        medications: 'medications',
+        encounters: 'encounters',
+        vitals: 'vitals',
+        results: 'results',
+        socialhistories: 'social_history',
+        immunizations: 'immunizations',
+        demographics: 'demographics',
+        problems: 'problems'
     };
 
     it('Remove All Collections', function(done) {

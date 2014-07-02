@@ -12,13 +12,13 @@ function updateMerged(updateId, updateComponent, updateParameters, callback) {
             callback(err);
         } else {
             //Gather partial record from db.
-            record.getEntry(updateComponent, resultComponent.match_entry_id._id, function(err, recordResults) {
+            record.getEntry(updateComponent, resultComponent.match_entry._id, function(err, recordResults) {
                 if (err) {
                     callback(err);
                 } else {
                     //NOTE:  Only one attribution merge since a partial.
-                    var recordId = recordResults.metadata.attribution[0].record_id;
-                    record.updateEntry(updateComponent, resultComponent.entry_id, recordId, updateParameters, function(err, updateResults) {
+                    var recordId = recordResults.metadata.attribution[0].record._id;
+                    record.updateEntry(updateComponent, resultComponent.entry._id, recordId, updateParameters, function(err, updateResults) {
                         if (err) {
                             callback(err);
                         } else {
@@ -77,43 +77,43 @@ function formatName(inputName) {
 function formatMerges(inputMerge) {
     for (var iMerge in inputMerge) {
         //Give Immunizations a name
-        if (inputMerge[iMerge].entry_type === 'immunization') {
-            if (inputMerge[iMerge].entry_id.product.name) {
-                inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.product.name;
+        if (inputMerge[iMerge].entry_type === 'immunizations') {
+            if (inputMerge[iMerge].entry.product.name) {
+                inputMerge[iMerge].entry.name = inputMerge[iMerge].entry.product.name;
             }
-            if (inputMerge[iMerge].match_entry_id.product.name) {
-                inputMerge[iMerge].match_entry_id.name = inputMerge[iMerge].match_entry_id.product.name;
+            if (inputMerge[iMerge].match_entry.product.name) {
+                inputMerge[iMerge].match_entry.name = inputMerge[iMerge].match_entry.product.name;
             }
 
         }
         //Give Medications a name
-        if (inputMerge[iMerge].entry_type === 'medication') {
-            if (inputMerge[iMerge].entry_id.product.name) {
-                inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.product.name;
+        if (inputMerge[iMerge].entry_type === 'medications') {
+            if (inputMerge[iMerge].entry.product.name) {
+                inputMerge[iMerge].entry.name = inputMerge[iMerge].entry.product.name;
             }
-            if (inputMerge[iMerge].match_entry_id.product.name) {
-                inputMerge[iMerge].match_entry_id.name = inputMerge[iMerge].match_entry_id.product.name;
+            if (inputMerge[iMerge].match_entry.product.name) {
+                inputMerge[iMerge].match_entry.name = inputMerge[iMerge].match_entry.product.name;
             }
         }
         //Give Socials a name
-        if (inputMerge[iMerge].entry_type === 'social') {
-            if (inputMerge[iMerge].entry_id.value) {
-                inputMerge[iMerge].entry_id.name = inputMerge[iMerge].entry_id.value;
+        if (inputMerge[iMerge].entry_type === 'social_history') {
+            if (inputMerge[iMerge].entry.value) {
+                inputMerge[iMerge].entry.name = inputMerge[iMerge].entry.value;
             }
-            if (inputMerge[iMerge].match_entry_id.value) {
-                inputMerge[iMerge].match_entry_id.name = inputMerge[iMerge].match_entry_id.value;
+            if (inputMerge[iMerge].match_entry.value) {
+                inputMerge[iMerge].match_entry.name = inputMerge[iMerge].match_entry.value;
             }
         }
         //Give Demographics a name
-        if (inputMerge[iMerge].entry_type === 'demographic') {
+        if (inputMerge[iMerge].entry_type === 'demographics') {
             var tmpName;
-            if (inputMerge[iMerge].entry_id.name) {
-                tmpName = formatName(inputMerge[iMerge].entry_id.name).displayName;
-                inputMerge[iMerge].entry_id.name = tmpName;
+            if (inputMerge[iMerge].entry.name) {
+                tmpName = formatName(inputMerge[iMerge].entry.name).displayName;
+                inputMerge[iMerge].entry.name = tmpName;
             }
-            if (inputMerge[iMerge].match_entry_id.name) {
-                tmpName = formatName(inputMerge[iMerge].match_entry_id.name).displayName;
-                inputMerge[iMerge].match_entry_id.name = tmpName;
+            if (inputMerge[iMerge].match_entry.name) {
+                tmpName = formatName(inputMerge[iMerge].match_entry.name).displayName;
+                inputMerge[iMerge].match_entry.name = tmpName;
             }
         }
     }

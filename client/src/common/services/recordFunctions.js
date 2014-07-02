@@ -171,5 +171,24 @@ angular.module('services.recordFunctions', [])
             }
         };
 
+        this.singularizeSection = (function() {
+            var sectionMap = {
+                allergies: 'allergy',
+                demographics: 'demographic',
+                medications: 'medication',
+                social_history: 'social',
+                procedures: 'procedure',
+                immunizations: 'immunization',
+                vitals: 'vital',
+                results: 'result',
+                encounters: 'encounter',
+                problems: 'problem'
+            };
+
+            return function(sectionName) {
+                var result = sectionMap[sectionName];
+                return result ? result : sectionName;
+            };
+        })();
     }
 ]);

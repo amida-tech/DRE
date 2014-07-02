@@ -8,16 +8,16 @@
             <div class="panel panel-default" ng-repeat="match_section in matches" ng-show="match_section">
                 <div class="panel-body">
                     <h4>
-                        <span style="text-transform:capitalize;">{{match_section[0].entry_type}}</span>      Update(s)</h4>
+                        <span style="text-transform:capitalize;">{{match_section[0].singular_section}}</span>      Update(s)</h4>
 
                     <div class="well" ng-repeat="new_match in match_section">
                         <div class="pull-right">
                             <button type="button" class="btn btn-success" ng-click="reviewClick(new_match)">Review</button>
                         </div>
 
-                        <h5 ng-if="new_match.entry_type!=='demographic' && new_match.entry_type!=='social'">Partial ({{new_match.percent}}%) Match with "{{new_match.entry_id.name}}" on Master Health Record</h5>
+                        <h5 ng-if="new_match.entry_type!=='demographics' && new_match.entry_type!=='social_history'">Partial ({{new_match.percent}}%) Match with "{{new_match.entry.name}}" on Master Health Record</h5>
 
-                        <h5 ng-if="new_match.entry_type==='demographic' || new_match.entry_type==='social'">Updated (Different) Information</h5>
+                        <h5 ng-if="new_match.entry_type==='demographics' || new_match.entry_type==='social_history'">Updated (Different) Information</h5>
 
                     </div>
 

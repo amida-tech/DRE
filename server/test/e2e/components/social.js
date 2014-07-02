@@ -50,11 +50,11 @@ describe('Pre Test Cleanup', function() {
 			if (err) {
 				done(err);
 			}
-			removeCollection('socialmerges', function(err) {
+			removeCollection('social_historymerges', function(err) {
 				if (err) {
 					done(err);
 				}
-				removeCollection('socialmatches', function(err) {
+				removeCollection('social_historymatches', function(err) {
 					if (err) {
 						done(err);
 					}
@@ -120,10 +120,10 @@ describe('Social API - Test New:', function() {
 				expect(res.body.merges.length).to.equal(1);
 				for (var i in res.body.merges) {
 					expect(res.body.merges[i].merge_reason).to.equal('new');
-					expect(res.body.merges[i].entry_type).to.equal('social');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('social_history');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				done();
@@ -184,10 +184,10 @@ describe('Social API - Test Duplicate:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('social_history');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(1);
 				expect(dupCnt).to.equal(1);
@@ -251,10 +251,10 @@ describe('Social API - Test New/Dupe Mix:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('social_history');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				//console.log(JSON.stringify(res.body.merges, null, 10));
 				expect(newCnt).to.equal(1);
@@ -320,10 +320,10 @@ describe('Social API - Test Partial Matches:', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('social_history');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(1);
 				expect(dupCnt).to.equal(2);
@@ -338,8 +338,8 @@ describe('Social API - Test Partial Matches:', function() {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
 				expect(res.body.matches.length).to.equal(1);
 				for (var i in res.body.matches) {
-					expect(res.body.matches[i].entry_id.name).to.equal(res.body.matches[i].match_entry_id.name);
-					expect(res.body.matches[i].entry_type).to.equal('social');
+					expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].match_entry.name);
+					expect(res.body.matches[i].entry_type).to.equal('social_history');
 				}
 				done();
 			});
@@ -361,7 +361,7 @@ describe('Social API - Test Added Matches', function() {
 					done(err);
 				} else {
 					update_id = res.body.matches[0]._id;
-					match_id = res.body.matches[0].match_entry_id._id;
+					match_id = res.body.matches[0].match_entry._id;
 					api.post('/api/v1/matches/social_history/' + update_id)
 						.send({
 							determination: "added"
@@ -425,10 +425,10 @@ describe('Social API - Test Added Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('social_history');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(2);
 				expect(dupCnt).to.equal(2);
@@ -477,7 +477,7 @@ describe('Social API - Test Ignored Matches', function() {
 					done(err);
 				} else {
 					update_id = res.body.matches[0]._id;
-					match_id = res.body.matches[0].match_entry_id._id;
+					match_id = res.body.matches[0].match_entry._id;
 					api.post('/api/v1/matches/social_history/' + update_id)
 						.send({
 							determination: "ignored"
@@ -540,10 +540,10 @@ describe('Social API - Test Ignored Matches', function() {
 					if (res.body.merges[i].merge_reason === 'duplicate') {
 						dupCnt++;
 					}
-					expect(res.body.merges[i].entry_type).to.equal('social');
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].entry_type).to.equal('social_history');
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(2);
 				expect(dupCnt).to.equal(2);
@@ -607,9 +607,9 @@ describe('Social API - Test Merged Matches', function() {
 					done(err);
 				} else {
 					//console.log(JSON.stringify(res.body.matches, null, 10));
-					base_id = res.body.matches[0].entry_id._id;
+					base_id = res.body.matches[0].entry._id;
 					update_id = res.body.matches[0]._id;
-					match_id = res.body.matches[0].match_entry_id._id;
+					match_id = res.body.matches[0].match_entry._id;
 					//Still need this object to check metadata.
 					api.get('/api/v1/record/social_history')
 						.expect(200)
@@ -701,13 +701,13 @@ describe('Social API - Test Merged Matches', function() {
 					}
 					if (res.body.merges[i].merge_reason === 'update') {
 						//Get record id off loaded rec, 
-						expect(res.body.merges[i].entry_id._id).to.equal(base_id);
-						expect(res.body.merges[i].record_id.filename).to.equal('bluebutton-04-diff-source-partial-matches.xml');
+						expect(res.body.merges[i].entry._id).to.equal(base_id);
+						expect(res.body.merges[i].record.filename).to.equal('bluebutton-04-diff-source-partial-matches.xml');
 						mrgCnt++;
 					}
-					expect(res.body.merges[i].record_id).to.exist;
-					expect(res.body.merges[i].record_id._id).to.exist;
-					expect(res.body.merges[i].entry_id._id).to.exist;
+					expect(res.body.merges[i].record).to.exist;
+					expect(res.body.merges[i].record._id).to.exist;
+					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				expect(newCnt).to.equal(2);
 				expect(dupCnt).to.equal(2);
