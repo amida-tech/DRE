@@ -67,6 +67,24 @@
 						</div>
 					</div>
 
+					<div class="col-md-12" ng-show="encounter.encounter.translations">
+						<h4>Other Descriptions</h4>
+						<div ng-repeat=" translation in encounter.encounter.translations" class="col-md-12">
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
+								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.name}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code">
+								<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code_system_name">
+								<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code_system_name}}</div>
+							</div>
+						</div>
+					</div>
+
 					<div class="col-md-12 pull-left" ng-repeat="finding in encounter.findings">
 						<h4>Findings</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="finding.name">
@@ -98,21 +116,7 @@
 							<div class="pull-left col-md-12" ng-repeat="location_address in location.addresses[0].displayAddress">{{location_address}}</div>
 						</div>
 					</div>
-					<div class="col-md-12 pull-left" ng-repeat="translation in encounter.encounter.translations">
-						<h4>Other Descriptions</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
-							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
-							<div class="pull-left col-md-12">{{translation.name}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code">
-							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{translation.code}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code_system_name">
-							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{translation.code_system_name}}</div>
-						</div>
-					</div>
+
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
 				</div>
 			</div>
