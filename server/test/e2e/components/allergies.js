@@ -332,6 +332,8 @@ describe('Allergies API - Test Partial Matches:', function() {
 			});
 	});
 
+	var exampleMatch;
+
 	it('Get Allergy Match Records', function(done) {
 		api.get('/api/v1/matches/allergies')
 			.expect(200)
@@ -342,10 +344,20 @@ describe('Allergies API - Test Partial Matches:', function() {
 					expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].match_entry.name);
 					expect(res.body.matches[i].entry_type).to.equal('allergies');
 				}
+				exampleMatch = res.body.matches[0];
 				done();
 			});
 	});
 
+	it('Get Allergy Single Match Record', function(done) {
+		api.get('/api/v1/match/allergies/' + exampleMatch._id)
+			.expect(200)
+			.end(function(err, res) {
+				expect(res.body.entry.name).to.equal(exampleMatch.entry.name);
+				expect(res.body.match_entry.name).to.equal(exampleMatch.match_entry.name);
+				done();
+			});
+	});
 });
 
 describe('Allergies API - Test Added Matches', function() {
