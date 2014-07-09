@@ -555,12 +555,13 @@ var dre = angular
     })
 
 
-.config(['$routeProvider', '$locationProvider',
-    function($routeProvider, $locationProvider) {
+.config(['$routeProvider', '$locationProvider', '$compileProvider',
+    function($routeProvider, $locationProvider, $compileProvider) {
         $routeProvider.when('/', {
             templateUrl: 'templates/dashboard/dashboard.tpl.html',
             controller: 'dashboardCtrl'
         });
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob):/);
 
     }
 ])

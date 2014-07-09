@@ -44,6 +44,12 @@ function($routeProvider) {
         });
       };
 
+      /* generate ccda from master health record for download */
+
+      var CCDA = "mock ccda";
+      var blob = new Blob([ CCDA ], { type : 'text/plain' });
+      $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
+
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;
