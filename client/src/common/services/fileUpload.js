@@ -1,7 +1,7 @@
 angular.module('services.fileUpload', [])
 
 .service('fileUpload', ['$http', function ($http) {
-    this.uploadFileToUrl = function(file, uploadUrl, callback){
+    this.uploadFileToUrl = function(file, uploadUrl, callback) {
         var fd = new FormData();
         fd.append('file', file);
         $http.put(uploadUrl, fd, {

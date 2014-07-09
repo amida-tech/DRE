@@ -24,8 +24,8 @@ function($routeProvider) {
   });
 }])
 
-  .controller('recordCtrl', ['$scope', '$http', '$location', 'getNotifications',
-    function($scope, $http, $location, getNotifications) {
+  .controller('recordCtrl', ['$scope', '$http', '$location', 'fileDownload', 'getNotifications', 
+    function($scope, $http, $location, fileDownload, getNotifications) {
 
       $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
@@ -44,11 +44,23 @@ function($routeProvider) {
         });
       };
 
-      /* generate ccda from master health record for download */
+      $scope.downloadData = function() {
+        /* generate ccda from master health record for download */
+        var CCDA = "mock ccda";
+        var blob = new Blob([ CCDA ], { type : 'text/plain' });
+        $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
+        
+        var downloadUrl = "api/v1/storage";
+        fileDownload.downloadFile(downloadUrl, function(err, res) {
+          if (err) {
+            console.log(err);
+          }
+          console.log("GETTING RESPONSE");
+          console.log(res);
+        });
+      };
 
-      var CCDA = "mock ccda";
-      var blob = new Blob([ CCDA ], { type : 'text/plain' });
-      $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
+ 
 
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {

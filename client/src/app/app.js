@@ -25,6 +25,7 @@ var dre = angular
         'dre.match.review',
         'directives.fileModel',
         'services.fileUpload',
+        'services.fileDownload',
         'services.getNotifications',
         'services.recordFunctions'
     ])

@@ -61,4 +61,17 @@ app.get('/api/v1/record/partial/:component', function(req, res) {
     }
 });
 
+// Retrieves master health record for download
+app.get('/api/v1/storage', function(req, res) {
+    record.getAllSections('test', function(err, allSections) {
+        if (err) {
+            throw err;
+        }
+        console.log("activated getAllSections");
+        var recordResponse = {};
+        recordResponse.storage = allSections;
+        res.send(recordResponse);
+    });
+});
+
 
