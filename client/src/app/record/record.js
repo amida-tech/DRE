@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
+var supportedComponents = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals'];
+
 angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals'])
 
 .config(['$routeProvider',
@@ -24,8 +26,8 @@ function($routeProvider) {
   });
 }])
 
-  .controller('recordCtrl', ['$scope', '$http', '$location', 'fileDownload', 'getNotifications', 
-    function($scope, $http, $location, fileDownload, getNotifications) {
+  .controller('recordCtrl', ['$scope', '$http', '$q', '$location', 'fileDownload', 'getNotifications', 
+    function($scope, $http, $q, $location, fileDownload, getNotifications) {
 
       $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
@@ -37,30 +39,55 @@ function($routeProvider) {
       $scope.resultsPath = "templates/record/components/results.tpl.html";
       $scope.vitalsPath = "templates/record/components/vitals.tpl.html";
 
-      $scope.dismissModal = function (index) {
+      $scope.dismissModal = function(index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {
             $location.path("/storage");
             $scope.$apply();
         });
       };
 
+      var aggregatedResponse = {};
+      function getSectionForDownload(i) {
+         var downloadUrl = "api/v1/record/" + supportedComponents[i];
+          fileDownload.downloadFile(downloadUrl, function(err, res) {
+            if (err) {
+              console.log(err);
+              return err;
+            } else {
+              $.extend(aggregatedResponse, res);
+            }
+          });
+          return aggregatedResponse;
+      }
+
+      function getEachSectionForDownload() {
+        var deferred = $q.defer();
+        var response = {};
+        for (i = 0; i < supportedComponents.length; i++) {
+          response = getSectionForDownload(i);
+        }
+        if (typeof response !== "object") {
+          deferred.reject('Failed');
+        } else {
+          deferred.resolve(response);
+        }
+        return deferred.promise;
+      }
+
       $scope.downloadData = function() {
-        /* generate ccda from master health record for download */
-        var CCDA = "mock ccda";
-        var blob = new Blob([ CCDA ], { type : 'text/plain' });
-        $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
-        
-        var downloadUrl = "api/v1/storage";
-        fileDownload.downloadFile(downloadUrl, function(err, res) {
-          if (err) {
-            console.log(err);
-          }
-          console.log("GETTING RESPONSE");
-          console.log(res);
+        var promise = getEachSectionForDownload();
+        promise.then(function(result) {
+          console.log('Success');
+          console.log(result);
+
+          /* now generate ccda with result for download */
+          var CCDA = JSON.stringify(result);
+          var blob = new Blob([ CCDA ], { type : 'text/plain' });
+          $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
+        }, function(reason) {
+          console.log("Error: " + reason);
         });
       };
-
- 
 
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
