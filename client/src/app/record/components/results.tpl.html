@@ -47,8 +47,27 @@
 		<div id="result-{{$index}}" class="panel-collapse collapse">
 			<div class="panel-body">
 				<div id="myTabContent" >
+
+					<div class="col-md-12" ng-show="result.result.translations">
+						<h4>Other Descriptions</h4>
+						<div ng-repeat=" translation in result.result.translations" class="col-md-12">
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
+								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.name}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code">
+								<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code_system_name">
+								<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code_system_name}}</div>
+							</div>
+						</div>
+					</div>
+
 					<div class="col-md-12" ng-repeat="result_value in result.results">
-						<h4>{{result_value.name}}</h4>
+						<h4>{{result_value.result.name}}</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="result_value.date[0].displayDate">
 							<div class="pull-left col-md-12"><strong>Measured:</strong></div><br/>
 							<div class="pull-left col-md-12">{{result_value.date[0].displayDate}}</div>
@@ -59,7 +78,7 @@
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="result_value.interpretations[0]">
 							<div class="pull-left col-md-12"><strong>Interpretation:</strong></div><br/>
-							<div class="pull-left col-md-12">{{result_value.interpretations[0]}}</div>
+							<div class="pull-left col-md-12" ng-repeat="interpretation in result_value.interpretations">{{interpretation}}</div>
 						</div>
 					</div>
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
