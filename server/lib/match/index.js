@@ -7,22 +7,22 @@ var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medicati
 
 function updateMerged(updateId, updateComponent, updateParameters, callback) {
     //Gather full match object by ID.
-    record.getMatch(updateComponent, updateId, function(err, resultComponent) {
+    record.getMatch(updateComponent, 'test', updateId, function(err, resultComponent) {
         if (err) {
             callback(err);
         } else {
             //Gather partial record from db.
-            record.getEntry(updateComponent, resultComponent.match_entry._id, function(err, recordResults) {
+            record.getEntry(updateComponent, 'test', resultComponent.match_entry._id, function(err, recordResults) {
                 if (err) {
                     callback(err);
                 } else {
                     //NOTE:  Only one attribution merge since a partial.
                     var recordId = recordResults.metadata.attribution[0].record._id;
-                    record.updateEntry(updateComponent, resultComponent.entry._id, recordId, updateParameters, function(err, updateResults) {
+                    record.updateEntry(updateComponent, 'test', resultComponent.entry._id, recordId, updateParameters, function(err, updateResults) {
                         if (err) {
                             callback(err);
                         } else {
-                            record.cancelMatch(updateComponent, updateId, 'merged', callback);
+                            record.cancelMatch(updateComponent, 'test', updateId, 'merged', callback);
                         }
                     });
                 }
@@ -38,7 +38,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
         if (updateComponent === 'demographics') {
             callback('Only one demographic accepted');
         }
-        record.acceptMatch(updateComponent, updateId, 'added', callback);
+        record.acceptMatch(updateComponent, 'test', updateId, 'added', callback);
     }
 
     if (updateParameters.determination === 'merged') {
@@ -53,7 +53,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
     }
 
     if (updateParameters.determination === 'ignored') {
-        record.cancelMatch(updateComponent, updateId, 'ignored', callback)
+        record.cancelMatch(updateComponent, 'test', updateId, 'ignored', callback)
     }
 }
 
@@ -132,7 +132,7 @@ app.get('/api/v1/match/:component/:record_id', function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
-        record.getMatch(req.params.component, req.params.record_id, function(err, match) {
+        record.getMatch(req.params.component, 'test', req.params.record_id, function(err, match) {
             if (err) {
                 res.send(400, err);
             } else {

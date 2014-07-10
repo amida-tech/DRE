@@ -22,7 +22,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         var returnPartialArray = [];
 
         function updateDuplicate(section, update_id, callback) {
-            record.duplicateEntry(section, update_id, newSourceID, function(err) {
+            record.duplicateEntry(section, 'test', update_id, newSourceID, function(err) {
                 if (err) {
                     callback(err);
                 } else {
