@@ -101,11 +101,11 @@ describe('Immunizations API - Test New:', function() {
 			});
 	});
 
-	it('Get Partial Immunization Records', function(done) {
-		api.get('/api/v1/record/partial/immunizations')
+	it('Get Immunization Match Records', function(done) {
+		api.get('/api/v1/matches/immunizations')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.immunizations.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -158,11 +158,11 @@ describe('Immunizations API - Test Duplicate:', function() {
 	});
 
 
-	it('Get Partial Immunization Records', function(done) {
-		api.get('/api/v1/record/partial/immunizations')
+	it('Get Immunization Match Records', function(done) {
+		api.get('/api/v1/matches/immunizations')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.immunizations.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -223,12 +223,12 @@ describe('Immunizations API - Test New/Dupe Mix:', function() {
 	});
 
 
-	it('Get Partial Immunization Records', function(done) {
-		api.get('/api/v1/record/partial/immunizations')
+	it('Get Immunization Match Records', function(done) {
+		api.get('/api/v1/matches/immunizations')
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.immunizations.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -286,17 +286,6 @@ describe('Immunizations API - Test Partial Matches:', function() {
 				}
 				//console.log(JSON.stringify(res.body.immunizations, null, 10));
 				expect(res.body.immunizations.length).to.equal(5);
-				done();
-			});
-	});
-
-
-	it('Get Partial Immunization Records', function(done) {
-		api.get('/api/v1/record/partial/immunizations')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.immunizations, null, 10));
-				expect(res.body.immunizations.length).to.equal(3);
 				done();
 			});
 	});
@@ -396,16 +385,6 @@ describe('Immunizations API - Test Added Matches', function() {
 			});
 	});
 
-	it('Get Partial Immunization Records', function(done) {
-		api.get('/api/v1/record/partial/immunizations')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.immunizations, null, 10));
-				expect(res.body.immunizations.length).to.equal(2);
-				done();
-			});
-	});
-
 	it('Get Immunization Merge Records Post Added', function(done) {
 		api.get('/api/v1/merges/immunizations')
 			.expect(200)
@@ -497,16 +476,6 @@ describe('Immunizations API - Test Ignored Matches', function() {
 					}
 				}
 				expect(total_immunizations).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Immunization Records', function(done) {
-		api.get('/api/v1/record/partial/immunizations')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.immunizations, null, 10));
-				expect(res.body.immunizations.length).to.equal(1);
 				done();
 			});
 	});
@@ -754,16 +723,6 @@ describe('Immunizations API - Test Merged Matches', function() {
 					}
 				}
 				expect(total_immunizations).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Immunization Records', function(done) {
-		api.get('/api/v1/record/partial/immunizations')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.immunizations, null, 10));
-				expect(res.body.immunizations.length).to.equal(0);
 				done();
 			});
 	});

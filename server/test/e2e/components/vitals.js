@@ -101,11 +101,11 @@ describe('Vitals API - Test New:', function() {
 			});
 	});
 
-	it('Get Partial Vital Records', function(done) {
-		api.get('/api/v1/record/partial/vitals')
+	it('Get Vital Match Records', function(done) {
+		api.get('/api/v1/matches/vitals')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.vitals.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -158,11 +158,11 @@ describe('Vitals API - Test Duplicate:', function() {
 	});
 
 
-	it('Get Partial Vital Records', function(done) {
-		api.get('/api/v1/record/partial/vitals')
+	it('Get Vital Match Records', function(done) {
+		api.get('/api/v1/matches/vitals')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.vitals.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -223,11 +223,11 @@ describe('Vitals API - Test New/Dupe Mix:', function() {
 	});
 
 
-	it('Get Partial Vital Records', function(done) {
-		api.get('/api/v1/record/partial/vitals')
+	it('Get Vital Match Records', function(done) {
+		api.get('/api/v1/matches/vitals')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.vitals.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -285,17 +285,6 @@ describe('Vitals API - Test Partial Matches:', function() {
 				}
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
 				expect(res.body.vitals.length).to.equal(11);
-				done();
-			});
-	});
-
-
-	it('Get Partial Vital Records', function(done) {
-		api.get('/api/v1/record/partial/vitals')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.vitals.length).to.equal(3);
 				done();
 			});
 	});
@@ -395,16 +384,6 @@ describe('Vitals API - Test Added Matches', function() {
 			});
 	});
 
-	it('Get Partial Vital Records', function(done) {
-		api.get('/api/v1/record/partial/vitals')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.vitals.length).to.equal(2);
-				done();
-			});
-	});
-
 	it('Get Vital Merge Records Post Added', function(done) {
 		api.get('/api/v1/merges/vitals')
 			.expect(200)
@@ -496,16 +475,6 @@ describe('Vitals API - Test Ignored Matches', function() {
 					}
 				}
 				expect(total_vitals).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Vital Records', function(done) {
-		api.get('/api/v1/record/partial/vitals')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.vitals.length).to.equal(1);
 				done();
 			});
 	});
@@ -676,16 +645,6 @@ describe('Vitals API - Test Merged Matches', function() {
 					}
 				}
 				expect(total_vitals).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Vital Records', function(done) {
-		api.get('/api/v1/record/partial/vitals')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.vitals.length).to.equal(0);
 				done();
 			});
 	});
