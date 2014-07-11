@@ -5,18 +5,11 @@ var record = require('blue-button-record');
 var bb = require('../../../../blue-button');
 var _ = require('underscore');
 var $q = require("q");
-var XmlDOM = require('xmldom').DOMParser;
-var counter = 0;
-var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
 
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
+var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 
+'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
 
+// blue bird to promisify record API
 Promise.promisifyAll(require("blue-button-record"));
 
 function formatResponse(srcComponent, srcResponse) {
@@ -75,28 +68,24 @@ app.get('/api/v1/record/partial/:component', function(req, res) {
 
 // ccda generation
 
-var aggregatedResponse = {};
+function getCCDA(callback) {
+    var aggregatedResponse = {};
+    var count = 0;
 
-function getSection(componentName) {
-    return record.getSectionAsync(componentName, 'test').then(function(section) {
-        return _.extend(aggregatedResponse, formatResponse(componentName, section));
+    supportedComponents.forEach(function(secName) {
+        record.getSectionAsync(secName, 'test').then(function(sec) {
+            _.extend(aggregatedResponse, formatResponse(secName, sec));
+            count++;
+            if (count == 10)
+                callback(null, aggregatedResponse);
+        }).catch(function(e) {
+            callback("Error");
+        });
     });
 }
 
-var aggregateEachSection = function(callback) {
-    var components = ['demographics', 'allergies', 'encounters', 'immunizations', 
-    'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals'];
-
-    for (var i = 0; i < components.length; i++) {
-        getSection(components[i]).catch(function(e) {
-            callback("Error");
-        });
-    }
-    callback(null, aggregatedResponse);
-}
-
 app.get('/api/v1/ccda', function(req, res) {
-    aggregateEachSection(function(err, result) {
+    getCCDA(function(err, result) {
         err ? res.send(500) : res.send(bb.generateCCDA(result).toString());
     });
 });

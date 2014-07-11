@@ -96,19 +96,20 @@ function($routeProvider) {
       };
 
       $scope.downloadData = function() {
+        console.log("I'm downloading!");
         var downloadUrl = "api/v1/ccda/";
         var promise = fileDownload.downloadFile(downloadUrl, function(err, res) {
           if (err) {
             console.log(err);
           }
           /* now generate ccda with result for download */
-          var blob = new Blob([ res.toString() ], { type : 'text/xml' });
+          var blob = new Blob([ res ], { type : 'text/xml' });
           $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
         });
       };
 
       $scope.init();
-
+      
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;
