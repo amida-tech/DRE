@@ -28,6 +28,11 @@ function($routeProvider) {
 
   .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 'getNotifications', 
     function($scope, $filter, $http, $q, $location, fileDownload, getNotifications) {
+      
+      // have download ready to go on page load    
+      $scope.init = function() {
+        $scope.downloadData();
+      };
 
       $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
@@ -46,70 +51,19 @@ function($routeProvider) {
         });
       };
 
-      // var aggregatedResponse = {};
-      // function getSectionForDownload(i) {
-      //    var downloadUrl = "api/v1/record/" + supportedComponents[i];
-      //     fileDownload.downloadFile(downloadUrl, function(err, res) {
-      //       if (err) {
-      //         console.log(err);
-      //         return err;
-      //       } else {
-      //         $.extend(aggregatedResponse, res);
-      //       }
-      //     });
-      //     return aggregatedResponse;
-      // }
-
-      // function getEachSectionForDownload() {
-      //   var deferred = $q.defer();
-      //   var response = {};
-      //   for (i = 0; i < supportedComponents.length; i++) {
-      //     response = getSectionForDownload(i);
-      //   }
-      //   if (typeof response !== "object") {
-      //     deferred.reject('Failed');
-      //   } else {
-      //     deferred.resolve(response);
-      //   }
-      //   return deferred.promise;
-      // }
-
-      // $scope.downloadData = function() {
-      //   var promise = getEachSectionForDownload();
-      //   promise.then(function(result) {
-      //     console.log('Success');
-      //     console.log(result);
-
-      //     /* now generate ccda with result for download */
-      //     var CCDA = JSON.stringify(result);
-      //     var blob = new Blob([ CCDA ], { type : 'text/plain' });
-      //     $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
-      //   }, function(reason) {
-      //     console.log("Error: " + reason);
-      //   });
-      // };
-
-
-
-      $scope.init = function() {
-        $scope.downloadData();
-      };
-
+      /* generate ccda for download by calling /ccda API endpoint */
       $scope.downloadData = function() {
-        console.log("I'm downloading!");
-        var downloadUrl = "api/v1/ccda/";
-        var promise = fileDownload.downloadFile(downloadUrl, function(err, res) {
+        fileDownload.downloadFile("api/v1/ccda/", function(err, res) {
           if (err) {
             console.log(err);
           }
-          /* now generate ccda with result for download */
           var blob = new Blob([ res ], { type : 'text/xml' });
           $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
         });
       };
 
       $scope.init();
-      
+
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;
