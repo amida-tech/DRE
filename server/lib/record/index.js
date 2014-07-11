@@ -67,16 +67,16 @@ app.get('/api/v1/record/partial/:component', function(req, res) {
     }
 });
 
-// ccda generation
+// CCDA generation. uses promise-based blue-button-record API 
+// (via bluebird module) to combine returned sections, propagating 
+// back to caller when done or on error via @callback
 function getCCDA(callback) {
-    var aggregatedResponse = {};
-    var count = 0;
+    var aggregatedResponse = {}, count = 0;
 
     Object.keys(supportedComponents).forEach(function(secName) {
         record.getSectionAsync(secName, 'test').then(function(sec) {
             _.extend(aggregatedResponse, formatResponse(secName, sec));
-            count++;
-            if (count == 10)
+            if (++count == 10)
                 callback(null, aggregatedResponse);
         }).catch(function(e) {
             callback("Error");
