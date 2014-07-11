@@ -4,13 +4,15 @@ var Promise = require("bluebird");
 var record = require('blue-button-record');
 var bb = require('../../../../blue-button');
 var _ = require('underscore');
-var $q = require("q");
-
-var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 
-'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
 
 // blue bird to promisify record API
 Promise.promisifyAll(require("blue-button-record"));
+
+var supportedComponents = {
+    allergies: 'allergies', procedures: 'procedures', immunizations: 'immunizations', medications: 'medications', 
+    encounters: 'encounters', vitals: 'vitals', results: 'results', social_history: 'social_history',
+    demographics: 'demographics', problems: 'problems' 
+} 
 
 function formatResponse(srcComponent, srcResponse) {
     var srcReturn = {};
@@ -26,12 +28,12 @@ function formatResponse(srcComponent, srcResponse) {
 
 app.get('/api/v1/record/:component', function(req, res) {
 
-    if (_.contains(supportedComponents, req.params.component) === false) {
+    if (!supportedComponents[req.params.component]) {
         res.send(404);
     } else {
 
         function sendResponse(componentName) {
-            record.getSection(req.params.component, 'test', function(err, componentList) {
+            record.getSection(componentName, 'test', function(err, componentList) {
                 if (err) {
                     res.send(500);
                 } else {
@@ -47,16 +49,15 @@ app.get('/api/v1/record/:component', function(req, res) {
 
 app.get('/api/v1/record/partial/:component', function(req, res) {
 
-    if (_.contains(supportedComponents, req.params.component) === false) {
+    if (!supportedComponents[req.params.component]) {
         res.send(404);
     } else {
 
         function sendResponse(componentName) {
-            record.getPartialSection(req.params.component, 'test', function(err, componentList) {
+            record.getPartialSection(componentName, 'test', function(err, componentList) {
                 if (err) {
                     res.send(500);
                 } else {
-                    //console.log(componentList);
                     var apiResponse = formatResponse(componentName, componentList);
                     res.send(apiResponse);
                 }
@@ -67,12 +68,11 @@ app.get('/api/v1/record/partial/:component', function(req, res) {
 });
 
 // ccda generation
-
 function getCCDA(callback) {
     var aggregatedResponse = {};
     var count = 0;
 
-    supportedComponents.forEach(function(secName) {
+    Object.keys(supportedComponents).forEach(function(secName) {
         record.getSectionAsync(secName, 'test').then(function(sec) {
             _.extend(aggregatedResponse, formatResponse(secName, sec));
             count++;
