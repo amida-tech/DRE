@@ -39,7 +39,6 @@ angular.module('dre.record.immunizations', [])
       }).
       success(function(data, status, headers, config) {
         $scope.immunizations = data.immunizations;
-        console.log(JSON.stringify(data.immunizations, null, 4));
         if ($scope.immunizations.length > 0) {
           $scope.displayImmunizations = true;
           $scope.updateFields();
@@ -68,7 +67,6 @@ angular.module('dre.record.immunizations', [])
                 recordFunctions.formatAddress($scope.immunizations[i].performer.address[perAddr]);
               }
             }
-
             if ($scope.immunizations[i].performer.name) {
               for (var perName in $scope.immunizations[i].performer.name) {
                 recordFunctions.formatName($scope.immunizations[i].performer.name[perName]);
