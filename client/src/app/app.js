@@ -27,7 +27,7 @@ var dre = angular
         'services.fileUpload',
         'services.fileDownload',
         'services.getNotifications',
-        'services.recordFunctions'
+        'services.recordFunctions',
     ])
     .filter('bb_date', function($filter) {
         //Format Blue Button date JSON struct into string (with precision)

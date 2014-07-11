@@ -26,8 +26,8 @@ function($routeProvider) {
   });
 }])
 
-  .controller('recordCtrl', ['$scope', '$http', '$q', '$location', 'fileDownload', 'getNotifications', 
-    function($scope, $http, $q, $location, fileDownload, getNotifications) {
+  .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 'getNotifications', 
+    function($scope, $filter, $http, $q, $location, fileDownload, getNotifications) {
 
       $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
@@ -46,46 +46,58 @@ function($routeProvider) {
         });
       };
 
-      var aggregatedResponse = {};
-      function getSectionForDownload(i) {
-         var downloadUrl = "api/v1/record/" + supportedComponents[i];
-          fileDownload.downloadFile(downloadUrl, function(err, res) {
-            if (err) {
-              console.log(err);
-              return err;
-            } else {
-              $.extend(aggregatedResponse, res);
-            }
-          });
-          return aggregatedResponse;
-      }
+      // var aggregatedResponse = {};
+      // function getSectionForDownload(i) {
+      //    var downloadUrl = "api/v1/record/" + supportedComponents[i];
+      //     fileDownload.downloadFile(downloadUrl, function(err, res) {
+      //       if (err) {
+      //         console.log(err);
+      //         return err;
+      //       } else {
+      //         $.extend(aggregatedResponse, res);
+      //       }
+      //     });
+      //     return aggregatedResponse;
+      // }
 
-      function getEachSectionForDownload() {
-        var deferred = $q.defer();
-        var response = {};
-        for (i = 0; i < supportedComponents.length; i++) {
-          response = getSectionForDownload(i);
-        }
-        if (typeof response !== "object") {
-          deferred.reject('Failed');
-        } else {
-          deferred.resolve(response);
-        }
-        return deferred.promise;
-      }
+      // function getEachSectionForDownload() {
+      //   var deferred = $q.defer();
+      //   var response = {};
+      //   for (i = 0; i < supportedComponents.length; i++) {
+      //     response = getSectionForDownload(i);
+      //   }
+      //   if (typeof response !== "object") {
+      //     deferred.reject('Failed');
+      //   } else {
+      //     deferred.resolve(response);
+      //   }
+      //   return deferred.promise;
+      // }
+
+      // $scope.downloadData = function() {
+      //   var promise = getEachSectionForDownload();
+      //   promise.then(function(result) {
+      //     console.log('Success');
+      //     console.log(result);
+
+      //     /* now generate ccda with result for download */
+      //     var CCDA = JSON.stringify(result);
+      //     var blob = new Blob([ CCDA ], { type : 'text/plain' });
+      //     $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
+      //   }, function(reason) {
+      //     console.log("Error: " + reason);
+      //   });
+      // };
 
       $scope.downloadData = function() {
-        var promise = getEachSectionForDownload();
-        promise.then(function(result) {
-          console.log('Success');
-          console.log(result);
-
+        var downloadUrl = "api/v1/ccda/";
+        var promise = fileDownload.downloadFile(downloadUrl, function(err, res) {
+          if (err) {
+            console.log(err);
+          }
           /* now generate ccda with result for download */
-          var CCDA = JSON.stringify(result);
-          var blob = new Blob([ CCDA ], { type : 'text/plain' });
+          var blob = new Blob([ res.toString() ], { type : 'text/xml' });
           $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
-        }, function(reason) {
-          console.log("Error: " + reason);
         });
       };
 
