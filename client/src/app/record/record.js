@@ -89,6 +89,12 @@ function($routeProvider) {
       //   });
       // };
 
+
+
+      $scope.init = function() {
+        $scope.downloadData();
+      };
+
       $scope.downloadData = function() {
         var downloadUrl = "api/v1/ccda/";
         var promise = fileDownload.downloadFile(downloadUrl, function(err, res) {
@@ -101,12 +107,12 @@ function($routeProvider) {
         });
       };
 
+      $scope.init();
+
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;
       });
-
-      
 
     }
   ]);
