@@ -104,7 +104,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 var matchObject = srcMatches[i];
                 var matchObjForDb = {};
                 matchObjForDb.diff = matchObject.diff;
-                matchObjForDb.percent = matchObject.percent;                
+                matchObjForDb.percent = matchObject.percent;
                 if (matchObject.subelements) {
                     matchObjForDb.subelements = matchObject.subelements;
                 }
@@ -145,6 +145,8 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         //console.log(JSON.stringify(newObject[iSec], null, 10));
 
         var currentMatchResult = matchResults.match[iSec];
+        console.log(iSec);
+        console.log(currentMatchResult);
         if (currentMatchResult.length > 0) {
             removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries, newPartialEntries) {
                 //New entries is fine...
@@ -172,7 +174,8 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 function reconcile(newObject, baseObject, newSourceID, callback) {
 
     newObjectForParsing = newObject;
-
+    console.log('base object? -------');
+    console.log(JSON.stringify(baseObject, null, 2));
     var baseObjectForParsing = {};
     for (var iObj in baseObject) {
         baseObjectForParsing[iObj] = {};
@@ -216,10 +219,11 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
 
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
-
+    console.log('yay new object vroom vroom');
+    console.log(JSON.stringify(newObjectForParsing, null, 4));
     //console.log(JSON.stringify(newObjectForParsing, null, 10));
-    //console.log('------------------');
-    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
+    console.log('------------------');
+    console.log(JSON.stringify(baseObjectForParsing, null, 4));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
     //console.log(JSON.stringify(matchResult, null, 10));
 

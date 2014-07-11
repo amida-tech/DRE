@@ -120,8 +120,8 @@ function getSavedRecords(saved_sections, callback) {
                 callback(err);
             } else {
                 responseObject[section] = savedObj;
-                callback(null);    
-            }       
+                callback(null);
+            }
         });
     }
 
@@ -130,7 +130,7 @@ function getSavedRecords(saved_sections, callback) {
             if (err) {
                 callback(err);
             } else {
-                checkComplete();    
+                checkComplete();
             }
         });
     }
@@ -138,12 +138,16 @@ function getSavedRecords(saved_sections, callback) {
 
 //Parses raw inbound records into components.
 function parseRecord(record_type, record_data, callback) {
-    if (record_type === 'application/xml' || record_type === 'text/xml') {
+    console.log('record type duddee' + record_type);
+    if (record_type === 'application/xml' || record_type === 'text/xml' || record_type == 'text/plain') {
         extractRecord(record_data, function(err, xml_type, parsed_record) {
+
+            console.log('xml_type');
+            console.log(xml_type);
             if (err) {
                 callback(err);
             } else {
-                if (xml_type === 'ccda') {
+                if (xml_type === 'ccda' || xml_type === 'cms') {
                     callback(null, xml_type, parsed_record);
                 } else {
                     callback(null, null);
@@ -163,6 +167,8 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
     for (var parsed_section in parsed_record) {
         sectionArray.push(parsed_section);
     }
+    console.log('section array');
+    console.log(sectionArray);
 
     //Get Saved Records.
     getSavedRecords(sectionArray, function(err, saved_record) {
@@ -206,7 +212,6 @@ function importRecord(record_metadata, record_data, callback) {
                     callback(err);
                 } else {
                     //SHIM.
-
                     if (parsed_record.demographics) {
                         var tmpDemographicsArray = new Array(parsed_record.demographics);
                         //console.log(tmpDemographicsArray);

@@ -48,8 +48,8 @@ angular.module('services.recordFunctions', [])
             if (inputSection.smoking_statuses) {
                 inputSection.name = "Smoking Status";
             }
-   
-            return inputSection;            
+
+            return inputSection;
         };
 
         //Returns printable array from address.
