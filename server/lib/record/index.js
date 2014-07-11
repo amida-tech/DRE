@@ -1,5 +1,6 @@
 var express = require('express');
 var app = module.exports = express();
+var Promise = require("bluebird");
 var record = require('blue-button-record');
 var bb = require('../../../../blue-button');
 var _ = require('underscore');
@@ -16,6 +17,7 @@ Object.size = function(obj) {
     return size;
 };
 
+Promise.promisifyAll(require("blue-button-record"));
 
 function formatResponse(srcComponent, srcResponse) {
     var srcReturn = {};
@@ -67,56 +69,35 @@ app.get('/api/v1/record/partial/:component', function(req, res) {
                 }
             });
         }
-
         sendResponse(req.params.component);
     }
 });
 
+// ccda generation
 
 var aggregatedResponse = {};
 
 function getSection(componentName) {
-    var deferred = $q.defer();
-    record.getSection(componentName, 'test', function(err, componentList) {
-        if (err) {
-            deferred.reject(err);
-        } else {
-            componentList = record.cleanSection(componentList);
-            deferred.resolve(formatResponse(componentName, componentList));
-        }
+    return record.getSectionAsync(componentName, 'test').then(function(section) {
+        return _.extend(aggregatedResponse, formatResponse(componentName, section));
     });
-    return deferred.promise;
 }
 
-function aggregateEachSection() {
-    var components = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals'];
-    var deferred = $q.defer();
+var aggregateEachSection = function(callback) {
+    var components = ['demographics', 'allergies', 'encounters', 'immunizations', 
+    'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals'];
 
     for (var i = 0; i < components.length; i++) {
-        var promise = getSection(components[i]);
-        promise.then(function(result) {
-            _.extend(aggregatedResponse, result);
-        }, function(reason) {
-          deferred.reject(reason);
+        getSection(components[i]).catch(function(e) {
+            callback("Error");
         });
     }
-    if (Object.size(aggregatedResponse) == 10) {
-        deferred.resolve(aggregatedResponse);
-    }
-    return deferred.promise;
+    callback(null, aggregatedResponse);
 }
 
 app.get('/api/v1/ccda', function(req, res) {
-    var deferred = $q.defer();
-
-    var promise = aggregateEachSection();
-    promise.then(function(result) {
-        deferred.resolve(aggregatedResponse);
-        res.send(bb.generateCCDA(aggregatedResponse).toString());
-    }, function(reason) {
-        deferred.reject(reason);
-        console.log("Error: " + reason);
+    aggregateEachSection(function(err, result) {
+        err ? res.send(500) : res.send(bb.generateCCDA(result).toString());
     });
-    return deferred.promise;
 });
 
