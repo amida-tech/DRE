@@ -27,26 +27,35 @@ angular.module('services.recordFunctions', [])
             if (inputSection.allergen) {
                 inputSection.name = inputSection.allergen.name;
             }
-            if (inputSection.encounter) {
+            else if (inputSection.encounter) {
                 inputSection.name = inputSection.encounter.name;
             }
-            if (inputSection.product) {
+            else if (inputSection.product) {
                 inputSection.name = inputSection.product.product.name;
             }
-            if (inputSection.problem) {
+            else if (inputSection.problem) {
                 inputSection.name = inputSection.problem.name;
             }
-            if (inputSection.results) {
+            else if (inputSection.results) {
                 inputSection.name = inputSection.result_set.name;
             }
-            if (inputSection.procedure) {
+            else if (inputSection.procedure) {
                 inputSection.name = inputSection.procedure.name;
             }
-            if (inputSection.vital) {
+            else if (inputSection.vital) {
                 inputSection.name = inputSection.vital.name;
             }
-            if (inputSection.smoking_statuses) {
+            else if (inputSection.plan_name) {
+                inputSection.name = inputSection.plan_name;
+            }
+            else if(inputSection.payer_name){
+                inputSection.name = inputSection.payer_name;
+            }
+            else if (inputSection.smoking_statuses) {
                 inputSection.name = "Smoking Status";
+            }
+            else{
+                inputSection.name = 'unknown';
             }
 
             return inputSection;
