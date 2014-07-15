@@ -553,6 +553,22 @@ var dre = angular
             return displayAddress.join(", ");
         };
     })
+    .filter('capFirstLetters', function($filter) {
+        //Format Blue Button address JSON struct into string
+        return function(input) {
+            if (input!=null){
+                input = input.toLowerCase();
+                var inputArr = input.split(' ');
+                var newString = "";
+                for(var x in inputArr){
+                    var token = inputArr[x];
+                    newString += token.substring(0,1).toUpperCase()+token.substring(1) + " ";
+                }
+                newString.trim();
+                return newString;
+            }
+        };
+    })
 
 
 .config(['$routeProvider', '$locationProvider',
