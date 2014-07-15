@@ -2,12 +2,12 @@
 
 <div class="col-md-12">
 	<br/>
-	<span class="lead">claims</span>
+	<span class="lead">Claims</span>
 	<br/>
 	<br/>
 </div>
 <div ng-hide="displayClaims" class="panel-title">No claims are currently in your record.</div>
-<div ng-show="displayClaims" class="panel-group" id="#accordian-claims" ng-repeat="claim in claims | orderBy:claimPredicate">
+<div ng-show="displayClaims" class="panel-group" id="#accordian-claims" ng-repeat="claim in claims | orderBy:claimsPredicate">
 
 	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div > Index: {{$index}} </div>
@@ -51,30 +51,32 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.date[0].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.name | capFirstLetters}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.start_date.displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{claim.start_date.displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.end_date.displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{claim.end_date.displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.sig">
-							<div class="pull-left col-md-12"><strong>Sig:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.sig}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.type">
+							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="each_type in claim.type">{{each_type | capFirstLetters}}{{$last ? '' : ', '}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.product.product.code">
-							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.product.product.code}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.payer">
+							<div class="pull-left col-md-12"><strong>Payer:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="each_type in claim.type">{{each_type}}{{$last ? '' : ', '}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.product.product.code_system_name">
-							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.product.product.code_system_name}}</div>
-						</div>
+
+						
 					</div>
 
 					<div class="col-md-12" ng-show="claim.product.product.translations">
-						<h4>Other Descriptions</h4>
+						<h4>Provider</h4>
 						<div ng-repeat=" translation in claim.product.product.translations" class="col-md-12">
 							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
 								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
@@ -91,28 +93,28 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left">
-						<h4>Administration</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.administration.route.name">
-							<div class="pull-left col-md-12"><strong>Route:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.administration.route.name}}</div>
+					<div class="col-md-12 pull-left" ng-show="claim.lines">
+						<h4>Charges </h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.code.code">
+							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.precondition.code.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.administration.form.name">
-							<div class="pull-left col-md-12"><strong>Form:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.administration.form.name}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.precondition.value.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.administration.dose.value">
-							<div class="pull-left col-md-12"><strong>Dose:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.administration.dose.value}} {{claim.administration.dose.unit}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.code">
+							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.precondition.value.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.administration.rate.value">
-							<div class="pull-left col-md-12"><strong>Rate:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.administration.rate.value}} {{claim.administration.rate.unit}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.code_system_name">
+							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.precondition.value.code_system_name}}</div>
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-show="claim.precondition">
-						<h4>Precondition</h4>
+					<div class="col-md-12 pull-left" ng-show="claim.lines">
+						<h4>Claim Lines</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.code.code">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
 							<div class="pull-left col-md-12">{{claim.precondition.code.code}}</div>

@@ -59,18 +59,26 @@ angular.module('dre.record.claims', [])
         var claim = $scope.claims[i];
         console.log(claim);
         if(claim.start_date){
+            //format date for Details section
+            recordFunctions.formatDate(claim.start_date);
+            //prepare the date that is going to be displayed in accordion
             claim.titleDate = claim.start_date;
         }
         if(claim.end_date){
+            recordFunctions(formatDate(claim.end_date));
             claim.titleDate = claim.end_date;
         }
         if(claim.titleDate){
             recordFunctions.formatDate(claim.titleDate);
         }
+        //assign date weight if titleDate was defined from above
         if(claim.titleDate){
             claim.date_weight = claim.titleDate.date;
         }
-        console.log(claim.titleDate);
+        //just assign UTC 1970 to claim date weight so it's at the bottom of the section
+        else{
+            claim.date_weight = (new Date(0)).toISOString();
+        }
       }
     };
 
