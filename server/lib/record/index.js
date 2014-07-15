@@ -2,7 +2,7 @@ var express = require('express');
 var app = module.exports = express();
 var Promise = require("bluebird");
 var record = require('blue-button-record');
-var bb = require('blue-button');
+var bb = require('../../../../blue-button');
 var _ = require('underscore');
 
 // blue bird to promisify record API
