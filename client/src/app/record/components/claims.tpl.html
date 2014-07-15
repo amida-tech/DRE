@@ -1,0 +1,139 @@
+<!--Begin claims-->
+
+<div class="col-md-12">
+	<br/>
+	<span class="lead">claims</span>
+	<br/>
+	<br/>
+</div>
+<div ng-hide="displayClaims" class="panel-title">No claims are currently in your record.</div>
+<div ng-show="displayClaims" class="panel-group" id="#accordian-claims" ng-repeat="claim in claims | orderBy:claimPredicate">
+
+	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div > Index: {{$index}} </div>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Record Sources</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+							<tr><td><strong>Source Information</strong></td></tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="attribution in claim.metadata.attribution">
+								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
+								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
+								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+
+			<a data-toggle="collapse" data-parent="#accordian-claims" data-target="#claim-{{$index}}">
+				<div class="panel-title" style="cursor:pointer;">
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+					<span style="text-transform:uppercase;">{{claim.payer[0]}}</span>
+					<span style="text-transform:uppercase;"> - {{claim.number}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{claim.titleDate.displayDate}}</span>
+				</div>
+			</a>
+		</div>
+		<div id="claim-{{$index}}" class="panel-collapse collapse">
+			<div class="panel-body">
+				<div id="myTabContent" >
+					<div class="col-md-12">
+						<h4>Details</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.date[0].displayDate">
+							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.date[0].displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.date[1].displayDate">
+							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.date[1].displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.sig">
+							<div class="pull-left col-md-12"><strong>Sig:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.sig}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.product.product.code">
+							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.product.product.code}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.product.product.code_system_name">
+							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.product.product.code_system_name}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" ng-show="claim.product.product.translations">
+						<h4>Other Descriptions</h4>
+						<div ng-repeat=" translation in claim.product.product.translations" class="col-md-12">
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
+								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.name}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code">
+								<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code_system_name">
+								<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code_system_name}}</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 pull-left">
+						<h4>Administration</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.administration.route.name">
+							<div class="pull-left col-md-12"><strong>Route:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.administration.route.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.administration.form.name">
+							<div class="pull-left col-md-12"><strong>Form:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.administration.form.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.administration.dose.value">
+							<div class="pull-left col-md-12"><strong>Dose:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.administration.dose.value}} {{claim.administration.dose.unit}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.administration.rate.value">
+							<div class="pull-left col-md-12"><strong>Rate:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.administration.rate.value}} {{claim.administration.rate.unit}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 pull-left" ng-show="claim.precondition">
+						<h4>Precondition</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.code.code">
+							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.precondition.code.code}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.precondition.value.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.code">
+							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.precondition.value.code}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.code_system_name">
+							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.precondition.value.code_system_name}}</div>
+						</div>
+					</div>
+					
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

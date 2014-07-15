@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =====================================`=================================*/
 
-angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance'])
+angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims'])
 
 .config(['$routeProvider',
 function($routeProvider) {
@@ -37,6 +37,7 @@ function($routeProvider) {
       $scope.resultsPath = "templates/record/components/results.tpl.html";
       $scope.vitalsPath = "templates/record/components/vitals.tpl.html";
       $scope.insurancePath  = "templates/record/components/insurance.tpl.html";
+      $scope.claimsPath = "templates/record/components/claims.tpl.html";
 
       $scope.dismissModal = function (index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {

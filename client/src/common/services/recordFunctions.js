@@ -174,7 +174,11 @@ angular.module('services.recordFunctions', [])
                 } else {
                     return date;
                 }
-            } else {
+            }
+            else if (Object.prototype.toString.call(date) === '[object Object]') {
+                return formatOutput(date);
+            }
+            else {
                 //TODO:  Might need a single date handler here.
                 return date;
             }
