@@ -554,10 +554,9 @@ var dre = angular
         };
     })
     .filter('capFirstLetters', function($filter) {
-        //Format Blue Button address JSON struct into string
+        //capitalize first letter of every word
         return function(input) {
-            if (input!=null){
-                input = input.toLowerCase();
+            if (input != null){
                 var inputArr = input.split(' ');
                 var newString = "";
                 for(var x in inputArr){
