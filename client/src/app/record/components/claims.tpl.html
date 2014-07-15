@@ -69,27 +69,40 @@
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.payer">
 							<div class="pull-left col-md-12"><strong>Payer:</strong></div><br/>
-							<div class="pull-left col-md-12" ng-repeat="each_type in claim.type">{{each_type}}{{$last ? '' : ', '}}</div>
+							<div class="pull-left col-md-12" ng-repeat="each_payer in claim.payer">{{each_payer | capFirstLetters}}{{$last ? '' : ', '}}</div>
 						</div>
 
 						
 					</div>
 
-					<div class="col-md-12" ng-show="claim.product.product.translations">
+					<div class="col-md-12" ng-show="claim.provider">
 						<h4>Provider</h4>
-						<div ng-repeat=" translation in claim.product.product.translations" class="col-md-12">
-							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
-								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
-								<div class="pull-left col-md-12">{{translation.name}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.provider.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{provider.name}}</div>
+						</div>
+
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show = "claim.provider.identifiers" ng-show="claim.provider.identifiers[0]">
+							<div class="pull-left col-md-12"><strong>Identifier:</strong></div><br/>
+						
+							<div class="pull-left col-md-12" ng-repeat="each_identifier in claim.provider.identifiers">{{each_identifier.identifier}}</div>
+						</div>
+
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show = "claim.provider.identifiers" ng-show="claim.provider.identifiers[0]">
+							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="each_identifier in claim.provider.identifiers">
+								<span ng-hide = 'each_identifier.identifier_type'> <br/>
+								</span>
+								<span ng-show = 'each_identifier.identifier_type'>
+									{{each_identifier.identifier_type}} 
+								</span>
+								<br/>
 							</div>
-							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code">
-								<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-								<div class="pull-left col-md-12">{{translation.code}}</div>
-							</div>
-							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code_system_name">
-								<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-								<div class="pull-left col-md-12">{{translation.code_system_name}}</div>
-							</div>
+						</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="provider_address in claim.provider.address" ng-show="claim.provider.address">
+							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="provider_display_address in provider_address.displayAddress">{{provider_display_address}}</div>
 						</div>
 					</div>
 

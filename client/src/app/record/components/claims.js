@@ -40,6 +40,7 @@ angular.module('dre.record.claims', [])
       }).
       success(function(data, status, headers, config) {
         $scope.claims = data.claims;
+        console.log(data.claims);
         if ($scope.claims.length > 0) {
           $scope.displayClaims = true;
           $scope.updateFields();
@@ -53,11 +54,29 @@ angular.module('dre.record.claims', [])
     };
 
     $scope.updateFields = function() {
+
+
+
+
       for (var i in $scope.claims) {
         recordFunctions.extractName($scope.claims[i]);
-
         var claim = $scope.claims[i];
         console.log(claim);
+
+        claim.provider = {};
+        claim.provider.name = 'ostrich';
+        claim.provider.identifiers = [];
+        var sampleIdentifier = {'identifier': '12345' ,'identifier_type': 'cms'};
+        var sampleIdentifier2 = {'identifier': '12345' ,'identifier_type': 'cms'};
+        claim.provider.identifiers.push(sampleIdentifier);
+        claim.provider.identifiers.push(sampleIdentifier2);
+
+
+
+        if(claim.name === "unknown"){
+            claim.name = undefined;
+        }
+
         if(claim.start_date){
             //format date for Details section
             recordFunctions.formatDate(claim.start_date);
@@ -79,6 +98,15 @@ angular.module('dre.record.claims', [])
         else{
             claim.date_weight = (new Date(0)).toISOString();
         }
+        console.log(claim.payer);
+        /*
+        if ($scope.immunizations[i].performer.address) {
+              for (var perAddr in $scope.immunizations[i].performer.address) {
+                recordFunctions.formatAddress($scope.immunizations[i].performer.address[perAddr]);
+              }
+          }
+        */
+
       }
     };
 
