@@ -3,7 +3,7 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 
-var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
+var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems', 'insurance', 'claims'];
 
 //Get all merges API.
 app.get('/api/v1/merges/:component', function(req, res) {
