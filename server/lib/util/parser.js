@@ -1,5 +1,3 @@
-var express = require('express');
-var app = module.exports = express();
 var bb = require('blue-button');
 
 
@@ -23,5 +21,5 @@ function extractRecord(inputRecord, callback) {
 	}
 
 }
-
 module.exports.extractRecord = extractRecord;
+

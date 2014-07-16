@@ -19,6 +19,10 @@ var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var app = express();
+var config = require('config');
+var winston = require('winston');
+var expressWinston = require('express-winston');
+
 var record = require('blue-button-record');
 
   app.set('client_location', path.resolve(__dirname, '../client/dist'));
@@ -47,28 +51,35 @@ var record = require('blue-button-record');
 
 
 
-app.use(express.logger());
+//app.use(express.logger());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 
-var storage  = require('./lib/storage');
-app.use(storage);
+app.winston = winston;
+//Request Logging
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console({
+      json: true,
+      colorize: true
+    })
+  ],
+  meta: true, // optional: control whether you want to log the meta data about the request (default to true)
+  msg: "HTTP {{req.method}} {{req.url}}" // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+}));
 
-var parser = require('./lib/parser');
-app.use(parser);
+require('./lib/api')(app);
 
-var healthRecord = require('./lib/record');
-app.use(healthRecord);
-
-var merges = require('./lib/merge');
-app.use(merges);
-
-var match = require('./lib/match');
-app.use(match);
-
-var notification = require('./lib/notification');
-app.use(notification);
+//Error Logging
+app.use(expressWinston.errorLogger({
+  transports: [
+    new winston.transports.Console({
+      json: true,
+      colorize: true
+    })
+  ]
+}));
 
 //Initialize Database Connection.
 var databaseServer = 'localhost';

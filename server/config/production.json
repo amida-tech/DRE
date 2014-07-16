@@ -1,0 +1,14 @@
+{
+  "supportedComponents": {
+    "allergies": true, 
+    "procedures": true,
+    "immunizations": true,
+    "medications" :true,
+    "encounters": true,
+    "vitals": true,
+    "results": true,
+    "social_history": true,
+    "demographics": true, 
+    "problems": true
+  }
+}
