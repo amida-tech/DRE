@@ -51,6 +51,11 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
+						<div class="col-md-3 pull-left" style="margin-bottom: 10px;" ng-show="claim.number">
+							<div class="pull-left col-md-12"><strong>Number:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.number}}</div>
+						</div>
+
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.name">
 							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
 							<div class="pull-left col-md-12">{{claim.name | capFirstLetters}}</div>
@@ -79,16 +84,15 @@
 						<h4>Provider</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.provider.name">
 							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
-							<div class="pull-left col-md-12">{{provider.name}}</div>
+							<div class="pull-left col-md-12">{{claim.provider.name}}</div>
 						</div>
 
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show = "claim.provider.identifiers" ng-show="claim.provider.identifiers[0]">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show = "claim.provider.identifiers">
 							<div class="pull-left col-md-12"><strong>Identifier:</strong></div><br/>
-						
 							<div class="pull-left col-md-12" ng-repeat="each_identifier in claim.provider.identifiers">{{each_identifier.identifier}}</div>
 						</div>
 
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show = "claim.provider.identifiers" ng-show="claim.provider.identifiers[0]">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show = "claim.provider.identifiers">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
 							<div class="pull-left col-md-12" ng-repeat="each_identifier in claim.provider.identifiers">
 								<span ng-hide = 'each_identifier.identifier_type'> <br/>
@@ -106,45 +110,210 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-show="claim.lines">
+					<div class="col-md-12 pull-left" ng-show="claim.charges">
 						<h4>Charges </h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.code.code">
-							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.precondition.code.code}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.charges.insurance_paid">
+							<div class="pull-left col-md-12"><strong>Insurance Paid:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.charges.insurance_paid}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.name">
-							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.precondition.value.name}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.charges.negotiated_price">
+							<div class="pull-left col-md-12"><strong>Negotiated Price:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.charges.negotiated_price}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.code">
-							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.precondition.value.code}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.charges.patient_responsibility">
+							<div class="pull-left col-md-12"><strong>Patient Responsibilty:</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.charges.patient_responsibility}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.code_system_name">
-							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.precondition.value.code_system_name}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.charges.provider_paid">
+							<div class="pull-left col-md-12"><strong>Provider Paid</strong></div><br/>
+							<div class="pull-left col-md-12">{{claim.charges.provider_paid}}</div>
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-show="claim.lines">
-						<h4>Claim Lines</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.code.code">
-							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.precondition.code.code}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.name">
-							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.precondition.value.name}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.code">
+					<div class = "col-md-12" ng-show="claim.diagnosis"> <h4> Diagnosis </h4> </div>
+
+
+
+					<div class="col-md-12" ng-repeat="diagnosis in claim.diagnosis">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="diagnosis.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.precondition.value.code}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="claim.precondition.value.code_system_name">
-							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{claim.precondition.value.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{diagnosis.code}}</div>
 						</div>
 					</div>
+
+					
+					
+					<div ng-hide="claim.lines" class="panel-title">No claim lines are currently in your record.</div>
+					<div class="col-md-12 pull-left" ng-show="claim.lines"> <h4>Claim Lines</h4> </div>
+					<div ng-show="claim.lines" class=" col-md-12 pull-left panel-group" id="#accordian-line-{{claim.count}}" ng-repeat="line in claim.lines | orderBy:claimsPredicate">
+						<div class="panel panel-default">
+							<div class="panel-heading ">
+								<a data-toggle="collapse" data-parent="#accordian-line-{{claim.count}}"  data-target="#line-{{claim.count}}-{{$index}}">
+									<div class="panel-title" style="cursor:pointer;">
+										<span> Line Number {{$index + 1}} </span>
+										<span class="pull-right" style="text-transform:uppercase;">{{line.titleDate.displayDate}}</span>
+									</div>
+								</a>
+							</div>
+							<div id="line-{{claim.count}}-{{$index}}" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div id="myTabContent" >
+										<div class="col-md-12">
+											<h4>Details</h4>
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.service_date">
+												<div class="pull-left col-md-12"><strong>Service:</strong></div><br/>
+												<div class="pull-left col-md-12">{{line.service_date.displayDate}}</div>
+											</div>
+
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.start_date">
+												<div class="pull-left col-md-12"><strong>Start:</strong></div><br/>
+												<div class="pull-left col-md-12">{{line.start_date.displayDate}}</div>
+											</div>
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.end_date">
+												<div class="pull-left col-md-12"><strong>End:</strong></div><br/>
+												<div class="pull-left col-md-12">{{line.end_date.displayDate}}</div>
+											</div>
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.type">
+												<div class="pull-left col-md-12"><strong>Type:</strong></div>
+												<span ng-show = "line.type.name"><string> Name:</string> {{line.type.name}} </span>
+												<span ng-show = "line.type.code"><string> Code:</string> {{line.type.code}} </span>
+											</div>
+
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.quantity">
+												<div class="pull-left col-md-12"><strong>Quantity:</strong></div><br/>
+												<div class="pull-left col-md-12">{{line.quantity}}</div>
+											</div>
+										</div>
+
+										<div class="col-md-12" ng-show="line.revenue">
+											<span ng-show='line.revenue'> <h4> Revenue </h4> </span> 
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.revenue.code">
+												<div class="pull-left col-md-12"><strong>Code:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.revenue.code}}</div>
+											</div>
+
+											<div class="col-md-10 pull-left" style="margin-bottom: 10px;" ng-show="line.revenue.description">
+												<div class="pull-left col-md-12"><strong>Description:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.revenue.description}}</div>
+											</div>
+										</div>
+
+										<div class="col-md-12" ng-show="line.procedure">
+											<span ng-show='line.procedure'> <h4> Procedure </h4> </span> 
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.procedure.code">
+												<div class="pull-left col-md-12"><strong>Code:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.procedure.code}}</div>
+											</div>
+
+											<div class="col-md-10 pull-left" style="margin-bottom: 10px;" ng-show="line.procedure.description">
+												<div class="pull-left col-md-12"><strong>Description:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.procedure.description}}</div>
+											</div>
+										</div>
+
+										<div class="col-md-12 pull-left" ng-show="line.charges">
+											<h4>Charges </h4>
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.charges.insurance_paid">
+												<div class="pull-left col-md-12"><strong>Insurance Paid:</strong></div><br/>
+												<div class="pull-left col-md-12">{{line.charges.insurance_paid}}</div>
+											</div>
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.charges.negotiated_price">
+												<div class="pull-left col-md-12"><strong>Negotiated Price:</strong></div><br/>
+												<div class="pull-left col-md-12">{{line.charges.negotiated_price}}</div>
+											</div>
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.charges.patient_responsibility">
+												<div class="pull-left col-md-12"><strong>Patient Responsibilty:</strong></div><br/>
+												<div class="pull-left col-md-12">{{line.charges.patient_responsibility}}</div>
+											</div>
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.charges.provider_paid">
+												<div class="pull-left col-md-12"><strong>Provider Paid</strong></div><br/>
+												<div class="pull-left col-md-12">{{line.charges.provider_paid}}</div>
+											</div>
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.charges.price_billed">
+												<div class="pull-left col-md-12"><strong>Price Billed</strong></div><br/>
+												<div class="pull-left col-md-12">{{line.charges.price_billed}}</div>
+											</div>
+										</div>
+
+										<div class="col-md-12" ng-show="line.place_of_service">
+											<h4> Place Of Service</h4> 
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.place_of_service.name">
+												<div class="pull-left col-md-12"><strong>Name:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.place_of_service.name}}</div>
+											</div>
+
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.place_of_service.code">
+												<div class="pull-left col-md-12"><strong>Code:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.place_of_service.code}}</div>
+											</div>
+										</div>
+
+										<div class="col-md-12" ng-show="line.rendering_provider">
+											<h4> Rendering Provider</h4> 
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.rendering_provider.number">
+												<div class="pull-left col-md-12"><strong>Number:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.rendering_provider.number}}</div>
+											</div>
+
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.rendering_provider.npi">
+												<div class="pull-left col-md-12"><strong>NPI:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.rendering_provider.npi}}</div>
+											</div>
+										</div>
+
+										<div class="col-md-12" ng-show="line.drug">
+											<h4> Drug</h4> 
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.drug.name">
+												<div class="pull-left col-md-12"><strong>Name:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.drug.name}}</div>
+											</div>
+
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.drug.code">
+												<div class="pull-left col-md-12"><strong>Code:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.drug.code}}</div>
+											</div>
+										</div>
+
+										<div class="col-md-12" ng-show="line.proscriber">
+											<h4> Proscriber</h4> 
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.proscriber.name">
+												<div class="pull-left col-md-12"><strong>Name:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.proscriber.name}}</div>
+											</div>
+
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.proscriber.code">
+												<div class="pull-left col-md-12"><strong>Code:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.proscriber.code}}</div>
+											</div>
+										</div>
+
+										<div class="col-md-12" ng-show="line.provider">
+											<h4> Provider</h4> 
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.provider.name">
+												<div class="pull-left col-md-12"><strong>Name:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.provider.name}}</div>
+											</div>
+
+											<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="line.provider.code">
+												<div class="pull-left col-md-12"><strong>Code:  </strong> </div>
+												<div class="pull-left col-md-12">{{line.provider.code}}</div>
+											</div>
+										</div>
+
+
+
+
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+
+
+					
 					
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
 				</div>

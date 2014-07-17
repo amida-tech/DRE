@@ -55,23 +55,25 @@ angular.module('dre.record.claims', [])
 
     $scope.updateFields = function() {
 
-
+        //this variable is used to prevent id colllisions in claims HTML.
+        var claimCount = 0;
 
 
       for (var i in $scope.claims) {
         recordFunctions.extractName($scope.claims[i]);
         var claim = $scope.claims[i];
-        console.log(claim);
+        //id for claims, since all claims may not have claim.number
+        claim.count = i;
 
+        console.log(claim);
         claim.provider = {};
+
         claim.provider.name = 'ostrich';
         claim.provider.identifiers = [];
         var sampleIdentifier = {'identifier': '12345' ,'identifier_type': 'cms'};
         var sampleIdentifier2 = {'identifier': '12345' ,'identifier_type': 'cms'};
         claim.provider.identifiers.push(sampleIdentifier);
         claim.provider.identifiers.push(sampleIdentifier2);
-
-
 
         if(claim.name === "unknown"){
             claim.name = undefined;
@@ -87,8 +89,12 @@ angular.module('dre.record.claims', [])
             recordFunctions(formatDate(claim.end_date));
             claim.titleDate = claim.end_date;
         }
-        if(claim.titleDate){
-            recordFunctions.formatDate(claim.titleDate);
+        if(claim.service_date){
+            recordFunctions(formatDate(claim.service_date));
+            if(claim.titleDate === undefined){
+                claim.titleDate = claim.service_date;
+            }
+
         }
         //assign date weight if titleDate was defined from above
         if(claim.titleDate){
@@ -98,7 +104,18 @@ angular.module('dre.record.claims', [])
         else{
             claim.date_weight = (new Date(0)).toISOString();
         }
-        console.log(claim.payer);
+
+        for(var x in claim.lines){
+            var line = claim.lines[x];
+            if(line.start_date){
+                recordFunctions.formatDate(line.start_date);
+            }
+            if(line.end_date){
+                recordFunctions.formatDate(line.end_date);
+            }
+        }
+
+
         /*
         if ($scope.immunizations[i].performer.address) {
               for (var perAddr in $scope.immunizations[i].performer.address) {
@@ -121,3 +138,16 @@ angular.module('dre.record.claims', [])
 
   }
 ]);
+/* Scrap from tests
+
+
+claim.provider = {};
+claim.provider.name = 'ostrich';
+claim.provider.identifiers = [];
+var sampleIdentifier = {'identifier': '12345' ,'identifier_type': 'cms'};
+var sampleIdentifier2 = {'identifier': '12345' ,'identifier_type': 'cms'};
+claim.provider.identifiers.push(sampleIdentifier);
+claim.provider.identifiers.push(sampleIdentifier2);
+
+*/
+

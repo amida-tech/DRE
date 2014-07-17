@@ -125,6 +125,7 @@ angular.module('services.recordFunctions', [])
 
             function formatOutput(input_date) {
                 var tmpDateArr;
+
                 if (input_date.precision === "year") {
                     tmpDateArr = $filter('date')(input_date.date, 'yyyy');
                     input_date.displayDate = tmpDateArr;
