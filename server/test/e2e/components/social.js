@@ -101,11 +101,11 @@ describe('Social API - Test New:', function() {
 			});
 	});
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/social_history')
+	it('Get Social Match Records', function(done) {
+		api.get('/api/v1/matches/social_history')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.social_history.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -158,11 +158,11 @@ describe('Social API - Test Duplicate:', function() {
 	});
 
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/social_history')
+	it('Get Social Match Records', function(done) {
+		api.get('/api/v1/matches/social_history')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.social_history.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -224,11 +224,11 @@ describe('Social API - Test New/Dupe Mix:', function() {
 	});
 
 
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/social_history')
+	it('Get Social Match Records', function(done) {
+		api.get('/api/v1/matches/social_history')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.social_history.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -285,17 +285,6 @@ describe('Social API - Test Partial Matches:', function() {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.social_history, null, 10));
-				expect(res.body.social_history.length).to.equal(1);
-				done();
-			});
-	});
-
-
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/social_history')
-			.expect(200)
-			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.social_history, null, 10));
 				expect(res.body.social_history.length).to.equal(1);
 				done();
@@ -393,16 +382,6 @@ describe('Social API - Test Added Matches', function() {
 					}
 				}
 				expect(total_allergies).to.equal(1);
-				done();
-			});
-	});
-
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/social_history')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.social_history.length).to.equal(0);
 				done();
 			});
 	});
@@ -508,16 +487,6 @@ describe('Social API - Test Ignored Matches', function() {
 					}
 				}
 				expect(total_allergies).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/social_history')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.social_history.length).to.equal(0);
 				done();
 			});
 	});
@@ -666,16 +635,6 @@ describe('Social API - Test Merged Matches', function() {
 					}
 				}
 				expect(total_socials).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Social Records', function(done) {
-		api.get('/api/v1/record/partial/social_history')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.social_history.length).to.equal(0);
 				done();
 			});
 	});

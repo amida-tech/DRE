@@ -25,7 +25,10 @@
         "async": "0.9.x",
         "blue-button": "git://github.com/amida-tech/blue-button.git#bjs-branch",
         "blue-button-match": "git://github.com/amida-tech/blue-button-match.git#insurance-bj",
-        "blue-button-record": "git://github.com/amida-tech/blue-button-record.git#insurance-bj"
+        "blue-button-record": "git://github.com/amida-tech/blue-button-record.git#insurance-bj",
+        "blue-button": "1.0.2",
+        "blue-button-match": "1.0.1",
+        "blue-button-record": "0.2.3"
     },
     "devDependencies": {
         "grunt": "0.4.x",

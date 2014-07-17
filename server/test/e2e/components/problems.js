@@ -101,11 +101,11 @@ describe('Problems API - Test New:', function() {
 			});
 	});
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Problem Match Records', function(done) {
+		api.get('/api/v1/matches/problems')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.problems.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -158,11 +158,11 @@ describe('Problems API - Test Duplicate:', function() {
 	});
 
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Problem Match Records', function(done) {
+		api.get('/api/v1/matches/problems')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.problems.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -223,11 +223,11 @@ describe('Problems API - Test New/Dupe Mix:', function() {
 	});
 
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
+	it('Get Problem Match Records', function(done) {
+		api.get('/api/v1/matches/problems')
 			.expect(200)
 			.end(function(err, res) {
-				expect(res.body.problems.length).to.equal(0);
+				expect(res.body.matches.length).to.equal(0);
 				done();
 			});
 	});
@@ -283,17 +283,6 @@ describe('Problems API - Test Partial Matches:', function() {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.problems.length).to.equal(3);
-				done();
-			});
-	});
-
-
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
-			.expect(200)
-			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
 				expect(res.body.problems.length).to.equal(3);
 				done();
@@ -395,16 +384,6 @@ describe('Problems API - Test Added Matches', function() {
 			});
 	});
 
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.problems.length).to.equal(2);
-				done();
-			});
-	});
-
 	it('Get Problem Merge Records Post Added', function(done) {
 		api.get('/api/v1/merges/problems')
 			.expect(200)
@@ -496,16 +475,6 @@ describe('Problems API - Test Ignored Matches', function() {
 					}
 				}
 				expect(total_problems).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.problems.length).to.equal(1);
 				done();
 			});
 	});
@@ -673,16 +642,6 @@ describe('Problems API - Test Merged Matches', function() {
 					}
 				}
 				expect(total_problems).to.equal(0);
-				done();
-			});
-	});
-
-	it('Get Partial Problem Records', function(done) {
-		api.get('/api/v1/record/partial/problems')
-			.expect(200)
-			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.problems.length).to.equal(0);
 				done();
 			});
 	});
