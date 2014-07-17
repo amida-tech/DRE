@@ -20,6 +20,8 @@ var http = require('http');
 var path = require('path');
 var app = express();
 var record = require('blue-button-record');
+var winston = require('winston');
+var expressWinston = require('express-winston');
 
   app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
@@ -47,7 +49,17 @@ var record = require('blue-button-record');
 
 
 
-app.use(express.logger());
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console({
+      json: true,
+      colorize: true
+    })
+  ],
+  meta: true, // optional: control whether you want to log the meta data about the request (default to true)
+  msg: "HTTP {{req.method}} {{req.url}}" // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+}));
+
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
@@ -69,6 +81,16 @@ app.use(match);
 
 var notification = require('./lib/notification');
 app.use(notification);
+
+app.use(expressWinston.errorLogger({
+    transports: [
+      new winston.transports.Console({
+        json: true,
+        colorize: true,
+        timestamp: true,
+      })
+    ]
+  }));
 
 //Initialize Database Connection.
 var databaseServer = 'localhost';
