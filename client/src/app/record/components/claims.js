@@ -113,6 +113,9 @@ angular.module('dre.record.claims', [])
             if(line.end_date){
                 recordFunctions.formatDate(line.end_date);
             }
+            if(line.service_date){
+                recordFunctions.formatDate(line.service_date);
+            }
         }
 
 
