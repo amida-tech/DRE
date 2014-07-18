@@ -347,14 +347,14 @@
                 "product": {
                     "name": "Proventil HFA",
                     "code": "219483",
-                    "code_system_name": "RXNORM",
                     "translations": [
                         {
                             "name": "Proventil 0.09 MG/ACTUAT inhalant solution",
                             "code": "573621",
                             "code_system_name": "RXNORM"
                         }
-                    ]
+                    ],
+                    "code_system_name": "RXNORM"
                 }
             },
             "administration": {

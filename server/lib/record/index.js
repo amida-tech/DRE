@@ -46,27 +46,6 @@ app.get('/api/v1/record/:component', function(req, res) {
         sendResponse(req.params.component);
     }
 });
-<<<<<<< HEAD
-
-app.get('/api/v1/record/partial/:component', function(req, res) {
-
-    if (!supportedComponents[req.params.component]) {
-        res.send(404);
-    } else {
-
-        function sendResponse(componentName) {
-            record.getPartialSection(componentName, 'test', function(err, componentList) {
-                if (err) {
-                    res.send(500);
-                } else {
-                    var apiResponse = formatResponse(componentName, componentList);
-                    res.send(apiResponse);
-                }
-            });
-        }
-        sendResponse(req.params.component);
-    }
-});
 
 // CCDA generation. uses promise-based blue-button-record API 
 // (via bluebird module) to combine returned sections, propagating 
@@ -96,6 +75,3 @@ app.get('/api/v1/ccda', function(req, res) {
         err ? res.send(500) : res.send(bb.generateCCDA(result).toString());
     });
 });
-
-=======
->>>>>>> master
