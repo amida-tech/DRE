@@ -57,83 +57,32 @@ angular.module('dre.match.review', [])
         $scope.partial_matches = {};
         $scope.diff = {};
 
-    $scope.navPath = "templates/nav/nav.tpl.html";
+        $scope.navPath = "templates/nav/nav.tpl.html";
 
-    $scope.dynamicTemplatePath = "templates/matching/reconciliation/review/components/"+$scope.section+".tpl.html";
+        $scope.dynamicTemplatePath = "templates/matching/reconciliation/review/components/"+$scope.section+".tpl.html";
 
-    $scope.getMatch = function(matchSection) {
-        //console.log(">>",matchSection);
+        $scope.getMatch = function(matchSection) {
+            //console.log(">>",matchSection);
             $http({
                 method: 'GET',
-                url: '/api/v1/matches/' + matchSection
+                url: '/api/v1/match/' + matchSection + '/' + $scope.index
             }).
             success(function(data, status, headers, config) {
-                for (var i in data.matches) {
-                    if (data.matches[i]._id === $scope.index) {
-                        $scope.partial_matches = data.matches[i];
-                        $scope.diff=$scope.partial_matches.diff;
-                        //console.log($scope.partial_matches);
-                    }
-                }
+                $scope.partial_matches = data;
+                $scope.diff=$scope.partial_matches.diff;
+                recordFunctions.extractName(data.match_entry);
+                $scope.src_el = data.match_entry;    
+                $scope.src_copy_el = angular.copy($scope.src_el);
+                recordFunctions.extractName(data.entry);
+                $scope.dest_el = data.entry;
+                $scope.dest_copy_el = angular.copy($scope.dest_el);
             }).
             error(function(data, status, headers, config) {
                 console.log('error');
             });
+        };
 
-    };
-
-    $scope.getMatch($scope.section);
-
-        //load partials and pull right one from url string param.
-        function getPartialSections(loadsec) {
-            //console.log(loadsec);
-            $http({
-                method: 'GET',
-                url: '/api/v1/record/partial/' + loadsec
-            }).
-            success(function(data, status, headers, config) {
-                for (var i in data[loadsec]) {
-
-                    recordFunctions.extractName(data[loadsec][i]);
-                    //console.log(data[loadsec][i]);
-                    //console.log($scope.dest_id);
-                    if (data[loadsec][i]._id === $scope.dest_id) {
-                            $scope.src_el = data[loadsec][i];    
-                            $scope.src_copy_el = angular.copy($scope.src_el);
-
-                    }
-                }
-            }).
-            error(function(data, status, headers, config) {
-                console.log('error');
-            });
-        }
-
-        function getMasterSections(loadsec) {
-            //console.log(loadsec);
-            $http({
-                method: 'GET',
-                url: '/api/v1/record/' + loadsec
-            }).
-            success(function(data, status, headers, config) {
-                for (var i in data[loadsec]) {
-                    //console.log(data[loadsec][i]._id);
-                    //console.log($scope.dest_id);
-                    recordFunctions.extractName(data[loadsec][i]);
-                    if (data[loadsec][i]._id === $scope.src_id) {
-                        $scope.dest_el = data[loadsec][i];
-                        $scope.dest_copy_el = angular.copy($scope.dest_el);
-                    }
-                }
-            }).
-            error(function(data, status, headers, config) {
-                console.log('error');
-            });
-        }
-
-        getPartialSections($scope.section);
-        getMasterSections($scope.section);
-
+        $scope.getMatch($scope.section);
 
         //close match, save new entry as separate entry from master entry
         $scope.createNew = function() {

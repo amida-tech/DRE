@@ -124,8 +124,8 @@ function getNotifications (callback) {
     checkDone();
   });
 
-  function getRecordCount(callback) {
-    record.recordCount('test', function(err, count) {
+  function getSourceCount(callback) {
+    record.sourceCount('test', function(err, count) {
       if (err) {
         callback(err);
       } else {
@@ -136,7 +136,7 @@ function getNotifications (callback) {
     });
   }
 
-  getRecordCount(function(err) {
+  getSourceCount(function(err) {
     checkDone();
   });
 

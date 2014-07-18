@@ -46,6 +46,7 @@ app.get('/api/v1/record/:component', function(req, res) {
         sendResponse(req.params.component);
     }
 });
+<<<<<<< HEAD
 
 app.get('/api/v1/record/partial/:component', function(req, res) {
 
@@ -96,3 +97,5 @@ app.get('/api/v1/ccda', function(req, res) {
     });
 });
 
+=======
+>>>>>>> master

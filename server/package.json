@@ -25,8 +25,12 @@
         "async": "0.9.x",
         "blue-button": "1.0.4",
         "blue-button-match": "1.0.1",
+<<<<<<< HEAD
         "blue-button-record": "0.2.0",
         "bluebird": "2.2.x"
+=======
+        "blue-button-record": "0.2.3"
+>>>>>>> master
     },
     "devDependencies": {
         "grunt": "0.4.x",
