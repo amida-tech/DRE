@@ -23,9 +23,10 @@
         "deep-equal": "0.2.x",
         "underscore": "1.6.x",
         "async": "0.9.x",
-        "blue-button": "1.0.2",
+        "blue-button": "1.0.4",
         "blue-button-match": "1.0.1",
-        "blue-button-record": "0.2.3"
+        "blue-button-record": "1.0.0",
+        "bluebird": "2.2.x"
     },
     "devDependencies": {
         "grunt": "0.4.x",

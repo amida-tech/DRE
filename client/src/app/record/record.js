@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
+var supportedComponents = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals'];
+
 angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals'])
 
 .config(['$routeProvider',
@@ -24,8 +26,13 @@ function($routeProvider) {
   });
 }])
 
-  .controller('recordCtrl', ['$scope', '$http', '$location', 'getNotifications',
-    function($scope, $http, $location, getNotifications) {
+  .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 'getNotifications', 
+    function($scope, $filter, $http, $q, $location, fileDownload, getNotifications) {
+      
+      // have download ready to go on page load    
+      $scope.init = function() {
+        $scope.downloadData();
+      };
 
       $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
@@ -37,19 +44,30 @@ function($routeProvider) {
       $scope.resultsPath = "templates/record/components/results.tpl.html";
       $scope.vitalsPath = "templates/record/components/vitals.tpl.html";
 
-      $scope.dismissModal = function (index) {
+      $scope.dismissModal = function(index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {
             $location.path("/storage");
             $scope.$apply();
         });
       };
 
+      /* generate ccda for download by calling /ccda API endpoint */
+      $scope.downloadData = function() {
+        fileDownload.downloadFile("api/v1/ccda/", function(err, res) {
+          if (err) {
+            console.log(err);
+          }
+          var blob = new Blob([ res ], { type : 'text/xml' });
+          $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
+        });
+      };
+
+      $scope.init();
+
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;
       });
-
-      
 
     }
   ]);
