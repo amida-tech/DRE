@@ -12,7 +12,9 @@ var record = require('blue-button-record');
     'social_history',
     'immunizations',
     'demographics',
-    'problems'
+    'problems',
+    'insurance',
+    'claims'
   ];
 
 function getNotifications (callback) {
@@ -57,7 +59,6 @@ function getNotifications (callback) {
           callback(err);
         } else {
           partialCount = partialCount + count;
-          //console.log(unreviewedCount);
           checkCountComplete();
         }
       });
@@ -71,7 +72,7 @@ function getNotifications (callback) {
   function getNewMergeCount(callback) {
     var secIteration = 0;
     var secTotal = supportedComponents.length;
-  
+
     function checkCountComplete() {
       secIteration++;
       if (secIteration === secTotal) {

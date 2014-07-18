@@ -138,12 +138,8 @@ function getSavedRecords(saved_sections, callback) {
 
 //Parses raw inbound records into components.
 function parseRecord(record_type, record_data, callback) {
-    console.log('record type duddee' + record_type);
     if (record_type === 'application/xml' || record_type === 'text/xml' || record_type == 'text/plain') {
         extractRecord(record_data, function(err, xml_type, parsed_record) {
-
-            console.log('xml_type');
-            console.log(xml_type);
             if (err) {
                 callback(err);
             } else {

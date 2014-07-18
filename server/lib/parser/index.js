@@ -5,13 +5,11 @@ var bb = require('blue-button');
 
 function extractRecord(inputRecord, callback) {
 
-    console.log('parser logic running');
 	var bbRecord;
 	var bbRecordType;
 
 	try {
 		bbRecordType = bb.senseString(inputRecord);
-        console.log('testing the record type!' + JSON.stringify(bbRecordType, null, 4));
         if(bbRecordType.type === 'cms'){
             bbRecord = bb.parseText(inputRecord);
         }
@@ -23,7 +21,6 @@ function extractRecord(inputRecord, callback) {
 	} catch (parseError) {
 		callback(parseError);
 	}
-    console.log(JSON.stringify(bbRecordType, null, 4));
 	if (bbRecordType.type === 'ccda') {
 		callback(null, 'ccda', bbRecord.data);
     }
