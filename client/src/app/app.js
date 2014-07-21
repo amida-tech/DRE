@@ -25,8 +25,9 @@ var dre = angular
         'dre.match.review',
         'directives.fileModel',
         'services.fileUpload',
+        'services.fileDownload',
         'services.getNotifications',
-        'services.recordFunctions'
+        'services.recordFunctions',
     ])
     .filter('bb_date', function($filter) {
         //Format Blue Button date JSON struct into string (with precision)
@@ -570,12 +571,13 @@ var dre = angular
     })
 
 
-.config(['$routeProvider', '$locationProvider',
-    function($routeProvider, $locationProvider) {
+.config(['$routeProvider', '$locationProvider', '$compileProvider',
+    function($routeProvider, $locationProvider, $compileProvider) {
         $routeProvider.when('/', {
             templateUrl: 'templates/dashboard/dashboard.tpl.html',
             controller: 'dashboardCtrl'
         });
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob):/);
 
     }
 ])

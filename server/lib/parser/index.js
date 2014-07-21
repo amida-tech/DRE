@@ -24,12 +24,12 @@ function extractRecord(inputRecord, callback) {
 	if (bbRecordType.type === 'ccda') {
 		callback(null, 'ccda', bbRecord.data);
     }
-    if (bbRecordType.type === 'cms'){
+    else if (bbRecordType.type === 'cms'){
         callback(null, 'cms', bbRecord.data);
 	} else {
 		callback(null);
 	}
-
+    console.log(JSON.stringify(bbRecord, null, 4));
 }
 
 module.exports.extractRecord = extractRecord;

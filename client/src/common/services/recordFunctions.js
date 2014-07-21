@@ -21,9 +21,14 @@ angular.module('services.recordFunctions', [])
 
         //Builds field displayName attribute.
         this.extractName = function(inputSection) {
-
-            //console.log(inputSection);
-
+            /*
+            console.log('input section');
+            console.log(JSON.stringify(inputSection, null, 4));
+            console.log('----------------');
+            */
+            console.log('--this is at extra names--');
+            console.log(inputSection);
+            console.log('------------');
             if (inputSection.allergen) {
                 inputSection.name = inputSection.allergen.name;
             }
@@ -45,21 +50,37 @@ angular.module('services.recordFunctions', [])
             else if (inputSection.vital) {
                 inputSection.name = inputSection.vital.name;
             }
+            //insurance
             else if (inputSection.plan_name) {
                 inputSection.name = inputSection.plan_name;
+                console.log('insurance trigger');
             }
             else if(inputSection.payer_name){
                 inputSection.name = inputSection.payer_name;
+            }
+            //claims
+            else if(inputSection.payer || inputSection.number){
+                inputSection.name = "";
+                if(inputSection.payer){
+                    inputSection.name += inputSection.payer;
+                }
+                if(inputSection.number){
+                    inputSection.name = inputSection.payer[0];
+                }
             }
             else if (inputSection.smoking_statuses) {
                 inputSection.name = "Smoking Status";
             }
             else{
-                inputSection.name = 'unknown';
+
+                inputSection.name = 'where is the name';
             }
 
+            //console.log('state of the name');
+            //console.log(inputSection.name);
             return inputSection;
         };
+
 
         //Returns printable array from address.
         this.formatAddress = function(address) {
@@ -196,7 +217,9 @@ angular.module('services.recordFunctions', [])
                 vitals: 'vital',
                 results: 'result',
                 encounters: 'encounter',
-                problems: 'problem'
+                problems: 'problem',
+                insurance: 'insurance',
+                claims: 'claims'
             };
 
             return function(sectionName) {

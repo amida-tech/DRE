@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =====================================`=================================*/
 
-angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims'])
+var supportedComponents = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals', 'claims', 'insurance'];
 
+angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims']);
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/record', {
@@ -24,8 +25,13 @@ function($routeProvider) {
   });
 }])
 
-  .controller('recordCtrl', ['$scope', '$http', '$location', 'getNotifications',
-    function($scope, $http, $location, getNotifications) {
+  .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 'getNotifications',
+    function($scope, $filter, $http, $q, $location, fileDownload, getNotifications) {
+
+      // have download ready to go on page load
+      $scope.init = function() {
+        $scope.downloadData();
+      };
 
       $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
@@ -39,19 +45,35 @@ function($routeProvider) {
       $scope.insurancePath  = "templates/record/components/insurance.tpl.html";
       $scope.claimsPath = "templates/record/components/claims.tpl.html";
 
-      $scope.dismissModal = function (index) {
+      $scope.dismissModal = function(index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {
             $location.path("/storage");
             $scope.$apply();
         });
       };
 
+      /* generate ccda for download by calling /ccda API endpoint */
+      $scope.downloadData = function() {
+        fileDownload.downloadFile("api/v1/ccda/", function(err, res) {
+          if (err) {
+            console.log(err);
+          }
+          var blob = new Blob([ res ], { type : 'text/xml' });
+          $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
+        });
+      };
+
+      $scope.init();
+
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;
       });
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 7d993219d329bd8b20cb08185ba638aff4f4a493
     }
   ]);
