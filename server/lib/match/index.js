@@ -57,56 +57,6 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
     }
 }
 
-function formatName(inputName) {
-    var outputName = "";
-
-    if (inputName.last && inputName.first) {
-        outputName = inputName.first + " " + inputName.last;
-    } else if (inputName.first) {
-        outputName = inputName.first;
-    } else if (inputName.last) {
-        outputName = inputName.last;
-    }
-    //TODO:  Add middle name handler, prefix, and suffix.
-    inputName.displayName = outputName;
-
-    return inputName;
-}
-
-var formatSectionEntry = {
-    immunizations: function(entry) {
-        if (entry.product.name) {
-            entry.name = entry.product.name;
-        }
-    },
-    medications: function(entry) {
-        if (entry.product.name) {
-            entry.name = entry.product.name;
-        }
-    },
-    social_history: function(entry) {
-        if (entry.value) {
-            entry.name = entry.value;
-        }
-    },
-    demographics: function(entry) {
-        if (entry.name) {
-            var tmpName = formatName(entry.name).displayName;
-            entry.name = tmpName;
-        }
-    }
-}
-
-function formatSectionEntries(secName, inputMerge) {
-    var formatEntry = formatSectionEntry[secName];
-    if (formatEntry) {
-        for (var iMerge in inputMerge) {
-            formatEntry(inputMerge[iMerge].entry);
-            formatEntry(inputMerge[iMerge].match_entry);
-        }
-    }
-}
-
 // Get all matches API.
 app.get('/api/v1/matches/:component', function(req, res) {
 
@@ -120,7 +70,6 @@ app.get('/api/v1/matches/:component', function(req, res) {
             } else {
                 var matchJSON = {};
                 matchJSON.matches = matchList;
-                formatSectionEntries(req.params.component, matchJSON.matches);
                 res.send(matchJSON);
             }
         });
