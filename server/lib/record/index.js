@@ -4,6 +4,7 @@ var Promise = require("bluebird");
 var record = require('blue-button-record');
 var bb = require('blue-button');
 var _ = require('underscore');
+var fs = require('fs');
 
 // blue bird to promisify record API
 Promise.promisifyAll(require("blue-button-record"));
@@ -76,13 +77,12 @@ function prep(sec, secName) {
 }
    
 function getCCDA(callback) {
-    var aggregatedResponse = {}, count = 0;
+    var aggregatedResponse = {}, count = 0, components = Object.keys(supportedComponents);
 
-    Object.keys(supportedComponents).forEach(function(secName) {
+    components.forEach(function(secName) {
         record.getSectionAsync(secName, 'test').then(function(sec) {
-            sec = prep(sec, secName);
-            _.extend(aggregatedResponse, formatResponse(secName, sec));
-            if (++count == 10)
+            _.extend(aggregatedResponse, formatResponse(secName, prep(sec, secName)));
+            if (++count === components.length)
                 callback(null, aggregatedResponse);
         }).catch(function(e) {
             callback("Error");
@@ -92,7 +92,24 @@ function getCCDA(callback) {
 
 app.get('/api/v1/ccda', function(req, res) {
     getCCDA(function(err, result) {
-        err ? res.send(500) : res.send(bb.generateCCDA(result).toString());
+       
+
+       
+        if (err)
+            res.send(500);
+        else {
+            // fs.writeFileSync('../../files/master_health_record_ccda.xml', bb.generateCCDA(result).toString());
+            // var filepath = __dirname;
+            // console.log(filepath);
+            // res.setHeader('Content-disposition', 'attachment; filename=' + '../../files/master_health_record_ccda.xml');
+            // res.setHeader('Content-type', 'application/octet-stream');
+            // var file = fs.createReadStream(filepath);
+            // file.pipe(res);
+            res.send(bb.generateCCDA(result).toString())
+        } 
+        // console.log(filepath);
+      
+        // err ? res.send(500) : res.send(bb.generateCCDA(result).toString());
     });
 });
 
