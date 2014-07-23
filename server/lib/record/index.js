@@ -96,9 +96,8 @@ app.get('/api/v1/ccda', function(req, res) {
         if (err) {
             res.send(500);
         } else {
-            var filePath = __dirname + '/files/master_health_record_ccda.xml';
-            fs.writeFileSync(filePath, bb.generateCCDA(result).toString());
-            res.download(filePath);
+            res.setHeader('Content-disposition', 'attachment; filename=' + 'ccda_record.xml');
+            res.send(bb.generateCCDA(result).toString());
         } 
     });
 });
