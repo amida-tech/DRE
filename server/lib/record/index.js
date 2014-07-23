@@ -11,7 +11,7 @@ Promise.promisifyAll(require("blue-button-record"));
 var supportedComponents = {
     allergies: 'allergies', procedures: 'procedures', immunizations: 'immunizations', medications: 'medications',
     encounters: 'encounters', vitals: 'vitals', results: 'results', social_history: 'social_history',
-    demographics: 'demographics', problems: 'problems' , 'insurance':insurance, 'claims':claims
+    demographics: 'demographics', problems: 'problems' , insurance: 'insurance', claims: 'claims'
 }
 
 function formatResponse(srcComponent, srcResponse) {

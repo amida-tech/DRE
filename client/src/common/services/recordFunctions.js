@@ -53,7 +53,6 @@ angular.module('services.recordFunctions', [])
             //insurance
             else if (inputSection.plan_name) {
                 inputSection.name = inputSection.plan_name;
-                console.log('insurance trigger');
             }
             else if(inputSection.payer_name){
                 inputSection.name = inputSection.payer_name;
@@ -72,8 +71,7 @@ angular.module('services.recordFunctions', [])
                 inputSection.name = "Smoking Status";
             }
             else{
-
-                inputSection.name = 'where is the name';
+                inputSection.name = 'unknown';
             }
 
             //console.log('state of the name');

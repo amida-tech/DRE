@@ -16,7 +16,7 @@ limitations under the License.
 
 var supportedComponents = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals', 'claims', 'insurance'];
 
-angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims']);
+angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims'])
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/record', {
@@ -69,11 +69,5 @@ function($routeProvider) {
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;
       });
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7d993219d329bd8b20cb08185ba638aff4f4a493
     }
   ]);

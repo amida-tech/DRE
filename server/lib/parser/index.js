@@ -12,6 +12,7 @@ function extractRecord(inputRecord, callback) {
 		bbRecordType = bb.senseString(inputRecord);
         if(bbRecordType.type === 'cms'){
             bbRecord = bb.parseText(inputRecord);
+            //console.log(JSON.stringify(bbRecord, null, 4));
         }
         else{
             bbRecord = bb.parseString(inputRecord);
@@ -29,7 +30,7 @@ function extractRecord(inputRecord, callback) {
 	} else {
 		callback(null);
 	}
-    console.log(JSON.stringify(bbRecord, null, 4));
+
 }
 
 module.exports.extractRecord = extractRecord;
