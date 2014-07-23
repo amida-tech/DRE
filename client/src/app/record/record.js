@@ -28,11 +28,6 @@ function($routeProvider) {
 
   .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 'getNotifications', 
     function($scope, $filter, $http, $q, $location, fileDownload, getNotifications) {
-      
-      // have download ready to go on page load    
-      $scope.init = function() {
-        $scope.downloadData();
-      };
 
       $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
@@ -50,20 +45,7 @@ function($routeProvider) {
             $scope.$apply();
         });
       };
-
-      /* generate ccda for download by calling /ccda API endpoint */
-      $scope.downloadData = function() {
-        fileDownload.downloadFile("api/v1/ccda/", function(err, res) {
-          if (err) {
-            console.log(err);
-          }
-          var blob = new Blob([ res ], { type : 'text/xml' });
-          $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
-        });
-      };
-
-      $scope.init();
-
+    
       $scope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;

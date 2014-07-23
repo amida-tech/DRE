@@ -5,6 +5,7 @@ var record = require('blue-button-record');
 var bb = require('blue-button');
 var _ = require('underscore');
 var fs = require('fs');
+var path = require('path');
 
 // blue bird to promisify record API
 Promise.promisifyAll(require("blue-button-record"));
@@ -92,24 +93,13 @@ function getCCDA(callback) {
 
 app.get('/api/v1/ccda', function(req, res) {
     getCCDA(function(err, result) {
-       
-
-       
-        if (err)
+        if (err) {
             res.send(500);
-        else {
-            // fs.writeFileSync('../../files/master_health_record_ccda.xml', bb.generateCCDA(result).toString());
-            // var filepath = __dirname;
-            // console.log(filepath);
-            // res.setHeader('Content-disposition', 'attachment; filename=' + '../../files/master_health_record_ccda.xml');
-            // res.setHeader('Content-type', 'application/octet-stream');
-            // var file = fs.createReadStream(filepath);
-            // file.pipe(res);
-            res.send(bb.generateCCDA(result).toString())
+        } else {
+            var filePath = __dirname + '/files/master_health_record_ccda.xml';
+            fs.writeFileSync(filePath, bb.generateCCDA(result).toString());
+            res.download(filePath);
         } 
-        // console.log(filepath);
-      
-        // err ? res.send(500) : res.send(bb.generateCCDA(result).toString());
     });
 });
 
