@@ -3,6 +3,7 @@ node_modules
 
 .project
 .settings
+.vagrant
 
 server/coverage
 client/coverage
