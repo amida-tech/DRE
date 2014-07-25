@@ -1,255 +1,239 @@
+<div class="col-md-12" ng-controller="demographicsCtrl">
+	<br/>
+	<h5 class="lead">Profile</h5>
+	<form role="form" class="form-horizontal">
 
-
-<div class="fluid-container col-md-12">
-	<div class="row">
-		<div ng-include="navPath"></div>
-		<div class="col-md-9">
+		<!--Profile Information-->
+		<div class="col-md-12 form-group">
+			<legend>Personal Information</legend>
 			<div class="col-md-12">
-				<br/>
-				<span class="lead">Profile</span>
-				<br/>
-				<br/>
+				<label for="first_name" class="col-sm-2 control-label">First Name</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly readonly class="form-control" id="first_name" placeholder="Enter first name" value="{{demographics.name.first}}">
+				</div>
 			</div>
 
-			<div ng-controller="demographicsCtrl">
-				
-				<div class="col-md-12">
-					<form role="form" class="form-horizontal">
+			<div class="col-md-12">
+				<label for="middle_name" class="col-sm-2 control-label">Middle Name</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly readonly class="form-control" id="middle_name" placeholder="Enter middle name" value="{{demographics.name.middle[0]}}">
+				</div>
+			</div>
 
-						<!--Profile Information-->
-						<div class="form-group">
-							<legend>Personal Information</legend>
-							<div class="col-md-12">
-								<label for="first_name" class="col-sm-2 control-label">First Name</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly readonly class="form-control" id="first_name" placeholder="Enter first name" value="{{demographics.name.first}}">
-								</div>
-							</div>
+			<div class="col-md-12">
+				<label for="last_name" class="col-sm-2 control-label">Last Name</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="last_name" placeholder="Enter last name" value="{{demographics.name.last}}">
+				</div>
+			</div>
 
-							<div class="col-md-12">
-								<label for="middle_name" class="col-sm-2 control-label">Middle Name</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly readonly class="form-control" id="middle_name" placeholder="Enter middle name" value="{{demographics.name.middle[0]}}">
-								</div>
-							</div>
+			<div class="col-md-12">
+				<label for="dob" class="col-sm-2 control-label">Date of Birth</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="dob" placeholder="Enter date of birth" value="{{demographics.dob[0].date | date:'shortDate'}}">
+				</div>
+			</div>
 
-							<div class="col-md-12">
-								<label for="last_name" class="col-sm-2 control-label">Last Name</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="last_name" placeholder="Enter last name" value="{{demographics.name.last}}">
-								</div>
-							</div>
+			<div class="col-md-12">
+				<label for="gender" class="col-sm-2 control-label">Gender</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gender" placeholder="Enter gender" value="{{demographics.gender}}">
+				</div>
+			</div>
 
-							<div class="col-md-12">
-								<label for="dob" class="col-sm-2 control-label">Date of Birth</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="dob" placeholder="Enter date of birth" value="{{demographics.dob[0].date | date:'shortDate'}}">
-								</div>
-							</div>
-
-							<div class="col-md-12">
-								<label for="gender" class="col-sm-2 control-label">Gender</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="gender" placeholder="Enter gender" value="{{demographics.gender}}">
-								</div>
-							</div>
-
-							<div class="col-md-12">
-								<label for="ethnicity" class="col-sm-2 control-label">Ethnicity</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="ethnicity" placeholder="Enter race of ethnicity" value="{{demographics.race_ethnicity}}">
-								</div>
-							</div>
-							<div class="col-md-12">
-								<label for="language" class="col-sm-2 control-label">Language</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="language" placeholder="Enter language" value="{{demographics.languages[0].language | bb_language}}">
-								</div>
-							</div>
-							<div class="col-md-12">
-								<label for="marital" class="col-sm-2 control-label">Marital Status</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="marital" placeholder="Enter marital status" value="{{demographics.marital_status}}">
-								</div>
-							</div>
-							<div class="col-md-12">
-								<label for="religion" class="col-sm-2 control-label">Religion</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="religion" placeholder="Enter religion" value="{{demographics.religion}}">
-								</div>
-							</div>
-							<div class="col-md-12">
-								<label for="smoking" class="col-sm-2 control-label">Smoking Status</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="smoking" placeholder="Enter smoking status" value="{{demographics.smoking_status}}">
-								</div>
-							</div>
-						</div>
-
-
-						<!--Contact Information-->
-						<div class="form-group">
-							<legend>Contact Information</legend>
-							<div class="col-md-12">
-								<label for="email" class="col-sm-2 control-label">Email</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="email" placeholder="Enter email address" value="{{demographics.email[0].address}}">
-								</div>
-							</div>
-
-							<div class="col-md-12">
-								<label for="phone" class="col-sm-2 control-label">Phone</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="phone" placeholder="Enter phone number" value="{{demographics.phone[0].number}}">
-								</div>
-							</div>
-
-							<div class="col-md-12">
-								<label for="address_line_1" class="col-sm-2 control-label">Street Address</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="address_line_1" placeholder="Enter address line 1" value="{{demographics.addresses[0].streetLines[0]}}">
-								</div>
-							</div>
-
-							<div class="col-md-12">
-								<label for="address_line_2" class="col-sm-2 control-label"></label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="address_line_2" placeholder="Enter address line 2" value="{{demographics.addresses[0].streetLines[1]}}">
-								</div>
-							</div>
-
-							<div class="col-md-12">
-								<label for="address_line_3" class="col-sm-2 control-label"></label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="address_line_3" placeholder="Enter address line 3" value="{{demographics.addresses[0].streetLines[2]}}">
-								</div>
-							</div>
-
-							<div class="col-md-12">
-								<label for="address_line_4" class="col-sm-2 control-label"></label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="address_line_4" placeholder="Enter address line 4" value="{{demographics.addresses[0].streetLines[3]}}">
-								</div>
-							</div>
-
-							<div class="col-md-12">
-								<label for="city" class="col-sm-2 control-label">City</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="city" placeholder="Enter city" value="{{demographics.addresses[0].city}}">
-								</div>
-							</div>
-
-							<div class="col-md-12">
-								<label for="state" class="col-sm-2 control-label">State</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="state" placeholder="Enter state" value="{{demographics.addresses[0].state}}">
-								</div>
-							</div>
-							<div class="col-md-12">
-								<label for="zip" class="col-sm-2 control-label">Postal Code</label>
-								<div class="col-sm-6" style="margin-bottom:20px;">
-									<input type="text" readonly class="form-control" id="zip" placeholder="Enter postal code" value="{{demographics.addresses[0].zip}}">
-								</div>
-							</div>
-
-							<!--Guardian-->
-							<div class="form-group">
-								<legend>Guardian Information</legend>
-								<div class="col-md-12">
-									<label for="gr_first_name" class="col-sm-2 control-label">First Name</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_first_name" placeholder="Enter first name" value="{{demographics.guardians[0].names[0].first}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_middle_name" class="col-sm-2 control-label">Middle Name</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_middle_name" placeholder="Enter middle name" value="{{demographics.guardians[0].names[0].middle[0]}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_last_name" class="col-sm-2 control-label">Last Name</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_last_name" placeholder="Enter last name" value="{{demographics.guardians[0].names[0].last}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_relationship" class="col-sm-2 control-label">Relationship</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_relationship" placeholder="Enter relationship" value="{{demographics.guardians[0].relation}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="email" class="col-sm-2 control-label">Email</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="email" placeholder="Enter email address" value="{{demographics.guardians[0].email[0].address}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_phone" class="col-sm-2 control-label">Phone</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_phone" placeholder="Enter phone number" value="{{demographics.guardians[0].phone[0].number}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_address_line_1" class="col-sm-2 control-label">Street Address</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_address_line_1" placeholder="Enter address line 1" value="{{demographics.guardians[0].addresses[0].streetLines[0]}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_address_line_2" class="col-sm-2 control-label"></label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_address_line_2" placeholder="Enter address line 2" value="{{demographics.guardians[0].addresses[0].streetLines[1]}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_address_line_3" class="col-sm-2 control-label"></label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_address_line_3" placeholder="Enter address line 3" value="{{demographics.guardians[0].addresses[0].streetLines[2]}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_address_line_4" class="col-sm-2 control-label"></label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_address_line_4" placeholder="Enter address line 4" value="{{demographics.addresses[0].streetLines[3]}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_city" class="col-sm-2 control-label">City</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_city" placeholder="Enter city" value="{{demographics.guardians[0].addresses[0].city}}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<label for="gr_state" class="col-sm-2 control-label">State</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_state" placeholder="Enter state" value="{{demographics.guardians[0].addresses[0].state}}">
-									</div>
-								</div>
-								<div class="col-md-12">
-									<label for="gr_zip" class="col-sm-2 control-label">Postal Code</label>
-									<div class="col-sm-6" style="margin-bottom:20px;">
-										<input type="text" readonly class="form-control" id="gr_zip" placeholder="Enter postal code" value="{{demographics.guardians[0].addresses[0].zip}}">
-									</div>
-								</div>
-							</div>
-
-						</div>
-
-					</form>
+			<div class="col-md-12">
+				<label for="ethnicity" class="col-sm-2 control-label">Ethnicity</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="ethnicity" placeholder="Enter race of ethnicity" value="{{demographics.race_ethnicity}}">
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label for="language" class="col-sm-2 control-label">Language</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="language" placeholder="Enter language" value="{{demographics.languages[0].language | bb_language}}">
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label for="marital" class="col-sm-2 control-label">Marital Status</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="marital" placeholder="Enter marital status" value="{{demographics.marital_status}}">
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label for="religion" class="col-sm-2 control-label">Religion</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="religion" placeholder="Enter religion" value="{{demographics.religion}}">
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label for="smoking" class="col-sm-2 control-label">Smoking Status</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="smoking" placeholder="Enter smoking status" value="{{demographics.smoking_status}}">
 				</div>
 			</div>
 		</div>
-	</div>
+
+
+		<!--Contact Information-->
+		<div class="form-group">
+			<legend>Contact Information</legend>
+			<div class="col-md-12">
+				<label for="email" class="col-sm-2 control-label">Email</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="email" placeholder="Enter email address" value="{{demographics.email[0].address}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="phone" class="col-sm-2 control-label">Phone</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="phone" placeholder="Enter phone number" value="{{demographics.phone[0].number}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="address_line_1" class="col-sm-2 control-label">Street Address</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="address_line_1" placeholder="Enter address line 1" value="{{demographics.addresses[0].streetLines[0]}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="address_line_2" class="col-sm-2 control-label"></label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="address_line_2" placeholder="Enter address line 2" value="{{demographics.addresses[0].streetLines[1]}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="address_line_3" class="col-sm-2 control-label"></label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="address_line_3" placeholder="Enter address line 3" value="{{demographics.addresses[0].streetLines[2]}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="address_line_4" class="col-sm-2 control-label"></label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="address_line_4" placeholder="Enter address line 4" value="{{demographics.addresses[0].streetLines[3]}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="city" class="col-sm-2 control-label">City</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="city" placeholder="Enter city" value="{{demographics.addresses[0].city}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="state" class="col-sm-2 control-label">State</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="state" placeholder="Enter state" value="{{demographics.addresses[0].state}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="zip" class="col-sm-2 control-label">Postal Code</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="zip" placeholder="Enter postal code" value="{{demographics.addresses[0].zip}}">
+				</div>
+			</div>
+		</div>
+
+		<!--Guardian-->
+		<div class="form-group">
+			<legend>Guardian Information</legend>
+			<div class="col-md-12">
+				<label for="gr_first_name" class="col-sm-2 control-label">First Name</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_first_name" placeholder="Enter first name" value="{{demographics.guardians[0].names[0].first}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_middle_name" class="col-sm-2 control-label">Middle Name</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_middle_name" placeholder="Enter middle name" value="{{demographics.guardians[0].names[0].middle[0]}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_last_name" class="col-sm-2 control-label">Last Name</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_last_name" placeholder="Enter last name" value="{{demographics.guardians[0].names[0].last}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_relationship" class="col-sm-2 control-label">Relationship</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_relationship" placeholder="Enter relationship" value="{{demographics.guardians[0].relation}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="email" class="col-sm-2 control-label">Email</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="email" placeholder="Enter email address" value="{{demographics.guardians[0].email[0].address}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_phone" class="col-sm-2 control-label">Phone</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_phone" placeholder="Enter phone number" value="{{demographics.guardians[0].phone[0].number}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_address_line_1" class="col-sm-2 control-label">Street Address</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_address_line_1" placeholder="Enter address line 1" value="{{demographics.guardians[0].addresses[0].streetLines[0]}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_address_line_2" class="col-sm-2 control-label"></label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_address_line_2" placeholder="Enter address line 2" value="{{demographics.guardians[0].addresses[0].streetLines[1]}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_address_line_3" class="col-sm-2 control-label"></label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_address_line_3" placeholder="Enter address line 3" value="{{demographics.guardians[0].addresses[0].streetLines[2]}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_address_line_4" class="col-sm-2 control-label"></label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_address_line_4" placeholder="Enter address line 4" value="{{demographics.addresses[0].streetLines[3]}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_city" class="col-sm-2 control-label">City</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_city" placeholder="Enter city" value="{{demographics.guardians[0].addresses[0].city}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_state" class="col-sm-2 control-label">State</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_state" placeholder="Enter state" value="{{demographics.guardians[0].addresses[0].state}}">
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<label for="gr_zip" class="col-sm-2 control-label">Postal Code</label>
+				<div class="col-sm-6" style="margin-bottom:20px;">
+					<input type="text" readonly class="form-control" id="gr_zip" placeholder="Enter postal code" value="{{demographics.guardians[0].addresses[0].zip}}">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
