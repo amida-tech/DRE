@@ -25,8 +25,8 @@ angular.module('dre.storage', ['directives.fileModel'])
   }
 ])
 
-.controller('storageCtrl', ['$rootScope', '$scope', '$http', '$location', 'fileUpload', 'getNotifications',
-  function($rootScope, $scope, $http, $location, fileUpload, getNotifications) {
+.controller('storageCtrl', ['$rootScope', '$scope', '$route', '$http', '$location', 'fileUpload', 'getNotifications',
+  function($rootScope, $scope, $route, $http, $location, fileUpload, getNotifications) {
 
     $scope.predicate = "-file_upload_date";
 
@@ -94,6 +94,7 @@ angular.module('dre.storage', ['directives.fileModel'])
         }
         $scope.myFile = null;
         $scope.refreshRecords();
+        $route.reload();
       });
 
     };
