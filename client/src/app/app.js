@@ -576,7 +576,7 @@ var dre = angular
 ]);
 
 // For notification updates, tie to rootScope
-dre.controller('MainCtrl',
+dre.controller('MainCtrl', ['$rootScope', 'getNotifications',
   function($rootScope, getNotifications) {
 
     $rootScope.notifications = {};
@@ -585,4 +585,4 @@ dre.controller('MainCtrl',
     });
 
   }
-);
+]);
