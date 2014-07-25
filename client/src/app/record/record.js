@@ -26,15 +26,14 @@ function($routeProvider) {
   });
 }])
 
-  .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 'getNotifications', 
-    function($scope, $filter, $http, $q, $location, fileDownload, getNotifications) {
+  .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 
+    function($scope, $filter, $http, $q, $location, fileDownload) {
       
       // have download ready to go on page load    
       $scope.init = function() {
         $scope.downloadData();
       };
 
-      $scope.navPath = "templates/nav/nav.tpl.html";
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
       $scope.allergiesPath = "templates/record/components/allergies.tpl.html";
       $scope.encountersPath = "templates/record/components/encounters.tpl.html";
@@ -64,10 +63,6 @@ function($routeProvider) {
 
       $scope.init();
 
-      $scope.notifications = {};
-        getNotifications.getUpdate(function(err, notifications) {
-        $scope.notifications = notifications;
-      });
 
     }
   ]);

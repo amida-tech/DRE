@@ -575,7 +575,7 @@ var dre = angular
     }
 ]);
 
-// For notification updates
+// For notification updates, tie to rootScope
 dre.controller('MainCtrl',
   function($rootScope, getNotifications) {
 
