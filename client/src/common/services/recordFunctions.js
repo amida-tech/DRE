@@ -26,9 +26,6 @@ angular.module('services.recordFunctions', [])
             console.log(JSON.stringify(inputSection, null, 4));
             console.log('----------------');
             */
-            console.log('--this is at extra names--');
-            console.log(inputSection);
-            console.log('------------');
             if (inputSection.allergen) {
                 inputSection.name = inputSection.allergen.name;
             }
@@ -70,6 +67,21 @@ angular.module('services.recordFunctions', [])
             else if (inputSection.smoking_statuses) {
                 inputSection.name = "Smoking Status";
             }
+            else if(inputSection.name){
+                var tempName = "";
+                if(inputSection.name.first){
+                    tempName += inputSection.name.first;
+                }
+                if(inputSection.name.middle){
+                    for(var x in inputSection.name.middle){
+                        tempName += ' ' + inputSection.name.middle[x];
+                    }
+                }
+                if(inputSection.name.last){
+                    tempName += inputSection.name.last;
+                }
+            }
+
             else{
                 inputSection.name = 'unknown';
             }

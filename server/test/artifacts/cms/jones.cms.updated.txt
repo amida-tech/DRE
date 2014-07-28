@@ -116,9 +116,9 @@ Source: Self-Entered
 
 Condition Name: Pneumonia
 
-Medical Condition Start Date: 01/03/2008
+Medical Condition Start Date: 01/03/2010
 
-Medical Condition End Date: 01/03/2008
+Medical Condition End Date: 01/03/2010
 
 
 
@@ -179,7 +179,7 @@ Type: Drugs
 
 Reaction: Hives
 
-Severity: Mild to moderate
+Severity: Life-Threatening
 
 Diagnosed: Yes
 
@@ -228,7 +228,7 @@ Method: Intramuscular injection
 
 Immunization Name: Influenza virus vaccine
 
-Date Administered: 12/15/1998
+Date Administered: 12/15/2012
 
 Method: Intramuscular injection
 
@@ -293,7 +293,7 @@ Source: Self-Entered
 
 
 Test/Lab Type: CBC WO DIFFERENTIAL
-Date Taken: 03/23/2000
+Date Taken: 03/23/2010
 
 Administered by: AnyLab
 
