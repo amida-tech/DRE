@@ -216,7 +216,6 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
 

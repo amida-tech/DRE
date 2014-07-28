@@ -163,14 +163,20 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
     for (var parsed_section in parsed_record) {
         sectionArray.push(parsed_section);
     }
-    console.log('section array');
-    console.log(sectionArray);
+    //console.log('section array');
+    //console.log(sectionArray);
 
     //Get Saved Records.
     getSavedRecords(sectionArray, function(err, saved_record) {
         if (err) {
             callback(err);
         } else {
+            //console.log('parsed records');
+            //console.log(JSON.stringify(parsed_record, null, 4));
+            //console.log('------------------------');
+            //console.log(JSON.stringify(saved_record, null, 4));
+
+
 
             dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
                 //console.log(JSON.stringify(partial_reconciliation_results, null, 10));

@@ -38,7 +38,7 @@ app.get('/api/v1/merges', function(req, res) {
 
 
     for (var iMerge in supportedComponents) {
-        record.getMerges(supportedComponents[iMerge], 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results plan_id payer_name payer number', 'filename uploadDate', function(err, mergeList) {
+        record.getMerges(supportedComponents[iMerge], 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results plan_id payer_name plan_name payer number', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 res.send(400, err);
             } else {
