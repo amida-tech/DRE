@@ -51,10 +51,10 @@
   command: npm install -g grunt-cli
 
 - name:  Install DRE client dependencies
-  command: npm install --production chdir=/var/www/dre/current/client
+  command: npm install chdir=/var/www/dre/current/client --no-bin-links
 
 - name:  Install DRE server dependencies
-  command: npm install --production chdir=/var/www/dre/current/server
+  command: npm install --production chdir=/var/www/dre/current/server --no-bin-links
 
 - name:  Run client build
   command: grunt chdir=/var/www/dre/current/client
@@ -63,7 +63,7 @@
   command: npm install -g pm2
   
 - name: Launch DRE through PM2
-  command: pm2 start /var/www/dre/current/server/server.js -u node
+  command: pm2 start /var/www/dre/current/server/server.js
   
 - name:  Configure PM2 for Auto-reload
   command: pm2 startup centos -u node && pm2 save
