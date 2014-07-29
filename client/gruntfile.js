@@ -110,6 +110,10 @@ module.exports = function(grunt) {
       bootstrap: {
         src: ['src/vendor/bootstrap/js/bootstrap.min.js'],
         dest: '<%= distdir %>/bootstrap.js'
+      },
+      moment: {
+        src: ['src/vendor/moment/moment.min.js'],
+        dest: '<%= distdir %>/moment.js'
       }
     },
     jshint: {

@@ -48,8 +48,8 @@ angular.module('services.recordFunctions', [])
             if (inputSection.smoking_statuses) {
                 inputSection.name = "Smoking Status";
             }
-   
-            return inputSection;            
+
+            return inputSection;
         };
 
         //Returns printable array from address.
@@ -117,31 +117,32 @@ angular.module('services.recordFunctions', [])
             function formatOutput(input_date) {
                 var tmpDateArr;
                 if (input_date.precision === "year") {
-                    tmpDateArr = $filter('date')(input_date.date, 'yyyy');
+                    tmpDateArr = moment.utc(input_date.date).format('YYYY');
                     input_date.displayDate = tmpDateArr;
                 }
                 if (input_date.precision === "month") {
-                    tmpDateArr = $filter('date')(input_date.date, 'MMM, yyyy');
+                    tmpDateArr = moment.utc(input_date.date).format('MMM, YYYY');
                     input_date.displayDate = tmpDateArr;
                 }
                 if (input_date.precision === "day") {
-                    tmpDateArr = $filter('date')(input_date.date, 'mediumDate');
+                    tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY');
                     input_date.displayDate = tmpDateArr;
                 }
                 if (input_date.precision === "hour") {
-                    tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                    tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
+
                     input_date.displayDate = tmpDateArr;
                 }
                 if (input_date.precision === "minute") {
-                    tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                    tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
                     input_date.displayDate = tmpDateArr;
                 }
                 if (input_date.precision === "second") {
-                    tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                    tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
                     input_date.displayDate = tmpDateArr;
                 }
                 if (input_date.precision === "subsecond") {
-                    tmpDateArr = $filter('date')(input_date.date, 'MMM d, y h:mm a');
+                    tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
                     input_date.displayDate = tmpDateArr;
                 }
                 return input_date;
