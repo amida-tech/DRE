@@ -1,0 +1,325 @@
+
+
+
+
+<div class="fluid-container col-md-12">
+	<div class="row">
+		<div ng-include="navPath"></div>
+		<div class="col-md-9">
+			<div class="col-md-12">
+				<br/>
+				<span class="lead">New Entries</span>
+				<br/>
+				<br/>
+				
+				<!-- All in here. -->
+				<div>
+
+					<!-- Left Pane -->
+					<div class="col-md-6 panel panel-default" style="padding: 30px;">
+
+						<div class="panel panel-primary">
+
+							<div class="panel-heading">
+								<table>
+									<tr>
+										<td class="col-md-2"><i class="fa fa-leaf fa-2x"></i></td>
+										<td>Allergic Reaction:</br>PENICILLIN</td>
+									</table>   
+								</div>
+
+								<div class="panel-body">
+
+									<div class="btn-group btn-group-justified">
+										<div class="btn-group btn-group-sm">
+											<button id="btn1" type="button" class="btn btn-default" ng-click="panelSwitch(1)" ng-class="{active: panelId === 1}">Add</button>
+										</div>
+										<div class="btn-group btn-group-sm">
+											<button id="btn2" type="button" class="btn btn-default" ng-click="panelSwitch(2)" ng-class="{active: panelId === 2}">Match</button>
+										</div>
+										<div class="btn-group btn-group-sm">
+											<button id="btn3" type="button" class="btn btn-default"  ng-click="panelSwitch(3)" ng-class="{active: panelId === 3}">Ignore</button>
+										</div>
+									</div>
+
+									<div class="col-md-12 text-center">
+										<h6>Entry Details <span class="caret"></span></h6>
+									</div>
+
+
+								</div>
+
+
+								<ul class="list-group">
+
+									<!--Select All Option-->
+									<li class="list-group-item" style="border:0px;">
+										<table class="table table-condensed table-hover" style="border:0px; margin-bottom:0px;">
+											<thead  style="border:0px;">
+												<tr  style="border:0px;">
+													<th class="col-md-2"  style="border:0px;">
+														<input type="checkbox" value="">
+													</th>
+													<th style="border:0px;">
+														Select All
+													</th>
+												</tr>
+											</thead>
+										</table>
+									</li>
+
+									<li ng-repeat="(entryTitle, entryItem) in entry" class="list-group-item" >
+
+										<!--String Viewer.-->
+										<table class="table table-condensed table-hover" ng-show="entryType(entryItem) === 'str'">
+											<thead>
+												<tr>
+													<th class="col-md-2">
+													</th>
+													<th style="text-transform: capitalize">
+														{{entryTitle}}
+													</th>
+												</tr>
+											</thead>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td>{{entryItem}}</td>
+											</tr>
+										</table>
+
+										<!--Object Viewer.-->
+										<table class="table table-condensed table-hover" ng-show="entryType(entryItem) === 'obj'" >
+											<thead>
+												<tr>
+													<th class="col-md-2">
+														<input type="checkbox" value="">
+													</th>
+													<th style="text-transform: capitalize">
+														{{entryTitle}}
+													</th>
+												</tr>
+											</thead>
+											<tr ng-repeat="(objItemName, objItem) in entryItem">
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label style="text-transform: capitalize">{{objItemName}}:</label>  {{objItem}}</td>
+											</tr>
+										</table>
+
+										<!--Array Viewer.-->
+										<table class="table table-condensed table-hover" ng-show="entryType(entryItem) === 'arr'" ng-repeat="(objItemName, objItem) in entryItem">
+											<thead>
+												<tr>
+													<th class="col-md-2">
+														<input type="checkbox" value="">
+													</th>
+													<th style="text-transform: capitalize">
+														{{entryTitle}}
+													</th>
+												</tr>
+											</thead>
+											<tr >
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label style="text-transform: capitalize">{{objItemName}}:</label>  {{objItem}}</td>
+											</tr>
+										</table>
+
+
+
+										{{entryType(entryItem)}}
+
+										{{entryItem}}
+									</li>
+
+
+								</ul>
+
+
+
+
+								<ul class="list-group" ng-hide="true">
+
+
+									<li class="list-group-item" style="border:0px;">	
+										<table class="table table-condensed table-hover" style="border:0px; margin-bottom:0px;">
+											<thead  style="border:0px;">
+												<tr  style="border:0px;">
+													<th class="col-md-2"  style="border:0px;">
+														<input type="checkbox" value="">
+													</th>
+													<th style="border:0px;">
+														Select All
+													</th>
+												</tr>
+											</thead>
+										</table>
+									</li>
+
+
+
+									<li class="list-group-item">	
+										<table class="table table-condensed table-hover">
+											<thead>
+												<tr>
+													<th class="col-md-2">
+														<input type="checkbox" value="">
+													</th>
+													<th>
+														Status
+													</th>
+												</tr>
+											</thead>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td>Inactive</td>
+											</tr>
+										</table>
+									</li>
+
+									<li class="list-group-item">
+										<table class="table table-condensed table-hover">
+											<thead>
+												<tr>
+													<th class="col-md-2">
+														<input type="checkbox" value="">
+													</th>
+													<th>
+														Timeframe
+													</th>
+												</tr>
+											</thead>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label>Start:</label>  June 6, 1944</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label>End:</label>  June 30, 1944</td>
+											</tr>
+										</table>
+									</li>
+
+									<li class="list-group-item">
+										<table class="table table-condensed table-hover">
+											<thead>
+												<tr>
+													<th class="col-md-2">
+														<input type="checkbox" value="">
+													</th>
+													<th>
+														Medical Coding
+													</th>
+												</tr>
+											</thead>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label>Name:</label>  ALLERGENIC EXTRACT, PENICILLIN</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label>Code:</label>  314422</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label>Code System:</label>  RXNORM</td>
+											</tr>
+										</table>
+									</li>
+									<li class="list-group-item">
+										<table class="table table-condensed table-hover">
+											<thead>
+												<tr>
+													<th class="col-md-2">
+														<input type="checkbox" value="">
+													</th>
+													<th>
+														Reaction
+													</th>
+												</tr>
+											</thead>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label>Reaction:</label>  Nausea</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label>Severity:</label>  Mild</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label>Code:</label>  422587007</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="checkbox" value="">
+												</td>
+												<td><label>Code System:</label>  SNOMED CT</td>
+											</tr>
+										</table>
+									</li>
+								</ul>
+
+								<div class="panel-body" ng-hide="panelId === 0">
+									<div class="col-md-6">
+										<button type="button" class="btn btn-primary">Save</button>
+										<button type="button" class="btn btn-default" ng-click="panelSwitch(0)">Cancel</button>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="panel panel-default col-md-10">
+								<div class="panel-body">
+									New Allergy #2
+								</div>
+							</div>
+
+							<div class="panel panel-default col-md-10">
+								<div class="panel-body">
+									New Allergy #3
+								</div>
+							</div>
+
+						</div>
+
+
+						<!-- Right Pane -->
+						<div class="col-md-6">
+
+							<div class="panel panel-default col-md-10">
+								<div class="panel-body">
+									My Allergy
+								</div>
+							</div>
+
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

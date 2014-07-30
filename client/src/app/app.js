@@ -22,6 +22,7 @@ var dre = angular
         'dre.dashboard',
         'dre.demographics',
         'dre.match',
+        'dre.match_new',
         'dre.match.review',
         'directives.fileModel',
         'services.fileUpload',
