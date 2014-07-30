@@ -65,16 +65,6 @@ angular.module('dre.record.claims', [])
         //id for claims, since all claims may not have claim.number
         claim.count = i;
 
-        console.log(claim);
-        claim.provider = {};
-
-        claim.provider.name = 'ostrich';
-        claim.provider.identifiers = [];
-        var sampleIdentifier = {'identifier': '12345' ,'identifier_type': 'cms'};
-        var sampleIdentifier2 = {'identifier': '12345' ,'identifier_type': 'cms'};
-        claim.provider.identifiers.push(sampleIdentifier);
-        claim.provider.identifiers.push(sampleIdentifier2);
-
         if(claim.name === "unknown"){
             claim.name = undefined;
         }
