@@ -26,6 +26,7 @@
         "blue-button": "1.0.4",
         "blue-button-match": "1.0.1",
         "blue-button-record": "1.0.0",
+        "blue-button-meta": "0.1.1",
         "bluebird": "2.2.x"
     },
     "devDependencies": {
