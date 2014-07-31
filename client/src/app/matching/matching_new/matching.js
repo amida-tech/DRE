@@ -31,6 +31,8 @@ angular.module('dre.match_new', [])
         $scope.navPath = "templates/nav/nav.tpl.html";
         $scope.panelId = 0;
 
+        $scope.templatePath = "templates/matching/matching_new/templates/allergies.tpl.html";
+
         $scope.panelSwitch = function(input) {
           $scope.panelId = input;
         };
