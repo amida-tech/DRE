@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular.module('dre.match_new', [])
+angular.module('dre.match_new', ['directives.matchingObjects'])
 
 .config(['$routeProvider',
     function ($routeProvider) {
@@ -32,6 +32,20 @@ angular.module('dre.match_new', [])
         $scope.panelId = 0;
 
         $scope.templatePath = "templates/matching/matching_new/templates/allergies.tpl.html";
+
+        $scope.selectAllClick = function (status) {
+            if (status === true) {
+
+            }
+
+        };
+
+        $scope.selectClick = function(selection) {
+
+            console.log('asdf');
+
+
+        };
 
         $scope.panelSwitch = function(input) {
           $scope.panelId = input;

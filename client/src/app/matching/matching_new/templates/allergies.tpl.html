@@ -3,10 +3,10 @@
 	<!--Select All Option-->
 	<li class="list-group-item" style="border:0px;">
 		<table class="table table-condensed table-hover" style="border:0px; margin-bottom:0px;">
-			<thead  style="border:0px;">
-				<tr  style="border:0px;">
-					<th class="col-md-2"  style="border:0px;">
-						<input type="checkbox" value="">
+			<thead style="border:0px;">
+				<tr style="border:0px;">
+					<th class="col-md-2" style="border:0px;">
+						<input type="checkbox" ng-model="selectAll" ng-change="selectAllClick(selectAll)" value=""> {{selectAll}}
 					</th>
 					<th style="border:0px;">
 						Select All
@@ -17,91 +17,23 @@
 	</li>
 
 	<li class="list-group-item">
-
-		{{entry}}
-
-		<table class="table table-condensed table-hover">
-			<thead>
-				<tr>
-					<th class="col-md-2">
-					</th>
-					<th style="text-transform: capitalize">
-						Allergen
-					</th>
-				</tr>
-			</thead>
-			<tr>
-				<td>
-					<input type="checkbox" value="">
-				</td>
-				<td><label>Name:</label>  {{entry.allergen.name}}</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="checkbox" value="">
-				</td>
-				<td><label>Code:</label>  {{entry.allergen.code}}</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="checkbox" value="">
-				</td>
-				<td><label>Code System:</label>  {{entry.allergen.code_system_name}}</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="checkbox" value="">
-				</td>
-				<td>
-					<label>Translations:</label>
-					<table class="table table-condensed-table-hover">
-					</table>
-				</td>
-			</tr>
-		</table>
+		<div coded-entry input-value="entry.allergen" input-title="Allergen"></div>
 	</li>
 
-	<li>
-		<table class="table table-condensed table-hover">
-			<thead>
-				<tr>
-					<th class="col-md-2">
-					</th>
-					<th style="text-transform: capitalize">
-						Date
-					</th>
-				</tr>
-			</thead>
-			<tr ng-repeat="date_entry in entry.date">
-				<td>
-					<input type="checkbox" value="">
-				</td>
-				<td><label>Date:</label>  {{date_entry.date}}</td>
-			</tr>
-			
-		</table>
+	<li class="list-group-item">
+		<div single-entry input-value="entry.status" input-title="Status" input-path="entry.status" select-click="selectClick()"></div>
+		{{currentSelection}}
 	</li>
 
-	<li>
-		<table class="table table-condensed table-hover">
-			<thead>
-				<tr>
-					<th class="col-md-2">
-					</th>
-					<th style="text-transform: capitalize">
-						Reactions
-					</th>
-				</tr>
-			</thead>
-			<tr ng-repeat="reaction_entry in entry.reaction">
-				<td>
-					<input type="checkbox" value="">
-				</td>
-				<td><label>Severity:</label>  {{reaction_entry.severity}}</td>
-			</tr>
-			
-		</table>
+	<li class="list-group-item">
+		<div single-entry input-value="entry.severity" input-title="Severity"></div>
 	</li>
 
+	<li class="list-group-item">
+		<div date-entry input-value="entry.date" input-title="Timeframe"></div>
+	</li>
 
+	<li class="list-group-item" ng-repeat="reaction_entry in entry.reaction">
+		<div coded-entry input-value="reaction_entry.reaction" input-title="Reaction" input-additional="reaction_entry"></div>
+	</li>
 </ul>
