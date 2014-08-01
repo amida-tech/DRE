@@ -49,7 +49,10 @@
 
 								</div>
 
-								<ng-include src="templatePath"></ng-include>
+								<ng-include ng-show="panelId === 1 || panelId === 2" src="templatePath"></ng-include>
+
+
+								<h5 ng-if="panelId === 3" class="col-md-12 text-center">This entry will be discarded.</br></br></h5>
 
 								<div class="panel-body" ng-hide="panelId === 0">
 									<div class="col-md-6">

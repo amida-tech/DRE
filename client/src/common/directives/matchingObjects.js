@@ -7,25 +7,13 @@ angular.module('directives.matchingObjects', [])
         scope: {
             inputValue: '=',
             inputTitle: '@',
-            inputPath: '@',
-            selectClick: '&'
+            selectField: '='
         },
+        template: "<table class='table table-condensed table-hover'>" + 
+                  "<thead><tr><th class='col-md-2'></th><th style='text-transform: capitalize'><label>{{inputTitle}}</label></th></tr></thead>" + 
+                  "<tr><td><input type='checkbox' ng-model='selectField'></td>" +
+                  "<td>{{inputValue}}</td></tr>",
         link: function(scope, element, attrs) {
-
-            console.log(scope.selectClick);
-
-            var output_table = "<table class='table table-condensed table-hover'>" + 
-                              "<thead><tr><th class='col-md-2'></th><th style='text-transform: capitalize'><label>" +
-                              scope.inputTitle + "</label></th></tr></thead>";
-
-            var output_table_end = "</table>";
-
-            var output_table_line = "<tr><td><input type='checkbox' ng-model='currentSelection' ng-change='" + scope.selectClick() + "'></td>" +
-                                    "<td>" + scope.inputValue + "</td></tr>";
-
-            output_table = output_table + output_table_line;
-            output_table = output_table + output_table_end;
-            element.append(output_table);
         }
     };
 }])
@@ -36,28 +24,16 @@ angular.module('directives.matchingObjects', [])
         replace: true,
         scope: {
             inputValue: '=',
-            inputTitle: '@'
+            inputTitle: '@',
+            selectField: '='
         },
+        template: "<table class='table table-condensed table-hover'>" + 
+                  "<thead><tr><th class='col-md-2'><input type='checkbox' ng-model='selectField.selectAll'></th><th style='text-transform: capitalize'>{{inputTitle}}</th></tr></thead>" +
+                  "<tr ng-repeat='(inputTitle, inputLine) in inputValue'><td><input type='checkbox' ng-model='$parent.selectField.date'></td>" +
+                  "<td><label style='text-transform: capitalize;'>Date:</label>  {{inputLine.date}}</td></tr>" +
+                  "</table>",
         link: function(scope, element, attrs) {
 
-            var output_table = "<table class='table table-condensed table-hover'>" + 
-                              "<thead><tr><th class='col-md-2'></th><th style='text-transform: capitalize'><label>" +
-                              scope.inputTitle + "</label></th></tr></thead>";
-
-            var output_table_end = "</table>";
-
-            for (var i in scope.inputValue) {
-                
-                //console.log(i);
-                //console.log(scope.inputValue[i]);
-               var output_table_line = "<tr><td><input type='checkbox' value=''></td>" +
-                                       "<td><label style='text-transform: capitalize;'>" + "Date" + ":</label>  " + scope.inputValue[i].date + "</td></tr>";
-               output_table = output_table + output_table_line;
-            }
-
-    
-            output_table = output_table + output_table_end;
-            element.append(output_table);
         }
     };
 }])
@@ -71,36 +47,15 @@ angular.module('directives.matchingObjects', [])
         scope: {
             inputValue: '=',
             inputTitle: '@',
-            inputAdditional: '='
+            inputAdditional: '=',
+            selectField: "="
         },
+        template: "<table class='table table-condensed table-hover'>" + 
+                  "<thead><tr><th class='col-md-2'><input type='checkbox' ng-model='selectField.selectAll'></th><th style='text-transform: capitalize'>{{inputTitle}}</th></tr></thead>" +
+                  "<tr ng-repeat='(inputTitle, inputLine) in inputValue'><td><input type='checkbox' ng-checked='selAll' ng-model='$parent.selectField[inputTitle]'></td>" +
+                  "<td><label style='text-transform: capitalize;'>{{inputTitle}}:</label>  {{inputLine}}</td></tr>" +
+                  "</table>",
         link: function(scope, element, attrs) {
-
-            var output_table = "<table class='table table-condensed table-hover'>" + 
-                              "<thead><tr><th class='col-md-2'></th><th style='text-transform: capitalize'>" +
-                              scope.inputTitle + "</th></tr></thead>";
-
-            var output_table_end = "</table>";
-
-            if (scope.inputAdditional !== undefined) {
-                if (scope.inputAdditional.severity) {
-                    scope.inputValue.severity = scope.inputAdditional.severity;
-                }
-            }
-
-            for (var i in scope.inputValue) {
-                var displayName = '';
-                if (i === 'code_system_name') {
-                    displayName = 'Code System';
-                } else {
-                    displayName = i;
-                }
-                var output_table_line = "<tr><td><input type='checkbox' value=''></td>" +
-                                        "<td><label style='text-transform: capitalize;'>" + displayName + ":</label>  " + scope.inputValue[i] + "</td></tr>";
-                output_table = output_table + output_table_line;
-            }
-
-            output_table = output_table + output_table_end;
-            element.append(output_table);
         }
     };
 }])

@@ -31,7 +31,16 @@ angular.module('dre.match_new', ['directives.matchingObjects'])
         $scope.navPath = "templates/nav/nav.tpl.html";
         $scope.panelId = 0;
 
+        //Need to initialize selection array.  May be able to walk original to build.
+        $scope.selectedItems = {};
+        $scope.selectedItems.allergen = {};
+
+        //TODO:  Rewrite loop to create shell object for each entry.
+        $scope.selectedItems.reaction = [{}];
+
         $scope.templatePath = "templates/matching/matching_new/templates/allergies.tpl.html";
+
+        //TODO:  Inject reaction severity into display from object.
 
         $scope.selectAllClick = function (status) {
             if (status === true) {
@@ -40,8 +49,12 @@ angular.module('dre.match_new', ['directives.matchingObjects'])
 
         };
 
-        $scope.selectClick = function(selection) {
+        $scope.selectClick = function(selected, selection) {
 
+            console.log(selected);
+            console.log(selection);
+
+            console.log($scope.selected);
             console.log('asdf');
 
 

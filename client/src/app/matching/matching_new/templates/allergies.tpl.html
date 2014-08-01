@@ -17,23 +17,24 @@
 	</li>
 
 	<li class="list-group-item">
-		<div coded-entry input-value="entry.allergen" input-title="Allergen"></div>
+		<div coded-entry input-value="entry.allergen" input-title="Allergen" select-field="selectedItems.allergen"></div>
 	</li>
 
 	<li class="list-group-item">
-		<div single-entry input-value="entry.status" input-title="Status" input-path="entry.status" select-click="selectClick()"></div>
-		{{currentSelection}}
+		<div single-entry input-value="entry.status" input-title="Status" select-field="selectedItems.status"></div>
+		
 	</li>
 
 	<li class="list-group-item">
-		<div single-entry input-value="entry.severity" input-title="Severity"></div>
+		<div single-entry input-value="entry.severity" input-title="Severity" select-field="selectedItems.severity"></div>
 	</li>
 
 	<li class="list-group-item">
-		<div date-entry input-value="entry.date" input-title="Timeframe"></div>
+		<div date-entry input-value="entry.date" input-title="Timeframe" select-field="selectedItems.date"></div>
 	</li>
 
-	<li class="list-group-item" ng-repeat="reaction_entry in entry.reaction">
-		<div coded-entry input-value="reaction_entry.reaction" input-title="Reaction" input-additional="reaction_entry"></div>
+	<li class="list-group-item" ng-repeat="(reaction_id, reaction_entry) in entry.reaction">
+		<div coded-entry input-value="reaction_entry.reaction" input-title="Reaction" input-additional="reaction_entry" select-field="selectedItems.reaction[reaction_id]"></div>
 	</li>
+
 </ul>
