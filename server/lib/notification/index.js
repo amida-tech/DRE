@@ -1,19 +1,7 @@
 var express = require('express');
 var app = module.exports = express();
 var record = require('blue-button-record');
-
-  var supportedComponents = [
-    'allergies',
-    'procedures',
-    'medications',
-    'encounters',
-    'vitals',
-    'results',
-    'social_history',
-    'immunizations',
-    'demographics',
-    'problems'
-  ];
+var bbm = require('blue-button-meta');
 
 function getNotifications (callback) {
 
@@ -41,7 +29,7 @@ function getNotifications (callback) {
 
   function getPartialCount(callback) {
     var secIteration = 0;
-    var secTotal = supportedComponents.length;
+    var secTotal = bbm.supported_sections.length;
 
     function checkCountComplete() {
       secIteration++;
@@ -51,7 +39,7 @@ function getNotifications (callback) {
       }
     }
 
-    supportedComponents.forEach(function(component) {
+    bbm.supported_sections.forEach(function(component) {
       record.matchCount(component, 'test', {}, function(err, count) {
         if (err) {
           callback(err);
@@ -70,7 +58,7 @@ function getNotifications (callback) {
 
   function getNewMergeCount(callback) {
     var secIteration = 0;
-    var secTotal = supportedComponents.length;
+    var secTotal = bbm.supported_sections.length;
   
     function checkCountComplete() {
       secIteration++;
@@ -80,7 +68,7 @@ function getNotifications (callback) {
       }
     }
 
-    supportedComponents.forEach(function(component) {
+    bbm.supported_sections.forEach(function(component) {
       record.mergeCount(component, 'test', {merge_reason: "new"}, function(err, count) {
         if (err) {
           callback(err);
@@ -98,7 +86,7 @@ function getNotifications (callback) {
 
   function getDupeMergeCount(callback) {
     var secIteration = 0;
-    var secTotal = supportedComponents.length;
+    var secTotal = bbm.supported_sections.length;
 
     function checkCountComplete() {
       secIteration++;
@@ -108,7 +96,7 @@ function getNotifications (callback) {
       }
     }
 
-    supportedComponents.forEach(function(component) {
+    bbm.supported_sections.forEach(function(component) {
       record.mergeCount(component, 'test', {merge_reason: "duplicate"}, function(err, count) {
         if (err) {
           callback(err);

@@ -2,8 +2,7 @@ var express = require('express');
 var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
-
-var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
+var bbm = require('blue-button-meta');
 
 function updateMerged(updateId, updateComponent, updateParameters, callback) {
     //Gather full match object by ID.
@@ -60,7 +59,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
 // Get all matches API.
 app.get('/api/v1/matches/:component', function(req, res) {
 
-    if (_.contains(supportedComponents, req.params.component) === false) {
+    if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         record.getMatches(req.params.component, 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results', function(err, matchList) {
@@ -78,7 +77,7 @@ app.get('/api/v1/matches/:component', function(req, res) {
 
 // Get single match API.
 app.get('/api/v1/match/:component/:record_id', function(req, res) {
-    if (_.contains(supportedComponents, req.params.component) === false) {
+    if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         record.getMatch(req.params.component, 'test', req.params.record_id, function(err, match) {
@@ -94,7 +93,7 @@ app.get('/api/v1/match/:component/:record_id', function(req, res) {
 //Post partial record updates.
 app.post('/api/v1/matches/:component/:record_id', function(req, res) {
 
-    if (_.contains(supportedComponents, req.params.component) === false) {
+    if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         if (_.contains(['added', 'ignored', 'merged'], req.body.determination)) {
