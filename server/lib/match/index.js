@@ -3,7 +3,7 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 
-var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
+var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems', 'insurance', 'claims'];
 
 function updateMerged(updateId, updateComponent, updateParameters, callback) {
     //Gather full match object by ID.
@@ -63,7 +63,7 @@ app.get('/api/v1/matches/:component', function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
-        record.getMatches(req.params.component, 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results', function(err, matchList) {
+        record.getMatches(req.params.component, 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results plan_id payer_name payer number plan_name"', function(err, matchList) {
             if (err) {
                 console.error(err);
                 res.send(400, err);

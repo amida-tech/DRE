@@ -9,10 +9,10 @@ var _ = require('underscore');
 Promise.promisifyAll(require("blue-button-record"));
 
 var supportedComponents = {
-    allergies: 'allergies', procedures: 'procedures', immunizations: 'immunizations', medications: 'medications', 
+    allergies: 'allergies', procedures: 'procedures', immunizations: 'immunizations', medications: 'medications',
     encounters: 'encounters', vitals: 'vitals', results: 'results', social_history: 'social_history',
-    demographics: 'demographics', problems: 'problems' 
-} 
+    demographics: 'demographics', problems: 'problems' , insurance: 'insurance', claims: 'claims'
+}
 
 function formatResponse(srcComponent, srcResponse) {
     var srcReturn = {};
@@ -47,14 +47,14 @@ app.get('/api/v1/record/:component', function(req, res) {
     }
 });
 
-// CCDA generation. uses promise-based blue-button-record API 
-// (via bluebird module) to combine returned sections, propagating 
+// CCDA generation. uses promise-based blue-button-record API
+// (via bluebird module) to combine returned sections, propagating
 // back to caller when done or on error via @callback
 
 function prep(sec, secName) {
     return secName == "demographics" || secName == "social_history" ? sec[0] : sec;
 }
-   
+
 function getCCDA(callback) {
     var aggregatedResponse = {}, count = 0;
 

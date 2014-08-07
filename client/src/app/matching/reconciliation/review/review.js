@@ -71,7 +71,7 @@ angular.module('dre.match.review', [])
                 $scope.partial_matches = data;
                 $scope.diff=$scope.partial_matches.diff;
                 recordFunctions.extractName(data.match_entry);
-                $scope.src_el = data.match_entry;    
+                $scope.src_el = data.match_entry;
                 $scope.src_copy_el = angular.copy($scope.src_el);
                 recordFunctions.extractName(data.entry);
                 $scope.dest_el = data.entry;
@@ -137,7 +137,7 @@ angular.module('dre.match.review', [])
                 console.log('error');
             });
         };
-        
+
         //This call is discontinued in favor of cancelReview, createNew, ignoreUpdate, saveUpdate
         $scope.saveReview = function() {
             //console.log($scope.partial_matches._id);

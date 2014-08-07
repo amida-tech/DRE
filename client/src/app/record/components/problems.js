@@ -48,23 +48,25 @@ angular.module('dre.record.problems', [])
             return inputObject.date[1].date;
          } else {
             return inputObject.date[0].date;
-         } 
+         }
        }
     ];
 
 
     function problemStatus (inputObject) {
-
-      if(inputObject.status.toLowerCase() === 'active') {
+      if(inputObject.status === undefined){
+        inputObject.statusFlag = false;
+      }
+      else if(inputObject.status.toLowerCase() === 'active') {
         inputObject.statusFlag = true;
       }
 
-      if(inputObject.status.toLowerCase() === 'resolved') {
+      else if(inputObject.status.toLowerCase() === 'resolved') {
         inputObject.statusFlag = false;
       }
 
       //added inactive per raccoon-149 report
-      if(inputObject.status.toLowerCase() === 'inactive') {
+      else if(inputObject.status.toLowerCase() === 'inactive') {
         inputObject.statusFlag = true;
       }
 
@@ -73,11 +75,11 @@ angular.module('dre.record.problems', [])
     function onsetAge (inputObject) {
       if(inputObject.onset_age && inputObject.onset_age_unit) {
           if (inputObject.onset_age_unit.toLowerCase() === "year") {
-            inputObject.onsetAgeDisplay = inputObject.onset_age; 
+            inputObject.onsetAgeDisplay = inputObject.onset_age;
           } else {
-            inputObject.onsetAgeDisplay = inputObject.onset_age + " " + inputObject.onset_age_unit; 
+            inputObject.onsetAgeDisplay = inputObject.onset_age + " " + inputObject.onset_age_unit;
           }
-          
+
       } else if (inputObject.onset_age) {
           inputObject.onsetAgeDisplay = inputObject.onset_age;
       }

@@ -81,7 +81,7 @@ angular.module('dre.match', ['dre.match.reconciliation'])
 
       //Will need to flag source record data.
       var placeholderJSON = {
-        //2 Allergies are awaiting your review.  
+        //2 Allergies are awaiting your review.
 
       };
 
@@ -91,19 +91,14 @@ angular.module('dre.match', ['dre.match.reconciliation'])
     function formatMerges (inputMerge) {
       var trimLength = 35;
       for (var iMerge in inputMerge) {
-        
-          //console.log(inputMerge[iMerge]);
           if (inputMerge[iMerge].entry_type !== 'demographics') {
-            recordFunctions.extractName(inputMerge[iMerge].entry);  
+            recordFunctions.extractName(inputMerge[iMerge].entry);
           }
 
           if (inputMerge[iMerge].entry_type === 'demographics') {
-            var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry.name);  
+            var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry.name);
             inputMerge[iMerge].entry.name = tmpName.displayName;
           }
-          
-
-
       }
     }
 
@@ -119,8 +114,9 @@ angular.module('dre.match', ['dre.match.reconciliation'])
       url: '/api/v1/merges'
     }).
     success(function(data, status, headers, config) {
-
       if (data.merges.length > 0) {
+        console.log('data merges on success');
+        console.log(data.merges);
         $scope.displayMerges = true;
       } else {
         $scope.displayMerges = false;
@@ -128,7 +124,6 @@ angular.module('dre.match', ['dre.match.reconciliation'])
 
 
       for (var i = 0; i < data.merges.length; i++) {
-        //console.log(data.merges);
         data.merges[i].section_singular = recordFunctions.singularizeSection(data.merges[i].entry_type);
         if (data.merges[i].merge_reason === "duplicate") {
           $scope.duplicate_merges.push(data.merges[i]);
@@ -141,7 +136,7 @@ angular.module('dre.match', ['dre.match.reconciliation'])
 
     }).
     error(function(data, status, headers, config) {
-      console.log('error');
+      //console.log('error');
     });
 
 

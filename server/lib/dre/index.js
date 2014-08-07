@@ -104,7 +104,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 var matchObject = srcMatches[i];
                 var matchObjForDb = {};
                 matchObjForDb.diff = matchObject.diff;
-                matchObjForDb.percent = matchObject.percent;                
+                matchObjForDb.percent = matchObject.percent;
                 if (matchObject.subelements) {
                     matchObjForDb.subelements = matchObject.subelements;
                 }
@@ -172,7 +172,6 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 function reconcile(newObject, baseObject, newSourceID, callback) {
 
     newObjectForParsing = newObject;
-
     var baseObjectForParsing = {};
     for (var iObj in baseObject) {
         baseObjectForParsing[iObj] = {};
@@ -216,13 +215,7 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
 
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
-
-    //console.log(JSON.stringify(newObjectForParsing, null, 10));
-    //console.log('------------------');
-    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-    //console.log(JSON.stringify(matchResult, null, 10));
-
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
 
@@ -242,7 +235,6 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     revertSocial();
 
     removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
-        //console.log(JSON.stringify(newObjectPostMatch, null, 10));
         callback(null, newObjectPostMatch, newPartialObjectPostMatch);
     });
 }

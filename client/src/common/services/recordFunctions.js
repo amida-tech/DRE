@@ -21,36 +21,76 @@ angular.module('services.recordFunctions', [])
 
         //Builds field displayName attribute.
         this.extractName = function(inputSection) {
-
-            //console.log(inputSection);
-
+            /*
+            console.log('input section');
+            console.log(JSON.stringify(inputSection, null, 4));
+            console.log('----------------');
+            */
             if (inputSection.allergen) {
                 inputSection.name = inputSection.allergen.name;
             }
-            if (inputSection.encounter) {
+            else if (inputSection.encounter) {
                 inputSection.name = inputSection.encounter.name;
             }
-            if (inputSection.product) {
+            else if (inputSection.product) {
                 inputSection.name = inputSection.product.product.name;
             }
-            if (inputSection.problem) {
+            else if (inputSection.problem) {
                 inputSection.name = inputSection.problem.name;
             }
-            if (inputSection.results) {
+            else if (inputSection.results) {
                 inputSection.name = inputSection.result_set.name;
             }
-            if (inputSection.procedure) {
+            else if (inputSection.procedure) {
                 inputSection.name = inputSection.procedure.name;
             }
-            if (inputSection.vital) {
+            else if (inputSection.vital) {
                 inputSection.name = inputSection.vital.name;
             }
-            if (inputSection.smoking_statuses) {
+            //insurance
+            else if (inputSection.plan_name) {
+                inputSection.name = inputSection.plan_name;
+            }
+            else if(inputSection.payer_name){
+                inputSection.name = inputSection.payer_name;
+            }
+            //claims
+            else if(inputSection.payer || inputSection.number){
+                inputSection.name = "";
+                if(inputSection.payer){
+                    inputSection.name += inputSection.payer;
+                }
+                if(inputSection.number){
+                    inputSection.name = inputSection.payer[0];
+                }
+            }
+            else if (inputSection.smoking_statuses) {
                 inputSection.name = "Smoking Status";
             }
-   
-            return inputSection;            
+            else if(inputSection.name){
+                var tempName = "";
+                if(inputSection.name.first){
+                    tempName += inputSection.name.first;
+                }
+                if(inputSection.name.middle){
+                    for(var x in inputSection.name.middle){
+                        tempName += ' ' + inputSection.name.middle[x];
+                    }
+                }
+                if(inputSection.name.last){
+                    tempName += inputSection.name.last;
+                }
+            }
+
+            else{
+                inputSection.name = 'unknown';
+            }
+
+            //console.log('state of the name');
+            //console.log(inputSection.name);
+            return inputSection;
         };
+
 
         //Returns printable array from address.
         this.formatAddress = function(address) {
@@ -116,6 +156,7 @@ angular.module('services.recordFunctions', [])
 
             function formatOutput(input_date) {
                 var tmpDateArr;
+
                 if (input_date.precision === "year") {
                     tmpDateArr = $filter('date')(input_date.date, 'yyyy');
                     input_date.displayDate = tmpDateArr;
@@ -165,7 +206,11 @@ angular.module('services.recordFunctions', [])
                 } else {
                     return date;
                 }
-            } else {
+            }
+            else if (Object.prototype.toString.call(date) === '[object Object]') {
+                return formatOutput(date);
+            }
+            else {
                 //TODO:  Might need a single date handler here.
                 return date;
             }
@@ -182,7 +227,9 @@ angular.module('services.recordFunctions', [])
                 vitals: 'vital',
                 results: 'result',
                 encounters: 'encounter',
-                problems: 'problem'
+                problems: 'problem',
+                insurance: 'insurance',
+                claims: 'claims'
             };
 
             return function(sectionName) {

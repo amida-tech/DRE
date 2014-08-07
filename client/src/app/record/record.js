@@ -12,12 +12,11 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-======================================================================*/
+=====================================`=================================*/
 
-var supportedComponents = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals'];
+var supportedComponents = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals', 'claims', 'insurance'];
 
-angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals'])
-
+angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims'])
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/record', {
@@ -26,10 +25,10 @@ function($routeProvider) {
   });
 }])
 
-  .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 'getNotifications', 
+  .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 'getNotifications',
     function($scope, $filter, $http, $q, $location, fileDownload, getNotifications) {
-      
-      // have download ready to go on page load    
+
+      // have download ready to go on page load
       $scope.init = function() {
         $scope.downloadData();
       };
@@ -43,6 +42,8 @@ function($routeProvider) {
       $scope.problemsPath = "templates/record/components/problems.tpl.html";
       $scope.resultsPath = "templates/record/components/results.tpl.html";
       $scope.vitalsPath = "templates/record/components/vitals.tpl.html";
+      $scope.insurancePath  = "templates/record/components/insurance.tpl.html";
+      $scope.claimsPath = "templates/record/components/claims.tpl.html";
 
       $scope.dismissModal = function(index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {
@@ -68,6 +69,5 @@ function($routeProvider) {
         getNotifications.getUpdate(function(err, notifications) {
         $scope.notifications = notifications;
       });
-
     }
   ]);

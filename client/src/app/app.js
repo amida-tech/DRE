@@ -554,6 +554,21 @@ var dre = angular
             return displayAddress.join(", ");
         };
     })
+    .filter('capFirstLetters', function($filter) {
+        //capitalize first letter of every word
+        return function(input) {
+            if (input != null){
+                var inputArr = input.split(' ');
+                var newString = "";
+                for(var x in inputArr){
+                    var token = inputArr[x];
+                    newString += token.substring(0,1).toUpperCase()+token.substring(1) + " ";
+                }
+                newString.trim();
+                return newString;
+            }
+        };
+    })
 
 
 .config(['$routeProvider', '$locationProvider', '$compileProvider',

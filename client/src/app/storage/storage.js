@@ -80,7 +80,6 @@ angular.module('dre.storage', ['directives.fileModel'])
         }
       }).
       error(function(data, status, headers, config) {
-        console.log(data);
       });
     };
 

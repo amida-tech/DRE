@@ -23,10 +23,9 @@
         "deep-equal": "0.2.x",
         "underscore": "1.6.x",
         "async": "0.9.x",
-        "blue-button": "1.0.4",
-        "blue-button-match": "1.0.1",
-        "blue-button-record": "1.0.0",
-        "bluebird": "2.2.x"
+        "blue-button": "git://github.com/amida-tech/blue-button.git#insurance-bj",
+        "blue-button-match": "git://github.com/amida-tech/blue-button-match.git#insurance-bj",
+        "blue-button-record": "git://github.com/amida-tech/blue-button-record.git#insurance-bj"
     },
     "devDependencies": {
         "grunt": "0.4.x",
