@@ -21,8 +21,11 @@ var dre = angular
         'dre.storage',
         'dre.dashboard',
         'dre.demographics',
+        'dre.login',
         'dre.match',
         'dre.match.review',
+        'dre.nav',
+        'dre.register',
         'directives.fileModel',
         'services.fileUpload',
         'services.fileDownload',
@@ -566,6 +569,30 @@ var dre = angular
 
     }
 ])
+
+.factory('myHttpResponseInterceptor',['$q', '$location', function($q, $location){
+  return {
+        response: function(response){
+            if (response.status === 401) {
+                console.log("Response 401");
+            }
+            return response || $q.when(response);
+        },
+        responseError: function(rejection) {
+            if (rejection.status === 401) {
+                $location.path('/login');
+            }
+            return $q.reject(rejection);
+        }
+    };
+
+}])
+
+//Http Intercpetor to check auth failures for xhr requests
+.config(['$httpProvider',function($httpProvider) {
+  $httpProvider.interceptors.push('myHttpResponseInterceptor');
+}])
+
 // Note TabService is included but not used to ensure its been instantiated
 .run(['$rootScope', '$location',
     function($rootScope, $location) {
