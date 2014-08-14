@@ -17,9 +17,15 @@ limitations under the License.
 angular.module('dre.nav', [])
 
 .controller('navCtrl', ['$scope', '$http', '$location',
-  function($scope, $http, $location) {
+	function($scope, $http, $location) {
 
-    $scope.refreshNotifications();
-
-  }
+		$scope.logout = function() {
+			$http.post('/api/v1/logout')
+			.success(function (data) {
+				$location.path('/login');
+			}).error(function (data) {
+				callback(data);
+			});
+		};
+	}
 ]);
