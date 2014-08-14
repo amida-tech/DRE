@@ -2,6 +2,7 @@ var express = require('express');
 var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
+var login = require('../login');
 
 var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
 
@@ -58,8 +59,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
 }
 
 // Get all matches API.
-app.get('/api/v1/matches/:component', function(req, res) {
-
+app.get('/api/v1/matches/:component', login.checkAuth, function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
@@ -77,7 +77,7 @@ app.get('/api/v1/matches/:component', function(req, res) {
 });
 
 // Get single match API.
-app.get('/api/v1/match/:component/:record_id', function(req, res) {
+app.get('/api/v1/match/:component/:record_id', login.checkAuth, function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {
@@ -92,8 +92,7 @@ app.get('/api/v1/match/:component/:record_id', function(req, res) {
 });
 
 //Post partial record updates.
-app.post('/api/v1/matches/:component/:record_id', function(req, res) {
-
+app.post('/api/v1/matches/:component/:record_id', login.checkAuth, function(req, res) {
     if (_.contains(supportedComponents, req.params.component) === false) {
         res.send(404);
     } else {

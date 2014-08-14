@@ -4,6 +4,7 @@ var Promise = require("bluebird");
 var record = require('blue-button-record');
 var bb = require('blue-button');
 var _ = require('underscore');
+var login = require('../login');
 
 // blue bird to promisify record API
 Promise.promisifyAll(require("blue-button-record"));
@@ -26,7 +27,7 @@ function formatResponse(srcComponent, srcResponse) {
     return srcReturn;
 }
 
-app.get('/api/v1/record/:component', function(req, res) {
+app.get('/api/v1/record/:component', login.checkAuth, function(req, res) {
 
     if (!supportedComponents[req.params.component]) {
         res.send(404);
@@ -70,7 +71,7 @@ function getCCDA(callback) {
     });
 }
 
-app.get('/api/v1/ccda', function(req, res) {
+app.get('/api/v1/ccda', login.checkAuth, function(req, res) {
     getCCDA(function(err, result) {
         err ? res.send(500) : res.send(bb.generateCCDA(result).toString());
     });

@@ -3,6 +3,7 @@ var fs = require('fs');
 var app = module.exports = express();
 var parser = require('../parser/index.js');
 var dre = require('../dre/index.js');
+var login = require('../login');
 
 var extractRecord = parser.extractRecord;
 var record = require('blue-button-record');
@@ -260,7 +261,7 @@ function processUpload(recordUpload, callback) {
 }
 
 //Retrieves a specific file for download.
-app.get('/api/v1/storage/record/:identifier', function(req, res) {
+app.get('/api/v1/storage/record/:identifier', login.checkAuth, function(req, res) {
     record.getSource('test', req.params.identifier, function(err, filename, returnFile) {
         if (err) {
             throw err;
@@ -271,7 +272,7 @@ app.get('/api/v1/storage/record/:identifier', function(req, res) {
 });
 
 //Returns list of records in storage.
-app.get('/api/v1/storage', function(req, res) {
+app.get('/api/v1/storage', login.checkAuth, function(req, res) {
     record.getSourceList('test', function(err, recordList) {
         var recordResponse = {};
         recordResponse.storage = recordList;
@@ -280,7 +281,7 @@ app.get('/api/v1/storage', function(req, res) {
 });
 
 //Uploads a file into storage.
-app.put('/api/v1/storage', function(req, res) {
+app.put('/api/v1/storage', login.checkAuth, function(req, res) {
     //console.log(req.files.file);
     processUpload(req.files.file, function(err) {
         if (err) {
