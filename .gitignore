@@ -4,6 +4,7 @@ node_modules
 .project
 .settings
 .vagrant
+.pem
 
 server/coverage
 client/coverage
