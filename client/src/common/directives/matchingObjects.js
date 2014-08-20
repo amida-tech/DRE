@@ -9,10 +9,9 @@ angular.module('directives.matchingObjects', [])
             inputTitle: '@',
             selectField: '='
         },
-        template: "<table class='table table-condensed table-hover'>" + 
-                  "<thead><tr><th class='col-md-2'></th><th style='text-transform: capitalize'><label>{{inputTitle}}</label></th></tr></thead>" + 
-                  "<tr><td><input type='checkbox' ng-model='selectField'></td>" +
-                  "<td>{{inputValue}}</td></tr>",
+        template: "<table class='table table-condensed' style='cursor: pointer;'>" + 
+                  "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                  "<tr><td class='col-md-4'>{{inputValue}}</td><td class='col-md-4 text-left'></td></tr>",
         link: function(scope, element, attrs) {
         }
     };
@@ -27,10 +26,9 @@ angular.module('directives.matchingObjects', [])
             inputTitle: '@',
             selectField: '='
         },
-        template: "<table class='table table-condensed table-hover'>" + 
-                  "<thead><tr><th class='col-md-2'><input type='checkbox' ng-model='selectField.selectAll'></th><th style='text-transform: capitalize'>{{inputTitle}}</th></tr></thead>" +
-                  "<tr ng-repeat='(inputTitle, inputLine) in inputValue'><td><input type='checkbox' ng-model='$parent.selectField.date'></td>" +
-                  "<td><label style='text-transform: capitalize;'>Date:</label>  {{inputLine.date}}</td></tr>" +
+        template: "<table class='table table-condensed' style='cursor: pointer;'>" + 
+                  "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                  "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue[0].displayDate}}</td></tr>" + 
                   "</table>",
         link: function(scope, element, attrs) {
 
@@ -50,10 +48,11 @@ angular.module('directives.matchingObjects', [])
             inputAdditional: '=',
             selectField: "="
         },
-        template: "<table class='table table-condensed table-hover'>" + 
-                  "<thead><tr><th class='col-md-2'><input type='checkbox' ng-model='selectField.selectAll'></th><th style='text-transform: capitalize'>{{inputTitle}}</th></tr></thead>" +
-                  "<tr ng-repeat='(inputTitle, inputLine) in inputValue'><td><input type='checkbox' ng-checked='selAll' ng-model='$parent.selectField[inputTitle]'></td>" +
-                  "<td><label style='text-transform: capitalize;'>{{inputTitle}}:</label>  {{inputLine}}</td></tr>" +
+        template: "<table class='table table-condensed' style='cursor: pointer;'>" + 
+                  "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
+                  "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.name}}</td></tr>" +
+                  "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.code}}</td></tr>" +
+                  "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.code_system_name}}</td></tr>" +
                   "</table>",
         link: function(scope, element, attrs) {
         }

@@ -8,27 +8,35 @@
 		<div class="col-md-9">
 			<div class="col-md-12">
 				<br/>
-				<span class="lead">New Entries</span>
+				<span class="lead">Allergic Reaction Matches</span>
 				<br/>
 				<br/>
 				
 				<!-- All in here. -->
-				<div>
+				<div class="panel panel-default col-md-12">
 
 					<!-- Left Pane -->
-					<div class="col-md-6 panel panel-default" style="padding: 30px;">
+					<div class="col-md-6" style="padding: 30px;">
 
-						<div class="panel panel-primary">
+						<div class="panel panel-info">
 
 							<div class="panel-heading">
 								<table>
 									<tr>
 										<td class="col-md-2"><i class="fa fa-leaf fa-2x"></i></td>
-										<td>Allergic Reaction:</br>PENICILLIN</td>
-									</table>   
-								</div>
+										<td class="col-md-10 pull-right text-right"><h4>Unmatched Entry</h4></td>
+									</tr>
+								</table>   
+							</div>
 
-								<div class="panel-body">
+							<div class="panel-body text-center"><h6>Select Entry Updates</h6></div>
+
+								<ng-include ng-show="panelId === 1 || panelId === 2" src="templatePath"></ng-include>
+
+
+
+
+								<!--<div class="panel-body">
 
 									<div class="btn-group btn-group-justified">
 										<div class="btn-group btn-group-sm">
@@ -47,12 +55,37 @@
 									</div>
 
 
+								</div>-->
+
+
+								<div class="panel-body">
+									<div class="col-md-12">
+										<button type="button" class="btn btn-default" ng-click="panelSwitch(0)">Discard</button>
+									</div>
 								</div>
 
-								<ng-include ng-show="panelId === 1 || panelId === 2" src="templatePath"></ng-include>
+							</div>
+
+						</div>
 
 
-								<h5 ng-if="panelId === 3" class="col-md-12 text-center">This entry will be discarded.</br></br></h5>
+						<!-- Right Pane -->
+						<div class="col-md-6" style="padding: 30px;">
+
+							<div class="panel panel-info">
+
+							<div class="panel-heading">
+								<table>
+									<tr>
+										<td class="col-md-2"><i class="fa fa-leaf fa-2x"></i></td>
+										<td class="col-md-10 pull-right text-right"><h4>86% Match</h4></td>
+									</tr>
+									</table>   
+								</div>
+
+								<div class="panel-body text-center"><h6>Not a Match?</h6></div>
+
+								<ng-include src="templatePath"></ng-include>
 
 								<div class="panel-body" ng-hide="panelId === 0">
 									<div class="col-md-6">
@@ -63,6 +96,7 @@
 
 							</div>
 
+
 							<div class="panel panel-default col-md-10">
 								<div class="panel-body">
 									New Allergy #2
@@ -72,18 +106,6 @@
 							<div class="panel panel-default col-md-10">
 								<div class="panel-body">
 									New Allergy #3
-								</div>
-							</div>
-
-						</div>
-
-
-						<!-- Right Pane -->
-						<div class="col-md-6">
-
-							<div class="panel panel-default col-md-10">
-								<div class="panel-body">
-									My Allergy
 								</div>
 							</div>
 

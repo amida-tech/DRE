@@ -9,3 +9,7 @@
 .nav-tabs {
     margin-bottom: 0;
 }
+
+.list-matching li:hover {
+	background-color: #d9edf7;
+}

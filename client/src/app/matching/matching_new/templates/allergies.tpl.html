@@ -1,23 +1,22 @@
-<ul class="list-group">
+<ul class="list-group list-matching">
 
 	<!--Select All Option-->
-	<li class="list-group-item" style="border:0px;">
+	<!--<li class="list-group-item" style="border:0px;">
 		<table class="table table-condensed table-hover" style="border:0px; margin-bottom:0px;">
 			<thead style="border:0px;">
 				<tr style="border:0px;">
 					<th class="col-md-2" style="border:0px;">
-						<input type="checkbox" ng-model="selectAll" ng-change="selectAllClick(selectAll)" value=""> {{selectAll}}
 					</th>
 					<th style="border:0px;">
-						Select All
+						<h4>Codeine</h4>
 					</th>
 				</tr>
 			</thead>
 		</table>
-	</li>
+	</li>-->
 
 	<li class="list-group-item">
-		<div coded-entry input-value="entry.allergen" input-title="Allergen" select-field="selectedItems.allergen"></div>
+		<div coded-entry input-value="entry.allergen" input-title="{{entry.allergen.name}}" select-field="selectedItems.allergen"></div>
 	</li>
 
 	<li class="list-group-item">
@@ -30,7 +29,7 @@
 	</li>
 
 	<li class="list-group-item">
-		<div date-entry input-value="entry.date" input-title="Timeframe" select-field="selectedItems.date"></div>
+		<div date-entry input-value="entry.date" input-title="Effective" select-field="selectedItems.date"></div>
 	</li>
 
 	<li class="list-group-item" ng-repeat="(reaction_id, reaction_entry) in entry.reaction">

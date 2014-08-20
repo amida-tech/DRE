@@ -29,7 +29,7 @@ angular.module('dre.match_new', ['directives.matchingObjects'])
     function ($scope, $http, $location, getNotifications, recordFunctions) {
 
         $scope.navPath = "templates/nav/nav.tpl.html";
-        $scope.panelId = 0;
+        $scope.panelId = 1;
 
         //Need to initialize selection array.  May be able to walk original to build.
         $scope.selectedItems = {};
@@ -102,6 +102,35 @@ angular.module('dre.match_new', ['directives.matchingObjects'])
             "status": "Active"
         };
 
+        $scope.current_entry = {
+            "allergen": {
+                "name": "Codeine",
+                "code": "2670",
+                "code_system_name": "RXNORM",
+                "translations": []
+            },
+            "date": [{
+                "date": "2005-05-01T00:00:00.000Z",
+                "precision": "day"
+            }],
+            "identifiers": [{
+                "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
+            }],
+            "reaction": [{
+                "severity": "Mild",
+                "reaction": {
+                    "name": "Wheezing",
+                    "code": "56018004",
+                    "code_system_name": "SNOMED CT",
+                    "translations": []
+                }
+            }],
+            "severity": "Moderate",
+            "status": "Active"
+        };
+
+
+        recordFunctions.formatDate($scope.entry.date);
 
     }
 ]);
