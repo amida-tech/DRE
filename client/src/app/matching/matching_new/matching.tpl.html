@@ -36,8 +36,16 @@
 								<ng-include src="newTemplatePath"></ng-include>
 
 								<div class="panel-body">
-									<div class="col-md-12">
-										<button type="button" class="btn btn-default btn-block" ng-click="panelSwitch(0)">Ignore Update</button>
+									<div class="col-md-2 col-md-offset-8">
+									<div class="btn-group">
+									  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+									    Options <span class="caret"></span>
+									  </button>
+									  <ul class="dropdown-menu" role="menu">
+									    <li><a href="#">Discard this Update</a></li>
+									    <li><a href="#">Make Update a New Entry</a></li>
+									  </ul>
+									</div>
 									</div>
 								</div>
 
@@ -60,7 +68,7 @@
 									</table>   
 								</div>
 
-								<div class="panel-body text-center"><h6><a style="cursor: pointer;">Not a Match?</a></h6></div>
+								<div class="panel-body text-center"><h6><a style="cursor: pointer;">Updating the wrong entry?</a></h6></div>
 
 								<ng-include src="recordTemplatePath"></ng-include>
 
@@ -77,7 +85,7 @@
 
 					<div class="col-md-6 col-md-offset-6">
 
-						<div class="text-center" style="padding: 15px;"><h5>Other Entries</h5></div>
+						<div class="text-center" style="padding: 15px;"><h5>Other Matches</h5></div>
 
 							<div class="panel panel-info">
 								<div class="panel-heading">
