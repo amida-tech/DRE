@@ -9,7 +9,7 @@ angular.module('directives.matchingObjects', [])
             inputTitle: '@',
             selectField: '='
         },
-        template: "<table class='table table-condensed' style='cursor: pointer;'>" + 
+        template: "<table class='table table-condensed'>" + 
                   "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
                   "<tr><td class='col-md-4'>{{inputValue}}</td><td class='col-md-4 text-left'></td></tr>",
         link: function(scope, element, attrs) {
@@ -26,7 +26,7 @@ angular.module('directives.matchingObjects', [])
             inputTitle: '@',
             selectField: '='
         },
-        template: "<table class='table table-condensed' style='cursor: pointer;'>" + 
+        template: "<table class='table table-condensed'>" + 
                   "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
                   "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue[0].displayDate}}</td></tr>" + 
                   "</table>",
@@ -48,7 +48,7 @@ angular.module('directives.matchingObjects', [])
             inputAdditional: '=',
             selectField: "="
         },
-        template: "<table class='table table-condensed' style='cursor: pointer;'>" + 
+        template: "<table class='table table-condensed'>" + 
                   "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
                   "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.name}}</td></tr>" +
                   "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.code}}</td></tr>" +

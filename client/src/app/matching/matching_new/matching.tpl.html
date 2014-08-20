@@ -8,7 +8,7 @@
 		<div class="col-md-9">
 			<div class="col-md-12">
 				<br/>
-				<span class="lead">Allergic Reaction Matches</span>
+				<span class="lead">Allergic Reaction Updates</span>
 				<br/>
 				<br/>
 				
@@ -16,26 +16,28 @@
 				<div class="panel panel-default col-md-12">
 
 					<!-- Left Pane -->
-					<div class="col-md-6" style="padding: 30px;">
 
-						<div class="panel panel-info">
+					<div>
+						<div class="col-md-6" style="padding: 30px 15px 0px 0px;">
 
-							<div class="panel-heading">
-								<table>
-									<tr>
-										<td class="col-md-2"><i class="fa fa-leaf fa-2x"></i></td>
-										<td class="col-md-10 pull-right text-right"><h4>Unmatched Entry</h4></td>
-									</tr>
-								</table>   
-							</div>
+							<div class="panel panel-info">
 
-							<div class="panel-body text-center"><h6>Select Entry Updates</h6></div>
+								<div class="panel-heading">
+									<table>
+										<tr>
+											<td class="col-md-2"><i class="fa fa-leaf fa-2x"></i></td>
+											<td class="col-md-10 pull-right text-right"><h4>Entry Update</h4></td>
+										</tr>
+									</table>   
+								</div>
+
+								<div class="panel-body text-center"><h6>Select Updates</h6></div>
 
 								<ng-include src="newTemplatePath"></ng-include>
 
 								<div class="panel-body">
 									<div class="col-md-12">
-										<button type="button" class="btn btn-default" ng-click="panelSwitch(0)">Discard</button>
+										<button type="button" class="btn btn-default btn-block" ng-click="panelSwitch(0)">Ignore Update</button>
 									</div>
 								</div>
 
@@ -45,50 +47,64 @@
 
 
 						<!-- Right Pane -->
-						<div class="col-md-6" style="padding: 30px;">
+						<div class="col-md-6" style="padding: 30px 0px 0px 15px;">
 
 							<div class="panel panel-info">
 
-							<div class="panel-heading">
-								<table>
-									<tr>
-										<td class="col-md-2"><i class="fa fa-leaf fa-2x"></i></td>
-										<td class="col-md-10 pull-right text-right"><h4>86% Match</h4></td>
-									</tr>
+								<div class="panel-heading">
+									<table>
+										<tr>
+											<td class="col-md-2"><i class="fa fa-leaf fa-2x"></i></td>
+											<td class="col-md-10 pull-right text-right"><h4>86% Match</h4></td>
+										</tr>
 									</table>   
 								</div>
 
-								<div class="panel-body text-center"><h6>Not a Match?</h6></div>
+								<div class="panel-body text-center"><h6><a style="cursor: pointer;">Not a Match?</a></h6></div>
 
 								<ng-include src="recordTemplatePath"></ng-include>
 
 								<div class="panel-body" ng-hide="panelId === 0">
-									<div class="col-md-6">
-										<button type="button" class="btn btn-primary">Save</button>
-										<button type="button" class="btn btn-default" ng-click="panelSwitch(0)">Cancel</button>
+									<div class="col-md-12">
+										<button type="button" class="btn btn-primary btn-block">Save Changes</button>
 									</div>
 								</div>
 
 							</div>
 
-
-							<div class="panel panel-default col-md-10">
-								<div class="panel-body">
-									New Allergy #2
-								</div>
-							</div>
-
-							<div class="panel panel-default col-md-10">
-								<div class="panel-body">
-									New Allergy #3
-								</div>
-							</div>
-
 						</div>
+					</div>
 
+					<div class="col-md-6 col-md-offset-6">
+
+						<div class="text-center" style="padding: 15px;"><h5>Other Entries</h5></div>
+
+							<div class="panel panel-info">
+								<div class="panel-heading">
+									<table>
+										<tr>
+											<td class="col-md-2"><i class="fa fa-leaf fa-2x"></i></td>
+											<td class="col-md-10 pull-right text-right"><h4>62% Match</h4></td>
+										</tr>
+									</table>   
+								</div>
+							</div>
+
+
+							<div class="panel panel-info">
+								<div class="panel-heading">
+									<table>
+										<tr>
+											<td class="col-md-2"><i class="fa fa-leaf fa-2x"></i></td>
+											<td class="col-md-10 pull-right text-right"><h4>45% Match</h4></td>
+										</tr>
+									</table>   
+								</div>
+							</div>
 
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
