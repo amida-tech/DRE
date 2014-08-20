@@ -11,12 +11,12 @@
 }
 
 .list-matching li:hover {
-	background-color: #d9edf7;
+	background-color: #dff0d8;
 	cursor: pointer;
 }
 
 .list-matching .selected {
-	background-color: #d9edf7;
+	background-color: #dff0d8;
 }
 
 .list-matching .disabled {

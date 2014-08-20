@@ -74,20 +74,6 @@ angular.module('dre.match_new', ['directives.matchingObjects'])
 
         };
 
-        $scope.selectClick = function (selected, selection) {
-
-            console.log(selected);
-            console.log(selection);
-
-            console.log($scope.selected);
-            console.log('asdf');
-
-        };
-
-        $scope.panelSwitch = function (input) {
-            $scope.panelId = input;
-        };
-
         $scope.entryType = function (input) {
             var response = 'str';
             if (angular.isObject(input)) {
