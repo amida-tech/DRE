@@ -33,17 +33,31 @@ angular.module('dre.match_new', ['directives.matchingObjects'])
 
         //Need to initialize selection array.  May be able to walk original to build.
         $scope.selectedItems = {};
-        $scope.selectedItems.allergen = {};
+        $scope.selectedItems.reaction = [];
+        //$scope.selectedItems.allergen = {};
 
-        //TODO:  Rewrite loop to create shell object for each entry.
-        $scope.selectedItems.reaction = [{}];
 
-        $scope.templatePath = "templates/matching/matching_new/templates/allergies.tpl.html";
+        $scope.newTemplatePath = "templates/matching/matching_new/templates/allergies_new.tpl.html";
+        $scope.recordTemplatePath = "templates/matching/matching_new/templates/allergies_record.tpl.html";
 
         //TODO:  Inject reaction severity into display from object.
 
-        $scope.selectAllClick = function (status) {
-            if (status === true) {
+        $scope.selectField = function (entry, entry_index) {
+
+            if (entry_index >=0) {
+
+                if (!$scope.selectedItems[entry][entry_index]) {
+                    $scope.selectedItems[entry][entry_index] = true;
+                } else {
+                    $scope.selectedItems[entry][entry_index] = false;
+                }
+                
+            } else {
+                if (!$scope.selectedItems[entry]) {
+                    $scope.selectedItems[entry] = true;
+                } else {
+                    $scope.selectedItems[entry] = false;
+                }
 
             }
 
@@ -75,7 +89,7 @@ angular.module('dre.match_new', ['directives.matchingObjects'])
             return response;
         };
 
-        $scope.entry = {
+        $scope.new_entry = {
             "allergen": {
                 "name": "Codeine",
                 "code": "2670",
@@ -93,6 +107,14 @@ angular.module('dre.match_new', ['directives.matchingObjects'])
                 "severity": "Mild",
                 "reaction": {
                     "name": "Wheezing",
+                    "code": "56018004",
+                    "code_system_name": "SNOMED CT",
+                    "translations": []
+                }
+            }, {
+                "severity": "Mild",
+                "reaction": {
+                    "name": "Nausea",
                     "code": "56018004",
                     "code_system_name": "SNOMED CT",
                     "translations": []
@@ -130,7 +152,12 @@ angular.module('dre.match_new', ['directives.matchingObjects'])
         };
 
 
-        recordFunctions.formatDate($scope.entry.date);
+        for (var i in $scope.new_entry.reaction) {
+            $scope.selectedItems.reaction.push(false);
+        }
+
+        recordFunctions.formatDate($scope.new_entry.date);
+        recordFunctions.formatDate($scope.current_entry.date);
 
     }
 ]);

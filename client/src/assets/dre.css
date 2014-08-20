@@ -13,3 +13,7 @@
 .list-matching li:hover {
 	background-color: #d9edf7;
 }
+
+.list-matching .selected {
+	background-color: #d9edf7;
+}

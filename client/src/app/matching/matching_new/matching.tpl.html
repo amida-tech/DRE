@@ -31,32 +31,7 @@
 
 							<div class="panel-body text-center"><h6>Select Entry Updates</h6></div>
 
-								<ng-include ng-show="panelId === 1 || panelId === 2" src="templatePath"></ng-include>
-
-
-
-
-								<!--<div class="panel-body">
-
-									<div class="btn-group btn-group-justified">
-										<div class="btn-group btn-group-sm">
-											<button id="btn1" type="button" class="btn btn-default" ng-click="panelSwitch(1)" ng-class="{active: panelId === 1}">Add</button>
-										</div>
-										<div class="btn-group btn-group-sm">
-											<button id="btn2" type="button" class="btn btn-default" ng-click="panelSwitch(2)" ng-class="{active: panelId === 2}">Match</button>
-										</div>
-										<div class="btn-group btn-group-sm">
-											<button id="btn3" type="button" class="btn btn-default"  ng-click="panelSwitch(3)" ng-class="{active: panelId === 3}">Ignore</button>
-										</div>
-									</div>
-
-									<div class="col-md-12 text-center">
-										<h6>Entry Details <span class="caret"></span></h6>
-									</div>
-
-
-								</div>-->
-
+								<ng-include src="newTemplatePath"></ng-include>
 
 								<div class="panel-body">
 									<div class="col-md-12">
@@ -85,7 +60,7 @@
 
 								<div class="panel-body text-center"><h6>Not a Match?</h6></div>
 
-								<ng-include src="templatePath"></ng-include>
+								<ng-include src="recordTemplatePath"></ng-include>
 
 								<div class="panel-body" ng-hide="panelId === 0">
 									<div class="col-md-6">
