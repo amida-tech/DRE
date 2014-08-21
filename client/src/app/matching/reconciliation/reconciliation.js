@@ -25,17 +25,8 @@ angular.module('dre.match.reconciliation', [])
     }
 ])
 
-.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope', 'getNotifications', 'recordFunctions',
-    function($scope, $http, $location, $rootScope, getNotifications, recordFunctions) {
-
-        $scope.notifications = {};
-
-
-        getNotifications.getUpdate(function(err, notifications) {
-          $scope.notifications = notifications;
-        });
-
-        $scope.navPath = "templates/nav/nav.tpl.html";
+.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope', 'recordFunctions',
+    function($scope, $http, $location, $rootScope, recordFunctions) {
 
         $scope.reviewClick = function(match) {
             //alert(JSON.stringify(match));

@@ -1,58 +1,49 @@
+<div class="col-md-12">
+	<br/>
+	<h5 class="lead">My Files
+	<button type="button" class="btn btn-info pull-right" data-target="#uploadModal" data-toggle="modal"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</button>
+	</h5>
 
-
-<div class="fluid-container col-md-12">
-	<div class="row">
-		<div ng-include="navPath"></div>
-		<div class="col-md-9">
-			<div class="col-md-12">
-					<br/>
-					<span class="lead">My Files</span>
-					<button type="button" class="btn btn-info pull-right" data-target="#uploadModal" data-toggle="modal"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</button>
-					<br/>
-					<br/>
-			</div>
-
-			<div id="uploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button class="close" type="button" data-dismiss="modal" ara-hidden="true">&times;</button>
-							<div class="modal-title">Upload Record</div>
-						</div>
-						<div class="modal-body">
-						<form>
-							<div class="form-group">
-								<input class="form-control" type="file" id="uploadFile" file-model="myFile"/>
-							</div>
-						</form>
-
-						<button class="btn btn-primary" type="submit" ng-click="uploadRecord()" data-dismiss="modal">Upload</button>
-						</div>
-					</div>
+	<div id="uploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" type="button" data-dismiss="modal" ara-hidden="true">&times;</button>
+					<div class="modal-title">Upload Record</div>
 				</div>
-			</div>
+				<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<input class="form-control" type="file" id="uploadFile" file-model="myFile"/>
+					</div>
+				</form>
 
-			<div ng-hide="displayRecords" class="panel-title">No files are currently in storage.</div>
-			<div class="panel-group" ng-show="displayRecords">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="panel-title">	
-							<span style="cursor:pointer;" ng-click="nameSort();"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>File Name</span>
-							<span style="cursor:pointer;" ng-click="dateSort();" class="pull-right"><i class="fa fa-sort pull-right" style="margin-right: 10px; line-height: 1.6em;"></i>Upload Date</span>
-						</div>		
-					</div>
-					<div class="panel-body">
-							<ul class="list-group" ng-repeat="file in file_array | orderBy:predicate">
-							<a ng-href="/api/v1/storage/record/{{file.file_id}}">
-							<li class="list-group-item" style="cursor:pointer;">
-								<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
-								<span style="text-transform:lowercase;">{{file.file_name}}</span>
-								<span class="pull-right" style="text-transform:lowercase;">{{file.file_upload_date | date: 'short'}}</span>
-							</li>
-							</a>
-							</ul>
-					</div>
+				<button class="btn btn-primary" type="submit" ng-click="uploadRecord()" data-dismiss="modal">Upload</button>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<div ng-hide="displayRecords" class="panel-title">No files are currently in storage.</div>
+	<div class="panel-group" ng-show="displayRecords">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">	
+					<span style="cursor:pointer;" ng-click="nameSort();"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>File Name</span>
+					<span style="cursor:pointer;" ng-click="dateSort();" class="pull-right"><i class="fa fa-sort pull-right" style="margin-right: 10px; line-height: 1.6em;"></i>Upload Date</span>
+				</div>		
+			</div>
+			<div class="panel-body">
+				<ul class="list-group" ng-repeat="file in file_array | orderBy:predicate">
+					<a ng-href="/api/v1/storage/record/{{file.file_id}}">
+						<li class="list-group-item" style="cursor:pointer;">
+							<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
+							<span style="text-transform:lowercase;">{{file.file_name}}</span>
+							<span class="pull-right" style="text-transform:lowercase;">{{file.file_upload_date | date: 'short'}}</span>
+						</li>
+					</a>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

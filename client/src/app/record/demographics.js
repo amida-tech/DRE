@@ -25,18 +25,12 @@ angular.module('dre.demographics', [])
   }
 ])
 
-.controller('demographicsCtrl', ['$scope', '$http', '$q', '$location', 'getNotifications', 'recordFunctions',
-  function($scope, $http, $q, $location, getNotifications, recordFunctions) {
+.controller('demographicsCtrl', ['$scope', '$http', '$q', '$location', 'recordFunctions',
+  function($scope, $http, $q, $location, recordFunctions) {
 
-    $scope.navPath = "templates/nav/nav.tpl.html";
     $scope.demographics = [];
     $scope.displayDemographics = false;
     $scope.demographicsPredicate = "-severity_weight";
-
-    $scope.notifications = {};
-    getNotifications.getUpdate(function(err, notifications) {
-      $scope.notifications = notifications;
-    });
 
     $scope.getRecord = function() {
       $q.all([

@@ -25,16 +25,8 @@ angular.module('dre.match', ['dre.match.reconciliation'])
   }
 ])
 
-.controller('matchCtrl', ['$scope', '$http', '$location', 'getNotifications', 'recordFunctions',
-  function($scope, $http, $location, getNotifications, recordFunctions) {
-
-    $scope.navPath = "templates/nav/nav.tpl.html";
-    $scope.notifications = {};
-
-
-    getNotifications.getUpdate(function(err, notifications) {
-      $scope.notifications = notifications;
-    });
+.controller('matchCtrl', ['$scope', '$http', '$location','recordFunctions',
+  function($scope, $http, $location, recordFunctions) {
 
     $scope.new_merges = [];
     $scope.duplicate_merges = [];
