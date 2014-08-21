@@ -1,6 +1,7 @@
 var express = require('express');
 var app = module.exports = express();
 var record = require('blue-button-record');
+
 var bbm = require('blue-button-meta');
 
 function getNotifications (callback) {
@@ -45,7 +46,6 @@ function getNotifications (callback) {
           callback(err);
         } else {
           partialCount = partialCount + count;
-          //console.log(unreviewedCount);
           checkCountComplete();
         }
       });

@@ -120,8 +120,8 @@ function getSavedRecords(saved_sections, callback) {
                 callback(err);
             } else {
                 responseObject[section] = savedObj;
-                callback(null);    
-            }       
+                callback(null);
+            }
         });
     }
 
@@ -130,7 +130,7 @@ function getSavedRecords(saved_sections, callback) {
             if (err) {
                 callback(err);
             } else {
-                checkComplete();    
+                checkComplete();
             }
         });
     }
@@ -138,12 +138,12 @@ function getSavedRecords(saved_sections, callback) {
 
 //Parses raw inbound records into components.
 function parseRecord(record_type, record_data, callback) {
-    if (record_type === 'application/xml' || record_type === 'text/xml') {
+    if (record_type === 'application/xml' || record_type === 'text/xml' || record_type == 'text/plain') {
         extractRecord(record_data, function(err, xml_type, parsed_record) {
             if (err) {
                 callback(err);
             } else {
-                if (xml_type === 'ccda') {
+                if (xml_type === 'ccda' || xml_type === 'cms') {
                     callback(null, xml_type, parsed_record);
                 } else {
                     callback(null, null);
@@ -163,12 +163,20 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
     for (var parsed_section in parsed_record) {
         sectionArray.push(parsed_section);
     }
+    //console.log('section array');
+    //console.log(sectionArray);
 
     //Get Saved Records.
     getSavedRecords(sectionArray, function(err, saved_record) {
         if (err) {
             callback(err);
         } else {
+            //console.log('parsed records');
+            //console.log(JSON.stringify(parsed_record, null, 4));
+            //console.log('------------------------');
+            //console.log(JSON.stringify(saved_record, null, 4));
+
+
 
             dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
                 //console.log(JSON.stringify(partial_reconciliation_results, null, 10));
@@ -206,7 +214,6 @@ function importRecord(record_metadata, record_data, callback) {
                     callback(err);
                 } else {
                     //SHIM.
-
                     if (parsed_record.demographics) {
                         var tmpDemographicsArray = new Array(parsed_record.demographics);
                         //console.log(tmpDemographicsArray);

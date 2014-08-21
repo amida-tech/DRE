@@ -1,0 +1,9 @@
+---
+- hosts: dbservers
+  sudo: yes
+  roles:
+    - common
+    - mongodb
+    
+
+

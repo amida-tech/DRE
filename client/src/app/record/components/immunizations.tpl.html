@@ -85,8 +85,12 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left">
+					<div class="col-md-12 pull-left" ng-show = "immunization.product">
 						<h4>Product</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.product.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{immunization.product.product.name}}</div>
+						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.lot_number">
 							<div class="pull-left col-md-12"><strong>Lot Number:</strong></div><br/>
 							<div class="pull-left col-md-12">{{immunization.product.lot_number}}</div>

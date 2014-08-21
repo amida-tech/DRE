@@ -2,7 +2,7 @@
     "author": "Dmitry Kachaev, Matthew McCall and Afsin Ustundag",
     "name": "DRE-Server",
     "description": "Data Reconcilliation Engine (Server).",
-    "version": "1.0.0",
+    "version": "1.1.0-beta.1",
     "repository": {
         "type": "git",
         "url": "git@github.com:amida-tech/DRE.git"
@@ -23,10 +23,10 @@
         "deep-equal": "0.2.x",
         "underscore": "1.6.x",
         "async": "0.9.x",
-        "blue-button": "1.0.4",
-        "blue-button-match": "1.0.1",
-        "blue-button-record": "1.0.0",
-        "blue-button-meta": "0.1.1",
+        "blue-button": "^1.1.0",
+        "blue-button-match": "^1.1.0",
+        "blue-button-record": "^1.1.0",
+        "blue-button-meta": "^1.1.0",
         "bluebird": "2.2.x"
     },
     "devDependencies": {

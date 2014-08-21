@@ -45,7 +45,7 @@ module.exports = function(grunt) {
     },
     watch: {
       all: {
-        files: ['src/**/*.js', 'test/**/*.js', 'src/**/*.html', 'src/**/*.tpl.html'],
+        files: ['src/**/*.js', 'test/**/*.js', 'src/**/*.html', 'src/**/*.tpl.html', 'src/**/*.css'],
         tasks: ['default']
       }
     },
@@ -110,6 +110,10 @@ module.exports = function(grunt) {
       bootstrap: {
         src: ['src/vendor/bootstrap/js/bootstrap.min.js'],
         dest: '<%= distdir %>/bootstrap.js'
+      },
+      moment: {
+        src: ['src/vendor/moment/moment.min.js'],
+        dest: '<%= distdir %>/moment.js'
       }
     },
     jshint: {

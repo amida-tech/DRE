@@ -1,0 +1,9 @@
+---
+#file: roles/common/tasks/main.yml
+
+- name: Test Connection
+  ping:
+
+# - name: Run System Updates
+#   yum: name="*" state="latest"
+#   sudo: yes
