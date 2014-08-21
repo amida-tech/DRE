@@ -4,15 +4,16 @@ var Promise = require("bluebird");
 var record = require('blue-button-record');
 var bb = require('blue-button');
 var _ = require('underscore');
+var bbm = require('blue-button-meta');
 
 // blue bird to promisify record API
 Promise.promisifyAll(require("blue-button-record"));
 
-var supportedComponents = {
-    allergies: 'allergies', procedures: 'procedures', immunizations: 'immunizations', medications: 'medications',
-    encounters: 'encounters', vitals: 'vitals', results: 'results', social_history: 'social_history',
-    demographics: 'demographics', problems: 'problems' , insurance: 'insurance', claims: 'claims'
-}
+
+var supportedComponents = bbm.supported_sections.reduce(function(r, c) { 
+    r[c] = true;
+    return r;
+}, {});
 
 function formatResponse(srcComponent, srcResponse) {
     var srcReturn = {};
@@ -58,7 +59,7 @@ function prep(sec, secName) {
 function getCCDA(callback) {
     var aggregatedResponse = {}, count = 0;
 
-    Object.keys(supportedComponents).forEach(function(secName) {
+    bbm.supported_sections.forEach(function(secName) {
         record.getSectionAsync(secName, 'test').then(function(sec) {
             sec = prep(sec, secName);
             _.extend(aggregatedResponse, formatResponse(secName, sec));
