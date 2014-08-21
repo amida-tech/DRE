@@ -1,0 +1,5 @@
+#Mongodb database location
+mongodb_datadir_prefix: /data/
+
+#Mongod port
+mongod_port: 27017
