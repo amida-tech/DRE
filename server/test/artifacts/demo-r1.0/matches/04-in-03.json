@@ -3,328 +3,2243 @@
         "allergies": [
             {
                 "match": "partial",
-                "percent": 95,
-                "subelements": [
-                    {
-                        "match": "partial",
-                        "percent": 75,
-                        "src_id": "0",
-                        "dest_id": "0"
-                    },
-                    {
-                        "match": "new",
-                        "src_id": "1"
-                    }
-                ],
+                "percent": 50,
+                "subelements": {
+                    "reaction": [
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "1",
+                            "dest": "src"
+                        },
+                        {
+                            "match": "duplicate",
+                            "percent": 100,
+                            "src_id": "1",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "1",
+                            "dest_id": "0",
+                            "dest": "src"
+                        }
+                    ]
+                },
                 "diff": {
-                    "date": "duplicate",
+                    "date_time": "duplicate",
                     "identifiers": "duplicate",
                     "allergen": "duplicate",
-                    "severity": "duplicate",
+                    "intolerance": "duplicate",
                     "status": "duplicate",
                     "reaction": "new"
                 },
                 "src_id": "0",
-                "dest_id": "0"
+                "dest_id": "0",
+                "dest": "dest"
             },
             {
-                "match": "duplicate",
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
                 "src_id": "1",
-                "dest_id": "1"
+                "dest_id": "0",
+                "dest": "dest"
             },
             {
                 "match": "duplicate",
+                "percent": "100",
+                "src_id": "1",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
                 "src_id": "2",
-                "dest_id": "2"
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "dest"
             },
             {
                 "match": "duplicate",
+                "percent": "100",
+                "src_id": "2",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
                 "src_id": "3",
-                "dest_id": "3"
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "duplicate",
+                "percent": "100",
+                "src_id": "3",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "3",
+                "dest": "dest"
             },
             {
                 "match": "partial",
-                "percent": 95,
-                "subelements": [
-                    {
-                        "match": "partial",
-                        "percent": 50,
-                        "src_id": "0",
-                        "dest_id": "0"
-                    },
-                    {
-                        "match": "new",
-                        "src_id": "1"
-                    }
-                ],
+                "percent": 50,
+                "subelements": {
+                    "reaction": [
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "1",
+                            "dest": "src"
+                        },
+                        {
+                            "match": "duplicate",
+                            "percent": 100,
+                            "src_id": "1",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "1",
+                            "dest_id": "0",
+                            "dest": "src"
+                        }
+                    ]
+                },
                 "diff": {
-                    "date": "duplicate",
+                    "date_time": "duplicate",
                     "identifiers": "duplicate",
                     "allergen": "duplicate",
+                    "intolerance": "duplicate",
                     "status": "duplicate",
                     "reaction": "new"
                 },
                 "src_id": "4",
-                "dest_id": "4"
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "4",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "4",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "4",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "4",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "3",
+                "dest": "src"
             }
         ],
         "encounters": [
             {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
                 "match": "partial",
-                "percent": 95,
-                "subelements": [
-                    {
-                        "match": "duplicate",
-                        "src_id": "1",
-                        "dest_id": "0"
-                    },
-                    {
-                        "match": "new",
-                        "src_id": "0"
-                    }
-                ],
+                "percent": 75,
+                "subelements": {
+                    "findings": [
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "1",
+                            "dest": "src"
+                        },
+                        {
+                            "match": "duplicate",
+                            "percent": 100,
+                            "src_id": "1",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "1",
+                            "dest_id": "0",
+                            "dest": "src"
+                        }
+                    ]
+                },
                 "diff": {
                     "encounter": "duplicate",
                     "identifiers": "duplicate",
-                    "date": "duplicate",
+                    "date_time": "duplicate",
+                    "performers": "duplicate",
                     "locations": "duplicate",
                     "findings": "new"
                 },
                 "src_id": "0",
-                "dest_id": "1"
+                "dest_id": "1",
+                "dest": "dest"
             }
         ],
         "immunizations": [
             {
                 "match": "partial",
-                "percent": 75,
+                "percent": 50,
                 "diff": {
-                    "date": "duplicate",
+                    "date_time": "duplicate",
                     "identifiers": "duplicate",
                     "status": "duplicate",
                     "product": "new",
                     "administration": "duplicate",
-                    "performer": "duplicate"
+                    "performer": "duplicate",
+                    "instructions": "duplicate"
                 },
                 "src_id": "0",
-                "dest_id": "0"
+                "dest_id": "0",
+                "dest": "dest"
             },
             {
-                "match": "duplicate",
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "date_time": "new",
+                    "identifiers": "duplicate",
+                    "status": "new",
+                    "product": "new",
+                    "administration": "duplicate",
+                    "performer": "duplicate",
+                    "instructions": "duplicate"
+                },
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "date_time": "new",
+                    "identifiers": "duplicate",
+                    "status": "new",
+                    "product": "duplicate",
+                    "administration": "duplicate",
+                    "performer": "duplicate",
+                    "instructions": "duplicate"
+                },
                 "src_id": "1",
-                "dest_id": "1"
+                "dest_id": "0",
+                "dest": "dest"
             },
             {
                 "match": "duplicate",
+                "percent": "100",
+                "src_id": "1",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
                 "src_id": "2",
-                "dest_id": "2"
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "dest"
             },
             {
                 "match": "duplicate",
+                "percent": "100",
+                "src_id": "2",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
                 "src_id": "3",
-                "dest_id": "3"
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "duplicate",
+                "percent": "100",
+                "src_id": "3",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "date_time": "new",
+                    "identifiers": "duplicate",
+                    "status": "new",
+                    "product": "new",
+                    "administration": "duplicate",
+                    "performer": "duplicate",
+                    "instructions": "duplicate"
+                },
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "date_time": "new",
+                    "identifiers": "duplicate",
+                    "status": "new",
+                    "product": "new",
+                    "administration": "duplicate",
+                    "performer": "duplicate",
+                    "instructions": "duplicate"
+                },
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "2",
+                "dest": "src"
             }
         ],
         "results": [
             {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "5",
+                "dest": "dest"
+            },
+            {
                 "match": "partial",
-                "percent": 95,
-                "subelements": [
-                    {
-                        "match": "partial",
-                        "percent": 75,
-                        "src_id": "0",
-                        "dest_id": "0"
-                    },
-                    {
-                        "match": "duplicate",
-                        "src_id": "1",
-                        "dest_id": "1"
-                    },
-                    {
-                        "match": "duplicate",
-                        "src_id": "2",
-                        "dest_id": "2"
-                    }
-                ],
+                "percent": 75,
+                "subelements": {
+                    "results": [
+                        {
+                            "match": "partial",
+                            "percent": 55,
+                            "src_id": "0",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "1",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "2",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "1",
+                            "dest": "src"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "0",
+                            "dest_id": "2",
+                            "dest": "src"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "1",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "duplicate",
+                            "percent": 100,
+                            "src_id": "1",
+                            "dest_id": "1",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "1",
+                            "dest_id": "2",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "1",
+                            "dest_id": "0",
+                            "dest": "src"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "1",
+                            "dest_id": "2",
+                            "dest": "src"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "2",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "2",
+                            "dest_id": "1",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "duplicate",
+                            "percent": 100,
+                            "src_id": "2",
+                            "dest_id": "2",
+                            "dest": "dest"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "2",
+                            "dest_id": "0",
+                            "dest": "src"
+                        },
+                        {
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "2",
+                            "dest_id": "1",
+                            "dest": "src"
+                        }
+                    ]
+                },
                 "diff": {
                     "identifiers": "duplicate",
                     "result_set": "duplicate",
                     "results": "new"
                 },
                 "src_id": "0",
-                "dest_id": "6"
+                "dest_id": "6",
+                "dest": "dest"
             }
         ],
         "medications": [
             {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
                 "match": "partial",
-                "percent": 80,
+                "percent": 30,
                 "diff": {
-                    "date": "new",
+                    "date_time": "new",
                     "identifiers": "duplicate",
                     "status": "duplicate",
                     "sig": "duplicate",
                     "product": "duplicate",
-                    "administration": "duplicate"
+                    "supply": "duplicate",
+                    "administration": "duplicate",
+                    "performer": "duplicate",
+                    "drug_vehicle": "duplicate",
+                    "indication": "duplicate",
+                    "dispense": "duplicate"
                 },
                 "src_id": "0",
-                "dest_id": "2"
+                "dest_id": "2",
+                "dest": "dest"
             }
         ],
         "problems": [
             {
-                "match": "partial",
-                "percent": 70,
-                "diff": {
-                    "date": "new",
-                    "identifiers": "duplicate",
-                    "negation_indicator": "new",
-                    "problem": "duplicate",
-                    "onset_age": "duplicate",
-                    "onset_age_unit": "duplicate",
-                    "status": "duplicate",
-                    "patient_status": "duplicate",
-                    "source_list_identifiers": "duplicate"
-                },
+                "match": "new",
+                "percent": 0,
                 "src_id": "0",
-                "dest_id": "1"
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "1",
+                "dest": "dest"
             },
             {
                 "match": "duplicate",
+                "percent": "100",
                 "src_id": "1",
-                "dest_id": "2"
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "src"
             }
         ],
         "procedures": [
             {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
                 "match": "partial",
-                "percent": 65,
+                "percent": 30,
                 "diff": {
                     "procedure": "duplicate",
                     "identifiers": "duplicate",
                     "status": "duplicate",
-                    "date": "new",
+                    "date_time": "new",
                     "body_sites": "duplicate",
-                    "providers": "duplicate",
+                    "specimen": "duplicate",
+                    "performer": "duplicate",
                     "procedure_type": "duplicate"
                 },
                 "src_id": "0",
-                "dest_id": "1"
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "1",
+                "dest": "dest"
             },
             {
                 "match": "duplicate",
+                "percent": "100",
                 "src_id": "1",
-                "dest_id": "2"
+                "dest_id": "2",
+                "dest": "dest"
             },
             {
                 "match": "partial",
-                "percent": 75,
+                "percent": 50,
+                "diff": {
+                    "procedure": "duplicate",
+                    "identifiers": "new",
+                    "status": "new",
+                    "date_time": "duplicate",
+                    "body_sites": "new",
+                    "priority": "duplicate",
+                    "performer": "new",
+                    "locations": "duplicate",
+                    "procedure_type": "new"
+                },
+                "src_id": "1",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 50,
+                "diff": {
+                    "procedure": "duplicate",
+                    "identifiers": "new",
+                    "status": "new",
+                    "date_time": "duplicate",
+                    "priority": "duplicate",
+                    "locations": "duplicate",
+                    "procedure_type": "new"
+                },
+                "src_id": "2",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 50,
                 "diff": {
                     "procedure": "duplicate",
                     "identifiers": "duplicate",
                     "status": "duplicate",
-                    "date": "duplicate",
+                    "date_time": "duplicate",
+                    "priority": "duplicate",
                     "locations": "duplicate",
                     "procedure_type": "duplicate"
                 },
                 "src_id": "2",
-                "dest_id": "3"
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 50,
+                "diff": {
+                    "procedure": "duplicate",
+                    "identifiers": "new",
+                    "status": "new",
+                    "date_time": "duplicate",
+                    "body_sites": "new",
+                    "priority": "duplicate",
+                    "performer": "new",
+                    "locations": "duplicate",
+                    "procedure_type": "new"
+                },
+                "src_id": "1",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 50,
+                "diff": {
+                    "procedure": "duplicate",
+                    "identifiers": "new",
+                    "status": "new",
+                    "date_time": "duplicate",
+                    "priority": "duplicate",
+                    "locations": "duplicate",
+                    "procedure_type": "new"
+                },
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "src"
             }
         ],
         "vitals": [
             {
                 "match": "partial",
-                "percent": 75,
+                "percent": 25,
+                "diff": {
+                    "identifiers": "new",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "new",
+                    "value": "new",
+                    "unit": "new"
+                },
+                "src_id": "0",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 30,
                 "diff": {
                     "identifiers": "duplicate",
                     "vital": "duplicate",
                     "status": "duplicate",
-                    "date": "new",
+                    "date_time": "new",
                     "interpretations": "duplicate",
                     "value": "duplicate",
                     "unit": "duplicate"
                 },
                 "src_id": "0",
-                "dest_id": "5"
+                "dest_id": "5",
+                "dest": "dest"
             },
             {
-                "match": "duplicate",
-                "src_id": "1",
-                "dest_id": "6"
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "6",
+                "dest": "dest"
             },
             {
-                "match": "duplicate",
-                "src_id": "2",
-                "dest_id": "7"
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "7",
+                "dest": "dest"
             },
             {
                 "match": "partial",
-                "percent": 75,
+                "percent": 25,
                 "diff": {
                     "identifiers": "duplicate",
                     "vital": "duplicate",
                     "status": "duplicate",
-                    "date": "new",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "duplicate",
+                    "unit": "duplicate"
+                },
+                "src_id": "0",
+                "dest_id": "8",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "9",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "10",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "new",
+                    "vital": "new",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "new",
+                    "value": "new",
+                    "unit": "new"
+                },
+                "src_id": "1",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "5",
+                "dest": "dest"
+            },
+            {
+                "match": "duplicate",
+                "percent": "100",
+                "src_id": "1",
+                "dest_id": "6",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "7",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "8",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "1",
+                "dest_id": "9",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "10",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "new",
+                    "vital": "new",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "new",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "2",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "5",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "6",
+                "dest": "dest"
+            },
+            {
+                "match": "duplicate",
+                "percent": "100",
+                "src_id": "2",
+                "dest_id": "7",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "8",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "9",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "2",
+                "dest_id": "10",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "new",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "new",
+                    "value": "new",
+                    "unit": "new"
+                },
+                "src_id": "3",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
                     "interpretations": "duplicate",
                     "value": "duplicate",
                     "unit": "duplicate"
                 },
                 "src_id": "3",
-                "dest_id": "8"
+                "dest_id": "5",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "6",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "7",
+                "dest": "dest"
             },
             {
                 "match": "partial",
-                "percent": 75,
+                "percent": 30,
                 "diff": {
                     "identifiers": "duplicate",
                     "vital": "duplicate",
                     "status": "duplicate",
-                    "date": "new",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "duplicate",
+                    "unit": "duplicate"
+                },
+                "src_id": "3",
+                "dest_id": "8",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "9",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "10",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "new",
+                    "vital": "new",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "new",
+                    "value": "new",
+                    "unit": "new"
+                },
+                "src_id": "4",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "5",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "4",
+                "dest_id": "6",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "7",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "8",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 30,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
                     "interpretations": "duplicate",
                     "value": "duplicate",
                     "unit": "duplicate"
                 },
                 "src_id": "4",
-                "dest_id": "9"
+                "dest_id": "9",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "10",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "new",
+                    "vital": "new",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "new",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "5",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "4",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "5",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "6",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "5",
+                "dest_id": "7",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "8",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "9",
+                "dest": "dest"
             },
             {
                 "match": "duplicate",
+                "percent": "100",
                 "src_id": "5",
-                "dest_id": "10"
-            }
-        ],
-        "demographics": [
+                "dest_id": "10",
+                "dest": "dest"
+            },
             {
-                "match": "diff",
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
                 "diff": {
-                    "name": "new",
-                    "dob": "duplicate",
-                    "gender": "duplicate",
                     "identifiers": "duplicate",
-                    "marital_status": "duplicate",
-                    "addresses": "duplicate",
-                    "phone": "new",
-                    "race_ethnicity": "duplicate",
-                    "languages": "duplicate",
-                    "religion": "duplicate",
-                    "birthplace": "duplicate",
-                    "guardians": "duplicate"
-                }
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "duplicate",
+                    "unit": "duplicate"
+                },
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "4",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "5",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "1",
+                "dest_id": "4",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "5",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "4",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "2",
+                "dest_id": "5",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "duplicate",
+                    "unit": "duplicate"
+                },
+                "src_id": "3",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "4",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "5",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "4",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "4",
+                "dest_id": "5",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 25,
+                "diff": {
+                    "identifiers": "duplicate",
+                    "vital": "duplicate",
+                    "status": "duplicate",
+                    "date_time": "new",
+                    "interpretations": "duplicate",
+                    "value": "new",
+                    "unit": "duplicate"
+                },
+                "src_id": "5",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "5",
+                "dest_id": "4",
+                "dest": "src"
             }
         ],
+        "demographics": {
+            "match": "diff",
+            "diff": {},
+            "src_id": 0,
+            "dest_id": 0
+        },
         "social_history": [
             {
-                "match": "diff",
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 30,
                 "diff": {
-                    "value": "new",
-                    "date": "duplicate"
-                }
+                    "value": "duplicate",
+                    "date_time": "new",
+                    "identifiers": "new",
+                    "code": "duplicate",
+                    "observation_value": "new"
+                },
+                "src_id": "1",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "duplicate",
+                "percent": "100",
+                "src_id": "1",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "duplicate",
+                "percent": "100",
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "partial",
+                "percent": 30,
+                "diff": {
+                    "value": "duplicate",
+                    "date_time": "new",
+                    "identifiers": "new",
+                    "code": "duplicate",
+                    "observation_value": "new"
+                },
+                "src_id": "2",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "0",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "1",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "2",
+                "dest": "dest"
+            },
+            {
+                "match": "duplicate",
+                "percent": "100",
+                "src_id": "3",
+                "dest_id": "3",
+                "dest": "dest"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "0",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 30,
+                "diff": {
+                    "value": "duplicate",
+                    "date_time": "new",
+                    "identifiers": "new",
+                    "code": "duplicate",
+                    "observation_value": "new"
+                },
+                "src_id": "1",
+                "dest_id": "2",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "1",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "partial",
+                "percent": 30,
+                "diff": {
+                    "value": "duplicate",
+                    "date_time": "new",
+                    "identifiers": "new",
+                    "code": "duplicate",
+                    "observation_value": "new"
+                },
+                "src_id": "2",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "2",
+                "dest_id": "3",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "0",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "1",
+                "dest": "src"
+            },
+            {
+                "match": "new",
+                "percent": 0,
+                "src_id": "3",
+                "dest_id": "2",
+                "dest": "src"
             }
         ]
     },
     "meta": {
-        "version": "1.0.1"
+        "version": "1.1.0-beta"
     },
     "errors": []
 }

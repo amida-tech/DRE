@@ -1,0 +1,23 @@
+<ul class="list-group list-matching">
+
+	<li class="list-group-item" ng-click="selectField('allergen', null, match_diff.allergen)" ng-class="{selected: selectedItems.allergen, disabled: match_diff.allergen}">
+		<div coded-entry input-value="new_entry.allergen" input-title="{{new_entry.allergen.name}}" select-field="selectedItems.allergen"></div>
+	</li>
+
+	<li class="list-group-item" ng-click="selectField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}">
+		<div single-entry input-value="new_entry.status" input-title="Status" select-field="selectedItems.status"></div>
+	</li>
+
+	<li class="list-group-item" ng-click="selectField('severity', null, match_diff.severity)" ng-class="{selected: selectedItems.severity, disabled: match_diff.severity}">
+		<div single-entry input-value="new_entry.severity" input-title="Severity" select-field="selectedItems.severity"></div>
+	</li>
+
+	<li class="list-group-item" ng-click="selectField('date', null, match_diff.date)" ng-class="{selected: selectedItems.date, disabled: match_diff.date_time}">
+		<div date-entry input-value="new_entry.date" input-title="Effective" select-field="selectedItems.date"></div>
+	</li>
+
+	<li class="list-group-item" ng-repeat="(reaction_id, reaction_entry) in new_entry.reaction" ng-click="selectField('reaction', reaction_id, match_diff.reaction)" ng-class="{selected: selectedItems.reaction[reaction_id], disabled: match_diff.reaction}">
+		<div coded-entry input-value="reaction_entry.reaction" input-title="Reaction" input-additional="reaction_entry" select-field="selectedItems.reaction[reaction_id]" ></div>
+	</li>
+
+</ul>

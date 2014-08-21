@@ -3,6 +3,7 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var bbMatch = require("blue-button-match");
 var _ = require("underscore");
+var async = require("async");
 
 
 //If an object is a duplicate; remove the newRecord and log disposal as duplicate
@@ -234,9 +235,78 @@ function reconcile(newObject, baseObject, newSourceID, callback) {
     }
     revertSocial();
 
-    removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
-        callback(null, newObjectPostMatch, newPartialObjectPostMatch);
-    });
+    //Rewrite here in parallel using async.
+
+    //console.log(JSON.stringify(matchResult.match, null, 10));
+
+    function deDuplicateNew (match) {
+
+        _.map(match, function(value, key) {
+
+            if (_.isArray(value)) {
+                //Find all duplicate source entries.
+                var duplicateArray = [];
+                for (var deLoop in value) {
+                    if(value[deLoop].dest === 'src' && value[deLoop].match === 'duplicate') {
+                        //console.log(value[deLoop]);
+                        duplicateArray.push(value[deLoop]);
+                    };
+                }
+
+                //Find intersection and drop one.
+                for (var srcLoop in duplicateArray) {
+                    for (var destLoop in duplicateArray) {
+
+                        if (duplicateArray[srcLoop].src_id === duplicateArray[destLoop].dest_id) {
+                            if (duplicateArray[srcLoop].dest_id === duplicateArray[destLoop].src_id) {
+                                duplicateArray.splice(destLoop, 1);
+                            }
+                        }
+                    }
+                }
+
+                //Remove remaining entry from source.
+                for (var iSrc in value) {
+                    for (var iDest in duplicateArray) {
+                        if (_.isEqual(value[iSrc], duplicateArray[iDest])) {
+                            value.splice(iSrc, 1);
+                        }
+                    }
+                }
+
+            }
+
+        });
+
+        return match;
+
+    }
+
+    var match = deDuplicateNew(matchResult.match);
+
+    //console.log(JSON.stringify(match, null, 10));
+
+    function removeDuplicates(match) {
+        _.map(match, function(value, key) {
+            //TODO:  Remove duplicate entries here, can't test since everything is broken.
+        });
+    }
+
+    removeDuplicates(match);
+
+    callback(null, newObjectForParsing, newObjectForParsing);
+
+
+
+
+    //console.log(match);
+
+
+
+    //removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
+        //console.log(JSON.stringify(newObjectPostMatch, null, 10));
+    //    callback(null, newObjectPostMatch, newPartialObjectPostMatch);
+   // });
 }
 
 module.exports.reconcile = reconcile;

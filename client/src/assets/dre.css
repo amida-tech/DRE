@@ -9,3 +9,21 @@
 .nav-tabs {
     margin-bottom: 0;
 }
+
+.list-matching li:hover {
+	background-color: #dff0d8;
+	cursor: pointer;
+}
+
+.list-matching .selected {
+	background-color: #dff0d8;
+}
+
+.list-matching .disabled {
+	color: #e7e7e7;
+}
+
+.list-matching li.disabled:hover {
+	background-color: #fff;
+	cursor: auto;
+}

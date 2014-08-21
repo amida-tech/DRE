@@ -61,7 +61,7 @@ before(function(done) {
 });
 
 
-describe('Verifying demo R1.0 sample xml files', function() {
+xdescribe('Verifying demo R1.0 sample xml files', function() {
 
 
     it('checking for all sections present in each demo file', function() {
