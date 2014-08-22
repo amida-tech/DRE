@@ -135,7 +135,7 @@ describe('Allergies API - Test New:', function() {
 
 });
 
-xdescribe('Allergies API - Test Duplicate:', function() {
+describe('Allergies API - Test Duplicate:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-02-duplicate.xml', function(err) {
