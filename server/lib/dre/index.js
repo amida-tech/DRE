@@ -92,8 +92,8 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
         });
 
         var returnObject = {
-                match: match,
-                matchObject: matchObject
+            match: match,
+            matchObject: matchObject
 
         }
 
@@ -177,67 +177,75 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
         return newRecord;
     }
 
+    function splitNewPartialEntries(match, newObjectArray) {
 
-    function buildNewEntryArray (match, newObjectArray) {
-
+        var partialObjectArray = [];
+        var outputNewObjectArray = [];
 
         _.map(match, function (value, matchKey) {
-            
+
+            partialObjectArray[matchKey] = [];
+            outputNewObjectArray[matchKey] = [];
+
             //Need to make sure all entries per src_id are only new.
             newCheckArray = _.where(value, {
-                    dest: 'dest'
+                dest: 'dest'
+            });
+
+            var groupCheckedArray = _.groupBy(newCheckArray, 'src_id');
+
+            _.each(groupCheckedArray, function (element, index) {
+                var newElementArray = _.filter(element, function (elementItem, elementItemIndex) {
+                    if (elementItem.match === 'new') {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 });
 
-                 var groupCheckedArray = _.groupBy(newCheckArray, 'src_id');
-
-                 //console.log(groupCheckedArray);
-                
-                //If filtered new length equals total length.
-                 _.each(groupCheckedArray, function(element, index) {
-                    var newElementArray = _.filter(element, function(elementItem, elementItemIndex) {
-                        if (elementItem.match === 'new') {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    });
-
-                    //console.log(element);
-
-                    if (newElementArray.length === element.length) {
-                        //console.log('asdf');
+                //Only valid entries (src_id) will have equal lengths
+                //Everything else is a partial match as that is all that remains.
+                if (newElementArray.length !== element.length) {
+                    if (newObjectArray[matchKey] !== undefined) {
+                        var partialEntry = newObjectArray[matchKey][index];
+                        partialObjectArray[matchKey].push(partialEntry);
                     }
+                } else {
+                    if (newObjectArray[matchKey] !== undefined) {
+                        var outputNewEntry = newObjectArray[matchKey][index];
+                        outputNewObjectArray[matchKey].push(outputNewEntry);
+                    }
+                }
 
-                 });
-
-
+            });
         });
 
-        //console.log(match);    
+        //console.log(match.allergies);
+        //console.log('---------');
+        //console.log(partialObjectArray);
+        //console.log('---------');
+        //console.log(outputNewObjectArray);
 
-        //console.log(newObjectArray);
+        var returnObject = {
+            newEntries: outputNewObjectArray,
+            partialEntries: partialObjectArray
+        }
 
+        return returnObject;
 
     }
 
-
     revertDemographics();
+
+    //Remove Overlapping Source Matches.
     var deDuplicatedSourceRecords = deDuplicateNew(matchResult.match, newObject);
+    //Remove Duplicates from save, update Record Entry.
     var deDuplicatedNewRecord = removeDuplicates(deDuplicatedSourceRecords.match, deDuplicatedSourceRecords.matchObject, baseObject, newRecordID);
+    //Pare down new entries for save to just new entries.
+    var entriesForSave = splitNewPartialEntries(deDuplicatedSourceRecords.match, deDuplicatedNewRecord);
+    //Pare down partial entries for save to just partial entries.
 
-    console.log(deDuplicatedNewRecord);
-
-
-
-    //console.log(match);
-
-
-
-    buildNewEntryArray(deDuplicatedSourceRecords.match, deDuplicatedNewRecord);
-
-    //console.log(deDuplicatedNewRecord);
-
-    callback(null, deDuplicatedNewRecord, deDuplicatedNewRecord);
+    callback(null, entriesForSave.newEntries, entriesForSave.partialEntries);
 
     //console.log(match);
 
