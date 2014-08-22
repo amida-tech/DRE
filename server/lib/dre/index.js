@@ -54,7 +54,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
         }
     }
 
-    function deDuplicateNew(match) {
+    function deDuplicateNew(match, matchObject) {
         _.map(match, function (value, key) {
             if (_.isArray(value)) {
                 //Find all duplicate source entries.
@@ -72,12 +72,13 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                         if (duplicateArray[srcLoop].src_id === duplicateArray[destLoop].dest_id) {
                             if (duplicateArray[srcLoop].dest_id === duplicateArray[destLoop].src_id) {
                                 duplicateArray.splice(destLoop, 1);
+                                matchObject[key].splice(destLoop, 1);
                             }
                         }
                     }
                 }
 
-                //Remove remaining entry from source.
+                //Remove remaining entries from source.
                 for (var iSrc in value) {
                     for (var iDest in duplicateArray) {
                         if (_.isEqual(value[iSrc], duplicateArray[iDest])) {
@@ -89,7 +90,14 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
             }
 
         });
-        return match;
+
+        var returnObject = {
+                match: match,
+                matchObject: matchObject
+
+        }
+
+        return returnObject;
     }
 
     //Splice duplicate entries from input array.
@@ -170,13 +178,66 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     }
 
 
+    function buildNewEntryArray (match, newObjectArray) {
+
+
+        _.map(match, function (value, matchKey) {
+            
+            //Need to make sure all entries per src_id are only new.
+            newCheckArray = _.where(value, {
+                    dest: 'dest'
+                });
+
+                 var groupCheckedArray = _.groupBy(newCheckArray, 'src_id');
+
+                 //console.log(groupCheckedArray);
+                
+                //If filtered new length equals total length.
+                 _.each(groupCheckedArray, function(element, index) {
+                    var newElementArray = _.filter(element, function(elementItem, elementItemIndex) {
+                        if (elementItem.match === 'new') {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+
+                    //console.log(element);
+
+                    if (newElementArray.length === element.length) {
+                        //console.log('asdf');
+                    }
+
+                 });
+
+
+        });
+
+        //console.log(match);    
+
+        //console.log(newObjectArray);
+
+
+    }
+
+
     revertDemographics();
-    var match = deDuplicateNew(matchResult.match);
-    var deDuplicatedNewRecord = removeDuplicates(match, newObject, baseObject, newRecordID);
+    var deDuplicatedSourceRecords = deDuplicateNew(matchResult.match, newObject);
+    var deDuplicatedNewRecord = removeDuplicates(deDuplicatedSourceRecords.match, deDuplicatedSourceRecords.matchObject, baseObject, newRecordID);
+
+    console.log(deDuplicatedNewRecord);
+
+
+
+    //console.log(match);
+
+
+
+    buildNewEntryArray(deDuplicatedSourceRecords.match, deDuplicatedNewRecord);
 
     //console.log(deDuplicatedNewRecord);
 
-    callback(null, deDuplicatedNewRecord);
+    callback(null, deDuplicatedNewRecord, deDuplicatedNewRecord);
 
     //console.log(match);
 
