@@ -98,6 +98,9 @@ describe('Allergies API - Test New:', function() {
 				if (err) {
 					return done(err);
 				}
+
+				console.log(res.body.allergies);
+
 				expect(res.body.allergies.length).to.equal(3);
 				console.log(JSON.stringify(res.body.allergies, null, 10));
 				done();
