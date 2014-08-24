@@ -5,17 +5,249 @@ var bbMatch = require("blue-button-match");
 var _ = require("underscore");
 var async = require("async");
 
+//Main function, performs match and dedupes.
 
-//If an object is a duplicate; remove the newRecord and log disposal as duplicate
+function reconcile(newObject, baseObject, newRecordID, callback) {
 
-//If an object is a partial match or diff, it needs to be saved as a record in source form.
-//This record should have a flag on it to mark it as non-visible.
-//A new object needs to be created containing the diff/partial (either percent of diff)
-//This new object should have a reviewed flag on it.
-//On review, a flag toggle needs to be set up to enable one view or disable the other.
+    newObjectForParsing = newObject;
 
-function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
+    var baseObjectForParsing = {};
+    for (var iObj in baseObject) {
+        baseObjectForParsing[iObj] = {};
+        baseObjectForParsing[iObj] = record.cleanSection(baseObject[iObj]);
 
+        if (baseObjectForParsing[iObj] === undefined) {
+            delete baseObjectForParsing[iObj];
+        }
+    }
+
+    //BB Matching library expects object for demographics.
+    function prepDemographics() {
+        if (baseObjectForParsing.demographics instanceof Array) {
+            if (baseObjectForParsing.demographics.length > 0) {
+                baseObjectForParsing.demographics = baseObjectForParsing.demographics[0];
+            }
+        }
+        if (newObjectForParsing.demographics instanceof Array) {
+            if (newObjectForParsing.demographics.length > 0) {
+                newObjectForParsing.demographics = newObjectForParsing.demographics[0];
+            }
+        }
+    }
+    prepDemographics();
+
+    baseObjectForParsing = {}.data = baseObjectForParsing;
+    newObjectForParsing = {}.data = newObjectForParsing;
+
+    //console.log(JSON.stringify(newObjectForParsing, null, 10));
+    //console.log('------------------');
+    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
+    var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
+    //console.log(JSON.stringify(matchResult, null, 10));
+
+    delete baseObjectForParsing.data;
+    delete newObjectForParsing.data;
+
+    function revertDemographics() {
+        if (_.isObject(newObjectForParsing.demographics) === true && _.isArray(newObjectForParsing.demographics) === false) {
+            newObjectForParsing.demographics = new Array(newObjectForParsing.demographics);
+        }
+    }
+
+    function deDuplicateNew(match, matchObject) {
+        _.map(match, function (value, key) {
+            if (_.isArray(value)) {
+                //Find all duplicate source entries.
+                var duplicateArray = [];
+                for (var deLoop in value) {
+                    if (value[deLoop].dest === 'src' && value[deLoop].match === 'duplicate') {
+                        duplicateArray.push(value[deLoop]);
+                    };
+                }
+
+                //Find intersection and drop one.
+                for (var srcLoop in duplicateArray) {
+                    for (var destLoop in duplicateArray) {
+
+                        if (duplicateArray[srcLoop].src_id === duplicateArray[destLoop].dest_id) {
+                            if (duplicateArray[srcLoop].dest_id === duplicateArray[destLoop].src_id) {
+                                duplicateArray.splice(destLoop, 1);
+                                matchObject[key].splice(destLoop, 1);
+                            }
+                        }
+                    }
+                }
+
+                //Remove remaining entries from source.
+                for (var iSrc in value) {
+                    for (var iDest in duplicateArray) {
+                        if (_.isEqual(value[iSrc], duplicateArray[iDest])) {
+                            value.splice(iSrc, 1);
+                        }
+                    }
+                }
+
+            }
+
+        });
+
+        var returnObject = {
+                match: match,
+                matchObject: matchObject
+
+        }
+
+        return returnObject;
+    }
+
+    //Splice duplicate entries from input array.
+    //Add source attribution to matched entries.
+    function removeDuplicates(match, newRecord, baseRecord, recordID) {
+        var duplicateArray = [];
+        _.map(match, function (value, matchKey) {
+            if (_.isArray(value)) {
+                duplicateArray = _.where(value, {
+                    dest: 'dest',
+                    match: 'duplicate'
+                });
+
+                duplicateNewIndexArray = _.uniq(_.pluck(duplicateArray, 'src_id'));
+                duplicateBaseIndexArray = _.uniq(_.pluck(duplicateArray, 'dest_id'));
+
+                var attributionRecord = _.filter(baseRecord[matchKey], function (object, objectIndex) {
+                    if (_.contains(duplicateBaseIndexArray, objectIndex.toString())) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+
+                function attributeBaseRecord(section, newRecordID) {
+                    record.duplicateEntry(section, 'test', update_id, newRecordID, function (err) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            callback(null);
+                        }
+                    });
+                }
+
+                async.each(attributionRecord, function (attribution, callback) {
+                    record.duplicateEntry(matchKey, 'test', attribution._id, recordID, function (err) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            callback(null);
+                        }
+                    })
+                }, function (err) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback();
+                    }
+                });
+
+                var returnRecord = _.filter(newRecord[matchKey], function (object, objectIndex) {
+                    if (_.contains(duplicateNewIndexArray, objectIndex.toString())) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+
+                newRecord[matchKey] = returnRecord;
+            } else {
+                if (value.match === 'duplicate' && matchKey === 'demographics') {
+
+                    //TODO:  Update demographics here.
+                    delete newRecord[matchKey];
+                }
+            }
+        });
+
+        _.map(newRecord, function (value, field) {
+            if (_.isArray(value)) {
+                if (value.length === 0) {
+                    delete newRecord[field];
+                }
+            }
+        });
+
+        return newRecord;
+    }
+
+
+    function buildNewEntryArray (match, newObjectArray) {
+
+
+        _.map(match, function (value, matchKey) {
+            
+            //Need to make sure all entries per src_id are only new.
+            newCheckArray = _.where(value, {
+                    dest: 'dest'
+                });
+
+                 var groupCheckedArray = _.groupBy(newCheckArray, 'src_id');
+
+                 //console.log(groupCheckedArray);
+                
+                //If filtered new length equals total length.
+                 _.each(groupCheckedArray, function(element, index) {
+                    var newElementArray = _.filter(element, function(elementItem, elementItemIndex) {
+                        if (elementItem.match === 'new') {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+
+                    //console.log(element);
+
+                    if (newElementArray.length === element.length) {
+                        //console.log('asdf');
+                    }
+
+                 });
+
+
+        });
+
+        //console.log(match);    
+
+        //console.log(newObjectArray);
+
+
+    }
+
+
+    revertDemographics();
+    var deDuplicatedSourceRecords = deDuplicateNew(matchResult.match, newObject);
+    var deDuplicatedNewRecord = removeDuplicates(deDuplicatedSourceRecords.match, deDuplicatedSourceRecords.matchObject, baseObject, newRecordID);
+
+    console.log(deDuplicatedNewRecord);
+
+
+
+    //console.log(match);
+
+
+
+    buildNewEntryArray(deDuplicatedSourceRecords.match, deDuplicatedNewRecord);
+
+    //console.log(deDuplicatedNewRecord);
+
+    callback(null, deDuplicatedNewRecord, deDuplicatedNewRecord);
+
+    //console.log(match);
+
+    //removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
+    //console.log(JSON.stringify(newObjectPostMatch, null, 10));
+    //    callback(null, newObjectPostMatch, newPartialObjectPostMatch);
+    // });
+
+    /*
+    function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID, callback) {
 
     function removeMatches(srcMatches, srcArray, baseArray, section, callback) {
 
@@ -23,14 +255,13 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         var returnPartialArray = [];
 
         function updateDuplicate(section, update_id, callback) {
-            record.duplicateEntry(section, 'test', update_id, newSourceID, function(err) {
+            record.duplicateEntry(section, 'test', update_id, newSourceID, function (err) {
                 if (err) {
                     callback(err);
                 } else {
                     callback(null);
                 }
             });
-
         }
 
         var loopCount = 0;
@@ -49,7 +280,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
                 //If duplicate, don't push to save array and make duplicate entry in log.
                 var matchIndex = srcMatches[i].dest_id || 0;
-                updateDuplicate(section, baseArray[matchIndex]._id, function(err, resIter) {
+                updateDuplicate(section, baseArray[matchIndex]._id, function (err, resIter) {
                     if (err) {
                         console.error(err);
                     } else {
@@ -63,8 +294,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
                 //If new, push the object to the return.
 
                 var tmpSrcIndex = 0;
-                if (srcMatches[i].src_id === undefined) {
-                } else {
+                if (srcMatches[i].src_id === undefined) {} else {
                     tmpSrcIndex = srcMatches[i].src_id;
                 }
 
@@ -147,7 +377,7 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
 
         var currentMatchResult = matchResults.match[iSec];
         if (currentMatchResult.length > 0) {
-            removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function(err, returnSection, newEntries, newPartialEntries) {
+            removeMatches(currentMatchResult, newObject[iSec], baseObject[iSec], iSec, function (err, returnSection, newEntries, newPartialEntries) {
                 //New entries is fine...
                 //console.log('newEntries');
                 //console.log(newEntries);
@@ -165,148 +395,9 @@ function removeMatchDuplicates(newObject, baseObject, matchResults, newSourceID,
         }
     }
 }
+*/
 
 
-
-//Main function, performs match and dedupes.
-
-function reconcile(newObject, baseObject, newSourceID, callback) {
-
-    newObjectForParsing = newObject;
-    var baseObjectForParsing = {};
-    for (var iObj in baseObject) {
-        baseObjectForParsing[iObj] = {};
-        baseObjectForParsing[iObj] = record.cleanSection(baseObject[iObj]);
-
-        if (baseObjectForParsing[iObj] === undefined) {
-            delete baseObjectForParsing[iObj];
-        }
-    }
-
-    //BB Matching library expects object for demographics.
-
-    function prepDemographics() {
-        if (baseObjectForParsing.demographics instanceof Array) {
-            if (baseObjectForParsing.demographics.length > 0) {
-                baseObjectForParsing.demographics = baseObjectForParsing.demographics[0];
-            }
-        }
-        if (newObjectForParsing.demographics instanceof Array) {
-            if (newObjectForParsing.demographics.length > 0) {
-                newObjectForParsing.demographics = newObjectForParsing.demographics[0];
-            }
-        }
-    }
-    prepDemographics();
-
-    function prepSocial() {
-        if (baseObjectForParsing.social_history instanceof Array) {
-            if (baseObjectForParsing.social_history.length > 0) {
-                baseObjectForParsing.social_history = baseObjectForParsing.social_history[0];
-            }
-        }
-        if (newObjectForParsing.social_history instanceof Array) {
-            if (newObjectForParsing.social_history.length > 0) {
-                newObjectForParsing.social_history = newObjectForParsing.social_history[0];
-            }
-        }
-    }
-
-    prepSocial();
-
-    baseObjectForParsing = {}.data = baseObjectForParsing;
-    newObjectForParsing = {}.data = newObjectForParsing;
-    var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-    delete baseObjectForParsing.data;
-    delete newObjectForParsing.data;
-
-    function revertDemographics() {
-        if (_.isObject(newObjectForParsing.demographics) === true && _.isArray(newObjectForParsing.demographics) === false) {
-            newObjectForParsing.demographics = new Array(newObjectForParsing.demographics);
-        }
-    }
-
-    revertDemographics();
-
-    function revertSocial() {
-        if (_.isObject(newObjectForParsing.social_history) === true && _.isArray(newObjectForParsing.social_history) === false) {
-            newObjectForParsing.social_history = new Array(newObjectForParsing.social_history);
-        }
-    }
-    revertSocial();
-
-    //Rewrite here in parallel using async.
-
-    //console.log(JSON.stringify(matchResult.match, null, 10));
-
-    function deDuplicateNew (match) {
-
-        _.map(match, function(value, key) {
-
-            if (_.isArray(value)) {
-                //Find all duplicate source entries.
-                var duplicateArray = [];
-                for (var deLoop in value) {
-                    if(value[deLoop].dest === 'src' && value[deLoop].match === 'duplicate') {
-                        //console.log(value[deLoop]);
-                        duplicateArray.push(value[deLoop]);
-                    };
-                }
-
-                //Find intersection and drop one.
-                for (var srcLoop in duplicateArray) {
-                    for (var destLoop in duplicateArray) {
-
-                        if (duplicateArray[srcLoop].src_id === duplicateArray[destLoop].dest_id) {
-                            if (duplicateArray[srcLoop].dest_id === duplicateArray[destLoop].src_id) {
-                                duplicateArray.splice(destLoop, 1);
-                            }
-                        }
-                    }
-                }
-
-                //Remove remaining entry from source.
-                for (var iSrc in value) {
-                    for (var iDest in duplicateArray) {
-                        if (_.isEqual(value[iSrc], duplicateArray[iDest])) {
-                            value.splice(iSrc, 1);
-                        }
-                    }
-                }
-
-            }
-
-        });
-
-        return match;
-
-    }
-
-    var match = deDuplicateNew(matchResult.match);
-
-    //console.log(JSON.stringify(match, null, 10));
-
-    function removeDuplicates(match) {
-        _.map(match, function(value, key) {
-            //TODO:  Remove duplicate entries here, can't test since everything is broken.
-        });
-    }
-
-    removeDuplicates(match);
-
-    callback(null, newObjectForParsing, newObjectForParsing);
-
-
-
-
-    //console.log(match);
-
-
-
-    //removeMatchDuplicates(newObjectForParsing, baseObject, matchResult, newSourceID, function(err, newObjectPostMatch, newPartialObjectPostMatch) {
-        //console.log(JSON.stringify(newObjectPostMatch, null, 10));
-    //    callback(null, newObjectPostMatch, newPartialObjectPostMatch);
-   // });
 }
 
 module.exports.reconcile = reconcile;
