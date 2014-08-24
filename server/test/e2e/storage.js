@@ -128,7 +128,7 @@ describe('Storage API', function() {
 
 });
 
-describe('Storage API Get List', function() {
+xdescribe('Storage API Get List', function() {
 
     it('File Endpoint GET', function(done) {
         api.get('/api/v1/storage')
