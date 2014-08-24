@@ -93,17 +93,51 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
         var returnObject = {
             match: match,
-            matchObject: matchObject
+            new_entries: matchObject
 
         }
 
         return returnObject;
     }
 
+    function removeSourceMatches(match) {
+
+        var returnMatch = {};
+
+        _.map(match, function (value, matchKey) {
+
+            if (matchKey !== 'demographics') {
+                var nonSourceMatch = _.filter(match[matchKey], function (object, objectIndex) {
+                    if (object.dest === 'src') {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+                returnMatch[matchKey] = nonSourceMatch;
+            } else {
+                //No need to filter atomic items.
+                returnMatch[matchKey] = value;
+            }
+
+        });
+
+        var returnObject = {
+            match: returnMatch
+        };
+
+        return returnObject;
+
+    }
+
     //Splice duplicate entries from input array.
     //Add source attribution to matched entries.
     function removeDuplicates(match, newRecord, baseRecord, recordID) {
+
         var duplicateArray = [];
+
+        var newMatch = {};
+
         _.map(match, function (value, matchKey) {
             if (_.isArray(value)) {
                 duplicateArray = _.where(value, {
@@ -122,16 +156,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                     }
                 });
 
-                function attributeBaseRecord(section, newRecordID) {
-                    record.duplicateEntry(section, 'test', update_id, newRecordID, function (err) {
-                        if (err) {
-                            callback(err);
-                        } else {
-                            callback(null);
-                        }
-                    });
-                }
-
+                //Update Source attribution.
                 async.each(attributionRecord, function (attribution, callback) {
                     record.duplicateEntry(matchKey, 'test', attribution._id, recordID, function (err) {
                         if (err) {
@@ -148,6 +173,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                     }
                 });
 
+                //Remove Duplicates from Entry List.
                 var returnRecord = _.filter(newRecord[matchKey], function (object, objectIndex) {
                     if (_.contains(duplicateNewIndexArray, objectIndex.toString())) {
                         return false;
@@ -156,12 +182,55 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                     }
                 });
 
+                //Remove Duplicates from Match List.
+                //use duplicate new index array to go through matches, and remove.
+                var returnMatch = _.filter(match[matchKey], function (object, objectInex) {
+                    if (_.contains(duplicateNewIndexArray, object.src_id)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+
+                //console.log(returnMatch);
+
+                //console.log(returnRecord);
+
                 newRecord[matchKey] = returnRecord;
+
+                if (returnMatch === undefined) {
+                    returnMatch = [];
+                }
+
+                if (returnRecord === undefined) {
+                    returnRecord = [];
+                }
+
+                newMatch[matchKey] = returnMatch;
+
             } else {
                 if (value.match === 'duplicate' && matchKey === 'demographics') {
 
-                    //TODO:  Update demographics here.
+                    var attributionRecord = baseRecord[matchKey];
+
+                    async.each(attributionRecord, function (attribution, callback) {
+                        record.duplicateEntry(matchKey, 'test', attribution._id, recordID, function (err) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                callback(null);
+                            }
+                        })
+                    }, function (err) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            callback();
+                        }
+                    });
+
                     delete newRecord[matchKey];
+                    delete newMatch[matchKey];
                 }
             }
         });
@@ -174,17 +243,32 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
             }
         });
 
-        return newRecord;
+        //console.log(match);
+
+        //console.log(JSON.stringify(newMatch, null, 10));
+
+        //This area can equal undefined on new_record entries for some reason.
+
+        var returnObject = {
+            new_record: newRecord,
+            new_match: newMatch
+        }
+
+        return returnObject;
     }
+
+    //duplicate matches must be purges from queue as well as entries!!!!
 
     function splitNewPartialEntries(match, newObjectArray) {
 
-        var partialObjectArray = [];
+        var outputPartialObjectArray = [];
         var outputNewObjectArray = [];
+
+        console.log(match);
 
         _.map(match, function (value, matchKey) {
 
-            partialObjectArray[matchKey] = [];
+            outputPartialObjectArray[matchKey] = [];
             outputNewObjectArray[matchKey] = [];
 
             //Need to make sure all entries per src_id are only new.
@@ -192,34 +276,83 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                 dest: 'dest'
             });
 
-            var groupCheckedArray = _.groupBy(newCheckArray, 'src_id');
+            if (matchKey === 'demographics') {
 
-            _.each(groupCheckedArray, function (element, index) {
-                var newElementArray = _.filter(element, function (elementItem, elementItemIndex) {
-                    if (elementItem.match === 'new') {
-                        return true;
+                if (match[matchKey].match === 'new') {
+                    outputNewObjectArray[matchKey] = newObjectArray[matchKey];
+                } else if (match[matchKey].match === 'partial') {
+                    partialObjectArray[matchKey] = newObjectArray[matchKey];
+                }
+
+            } else {
+
+                //If there are no dest records, everything is new.
+                if (newCheckArray.length === 0) {
+
+                    if (newObjectArray[matchKey] === undefined) {
+                        outputNewObjectArray[matchKey] = [];
                     } else {
-                        return false;
-                    }
-                });
-
-                //Only valid entries (src_id) will have equal lengths
-                //Everything else is a partial match as that is all that remains.
-                if (newElementArray.length !== element.length) {
-                    if (newObjectArray[matchKey] !== undefined) {
-                        var partialEntry = newObjectArray[matchKey][index];
-                        partialObjectArray[matchKey].push(partialEntry);
-                    }
-                } else {
-                    if (newObjectArray[matchKey] !== undefined) {
-                        var outputNewEntry = newObjectArray[matchKey][index];
-                        outputNewObjectArray[matchKey].push(outputNewEntry);
+                        outputNewObjectArray[matchKey] = newObjectArray[matchKey];
                     }
                 }
 
-            });
+                var groupCheckedArray = _.groupBy(newCheckArray, 'src_id');
+
+                _.each(groupCheckedArray, function (element, index) {
+                    var newElementArray = _.filter(element, function (elementItem, elementItemIndex) {
+                        if (elementItem.match === 'new') {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+
+                    //Only valid entries (src_id) will have equal lengths
+                    //Everything else is a partial match as that is all that remains.
+
+                    //console.log(newElementArray.length);
+                    //console.log(element.length);
+
+                    if (newElementArray.length !== element.length) {
+                        //console.log(newObjectArray[matchKey]);
+                        if (newObjectArray[matchKey] !== undefined) {
+                            var partialEntry = newObjectArray[matchKey][index];
+
+                            //console.log(element[index]);
+
+                            var returnObject = {
+                                partial_entry: partialEntry,
+                                partial_match: element[index]
+
+                            };
+
+                            //console.log(returnObject);
+
+                            outputPartialObjectArray[matchKey].push(partialEntry);
+
+                            //Partial Match output has custom formatting.
+                            //Diffs always zero, can take only array object.
+                            //returnPartialArray.push({
+                            //    partial_entry: srcArray[0],
+                            //    partial_match: matchObjForDb,
+                            //    match_entry_id: tmpMatchRecId
+                            //});
+
+                        }
+                    } else {
+                        if (newObjectArray[matchKey] !== undefined) {
+                            var outputNewEntry = newObjectArray[matchKey][index];
+                            outputNewObjectArray[matchKey].push(outputNewEntry);
+                        }
+                    }
+
+                });
+
+            }
+
         });
 
+        //console.log(outputNewObjectArray);
         //console.log(match.allergies);
         //console.log('---------');
         //console.log(partialObjectArray);
@@ -228,8 +361,12 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
         var returnObject = {
             newEntries: outputNewObjectArray,
-            partialEntries: partialObjectArray
+            partialEntries: outputPartialObjectArray
         }
+
+        console.log(returnObject);
+
+        //console.log(returnObject);
 
         return returnObject;
 
@@ -239,13 +376,27 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
     //Remove Overlapping Source Matches.
     var deDuplicatedSourceRecords = deDuplicateNew(matchResult.match, newObject);
-    //Remove Duplicates from save, update Record Entry.
-    var deDuplicatedNewRecord = removeDuplicates(deDuplicatedSourceRecords.match, deDuplicatedSourceRecords.matchObject, baseObject, newRecordID);
-    //Pare down new entries for save to just new entries.
-    var entriesForSave = splitNewPartialEntries(deDuplicatedSourceRecords.match, deDuplicatedNewRecord);
-    //Pare down partial entries for save to just partial entries.
 
-    callback(null, entriesForSave.newEntries, entriesForSave.partialEntries);
+    //Remove All 'src' matches.  Currently not implemented or required.
+    var nonSourceMatches = removeSourceMatches(deDuplicatedSourceRecords.match);
+    //console.log(JSON.stringify(nonSourceMatches, null, 10));
+
+    //Remove Duplicates from save, update Record Entry.
+    var deDuplicatedNewRecord = removeDuplicates(nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
+    //console.log(JSON.stringify(deDuplicatedNewRecord, null, 10));
+
+    //Split incoming entries into new/partial.
+    var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record);
+
+    console.log(JSON.stringify(splitIncomingEntries, null, 10));
+
+    //console.log(JSON.stringify(splitIncomingEntries, null, 10));
+
+    //var partialReturnObject = decoratePartial
+
+    //console.log(JSON.stringify(entriesForSave, null, 10));
+
+    callback(null, splitIncomingEntries.newEntries, []);
 
     //console.log(match);
 
