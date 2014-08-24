@@ -21,30 +21,32 @@ var path = require('path');
 var app = express();
 var record = require('blue-button-record');
 var passport = require('passport');
+//var redis = require("redis").createClient();
+var redisStore = require('connect-redis')(express);
 
-  app.set('client_location', path.resolve(__dirname, '../client/dist'));
+app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
-  //app.use(express.favicon(config.client.location + '/favicon.ico'));
-  app.use(express.static(app.get('client_location')));
-  app.use(function(req, res, next) {
+//app.use(express.favicon(config.client.location + '/favicon.ico'));
+app.use(express.static(app.get('client_location')));
+app.use(function(req, res, next) {
     var requestPath = '';
     if (req.path.substring(req.path.length - 1) === '/') {
-      requestPath = req.path.substring(0, req.path.length - 1);
+        requestPath = req.path.substring(0, req.path.length - 1);
     } else {
-      requestPath = req.path;
+        requestPath = req.path;
     }
     var viewPath = app.get('client_location') + requestPath + '.html';
     fs.exists(viewPath, function(exists) {
-      console.log(viewPath);
-      if (exists) {
+        console.log(viewPath);
+        if (exists) {
 
-        res.header("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-        res.render(viewPath);
-      } else {
-        next();
-      }
+            res.header("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+            res.render(viewPath);
+        } else {
+            next();
+        }
     });
-  });
+});
 
 app.use(express.logger());
 app.use(express.bodyParser());
@@ -52,11 +54,15 @@ app.use(express.methodOverride());
 app.use(express.cookieParser());
 
 //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
-app.use(express.session({ secret: 'keyboard cat'}));
+app.use(express.session({
+    secret: 'keyboard cat',
+    store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-var storage  = require('./lib/storage');
+var storage = require('./lib/storage');
 app.use(storage);
 
 var parser = require('./lib/parser');
@@ -77,6 +83,9 @@ app.use(notification);
 var login = require('./lib/login');
 app.use(login);
 
+var account = require('./lib/account');
+app.use(account);
+
 //Initialize Database Connection.
 var databaseServer = 'localhost';
 
@@ -86,7 +95,6 @@ record.connectDatabase(databaseServer, function(err) {
         console.log(err);
     } else {
         app.listen(3000);
-        console.log("Server listening on port "+ 3000);
+        console.log("Server listening on port " + 3000);
     }
 });
-

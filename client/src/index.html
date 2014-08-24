@@ -31,7 +31,8 @@
         </div>
       </div>
       <div class = "row">
-        <div class="col-md-3">
+        
+        <div class="col-md-3" ng-show="isAuthenticated">
           <a href="#/profile"><img src="img/img-demo.png" width="150" height="150" class="img-circle center-block" style="padding: 20px;"></a>
           <a href="#/profile"><p class="text-center lead">{{notifications.displayName}}</p></a>
           <ul class="nav nav-pills nav-stacked">
@@ -41,6 +42,7 @@
             <li><a href="#/storage">MY FILES</a></li>
           </ul>
         </div>
+
         <div class="col-md-9" ng-view>
         </div>
       </div>

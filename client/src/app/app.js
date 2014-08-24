@@ -17,6 +17,7 @@ limitations under the License.
 var dre = angular
     .module('dre', [
         'ngRoute',
+        'dre.home',
         'dre.record',
         'dre.storage',
         'dre.dashboard',
@@ -29,6 +30,7 @@ var dre = angular
         'dre.register',
         'directives.fileModel',
         'directives.matchingObjects',
+        'services.account',
         'services.fileUpload',
         'services.fileDownload',
         'services.getNotifications',
@@ -579,8 +581,8 @@ var dre = angular
 .config(['$routeProvider', '$locationProvider', '$compileProvider',
     function($routeProvider, $locationProvider, $compileProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'templates/dashboard/dashboard.tpl.html',
-            controller: 'MainCtrl'
+            templateUrl: 'templates/home/home.tpl.html',
+            controller: 'homeCtrl'
         });
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob):/);
 
@@ -625,8 +627,13 @@ var dre = angular
 ]);
 
 // For notification updates, tie to rootScope
-dre.controller('MainCtrl', ['$rootScope', 'getNotifications',
-    function($rootScope, getNotifications) {
+dre.controller('MainCtrl', ['$rootScope', '$scope', 'getNotifications', 'account',
+    function($rootScope, $scope, getNotifications, account) {
+
+        $scope.isAuthenticated = {};
+        account.isAuthenticated(function(err, result) {
+            $scope.isAuthenticated = result;
+        });
 
         $rootScope.notifications = {};
         getNotifications.getUpdate(function(err, notifications) {
