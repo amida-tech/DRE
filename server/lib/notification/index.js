@@ -1,6 +1,7 @@
 var express = require('express');
 var app = module.exports = express();
 var record = require('blue-button-record');
+var login = require('../login');
 
 var bbm = require('blue-button-meta');
 
@@ -130,7 +131,7 @@ function getNotifications (callback) {
 
 }
 
-app.get('/api/v1/notification', function(req, res) {
+app.get('/api/v1/notification', login.checkAuth, function(req, res) {
 
   getNotifications(function(err, notificationList) {
     if (err) {

@@ -3,6 +3,8 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 var bbm = require('blue-button-meta');
+var login = require('../login');
+
 
 function updateMerged(updateId, updateComponent, updateParameters, callback) {
     //Gather full match object by ID.
@@ -57,7 +59,7 @@ function processUpdate(updateId, updateComponent, updateParameters, callback) {
 }
 
 // Get all matches API.
-app.get('/api/v1/matches/:component', function(req, res) {
+app.get('/api/v1/matches/:component', login.checkAuth, function(req, res) {
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
@@ -76,7 +78,7 @@ app.get('/api/v1/matches/:component', function(req, res) {
 });
 
 // Get single match API.
-app.get('/api/v1/match/:component/:record_id', function(req, res) {
+app.get('/api/v1/match/:component/:record_id', login.checkAuth, function(req, res) {
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
@@ -91,7 +93,7 @@ app.get('/api/v1/match/:component/:record_id', function(req, res) {
 });
 
 //Post partial record updates.
-app.post('/api/v1/matches/:component/:record_id', function(req, res) {
+app.post('/api/v1/matches/:component/:record_id', login.checkAuth,function(req, res) {
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);

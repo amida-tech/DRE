@@ -3,9 +3,10 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 var bbm = require('blue-button-meta');
+var login = require('../login');
 
 //Get all merges API.
-app.get('/api/v1/merges/:component', function(req, res) {
+app.get('/api/v1/merges/:component', login.checkAuth, function(req, res) {
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
@@ -22,7 +23,7 @@ app.get('/api/v1/merges/:component', function(req, res) {
     }
 });
 
-app.get('/api/v1/merges', function(req, res) {
+app.get('/api/v1/merges', login.checkAuth, function(req, res) {
 
     var mergeJSON = {};
     mergeJSON.merges = [];

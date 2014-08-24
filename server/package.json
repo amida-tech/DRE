@@ -27,7 +27,10 @@
         "blue-button-match": "^1.1.0",
         "blue-button-record": "^1.1.0",
         "blue-button-meta": "^1.1.0",
-        "bluebird": "2.2.x"
+        "bluebird": "2.2.x",
+        "passport": "0.2.x",
+        "passport-local": "1.0.x",
+        "passport-local-mongoose": "0.3.x"
     },
     "devDependencies": {
         "grunt": "0.4.x",

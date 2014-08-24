@@ -20,6 +20,7 @@ var http = require('http');
 var path = require('path');
 var app = express();
 var record = require('blue-button-record');
+var passport = require('passport');
 
   app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
@@ -45,12 +46,14 @@ var record = require('blue-button-record');
     });
   });
 
-
-
 app.use(express.logger());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
+
+app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 var storage  = require('./lib/storage');
 app.use(storage);
@@ -69,6 +72,9 @@ app.use(match);
 
 var notification = require('./lib/notification');
 app.use(notification);
+
+var login = require('./lib/login');
+app.use(login);
 
 //Initialize Database Connection.
 var databaseServer = 'localhost';

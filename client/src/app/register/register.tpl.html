@@ -1,0 +1,31 @@
+<!-- Register users -->
+
+<div class="panel panel-default col-md-4 col-md-offset-4" style="margin-top: 10px" ng-controller="registerCtrl">
+	<div>
+	<h4>Register a new account</h4>
+	</div>
+	<div class="panel-body">
+		<form novalidate, name="registration" ng-submit="submitReg()">
+			<div class="form-group">
+				<label for="inputUsername" class="control-label">
+				Username:
+				</label>
+				<div>
+					<input type="text" class="form-control" ng-model="inputUsername" placeholder="Choose a Username" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPassword" class="control-label">
+				Password:
+				</label>
+				<div>
+					<input type="password" class="form-control" ng-model="inputPassword" placeholder="Password" required>
+				</div>
+			</div>	
+			<div class ="pull-right">
+				<a href="#/login" class="btn btn-default" role="button">Cancel</a>
+				<button class="btn btn-success" type="submit" name="submit" required>Register</button>
+			</div>
+		</form>
+	</div>
+</div>

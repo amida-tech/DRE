@@ -7,6 +7,7 @@ var _ = require('underscore');
 var bbm = require('blue-button-meta');
 var fs = require('fs');
 var path = require('path');
+var login = require('../login');
 
 // blue bird to promisify record API
 Promise.promisifyAll(require("blue-button-record"));
@@ -29,7 +30,7 @@ function formatResponse(srcComponent, srcResponse) {
     return srcReturn;
 }
 
-app.get('/api/v1/record/:component', function(req, res) {
+app.get('/api/v1/record/:component', login.checkAuth, function(req, res) {
 
     if (!supportedComponents[req.params.component]) {
         res.send(404);
@@ -72,7 +73,7 @@ function getCCDA(callback) {
     });
 }
 
-app.get('/api/v1/ccda', function(req, res) {
+app.get('/api/v1/ccda', login.checkAuth, function(req, res) {
     getCCDA(function(err, result) {
         if (err) {
             res.send(500);
