@@ -29,9 +29,9 @@ angular.module('dre.register', [])
 		$scope.submitLogin = function() {
 			$http.post('api/v1/login', {"username": $scope.inputUsername, "password": $scope.inputPassword})
 				.success(function (data) {
-					callback(null, data);
+					$location.path('/dashboard');
 				}).error(function (data) {
-					callback(data);
+					$location.path('/dashboard');
 				});
 		};
 	}

@@ -51,7 +51,8 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 
-app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
+//app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
+app.use(express.session({ secret: 'keyboard cat'}));
 app.use(passport.initialize());
 app.use(passport.session());
 

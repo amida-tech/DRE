@@ -562,12 +562,12 @@ var dre = angular
     .filter('capFirstLetters', function($filter) {
         //capitalize first letter of every word
         return function(input) {
-            if (input != null){
+            if (input != null) {
                 var inputArr = input.split(' ');
                 var newString = "";
-                for(var x in inputArr){
+                for (var x in inputArr) {
                     var token = inputArr[x];
-                    newString += token.substring(0,1).toUpperCase()+token.substring(1) + " ";
+                    newString += token.substring(0, 1).toUpperCase() + token.substring(1) + " ";
                 }
                 newString.trim();
                 return newString;
@@ -587,28 +587,35 @@ var dre = angular
     }
 ])
 
-.factory('myHttpResponseInterceptor',['$q', '$location', function($q, $location){
-  return {
-        response: function(response){
-            if (response.status === 401) {
-                console.log("Response 401");
-            }
-            return response || $q.when(response);
-        },
-        responseError: function(rejection) {
-            if (rejection.status === 401) {
-                $location.path('/login');
-            }
-            return $q.reject(rejection);
-        }
-    };
+.factory('myHttpResponseInterceptor', ['$q', '$location',
+    function($q, $location) {
+        console.log("HTTP intercepting...");
 
-}])
+        return {
+
+            response: function(response) {
+                if (response.status === 401) {
+                    console.log("Response 401");
+                }
+                return response || $q.when(response);
+            },
+            responseError: function(rejection) {
+                if (rejection.status === 401) {
+                    $location.path('/login');
+                }
+                return $q.reject(rejection);
+            }
+        };
+
+    }
+])
 
 //Http Intercpetor to check auth failures for xhr requests
-.config(['$httpProvider',function($httpProvider) {
-  $httpProvider.interceptors.push('myHttpResponseInterceptor');
-}])
+.config(['$httpProvider',
+    function($httpProvider) {
+        $httpProvider.interceptors.push('myHttpResponseInterceptor');
+    }
+])
 
 // Note TabService is included but not used to ensure its been instantiated
 .run(['$rootScope', '$location',
@@ -619,12 +626,12 @@ var dre = angular
 
 // For notification updates, tie to rootScope
 dre.controller('MainCtrl', ['$rootScope', 'getNotifications',
-  function($rootScope, getNotifications) {
+    function($rootScope, getNotifications) {
 
-    $rootScope.notifications = {};
-    getNotifications.getUpdate(function (err, notifications) {
-      $rootScope.notifications = notifications;
-    });
+        $rootScope.notifications = {};
+        getNotifications.getUpdate(function(err, notifications) {
+            $rootScope.notifications = notifications;
+        });
 
-  }
+    }
 ]);
