@@ -261,10 +261,10 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
     function splitNewPartialEntries(match, newObjectArray) {
 
-        var outputPartialObjectArray = [];
-        var outputNewObjectArray = [];
+        var outputPartialObjectArray = {};
+        var outputNewObjectArray = {};
 
-        console.log(match);
+        //console.log(match);
 
         _.map(match, function (value, matchKey) {
 
@@ -320,13 +320,19 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
                             //console.log(element[index]);
 
+                            //Need to pare down element object to just partial match entries.
+                            //For each partial, grab the associated target entry and source entry.
+                            //Return a big list of all matches.
+                            //This will result in too many partial source entries being persisted.
+                            //Must modify save logic to account for this.
+
                             var returnObject = {
                                 partial_entry: partialEntry,
                                 partial_match: element[index]
 
                             };
 
-                            //console.log(returnObject);
+                            //console.log(element);
 
                             outputPartialObjectArray[matchKey].push(partialEntry);
 
@@ -357,15 +363,15 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
         //console.log('---------');
         //console.log(partialObjectArray);
         //console.log('---------');
-        //console.log(outputNewObjectArray);
+        //console.log(JSON.stringify(outputNewObjectArray, null, 10));
 
         var returnObject = {
             newEntries: outputNewObjectArray,
             partialEntries: outputPartialObjectArray
         }
 
-        console.log(returnObject);
-
+        //Weird gap here.
+        //console.log(JSON.stringify(returnObject, null, 10));
         //console.log(returnObject);
 
         return returnObject;
@@ -377,7 +383,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     //Remove Overlapping Source Matches.
     var deDuplicatedSourceRecords = deDuplicateNew(matchResult.match, newObject);
 
-    //Remove All 'src' matches.  Currently not implemented or required.
+    //Remove All 'src' matches.  Currently not required.
     var nonSourceMatches = removeSourceMatches(deDuplicatedSourceRecords.match);
     //console.log(JSON.stringify(nonSourceMatches, null, 10));
 
@@ -388,9 +394,11 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     //Split incoming entries into new/partial.
     var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record);
 
-    console.log(JSON.stringify(splitIncomingEntries, null, 10));
+    //console.log(splitIncomingEntries);
 
-    //console.log(JSON.stringify(splitIncomingEntries, null, 10));
+    //console.log(JSON.stringify(splitIncomingEntries));
+
+    //console.log(JSON.stringify(splitIncomingEntries.newEntries, null, 10));
 
     //var partialReturnObject = decoratePartial
 
