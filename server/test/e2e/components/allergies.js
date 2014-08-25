@@ -224,7 +224,7 @@ describe('Allergies API - Test New/Dupe Mix:', function() {
 					return done(err);
 				}
 				expect(res.body.allergies.length).to.equal(5);
-				console.log(res.body.allergies);
+				//console.log(res.body.allergies);
 				done();
 			});
 	});
@@ -271,7 +271,7 @@ describe('Allergies API - Test New/Dupe Mix:', function() {
 });
 
 //Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
-xdescribe('Allergies API - Test Partial Matches:', function() {
+describe('Allergies API - Test Partial Matches:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
@@ -331,7 +331,7 @@ xdescribe('Allergies API - Test Partial Matches:', function() {
 		api.get('/api/v1/matches/allergies')
 			.expect(200)
 			.end(function(err, res) {
-				//console.log(JSON.stringify(res.body.matches, null, 10));
+				console.log(JSON.stringify(res.body.matches, null, 10));
 				expect(res.body.matches.length).to.equal(3);
 				for (var i in res.body.matches) {
 					expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].match_entry.name);

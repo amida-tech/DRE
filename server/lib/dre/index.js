@@ -349,7 +349,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                            var partialOutput = {
                                 partial_entry: partialEntry,
                                 partial_match: partialElement,
-                                match_entry_id: baseObjectArray[matchKey][partialElement.dest_id]
+                                match_entry_id: baseObjectArray[matchKey][partialElement.dest_id]._id
                             };
 
                             outputPartialObjectArray[matchKey].push(partialOutput);
@@ -433,7 +433,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
     //console.log(JSON.stringify(splitIncomingEntries));
 
-    //console.log(JSON.stringify(splitIncomingEntries.partialEntries, null, 10));
+    console.log(JSON.stringify(splitIncomingEntries.partialEntries.allergies, null, 10));
 
     //var partialReturnObject = decoratePartial
 
