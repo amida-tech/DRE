@@ -259,7 +259,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
     //duplicate matches must be purges from queue as well as entries!!!!
 
-    function splitNewPartialEntries(match, newObjectArray) {
+    function splitNewPartialEntries(match, newObjectArray, baseObjectArray) {
 
         var outputPartialObjectArray = {};
         var outputNewObjectArray = {};
@@ -318,23 +318,55 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                         if (newObjectArray[matchKey] !== undefined) {
                             var partialEntry = newObjectArray[matchKey][index];
 
-                            //console.log(element[index]);
-
                             //Need to pare down element object to just partial match entries.
                             //For each partial, grab the associated target entry and source entry.
                             //Return a big list of all matches.
                             //This will result in too many partial source entries being persisted.
                             //Must modify save logic to account for this.
 
-                            var returnObject = {
-                                partial_entry: partialEntry,
-                                partial_match: element[index]
+                            //console.log(element);
 
+                            var partialElementArray = _.filter(element, function(elementItem, elementItemIndex) {
+                                if (elementItem.match === 'partial') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            });
+
+                            _.each(partialElementArray, function(partialElement, partialIndex) {
+
+                                //Match object.
+                                //console.log(partialElement);
+                                //Partial Entry.
+                                //console.log(partialEntry);
+                                //Source entry.
+                                //console.log(baseObjectArray[matchKey][partialElement.dest_id]);
+
+                                //Partial Match output has custom formatting.
+                           var partialOutput = {
+                                partial_entry: partialEntry,
+                                partial_match: partialElement,
+                                match_entry_id: baseObjectArray[matchKey][partialElement.dest_id]
                             };
+
+                            outputPartialObjectArray[matchKey].push(partialOutput);
+
+                            });
+
+
+
+                            //console.log(partialElementArray);
+
+                            //var returnObject = {
+                            //    partial_entry: partialEntry,
+                            //    partial_match: element[index]
+
+                            //};
 
                             //console.log(element);
 
-                            outputPartialObjectArray[matchKey].push(partialEntry);
+                            //outputPartialObjectArray[matchKey].push(partialEntry);
 
                             //Partial Match output has custom formatting.
                             //Diffs always zero, can take only array object.
@@ -392,19 +424,19 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     //console.log(JSON.stringify(deDuplicatedNewRecord, null, 10));
 
     //Split incoming entries into new/partial.
-    var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record);
+    var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record, baseObject);
 
     //console.log(splitIncomingEntries);
 
     //console.log(JSON.stringify(splitIncomingEntries));
 
-    //console.log(JSON.stringify(splitIncomingEntries.newEntries, null, 10));
+    //console.log(JSON.stringify(splitIncomingEntries.partialEntries, null, 10));
 
     //var partialReturnObject = decoratePartial
 
     //console.log(JSON.stringify(entriesForSave, null, 10));
 
-    callback(null, splitIncomingEntries.newEntries, []);
+    callback(null, splitIncomingEntries.newEntries, splitIncomingEntries.partialEntries);
 
     //console.log(match);
 
