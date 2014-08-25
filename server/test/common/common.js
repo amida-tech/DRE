@@ -2,6 +2,8 @@
 var database = require('mongodb').Db;
 var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var path = require('path');
+var async = require('async');
+var _ = require('underscore');
 
 
 function loadTestRecord(api, fileName, callback) {
@@ -41,20 +43,43 @@ function removeCollection(inputCollection, callback) {
     });
 }
 
-function removeAll(callback) {
+function removeAllCollections (callback) {
 
-    removeCollection('allergies', function (err) {
-        if (err) {
-            callback(err);
-        }
-        removeCollection('allergiesmerges', function (err) {
+	var sections = ['allergies', 'encounters'];
+
+    async.each(sections, function (entry, callback) {
+        removeCollection(entry, function (err) {
             if (err) {
                 callback(err);
             }
-            removeCollection('allergiesmatches', function (err) {
+            removeCollection(entry + 'merges', function (err) {
                 if (err) {
                     callback(err);
                 }
+                removeCollection(entry + 'matches', function (err) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback();
+                    }
+                });
+            });
+        });
+
+    }, function(err) {
+    	if (err) {
+    		callback(err);
+    	}
+    });
+
+    callback();
+
+}
+
+
+function removeAll(callback) {
+
+
                 removeCollection('storage.files', function (err) {
                     if (err) {
                         callback(err);
@@ -63,12 +88,15 @@ function removeAll(callback) {
                         if (err) {
                             callback(err);
                         }
-                        callback();
+                        removeAllCollections(function (err) {
+                        	if (err) {
+                        		callback(err);
+                        	} else {
+                        		callback();
+                        	}
+                        })
                     });
                 });
-            });
-        });
-    });
 
 }
 
