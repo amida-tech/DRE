@@ -331,7 +331,7 @@ describe('Allergies API - Test Partial Matches:', function() {
 		api.get('/api/v1/matches/allergies')
 			.expect(200)
 			.end(function(err, res) {
-				console.log(JSON.stringify(res.body.matches, null, 10));
+				//console.log(JSON.stringify(res.body.matches, null, 10));
 				expect(res.body.matches.length).to.equal(3);
 				for (var i in res.body.matches) {
 					expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].match_entry.name);
@@ -353,7 +353,7 @@ describe('Allergies API - Test Partial Matches:', function() {
 	});
 });
 
-xdescribe('Allergies API - Test Added Matches', function() {
+describe('Allergies API - Test Added Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -450,7 +450,7 @@ xdescribe('Allergies API - Test Added Matches', function() {
 
 
 
-xdescribe('Allergies API - Test Ignored Matches', function() {
+describe('Allergies API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -543,7 +543,7 @@ xdescribe('Allergies API - Test Ignored Matches', function() {
 });
 
 
-xdescribe('Allergies API - Test Merged Matches', function() {
+describe('Allergies API - Test Merged Matches', function() {
 
 	var match_id = '';
 
