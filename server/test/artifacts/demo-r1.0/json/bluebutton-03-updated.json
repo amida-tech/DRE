@@ -867,7 +867,9 @@
                 "repeatNumber": "1",
                 "quantity": "75",
                 "author": {
-                    "date_time": {},
+                    "date_time": {
+                        "null_flavor": "UNK"
+                    },
                     "identifiers": [
                         {
                             "identifier": "2a620155-9d11-439e-92b3-5d9815fe4de8"
@@ -1182,293 +1184,397 @@
     ],
     "allergies": [
         {
+            "identifiers": [
+                {
+                    "identifier": "36e3e930-7b14-11db-9fe1-0800200c9a66"
+                }
+            ],
             "date_time": {
                 "point": {
                     "date": "2007-05-01T00:00:00Z",
                     "precision": "day"
                 }
             },
-            "identifiers": [
-                {
-                    "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
-                }
-            ],
-            "allergen": {
-                "name": "ALLERGENIC EXTRACT, PENICILLIN",
-                "code": "314422",
-                "code_system_name": "RXNORM"
-            },
-            "intolerance": {
+            "observation": {
+                "identifiers": [
+                    {
+                        "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
+                    }
+                ],
+                "allergen": {
+                    "name": "ALLERGENIC EXTRACT, PENICILLIN",
+                    "code": "314422",
+                    "code_system_name": "RXNORM"
+                },
+                "intolerance": {
+                    "name": "Propensity to adverse reactions to drug",
+                    "code": "419511003",
+                    "code_system_name": "SNOMED CT"
+                },
                 "date_time": {
                     "low": {
                         "date": "2007-05-01T00:00:00Z",
                         "precision": "day"
                     }
                 },
-                "code": "419511003",
-                "name": "Propensity to adverse reactions to drug",
-                "code_system_name": "SNOMED CT",
-                "severity": {
-                    "code": "371924009",
-                    "name": "Moderate to severe"
-                }
-            },
-            "status": {
-                "code": "73425007",
-                "status": "Inactive"
-            },
-            "reaction": [
-                {
-                    "date_time": {
-                        "low": {
-                            "date": "2007-05-01T00:00:00Z",
-                            "precision": "day"
+                "status": {
+                    "name": "Inactive",
+                    "code": "73425007",
+                    "code_system_name": "SNOMED CT"
+                },
+                "reactions": [
+                    {
+                        "date_time": {
+                            "low": {
+                                "date": "2007-05-01T00:00:00Z",
+                                "precision": "day"
+                            },
+                            "high": {
+                                "date": "2009-02-27T13:00:00Z",
+                                "precision": "second"
+                            }
                         },
-                        "high": {
-                            "date": "2009-02-27T13:00:00Z",
-                            "precision": "second"
+                        "reaction": {
+                            "name": "Nausea",
+                            "code": "422587007",
+                            "code_system_name": "SNOMED CT"
+                        },
+                        "severity": {
+                            "code": {
+                                "name": "Mild",
+                                "code": "255604002",
+                                "code_system_name": "SNOMED CT"
+                            },
+                            "interpretation": {
+                                "name": "Suceptible",
+                                "code": "S",
+                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                            }
                         }
-                    },
-                    "reaction": {
-                        "name": "Nausea",
-                        "code": "422587007",
+                    }
+                ],
+                "severity": {
+                    "code": {
+                        "name": "Moderate to severe",
+                        "code": "371924009",
                         "code_system_name": "SNOMED CT"
                     },
-                    "severity": {
-                        "code": "255604002",
-                        "name": "Mild"
+                    "interpretation": {
+                        "name": "Normal",
+                        "code": "N",
+                        "code_system_name": "OID 2.16.840.1.113883.1.11.78"
                     }
                 }
-            ]
+            }
         },
         {
+            "identifiers": [
+                {
+                    "identifier": "36e3e930-7b14-11db-9fe1-0800200c9a66"
+                }
+            ],
             "date_time": {
                 "point": {
                     "date": "2006-05-01T00:00:00Z",
                     "precision": "day"
                 }
             },
-            "identifiers": [
-                {
-                    "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
-                }
-            ],
-            "allergen": {
-                "name": "Codeine",
-                "code": "2670",
-                "code_system_name": "RXNORM"
-            },
-            "intolerance": {
+            "observation": {
+                "identifiers": [
+                    {
+                        "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
+                    }
+                ],
+                "allergen": {
+                    "name": "Codeine",
+                    "code": "2670",
+                    "code_system_name": "RXNORM"
+                },
+                "intolerance": {
+                    "name": "Propensity to adverse reactions to drug",
+                    "code": "419511003",
+                    "code_system_name": "SNOMED CT"
+                },
                 "date_time": {
                     "low": {
                         "date": "2006-05-01T00:00:00Z",
                         "precision": "day"
                     }
                 },
-                "code": "419511003",
-                "name": "Propensity to adverse reactions to drug",
-                "code_system_name": "SNOMED CT",
-                "severity": {
-                    "code": "6736007",
-                    "name": "Moderate"
-                }
-            },
-            "status": {
-                "code": "55561003",
-                "status": "Active"
-            },
-            "reaction": [
-                {
-                    "date_time": {
-                        "low": {
-                            "date": "2006-05-01T00:00:00Z",
-                            "precision": "day"
+                "status": {
+                    "name": "Active",
+                    "code": "55561003",
+                    "code_system_name": "SNOMED CT"
+                },
+                "reactions": [
+                    {
+                        "date_time": {
+                            "low": {
+                                "date": "2006-05-01T00:00:00Z",
+                                "precision": "day"
+                            },
+                            "high": {
+                                "date": "2009-02-27T13:00:00Z",
+                                "precision": "second"
+                            }
                         },
-                        "high": {
-                            "date": "2009-02-27T13:00:00Z",
-                            "precision": "second"
+                        "reaction": {
+                            "name": "Wheezing",
+                            "code": "56018004",
+                            "code_system_name": "SNOMED CT"
+                        },
+                        "severity": {
+                            "code": {
+                                "name": "Mild",
+                                "code": "255604002",
+                                "code_system_name": "SNOMED CT"
+                            },
+                            "interpretation": {
+                                "name": "Suceptible",
+                                "code": "S",
+                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                            }
                         }
-                    },
-                    "reaction": {
-                        "name": "Wheezing",
-                        "code": "56018004",
+                    }
+                ],
+                "severity": {
+                    "code": {
+                        "name": "Moderate",
+                        "code": "6736007",
                         "code_system_name": "SNOMED CT"
                     },
-                    "severity": {
-                        "code": "255604002",
-                        "name": "Mild"
+                    "interpretation": {
+                        "name": "Normal",
+                        "code": "N",
+                        "code_system_name": "OID 2.16.840.1.113883.1.11.78"
                     }
                 }
-            ]
+            }
         },
         {
+            "identifiers": [
+                {
+                    "identifier": "36e3e930-7b14-11db-9fe1-0800200c9a66"
+                }
+            ],
             "date_time": {
                 "low": {
                     "date": "1984-06-05T10:00:00Z",
                     "precision": "second"
                 }
             },
-            "identifiers": [
-                {
-                    "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
-                }
-            ],
-            "allergen": {
-                "name": "Eggs",
-                "code": "291P45F896",
-                "code_system_name": "UNII",
-                "translations": [
+            "observation": {
+                "identifiers": [
                     {
-                        "name": "Allergy to eggs",
-                        "code": "V15.03",
-                        "code_system_name": "OID 2.16.840.1.113883.6.2"
+                        "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
+                    }
+                ],
+                "allergen": {
+                    "name": "Eggs",
+                    "code": "291P45F896",
+                    "code_system_name": "UNII",
+                    "translations": [
+                        {
+                            "name": "Allergy to eggs",
+                            "code": "V15.03",
+                            "code_system_name": "OID 2.16.840.1.113883.6.2"
+                        }
+                    ]
+                },
+                "intolerance": {
+                    "name": "Food allergy (disorder)",
+                    "code": "414285001",
+                    "code_system_name": "SNOMED CT"
+                },
+                "date_time": {},
+                "status": {
+                    "name": "Inactive",
+                    "code": "73425007",
+                    "code_system_name": "SNOMED CT"
+                },
+                "reactions": [
+                    {
+                        "date_time": {
+                            "low": {
+                                "date": "2007-05-01T00:00:00Z",
+                                "precision": "day"
+                            },
+                            "high": {
+                                "date": "2009-02-27T13:00:00Z",
+                                "precision": "second"
+                            }
+                        },
+                        "reaction": {
+                            "name": "Nausea",
+                            "code": "422587007",
+                            "code_system_name": "SNOMED CT"
+                        },
+                        "severity": {
+                            "code": {
+                                "name": "Mild",
+                                "code": "255604002",
+                                "code_system_name": "SNOMED CT"
+                            },
+                            "interpretation": {
+                                "name": "Suceptible",
+                                "code": "S",
+                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                            }
+                        }
                     }
                 ]
-            },
-            "intolerance": {
-                "date_time": {},
-                "code": "414285001",
-                "name": "Food allergy (disorder)",
-                "code_system_name": "SNOMED-CT"
-            },
-            "status": {
-                "code": "73425007",
-                "status": "Inactive"
-            },
-            "reaction": [
-                {
-                    "date_time": {
-                        "low": {
-                            "date": "2007-05-01T00:00:00Z",
-                            "precision": "day"
-                        },
-                        "high": {
-                            "date": "2009-02-27T13:00:00Z",
-                            "precision": "second"
-                        }
-                    },
-                    "reaction": {
-                        "name": "Nausea",
-                        "code": "422587007",
-                        "code_system_name": "SNOMED CT"
-                    },
-                    "severity": {
-                        "code": "255604002",
-                        "name": "Mild"
-                    }
-                }
-            ]
+            }
         },
         {
+            "identifiers": [
+                {
+                    "identifier": "36e3e930-7b14-11db-9fe1-0800200c9a66"
+                }
+            ],
             "date_time": {
                 "point": {
                     "date": "2008-05-01T00:00:00Z",
                     "precision": "day"
                 }
             },
-            "identifiers": [
-                {
-                    "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
-                }
-            ],
-            "allergen": {
-                "name": "Aspirin",
-                "code": "1191",
-                "code_system_name": "RXNORM"
-            },
-            "intolerance": {
+            "observation": {
+                "identifiers": [
+                    {
+                        "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
+                    }
+                ],
+                "allergen": {
+                    "name": "Aspirin",
+                    "code": "1191",
+                    "code_system_name": "RXNORM"
+                },
+                "intolerance": {
+                    "name": "Drug intolerance",
+                    "code": "59037007",
+                    "code_system_name": "SNOMED CT"
+                },
                 "date_time": {
                     "low": {
                         "date": "2008-05-01T00:00:00Z",
                         "precision": "day"
                     }
                 },
-                "code": "59037007",
-                "name": "Drug intolerance",
-                "code_system_name": "SNOMED CT",
-                "severity": {
-                    "code": "371923003",
-                    "name": "Mild to moderate"
-                }
-            },
-            "status": {
-                "code": "55561003",
-                "status": "Active"
-            },
-            "reaction": [
-                {
-                    "date_time": {
-                        "low": {
-                            "date": "2008-05-01T00:00:00Z",
-                            "precision": "day"
+                "status": {
+                    "name": "Active",
+                    "code": "55561003",
+                    "code_system_name": "SNOMED CT"
+                },
+                "reactions": [
+                    {
+                        "date_time": {
+                            "low": {
+                                "date": "2008-05-01T00:00:00Z",
+                                "precision": "day"
+                            },
+                            "high": {
+                                "date": "2009-02-27T13:00:00Z",
+                                "precision": "second"
+                            }
                         },
-                        "high": {
-                            "date": "2009-02-27T13:00:00Z",
-                            "precision": "second"
+                        "reaction": {
+                            "name": "Hives",
+                            "code": "247472004",
+                            "code_system_name": "SNOMED CT"
+                        },
+                        "severity": {
+                            "code": {
+                                "name": "Mild to moderate",
+                                "code": "371923003",
+                                "code_system_name": "SNOMED CT"
+                            },
+                            "interpretation": {
+                                "name": "Suceptible",
+                                "code": "S",
+                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                            }
                         }
-                    },
-                    "reaction": {
-                        "name": "Hives",
-                        "code": "247472004",
+                    }
+                ],
+                "severity": {
+                    "code": {
+                        "name": "Mild to moderate",
+                        "code": "371923003",
                         "code_system_name": "SNOMED CT"
                     },
-                    "severity": {
-                        "code": "371923003",
-                        "name": "Mild to moderate"
+                    "interpretation": {
+                        "name": "Normal",
+                        "code": "N",
+                        "code_system_name": "OID 2.16.840.1.113883.1.11.78"
                     }
                 }
-            ]
+            }
         },
         {
+            "identifiers": [
+                {
+                    "identifier": "36e3e930-7b14-11db-9fe1-0800200c9a66"
+                }
+            ],
             "date_time": {
                 "low": {
                     "date": "2009-08-26T10:00:00Z",
                     "precision": "second"
                 }
             },
-            "identifiers": [
-                {
-                    "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
-                }
-            ],
-            "allergen": {
-                "name": "Neomycin Sulfate 500 MG",
-                "code": "866041",
-                "code_system_name": "RXNORM"
-            },
-            "intolerance": {
-                "date_time": {},
-                "code": "416098002",
-                "name": "Drug allergy (disorder)",
-                "code_system_name": "SNOMED-CT"
-            },
-            "status": {
-                "code": "73425007",
-                "status": "Inactive"
-            },
-            "reaction": [
-                {
-                    "date_time": {
-                        "low": {
-                            "date": "2007-05-01T00:00:00Z",
-                            "precision": "day"
-                        },
-                        "high": {
-                            "date": "2009-02-27T13:00:00Z",
-                            "precision": "second"
-                        }
-                    },
-                    "reaction": {
-                        "name": "Nausea",
-                        "code": "422587007",
-                        "code_system_name": "SNOMED CT"
-                    },
-                    "severity": {
-                        "code": "255604002",
-                        "name": "Mild"
+            "observation": {
+                "identifiers": [
+                    {
+                        "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
                     }
-                }
-            ]
+                ],
+                "allergen": {
+                    "name": "Neomycin Sulfate 500 MG",
+                    "code": "866041",
+                    "code_system_name": "RXNORM"
+                },
+                "intolerance": {
+                    "name": "Drug allergy (disorder)",
+                    "code": "416098002",
+                    "code_system_name": "SNOMED CT"
+                },
+                "date_time": {},
+                "status": {
+                    "name": "Inactive",
+                    "code": "73425007",
+                    "code_system_name": "SNOMED CT"
+                },
+                "reactions": [
+                    {
+                        "date_time": {
+                            "low": {
+                                "date": "2007-05-01T00:00:00Z",
+                                "precision": "day"
+                            },
+                            "high": {
+                                "date": "2009-02-27T13:00:00Z",
+                                "precision": "second"
+                            }
+                        },
+                        "reaction": {
+                            "name": "Nausea",
+                            "code": "422587007",
+                            "code_system_name": "SNOMED CT"
+                        },
+                        "severity": {
+                            "code": {
+                                "name": "Mild",
+                                "code": "255604002",
+                                "code_system_name": "SNOMED CT"
+                            },
+                            "interpretation": {
+                                "name": "Suceptible",
+                                "code": "S",
+                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                            }
+                        }
+                    }
+                ]
+            }
         }
     ],
     "immunizations": [
@@ -1804,7 +1910,6 @@
     ],
     "social_history": [
         {
-            "value": "Former smoker",
             "date_time": {
                 "low": {
                     "date": "2005-05-01T00:00:00Z",
@@ -1822,12 +1927,11 @@
                 }
             ],
             "code": {
-                "code": "ASSERTION",
-                "code_system_name": "HL7ActCode"
-            }
+                "code": "Smoking Status"
+            },
+            "value": "Former smoker"
         },
         {
-            "value": "Tobacco use and exposure",
             "date_time": {
                 "low": {
                     "date": "2005-05-01T00:00:00Z",
@@ -1848,10 +1952,9 @@
                 "code": "229819007",
                 "code_system_name": "SNOMED CT"
             },
-            "observation_value": "1 pack per day"
+            "value": "1 pack per day"
         },
         {
-            "value": "Tobacco use and exposure",
             "date_time": {
                 "low": {
                     "date": "2009-02-27T13:00:00Z",
@@ -1868,10 +1971,9 @@
                 "code": "229819007",
                 "code_system_name": "SNOMED CT"
             },
-            "observation_value": "None"
+            "value": "None"
         },
         {
-            "value": "Alcohol intake",
             "date_time": {
                 "low": {
                     "date": "2005-05-01T00:00:00Z",
@@ -1888,7 +1990,7 @@
                 "code": "160573003",
                 "code_system_name": "SNOMED CT"
             },
-            "observation_value": "None"
+            "value": "None"
         }
     ],
     "problems": [

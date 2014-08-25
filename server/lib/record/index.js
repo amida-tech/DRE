@@ -13,7 +13,7 @@ var login = require('../login');
 Promise.promisifyAll(require("blue-button-record"));
 
 
-var supportedComponents = bbm.supported_sections.reduce(function(r, c) { 
+var supportedComponents = bbm.supported_sections.reduce(function(r, c) {
     r[c] = true;
     return r;
 }, {});
@@ -60,11 +60,16 @@ function prep(sec, secName) {
 }
 
 function getCCDA(callback) {
-    var aggregatedResponse = {}, count = 0, components = Object.keys(supportedComponents);
+    console.log("genCCDA");
+    var aggregatedResponse = {},
+        count = 0,
+        components = Object.keys(supportedComponents);
 
     bbm.supported_sections.forEach(function(secName) {
         record.getSectionAsync(secName, 'test').then(function(sec) {
-            _.extend(aggregatedResponse, formatResponse(secName, prep(sec, secName)));
+            if (sec.length !== 0) {
+                _.extend(aggregatedResponse, formatResponse(secName, prep(sec, secName)));
+            }
             if (++count === components.length)
                 callback(null, aggregatedResponse);
         }).catch(function(e) {
@@ -75,11 +80,15 @@ function getCCDA(callback) {
 
 app.get('/api/v1/ccda', login.checkAuth, function(req, res) {
     getCCDA(function(err, result) {
+        //console.log(result);
+
         if (err) {
             res.send(500);
         } else {
             res.setHeader('Content-disposition', 'attachment; filename=' + 'ccda_record.xml');
-            res.send(bb.generateCCDA(result).toString());
-        } 
+
+            res.send(JSON.stringify(result, null, 4)); //return BB JSON for now
+            //res.send(bb.generateCCDA(result).toString());
+        }
     });
 });
