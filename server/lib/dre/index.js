@@ -134,6 +134,8 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     //Add source attribution to matched entries.
     function removeDuplicates(match, newRecord, baseRecord, recordID) {
 
+        var newRecord = _.clone(newRecord);
+
         var duplicateArray = [];
 
         var newMatch = {};
@@ -259,7 +261,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
     //duplicate matches must be purges from queue as well as entries!!!!
 
-    function splitNewPartialEntries(match, newObjectArray, baseObjectArray) {
+    function splitNewPartialEntries(match, newObjectArray, originalNewObjectArray, baseObjectArray) {
 
         var outputPartialObjectArray = {};
         var outputNewObjectArray = {};
@@ -379,7 +381,8 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                         }
                     } else {
                         if (newObjectArray[matchKey] !== undefined) {
-                            var outputNewEntry = newObjectArray[matchKey][index];
+
+                            var outputNewEntry = originalNewObjectArray[matchKey][element[0].src_id];
                             outputNewObjectArray[matchKey].push(outputNewEntry);
                         }
                     }
@@ -424,7 +427,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     //console.log(JSON.stringify(deDuplicatedNewRecord, null, 10));
 
     //Split incoming entries into new/partial.
-    var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record, baseObject);
+    var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record, deDuplicatedSourceRecords.new_entries, baseObject);
 
     //console.log(splitIncomingEntries);
 

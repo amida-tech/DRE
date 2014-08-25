@@ -102,7 +102,7 @@ describe('Allergies API - Test New:', function() {
 				//console.log(res.body.allergies);
 
 				expect(res.body.allergies.length).to.equal(3);
-				console.log(JSON.stringify(res.body.allergies, null, 10));
+				//console.log(JSON.stringify(res.body.allergies, null, 10));
 				done();
 			});
 	});
@@ -224,6 +224,7 @@ describe('Allergies API - Test New/Dupe Mix:', function() {
 					return done(err);
 				}
 				expect(res.body.allergies.length).to.equal(5);
+				console.log(res.body.allergies);
 				done();
 			});
 	});
@@ -270,7 +271,7 @@ describe('Allergies API - Test New/Dupe Mix:', function() {
 });
 
 //Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
-describe('Allergies API - Test Partial Matches:', function() {
+xdescribe('Allergies API - Test Partial Matches:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
