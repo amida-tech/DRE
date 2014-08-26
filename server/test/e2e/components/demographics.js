@@ -258,6 +258,9 @@ describe('Demographic API - Test Partial Matches:', function() {
 		api.get('/api/v1/matches/demographics')
 			.expect(200)
 			.end(function(err, res) {
+
+				//console.log(JSON.stringify(res.body.matches, null, 10));
+
 				expect(res.body.matches.length).to.equal(1);
 				for (var i in res.body.matches) {
 					expect(res.body.matches[i].entry.name).to.deep.equal(res.body.matches[i].match_entry.name);

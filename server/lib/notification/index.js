@@ -92,6 +92,7 @@ function getNotifications (callback) {
     function checkCountComplete() {
       secIteration++;
       if (secIteration === secTotal) {
+        //console.log(dupeCount);
         dupeDone = true;
         callback();
       }
@@ -102,6 +103,7 @@ function getNotifications (callback) {
         if (err) {
           callback(err);
         } else {
+          //console.log(count);
           dupeCount = dupeCount + count;
           checkCountComplete();
         }

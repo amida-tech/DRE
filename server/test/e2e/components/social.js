@@ -96,7 +96,7 @@ describe('Social API - Test New:', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.social_history, null, 10));
-				expect(res.body.social_history.length).to.equal(1);
+				expect(res.body.social_history.length).to.equal(4);
 				done();
 			});
 	});
@@ -117,7 +117,7 @@ describe('Social API - Test New:', function() {
 				if (err) {
 					return done(err);
 				}
-				expect(res.body.merges.length).to.equal(1);
+				expect(res.body.merges.length).to.equal(4);
 				for (var i in res.body.merges) {
 					expect(res.body.merges[i].merge_reason).to.equal('new');
 					expect(res.body.merges[i].entry_type).to.equal('social_history');
@@ -152,7 +152,7 @@ describe('Social API - Test Duplicate:', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.allergies, null, 10));
-				expect(res.body.social_history.length).to.equal(1);
+				expect(res.body.social_history.length).to.equal(4);
 				done();
 			});
 	});
@@ -174,7 +174,7 @@ describe('Social API - Test Duplicate:', function() {
 				if (err) {
 					return done(err);
 				}
-				expect(res.body.merges.length).to.equal(2);
+				expect(res.body.merges.length).to.equal(8);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -189,8 +189,8 @@ describe('Social API - Test Duplicate:', function() {
 					expect(res.body.merges[i].record._id).to.exist;
 					expect(res.body.merges[i].entry._id).to.exist;
 				}
-				expect(newCnt).to.equal(1);
-				expect(dupCnt).to.equal(1);
+				expect(newCnt).to.equal(4);
+				expect(dupCnt).to.equal(4);
 				done();
 			});
 	});
@@ -218,7 +218,7 @@ describe('Social API - Test New/Dupe Mix:', function() {
 					return done(err);
 				}
 				//console.log(res.body.social_history);
-				expect(res.body.social_history.length).to.equal(1);
+				expect(res.body.social_history.length).to.equal(4);
 				done();
 			});
 	});
@@ -241,7 +241,7 @@ describe('Social API - Test New/Dupe Mix:', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(3);
+				expect(res.body.merges.length).to.equal(12);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -257,8 +257,8 @@ describe('Social API - Test New/Dupe Mix:', function() {
 					expect(res.body.merges[i].entry._id).to.exist;
 				}
 				//console.log(JSON.stringify(res.body.merges, null, 10));
-				expect(newCnt).to.equal(1);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(4);
+				expect(dupCnt).to.equal(8);
 				
 				done();
 			});
@@ -286,7 +286,7 @@ describe('Social API - Test Partial Matches:', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.social_history, null, 10));
-				expect(res.body.social_history.length).to.equal(1);
+				expect(res.body.social_history.length).to.equal(4);
 				done();
 			});
 	});
@@ -299,7 +299,7 @@ describe('Social API - Test Partial Matches:', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(3);
+				expect(res.body.merges.length).to.equal(12);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -314,8 +314,8 @@ describe('Social API - Test Partial Matches:', function() {
 					expect(res.body.merges[i].record._id).to.exist;
 					expect(res.body.merges[i].entry._id).to.exist;
 				}
-				expect(newCnt).to.equal(1);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(4);
+				expect(dupCnt).to.equal(8);
 				done();
 			});
 	});
@@ -325,7 +325,7 @@ describe('Social API - Test Partial Matches:', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
-				expect(res.body.matches.length).to.equal(1);
+				expect(res.body.matches.length).to.equal(6);
 				for (var i in res.body.matches) {
 					expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].match_entry.name);
 					expect(res.body.matches[i].entry_type).to.equal('social_history');
@@ -373,7 +373,7 @@ describe('Social API - Test Added Matches', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.social_history.length).to.equal(2);
+				expect(res.body.social_history.length).to.equal(5);
 				var total_allergies = 0;
 				for (var iEntry in res.body.social_history) {
 					if (res.body.social_history[iEntry]._id === match_id) {
@@ -394,7 +394,7 @@ describe('Social API - Test Added Matches', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(4);
+				expect(res.body.merges.length).to.equal(13);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -409,8 +409,8 @@ describe('Social API - Test Added Matches', function() {
 					expect(res.body.merges[i].record._id).to.exist;
 					expect(res.body.merges[i].entry._id).to.exist;
 				}
-				expect(newCnt).to.equal(2);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(5);
+				expect(dupCnt).to.equal(8);
 				done();
 			});
 	});
@@ -423,7 +423,7 @@ describe('Social API - Test Added Matches', function() {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(0);
+			expect(res.body.matches.length).to.equal(5);
 			done();
 		});
 	});
@@ -455,6 +455,9 @@ describe('Social API - Test Ignored Matches', function() {
 				if (err) {
 					done(err);
 				} else {
+
+					//console.log(res.body.matches);
+
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].match_entry._id;
 					api.post('/api/v1/matches/social_history/' + update_id)
@@ -478,7 +481,7 @@ describe('Social API - Test Ignored Matches', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.social_history.length).to.equal(2);
+				expect(res.body.social_history.length).to.equal(5);
 				var total_allergies = 0;
 				for (var iEntry in res.body.social_history) {
 					if (res.body.social_history[iEntry]._id === match_id) {
@@ -499,7 +502,7 @@ describe('Social API - Test Ignored Matches', function() {
 					return done(err);
 				}
 				//console.log(res.body.merges);
-				expect(res.body.merges.length).to.equal(4);
+				expect(res.body.merges.length).to.equal(14);
 				var newCnt = 0;
 				var dupCnt = 0;
 				for (var i in res.body.merges) {
@@ -514,8 +517,8 @@ describe('Social API - Test Ignored Matches', function() {
 					expect(res.body.merges[i].record._id).to.exist;
 					expect(res.body.merges[i].entry._id).to.exist;
 				}
-				expect(newCnt).to.equal(2);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(5);
+				expect(dupCnt).to.equal(9);
 				done();
 			});
 	});
@@ -528,7 +531,7 @@ describe('Social API - Test Ignored Matches', function() {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(0);
+			expect(res.body.matches.length).to.equal(9);
 			done();
 		});
 	});
@@ -615,7 +618,7 @@ describe('Social API - Test Merged Matches', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body, null, 10));
-				expect(res.body.social_history.length).to.equal(2);
+				expect(res.body.social_history.length).to.equal(5);
 				var total_socials = 0;
 				for (var iEntry in res.body.social_history) {
 					if (res.body.social_history[iEntry]._id === match_id) {
@@ -647,7 +650,7 @@ describe('Social API - Test Merged Matches', function() {
 					return done(err);
 				}
 				//console.log(JSON.stringify(res.body.merges,null, 10));
-				expect(res.body.merges.length).to.equal(5);
+				expect(res.body.merges.length).to.equal(16);
 				var newCnt = 0;
 				var dupCnt = 0;
 				var mrgCnt = 0;
@@ -668,8 +671,8 @@ describe('Social API - Test Merged Matches', function() {
 					expect(res.body.merges[i].record._id).to.exist;
 					expect(res.body.merges[i].entry._id).to.exist;
 				}
-				expect(newCnt).to.equal(2);
-				expect(dupCnt).to.equal(2);
+				expect(newCnt).to.equal(5);
+				expect(dupCnt).to.equal(10);
 				expect(mrgCnt).to.equal(1);
 				done();
 			});
@@ -683,7 +686,7 @@ describe('Social API - Test Merged Matches', function() {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(0);
+			expect(res.body.matches.length).to.equal(13);
 			done();
 		});
 	});

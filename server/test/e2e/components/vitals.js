@@ -283,7 +283,7 @@ describe('Vitals API - Test Partial Matches:', function() {
 				if (err) {
 					return done(err);
 				}
-				//console.log(JSON.stringify(res.body.allergies, null, 10));
+				//console.log(JSON.stringify(res.body, null, 10));
 				expect(res.body.vitals.length).to.equal(11);
 				done();
 			});

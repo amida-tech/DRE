@@ -323,7 +323,7 @@ describe('Procedures API - Test Partial Matches:', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
-				expect(res.body.matches.length).to.equal(3);
+				expect(res.body.matches.length).to.equal(4);
 				for (var i in res.body.matches) {
 					expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].match_entry.name);
 					expect(res.body.matches[i].entry_type).to.equal('procedures');
@@ -421,7 +421,7 @@ describe('Procedures API - Test Added Matches', function() {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(2);
+			expect(res.body.matches.length).to.equal(3);
 			done();
 		});
 	});
@@ -516,7 +516,7 @@ describe('Procedures API - Test Ignored Matches', function() {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(1);
+			expect(res.body.matches.length).to.equal(2);
 			done();
 		});
 	});
@@ -756,7 +756,7 @@ describe('Procedures API - Test Merged Matches', function() {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(0);
+			expect(res.body.matches.length).to.equal(1);
 			done();
 		});
 	});
