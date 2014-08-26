@@ -36,7 +36,7 @@ var record = require('blue-button-record');
     fs.exists(viewPath, function(exists) {
       console.log(viewPath);
       if (exists) {
-        
+
         res.header("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
         res.render(viewPath);
       } else {

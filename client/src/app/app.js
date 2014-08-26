@@ -556,21 +556,50 @@ var dre = angular
             return displayAddress.join(", ");
         };
     })
+    .filter('capFirstLetters', function($filter) {
+        //capitalize first letter of every word
+        return function(input) {
+            if (input != null){
+                var inputArr = input.split(' ');
+                var newString = "";
+                for(var x in inputArr){
+                    var token = inputArr[x];
+                    newString += token.substring(0,1).toUpperCase()+token.substring(1) + " ";
+                }
+                newString.trim();
+                return newString;
+            }
+        };
+    })
 
 
 .config(['$routeProvider', '$locationProvider', '$compileProvider',
     function($routeProvider, $locationProvider, $compileProvider) {
         $routeProvider.when('/', {
             templateUrl: 'templates/dashboard/dashboard.tpl.html',
-            controller: 'dashboardCtrl'
+            controller: 'MainCtrl'
         });
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob):/);
 
     }
 ])
+
+
 // Note TabService is included but not used to ensure its been instantiated
 .run(['$rootScope', '$location',
     function($rootScope, $location) {
 
     }
+]);
+
+// For notification updates, tie to rootScope
+dre.controller('MainCtrl', ['$rootScope', 'getNotifications',
+  function($rootScope, getNotifications) {
+
+    $rootScope.notifications = {};
+    getNotifications.getUpdate(function (err, notifications) {
+      $rootScope.notifications = notifications;
+    });
+
+  }
 ]);

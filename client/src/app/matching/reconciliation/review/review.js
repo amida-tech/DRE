@@ -31,16 +31,11 @@ angular.module('dre.match.review', [])
     }
 ])
 
-.controller('reviewCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', '$rootScope', 'recordFunctions', 'getNotifications',
-    function($scope, $http, $location, $route, $routeParams, $rootScope, recordFunctions, getNotifications) {
-        $scope.notifications = {};
+.controller('reviewCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', '$rootScope', 'recordFunctions',
+    function($scope, $http, $location, $route, $routeParams, $rootScope, recordFunctions) {
 
         $scope.modified=false;
         $scope.added_subelements={};
-
-        getNotifications.getUpdate(function(err, notifications) {
-          $scope.notifications = notifications;
-        });
 
         //set to false to hide JSON debug output in UI/templates
         $scope.debug=false;
@@ -71,7 +66,7 @@ angular.module('dre.match.review', [])
                 $scope.partial_matches = data;
                 $scope.diff=$scope.partial_matches.diff;
                 recordFunctions.extractName(data.match_entry);
-                $scope.src_el = data.match_entry;    
+                $scope.src_el = data.match_entry;
                 $scope.src_copy_el = angular.copy($scope.src_el);
                 recordFunctions.extractName(data.entry);
                 $scope.dest_el = data.entry;
@@ -137,7 +132,7 @@ angular.module('dre.match.review', [])
                 console.log('error');
             });
         };
-        
+
         //This call is discontinued in favor of cancelReview, createNew, ignoreUpdate, saveUpdate
         $scope.saveReview = function() {
             //console.log($scope.partial_matches._id);

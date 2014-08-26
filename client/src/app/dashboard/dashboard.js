@@ -25,14 +25,9 @@ angular.module('dre.dashboard', [])
   }
 ])
 
-.controller('dashboardCtrl', ['$scope', '$http', '$location', 'getNotifications',
-  function($scope, $http, $location, getNotifications) {
+.controller('dashboardCtrl', ['$scope', '$http', '$location',
+  function($scope, $http, $location) {
 
-    $scope.navPath = "templates/nav/nav.tpl.html";
-    $scope.notifications = {};
-    getNotifications.getUpdate(function(err, notifications) {
-      $scope.notifications = notifications;
-    });
 
   }
 ]);

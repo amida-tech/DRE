@@ -53,29 +53,27 @@ angular.module('dre.record.immunizations', [])
 
     $scope.updateFields = function() {
       for (var i in $scope.immunizations) {
-  
         recordFunctions.extractName($scope.immunizations[i]);
         recordFunctions.formatDate($scope.immunizations[i].date);
-  
+
         $scope.immunizations[i].date_weight = $scope.immunizations[i].date[0].date;
         $scope.immunizations[i].name = recordFunctions.truncateName($scope.immunizations[i].name);
-  
         if ($scope.immunizations[i].administration.dose) {
           recordFunctions.formatQuantity($scope.immunizations[i].administration.dose);
         }
-  
-        if ($scope.immunizations[i].performer.address) {
-          for (var perAddr in $scope.immunizations[i].performer.address) {
-            recordFunctions.formatAddress($scope.immunizations[i].performer.address[perAddr]);
-          }
+        if($scope.immunizations[i].performer){
+            if ($scope.immunizations[i].performer.address) {
+              for (var perAddr in $scope.immunizations[i].performer.address) {
+                recordFunctions.formatAddress($scope.immunizations[i].performer.address[perAddr]);
+              }
+            }
+            if ($scope.immunizations[i].performer.name) {
+              for (var perName in $scope.immunizations[i].performer.name) {
+                recordFunctions.formatName($scope.immunizations[i].performer.name[perName]);
+              }
+            }
         }
-  
-        if ($scope.immunizations[i].performer.name) {
-          for (var perName in $scope.immunizations[i].performer.name) {
-            recordFunctions.formatName($scope.immunizations[i].performer.name[perName]);  
-          }
-        }
-      }
+  }
     };
 
     $scope.getStub = function() {

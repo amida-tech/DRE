@@ -1,0 +1,23 @@
+---
+#file: roles/mongodb/tasks/main.yml
+
+- name: Create the mongod group
+  group: name=mongod system=yes
+
+- name: Create the mongod user
+  user: name=mongod group=mongod comment="MongoD" append=yes
+  sudo: yes
+
+- name: Install 10gen yum repo
+  copy:  src=10gen.repo.j2 dest=/etc/yum.repos.d/10gen.repo
+  sudo: yes
+
+- name: Install mongodb
+  yum: name={{item}} enablerepo="10gen" state="installed"
+  sudo: yes
+  with_items:
+    - mongodb-org
+
+- name: Start Mongodb Service
+  sudo: yes
+  service: name=mongod state="started" enabled=yes

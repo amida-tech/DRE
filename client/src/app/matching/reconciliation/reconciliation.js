@@ -25,17 +25,8 @@ angular.module('dre.match.reconciliation', [])
     }
 ])
 
-.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope', 'getNotifications', 'recordFunctions',
-    function($scope, $http, $location, $rootScope, getNotifications, recordFunctions) {
-
-        $scope.notifications = {};
-
-
-        getNotifications.getUpdate(function(err, notifications) {
-          $scope.notifications = notifications;
-        });
-
-        $scope.navPath = "templates/nav/nav.tpl.html";
+.controller('reconciliationCtrl', ['$scope', '$http', '$location', '$rootScope', 'recordFunctions',
+    function($scope, $http, $location, $rootScope, recordFunctions) {
 
         $scope.reviewClick = function(match) {
             //alert(JSON.stringify(match));
@@ -50,7 +41,7 @@ angular.module('dre.match.reconciliation', [])
         };
 
         $scope.getMatches = function() {
-            var sections = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
+            var sections = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems', 'insurance', 'claims'];
             //var sections = ['allergies'];
 
             function getMatchSections(loadsec) {
@@ -63,6 +54,7 @@ angular.module('dre.match.reconciliation', [])
                     //console.log(data.matches);
 
                     for (var iM in data.matches) {
+
                         data.matches[iM].entry = recordFunctions.extractName(data.matches[iM].entry);
                         data.matches[iM].singular_section = recordFunctions.singularizeSection(data.matches[iM].entry_type);
                         //console.log(data.matches[iM]);

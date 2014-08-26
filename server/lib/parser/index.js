@@ -9,15 +9,24 @@ function extractRecord(inputRecord, callback) {
 	var bbRecordType;
 
 	try {
-		bbRecord = bb.parseString(inputRecord);
 		bbRecordType = bb.senseString(inputRecord);
+        if(bbRecordType.type === 'cms'){
+            bbRecord = bb.parseText(inputRecord);
+            //console.log(JSON.stringify(bbRecord, null, 4));
+        }
+        else{
+            bbRecord = bb.parseString(inputRecord);
+        }
+
 
 	} catch (parseError) {
 		callback(parseError);
 	}
-
-	if (bbRecordType.type = 'ccda') {
+	if (bbRecordType.type === 'ccda') {
 		callback(null, 'ccda', bbRecord.data);
+    }
+    else if (bbRecordType.type === 'cms'){
+        callback(null, 'cms', bbRecord.data);
 	} else {
 		callback(null);
 	}

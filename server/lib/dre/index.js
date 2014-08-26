@@ -435,9 +435,13 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     //Remove Overlapping Source Matches.
     var deDuplicatedSourceRecords = deDuplicateNew(matchResult.match, newObject);
 
+<<<<<<< HEAD
     //Remove All 'src' matches.  Currently not required.
     var nonSourceMatches = removeSourceMatches(deDuplicatedSourceRecords.match);
     //console.log(JSON.stringify(nonSourceMatches.match, null, 10));
+=======
+    //console.log(deDuplicatedNewRecord);
+>>>>>>> master
 
     //Remove Duplicates from save, update Record Entry.
     var deDuplicatedNewRecord = removeDuplicates(nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
@@ -615,6 +619,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     }
 }
 */
+
 
 }
 

@@ -2,13 +2,12 @@ var express = require('express');
 var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
-
-var supportedComponents = ['allergies', 'procedures', 'immunizations', 'medications', 'encounters', 'vitals', 'results', 'social_history', 'demographics', 'problems'];
+var bbm = require('blue-button-meta');
 
 //Get all merges API.
 app.get('/api/v1/merges/:component', function(req, res) {
 
-    if (_.contains(supportedComponents, req.params.component) === false) {
+    if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         record.getMerges(req.params.component, 'test', 'name severity', 'filename uploadDate', function(err, mergeList) {
@@ -30,15 +29,15 @@ app.get('/api/v1/merges', function(req, res) {
     mergeCount = 0;
 
     function checkComplete () {
-        if(mergeCount === supportedComponents.length) {
+        if(mergeCount === bbm.supported_sections.length) {
             res.send(mergeJSON);
         }
 
     }
 
 
-    for (var iMerge in supportedComponents) {
-        record.getMerges(supportedComponents[iMerge], 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results', 'filename uploadDate', function(err, mergeList) {
+    for (var iMerge in bbm.supported_sections) {
+        record.getMerges(bbm.supported_sections[iMerge], 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 res.send(400, err);
             } else {

@@ -71,7 +71,10 @@ describe('Pre Test Cleanup 2', function() {
         social_histories: 'social_history',
         immunizations: 'immunizations',
         demographics: 'demographics',
-        problems: 'problems'
+        problems: 'problems',
+        claims: 'claims',
+        insurance: 'insurance'
+
     };
 
     it('Remove All Collections', function(done) {

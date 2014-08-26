@@ -128,7 +128,7 @@ describe('Storage API', function() {
 
 });
 
-describe('Storage API Get List', function() {
+xdescribe('Storage API Get List', function() {
 
     it('File Endpoint GET', function(done) {
         api.get('/api/v1/storage')
@@ -137,7 +137,7 @@ describe('Storage API Get List', function() {
                 if (err) {
                     return done(err);
                 } else {
-                    //console.log(res.body.storage);
+                    console.log(res.body.storage);
                     expect(res.body.storage).to.exist;
                     expect(res.body.storage.length).to.equal(1);
                     expect(res.body.storage[0].file_name).to.equal('bluebutton-01-original.xml');
