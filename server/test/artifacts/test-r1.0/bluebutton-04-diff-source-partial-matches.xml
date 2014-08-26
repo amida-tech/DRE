@@ -3761,7 +3761,7 @@
 							</code>
 							<statusCode code="completed"/>
 							<effectiveTime>
-								<low value="20050501"/>
+								<low value="20050502"/>
 								<high value="20090227130000+0500"/>
 							</effectiveTime>
 							<value xsi:type="ST">1 pack per day</value>
@@ -3780,7 +3780,7 @@
 							</code>
 							<statusCode code="completed"/>
 							<effectiveTime>
-								<low value="20090227130000+0500"/>
+								<low value="20090223130000+0500"/>
 							</effectiveTime>
 							<value xsi:type="ST">None</value>
 						</observation>
@@ -3798,7 +3798,7 @@
 							</code>
 							<statusCode code="completed"/>
 							<effectiveTime>
-								<low value="20050501"/>
+								<low value="20050504"/>
 							</effectiveTime>
 							<value xsi:type="ST">None</value>
 						</observation>
