@@ -59,8 +59,7 @@ function prep(sec, secName) {
     return secName == "demographics" || secName == "social_history" ? sec[0] : sec;
 }
 
-function getCCDA(callback) {
-    console.log("genCCDA");
+function getMHR(callback) {
     var aggregatedResponse = {},
         count = 0,
         components = Object.keys(supportedComponents);
@@ -78,17 +77,27 @@ function getCCDA(callback) {
     });
 }
 
-app.get('/api/v1/ccda', login.checkAuth, function(req, res) {
-    getCCDA(function(err, result) {
+app.get('/api/v1/master_health_record/:format?', login.checkAuth, function(req, res) {
+    var format = "xml";
+    if (req.params.format && req.params.format === "json") {
+        format = "json";
+    }
+
+    getMHR(function(err, result) {
         //console.log(result);
 
         if (err) {
             res.send(500);
         } else {
-            res.setHeader('Content-disposition', 'attachment; filename=' + 'ccda_record.xml');
+            res.setHeader('Content-disposition', 'attachment; filename=' + 'ccda_record.' + format);
 
-            res.send(JSON.stringify(result, null, 4)); //return BB JSON for now
-            //res.send(bb.generateCCDA(result).toString());
+            if (format === "json") {
+                //return BB JSON
+                res.send(JSON.stringify(result, null, 4)); 
+            } else {
+                //return CCDA
+                res.send(bb.generateCCDA(result).toString());
+            }
         }
     });
 });
