@@ -217,6 +217,9 @@ describe('Immunizations API - Test New/Dupe Mix:', function() {
 				if (err) {
 					return done(err);
 				}
+
+				//console.log(res.body.immunizations);
+
 				expect(res.body.immunizations.length).to.equal(5);
 				done();
 			});

@@ -264,7 +264,7 @@ describe('Vitals API - Test New/Dupe Mix:', function() {
 });
 
 //Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
-describe('Vitals API - Test Partial Matches:', function() {
+xdescribe('Vitals API - Test Partial Matches:', function() {
 
 	before(function(done) {
 		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
@@ -334,7 +334,7 @@ describe('Vitals API - Test Partial Matches:', function() {
 
 });
 
-describe('Vitals API - Test Added Matches', function() {
+xdescribe('Vitals API - Test Added Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -431,7 +431,7 @@ describe('Vitals API - Test Added Matches', function() {
 
 
 
-describe('Vitals API - Test Ignored Matches', function() {
+xdescribe('Vitals API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -524,7 +524,7 @@ describe('Vitals API - Test Ignored Matches', function() {
 });
 
 
-describe('Vitals API - Test Merged Matches', function() {
+xdescribe('Vitals API - Test Merged Matches', function() {
 
 	var match_id = '';
 
