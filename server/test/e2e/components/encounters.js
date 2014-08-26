@@ -213,7 +213,7 @@ describe('Encounters API - Test New/Dupe Mix:', function() {
 });
 
 
-xdescribe('Encounters API - Test Partial Matches:', function() {
+describe('Encounters API - Test Partial Matches:', function() {
 
 	before(function(done) {
 		common.loadTestRecord(api, 'bluebutton-04-diff-source-partial-matches.xml', function(err) {
@@ -283,7 +283,7 @@ xdescribe('Encounters API - Test Partial Matches:', function() {
 
 });
 
-xdescribe('Encounters API - Test Added Matches', function() {
+describe('Encounters API - Test Added Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -379,7 +379,7 @@ xdescribe('Encounters API - Test Added Matches', function() {
 
 
 
-xdescribe('Encounters API - Test Ignored Matches', function() {
+describe('Encounters API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -472,7 +472,7 @@ xdescribe('Encounters API - Test Ignored Matches', function() {
 });
 
 
-xdescribe('Encounters API - Test Merged Matches', function() {
+describe('Encounters API - Test Merged Matches', function() {
 
 	var match_id = '';
 
