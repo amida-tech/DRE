@@ -6,6 +6,7 @@ var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 var database = require('mongodb').Db;
+var common = require('./common.js');
 
 function removeCollection(inputCollection, callback) {
     var db;
@@ -111,6 +112,12 @@ describe('Pre Test Cleanup 2', function() {
 
 describe('Storage API', function() {
     var sampleFile = '';
+
+    before(function(done) {
+        common.login(api, 'test1', 'test1', function() {
+            done();
+        });
+    });
 
     it('File Endpoint PUT', function(done) {
         var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
