@@ -39,11 +39,11 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
 
-    //console.log(JSON.stringify(newObjectForParsing, null, 10));
+    //console.log(JSON.stringify(newObjectForParsing.demographics, null, 10));
     //console.log('------------------');
-    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
+    //console.log(JSON.stringify(baseObjectForParsing.demographics, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-    //console.log(JSON.stringify(matchResult, null, 10));
+    console.log(JSON.stringify(matchResult.match.demographics, null, 10));
 
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
@@ -232,8 +232,11 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                     });
 
                     delete newRecord[matchKey];
-                    delete newMatch[matchKey];
+                    //delete newMatch[matchKey];
+                } else if (matchKey === 'demographics') {
+                    newMatch[matchKey] = value;
                 }
+
             }
         });
 
@@ -266,7 +269,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
         var outputPartialObjectArray = {};
         var outputNewObjectArray = {};
 
-        //console.log(match);
+        console.log(match);
 
         _.map(match, function (value, matchKey) {
 
@@ -280,10 +283,24 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
             if (matchKey === 'demographics') {
 
+                //console.log('asdf');
+
                 if (match[matchKey].match === 'new') {
                     outputNewObjectArray[matchKey] = newObjectArray[matchKey];
                 } else if (match[matchKey].match === 'partial') {
-                    partialObjectArray[matchKey] = newObjectArray[matchKey];
+
+
+                    //console.log(baseObjectArray)
+
+                    var partialOutput = {
+                                partial_entry: newObjectArray[matchKey][0],
+                                partial_match: match[matchKey],
+                                match_entry_id: baseObjectArray[matchKey][0]._id
+                    };
+
+                    //console.log(partialOutput);
+
+                    outputPartialObjectArray[matchKey].push(partialOutput);
                 }
 
             } else {
@@ -420,11 +437,11 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
     //Remove All 'src' matches.  Currently not required.
     var nonSourceMatches = removeSourceMatches(deDuplicatedSourceRecords.match);
-    //console.log(JSON.stringify(nonSourceMatches, null, 10));
+    //console.log(JSON.stringify(nonSourceMatches.match, null, 10));
 
     //Remove Duplicates from save, update Record Entry.
     var deDuplicatedNewRecord = removeDuplicates(nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
-    //console.log(JSON.stringify(deDuplicatedNewRecord, null, 10));
+    console.log(JSON.stringify(deDuplicatedNewRecord.new_match, null, 10));
 
     //Split incoming entries into new/partial.
     var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record, deDuplicatedSourceRecords.new_entries, baseObject);
@@ -433,7 +450,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
     //console.log(JSON.stringify(splitIncomingEntries));
 
-    console.log(JSON.stringify(splitIncomingEntries.partialEntries.allergies, null, 10));
+    //console.log(JSON.stringify(splitIncomingEntries.partialEntries, null, 10));
 
     //var partialReturnObject = decoratePartial
 
