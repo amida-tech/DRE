@@ -179,12 +179,7 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
 
 
             dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
-<<<<<<< HEAD
-                //console.log(JSON.stringify(reconciliation_results, null, 10));
-=======
                 //console.log(JSON.stringify(partial_reconciliation_results, null, 10));
-                
->>>>>>> master
                 saveComponents(reconciliation_results, partial_reconciliation_results, parsed_record_identifier, function(err) {
                     if (err) {
                         callback(err);
