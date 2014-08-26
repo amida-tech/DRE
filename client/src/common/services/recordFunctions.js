@@ -29,24 +29,24 @@ angular.module('services.recordFunctions', [])
             inputSection.name = " ";
 
             if (type === "allergies") {
-                inputSection.name = "[allergy]";
-            } else if (type === "social_history") {
-                inputSection.name = "[social history]";
+                inputSection.name = inputSection.observation.allergen.name;
             } else if (type === "payers") {
                 inputSection.name = "[payers]";
             } else if (type === "plan_of_care") {
                 inputSection.name = "[plan of care]";
-            } else if (inputSection.encounter) {
+            } else if (type === "encounters") {
                 inputSection.name = inputSection.encounter.name;
-            } else if (inputSection.product) {
+            } else if (type === "immunizations") {
                 inputSection.name = inputSection.product.product.name;
-            } else if (inputSection.problem) {
+            } else if (type === "medications") {
+                inputSection.name = inputSection.product.product.name;
+            } else if (type === "problems") {
                 inputSection.name = inputSection.problem.code.name;
-            } else if (inputSection.results) {
+            } else if (type === "results") {
                 inputSection.name = inputSection.result_set.name;
-            } else if (inputSection.procedure) {
+            } else if (type === "procedures") {
                 inputSection.name = inputSection.procedure.name;
-            } else if (inputSection.vital) {
+            } else if (type === "vitals") {
                 inputSection.name = inputSection.vital.name;
             }
             //insurance
@@ -64,8 +64,8 @@ angular.module('services.recordFunctions', [])
                 if (inputSection.number) {
                     inputSection.name = inputSection.payer[0];
                 }
-            } else if (inputSection.smoking_statuses) {
-                inputSection.name = "Smoking Status";
+            } else if (type === "social_history") {
+                inputSection.name = inputSection.code.code;
             }
 
             /* merging display bug with date, fixed by BJ with moment.js library

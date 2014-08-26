@@ -55,7 +55,7 @@ angular.module('dre.record.procedures', [])
             for (var i in $scope.procedures) {
                 var p = $scope.procedures[i];
                 recordFunctions.formatDate(p.date);
-                recordFunctions.extractName($scope.procedures[i]);
+                recordFunctions.extractName($scope.procedures[i], "procedures");
                 $scope.procedures[i].name = recordFunctions.truncateName($scope.procedures[i].name);
                 p.date_weight = p.date && p.date[0] && p.date[0].date;
                 for (var proloc in p.providers) {

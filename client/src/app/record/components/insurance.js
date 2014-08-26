@@ -53,7 +53,7 @@ angular.module('dre.record.insurance', [])
 
     $scope.updateFields = function() {
       for (var i in $scope.insurance) {
-        recordFunctions.extractName($scope.insurance[i]);
+        recordFunctions.extractName($scope.insurance[i], "insurance");
         recordFunctions.formatDate($scope.insurance[i].date);
         $scope.insurance[i].date_weight = $scope.insurance[i].date[0].date;
         $scope.insurance[i].name = recordFunctions.truncateName($scope.insurance[i].name);

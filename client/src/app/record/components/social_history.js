@@ -14,28 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular.module('dre.record.vitals', [])
+angular.module('dre.record.social_history', [])
 
 .config(['$routeProvider',
   function($routeProvider) {
-    $routeProvider.when('/record/vitals', {
-      templateUrl: 'templates/record/components/vitals.tpl.html',
-      controller: 'recordsCtrl'
+    $routeProvider.when('/record/social_history', {
+      templateUrl: 'templates/record/components/social_history.tpl.html',
+      controller: 'social_historyCtrl'
     });
   }
 ])
 
-.controller('vitalsCtrl', ['$scope', '$http', '$location', 'recordFunctions',
+.controller('social_historyCtrl', ['$scope', '$http', '$location', 'recordFunctions',
   function($scope, $http, $location, recordFunctions) {
 
-    $scope.vitals = [];
+    $scope.social_history = [];
     $scope.displayVitals = false;
     $scope.vitalPredicate = "-date_weight";
 
     $scope.getRecord = function() {
       $http({
         method: 'GET',
-        url: '/api/v1/record/vitals'
+        url: '/api/v1/record/social_history'
       }).
       success(function(data, status, headers, config) {
         $scope.vitals = data.vitals;
@@ -53,7 +53,7 @@ angular.module('dre.record.vitals', [])
 
     $scope.updateFields = function() {
         for (var iRec in $scope.vitals) {
-            recordFunctions.extractName($scope.vitals[iRec], "vitals");
+            recordFunctions.extractName($scope.vitals[iRec], "social_history");
             $scope.vitals[iRec].name = recordFunctions.truncateName($scope.vitals[iRec].name);
             var d = $scope.vitals[iRec].date;
             recordFunctions.formatDate(d);

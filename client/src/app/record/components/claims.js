@@ -60,7 +60,7 @@ angular.module('dre.record.claims', [])
 
 
       for (var i in $scope.claims) {
-        recordFunctions.extractName($scope.claims[i]);
+        recordFunctions.extractName($scope.claims[i], "claims");
         var claim = $scope.claims[i];
         //id for claims, since all claims may not have claim.number
         claim.count = i;

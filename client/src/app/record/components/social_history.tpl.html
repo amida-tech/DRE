@@ -1,0 +1,94 @@
+<!--Begin Social History-->
+
+<div class="col-md-12">
+	<br/>
+	<span class="lead">Social History</span>
+	<br/>
+	<br/>
+</div>
+<div ng-hide="displayVitals" class="panel-title">No social history entries are currently in your record.</div>
+<div ng-show="displayVitals" class="panel-group" id="#accordian-vitals" ng-repeat="vital in vitals | orderBy:vitalPredicate">
+
+	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Record Sources</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+							<tr><td><strong>Source Information</strong></td></tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="attribution in vital.metadata.attribution">
+								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
+								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
+								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+
+			<a data-toggle="collapse" data-parent="#accordian-vitals" data-target="#vital-{{$index}}">
+				<div class="panel-title" style="cursor:pointer;">
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+					<span style="text-transform:uppercase;">{{vital.vital.name}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{vital.date[0].displayDate}}</span>
+				</div>
+			</a>
+		</div>
+		<div id="vital-{{$index}}" class="panel-collapse collapse">
+			<div class="panel-body">
+				<div id="myTabContent" >
+
+
+					<div class="col-md-12" ng-show="vital.vital.translations">
+						<h4>Other Descriptions</h4>
+						<div ng-repeat=" translation in vital.vital.translations" class="col-md-12">
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
+								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.name}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code">
+								<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code_system_name">
+								<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code_system_name}}</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+					<div class="col-md-12">
+						<h4>Details</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="vital.date[0].displayDate">
+							<div class="pull-left col-md-12"><strong>Measured:</strong></div><br/>
+							<div class="pull-left col-md-12">{{vital.date[0].displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="vital.displayQuantity">
+							<div class="pull-left col-md-12"><strong>Measurement:</strong></div><br/>
+							<div class="pull-left col-md-12">{{vital.displayQuantity}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="vital.interpretations[0]">
+							<div class="pull-left col-md-12"><strong>Interpretation:</strong></div><br/>
+							<div class="pull-left col-md-12">{{vital.interpretations[0]}}</div>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
