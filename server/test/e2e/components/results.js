@@ -554,10 +554,12 @@ describe('Results API - Test Merged Matches', function() {
             "interpretations": [
                 "abnormal"
             ],
-            "date": [{
-                "date": "2012-11-16T00:00:00.000Z",
-                "precision": "year"
-            }],
+            "date_time": { 
+                "point": {
+                    "date": "2012-11-16T00:00:00.000Z",
+                    "precision": "year"
+                }
+            },
             "identifiers": [{
                 "identifier": "9cd43fa7-db31-4c29-ab30-83f92fdcaa20",
             }]

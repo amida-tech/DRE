@@ -7,79 +7,26 @@ var fs = require('fs');
 var path = require('path');
 var database = require('mongodb').Db;
 
-function removeCollection(inputCollection, callback) {
-	var db;
-	database.connect(databaseLocation, function(err, dbase) {
-		if (err) {
-			throw err;
-		}
-		db = dbase;
-		db.collection(inputCollection, function(err, coll) {
-			if (err) {
-				throw err;
-			}
-			coll.remove({}, function(err, results) {
-				if (err) {
-					throw err;
-				}
-				db.close();
-				callback();
-			});
-		});
-	});
-}
-
-function loadTestRecord(fileName, callback) {
-	var filepath = path.join(__dirname, '../../artifacts/test-r1.0/' + fileName);
-	api.put('/api/v1/storage')
-		.attach('file', filepath)
-		.expect(200)
-		.end(function(err, res) {
-			if (err) {
-				callback(err);
-			}
-			callback(null);
-		});
-}
+var common = require(path.join(__dirname, '../../common/common.js'));
 
 
-describe('Pre Test Cleanup', function() {
+describe('Pre Test Cleanup', function () {
 
-	it('Remove Encounter Collections', function(done) {
-		removeCollection('encounters', function(err) {
-			if (err) {
-				done(err);
-			}
-			removeCollection('encountersmerges', function(err) {
-				if (err) {
-					done(err);
-				}
-				removeCollection('encountersmatches', function(err) {
-					if (err) {
-						done(err);
-					}
-					removeCollection('storage.files', function(err) {
-						if (err) {
-							done(err);
-						}
-						removeCollection('storage.chunks', function(err) {
-							if (err) {
-								done(err);
-							}
-							done();
-						});
-					});
-				});
-			});
-		});
-	});
-
+    it('Clean Database', function (done) {
+        common.removeAll(function (err, results) {
+            if (err) {
+            	done(err);
+            } else {
+            	done();
+            }
+        });
+    });
 });
 
 describe('Encounters API - Test New:', function() {
 
 	it('load sample', function(done) {
-		loadTestRecord('bluebutton-01-original.xml', function(err) {
+		common.loadTestRecord(api, 'bluebutton-01-original.xml', function(err) {
 			if (err) {
 				done(err);
 			} else {
@@ -136,7 +83,7 @@ describe('Encounters API - Test New:', function() {
 describe('Encounters API - Test Duplicate:', function() {
 
 	it('load sample', function(done) {
-		loadTestRecord('bluebutton-02-duplicate.xml', function(err) {
+		common.loadTestRecord(api, 'bluebutton-02-duplicate.xml', function(err) {
 			if (err) {
 				done(err);
 			} else {
@@ -202,7 +149,7 @@ describe('Encounters API - Test Duplicate:', function() {
 describe('Encounters API - Test New/Dupe Mix:', function() {
 
 	it('load sample', function(done) {
-		loadTestRecord('bluebutton-03-updated.xml', function(err) {
+		common.loadTestRecord(api, 'bluebutton-03-updated.xml', function(err) {
 			if (err) {
 				done(err);
 			} else {
@@ -269,7 +216,7 @@ describe('Encounters API - Test New/Dupe Mix:', function() {
 describe('Encounters API - Test Partial Matches:', function() {
 
 	before(function(done) {
-		loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
+		common.loadTestRecord(api, 'bluebutton-04-diff-source-partial-matches.xml', function(err) {
 			if (err) {
 				done(err);
 			} else {

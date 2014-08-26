@@ -157,7 +157,7 @@ describe('Base Merge API:', function() {
           return done(err);
         } else {
           expect(res.body.merges).to.exist;
-          expect(res.body.merges.length).to.equal(23);
+          expect(res.body.merges.length).to.equal(26);
 
           for (var i in res.body.merges) {
             supportedCount[res.body.merges[i].entry_type]++;
@@ -176,7 +176,7 @@ describe('Base Merge API:', function() {
           expect(supportedCount.encounters).to.equal(1);
           expect(supportedCount.vitals).to.equal(6);
           expect(supportedCount.results).to.equal(1);
-          expect(supportedCount.social_history).to.equal(1);
+          expect(supportedCount.social_history).to.equal(4);
           expect(supportedCount.immunizations).to.equal(4);
           expect(supportedCount.demographics).to.equal(1);
           expect(supportedCount.problems).to.equal(2);

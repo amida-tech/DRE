@@ -39,11 +39,11 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
 
-    //console.log(JSON.stringify(newObjectForParsing, null, 10));
+    //console.log(JSON.stringify(newObjectForParsing.demographics, null, 10));
     //console.log('------------------');
-    //console.log(JSON.stringify(baseObjectForParsing, null, 10));
+    //console.log(JSON.stringify(baseObjectForParsing.demographics, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-    //console.log(JSON.stringify(matchResult, null, 10));
+    console.log(JSON.stringify(matchResult.match.demographics, null, 10));
 
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
@@ -92,18 +92,54 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
         });
 
         var returnObject = {
-                match: match,
-                matchObject: matchObject
+            match: match,
+            new_entries: matchObject
 
         }
 
         return returnObject;
     }
 
+    function removeSourceMatches(match) {
+
+        var returnMatch = {};
+
+        _.map(match, function (value, matchKey) {
+
+            if (matchKey !== 'demographics') {
+                var nonSourceMatch = _.filter(match[matchKey], function (object, objectIndex) {
+                    if (object.dest === 'src') {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+                returnMatch[matchKey] = nonSourceMatch;
+            } else {
+                //No need to filter atomic items.
+                returnMatch[matchKey] = value;
+            }
+
+        });
+
+        var returnObject = {
+            match: returnMatch
+        };
+
+        return returnObject;
+
+    }
+
     //Splice duplicate entries from input array.
     //Add source attribution to matched entries.
     function removeDuplicates(match, newRecord, baseRecord, recordID) {
+
+        var newRecord = _.clone(newRecord);
+
         var duplicateArray = [];
+
+        var newMatch = {};
+
         _.map(match, function (value, matchKey) {
             if (_.isArray(value)) {
                 duplicateArray = _.where(value, {
@@ -122,16 +158,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                     }
                 });
 
-                function attributeBaseRecord(section, newRecordID) {
-                    record.duplicateEntry(section, 'test', update_id, newRecordID, function (err) {
-                        if (err) {
-                            callback(err);
-                        } else {
-                            callback(null);
-                        }
-                    });
-                }
-
+                //Update Source attribution.
                 async.each(attributionRecord, function (attribution, callback) {
                     record.duplicateEntry(matchKey, 'test', attribution._id, recordID, function (err) {
                         if (err) {
@@ -148,6 +175,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                     }
                 });
 
+                //Remove Duplicates from Entry List.
                 var returnRecord = _.filter(newRecord[matchKey], function (object, objectIndex) {
                     if (_.contains(duplicateNewIndexArray, objectIndex.toString())) {
                         return false;
@@ -156,13 +184,59 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                     }
                 });
 
+                //Remove Duplicates from Match List.
+                //use duplicate new index array to go through matches, and remove.
+                var returnMatch = _.filter(match[matchKey], function (object, objectInex) {
+                    if (_.contains(duplicateNewIndexArray, object.src_id)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+
+                //console.log(returnMatch);
+
+                //console.log(returnRecord);
+
                 newRecord[matchKey] = returnRecord;
+
+                if (returnMatch === undefined) {
+                    returnMatch = [];
+                }
+
+                if (returnRecord === undefined) {
+                    returnRecord = [];
+                }
+
+                newMatch[matchKey] = returnMatch;
+
             } else {
                 if (value.match === 'duplicate' && matchKey === 'demographics') {
 
-                    //TODO:  Update demographics here.
+                    var attributionRecord = baseRecord[matchKey];
+
+                    async.each(attributionRecord, function (attribution, callback) {
+                        record.duplicateEntry(matchKey, 'test', attribution._id, recordID, function (err) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                callback(null);
+                            }
+                        })
+                    }, function (err) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            callback();
+                        }
+                    });
+
                     delete newRecord[matchKey];
+                    //delete newMatch[matchKey];
+                } else if (matchKey === 'demographics') {
+                    newMatch[matchKey] = value;
                 }
+
             }
         });
 
@@ -174,27 +248,77 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
             }
         });
 
-        return newRecord;
+        //console.log(match);
+
+        //console.log(JSON.stringify(newMatch, null, 10));
+
+        //This area can equal undefined on new_record entries for some reason.
+
+        var returnObject = {
+            new_record: newRecord,
+            new_match: newMatch
+        }
+
+        return returnObject;
     }
 
+    //duplicate matches must be purges from queue as well as entries!!!!
 
-    function buildNewEntryArray (match, newObjectArray) {
+    function splitNewPartialEntries(match, newObjectArray, originalNewObjectArray, baseObjectArray) {
 
+        var outputPartialObjectArray = {};
+        var outputNewObjectArray = {};
+
+        //console.log(match);
 
         _.map(match, function (value, matchKey) {
-            
+
+            outputPartialObjectArray[matchKey] = [];
+            outputNewObjectArray[matchKey] = [];
+
             //Need to make sure all entries per src_id are only new.
             newCheckArray = _.where(value, {
-                    dest: 'dest'
-                });
+                dest: 'dest'
+            });
 
-                 var groupCheckedArray = _.groupBy(newCheckArray, 'src_id');
+            if (matchKey === 'demographics') {
 
-                 //console.log(groupCheckedArray);
-                
-                //If filtered new length equals total length.
-                 _.each(groupCheckedArray, function(element, index) {
-                    var newElementArray = _.filter(element, function(elementItem, elementItemIndex) {
+                //console.log('asdf');
+
+                if (match[matchKey].match === 'new') {
+                    outputNewObjectArray[matchKey] = newObjectArray[matchKey];
+                } else if (match[matchKey].match === 'partial') {
+
+
+                    //console.log(baseObjectArray)
+
+                    var partialOutput = {
+                                partial_entry: newObjectArray[matchKey][0],
+                                partial_match: match[matchKey],
+                                match_entry_id: baseObjectArray[matchKey][0]._id
+                    };
+
+                    //console.log(partialOutput);
+
+                    outputPartialObjectArray[matchKey].push(partialOutput);
+                }
+
+            } else {
+
+                //If there are no dest records, everything is new.
+                if (newCheckArray.length === 0) {
+
+                    if (newObjectArray[matchKey] === undefined) {
+                        outputNewObjectArray[matchKey] = [];
+                    } else {
+                        outputNewObjectArray[matchKey] = newObjectArray[matchKey];
+                    }
+                }
+
+                var groupCheckedArray = _.groupBy(newCheckArray, 'src_id');
+
+                _.each(groupCheckedArray, function (element, index) {
+                    var newElementArray = _.filter(element, function (elementItem, elementItemIndex) {
                         if (elementItem.match === 'new') {
                             return true;
                         } else {
@@ -202,42 +326,137 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                         }
                     });
 
-                    //console.log(element);
+                    //Only valid entries (src_id) will have equal lengths
+                    //Everything else is a partial match as that is all that remains.
 
-                    if (newElementArray.length === element.length) {
-                        //console.log('asdf');
+                    //console.log(newElementArray.length);
+                    //console.log(element.length);
+
+                    if (newElementArray.length !== element.length) {
+                        //console.log(newObjectArray[matchKey]);
+                        if (newObjectArray[matchKey] !== undefined) {
+                            var partialEntry = newObjectArray[matchKey][index];
+
+                            //Need to pare down element object to just partial match entries.
+                            //For each partial, grab the associated target entry and source entry.
+                            //Return a big list of all matches.
+                            //This will result in too many partial source entries being persisted.
+                            //Must modify save logic to account for this.
+
+                            //console.log(element);
+
+                            var partialElementArray = _.filter(element, function(elementItem, elementItemIndex) {
+                                if (elementItem.match === 'partial') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            });
+
+                            _.each(partialElementArray, function(partialElement, partialIndex) {
+
+                                //Match object.
+                                //console.log(partialElement);
+                                //Partial Entry.
+                                //console.log(partialEntry);
+                                //Source entry.
+                                //console.log(baseObjectArray[matchKey][partialElement.dest_id]);
+
+                                //Partial Match output has custom formatting.
+                           var partialOutput = {
+                                partial_entry: partialEntry,
+                                partial_match: partialElement,
+                                match_entry_id: baseObjectArray[matchKey][partialElement.dest_id]._id
+                            };
+
+                            outputPartialObjectArray[matchKey].push(partialOutput);
+
+                            });
+
+
+
+                            //console.log(partialElementArray);
+
+                            //var returnObject = {
+                            //    partial_entry: partialEntry,
+                            //    partial_match: element[index]
+
+                            //};
+
+                            //console.log(element);
+
+                            //outputPartialObjectArray[matchKey].push(partialEntry);
+
+                            //Partial Match output has custom formatting.
+                            //Diffs always zero, can take only array object.
+                            //returnPartialArray.push({
+                            //    partial_entry: srcArray[0],
+                            //    partial_match: matchObjForDb,
+                            //    match_entry_id: tmpMatchRecId
+                            //});
+
+                        }
+                    } else {
+                        if (newObjectArray[matchKey] !== undefined) {
+
+                            var outputNewEntry = originalNewObjectArray[matchKey][element[0].src_id];
+                            outputNewObjectArray[matchKey].push(outputNewEntry);
+                        }
                     }
 
-                 });
+                });
 
+            }
 
         });
 
-        //console.log(match);    
+        //console.log(outputNewObjectArray);
+        //console.log(match.allergies);
+        //console.log('---------');
+        //console.log(partialObjectArray);
+        //console.log('---------');
+        //console.log(JSON.stringify(outputNewObjectArray, null, 10));
 
-        //console.log(newObjectArray);
+        var returnObject = {
+            newEntries: outputNewObjectArray,
+            partialEntries: outputPartialObjectArray
+        }
 
+        //Weird gap here.
+        //console.log(JSON.stringify(returnObject, null, 10));
+        //console.log(returnObject);
+
+        return returnObject;
 
     }
 
-
     revertDemographics();
+
+    //Remove Overlapping Source Matches.
     var deDuplicatedSourceRecords = deDuplicateNew(matchResult.match, newObject);
-    var deDuplicatedNewRecord = removeDuplicates(deDuplicatedSourceRecords.match, deDuplicatedSourceRecords.matchObject, baseObject, newRecordID);
 
-    //console.log(deDuplicatedNewRecord);
+    //Remove All 'src' matches.  Currently not required.
+    var nonSourceMatches = removeSourceMatches(deDuplicatedSourceRecords.match);
+    //console.log(JSON.stringify(nonSourceMatches.match, null, 10));
 
+    //Remove Duplicates from save, update Record Entry.
+    var deDuplicatedNewRecord = removeDuplicates(nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
+    //console.log(JSON.stringify(deDuplicatedNewRecord.new_match, null, 10));
 
+    //Split incoming entries into new/partial.
+    var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record, deDuplicatedSourceRecords.new_entries, baseObject);
 
-    //console.log(match);
+    //console.log(splitIncomingEntries);
 
+    //console.log(JSON.stringify(splitIncomingEntries));
 
+    //console.log(JSON.stringify(splitIncomingEntries.partialEntries, null, 10));
 
-    buildNewEntryArray(deDuplicatedSourceRecords.match, deDuplicatedNewRecord);
+    //var partialReturnObject = decoratePartial
 
-    //console.log(deDuplicatedNewRecord);
+    //console.log(JSON.stringify(entriesForSave, null, 10));
 
-    callback(null, deDuplicatedNewRecord, deDuplicatedNewRecord);
+    callback(null, splitIncomingEntries.newEntries, splitIncomingEntries.partialEntries);
 
     //console.log(match);
 

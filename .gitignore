@@ -9,3 +9,6 @@ node_modules
 server/coverage
 client/coverage
 coverage
+.DS_Store
+
+*/**/.DS_Store
