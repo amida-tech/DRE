@@ -38,11 +38,11 @@ angular.module('dre.record.problems', [])
     $scope.displayProblems = false;
     $scope.problemPredicate = [
        function(inputObject) {
-         var v = inputObject.status;
+         var v = inputObject.status.name;
          return (v && statusWeight[v.toLowerCase()]) || 0;
        },
        function(inputObject) {
-         var v = inputObject.status;
+         var v = inputObject.status.name;
          v = v && v.toLowerCase();
          if (v === 'resolved') {
             return inputObject.date[1].date;
@@ -54,19 +54,19 @@ angular.module('dre.record.problems', [])
 
 
     function problemStatus (inputObject) {
-      if(inputObject.status === undefined){
+      if(inputObject.status.name === undefined){
         inputObject.statusFlag = false;
       }
-      else if(inputObject.status.toLowerCase() === 'active') {
+      else if(inputObject.status.name.toLowerCase() === 'active') {
         inputObject.statusFlag = true;
       }
 
-      else if(inputObject.status.toLowerCase() === 'resolved') {
+      else if(inputObject.status.name.toLowerCase() === 'resolved') {
         inputObject.statusFlag = false;
       }
 
       //added inactive per raccoon-149 report
-      else if(inputObject.status.toLowerCase() === 'inactive') {
+      else if(inputObject.status.name.toLowerCase() === 'inactive') {
         inputObject.statusFlag = true;
       }
 

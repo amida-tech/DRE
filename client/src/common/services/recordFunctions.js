@@ -102,9 +102,9 @@ angular.module('services.recordFunctions', [])
         //Returns printable array from address.
         this.formatAddress = function(address) {
             var displayAddress = [];
-            if (address.streetLines.length > 0) {
-                for (var addrLine in address.streetLines) {
-                    displayAddress.push(address.streetLines[addrLine]);
+            if (address.street_lines.length > 0) {
+                for (var addrLine in address.street_lines) {
+                    displayAddress.push(address.street_lines[addrLine]);
                 }
             }
             var cityLine = "";
