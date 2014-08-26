@@ -20,55 +20,55 @@ angular.module('services.recordFunctions', [])
         };
 
         //Builds field displayName attribute.
-        this.extractName = function(inputSection) {
-            /*
-            console.log('input section');
-            console.log(JSON.stringify(inputSection, null, 4));
-            console.log('----------------');
-            */
-            if (inputSection.allergen) {
-                inputSection.name = inputSection.allergen.name;
-            }
-            else if (inputSection.encounter) {
+        this.extractName = function(inputSection, type) {
+
+            //console.log('input section - ', type);
+            //console.log(JSON.stringify(inputSection, null, 4));
+            //console.log('----------------');
+
+            inputSection.name = " ";
+
+            if (type === "allergies") {
+                inputSection.name = "[allergy]";
+            } else if (type === "social_history") {
+                inputSection.name = "[social history]";
+            } else if (type === "payers") {
+                inputSection.name = "[payers]";
+            } else if (type === "plan_of_care") {
+                inputSection.name = "[plan of care]";
+            } else if (inputSection.encounter) {
                 inputSection.name = inputSection.encounter.name;
-            }
-            else if (inputSection.product) {
+            } else if (inputSection.product) {
                 inputSection.name = inputSection.product.product.name;
-            }
-            else if (inputSection.problem) {
-                inputSection.name = inputSection.problem.name;
-            }
-            else if (inputSection.results) {
+            } else if (inputSection.problem) {
+                inputSection.name = inputSection.problem.code.name;
+            } else if (inputSection.results) {
                 inputSection.name = inputSection.result_set.name;
-            }
-            else if (inputSection.procedure) {
+            } else if (inputSection.procedure) {
                 inputSection.name = inputSection.procedure.name;
-            }
-            else if (inputSection.vital) {
+            } else if (inputSection.vital) {
                 inputSection.name = inputSection.vital.name;
             }
             //insurance
             else if (inputSection.plan_name) {
                 inputSection.name = inputSection.plan_name;
-            }
-            else if(inputSection.payer_name){
+            } else if (inputSection.payer_name) {
                 inputSection.name = inputSection.payer_name;
             }
             //claims
-            else if(inputSection.payer || inputSection.number){
+            else if (inputSection.payer || inputSection.number) {
                 inputSection.name = "";
-                if(inputSection.payer){
+                if (inputSection.payer) {
                     inputSection.name += inputSection.payer;
                 }
-                if(inputSection.number){
+                if (inputSection.number) {
                     inputSection.name = inputSection.payer[0];
                 }
-            }
-            else if (inputSection.smoking_statuses) {
+            } else if (inputSection.smoking_statuses) {
                 inputSection.name = "Smoking Status";
             }
 
-/* merging display bug with date, fixed by BJ with moment.js library
+            /* merging display bug with date, fixed by BJ with moment.js library
 
             else if(inputSection.name){
                 var tempName = "";
@@ -92,6 +92,9 @@ angular.module('services.recordFunctions', [])
             //console.log('state of the name');
             //console.log(inputSection.name);
 */
+            console.log('state of the name');
+            console.log(inputSection.name);
+
             return inputSection;
         };
 
@@ -211,11 +214,9 @@ angular.module('services.recordFunctions', [])
                 } else {
                     return date;
                 }
-            }
-            else if (Object.prototype.toString.call(date) === '[object Object]') {
+            } else if (Object.prototype.toString.call(date) === '[object Object]') {
                 return formatOutput(date);
-            }
-            else {
+            } else {
                 //TODO:  Might need a single date handler here.
                 return date;
             }
@@ -234,6 +235,7 @@ angular.module('services.recordFunctions', [])
                 encounters: 'encounter',
                 problems: 'problem',
                 insurance: 'insurance',
+                plan_of_care: 'plan of care',
                 claims: 'claims'
             };
 
