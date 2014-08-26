@@ -161,7 +161,7 @@ describe('Storage API Get List', function() {
                             if (err) {
                                 return done(err);
                             } else {
-                                expect(res.text.length).to.equal(124031);
+                                expect(res.text.length).to.equal(129070);
                                 expect(res.buffered).to.equal(true);
                                 done();
                             }

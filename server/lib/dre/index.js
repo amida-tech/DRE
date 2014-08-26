@@ -269,7 +269,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
         var outputPartialObjectArray = {};
         var outputNewObjectArray = {};
 
-        console.log(match);
+        //console.log(match);
 
         _.map(match, function (value, matchKey) {
 
@@ -441,7 +441,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
     //Remove Duplicates from save, update Record Entry.
     var deDuplicatedNewRecord = removeDuplicates(nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
-    console.log(JSON.stringify(deDuplicatedNewRecord.new_match, null, 10));
+    //console.log(JSON.stringify(deDuplicatedNewRecord.new_match, null, 10));
 
     //Split incoming entries into new/partial.
     var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record, deDuplicatedSourceRecords.new_entries, baseObject);
