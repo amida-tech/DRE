@@ -3910,8 +3910,8 @@
 										<reference value="#ID0EIANACA"/>
 									</text>
 									<statusCode code="completed"/>
-									<effectiveTime value="201210"/>
-									<value xsi:type="PQ" value="64" unit="[in_us]"/>
+									<effectiveTime value="20121002"/>
+									<value xsi:type="PQ" value="66" unit="[in_us]"/>
 									<author>
 										<time value="20121002103000-0400"/>
 										<assignedAuthor>
@@ -3941,8 +3941,8 @@
 										<reference value="#ID0EHANACA"/>
 									</text>
 									<statusCode code="completed"/>
-									<effectiveTime value="201210"/>
-									<value xsi:type="PQ" value="160" unit="[lb_av]"/>
+									<effectiveTime value="20121002"/>
+									<value xsi:type="PQ" value="170" unit="[lb_av]"/>
 								</observation>
 							</component>
 							<component>
@@ -3955,8 +3955,8 @@
 										<reference value="#ID0EGANACA"/>
 									</text>
 									<statusCode code="completed"/>
-									<effectiveTime value="201210"/>
-									<value xsi:type="PQ" value="120" unit="mm[Hg]"/>
+									<effectiveTime value="20121002"/>
+									<value xsi:type="PQ" value="126" unit="mm[Hg]"/>
 								</observation>
 							</component>
 							<component>
