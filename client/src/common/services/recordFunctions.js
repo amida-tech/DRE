@@ -1,8 +1,8 @@
 angular.module('services.recordFunctions', [])
 
-.service('recordFunctions', ['$filter',
+.service('recordFunctions', ['$filter', '$http',
 
-    function($filter) {
+    function($filter, $http) {
 
         this.minDateFromArray = function(inputArray) {
             var sortedArray = $filter('orderBy')(inputArray, "-date");
@@ -65,7 +65,7 @@ angular.module('services.recordFunctions', [])
                     inputSection.name = inputSection.payer[0];
                 }
             } else if (type === "social_history") {
-                inputSection.name = inputSection.code.code;
+                inputSection.name = inputSection.code.name + " - " + inputSection.value;
             }
 
             /* merging display bug with date, fixed by BJ with moment.js library
@@ -92,9 +92,6 @@ angular.module('services.recordFunctions', [])
             //console.log('state of the name');
             //console.log(inputSection.name);
 */
-            console.log('state of the name');
-            console.log(inputSection.name);
-
             return inputSection;
         };
 
@@ -158,6 +155,22 @@ angular.module('services.recordFunctions', [])
             return inputQuantity;
         };
 
+
+        this.formatDateTime = function(date_time) {
+            if (date_time.point) {
+                return this.formatDate(date_time.point);
+            } else if (date_time.low && date_time.high) {
+                return this.formatDate(date_time.low) + " - " + this.formatDate(date_time.high);
+            } else if (date_time.high) {
+                return "... - " + this.formatDate(date_time.high);
+            } else if (date_time.low) {
+                return this.formatDate(date_time.low) + " - Present";
+            } else {
+                return "Unknown";
+            }
+
+        };
+
         //Returns printable Date.
         this.formatDate = function(date) {
 
@@ -193,7 +206,7 @@ angular.module('services.recordFunctions', [])
                     tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
                     input_date.displayDate = tmpDateArr;
                 }
-                return input_date;
+                return tmpDateArr;
             }
 
             if (Object.prototype.toString.call(date) === '[object Array]') {
@@ -244,5 +257,76 @@ angular.module('services.recordFunctions', [])
                 return result ? result : sectionName;
             };
         })();
+
+
+        //makes sortable value out of date_time structure
+        this.sortOrderDateTime = function(date_time) {
+            if (date_time.high) {
+                return date_time.high.date;
+            } else if (date_time.point) {
+                return date_time.point.date;
+            } else if (date_time.low) {
+                return date_time.low.date;
+            } else {
+                return "Unknown";
+            }
+        };
+
+        //this method calculates display name and attribute on right side of display name e.g. date(or severity), sort order and other stuff
+        this.updateFields = function(entries, section) {
+            for (var i in entries) {
+
+                this.extractName(entries[i], section);
+
+                entries[i].name = this.truncateName(entries[i].name);
+
+                if (section === "allergies") {
+                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+                }
+                else if (section === "allergies") {
+                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+                }
+                // social_history, vitals
+                else  {
+                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+                }
+
+            }
+        };
+
+        //new method to get all patients entries for specific section
+        this.getEntries=function($scope, section) {
+            console.log("fetching " + section + " entires");
+
+            var that=this;
+
+            $http({
+                method: 'GET',
+                url: '/api/v1/record/' + section
+            }).
+            success(function(data, status, headers, config) {
+                console.log(section + JSON.stringify(data));
+                $scope.entries = data[section];
+
+                console.log(section + $scope.entries);
+                console.log(section + " length:", $scope.entries.length);
+
+                if ($scope.entries.length > 0) {
+                    $scope.display = true;
+                    that.updateFields($scope.entries, section);
+                    $scope.sort_predicate = "-sort_order";
+                } else {
+                    $scope.display = false;
+                }
+
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error while fetching ' + section + ' entries');
+            });
+
+        };
     }
 ]);

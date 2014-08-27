@@ -16,7 +16,7 @@ limitations under the License.
 
 var supportedComponents = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals', 'claims', 'insurance'];
 
-angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims'])
+angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims', 'dre.record.social_history'])
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/record', {
@@ -39,6 +39,7 @@ function($routeProvider) {
       $scope.vitalsPath = "templates/record/components/vitals.tpl.html";
       $scope.insurancePath  = "templates/record/components/insurance.tpl.html";
       $scope.claimsPath = "templates/record/components/claims.tpl.html";
+      $scope.social_historyPath = "templates/record/components/social_history.tpl.html";
 
       $scope.dismissModal = function(index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {

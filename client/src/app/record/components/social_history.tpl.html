@@ -6,8 +6,8 @@
 	<br/>
 	<br/>
 </div>
-<div ng-hide="displayVitals" class="panel-title">No social history entries are currently in your record.</div>
-<div ng-show="displayVitals" class="panel-group" id="#accordian-vitals" ng-repeat="vital in vitals | orderBy:vitalPredicate">
+<div ng-hide="display" class="panel-title">No social history entries are currently in your record.</div>
+<div ng-show="display" class="panel-group" id="#accordian-social_history" ng-repeat="entry in entries | orderBy:sort_predicate">
 
 	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -36,49 +36,26 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 
-			<a data-toggle="collapse" data-parent="#accordian-vitals" data-target="#vital-{{$index}}">
+			<a data-toggle="collapse" data-parent="#accordian-social_history" data-target="#social_history-{{$index}}">
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
-					<span style="text-transform:uppercase;">{{vital.vital.name}}</span>
-					<span class="pull-right" style="text-transform:uppercase;">{{vital.date[0].displayDate}}</span>
+					<span style="text-transform:uppercase;">{{entry.name}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{entry.attribute}}</span>
 				</div>
 			</a>
 		</div>
-		<div id="vital-{{$index}}" class="panel-collapse collapse">
+		<div id="social_history-{{$index}}" class="panel-collapse collapse">
 			<div class="panel-body">
 				<div id="myTabContent" >
-
-
-					<div class="col-md-12" ng-show="vital.vital.translations">
-						<h4>Other Descriptions</h4>
-						<div ng-repeat=" translation in vital.vital.translations" class="col-md-12">
-							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
-								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
-								<div class="pull-left col-md-12">{{translation.name}}</div>
-							</div>
-							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code">
-								<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-								<div class="pull-left col-md-12">{{translation.code}}</div>
-							</div>
-							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code_system_name">
-								<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-								<div class="pull-left col-md-12">{{translation.code_system_name}}</div>
-							</div>
-						</div>
-					</div>
 
 
 
 
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="vital.date[0].displayDate">
-							<div class="pull-left col-md-12"><strong>Measured:</strong></div><br/>
-							<div class="pull-left col-md-12">{{vital.date[0].displayDate}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="vital.displayQuantity">
-							<div class="pull-left col-md-12"><strong>Measurement:</strong></div><br/>
-							<div class="pull-left col-md-12">{{vital.displayQuantity}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+							<div class="pull-left col-md-12"><strong>Value:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.value}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="vital.interpretations[0]">
 							<div class="pull-left col-md-12"><strong>Interpretation:</strong></div><br/>

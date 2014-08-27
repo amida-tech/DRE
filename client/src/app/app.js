@@ -581,8 +581,8 @@ var dre = angular
 .config(['$routeProvider', '$locationProvider', '$compileProvider',
     function($routeProvider, $locationProvider, $compileProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'templates/home/home.tpl.html',
-            controller: 'homeCtrl'
+            templateUrl: 'templates/dashboard/dashboard.tpl.html',
+            controller: 'dashboardCtrl'
         });
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob):/);
 
