@@ -1,14 +1,12 @@
 <div class="col-md-12">
-    <div class="col-md-12">
-        <br/>
-        <span class="lead">Allergies</span>
-        <a ng-href="/api/v1/master_health_record">
-            <button type="button" class="btn btn-info pull-right">
+
+    <br/>
+    <h5 class="lead">
+        <a ng-href="/api/v1/master_health_record" class=" pull-right">
+            <button type="button" class="btn btn-info">
                 <span class="glyphicon glyphicon-cloud-download"></span>Download Data</button>
         </a>
-        <br/>
-        <br/>
-    </div>
+    </h5>
 
     <div ng-controller="allergiesCtrl">
         <div ng-include="allergiesPath"></div>

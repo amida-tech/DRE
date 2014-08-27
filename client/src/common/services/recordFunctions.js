@@ -272,7 +272,7 @@ angular.module('services.recordFunctions', [])
             }
         };
 
-        var this.severityReference = {
+        var severityReference = {
             "MILD": 1,
             "MILD TO MODERATE": 2,
             "MODERATE": 3,

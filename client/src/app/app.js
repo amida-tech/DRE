@@ -603,7 +603,7 @@ var dre = angular
             },
             responseError: function(rejection) {
                 if (rejection.status === 401) {
-                    $location.path('/login');
+                    $location.path('/home');
                 }
                 return $q.reject(rejection);
             }
@@ -627,12 +627,14 @@ var dre = angular
 ]);
 
 // For notification updates, tie to rootScope
-dre.controller('MainCtrl', ['$rootScope', '$scope', 'getNotifications', 'account',
-    function($rootScope, $scope, getNotifications, account) {
+dre.controller('MainCtrl', ['$http','$location','$rootScope', '$scope', 'getNotifications', 'account',
+    function($http, $location, $rootScope, $scope, getNotifications, account) {
+        $scope.navPath = "templates/nav/nav.tpl.html";
 
-        $scope.isAuthenticated = {};
+        $rootScope.isAuthenticated = false;
         account.isAuthenticated(function(err, result) {
-            $scope.isAuthenticated = result;
+            $rootScope.isAuthenticated = result;
+            //$scope.isAuthenticated=$rootScope.isAuthenticated;
         });
 
         $rootScope.notifications = {};
@@ -640,5 +642,18 @@ dre.controller('MainCtrl', ['$rootScope', '$scope', 'getNotifications', 'account
             $rootScope.notifications = notifications;
         });
 
+
+        $scope.logout = function() {
+            $http.post('api/v1/logout')
+                .success(function() {
+                    $rootScope.isAuthenticated=false;
+                    $location.path('/home');
+                }).error(function() {
+                    callback();
+                });
+        };
+
     }
+
+
 ]);
