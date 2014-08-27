@@ -272,6 +272,15 @@ angular.module('services.recordFunctions', [])
             }
         };
 
+        var this.severityReference = {
+            "MILD": 1,
+            "MILD TO MODERATE": 2,
+            "MODERATE": 3,
+            "MODERATE TO SEVERE": 4,
+            "SEVERE": 5,
+            "FATAL": 6
+        };
+
         //this method calculates display name and attribute on right side of display name e.g. date(or severity), sort order and other stuff
         this.updateFields = function(entries, section) {
             for (var i in entries) {
@@ -281,15 +290,17 @@ angular.module('services.recordFunctions', [])
                 entries[i].name = this.truncateName(entries[i].name);
 
                 if (section === "allergies") {
-                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+
+                    //replace attribute with severity
+                    entries[i].attribute = this.formatDateTime(entries[i].date_time); //should be 6-1 based on severity
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
-                }
-                else if (section === "allergies") {
+                } else if (section === "problems") {
+                    //replace attribute with resolution flag??
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
                 }
                 // social_history, vitals
-                else  {
+                else {
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
                 }
@@ -298,10 +309,10 @@ angular.module('services.recordFunctions', [])
         };
 
         //new method to get all patients entries for specific section
-        this.getEntries=function($scope, section) {
+        this.getEntries = function($scope, section) {
             console.log("fetching " + section + " entires");
 
-            var that=this;
+            var that = this;
 
             $http({
                 method: 'GET',
