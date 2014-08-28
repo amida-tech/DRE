@@ -54,7 +54,7 @@ angular.module('dre.record.medications', [])
 
     $scope.updateFields = function() {
       for (var i in $scope.medications) {
-        recordFunctions.extractName($scope.medications[i]);
+        recordFunctions.extractName($scope.medications[i], "medications");
         $scope.medications[i].name = recordFunctions.truncateName($scope.medications[i].name);
         recordFunctions.formatDate($scope.medications[i].date);
       }

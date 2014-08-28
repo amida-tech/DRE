@@ -40,7 +40,7 @@
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
 					<span style="text-transform:uppercase;">{{immunization.name}} - {{immunization.status}}</span>
-					<span class="pull-right" style="text-transform:uppercase;">{{immunization.date[0].displayDate}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{immunization.date_time.point.date | date}}</span>
 				</div>
 			</a>
 		</div>

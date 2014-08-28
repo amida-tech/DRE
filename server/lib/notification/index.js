@@ -1,10 +1,11 @@
 var express = require('express');
 var app = module.exports = express();
 var record = require('blue-button-record');
+var login = require('../login');
 
 var bbm = require('blue-button-meta');
 
-function getNotifications (callback) {
+function getNotifications (username, callback) {
 
   var newCount = 0;
   var newDone = false;
@@ -28,7 +29,7 @@ function getNotifications (callback) {
     }
   }
 
-  function getPartialCount(callback) {
+  function getPartialCount(username, callback) {
     var secIteration = 0;
     var secTotal = bbm.supported_sections.length;
 
@@ -41,7 +42,7 @@ function getNotifications (callback) {
     }
 
     bbm.supported_sections.forEach(function(component) {
-      record.matchCount(component, 'test', {}, function(err, count) {
+      record.matchCount(component, username, {}, function(err, count) {
         if (err) {
           callback(err);
         } else {
@@ -52,11 +53,11 @@ function getNotifications (callback) {
     });
   }
 
-  getPartialCount(function(err) {
+  getPartialCount(username, function(err) {
     checkDone();
   });
 
-  function getNewMergeCount(callback) {
+  function getNewMergeCount(username, callback) {
     var secIteration = 0;
     var secTotal = bbm.supported_sections.length;
   
@@ -69,7 +70,7 @@ function getNotifications (callback) {
     }
 
     bbm.supported_sections.forEach(function(component) {
-      record.mergeCount(component, 'test', {merge_reason: "new"}, function(err, count) {
+      record.mergeCount(component, username, {merge_reason: "new"}, function(err, count) {
         if (err) {
           callback(err);
         } else {
@@ -80,11 +81,11 @@ function getNotifications (callback) {
     });
   }
 
-  getNewMergeCount(function(err) {
+  getNewMergeCount(username, function(err) {
     checkDone();
   });
 
-  function getDupeMergeCount(callback) {
+  function getDupeMergeCount(username, callback) {
     var secIteration = 0;
     var secTotal = bbm.supported_sections.length;
 
@@ -98,7 +99,7 @@ function getNotifications (callback) {
     }
 
     bbm.supported_sections.forEach(function(component) {
-      record.mergeCount(component, 'test', {merge_reason: "duplicate"}, function(err, count) {
+      record.mergeCount(component, username, {merge_reason: "duplicate"}, function(err, count) {
         if (err) {
           callback(err);
         } else {
@@ -110,12 +111,12 @@ function getNotifications (callback) {
     });
   }
 
-  getDupeMergeCount(function(err) {
+  getDupeMergeCount(username, function(err) {
     checkDone();
   });
 
-  function getSourceCount(callback) {
-    record.sourceCount('test', function(err, count) {
+  function getSourceCount(username, callback) {
+    record.sourceCount(username, function(err, count) {
       if (err) {
         callback(err);
       } else {
@@ -126,15 +127,15 @@ function getNotifications (callback) {
     });
   }
 
-  getSourceCount(function(err) {
+  getSourceCount(username, function(err) {
     checkDone();
   });
 
 }
 
-app.get('/api/v1/notification', function(req, res) {
+app.get('/api/v1/notification', login.checkAuth, function(req, res) {
 
-  getNotifications(function(err, notificationList) {
+  getNotifications(req.user.username, function(err, notificationList) {
     if (err) {
       res.send(400, err);
     } else {

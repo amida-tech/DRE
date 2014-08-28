@@ -84,7 +84,7 @@ angular.module('dre.match', ['dre.match.reconciliation'])
       var trimLength = 35;
       for (var iMerge in inputMerge) {
           if (inputMerge[iMerge].entry_type !== 'demographics') {
-            recordFunctions.extractName(inputMerge[iMerge].entry);
+            recordFunctions.extractName(inputMerge[iMerge].entry, inputMerge[iMerge].entry_type);
           }
 
           if (inputMerge[iMerge].entry_type === 'demographics') {

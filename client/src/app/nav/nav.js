@@ -14,25 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular.module('dre.record.vitals', [])
+angular.module('dre.nav', [])
 
-.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.when('/record/vitals', {
-      templateUrl: 'templates/record/components/vitals.tpl.html',
-      controller: 'recordsCtrl'
-    });
-  }
-])
+.controller('navCtrl', ['$rootScope','$scope', '$http', '$location',
+	function($rootScope, $scope, $http, $location) {
 
-.controller('vitalsCtrl', ['$scope', '$http', '$location', 'recordFunctions',
-  function($scope, $http, $location, recordFunctions) {
-
-
-    $scope.entries = [];
-    $scope.display = false;
-
-    recordFunctions.getEntries($scope, "vitals");
-    
-  }
+		$scope.logout = function() {
+			$http.post('/api/v1/logout')
+			.success(function (data) {
+				$rootScope.isAuthenticated=false;
+				$location.path('/home');
+			}).error(function (data) {
+				callback(data);
+			});
+		};
+	}
 ]);

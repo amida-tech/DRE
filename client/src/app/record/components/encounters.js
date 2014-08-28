@@ -53,12 +53,12 @@ angular.module('dre.record.encounters', [])
 
     $scope.updateFields = function() {
       for (var i in $scope.encounters) {
-        recordFunctions.extractName($scope.encounters[i]);
+        recordFunctions.extractName($scope.encounters[i], "encounters");
         $scope.encounters[i].name = recordFunctions.truncateName($scope.encounters[i].name);
-        recordFunctions.formatDate($scope.encounters[i].date);
-        $scope.encounters[i].date_weight = $scope.encounters[i].date[0].date;
+        recordFunctions.formatDate($scope.encounters[i].date_time);
+        $scope.encounters[i].date_weight = $scope.encounters[i].date_time.point.date;
         for (var ii in $scope.encounters[i].locations) {
-          recordFunctions.formatAddress($scope.encounters[i].locations[ii].addresses[0]);
+          recordFunctions.formatAddress($scope.encounters[i].locations[ii].address[0]);
         }
       }
     };

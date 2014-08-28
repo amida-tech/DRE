@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="dre" id="ng-app">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>DRE UI Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Loading Bootstrap -->
-    
+
     <link rel="stylesheet" href="DRE-Demo.css">
     <link rel="stylesheet" href="dre.css">
 
@@ -19,32 +20,42 @@
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-  </head>
-  <body style="padding-top: 50px;">
+</head>
+
+<body style="padding-top: 50px;">
+
+    <!--div ng-view ng-controller="MainCtrl">
+  </div-->
+
     <div class="fluid-container col-md-12" ng-controller="MainCtrl">
-      <div class="navbar navbar-default navbar-fixed-top" style="padding-left: 15px;">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            
-            <a class="navbar-brand" href="#"><img src="img/bb-logo-vector.png" width="27px" height="27px"/> &nbsp;  Data Reconciliation Engine </a>
-          </div>
+        <div class="navbar navbar-default navbar-fixed-top" style="padding-left: 15px;">
+            <div class="container-fluid">
+                <div class="navbar-header">
+
+                    <a class="navbar-brand" href="#">
+                        <img src="img/bb-logo-vector.png" width="27px" height="27px" />&nbsp; Data Reconciliation Engine</a>
+
+                </div>
+                <div class="navbar-collapse collapse" >
+                    <ul class="nav navbar-header  navbar-right" ng-show="isAuthenticated">
+                        <li>
+                            <a ng-click="logout()"><i class="fa fa-sign-out fa-2x"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class = "row">
-        <div class="col-md-3">
-          <a href="#/profile"><img src="img/img-demo.png" width="150" height="150" class="img-circle center-block" style="padding: 20px;"></a>
-          <a href="#/profile"><p class="text-center lead">{{notifications.displayName}}</p></a>
-          <ul class="nav nav-pills nav-stacked">
-            <li><a href="#/dashboard">HOME</a></li>
-            <li><a href="#/record">MY RECORD<span class="badge pull-right" ng-show="notifications.displayNotifications">{{notifications.new_count}}</span></a></li>
-            <li><a href="#/match">MY UPDATES<span class="badge pull-right" ng-show="notifications.unreviewed_merges > 0">{{notifications.unreviewed_merges}}</span></a></li>
-            <li><a href="#/storage">MY FILES</a></li>
-          </ul>
+        <div class="row">
+
+            <div ng-show="isAuthenticated">
+                <div ng-include="navPath"></div>
+            </div>
+
+            <div class="col-md-9" ng-view>
+            </div>
         </div>
-        <div class="col-md-9" ng-view>
-        </div>
-      </div>
     </div>
+
     <!-- Load vendor JS -->
     <script src="jquery.js"></script>
     <script src="moment.js"></script>
@@ -54,5 +65,6 @@
 
     <script src="DRE-Demo.js"></script>
 
-  </body>
+</body>
+
 </html>

@@ -3,14 +3,15 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 var bbm = require('blue-button-meta');
+var login = require('../login');
 
 //Get all merges API.
-app.get('/api/v1/merges/:component', function(req, res) {
+app.get('/api/v1/merges/:component', login.checkAuth, function(req, res) {
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
-        record.getMerges(req.params.component, 'test', 'name severity', 'filename uploadDate', function(err, mergeList) {
+        record.getMerges(req.params.component, req.user.username, 'name severity', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 res.send(400, err);
             } else {
@@ -22,7 +23,7 @@ app.get('/api/v1/merges/:component', function(req, res) {
     }
 });
 
-app.get('/api/v1/merges', function(req, res) {
+app.get('/api/v1/merges', login.checkAuth, function(req, res) {
 
     var mergeJSON = {};
     mergeJSON.merges = [];
@@ -37,7 +38,7 @@ app.get('/api/v1/merges', function(req, res) {
 
 
     for (var iMerge in bbm.supported_sections) {
-        record.getMerges(bbm.supported_sections[iMerge], 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results', 'filename uploadDate', function(err, mergeList) {
+        record.getMerges(bbm.supported_sections[iMerge], req.user.username, 'procedure problem product allergen vital name smoking_statuses encounter result_set results', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 res.send(400, err);
             } else {
