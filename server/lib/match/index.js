@@ -3,6 +3,126 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 var bbm = require('blue-button-meta');
+var dre = require('../dre/index.js');
+var async = require('async');
+
+
+function reRunMatches (matchComponent, matchUser, callback) {
+
+    //Select all matches for the patient.
+    //Get MHR.
+    //feed them into DRE.
+    //need to re-attribute new/dupe/partial.
+
+    function rebuildSourceEntries(sourceRecordArray, sourceRecordUser, sourceRecordSections, callback) {
+        var newOutputArray = [];
+        async.map(sourceRecordSections, function(matchSection, callback) {
+            async.map(sourceRecordArray[matchSection], function (entryIdentifier, callback) {
+                record.getEntry(matchSection, sourceRecordUser, entryIdentifier, function (err, results) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null, results);
+                    }
+                });
+            }, function (err, newRecord) {
+                if (err) {
+                    callback(err);
+                } else {
+
+                    var newReturnRecord = {};
+                    var newSerialRecord = _.clone(newRecord);
+
+                    delete newSerialRecord._id;
+
+                    console.log(newSerialRecord);
+
+
+                   newOutputArray.push(newRecord);
+                   callback(null);          
+                }
+            });
+        }, function(err, updatedSection) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, newOutputArray);
+            }      
+        });         
+    }
+
+    function rebuildMHRRecord(mhrSections, mhrRecordUser, callback) {
+        var masterHealthRecord = {};
+        //Get elements from MHR.
+        async.each(mhrSections, function (section, callback) {
+            record.getSection(section, mhrRecordUser, function (err, mhrEntries) {
+                if (err) {
+                    callback(err);
+                } else {
+                    //console.log(mhrEntries);
+                    masterHealthRecord[section] = mhrEntries;
+                    callback(null);
+                }
+            });
+        }, function (err) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, masterHealthRecord);
+            }
+        });
+    }
+
+    record.getMatches(matchComponent, matchUser, "", function(err, matchList) {
+            if (err) {
+                callback(err);
+            } else {
+
+                var srcHealthRecord = {};
+
+                //For each section get list of IDs for query.
+                for (var matchEntry in matchList) {
+                    if(_.isUndefined(srcHealthRecord[matchList[matchEntry].entry_type])) {
+                        srcHealthRecord[matchList[matchEntry].entry_type] = [];
+                    }
+                    srcHealthRecord[matchList[matchEntry].entry_type].push(matchList[matchEntry].entry._id);
+                }
+
+                //Select elements from partial match for rerun.
+                var reRunSections = _.uniq(_.pluck(matchList, 'entry_type'));
+
+                rebuildSourceEntries(srcHealthRecord, matchUser, reRunSections, function(err, sourceMatchRecords) {
+                    rebuildMHRRecord(reRunSections, matchUser, function(err, mhrMatchRecords) {
+
+                        //Sequentially load each record, so record_id is accurate for src entries.
+                        //MHR can all go in.
+
+                        //console.log(sourceMatchRecords);
+                        //Will need to apply hygiene to sources as it is on mhr.
+                        //async.each(sourceMatchRecords, function(matchSection, callback) {
+
+                        //    console.log(matchSection);
+
+
+                        //});
+
+
+
+                        //console.log(mhrMatchRecords);
+
+                    });
+
+                });            
+                
+            }
+        });
+
+
+callback();
+
+}
+
+
 
 function updateMerged(updateId, updateComponent, updateIndex, updateParameters, callback) {
     //Gather full match object by ID.
@@ -33,8 +153,15 @@ function updateMerged(updateId, updateComponent, updateIndex, updateParameters, 
                         } else {
 
                             //Need to shim in re-running matches here.
-
-                            record.cancelMatch(updateComponent, 'test', updateId, 'merged', callback);
+                            record.cancelMatch(updateComponent, 'test', updateId, 'merged', function(err, results) {
+                                if (err) {
+                                    callback(err);
+                                } else {
+                                    reRunMatches(updateComponent, 'test', function(err, results) {
+                                        callback();
+                                    });
+                                }
+                            });
                         }
                     });
                 }
