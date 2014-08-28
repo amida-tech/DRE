@@ -22,7 +22,14 @@ function reRunMatches (matchComponent, matchUser, callback) {
                     if (err) {
                         callback(err);
                     } else {
-                        callback(null, results);
+
+                        var newResult = _.omit(results, ['_id', 'metadata']);
+                        var returnResult = {
+                            entry: newResult,
+                            record_id: results.metadata.attribution[0].record._id
+                        }
+
+                        callback(null, returnResult);
                     }
                 });
             }, function (err, newRecord) {
@@ -30,15 +37,12 @@ function reRunMatches (matchComponent, matchUser, callback) {
                     callback(err);
                 } else {
 
-                    var newReturnRecord = {};
-                    var newSerialRecord = _.clone(newRecord);
+                    _.each(newRecord, function(newRec) {
+                        newRec.section = matchSection
+                        newOutputArray.push(newRec);
 
-                    delete newSerialRecord._id;
-
-                    console.log(newSerialRecord);
-
-
-                   newOutputArray.push(newRecord);
+                    });
+                   
                    callback(null);          
                 }
             });
