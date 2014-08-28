@@ -235,7 +235,7 @@ describe('Count API - Test Partial Matches:', function() {
                 if (err) {
                     return done(err);
                 }
-                expect(res.body.notifications.unreviewed_merges).to.equal(32);
+                expect(res.body.notifications.unreviewed_merges).to.equal(29);
                 expect(res.body.notifications.new_merges).to.equal(47);
                 expect(res.body.notifications.duplicate_merges).to.equal(66);
                 expect(res.body.notifications.file_count).to.equal(4);
@@ -259,7 +259,7 @@ describe('Count API - Test Added Matches via Allergies', function() {
                     done(err);
                 } else {
                     update_id = res.body.matches[0]._id;
-                    match_id = res.body.matches[0].match_entry._id;
+                    match_id = res.body.matches[0].entry._id;
                     api.post('/api/v1/matches/allergies/' + update_id)
                         .send({
                             determination: "added"
@@ -284,7 +284,7 @@ describe('Count API - Test Added Matches via Allergies', function() {
                 if (err) {
                     return done(err);
                 }
-                expect(res.body.notifications.unreviewed_merges).to.equal(31);
+                expect(res.body.notifications.unreviewed_merges).to.equal(28);
                 expect(res.body.notifications.new_merges).to.equal(48);
                 expect(res.body.notifications.duplicate_merges).to.equal(66);
                 expect(res.body.notifications.file_count).to.equal(4);

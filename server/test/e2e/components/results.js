@@ -325,7 +325,7 @@ describe('Results API - Test Partial Matches:', function() {
                 //console.log(JSON.stringify(res.body.matches, null, 10));
                 expect(res.body.matches.length).to.equal(3);
                 for (var i in res.body.matches) {
-                    expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].match_entry.name);
+                    expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].entry.name);
                     expect(res.body.matches[i].entry_type).to.equal('results');
                 }
                 done();
@@ -348,7 +348,7 @@ describe('Results API - Test Added Matches', function() {
                     done(err);
                 } else {
                     update_id = res.body.matches[0]._id;
-                    match_id = res.body.matches[0].match_entry._id;
+                    match_id = res.body.matches[0].entry._id;
                     api.post('/api/v1/matches/results/' + update_id)
                         .send({
                             determination: "added"
@@ -444,7 +444,7 @@ describe('Results API - Test Ignored Matches', function() {
                     done(err);
                 } else {
                     update_id = res.body.matches[0]._id;
-                    match_id = res.body.matches[0].match_entry._id;
+                    match_id = res.body.matches[0].entry._id;
                     api.post('/api/v1/matches/results/' + update_id)
                         .send({
                             determination: "ignored"
@@ -575,9 +575,9 @@ describe('Results API - Test Merged Matches', function() {
                     done(err);
                 } else {
                     //console.log(JSON.stringify(res.body.matches, null, 10));
-                    base_id = res.body.matches[0].entry._id;
+                    base_id = res.body.matches[0].matches[0].match_entry._id;
                     update_id = res.body.matches[0]._id;
-                    match_id = res.body.matches[0].match_entry._id;
+                    match_id = res.body.matches[0].entry._id;
                     //Still need this object to check metadata.
                     api.get('/api/v1/record/results')
                         .expect(200)
@@ -590,7 +590,7 @@ describe('Results API - Test Merged Matches', function() {
                                         base_object = res.body.results[i];
                                     }
                                 }
-                                api.post('/api/v1/matches/results/' + update_id)
+                                api.post('/api/v1/matches/results/' + update_id + '/0')
                                     .send({
                                         determination: "merged",
                                         updated_entry: tmp_updated_entry

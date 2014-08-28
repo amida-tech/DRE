@@ -42,7 +42,7 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
     //console.log('------------------');
     //console.log(JSON.stringify(baseObjectForParsing.demographics, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-    console.log(JSON.stringify(matchResult.match.demographics, null, 10));
+    //console.log(JSON.stringify(matchResult.match.demographics, null, 10));
 
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
@@ -282,8 +282,6 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
 
             if (matchKey === 'demographics') {
 
-                //console.log('asdf');
-
                 if (match[matchKey].match === 'new') {
                     outputNewObjectArray[matchKey] = newObjectArray[matchKey];
                 } else if (match[matchKey].match === 'partial') {
@@ -297,9 +295,18 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
                                 match_entry_id: baseObjectArray[matchKey][0]._id
                     };
 
-                    //console.log(partialOutput);
+                    var multiPartialOutput = {
+                        partial_entry: newObjectArray[matchKey][0],
+                        partial_matches: [{
+                            match_entry: baseObjectArray[matchKey][0]._id,
+                            match_object: match[matchKey]
+                        }]
+                    }
 
-                    outputPartialObjectArray[matchKey].push(partialOutput);
+                    //console.log(JSON.stringify(multiPartialOutput, null, 10));
+
+                    //outputPartialObjectArray[matchKey].push(partialOutput);
+                    outputPartialObjectArray[matchKey].push(multiPartialOutput);
                 }
 
             } else {
@@ -352,47 +359,42 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
                                 }
                             });
 
-                            _.each(partialElementArray, function(partialElement, partialIndex) {
+                            //console.log(matchKey);
 
-                                //Match object.
-                                //console.log(partialElement);
-                                //Partial Entry.
-                                //console.log(partialEntry);
-                                //Source entry.
-                                //console.log(baseObjectArray[matchKey][partialElement.dest_id]);
+                            if (matchKey === 'procedures') {
+                                //console.log(partialElementArray);
+                            }
 
-                                //Partial Match output has custom formatting.
-                           var partialOutput = {
+                            var multiPartialOutput = {
                                 partial_entry: partialEntry,
-                                partial_match: partialElement,
-                                match_entry_id: baseObjectArray[matchKey][partialElement.dest_id]._id
+                                partial_matches: []
                             };
 
-                            outputPartialObjectArray[matchKey].push(partialOutput);
+                            //console.log(partialElementArray.length);
+
+                            _.each(partialElementArray, function (partialElement, partialIndex) {
+
+                                //---Dying between lines.
+                                var partialOutput = {
+                                    partial_entry: partialEntry,
+                                    partial_match: partialElement,
+                                    match_entry_id: baseObjectArray[matchKey][partialElement.dest_id]._id
+                                };
+                                //outputPartialObjectArray[matchKey].push(partialOutput);
+                                //---
+
+                                var multiPartialMatch = {
+                                    match_entry: baseObjectArray[matchKey][partialElement.dest_id]._id,
+                                    match_object: partialElement
+                                }
+
+                                multiPartialOutput.partial_matches.push(multiPartialMatch);
 
                             });
 
+                            //console.log(JSON.stringify(multiPartialOutput, null, 10));
+                            outputPartialObjectArray[matchKey].push(multiPartialOutput);
 
-
-                            //console.log(partialElementArray);
-
-                            //var returnObject = {
-                            //    partial_entry: partialEntry,
-                            //    partial_match: element[index]
-
-                            //};
-
-                            //console.log(element);
-
-                            //outputPartialObjectArray[matchKey].push(partialEntry);
-
-                            //Partial Match output has custom formatting.
-                            //Diffs always zero, can take only array object.
-                            //returnPartialArray.push({
-                            //    partial_entry: srcArray[0],
-                            //    partial_match: matchObjForDb,
-                            //    match_entry_id: tmpMatchRecId
-                            //});
 
                         }
                     } else {
@@ -414,7 +416,7 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
         //console.log('---------');
         //console.log(partialObjectArray);
         //console.log('---------');
-        //console.log(JSON.stringify(outputNewObjectArray, null, 10));
+        //console.log(JSON.stringify(outputPartialObjectArray, null, 10));
 
         var returnObject = {
             newEntries: outputNewObjectArray,

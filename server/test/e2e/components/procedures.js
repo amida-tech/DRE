@@ -323,9 +323,9 @@ describe('Procedures API - Test Partial Matches:', function() {
 			.expect(200)
 			.end(function(err, res) {
 				//console.log(JSON.stringify(res.body.matches, null, 10));
-				expect(res.body.matches.length).to.equal(4);
+				expect(res.body.matches.length).to.equal(3);
 				for (var i in res.body.matches) {
-					expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].match_entry.name);
+					expect(res.body.matches[i].entry.name).to.equal(res.body.matches[i].entry.name);
 					expect(res.body.matches[i].entry_type).to.equal('procedures');
 				}
 				done();
@@ -348,7 +348,7 @@ describe('Procedures API - Test Added Matches', function() {
 					done(err);
 				} else {
 					update_id = res.body.matches[0]._id;
-					match_id = res.body.matches[0].match_entry._id;
+					match_id = res.body.matches[0].entry._id;
 					api.post('/api/v1/matches/procedures/' + update_id)
 						.send({
 							determination: "added"
@@ -421,7 +421,7 @@ describe('Procedures API - Test Added Matches', function() {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(3);
+			expect(res.body.matches.length).to.equal(2);
 			done();
 		});
 	});
@@ -444,7 +444,7 @@ describe('Procedures API - Test Ignored Matches', function() {
 					done(err);
 				} else {
 					update_id = res.body.matches[0]._id;
-					match_id = res.body.matches[0].match_entry._id;
+					match_id = res.body.matches[0].entry._id;
 					api.post('/api/v1/matches/procedures/' + update_id)
 						.send({
 							determination: "ignored"
@@ -516,7 +516,7 @@ describe('Procedures API - Test Ignored Matches', function() {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(2);
+			expect(res.body.matches.length).to.equal(1);
 			done();
 		});
 	});
@@ -611,9 +611,9 @@ describe('Procedures API - Test Merged Matches', function() {
 					done(err);
 				} else {
 					//console.log(JSON.stringify(res.body.matches, null, 10));
-					base_id = res.body.matches[0].entry._id;
+					base_id = res.body.matches[0].matches[0].match_entry._id;
 					update_id = res.body.matches[0]._id;
-					match_id = res.body.matches[0].match_entry._id;
+					match_id = res.body.matches[0].entry._id;
 					//Still need this object to check metadata.
 					api.get('/api/v1/record/procedures')
 						.expect(200)
@@ -626,7 +626,7 @@ describe('Procedures API - Test Merged Matches', function() {
 										base_object = res.body.procedures[i];
 									}
 								}
-								api.post('/api/v1/matches/procedures/' + update_id)
+								api.post('/api/v1/matches/procedures/' + update_id + '/0')
 									.send({
 										determination: "merged",
 										updated_entry: tmp_updated_entry
@@ -756,7 +756,7 @@ describe('Procedures API - Test Merged Matches', function() {
 				done(err);
 			}
 			//console.log(JSON.stringify(res.body, null, 10));
-			expect(res.body.matches.length).to.equal(1);
+			expect(res.body.matches.length).to.equal(0);
 			done();
 		});
 	});
