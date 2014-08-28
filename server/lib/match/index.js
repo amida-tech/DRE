@@ -131,7 +131,7 @@ app.post('/api/v1/matches/:component/:record_id', login.checkAuth, function(req,
 });
 
 //Post partial record updates.
-app.post('/api/v1/matches/:component/:record_id/:record_index', ogin.checkAuth, function(req, res) {
+app.post('/api/v1/matches/:component/:record_id/:record_index', login.checkAuth, function(req, res) {
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
