@@ -6,8 +6,8 @@
 	<br/>
 	<br/>
 </div>
-<div ng-hide="displayProblems" class="panel-title">No problems are currently in your record.</div>
-<div ng-show="displayProblems" class="panel-group" id="#accordian-problems" ng-repeat="problem in problems | orderBy:problemPredicate:1">
+<div ng-hide="display" class="panel-title">No problems are currently in your record.</div>
+<div ng-show="display" class="panel-group" id="#accordian-problems" ng-repeat="entry in entries | orderBy:sort_predicate">
 
 	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -22,7 +22,7 @@
 							<tr><td><strong>Source Information</strong></td></tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="attribution in problem.metadata.attribution">
+							<tr ng-repeat="attribution in entry.metadata.attribution">
 								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
 								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
 								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
@@ -39,12 +39,11 @@
 			<a data-toggle="collapse" data-parent="#accordian-problems" data-target="#problem-{{$index}}">
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
-					<span style="text-transform:uppercase;" ng-show="problem.negation_indicator">NO </span>
-					<span style="text-transform:uppercase;">{{problem.name}}</span>
-					<span style="text-transform:uppercase;" ng-show="problem.negation_indicator">FOUND</span>
-					<span style="text-transform:uppercase;" ng-show="problem.status">- {{problem.status}}</span>
-					<span class="pull-right" style="text-transform:uppercase;" ng-show="problem.statusFlag">{{problem.date[0].displayDate}}</span>
-					<span class="pull-right" style="text-transform:uppercase;" ng-hide="problem.statusFlag">{{problem.date[1].displayDate}}</span>
+					<span style="text-transform:uppercase;" ng-show="entry.negation_indicator">NO </span>
+					<span style="text-transform:uppercase;">{{entry.name}}</span>
+					<span style="text-transform:uppercase;" ng-show="entry.negation_indicator">FOUND</span>
+					<span style="text-transform:uppercase;" ng-show="entry.status">- {{entry.status.name}}</span>
+					<span class="pull-right" style="text-transform:uppercase;" >{{entry.attribute}}</span>
 				</div>
 			</a>
 		</div>
@@ -53,29 +52,29 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.date[0].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[0].displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{problem.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[0].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[1].displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{problem.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.onsetAgeDisplay">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.onsetAgeDisplay">
 							<div class="pull-left col-md-12"><strong>Onset Age:</strong></div><br/>
-							<div class="pull-left col-md-12">{{problem.onsetAgeDisplay}}</div>
+							<div class="pull-left col-md-12">{{entry.onsetAgeDisplay}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.problem.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.problem.code">
 							<div class="pull-left col-md-12"><strong>Problem Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{problem.problem.code}}</div>
+							<div class="pull-left col-md-12">{{entry.problem.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.problem.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.problem.code_system_name">
 							<div class="pull-left col-md-12"><strong>Problem Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{problem.problem.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{entry.problem.code_system_name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="problem.patient_status">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.patient_status">
 							<div class="pull-left col-md-12"><strong>Reported Status:</strong></div><br/>
-							<div class="pull-left col-md-12">{{problem.patient_status}}</div>
+							<div class="pull-left col-md-12">{{entry.patient_status}}</div>
 						</div>
 					</div>
 

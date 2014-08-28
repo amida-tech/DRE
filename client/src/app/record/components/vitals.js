@@ -17,22 +17,21 @@ limitations under the License.
 angular.module('dre.record.vitals', [])
 
 .config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.when('/record/vitals', {
-      templateUrl: 'templates/record/components/vitals.tpl.html',
-      controller: 'recordsCtrl'
-    });
-  }
+    function($routeProvider) {
+        $routeProvider.when('/record/vitals', {
+            templateUrl: 'templates/record/components/vitals.tpl.html',
+            controller: 'recordsCtrl'
+        });
+    }
 ])
 
 .controller('vitalsCtrl', ['$scope', '$http', '$location', 'recordFunctions',
-  function($scope, $http, $location, recordFunctions) {
+    function($scope, $http, $location, recordFunctions) {
 
+        $scope.entries = [];
+        $scope.display = false;
 
-    $scope.entries = [];
-    $scope.display = false;
+        recordFunctions.getEntries($scope, "vitals");
 
-    recordFunctions.getEntries($scope, "vitals");
-    
-  }
+    }
 ]);

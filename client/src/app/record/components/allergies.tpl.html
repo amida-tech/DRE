@@ -6,8 +6,8 @@
     <br/>
     <br/>
 </div>
-<div ng-hide="displayAllergies" class="panel-title">No allergies are currently in your record.</div>
-<div ng-show="displayAllergies" class="panel-group" id="#accordian-allergy" ng-repeat="allergy in allergies | orderBy:allergyPredicate">
+<div ng-hide="display" class="panel-title">No allergies are currently in your record.</div>
+<div ng-show="display" class="panel-group" id="#accordian-allergy" ng-repeat="entry in entries | orderBy:sort_predicate">
 
     <div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -26,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="attribution in allergy.metadata.attribution">
+                            <tr ng-repeat="attribution in entry.metadata.attribution">
                                 <td>
                                     <strong>Source:</strong> <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a>
                                 </td>
@@ -49,8 +49,8 @@
             <a data-toggle="collapse" data-parent="#accordian-allergy" data-target="#collapse{{$index}}">
                 <div class="panel-title" style="cursor:pointer;">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    <span style="text-transform:uppercase;">{{allergy.name}}</span>
-                    <span class="pull-right" style="text-transform:uppercase;">{{allergy.observation.severity.code.name}}</span>
+                    <span style="text-transform:uppercase;">{{entry.name}}</span>
+                    <span class="pull-right" style="text-transform:uppercase;">{{entry.attribute}}</span>
                 </div>
             </a>
         </div>
@@ -59,39 +59,39 @@
                 <div id="myTabContent">
                     <div class="col-md-12">
                         <h4>Details</h4>
-                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="allergy.status">
+                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.observation.status">
                             <div class="pull-left col-md-12">
                                 <strong>Status:</strong>
                             </div>
                             <br/>
-                            <div class="pull-left col-md-12">{{allergy.status}}</div>
+                            <div class="pull-left col-md-12">{{entry.observation.status.name}}</div>
                         </div>
-                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="allergy.date[0].displayDate">
+                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.observation.date[0].displayDate">
                             <div class="pull-left col-md-12">
                                 <strong>Start:</strong>
                             </div>
                             <br/>
-                            <div class="pull-left col-md-12">{{allergy.date[0].displayDate}}</div>
+                            <div class="pull-left col-md-12">{{entry.observation.date[0].displayDate}}</div>
                         </div>
-                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="allergy.allergen.code">
+                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.observation.allergen.code">
                             <div class="pull-left col-md-12">
                                 <strong>Code:</strong>
                             </div>
                             <br/>
-                            <div class="pull-left col-md-12">{{allergy.allergen.code}}</div>
+                            <div class="pull-left col-md-12">{{entry.observation.allergen.code}}</div>
                         </div>
-                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="allergy.allergen.code_system_name">
+                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.observation.allergen.code_system_name">
                             <div class="pull-left col-md-12">
                                 <strong>Code System:</strong>
                             </div>
                             <br/>
-                            <div class="pull-left col-md-12">{{allergy.allergen.code_system_name}}</div>
+                            <div class="pull-left col-md-12">{{entry.observation.allergen.code_system_name}}</div>
                         </div>
                     </div>
 
-                    <div class="col-md-12" ng-show="allergy.allergen.translations">
+                    <div class="col-md-12" ng-show="entry.observation.allergen.translations">
                         <h4>Other Descriptions</h4>
-                        <div ng-repeat=" translation in allergy.allergen.translations" class="col-md-12">
+                        <div ng-repeat=" translation in entry.observation.allergen.translations" class="col-md-12">
                             <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
                                 <div class="pull-left col-md-12">
                                     <strong>Name:</strong>
@@ -116,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12" ng-repeat="reaction in allergy.reaction">
+                    <div class="col-md-12" ng-repeat="reaction in entry.observation.reactions">
                         <h4>Reactions</h4>
                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="reaction.reaction.name">
                             <div class="pull-left col-md-12">
@@ -130,7 +130,7 @@
                                 <strong>Severity:</strong>
                             </div>
                             <br/>
-                            <div class="pull-left col-md-12">{{reaction.severity}}</div>
+                            <div class="pull-left col-md-12">{{reaction.severity.code.name}}</div>
                         </div>
                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="reaction.reaction.code">
                             <div class="pull-left col-md-12">
