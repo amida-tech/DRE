@@ -6,8 +6,8 @@
 	<br/>
 	<br/>
 </div>
-<div ng-hide="displayImmunizations" class="panel-title">No immunizations are currently in your record.</div>
-<div ng-show="displayImmunizations" class="panel-group" id="#accordian-immunizations" ng-repeat="immunization in immunizations | orderBy:immunizationPredicate">
+<div ng-hide="display" class="panel-title">No immunizations are currently in your record.</div>
+<div ng-show="display" class="panel-group" id="#accordian-immunizations" ng-repeat="entry in entries | orderBy:sort_predicate">
 
 	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -22,7 +22,7 @@
 							<tr><td><strong>Source Information</strong></td></tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="attribution in immunization.metadata.attribution">
+							<tr ng-repeat="attribution in entry.metadata.attribution">
 								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
 								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
 								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
@@ -39,8 +39,8 @@
 			<a data-toggle="collapse" data-parent="#accordian-immunizations" data-target="#immunization-{{$index}}">
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
-					<span style="text-transform:uppercase;">{{immunization.name}} - {{immunization.status}}</span>
-					<span class="pull-right" style="text-transform:uppercase;">{{immunization.date[0].displayDate}}</span>
+					<span style="text-transform:uppercase;">{{entry.name}} - {{entry.status}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{entry.attribute}}</span>
 				</div>
 			</a>
 		</div>
@@ -49,27 +49,27 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.date[0].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[0].displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[0].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[1].displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.product.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.product.product.code">
 							<div class="pull-left col-md-12"><strong>Product Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.product.product.code}}</div>
+							<div class="pull-left col-md-12">{{entry.product.product.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.product.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.product.product.code_system_name">
 							<div class="pull-left col-md-12"><strong>Product Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.product.product.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{entry.product.product.code_system_name}}</div>
 						</div>
 					</div>
 
-					<div class="col-md-12" ng-show="immunization.product.product.translations">
+					<div class="col-md-12" ng-show="entry.product.product.translations">
 						<h4>Other Descriptions</h4>
-						<div ng-repeat=" translation in immunization.product.product.translations" class="col-md-12">
+						<div ng-repeat=" translation in entry.product.product.translations" class="col-md-12">
 							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
 								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
 								<div class="pull-left col-md-12">{{translation.name}}</div>
@@ -85,45 +85,45 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-show = "immunization.product">
+					<div class="col-md-12 pull-left" ng-show = "entry.product">
 						<h4>Product</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.product.name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.product.product.name">
 							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.product.product.name}}</div>
+							<div class="pull-left col-md-12">{{entry.product.product.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.lot_number">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.product.lot_number">
 							<div class="pull-left col-md-12"><strong>Lot Number:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.product.lot_number}}</div>
+							<div class="pull-left col-md-12">{{entry.product.lot_number}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.product.manufacturer">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.product.manufacturer">
 							<div class="pull-left col-md-12"><strong>Manufacturer:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.product.manufacturer}}</div>
+							<div class="pull-left col-md-12">{{entry.product.manufacturer}}</div>
 						</div>
 					</div>
 
 					<div class="col-md-12 pull-left">
 						<h4>Administration</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.administration.route.name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.administration.route.name">
 							<div class="pull-left col-md-12"><strong>Route:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.administration.route.name}}</div>
+							<div class="pull-left col-md-12">{{entry.administration.route.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="immunization.administration.dose.displayQuantity">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.administration.dose.displayQuantity">
 							<div class="pull-left col-md-12"><strong>Quantity:</strong></div><br/>
-							<div class="pull-left col-md-12">{{immunization.administration.dose.displayQuantity}}</div>
+							<div class="pull-left col-md-12">{{entry.administration.dose.displayQuantity}}</div>
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-show="immunization.performer">
+					<div class="col-md-12 pull-left" ng-show="entry.performer">
 						<h4>Performer</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_name in immunization.performer.name" ng-show="immunization.performer.name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_name in entry.performer.name" ng-show="entry.performer.name">
 							<div class="pull-left col-md-12"><strong>Performer:</strong></div><br/>
 							<div class="pull-left col-md-12" >{{performer_name.displayName}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_organization in immunization.performer.organization" ng-show="immunization.performer.organization">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_organization in entry.performer.organization" ng-show="entry.performer.organization">
 							<div class="pull-left col-md-12"><strong>Organization:</strong></div><br/>
 							<div class="pull-left col-md-12" ng-repeat="performer_organization_name in performer_organization.name">{{performer_organization_name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_address in immunization.performer.address" ng-show="immunization.performer.address">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_address in entry.performer.address" ng-show="entry.performer.address">
 							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
 							<div class="pull-left col-md-12" ng-repeat="performer_display_address in performer_address.displayAddress">{{performer_display_address}}</div>
 						</div>

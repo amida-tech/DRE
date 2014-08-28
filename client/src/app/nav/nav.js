@@ -14,24 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular.module('dre.record.results', [])
+angular.module('dre.nav', [])
 
-.config(['$routeProvider',
-    function($routeProvider) {
-        $routeProvider.when('/record/results', {
-            templateUrl: 'templates/record/components/results.tpl.html',
-            controller: 'recordsCtrl'
-        });
-    }
-])
+.controller('navCtrl', ['$rootScope','$scope', '$http', '$location',
+	function($rootScope, $scope, $http, $location) {
 
-.controller('resultsCtrl', ['$scope', '$http', '$location', 'recordFunctions',
-    function($scope, $http, $location, recordFunctions) {
-
-        $scope.entries = [];
-        $scope.display = false;
-
-        recordFunctions.getEntries($scope, "results");
-
-    }
+		$scope.logout = function() {
+			$http.post('/api/v1/logout')
+			.success(function (data) {
+				$rootScope.isAuthenticated=false;
+				$location.path('/home');
+			}).error(function (data) {
+				callback(data);
+			});
+		};
+	}
 ]);

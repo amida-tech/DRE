@@ -88,7 +88,7 @@ Release 1.0 (end of May, 2014)
 
 ```
 # you need Node.js and Grunt.js installed
-# and MongoDB runnning
+# and MongoDB + Redis runnning
 
 #build client app
 cd client

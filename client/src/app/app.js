@@ -17,15 +17,20 @@ limitations under the License.
 var dre = angular
     .module('dre', [
         'ngRoute',
+        'dre.home',
         'dre.record',
         'dre.storage',
         'dre.dashboard',
         'dre.demographics',
+        'dre.login',
         'dre.match',
         'dre.match_new',
         'dre.match.review',
+        'dre.nav',
+        'dre.register',
         'directives.fileModel',
         'directives.matchingObjects',
+        'services.account',
         'services.fileUpload',
         'services.fileDownload',
         'services.getNotifications',
@@ -559,12 +564,12 @@ var dre = angular
     .filter('capFirstLetters', function($filter) {
         //capitalize first letter of every word
         return function(input) {
-            if (input != null){
+            if (input != null) {
                 var inputArr = input.split(' ');
                 var newString = "";
-                for(var x in inputArr){
+                for (var x in inputArr) {
                     var token = inputArr[x];
-                    newString += token.substring(0,1).toUpperCase()+token.substring(1) + " ";
+                    newString += token.substring(0, 1).toUpperCase() + token.substring(1) + " ";
                 }
                 newString.trim();
                 return newString;
@@ -577,13 +582,42 @@ var dre = angular
     function($routeProvider, $locationProvider, $compileProvider) {
         $routeProvider.when('/', {
             templateUrl: 'templates/dashboard/dashboard.tpl.html',
-            controller: 'MainCtrl'
+            controller: 'dashboardCtrl'
         });
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob):/);
 
     }
 ])
 
+.factory('myHttpResponseInterceptor', ['$q', '$location',
+    function($q, $location) {
+        console.log("HTTP intercepting...");
+
+        return {
+
+            response: function(response) {
+                if (response.status === 401) {
+                    console.log("Response 401");
+                }
+                return response || $q.when(response);
+            },
+            responseError: function(rejection) {
+                if (rejection.status === 401) {
+                    $location.path('/home');
+                }
+                return $q.reject(rejection);
+            }
+        };
+
+    }
+])
+
+//Http Intercpetor to check auth failures for xhr requests
+.config(['$httpProvider',
+    function($httpProvider) {
+        $httpProvider.interceptors.push('myHttpResponseInterceptor');
+    }
+])
 
 // Note TabService is included but not used to ensure its been instantiated
 .run(['$rootScope', '$location',
@@ -593,13 +627,33 @@ var dre = angular
 ]);
 
 // For notification updates, tie to rootScope
-dre.controller('MainCtrl', ['$rootScope', 'getNotifications',
-  function($rootScope, getNotifications) {
+dre.controller('MainCtrl', ['$http','$location','$rootScope', '$scope', 'getNotifications', 'account',
+    function($http, $location, $rootScope, $scope, getNotifications, account) {
+        $scope.navPath = "templates/nav/nav.tpl.html";
 
-    $rootScope.notifications = {};
-    getNotifications.getUpdate(function (err, notifications) {
-      $rootScope.notifications = notifications;
-    });
+        $rootScope.isAuthenticated = false;
+        account.isAuthenticated(function(err, result) {
+            $rootScope.isAuthenticated = result;
+            //$scope.isAuthenticated=$rootScope.isAuthenticated;
+        });
 
-  }
+        $rootScope.notifications = {};
+        getNotifications.getUpdate(function(err, notifications) {
+            $rootScope.notifications = notifications;
+        });
+
+
+        $scope.logout = function() {
+            $http.post('api/v1/logout')
+                .success(function() {
+                    $rootScope.isAuthenticated=false;
+                    $location.path('/home');
+                }).error(function() {
+                    callback();
+                });
+        };
+
+    }
+
+
 ]);
