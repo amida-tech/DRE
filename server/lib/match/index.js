@@ -61,11 +61,7 @@ function processUpdate(username, updateId, updateIndex, updateComponent, updateP
 
     if (updateParameters.determination === 'merged') {
         //If determination is merged, overwrite original record, drop source object, and update merge history of object.
-<<<<<<< HEAD
-        updateMerged(updateId, updateComponent, updateIndex, updateParameters.updated_entry, function(err, results) {
-=======
         updateMerged(username, updateId, updateComponent, updateParameters.updated_entry, function(err, results) {
->>>>>>> master
             if (err) {
                 callback(err);
             } else {
