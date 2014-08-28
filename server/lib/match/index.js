@@ -4,55 +4,45 @@ var record = require('blue-button-record');
 var _ = require('underscore');
 var bbm = require('blue-button-meta');
 var dre = require('../dre/index.js');
+var storage = require('../storage/index.js');
 var async = require('async');
 
-
-function reRunMatches (matchComponent, matchUser, callback) {
+function reRunMatches(matchComponent, matchUser, callback) {
 
     //Select all matches for the patient.
     //Get MHR.
     //feed them into DRE.
     //need to re-attribute new/dupe/partial.
 
-    function rebuildSourceEntries(sourceRecordArray, sourceRecordUser, sourceRecordSections, callback) {
-        var newOutputArray = [];
-        async.map(sourceRecordSections, function(matchSection, callback) {
-            async.map(sourceRecordArray[matchSection], function (entryIdentifier, callback) {
-                record.getEntry(matchSection, sourceRecordUser, entryIdentifier, function (err, results) {
-                    if (err) {
-                        callback(err);
-                    } else {
+    function rebuildSourceEntries(sourceMatches, sourceRecordUser, sourceRecordSections, callback) {
 
-                        var newResult = _.omit(results, ['_id', 'metadata']);
-                        var returnResult = {
-                            entry: newResult,
-                            record_id: results.metadata.attribution[0].record._id
-                        }
+        async.map(sourceMatches, function (matchEntry, srcCallback) {
 
-                        callback(null, returnResult);
-                    }
-                });
-            }, function (err, newRecord) {
+            //Re-gather partial entry for completeness.
+            record.getEntry(matchEntry.entry_type, sourceRecordUser, matchEntry.entry._id, function (err, results) {
                 if (err) {
-                    callback(err);
+                    srcCallback(err);
                 } else {
 
-                    _.each(newRecord, function(newRec) {
-                        newRec.section = matchSection
-                        newOutputArray.push(newRec);
+                    var newResult = _.omit(results, ['_id', 'metadata']);
+                    var returnResult = {
+                        entry: newResult,
+                        record_id: results.metadata.attribution[0].record._id,
+                        partial_id: results._id,
+                        match_id: matchEntry._id,
+                        section: matchEntry.entry_type
+                    }
 
-                    });
-                   
-                   callback(null);          
+                    srcCallback(null, returnResult);
                 }
             });
-        }, function(err, updatedSection) {
+        }, function (err, newRecord) {
             if (err) {
                 callback(err);
             } else {
-                callback(null, newOutputArray);
-            }      
-        });         
+                callback(null, newRecord);
+            }
+        });
     }
 
     function rebuildMHRRecord(mhrSections, mhrRecordUser, callback) {
@@ -77,91 +67,112 @@ function reRunMatches (matchComponent, matchUser, callback) {
         });
     }
 
-    record.getMatches(matchComponent, matchUser, "", function(err, matchList) {
-            if (err) {
-                callback(err);
-            } else {
+    function updateMatches(matchUserID, matchOriginalEntry, matchNewEntries, matchPartialEntries, callback) {
 
-                var srcHealthRecord = {};
+        //Update each match to dead.
+        //save new match pointing to source record.
+        //discard return entry (since I know it already).
+        //save added matches to db.
 
-                //For each section get list of IDs for query.
-                for (var matchEntry in matchList) {
-                    if(_.isUndefined(srcHealthRecord[matchList[matchEntry].entry_type])) {
-                        srcHealthRecord[matchList[matchEntry].entry_type] = [];
-                    }
-                    srcHealthRecord[matchList[matchEntry].entry_type].push(matchList[matchEntry].entry._id);
-                }
+        callback();
 
-                //Select elements from partial match for rerun.
-                var reRunSections = _.uniq(_.pluck(matchList, 'entry_type'));
+    }
 
-                rebuildSourceEntries(srcHealthRecord, matchUser, reRunSections, function(err, sourceMatchRecords) {
-                    rebuildMHRRecord(reRunSections, matchUser, function(err, mhrMatchRecords) {
+    function reconcile (sourceRecords, mhrRecords, callback) {
 
-                        //Sequentially load each record, so record_id is accurate for src entries.
-                        //MHR can all go in.
+        async.map(sourceRecords, function(matchRecord, cb) {
+            
+             var formattedMatchRecord = {};
+            formattedMatchRecord[matchRecord.section] = [matchRecord.entry];
 
-                        //console.log(sourceMatchRecords);
-                        //Will need to apply hygiene to sources as it is on mhr.
-                        //async.each(sourceMatchRecords, function(matchSection, callback) {
-
-                        //    console.log(matchSection);
-
-
-                        //});
-
-
-
-                        //console.log(mhrMatchRecords);
-
-                    });
-
-                });            
-                
-            }
-        });
-
-
-callback();
-
-}
-
-
-
-function updateMerged(updateId, updateComponent, updateIndex, updateParameters, callback) {
-    //Gather full match object by ID.
-    record.getMatch(updateComponent, 'test', updateId, function(err, resultComponent) {
-        if (err) {
-            callback(err);
-        } else {
-
-            //resultComponent:   Original Match Object.
-            //updateParameters:  Object to Overwrite Original with.
-            // updateComponent:  The section (allergies, etc.)
-            // updateIndex:  index of valid match from array.
-
-            //Gather partial record from db.
-            record.getEntry(updateComponent, 'test', resultComponent.entry._id, function(err, recordResults) {
+            dre.reconcile(formattedMatchRecord, mhrRecords, matchRecord.record_id, function (err, reconciliation_results, partial_reconciliation_results) {
                 if (err) {
                     callback(err);
                 } else {
 
-                    //console.log(recordResults);
+                    var reconcilationResponse = {
+                        newEntries: reconciliation_results,
+                        partialEntries: partial_reconciliation_results
+                    };
 
+                    matchRecord.reconciliation = reconcilationResponse
+                    callback(null, matchRecord);
+                }
+            });
+
+        }, function(err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, results);    
+            }   
+        });
+
+    }
+
+    record.getMatches(matchComponent, matchUser, "", function (err, matchList) {
+        if (err) {
+            callback(err);
+        } else {
+
+            //Select elements from partial match for rerun.
+            var reRunSections = _.uniq(_.pluck(matchList, 'entry_type'));
+
+            //Generate Source Records for Match.
+            rebuildSourceEntries(matchList, matchUser, reRunSections, function (err, sourceMatchRecords) {
+
+                //Generate MHR Records for Match.
+                rebuildMHRRecord(reRunSections, matchUser, function (err, mhrMatchRecords) {
+
+                    reconcile(sourceMatchRecords, mhrMatchRecords, function(err, results) {
+
+                        //HERE.
+                        console.log(results);
+
+
+                    });
+
+                });
+
+            });
+        }
+    });
+
+    //TODO:  Kill this guy.
+    //callback();
+
+}
+
+function updateMerged(updateId, updateComponent, updateIndex, updateParameters, callback) {
+    //Gather full match object by ID.
+    record.getMatch(updateComponent, 'test', updateId, function (err, resultComponent) {
+        if (err) {
+            callback(err);
+        } else {
+
+            //Gather partial record from db.
+            record.getEntry(updateComponent, 'test', resultComponent.entry._id, function (err, recordResults) {
+                if (err) {
+                    callback(err);
+                } else {
 
                     //NOTE:  Only one attribution merge since a partial.
                     var recordId = recordResults.metadata.attribution[0].record._id;
-                    record.updateEntry(updateComponent, 'test', resultComponent.matches[updateIndex].match_entry._id, recordId, updateParameters, function(err, updateResults) {
+
+                    //Update merged entry.
+                    record.updateEntry(updateComponent, 'test', resultComponent.matches[updateIndex].match_entry._id, recordId, updateParameters, function (err, updateResults) {
                         if (err) {
                             callback(err);
                         } else {
 
-                            //Need to shim in re-running matches here.
-                            record.cancelMatch(updateComponent, 'test', updateId, 'merged', function(err, results) {
+                            //Use cancel to update to merged.
+                            record.cancelMatch(updateComponent, 'test', updateId, 'merged', function (err, results) {
                                 if (err) {
                                     callback(err);
                                 } else {
-                                    reRunMatches(updateComponent, 'test', function(err, results) {
+
+                                    //Rerun Matching.
+                                    reRunMatches(updateComponent, 'test', function (err, results) {
                                         callback();
                                     });
                                 }
@@ -177,6 +188,8 @@ function updateMerged(updateId, updateComponent, updateIndex, updateParameters, 
 function processUpdate(updateId, updateIndex, updateComponent, updateParameters, callback) {
     //Can be 1) Merged, 2) Added, 3) Ignored.
 
+    //TODO:  ADD RERUN MATCH AFTER ADD AS WELL (AND IGNORE, WHY NOT?).
+
     if (updateParameters.determination === 'added') {
         if (updateComponent === 'demographics') {
             callback('Only one demographic accepted');
@@ -186,7 +199,7 @@ function processUpdate(updateId, updateIndex, updateComponent, updateParameters,
 
     if (updateParameters.determination === 'merged') {
         //If determination is merged, overwrite original record, drop source object, and update merge history of object.
-        updateMerged(updateId, updateComponent, updateIndex, updateParameters.updated_entry, function(err, results) {
+        updateMerged(updateId, updateComponent, updateIndex, updateParameters.updated_entry, function (err, results) {
             if (err) {
                 callback(err);
             } else {
@@ -201,12 +214,12 @@ function processUpdate(updateId, updateIndex, updateComponent, updateParameters,
 }
 
 // Get all matches API.
-app.get('/api/v1/matches/:component', function(req, res) {
+app.get('/api/v1/matches/:component', function (req, res) {
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
-        record.getMatches(req.params.component, 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results plan_id payer_name payer number plan_name"', function(err, matchList) {
+        record.getMatches(req.params.component, 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results plan_id payer_name payer number plan_name"', function (err, matchList) {
             if (err) {
                 console.error(err);
                 res.send(400, err);
@@ -220,11 +233,11 @@ app.get('/api/v1/matches/:component', function(req, res) {
 });
 
 // Get single match API.
-app.get('/api/v1/match/:component/:record_id', function(req, res) {
+app.get('/api/v1/match/:component/:record_id', function (req, res) {
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
-        record.getMatch(req.params.component, 'test', req.params.record_id, function(err, match) {
+        record.getMatch(req.params.component, 'test', req.params.record_id, function (err, match) {
             if (err) {
                 res.send(400, err);
             } else {
@@ -235,13 +248,13 @@ app.get('/api/v1/match/:component/:record_id', function(req, res) {
 });
 
 //Post partial record updates.
-app.post('/api/v1/matches/:component/:record_id', function(req, res) {
+app.post('/api/v1/matches/:component/:record_id', function (req, res) {
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         if (_.contains(['added', 'ignored'], req.body.determination)) {
-            processUpdate(req.params.record_id, null, req.params.component, req.body, function(err) {
+            processUpdate(req.params.record_id, null, req.params.component, req.body, function (err) {
                 if (err) {
                     console.error(err);
                     res.send(400, err);
@@ -256,13 +269,13 @@ app.post('/api/v1/matches/:component/:record_id', function(req, res) {
 });
 
 //Post partial record updates.
-app.post('/api/v1/matches/:component/:record_id/:record_index', function(req, res) {
+app.post('/api/v1/matches/:component/:record_id/:record_index', function (req, res) {
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         if (_.contains(['merged'], req.body.determination)) {
-            processUpdate(req.params.record_id, req.params.record_index, req.params.component, req.body, function(err) {
+            processUpdate(req.params.record_id, req.params.record_index, req.params.component, req.body, function (err) {
                 if (err) {
                     console.error(err);
                     res.send(400, err);

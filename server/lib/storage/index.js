@@ -97,6 +97,8 @@ savePartialComponents();
 
 }
 
+module.exports.saveComponents = saveComponents;
+
 //Pull saved records from db for reconciliation.
 function getSavedRecords(saved_sections, callback) {
 
@@ -175,7 +177,7 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
             //console.log(JSON.stringify(parsed_record, null, 4));
             //console.log('------------------------');
             //console.log(JSON.stringify(parsed_record, null, 4));
-            console.log(parsed_record);
+            //console.log(parsed_record);
 
 
             dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
