@@ -30,8 +30,11 @@ angular.module('dre.match.reconciliation', [])
 
         $scope.reviewClick = function(match) {
             //alert(JSON.stringify(match));
-            //console.log(match);
-            $location.path("match/reconciliation/review/" + match.entry_type + "/" + match._id + "/" + match.entry._id + "/" + match.match_entry._id);
+            console.log("Review Match Click!");
+            console.log(JSON.stringify(match,null,4));
+
+            //pass section name and _id of the match object only
+            $location.path("match/reconciliation/review/" + match.entry_type + "/" + match._id);
         };
 
         $scope.matches = {};
@@ -55,7 +58,7 @@ angular.module('dre.match.reconciliation', [])
 
                     for (var iM in data.matches) {
 
-                        data.matches[iM].entry = recordFunctions.extractName(data.matches[iM].entry);
+                        data.matches[iM].entry = recordFunctions.extractName(data.matches[iM].entry, loadsec);
                         data.matches[iM].singular_section = recordFunctions.singularizeSection(data.matches[iM].entry_type);
                         //console.log(data.matches[iM]);
 

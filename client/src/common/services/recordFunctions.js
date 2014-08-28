@@ -328,11 +328,8 @@ angular.module('services.recordFunctions', [])
                         }
                     }
 
-                    console.log("minDate ", minDate);
                     entries[i].attribute = this.formatDateTime(minDate);
                     entries[i].sort_order = this.sortOrderDateTime(minDate);
-
-                    console.log(entries[i].attribute);
                 }
                 else if (section==="medications"){
                     entries[i].attribute = entries[i].status;
@@ -349,7 +346,7 @@ angular.module('services.recordFunctions', [])
 
         //new method to get all patients entries for specific section
         this.getEntries = function($scope, section) {
-            console.log("fetching " + section + " entires");
+            //console.log("fetching " + section + " entires");
 
             var that = this;
 
@@ -358,11 +355,7 @@ angular.module('services.recordFunctions', [])
                 url: '/api/v1/record/' + section
             }).
             success(function(data, status, headers, config) {
-                console.log(section + JSON.stringify(data));
                 $scope.entries = data[section];
-
-                console.log(section + $scope.entries);
-                console.log(section + " length:", $scope.entries.length);
 
                 if ($scope.entries.length > 0) {
                     $scope.display = true;

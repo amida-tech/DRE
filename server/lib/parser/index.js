@@ -18,6 +18,7 @@ function extractRecord(inputRecord, callback) {
             bbRecord = bb.parseString(inputRecord);
         }
 
+        console.log(bbRecord.meta);
 
 	} catch (parseError) {
 		callback(parseError);
