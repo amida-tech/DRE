@@ -6,8 +6,8 @@
 	<br/>
 	<br/>
 </div>
-<div ng-hide="displayMedications" class="panel-title">No medications are currently in your record.</div>
-<div ng-show="displayMedications" class="panel-group" id="#accordian-medications" ng-repeat="medication in medications | orderBy:medicationPredicate">
+<div ng-hide="display" class="panel-title">No medications are currently in your record.</div>
+<div ng-show="display" class="panel-group" id="#accordian-medications" ng-repeat="entry in entries | orderBy:sort_predicate">
 
 	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -22,7 +22,7 @@
 							<tr><td><strong>Source Information</strong></td></tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="attribution in medication.metadata.attribution">
+							<tr ng-repeat="attribution in entry.metadata.attribution">
 								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
 								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
 								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
@@ -39,8 +39,8 @@
 			<a data-toggle="collapse" data-parent="#accordian-medications" data-target="#medication-{{$index}}">
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
-					<span style="text-transform:uppercase;">{{medication.name}}</span>
-					<span class="pull-right" style="text-transform:uppercase;">{{medication.status}}</span>
+					<span style="text-transform:uppercase;">{{entry.name}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{entry.attribute}}</span>
 				</div>
 			</a>
 		</div>
@@ -49,31 +49,31 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.date[0].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[0].displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[0].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[1].displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.sig">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.sig">
 							<div class="pull-left col-md-12"><strong>Sig:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.sig}}</div>
+							<div class="pull-left col-md-12">{{entry.sig}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.product.product.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.product.product.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.product.product.code}}</div>
+							<div class="pull-left col-md-12">{{entry.product.product.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.product.product.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.product.product.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.product.product.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{entry.product.product.code_system_name}}</div>
 						</div>
 					</div>
 
-					<div class="col-md-12" ng-show="medication.product.product.translations">
+					<div class="col-md-12" ng-show="entry.product.product.translations">
 						<h4>Other Descriptions</h4>
-						<div ng-repeat=" translation in medication.product.product.translations" class="col-md-12">
+						<div ng-repeat=" translation in entry.product.product.translations" class="col-md-12">
 							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
 								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
 								<div class="pull-left col-md-12">{{translation.name}}</div>
@@ -89,43 +89,43 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-show="medication.administration">
+					<div class="col-md-12 pull-left" ng-show="entry.administration">
 						<h4>Administration</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.administration.route.name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.administration.route.name">
 							<div class="pull-left col-md-12"><strong>Route:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.administration.route.name}}</div>
+							<div class="pull-left col-md-12">{{entry.administration.route.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.administration.form.name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.administration.form.name">
 							<div class="pull-left col-md-12"><strong>Form:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.administration.form.name}}</div>
+							<div class="pull-left col-md-12">{{entry.administration.form.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.administration.dose.value">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.administration.dose.value">
 							<div class="pull-left col-md-12"><strong>Dose:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.administration.dose.value}} {{medication.administration.dose.unit}}</div>
+							<div class="pull-left col-md-12">{{entry.administration.dose.value}} {{medication.administration.dose.unit}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.administration.rate.value">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.administration.rate.value">
 							<div class="pull-left col-md-12"><strong>Rate:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.administration.rate.value}} {{medication.administration.rate.unit}}</div>
+							<div class="pull-left col-md-12">{{entry.administration.rate.value}} {{medication.administration.rate.unit}}</div>
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-show="medication.precondition">
+					<div class="col-md-12 pull-left" ng-show="entry.precondition">
 						<h4>Precondition</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.precondition.code.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.precondition.code.code">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.precondition.code.code}}</div>
+							<div class="pull-left col-md-12">{{entry.precondition.code.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.precondition.value.name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.precondition.value.name">
 							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.precondition.value.name}}</div>
+							<div class="pull-left col-md-12">{{entry.precondition.value.name}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.precondition.value.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.precondition.value.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.precondition.value.code}}</div>
+							<div class="pull-left col-md-12">{{entry.precondition.value.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="medication.precondition.value.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.precondition.value.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{medication.precondition.value.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{entry.precondition.value.code_system_name}}</div>
 						</div>
 					</div>
 					

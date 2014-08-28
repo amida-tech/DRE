@@ -6,8 +6,8 @@
 	<br/>
 	<br/>
 </div>
-<div ng-hide="displayEncounters" class="panel-title">No encounters are currently in your record.</div>
-<div ng-show="displayEncounters" class="panel-group" id="#accordian-encounters" ng-repeat="encounter in encounters | orderBy:encounterPredicate">
+<div ng-hide="display" class="panel-title">No encounters are currently in your record.</div>
+<div ng-show="display" class="panel-group" id="#accordian-encounters" ng-repeat="entry in entries | orderBy:sort_predicate">
 
 	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -22,7 +22,7 @@
 							<tr><td><strong>Source Information</strong></td></tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="attribution in encounter.metadata.attribution">
+							<tr ng-repeat="attribution in entry.metadata.attribution">
 								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
 								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
 								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
@@ -39,8 +39,8 @@
 			<a data-toggle="collapse" data-parent="#accordian-encounters" data-target="#encounter-{{$index}}">
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
-					<span style="text-transform:uppercase;">{{encounter.name}}</span>
-					<span class="pull-right" style="text-transform:uppercase;">{{encounter.date_time.point.date | date}}</span>
+					<span style="text-transform:uppercase;">{{entry.name}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{entry.attribute}}</span>
 				</div>
 			</a>
 		</div>
@@ -49,27 +49,27 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="encounter.date[0].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[0].displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{encounter.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[0].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="encounter.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[1].displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{encounter.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="encounter.encounter.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.encounter.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{encounter.encounter.code}}</div>
+							<div class="pull-left col-md-12">{{entry.encounter.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="encounter.encounter.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.encounter.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{encounter.encounter.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{entry.encounter.code_system_name}}</div>
 						</div>
 					</div>
 
-					<div class="col-md-12" ng-show="encounter.encounter.translations">
+					<div class="col-md-12" ng-show="entry.encounter.translations">
 						<h4>Other Descriptions</h4>
-						<div ng-repeat=" translation in encounter.encounter.translations" class="col-md-12">
+						<div ng-repeat=" translation in entry.encounter.translations" class="col-md-12">
 							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
 								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
 								<div class="pull-left col-md-12">{{translation.name}}</div>
@@ -85,7 +85,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="finding in encounter.findings">
+					<div class="col-md-12 pull-left" ng-repeat="finding in entry.findings">
 						<h4>Findings</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="finding.name">
 							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
@@ -101,7 +101,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="location in encounter.locations">
+					<div class="col-md-12 pull-left" ng-repeat="location in entry.locations">
 						<h4>Location</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="location.name">
 							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>

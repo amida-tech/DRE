@@ -272,14 +272,8 @@ angular.module('services.recordFunctions', [])
             }
         };
 
-        var severityReference = {
-            "MILD": 1,
-            "MILD TO MODERATE": 2,
-            "MODERATE": 3,
-            "MODERATE TO SEVERE": 4,
-            "SEVERE": 5,
-            "FATAL": 6
-        };
+
+
 
         //this method calculates display name and attribute on right side of display name e.g. date(or severity), sort order and other stuff
         this.updateFields = function(entries, section) {
@@ -290,16 +284,61 @@ angular.module('services.recordFunctions', [])
                 entries[i].name = this.truncateName(entries[i].name);
 
                 if (section === "allergies") {
+                    var severityWeight = {
+                        "MILD": 1,
+                        "MILD TO MODERATE": 2,
+                        "MODERATE": 3,
+                        "MODERATE TO SEVERE": 4,
+                        "SEVERE": 5,
+                        "FATAL": 6
+                    };
 
                     //replace attribute with severity
-                    entries[i].attribute = this.formatDateTime(entries[i].date_time); //should be 6-1 based on severity
-                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+
+                    var severity = entries[i].observation.severity.code.name;
+                    entries[i].sort_order = (severity && severityWeight[severity.toUpperCase()]) || 0;
                 } else if (section === "problems") {
                     //replace attribute with resolution flag??
+
+                    var statusWeight = {
+                        active: 3,
+                        inactive: 2,
+                        resolved: 1
+                    };
+
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
+
+                    var status = entries[i].status.name;
+                    entries[i].sort_order = (status && statusWeight[status.toLowerCase()]) || 0;
+                } else if (section === "results") {
+                    //Results find date based on array
+                    //TODO:  Improve so takes highest accuracy over lowest value.
+
+                    var minDate;
+
+                    //find earlies date in test result and use it as attribute for entire battery/cluster
+                    for (var j in entries[i].results) {
+                        var curr = entries[i].results[j];
+                        if (curr.date_time.point) {
+                            //if min date is empty or more recent then current, update min date
+                            if (!minDate || minDate.point.date > curr.date_time.point.date) {
+                                minDate = curr.date_time;
+                            }
+                        }
+                    }
+
+                    console.log("minDate ", minDate);
+                    entries[i].attribute = this.formatDateTime(minDate);
+                    entries[i].sort_order = this.sortOrderDateTime(minDate);
+
+                    console.log(entries[i].attribute);
+                }
+                else if (section==="medications"){
+                    entries[i].attribute = entries[i].status;
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
                 }
-                // social_history, vitals
+                // social_history, vitals, procedures, immunizations, encounters
                 else {
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
@@ -327,8 +366,9 @@ angular.module('services.recordFunctions', [])
 
                 if ($scope.entries.length > 0) {
                     $scope.display = true;
-                    that.updateFields($scope.entries, section);
                     $scope.sort_predicate = "-sort_order";
+
+                    that.updateFields($scope.entries, section);
                 } else {
                     $scope.display = false;
                 }

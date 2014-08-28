@@ -17,21 +17,21 @@ limitations under the License.
 angular.module('dre.record.social_history', [])
 
 .config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.when('/record/social_history', {
-      templateUrl: 'templates/record/components/social_history.tpl.html',
-      controller: 'social_historyCtrl'
-    });
-  }
+    function($routeProvider) {
+        $routeProvider.when('/record/social_history', {
+            templateUrl: 'templates/record/components/social_history.tpl.html',
+            controller: 'social_historyCtrl'
+        });
+    }
 ])
 
 .controller('social_historyCtrl', ['$scope', '$http', '$location', 'recordFunctions',
-  function($scope, $http, $location, recordFunctions) {
+    function($scope, $http, $location, recordFunctions) {
 
-    $scope.entries = [];
-    $scope.display = false;
+        $scope.entries = [];
+        $scope.display = false;
 
-    recordFunctions.getEntries($scope, "social_history");
-    
-  }
+        recordFunctions.getEntries($scope, "social_history");
+
+    }
 ]);

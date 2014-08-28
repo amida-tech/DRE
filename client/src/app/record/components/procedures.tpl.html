@@ -6,8 +6,8 @@
 	<br/>
 	<br/>
 </div>
-<div ng-hide="displayProcedures" class="panel-title">No procedures are currently in your record.</div>
-<div ng-show="displayProcedures" class="panel-group" id="#accordian-procedures" ng-repeat="procedure in procedures | orderBy:procedurePredicate">
+<div ng-hide="display" class="panel-title">No procedures are currently in your record.</div>
+<div ng-show="display" class="panel-group" id="#accordian-procedures" ng-repeat="entry in entries | orderBy:sort_predicate">
 
 	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -22,7 +22,7 @@
 							<tr><td><strong>Source Information</strong></td></tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="attribution in procedure.metadata.attribution">
+							<tr ng-repeat="attribution in entry.metadata.attribution">
 								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
 								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
 								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
@@ -39,8 +39,8 @@
 			<a data-toggle="collapse" data-parent="#accordian-procedures" data-target="#procedure-{{$index}}">
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
-					<span style="text-transform:uppercase;">{{procedure.name}} - {{procedure.status}}</span>
-					<span class="pull-right" style="text-transform:uppercase;">{{procedure.date[0].displayDate}}</span>
+					<span style="text-transform:uppercase;">{{entry.name}} - {{entry.status}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{entry.attribute}}</span>
 				</div>
 			</a>
 		</div>
@@ -49,29 +49,29 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.date[0].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[0].displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{procedure.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[0].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[1].displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{procedure.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date[1].displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.procedure_type">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.procedure_type">
 							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
-							<div class="pull-left col-md-12">{{procedure.procedure_type}}</div>
+							<div class="pull-left col-md-12">{{entry.procedure_type}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.procedure.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.procedure.code">
 							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{procedure.procedure.code}}</div>
+							<div class="pull-left col-md-12">{{entry.procedure.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="procedure.procedure.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.procedure.code_system_name">
 							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{procedure.procedure.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{entry.procedure.code_system_name}}</div>
 						</div>
 					</div>
 
-					<div class="col-md-12" ng-show="procedure.procedure.translations">
+					<div class="col-md-12" ng-show="entry.procedure.translations">
 						<h4>Other Descriptions</h4>
 						<div ng-repeat=" translation in procedure.procedure.translations" class="col-md-12">
 							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
@@ -89,7 +89,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="provider in procedure.providers">
+					<div class="col-md-12 pull-left" ng-repeat="provider in entry.providers">
 						<h4>Provider</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="provider.organization.name">
 							<div class="pull-left col-md-12"><strong>Provider:</strong></div><br/>
@@ -101,7 +101,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="location in procedure.locations" ng-show="procedure.locations">
+					<div class="col-md-12 pull-left" ng-repeat="location in entry.locations" ng-show="entry.locations">
 						<h4>Location</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="location.name">
 							<div class="pull-left col-md-12"><strong>Provider:</strong></div><br/>
@@ -117,7 +117,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="body_site in procedure.body_sites">
+					<div class="col-md-12 pull-left" ng-repeat="body_site in entry.body_sites">
 						<h4>Body Sites</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="body_site.name">
 							<div class="pull-left col-md-12"><strong>Location:</strong></div><br/>

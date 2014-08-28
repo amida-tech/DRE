@@ -26,108 +26,12 @@ angular.module('dre.record.medications', [])
 ])
 
 .controller('medicationsCtrl', ['$scope', '$http', '$location', 'recordFunctions',
-  function($scope, $http, $location, recordFunctions) {
+    function($scope, $http, $location, recordFunctions) {
 
-    $scope.medications = [];
-    $scope.displayMedications = false;
-    $scope.medicationPredicate = "-status";
+        $scope.entries = [];
+        $scope.display = false;
 
-
-    $scope.getRecord = function() {
-      $http({
-        method: 'GET',
-        url: '/api/v1/record/medications'
-      }).
-      success(function(data, status, headers, config) {
-        $scope.medications = data.medications;
-        if ($scope.medications.length > 0) {
-          $scope.displayMedications = true;
-          $scope.updateFields();
-        } else {
-          $scope.displayMedications = false;
-        }
-      }).
-      error(function(data, status, headers, config) {
-        console.log('error');
-      });
-    };
-
-    $scope.updateFields = function() {
-      for (var i in $scope.medications) {
-        recordFunctions.extractName($scope.medications[i], "medications");
-        $scope.medications[i].name = recordFunctions.truncateName($scope.medications[i].name);
-        recordFunctions.formatDate($scope.medications[i].date);
-      }
-    };
-
-    $scope.getStub = function() {
-      $scope.displayMedications = true;
-      $scope.medications = [{
-        "date": [
-          {
-            "date": "2007-01-03T00:00:00.000Z",
-            "precision": "day"
-          }, {
-            "date": "2012-05-15T00:00:00.000Z",
-            "precision": "day"
-          }
-        ],
-        "identifiers": [{
-          "identifier": "cdbd33f0-6cde-11db-9fe1-0800200c9a66"
-        }],
-        "status": "Completed",
-        "sig": "Proventil HFA\n\t\t\t\t\t\t\t\t\t\t\t",
-        "product": {
-          "name": "Proventil HFA",
-          "code": "219483",
-          "code_system_name": "RXNORM",
-          "translations": [{
-            "name": "Proventil 0.09 MG/ACTUAT inhalant solution",
-            "code": "573621",
-            "code_system_name": "RXNORM"
-          }],
-          "unencoded_name": "Proventil HFA\n\t\t\t\t\t\t\t\t\t\t\t",
-          "identifers": {
-            "identifier": "2a620155-9d11-439e-92b3-5d9815ff4ee8"
-          }
-        },
-        "administration": {
-          "route": {
-            "name": "RESPIRATORY (INHALATION)",
-            "code": "C38216",
-            "code_system_name": "Medication Route FDA"
-          },
-          "form": {
-            "name": "INHALANT",
-            "code": "C42944",
-            "code_system_name": "Medication Route FDA"
-          },
-          "dose": {
-            "value": 1,
-            "unit": "mg/actuat"
-          },
-          "rate": {
-            "value": 90,
-            "unit": "ml/min"
-          }
-        },
-        "precondition": {
-          "code": {
-            "code": "ASSERTION",
-            "code_system_name": "HL7ActCode"
-          },
-          "value": {
-            "name": "Wheezing",
-            "code": "56018004",
-            "code_system_name": "SNOMED CT"
-          }
-        }
-      }];
-      $scope.updateFields();
-    };
-
-    $scope.getRecord();
-    //$scope.getStub();
+        recordFunctions.getEntries($scope, "medications");
 
   }
 ]);
