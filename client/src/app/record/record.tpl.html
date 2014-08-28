@@ -1,12 +1,15 @@
 <div class="col-md-12">
 
     <br/>
-    <h5 class="lead">
+    <h5 class="">
         <a ng-href="/api/v1/master_health_record" class=" pull-right">
             <button type="button" class="btn btn-info">
                 <span class="glyphicon glyphicon-cloud-download"></span>Download Data</button>
         </a>
     </h5>
+
+    <!-- Usage as a class -->
+    <div class="clearfix"></div>
 
     <div ng-controller="allergiesCtrl">
         <div ng-include="allergiesPath"></div>
@@ -50,5 +53,6 @@
     <div ng-controller="social_historyCtrl">
         <div ng-include="social_historyPath"></div>
     </div>
+
 
 </div>

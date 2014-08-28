@@ -37,7 +37,7 @@ app.get('/api/v1/record/:component', login.checkAuth, function(req, res) {
     } else {
 
         function sendResponse(componentName) {
-            record.getSection(componentName, 'test', function(err, componentList) {
+            record.getSection(componentName, req.user.username, function(err, componentList) {
                 if (err) {
                     res.send(500);
                 } else {
@@ -59,13 +59,13 @@ function prep(sec, secName) {
     return secName == "demographics" || secName == "social_history" ? sec[0] : sec;
 }
 
-function getMHR(callback) {
+function getMHR(username, callback) {
     var aggregatedResponse = {},
         count = 0,
         components = Object.keys(supportedComponents);
 
     bbm.supported_sections.forEach(function(secName) {
-        record.getSectionAsync(secName, 'test').then(function(sec) {
+        record.getSectionAsync(secName, username).then(function(sec) {
             if (sec.length !== 0) {
                 _.extend(aggregatedResponse, formatResponse(secName, prep(sec, secName)));
             }
@@ -83,7 +83,7 @@ app.get('/api/v1/master_health_record/:format?', login.checkAuth, function(req, 
         format = "json";
     }
 
-    getMHR(function(err, result) {
+    getMHR(req.user.username, function(err, result) {
         //console.log(result);
 
         if (err) {

@@ -9,7 +9,7 @@ var extractRecord = parser.extractRecord;
 var record = require('blue-button-record');
 
 //Wrapper function to save all components of an incoming object.
-function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
+function saveComponents(username, masterObject, masterPartialObject, sourceID, callback) {
 
     var masterComplete = false;
     var masterPartialComplete = false;
@@ -20,7 +20,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
         }
     }
 
-    function saveMasterComponents() {
+    function saveMasterComponents(username) {
 
         //Set initial counter values.
         var totalSections = 0;
@@ -29,7 +29,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             totalSections++;
         }
 
-        function checkSaveMasterComponentsComplete () {
+        function checkSaveMasterComponentsComplete() {
             savedSections++;
             if (savedSections === totalSections) {
                 masterComplete = true;
@@ -42,7 +42,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             if (saveArray.length === 0) {
                 checkSaveMasterComponentsComplete();
             } else {
-                record.saveSection(secName, 'test', saveArray, sourceID, function(err) {
+                record.saveSection(secName, username, saveArray, sourceID, function(err) {
                     if (err) {
                         callback(err);
                     } else {
@@ -53,7 +53,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
         }
     }
 
-    function savePartialComponents() {
+    function savePartialComponents(username) {
 
         //Set initial counter values.
         var totalSections = 0;
@@ -67,7 +67,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             checkComponentsComplete();
         }
 
-        function checkSavePartialComponentsComplete () {
+        function checkSavePartialComponentsComplete() {
             savedSections++;
             if (savedSections === totalSections) {
                 masterPartialComplete = true;
@@ -81,7 +81,7 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
             if (saveArray.length === 0) {
                 checkSavePartialComponentsComplete();
             } else {
-                record.saveMatches(secName, 'test', saveArray, sourceID, function(err) {
+                record.saveMatches(secName, username, saveArray, sourceID, function(err) {
                     if (err) {
                         callback(err);
                     } else {
@@ -89,24 +89,24 @@ function saveComponents(masterObject, masterPartialObject, sourceID, callback) {
                     }
                 });
 
+            }
         }
     }
-}
 
-saveMasterComponents();
-savePartialComponents();
+    saveMasterComponents(username);
+    savePartialComponents(username);
 
 }
 
 //Pull saved records from db for reconciliation.
-function getSavedRecords(saved_sections, callback) {
+function getSavedRecords(username, saved_sections, callback) {
 
     var responseObject = {};
     var responseIter = 0;
     var responseLength = saved_sections.length;
 
     //TODO:  Factor patient ID further up stack.
-    var patient_id = 'test';
+    var patient_id = username;
 
     function checkComplete(current_iteration) {
         responseIter++;
@@ -157,7 +157,7 @@ function parseRecord(record_type, record_data, callback) {
 }
 
 //Pulls saved components from DB, reconciles with incoming.
-function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
+function reconcileRecord(username, parsed_record, parsed_record_identifier, callback) {
 
     var sectionArray = [];
 
@@ -168,7 +168,7 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
     //console.log(sectionArray);
 
     //Get Saved Records.
-    getSavedRecords(sectionArray, function(err, saved_record) {
+    getSavedRecords(username, sectionArray, function(err, saved_record) {
         if (err) {
             callback(err);
         } else {
@@ -179,9 +179,9 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
 
 
 
-            dre.reconcile(parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
+            dre.reconcile(username, parsed_record, saved_record, parsed_record_identifier, function(err, reconciliation_results, partial_reconciliation_results) {
                 //console.log(JSON.stringify(partial_reconciliation_results, null, 10));
-                saveComponents(reconciliation_results, partial_reconciliation_results, parsed_record_identifier, function(err) {
+                saveComponents(username, reconciliation_results, partial_reconciliation_results, parsed_record_identifier, function(err) {
                     if (err) {
                         callback(err);
                     } else {
@@ -194,12 +194,12 @@ function reconcileRecord(parsed_record, parsed_record_identifier, callback) {
 }
 
 //Wrapper function for all match/merge operations.
-function importRecord(record_metadata, record_data, callback) {
+function importRecord(username, record_metadata, record_data, callback) {
     parseRecord(record_metadata.type, record_data, function(err, parsed_record_type, parsed_record) {
         if (err) {
             callback(err);
         } else if (!parsed_record_type) {
-            record.saveSource('test', record_data, record_metadata, null, function(err, fileInfo) {
+            record.saveSource(username, record_data, record_metadata, null, function(err, fileInfo) {
                 if (err) {
                     callback(err);
                 } else {
@@ -209,8 +209,7 @@ function importRecord(record_metadata, record_data, callback) {
         } else {
 
             //May need to wrap you.
-
-            record.saveSource('test', record_data, record_metadata, parsed_record_type, function(err, id) {
+            record.saveSource(username, record_data, record_metadata, parsed_record_type, function(err, id) {
                 if (err) {
                     callback(err);
                 } else {
@@ -221,11 +220,10 @@ function importRecord(record_metadata, record_data, callback) {
                         parsed_record.demographics = tmpDemographicsArray;
                     }
 
-                    reconcileRecord(parsed_record, id, function(err) {
+                    reconcileRecord(username, parsed_record, id, function(err) {
                         if (err) {
-                            console.error(err);
                             callback(err);
-                        } else {                            
+                        } else {
                             callback(null, id);
                         }
                     });
@@ -241,7 +239,7 @@ function validateFileMessage(requestObject, callback) {
 }
 
 //Master wrapper function.
-function processUpload(recordUpload, callback) {
+function processUpload(username, recordUpload, callback) {
     if (!recordUpload) {
         callback('Wrong object name');
     } else {
@@ -253,7 +251,7 @@ function processUpload(recordUpload, callback) {
                     if (err) {
                         callback(err);
                     } else {
-                        importRecord(recordUpload, fileData, function(err, import_results) {
+                        importRecord(username, recordUpload, fileData, function(err, import_results) {
                             if (err) {
                                 callback(err);
                             } else {
@@ -269,7 +267,7 @@ function processUpload(recordUpload, callback) {
 
 //Retrieves a specific file for download.
 app.get('/api/v1/storage/record/:identifier', login.checkAuth, function(req, res) {
-    record.getSource('test', req.params.identifier, function(err, filename, returnFile) {
+    record.getSource(req.user.username, req.params.identifier, function(err, filename, returnFile) {
         if (err) {
             throw err;
         }
@@ -280,7 +278,7 @@ app.get('/api/v1/storage/record/:identifier', login.checkAuth, function(req, res
 
 //Returns list of records in storage.
 app.get('/api/v1/storage', login.checkAuth, function(req, res) {
-    record.getSourceList('test', function(err, recordList) {
+    record.getSourceList(req.user.username, function(err, recordList) {
         var recordResponse = {};
         recordResponse.storage = recordList;
         res.send(recordResponse);
@@ -290,9 +288,8 @@ app.get('/api/v1/storage', login.checkAuth, function(req, res) {
 //Uploads a file into storage.
 app.put('/api/v1/storage', login.checkAuth, function(req, res) {
     //console.log(req.files.file);
-    processUpload(req.files.file, function(err) {
+    processUpload(req.user.username, req.files.file, function(err) {
         if (err) {
-            console.error(err);
             res.send(400, err);
         } else {
             res.send(200);

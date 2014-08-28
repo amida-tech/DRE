@@ -51,7 +51,7 @@ describe('authentication', function(done) {
     })    
 
     it('should login', function(done) {
-        common.login(api, 'test2', 'test2', done);
+        common.login(api, 'test', 'test', done);
     })
 
     it('should be authenticated', function(done) {

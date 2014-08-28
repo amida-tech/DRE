@@ -1,10 +1,11 @@
+<!-- Begin allergies -->
+
 <div class="col-md-12">
     <br/>
     <span class="lead">Allergies</span>
     <br/>
     <br/>
 </div>
-
 <div ng-hide="displayAllergies" class="panel-title">No allergies are currently in your record.</div>
 <div ng-show="displayAllergies" class="panel-group" id="#accordian-allergy" ng-repeat="allergy in allergies | orderBy:allergyPredicate">
 
