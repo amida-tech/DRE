@@ -3,10 +3,10 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 var bbm = require('blue-button-meta');
-//<<<<<<< HEAD
 var dre = require('../dre/index.js');
 var storage = require('../storage/index.js');
 var async = require('async');
+var login = require('../login');
 
 function reRunMatches(matchComponent, matchUser, callback) {
 
@@ -179,11 +179,8 @@ function reRunMatches(matchComponent, matchUser, callback) {
     });
 
 }
-//=======
-var login = require('../login');
 
 function updateMerged(username, updateId, updateComponent, updateIndex, updateParameters, callback) {
-//>>>>>>> master
 
     //Gather full match object by ID.
     record.getMatch(updateComponent, username, updateId, function(err, resultComponent) {
@@ -192,7 +189,9 @@ function updateMerged(username, updateId, updateComponent, updateIndex, updatePa
         } else {
 
             //Gather partial record from db.
+
             record.getEntry(updateComponent, username, resultComponent.entry._id, function(err, recordResults) {
+
                 if (err) {
                     callback(err);
                 } else {
@@ -201,15 +200,14 @@ function updateMerged(username, updateId, updateComponent, updateIndex, updatePa
                     var recordId = recordResults.metadata.attribution[0].record._id;
 
                     //Update merged entry.
+
                     record.updateEntry(updateComponent, username, resultComponent.matches[updateIndex].match_entry._id, recordId, updateParameters, function(err, updateResults) {
                         if (err) {
                             callback(err);
                         } else {
-
-/*<<<<<<< HEAD
-                            
+     
                             //Use cancel to update to merged.
-                            record.cancelMatch(updateComponent, 'test', updateId, 'merged', function (err, results) {
+                            record.cancelMatch(updateComponent, username, updateId, 'merged', function (err, results) {
                                 if (err) {
                                     callback(err);
                                 } else {
@@ -220,10 +218,6 @@ function updateMerged(username, updateId, updateComponent, updateIndex, updatePa
                                     //});
                                 }
                             });
-=======*/
-                            //Need to shim in re-running matches here.
-                            
-                            record.cancelMatch(updateComponent, username, updateId, 'merged', callback);
                         }
                     });
                 }
@@ -242,14 +236,13 @@ function processUpdate(username, updateId, updateIndex, updateComponent, updateP
         if (updateComponent === 'demographics') {
             callback('Only one demographic accepted');
         }
-/*        
-<<<<<<< HEAD
+
         record.acceptMatch(updateComponent, 'test', updateId, 'added', function(err, results) {
             if (err) {
                 callback(err);
             } else {
                  //Rerun Matching.
-                reRunMatches(updateComponent, 'test', function (err, results) {
+                reRunMatches(updateComponent, username, function (err, results) {
                     if (err) {
                         callback(err);
                     } else {
@@ -258,14 +251,13 @@ function processUpdate(username, updateId, updateIndex, updateComponent, updateP
                 });
             }
         });
-=======
-*/
-        record.acceptMatch(updateComponent, username, updateId, 'added', callback);
+
     }
 
     if (updateParameters.determination === 'merged') {
         //If determination is merged, overwrite original record, drop source object, and update merge history of object.
-        updateMerged(username, updateId, updateComponent, updateParameters.updated_entry, function(err, results) {
+        updateMerged(username, updateId, updateComponent, updateIndex, updateParameters.updated_entry, function (err, results) {
+
             if (err) {
                 callback(err);
             } else {
@@ -275,7 +267,24 @@ function processUpdate(username, updateId, updateIndex, updateComponent, updateP
     }
 
     if (updateParameters.determination === 'ignored') {
-        record.cancelMatch(updateComponent, username, updateId, 'ignored', callback)
+        record.cancelMatch(updateComponent, username, updateId, 'ignored', function(err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                //Rerun Matching.
+               /* reRunMatches(updateComponent, 'test', function (err, results) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback();
+                    }
+                });*/
+
+                callback();
+
+            }
+        })
+
     }
 }
 
@@ -299,7 +308,6 @@ app.get('/api/v1/matches/:component', login.checkAuth, function(req, res) {
 });
 
 // Get single match API.
-
 app.get('/api/v1/match/:component/:record_id', login.checkAuth, function(req, res) {
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
