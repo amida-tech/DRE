@@ -37,10 +37,15 @@
         <div phone-entry input-value="new_entry.phone" input-title="Phone" select-field="selectedItems.phone"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('email', null, match_diff.email)" ng-show="selectedItems.email" ng-class="{selected: selectedItems.email, disabled: match_diff.email}">
+    <li class="list-group-item" ng-click="selectField('email', null, match_diff.email)" ng-show="new_entry.email" ng-class="{selected: selectedItems.email, disabled: match_diff.email}">
         <div single-entry input-value="new_entry.email" input-title="Email" select-field="selectedItems.email"></div>
     </li>
 
+    <li class="list-group-item" ng-click="selectField('guardians', null, match_diff.guardians)" ng-show="new_entry.guardians" ng-class="{selected: selectedItems.guardians, disabled: match_diff.guardians}">
+        <div guardians-entry input-value="new_entry.guardians" input-title="Guardians" select-field="selectedItems.guardians"></div>
+    </li>
+
+    <pre>{{selectedItems | json}} </pre>
 
     <li class="list-group-item" ng-repeat="(reaction_id, reaction_entry) in new_entry.reaction" ng-click="selectField('reaction', reaction_id, match_diff.reaction)" ng-class="{selected: selectedItems.reaction[reaction_id], disabled: match_diff.reaction}">
         <div coded-entry input-value="reaction_entry.reaction" input-title="Reaction" input-additional="reaction_entry" select-field="selectedItems.reaction[reaction_id]"></div>

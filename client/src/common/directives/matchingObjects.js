@@ -73,7 +73,8 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
-.directive('dateEntry', ['$parse',
+//guardians for demographics
+.directive('guardiansEntry', ['$parse',
     function($parse) {
         return {
             restrict: 'A',
@@ -83,17 +84,51 @@ angular.module('directives.matchingObjects', [])
                 inputTitle: '@',
                 selectField: '='
             },
-            template: "<table class='table table-condensed'>" +
-                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
-                //"<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue[0].displayDate}}</td></tr>" +
-                "<tr ng-show='inputValue.point'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.point.date | date:'medium'}}</td></tr>" +
-                "</table>",
-            link: function(scope, element, attrs) {
+            template: "<div ><div ng-repeat='guardian in inputValue'>" +
 
-            }
+            "<table class='table table-condensed' ng-repeat='name in guardian.names'>" +
+                "<thead><tr><th><h4>Guardian</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr><td class='col-md-12'>{{name.first}} {{name.middle.join(' ')}} {{name.last}}</td></tr>" +
+
+            "<table class='table table-condensed' ng-repeat='phone in guardian.phone'>" +
+                "<thead><tr><th><h4>Phone</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr><td class='col-md-8'>{{phone.number}}</td><td class='col-md-4 text-left'>{{phone.type}}</td></tr></table>" +
+
+            "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr ng-repeat='phone in inputValue'><td class='col-md-8'>{{phone.number}}</td><td class='col-md-4 text-left'>{{phone.type}}</td></tr>"+
+
+            "<table class='table table-condensed' ng-repeat='address in guardian.addresses'>" +
+                "<thead><tr><th><h4>Address</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr ng-repeat='line in address.street_lines'><td class='col-md-12'>{{line}}</td></tr>" +
+                "<tr><td class='col-md-12'>{{address.city}}, {{address.state}} {{address.zip}}</td></tr></table>" +
+
+            "</div></div>",
+            link: function(scope, element, attrs) {}
         };
     }
 ])
+    .directive('dateEntry', ['$parse',
+        function($parse) {
+            return {
+                restrict: 'A',
+                replace: true,
+                scope: {
+                    inputValue: '=',
+                    inputTitle: '@',
+                    selectField: '='
+                },
+                template: "<table class='table table-condensed'>" +
+                    "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                //"<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue[0].displayDate}}</td></tr>" +
+                "<tr ng-show='inputValue.point'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.point.date | date:'medium'}}</td></tr>" +
+                    "</table>",
+                link: function(scope, element, attrs) {
+
+                }
+            };
+        }
+    ])
 
 
 .directive('productEntry', ['$parse',
@@ -112,7 +147,7 @@ angular.module('directives.matchingObjects', [])
                 "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.product.name}}</td></tr>" +
                 "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.product.code}}</td></tr>" +
                 "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.product.code_system_name}}</td></tr>" +
-                "</table>"+
+                "</table>" +
                 "<table class='table table-condensed'>" +
                 "<thead><tr><th><h4>Manufacturer</h4></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
                 "<tr><td class='col-md-12'><label style='text-transform: capitalize;'>{{inputValue.manufacturer}}</label></td></tr>" +
