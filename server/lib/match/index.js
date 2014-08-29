@@ -3,10 +3,6 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 var bbm = require('blue-button-meta');
-<<<<<<< HEAD
-=======
-//<<<<<<< HEAD
->>>>>>> master
 var dre = require('../dre/index.js');
 var storage = require('../storage/index.js');
 var async = require('async');
@@ -183,16 +179,8 @@ function reRunMatches(matchComponent, matchUser, callback) {
     });
 
 }
-<<<<<<< HEAD
 
 function updateMerged(username, updateId, updateComponent, updateIndex, updateParameters, callback) {
-=======
-//=======
-var login = require('../login');
-
-function updateMerged(username, updateId, updateComponent, updateIndex, updateParameters, callback) {
-//>>>>>>> master
->>>>>>> master
 
     //Gather full match object by ID.
     record.getMatch(updateComponent, username, updateId, function(err, resultComponent) {
@@ -201,12 +189,9 @@ function updateMerged(username, updateId, updateComponent, updateIndex, updatePa
         } else {
 
             //Gather partial record from db.
-<<<<<<< HEAD
-            record.getEntry(updateComponent, username, resultComponent.entry._id, function (err, recordResults) {
 
-=======
             record.getEntry(updateComponent, username, resultComponent.entry._id, function(err, recordResults) {
->>>>>>> master
+
                 if (err) {
                     callback(err);
                 } else {
@@ -215,21 +200,12 @@ function updateMerged(username, updateId, updateComponent, updateIndex, updatePa
                     var recordId = recordResults.metadata.attribution[0].record._id;
 
                     //Update merged entry.
-<<<<<<< HEAD
-                    record.updateEntry(updateComponent, username, resultComponent.matches[updateIndex].match_entry._id, recordId, updateParameters, function (err, updateResults) {
 
-                        if (err) {
-                            callback(err);
-                        } else {
-=======
                     record.updateEntry(updateComponent, username, resultComponent.matches[updateIndex].match_entry._id, recordId, updateParameters, function(err, updateResults) {
                         if (err) {
                             callback(err);
                         } else {
-
-/*<<<<<<< HEAD
->>>>>>> master
-                            
+     
                             //Use cancel to update to merged.
                             record.cancelMatch(updateComponent, username, updateId, 'merged', function (err, results) {
                                 if (err) {
@@ -242,14 +218,6 @@ function updateMerged(username, updateId, updateComponent, updateIndex, updatePa
                                     //});
                                 }
                             });
-<<<<<<< HEAD
-
-=======
-=======*/
-                            //Need to shim in re-running matches here.
-                            
-                            record.cancelMatch(updateComponent, username, updateId, 'merged', callback);
->>>>>>> master
                         }
                     });
                 }
@@ -268,13 +236,8 @@ function processUpdate(username, updateId, updateIndex, updateComponent, updateP
         if (updateComponent === 'demographics') {
             callback('Only one demographic accepted');
         }
-<<<<<<< HEAD
-        record.acceptMatch(updateComponent, username, updateId, 'added', function(err, results) {
-=======
-/*        
-<<<<<<< HEAD
+
         record.acceptMatch(updateComponent, 'test', updateId, 'added', function(err, results) {
->>>>>>> master
             if (err) {
                 callback(err);
             } else {
@@ -288,21 +251,13 @@ function processUpdate(username, updateId, updateIndex, updateComponent, updateP
                 });
             }
         });
-<<<<<<< HEAD
-=======
-=======
-*/
-        record.acceptMatch(updateComponent, username, updateId, 'added', callback);
->>>>>>> master
+
     }
 
     if (updateParameters.determination === 'merged') {
         //If determination is merged, overwrite original record, drop source object, and update merge history of object.
-<<<<<<< HEAD
         updateMerged(username, updateId, updateComponent, updateIndex, updateParameters.updated_entry, function (err, results) {
-=======
-        updateMerged(username, updateId, updateComponent, updateParameters.updated_entry, function(err, results) {
->>>>>>> master
+
             if (err) {
                 callback(err);
             } else {
@@ -312,7 +267,6 @@ function processUpdate(username, updateId, updateIndex, updateComponent, updateP
     }
 
     if (updateParameters.determination === 'ignored') {
-<<<<<<< HEAD
         record.cancelMatch(updateComponent, username, updateId, 'ignored', function(err, results) {
             if (err) {
                 callback(err);
@@ -330,9 +284,7 @@ function processUpdate(username, updateId, updateIndex, updateComponent, updateP
 
             }
         })
-=======
-        record.cancelMatch(updateComponent, username, updateId, 'ignored', callback)
->>>>>>> master
+
     }
 }
 
@@ -356,10 +308,6 @@ app.get('/api/v1/matches/:component', login.checkAuth, function(req, res) {
 });
 
 // Get single match API.
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 app.get('/api/v1/match/:component/:record_id', login.checkAuth, function(req, res) {
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
@@ -376,20 +324,12 @@ app.get('/api/v1/match/:component/:record_id', login.checkAuth, function(req, re
 
 //Post partial record updates.
 app.post('/api/v1/matches/:component/:record_id', login.checkAuth, function(req, res) {
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         if (_.contains(['added', 'ignored'], req.body.determination)) {
             processUpdate(req.user.username, req.params.record_id, null, req.params.component, req.body, function(err) {
-<<<<<<< HEAD
-
-=======
->>>>>>> master
                 if (err) {
                     console.error(err);
                     res.send(400, err);
