@@ -1,14 +1,14 @@
 <!--div class="fluid-container col-md-12">
-	<div class="row">
-		<div ng-include="navPath"></div-->
+    <div class="row">
+        <div ng-include="navPath"></div-->
 <div class="col-md-9">
     <div class="col-md-12">
         <br/>
-        <span class="lead">Allergic Reaction Updates</span>
+        <span class="lead"><span style="text-transform:capitalize;">{{match.entry_type_singular}}</span> Match</span>
         <span class="pull-right">
             <a href="/#/match/reconciliation"> back
-				<i class="fa fa-undo fa-1x"></i> 
-			</a>
+                <i class="fa fa-undo fa-1x"></i> 
+            </a>
         </span>
         <br/>
         <br/>
@@ -160,6 +160,9 @@
 
             </div>
         </div>
+        
+        <pre>{{ match | json}}</pre>
+
     </div>
 </div>
 <!--/div>

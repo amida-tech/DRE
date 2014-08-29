@@ -1,16 +1,60 @@
 angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
 .config(['$routeProvider',
-    function ($routeProvider) {
+    function($routeProvider) {
         $routeProvider.when('/match/reconciliation/review/:section/:match_id', {
             templateUrl: 'templates/matching/reconciliation/review/review.tpl.html',
-            controller: 'matchNewCtrl'
+            controller: 'matchReviewCtrl'
         });
     }
 ])
 
-.controller('matchNewCtrl', ['$scope', '$http', '$location', 'getNotifications', 'recordFunctions',
-    function ($scope, $http, $location, getNotifications, recordFunctions) {
+.controller('matchReviewCtrl', ['$scope', '$http', '$routeParams', '$location', 'getNotifications', 'recordFunctions',
+    function($scope, $http, $routeParams, $location, getNotifications, recordFunctions) {
+
+        //getting parameters from route/url
+        $scope.section = $routeParams["section"];
+        $scope.match_id = $routeParams["match_id"];
+
+        //fetching match object based on id
+        $scope.match = {};
+        $scope.new_entry = {};
+        $scope.current_entry = {};
+        $scope.update_entry = {};
+
+        //$scope.match.entry_type_singular
+
+        $scope.getMatch = function() {
+            $http({
+                method: 'GET',
+                url: '/api/v1/match/' + $scope.section + '/' + $scope.match_id
+            }).
+            success(function(data, status, headers, config) {
+                $scope.match = data;
+                $scope.match.entry_type_singular = recordFunctions.singularizeSection($scope.match.entry_type);
+
+                $scope.new_entry = $scope.match.entry;
+                $scope.current_entry = $scope.match.matches[0].match_entry;
+                $scope.update_entry = $scope.match.matches[0].match_entry;
+
+                /*
+                $scope.diff=$scope.partial_matches.diff;
+                recordFunctions.extractName(data.match_entry);
+                $scope.src_el = data.match_entry;
+                $scope.src_copy_el = angular.copy($scope.src_el);
+                recordFunctions.extractName(data.entry);
+                $scope.dest_el = data.entry;
+                $scope.dest_copy_el = angular.copy($scope.dest_el);
+                */
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        };
+
+        $scope.getMatch();
+
+
 
         $scope.panelId = 1;
 
@@ -19,12 +63,12 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.selectedItems.reaction = [];
         //$scope.selectedItems.allergen = {};
 
-        $scope.newTemplatePath = "templates/matching/reconciliation/review/templates/allergies_new.tpl.html";
-        $scope.recordTemplatePath = "templates/matching/reconciliation/review/templates/allergies_record.tpl.html";
+        $scope.newTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_new.tpl.html";
+        $scope.recordTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_record.tpl.html";
 
         //TODO:  Inject reaction severity into display from object.
 
-        $scope.selectField = function (entry, entry_index, entry_status) {
+        $scope.selectField = function(entry, entry_index, entry_status) {
 
             //Don't process hidden items.
             if (entry_status) {
@@ -38,7 +82,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 } else {
                     $scope.selectedItems[entry][entry_index] = false;
                     if ($scope.current_entry[entry][entry_index] !== undefined) {
-                        $scope.update_entry[entry][entry_index] = $scope.current_entry[entry][entry_index];    
+                        $scope.update_entry[entry][entry_index] = $scope.current_entry[entry][entry_index];
                     } else {
                         $scope.update_entry[entry].splice([entry_index], 1);
                     }
@@ -57,7 +101,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
         };
 
-        $scope.entryType = function (input) {
+        $scope.entryType = function(input) {
             var response = 'str';
             if (angular.isObject(input)) {
                 response = 'obj';
@@ -68,67 +112,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             return response;
         };
 
-        $scope.new_entry = {
-            "allergen": {
-                "name": "Codeine",
-                "code": "2670",
-                "code_system_name": "RXNORM",
-                "translations": []
-            },
-            "date": [{
-                "date": "2006-05-01T00:00:00.000Z",
-                "precision": "day"
-            }],
-            "identifiers": [{
-                "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
-            }],
-            "reaction": [{
-                "severity": "Mild",
-                "reaction": {
-                    "name": "Wheezing",
-                    "code": "56018004",
-                    "code_system_name": "SNOMED CT",
-                    "translations": []
-                }
-            }, {
-                "severity": "Mild",
-                "reaction": {
-                    "name": "Nausea",
-                    "code": "56018004",
-                    "code_system_name": "SNOMED CT",
-                    "translations": []
-                }
-            }],
-            "severity": "Severe",
-            "status": "Active"
-        };
 
-        $scope.current_entry = {
-            "allergen": {
-                "name": "Codeine",
-                "code": "2670",
-                "code_system_name": "RXNORM",
-                "translations": []
-            },
-            "date": [{
-                "date": "2005-05-01T00:00:00.000Z",
-                "precision": "day"
-            }],
-            "identifiers": [{
-                "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
-            }],
-            "reaction": [{
-                "severity": "Mild",
-                "reaction": {
-                    "name": "Wheezing",
-                    "code": "56018004",
-                    "code_system_name": "SNOMED CT",
-                    "translations": []
-                }
-            }],
-            "severity": "Moderate",
-            "status": "Active"
-        };
 
         $scope.update_entry = {
             "allergen": {
