@@ -114,8 +114,10 @@ describe('Storage API', function() {
     var sampleFile = '';
 
     before(function(done) {
-        common.login(api, 'test', 'test', function() {
-            done();
+        common.register(api, 'test', 'test', function() {
+            common.login(api, 'test', 'test', function() {
+                done();
+            });
         });
     });
 
@@ -127,15 +129,16 @@ describe('Storage API', function() {
             .end(function(err, res) {
                 if (err) {
                     return done(err);
+                } else {
+                    expect(res.body).to.deep.equal({});
+                    done();
                 }
-                expect(res.body).to.deep.equal({});
-                done();
             });
     });
 
 });
 
-xdescribe('Storage API Get List', function() {
+describe('Storage API Get List', function() {
 
     it('File Endpoint GET', function(done) {
         api.get('/api/v1/storage')
