@@ -18,6 +18,24 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+.directive('phoneEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr><td class='col-md-8'>{{inputValue[0].number}}</td><td class='col-md-4 text-left'>{{inputValue[0].type}}</td></tr>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
 .directive('nameEntry', ['$parse',
     function($parse) {
         return {
