@@ -10,7 +10,7 @@
     </li>
 
     <li class="list-group-item" ng-click="selectField('dob', null, match_diff.dob)" ng-class="{selected: selectedItems.dob, disabled: match_diff.dob}">
-        <div date-entry input-value="new_entry.dob.point.date" input-title="Birthday" select-field="selectedItems.dob.point.date"></div>
+        <div date-entry input-value="new_entry.dob" input-title="Birthday" select-field="selectedItems.dob"></div>
     </li>
 
     <li class="list-group-item" ng-click="selectField('birthplace', null, match_diff.birthplace)" ng-class="{selected: selectedItems.birthplace, disabled: match_diff.birthplace}">
@@ -37,7 +37,7 @@
         <div phone-entry input-value="new_entry.phone" input-title="Phone" select-field="selectedItems.phone"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('email', null, match_diff.email)" ng-class="{selected: selectedItems.email, disabled: match_diff.email}">
+    <li class="list-group-item" ng-click="selectField('email', null, match_diff.email)" ng-show="selectedItems.email" ng-class="{selected: selectedItems.email, disabled: match_diff.email}">
         <div single-entry input-value="new_entry.email" input-title="Email" select-field="selectedItems.email"></div>
     </li>
 

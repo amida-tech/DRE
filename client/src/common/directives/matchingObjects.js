@@ -30,7 +30,7 @@ angular.module('directives.matchingObjects', [])
             },
             template: "<table class='table table-condensed'>" +
                 "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
-                "<tr><td class='col-md-8'>{{inputValue[0].number}}</td><td class='col-md-4 text-left'>{{inputValue[0].type}}</td></tr>",
+                "<tr ng-repeat='phone in inputValue'><td class='col-md-8'>{{phone.number}}</td><td class='col-md-4 text-left'>{{phone.type}}</td></tr>",
             link: function(scope, element, attrs) {}
         };
     }
@@ -66,7 +66,7 @@ angular.module('directives.matchingObjects', [])
             },
             template: "<table class='table table-condensed'>" +
                 "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
-                "<tr><td class='col-md-12'>{{inputValue.street_lines.join(' ')}} {{inputValue.last}}</td></tr>" +
+                "<tr ng-repeat='line in inputValue.street_lines'><td class='col-md-12'>{{line}}</td></tr>" +
                 "<tr><td class='col-md-12'>{{inputValue.city}}, {{inputValue.state}} {{inputValue.zip}}</td></tr>",
             link: function(scope, element, attrs) {}
         };
@@ -85,7 +85,8 @@ angular.module('directives.matchingObjects', [])
             },
             template: "<table class='table table-condensed'>" +
                 "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue[0].displayDate}}</td></tr>" +
+                //"<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue[0].displayDate}}</td></tr>" +
+                "<tr ng-show='inputValue.point'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.point.date | date:'medium'}}</td></tr>" +
                 "</table>",
             link: function(scope, element, attrs) {
 
