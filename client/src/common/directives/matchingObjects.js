@@ -73,6 +73,48 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+.directive('addressesEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<table class='table table-condensed' ng-repeat='address in inputValue'>" +
+                "<thead><tr><th><h4>Address</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr><td class='col-md-12'>({{address.use}})</td></tr>" +
+                "<tr ng-repeat='line in address.street_lines'><td class='col-md-12'>{{line}}</td></tr>" +
+                "<tr><td class='col-md-12'>{{address.city}}, {{address.state}} {{address.zip}}</td></tr></table>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+//languages for demographics
+.directive('languagesEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<div><h4>Languages</h4><table class='table table-condensed' ng-repeat='lang in inputValue'" +
+                "<thead><tr><th><b>{{lang.language | bb_language}}</b></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr ><td class='col-md-12'>{{lang.mode}}</td></tr>"+
+                "<tr ><td class='col-md-12'>Proficiency: {{lang.proficiency}}</td></tr>"+
+                "<tr ng-show='lang.preferred'><td class='col-md-12'>Preferred</td></tr>"+
+                "</table></div>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
 //guardians for demographics
 .directive('guardiansEntry', ['$parse',
     function($parse) {
@@ -85,21 +127,17 @@ angular.module('directives.matchingObjects', [])
                 selectField: '='
             },
             template: "<div ><div ng-repeat='guardian in inputValue'>" +
-
+            "<h4>Guardians</h4>"+
             "<table class='table table-condensed' ng-repeat='name in guardian.names'>" +
-                "<thead><tr><th><h4>Guardian</h4></th><th class='col-md-12'></th></tr></thead>" +
-                "<tr><td class='col-md-12'>{{name.first}} {{name.middle.join(' ')}} {{name.last}}</td></tr>" +
+                "<thead><tr><th><b>Name</b></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr><td class='col-md-12'>{{name.first}} {{name.middle.join(' ')}} {{name.last}}</td></tr></table>" +
 
             "<table class='table table-condensed' ng-repeat='phone in guardian.phone'>" +
-                "<thead><tr><th><h4>Phone</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<thead><tr><th><b>Phone</b></th><th class='col-md-12'></th></tr></thead>" +
                 "<tr><td class='col-md-8'>{{phone.number}}</td><td class='col-md-4 text-left'>{{phone.type}}</td></tr></table>" +
 
-            "<table class='table table-condensed'>" +
-                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
-                "<tr ng-repeat='phone in inputValue'><td class='col-md-8'>{{phone.number}}</td><td class='col-md-4 text-left'>{{phone.type}}</td></tr>"+
-
             "<table class='table table-condensed' ng-repeat='address in guardian.addresses'>" +
-                "<thead><tr><th><h4>Address</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<thead><tr><th><b>Address</b></th><th class='col-md-12'></th></tr></thead>" +
                 "<tr ng-repeat='line in address.street_lines'><td class='col-md-12'>{{line}}</td></tr>" +
                 "<tr><td class='col-md-12'>{{address.city}}, {{address.state}} {{address.zip}}</td></tr></table>" +
 
