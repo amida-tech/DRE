@@ -457,16 +457,9 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
     //console.log(JSON.stringify(nonSourceMatches, null, 10));
 
     //Remove Duplicates from save, update Record Entry.
-<<<<<<< HEAD
-    var deDuplicatedNewRecord = removeDuplicates(nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
-    //console.log(JSON.stringify(deDuplicatedNewRecord.new_record.social_history, null, 10));
 
-
-    //newRec = 3, srcRec = 4.
-=======
     var deDuplicatedNewRecord = removeDuplicates(username, nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
     //console.log(JSON.stringify(deDuplicatedNewRecord.new_match, null, 10));
->>>>>>> master
 
     //Split incoming entries into new/partial.
     var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record, deDuplicatedSourceRecords.new_entries, baseObject);
