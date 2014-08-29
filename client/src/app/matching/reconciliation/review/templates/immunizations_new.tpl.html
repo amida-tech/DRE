@@ -1,17 +1,20 @@
 <ul class="list-group list-matching">
 
-    <li class="list-group-item" ng-click="selectField('name', null, match_diff.name)" ng-class="{selected: selectedItems.name, disabled: match_diff.name}">
-        <div name-entry input-value="new_entry.name" input-title="Name" select-field="selectedItems.name"></div>
+    <li class="list-group-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}">
+        <div date-entry input-value="new_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
     </li>
 
-
-    <li class="list-group-item" ng-click="selectField('gender', null, match_diff.gender)" ng-class="{selected: selectedItems.gender, disabled: match_diff.gender}">
-        <div single-entry input-value="new_entry.gender" input-title="Gender" select-field="selectedItems.gender"></div>
+    <li class="list-group-item" ng-click="selectField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}">
+        <div single-entry input-value="new_entry.status" input-title="Status" select-field="selectedItems.status"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('dob', null, match_diff.dob)" ng-class="{selected: selectedItems.dob, disabled: match_diff.dob}">
-        <div date-entry input-value="new_entry.dob" input-title="Birthday" select-field="selectedItems.dob"></div>
+    <li class="list-group-item" ng-click="selectField('product', null, match_diff.product)" ng-class="{selected: selectedItems.product, disabled: match_diff.product}">
+        <div product-entry input-value="new_entry.product" input-title="Product" select-field="selectedItems.product"></div>
     </li>
+
+    <li class="list-group-item" ng-click="selectField('product.manufacturer', null, match_diff.product.manufacturer)" ng-class="{selected: selectedItems.product.manufacturer, disabled: match_diff.product.manufacturer}">
+        <div single-entry input-value="new_entry.product.manufacturer" input-title="Manufacturer" select-field="selectedItems.product.manufacturer"></div>
+    </li>    
 
     <li class="list-group-item" ng-click="selectField('birthplace', null, match_diff.birthplace)" ng-class="{selected: selectedItems.birthplace, disabled: match_diff.birthplace}">
         <div address-entry input-value="new_entry.birthplace" input-title="Birthplace" select-field="selectedItems.birthplace"></div>
@@ -37,15 +40,10 @@
         <div phone-entry input-value="new_entry.phone" input-title="Phone" select-field="selectedItems.phone"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('email', null, match_diff.email)" ng-show="new_entry.email" ng-class="{selected: selectedItems.email, disabled: match_diff.email}">
+    <li class="list-group-item" ng-click="selectField('email', null, match_diff.email)" ng-show="selectedItems.email" ng-class="{selected: selectedItems.email, disabled: match_diff.email}">
         <div single-entry input-value="new_entry.email" input-title="Email" select-field="selectedItems.email"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('guardians', null, match_diff.guardians)" ng-show="new_entry.guardians" ng-class="{selected: selectedItems.guardians, disabled: match_diff.guardians}">
-        <div guardians-entry input-value="new_entry.guardians" input-title="Guardians" select-field="selectedItems.guardians"></div>
-    </li>
-
-    <pre>{{selectedItems | json}} </pre>
 
     <li class="list-group-item" ng-repeat="(reaction_id, reaction_entry) in new_entry.reaction" ng-click="selectField('reaction', reaction_id, match_diff.reaction)" ng-class="{selected: selectedItems.reaction[reaction_id], disabled: match_diff.reaction}">
         <div coded-entry input-value="reaction_entry.reaction" input-title="Reaction" input-additional="reaction_entry" select-field="selectedItems.reaction[reaction_id]"></div>
