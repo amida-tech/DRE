@@ -38,11 +38,11 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
     baseObjectForParsing = {}.data = baseObjectForParsing;
     newObjectForParsing = {}.data = newObjectForParsing;
 
-    //console.log(JSON.stringify(newObjectForParsing.demographics, null, 10));
+    //console.log(JSON.stringify(newObjectForParsing.social_history, null, 10));
     //console.log('------------------');
-    //console.log(JSON.stringify(baseObjectForParsing.demographics, null, 10));
+    //console.log(JSON.stringify(baseObjectForParsing.social_history, null, 10));
     var matchResult = bbMatch.match(newObjectForParsing, baseObjectForParsing);
-    //console.log(JSON.stringify(matchResult.match.demographics, null, 10));
+    //console.log(JSON.stringify(matchResult.match.social_history, null, 10));
 
     delete baseObjectForParsing.data;
     delete newObjectForParsing.data;
@@ -148,6 +148,13 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
 
                 duplicateNewIndexArray = _.uniq(_.pluck(duplicateArray, 'src_id'));
                 duplicateBaseIndexArray = _.uniq(_.pluck(duplicateArray, 'dest_id'));
+
+                if (matchKey === 'social_history') {
+                    //console.log(match);
+                    //console.log(newRecord.social_history[0]);
+                    //console.log(baseRecord.social_history[4]);
+
+                }
 
                 var attributionRecord = _.filter(baseRecord[matchKey], function (object, objectIndex) {
                     if (_.contains(duplicateBaseIndexArray, objectIndex.toString())) {
@@ -323,6 +330,11 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
 
                 var groupCheckedArray = _.groupBy(newCheckArray, 'src_id');
 
+                //if (matchKey === 'social_history') {
+                //    console.log(groupCheckedArray);    
+                //}
+                
+
                 _.each(groupCheckedArray, function (element, index) {
                     var newElementArray = _.filter(element, function (elementItem, elementItemIndex) {
                         if (elementItem.match === 'new') {
@@ -374,6 +386,10 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
 
                             _.each(partialElementArray, function (partialElement, partialIndex) {
 
+                                if (matchKey === 'social_history') {
+                                    //console.log(partialElementArray);
+                                }
+
                                 //---Dying between lines.
                                 var partialOutput = {
                                     partial_entry: partialEntry,
@@ -416,7 +432,7 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
         //console.log('---------');
         //console.log(partialObjectArray);
         //console.log('---------');
-        //console.log(JSON.stringify(outputPartialObjectArray, null, 10));
+        //console.log(JSON.stringify(outputPartialObjectArray.social_history, null, 10));
 
         var returnObject = {
             newEntries: outputNewObjectArray,
@@ -438,11 +454,19 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
 
     //Remove All 'src' matches.  Currently not required.
     var nonSourceMatches = removeSourceMatches(deDuplicatedSourceRecords.match);
-    //console.log(JSON.stringify(nonSourceMatches.match, null, 10));
+    //console.log(JSON.stringify(nonSourceMatches, null, 10));
 
     //Remove Duplicates from save, update Record Entry.
+<<<<<<< HEAD
+    var deDuplicatedNewRecord = removeDuplicates(nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
+    //console.log(JSON.stringify(deDuplicatedNewRecord.new_record.social_history, null, 10));
+
+
+    //newRec = 3, srcRec = 4.
+=======
     var deDuplicatedNewRecord = removeDuplicates(username, nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
     //console.log(JSON.stringify(deDuplicatedNewRecord.new_match, null, 10));
+>>>>>>> master
 
     //Split incoming entries into new/partial.
     var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record, deDuplicatedSourceRecords.new_entries, baseObject);
