@@ -86,7 +86,7 @@ function reRunMatches(matchComponent, matchUser, callback) {
                     matchPartialEntries = {};
                 }
 
-                storage.saveComponents(matchNewEntries, matchPartialEntries, recordOriginalEntryID, function(err) {
+                storage.saveComponents(matchUserID, matchNewEntries, matchPartialEntries, recordOriginalEntryID, function(err) {
                     if (err) {
                         callback(err);
                     } else {
@@ -148,7 +148,7 @@ function reRunMatches(matchComponent, matchUser, callback) {
 
                         //console.log(formattedMatchRecord);
 
-                        dre.reconcile(formattedMatchRecord, mhrMatchRecords, matchRecord.record_id, function(err, newResults, partialResults) {
+                        dre.reconcile(matchUser, formattedMatchRecord, mhrMatchRecords, matchRecord.record_id, function(err, newResults, partialResults) {
 
                             updateMatch(matchUser, matchRecord.section, matchRecord.match_id, matchRecord.record_id, newResults, partialResults, function(err, results) {
                                 if (err) {
