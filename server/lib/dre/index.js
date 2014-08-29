@@ -7,8 +7,7 @@ var async = require("async");
 
 //Main function, performs match and dedupes.
 
-function reconcile(newObject, baseObject, newRecordID, callback) {
-
+function reconcile(username, newObject, baseObject, newRecordID, callback) {
     newObjectForParsing = newObject;
 
     var baseObjectForParsing = {};
@@ -132,7 +131,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
     //Splice duplicate entries from input array.
     //Add source attribution to matched entries.
-    function removeDuplicates(match, newRecord, baseRecord, recordID) {
+    function removeDuplicates(username, match, newRecord, baseRecord, recordID) {
 
         var newRecord = _.clone(newRecord);
 
@@ -167,7 +166,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
 
                 //Update Source attribution.
                 async.each(attributionRecord, function (attribution, callback) {
-                    record.duplicateEntry(matchKey, 'test', attribution._id, recordID, function (err) {
+                    record.duplicateEntry(matchKey, username, attribution._id, recordID, function (err) {
                         if (err) {
                             callback(err);
                         } else {
@@ -223,7 +222,7 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
                     var attributionRecord = baseRecord[matchKey];
 
                     async.each(attributionRecord, function (attribution, callback) {
-                        record.duplicateEntry(matchKey, 'test', attribution._id, recordID, function (err) {
+                        record.duplicateEntry(matchKey, username, attribution._id, recordID, function (err) {
                             if (err) {
                                 callback(err);
                             } else {
@@ -458,11 +457,16 @@ function reconcile(newObject, baseObject, newRecordID, callback) {
     //console.log(JSON.stringify(nonSourceMatches, null, 10));
 
     //Remove Duplicates from save, update Record Entry.
+<<<<<<< HEAD
     var deDuplicatedNewRecord = removeDuplicates(nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
     //console.log(JSON.stringify(deDuplicatedNewRecord.new_record.social_history, null, 10));
 
 
     //newRec = 3, srcRec = 4.
+=======
+    var deDuplicatedNewRecord = removeDuplicates(username, nonSourceMatches.match, deDuplicatedSourceRecords.new_entries, baseObject, newRecordID);
+    //console.log(JSON.stringify(deDuplicatedNewRecord.new_match, null, 10));
+>>>>>>> master
 
     //Split incoming entries into new/partial.
     var splitIncomingEntries = splitNewPartialEntries(deDuplicatedNewRecord.new_match, deDuplicatedNewRecord.new_record, deDuplicatedSourceRecords.new_entries, baseObject);

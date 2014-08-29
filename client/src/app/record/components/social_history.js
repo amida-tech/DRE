@@ -14,24 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ======================================================================*/
 
-angular.module('dre.record.results', [])
+angular.module('dre.record.social_history', [])
 
 .config(['$routeProvider',
     function($routeProvider) {
-        $routeProvider.when('/record/results', {
-            templateUrl: 'templates/record/components/results.tpl.html',
-            controller: 'recordsCtrl'
+        $routeProvider.when('/record/social_history', {
+            templateUrl: 'templates/record/components/social_history.tpl.html',
+            controller: 'social_historyCtrl'
         });
     }
 ])
 
-.controller('resultsCtrl', ['$scope', '$http', '$location', 'recordFunctions',
+.controller('social_historyCtrl', ['$scope', '$http', '$location', 'recordFunctions',
     function($scope, $http, $location, recordFunctions) {
 
         $scope.entries = [];
         $scope.display = false;
 
-        recordFunctions.getEntries($scope, "results");
+        recordFunctions.getEntries($scope, "social_history");
 
     }
 ]);

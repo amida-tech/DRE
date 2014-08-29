@@ -16,7 +16,7 @@ limitations under the License.
 
 var supportedComponents = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals', 'claims', 'insurance'];
 
-angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims'])
+angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims', 'dre.record.social_history'])
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/record', {
@@ -28,10 +28,6 @@ function($routeProvider) {
   .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 
     function($scope, $filter, $http, $q, $location, fileDownload) {
 
-      // have download ready to go on page load
-      $scope.init = function() {
-        $scope.downloadData();
-      };
 
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
       $scope.allergiesPath = "templates/record/components/allergies.tpl.html";
@@ -43,6 +39,7 @@ function($routeProvider) {
       $scope.vitalsPath = "templates/record/components/vitals.tpl.html";
       $scope.insurancePath  = "templates/record/components/insurance.tpl.html";
       $scope.claimsPath = "templates/record/components/claims.tpl.html";
+      $scope.social_historyPath = "templates/record/components/social_history.tpl.html";
 
       $scope.dismissModal = function(index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {
@@ -50,19 +47,6 @@ function($routeProvider) {
             $scope.$apply();
         });
       };
-
-      /* generate ccda for download by calling /ccda API endpoint */
-      $scope.downloadData = function() {
-        fileDownload.downloadFile("api/v1/ccda/", function(err, res) {
-          if (err) {
-            console.log(err);
-          }
-          var blob = new Blob([ res ], { type : 'text/xml' });
-          $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
-        });
-      };
-
-      $scope.init();
 
     }
   ]);

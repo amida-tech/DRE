@@ -3,6 +3,7 @@ var app = module.exports = express();
 var record = require('blue-button-record');
 var _ = require('underscore');
 var bbm = require('blue-button-meta');
+<<<<<<< HEAD
 var dre = require('../dre/index.js');
 var storage = require('../storage/index.js');
 var async = require('async');
@@ -178,16 +179,30 @@ function reRunMatches(matchComponent, matchUser, callback) {
     });
 
 }
+=======
+var login = require('../login');
 
-function updateMerged(updateId, updateComponent, updateIndex, updateParameters, callback) {
+function updateMerged(username, updateId, updateComponent, updateIndex, updateParameters, callback) {
+>>>>>>> master
+
     //Gather full match object by ID.
+<<<<<<< HEAD
     record.getMatch(updateComponent, 'test', updateId, function (err, resultComponent) {
+=======
+    record.getMatch(updateComponent, username, updateId, function(err, resultComponent) {
+>>>>>>> master
         if (err) {
             callback(err);
         } else {
 
             //Gather partial record from db.
+<<<<<<< HEAD
             record.getEntry(updateComponent, 'test', resultComponent.entry._id, function (err, recordResults) {
+=======
+
+            record.getEntry(updateComponent, username, resultComponent.entry._id, function(err, recordResults) {
+
+>>>>>>> master
                 if (err) {
                     callback(err);
                 } else {
@@ -195,12 +210,17 @@ function updateMerged(updateId, updateComponent, updateIndex, updateParameters, 
                     //NOTE:  Only one attribution merge since a partial.
                     var recordId = recordResults.metadata.attribution[0].record._id;
 
+<<<<<<< HEAD
                     //Update merged entry.
                     record.updateEntry(updateComponent, 'test', resultComponent.matches[updateIndex].match_entry._id, recordId, updateParameters, function (err, updateResults) {
+=======
+                    record.updateEntry(updateComponent, username, resultComponent.matches[updateIndex].match_entry._id, recordId, updateParameters, function(err, updateResults) {
+>>>>>>> master
                         if (err) {
                             callback(err);
                         } else {
 
+<<<<<<< HEAD
                             
                             //Use cancel to update to merged.
                             record.cancelMatch(updateComponent, 'test', updateId, 'merged', function (err, results) {
@@ -214,6 +234,11 @@ function updateMerged(updateId, updateComponent, updateIndex, updateParameters, 
                                     //});
                                 }
                             });
+=======
+                            //Need to shim in re-running matches here.
+                            
+                            record.cancelMatch(updateComponent, username, updateId, 'merged', callback);
+>>>>>>> master
                         }
                     });
                 }
@@ -222,7 +247,8 @@ function updateMerged(updateId, updateComponent, updateIndex, updateParameters, 
     });
 }
 
-function processUpdate(updateId, updateIndex, updateComponent, updateParameters, callback) {
+function processUpdate(username, updateId, updateIndex, updateComponent, updateParameters, callback) {
+
     //Can be 1) Merged, 2) Added, 3) Ignored.
 
     //TODO:  ADD RERUN MATCH AFTER ADD AS WELL (AND IGNORE, WHY NOT?).
@@ -231,6 +257,7 @@ function processUpdate(updateId, updateIndex, updateComponent, updateParameters,
         if (updateComponent === 'demographics') {
             callback('Only one demographic accepted');
         }
+<<<<<<< HEAD
         record.acceptMatch(updateComponent, 'test', updateId, 'added', function(err, results) {
             if (err) {
                 callback(err);
@@ -245,11 +272,18 @@ function processUpdate(updateId, updateIndex, updateComponent, updateParameters,
                 });
             }
         });
+=======
+        record.acceptMatch(updateComponent, username, updateId, 'added', callback);
+>>>>>>> master
     }
 
     if (updateParameters.determination === 'merged') {
         //If determination is merged, overwrite original record, drop source object, and update merge history of object.
+<<<<<<< HEAD
         updateMerged(updateId, updateComponent, updateIndex, updateParameters.updated_entry, function (err, results) {
+=======
+        updateMerged(username, updateId, updateComponent, updateParameters.updated_entry, function(err, results) {
+>>>>>>> master
             if (err) {
                 callback(err);
             } else {
@@ -259,6 +293,7 @@ function processUpdate(updateId, updateIndex, updateComponent, updateParameters,
     }
 
     if (updateParameters.determination === 'ignored') {
+<<<<<<< HEAD
         record.cancelMatch(updateComponent, 'test', updateId, 'ignored', function(err, results) {
             if (err) {
                 callback(err);
@@ -276,16 +311,27 @@ function processUpdate(updateId, updateIndex, updateComponent, updateParameters,
 
             }
         })
+=======
+        record.cancelMatch(updateComponent, username, updateId, 'ignored', callback)
+>>>>>>> master
     }
 }
 
 // Get all matches API.
+<<<<<<< HEAD
 app.get('/api/v1/matches/:component', function (req, res) {
+=======
+app.get('/api/v1/matches/:component', login.checkAuth, function(req, res) {
+>>>>>>> master
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
+<<<<<<< HEAD
         record.getMatches(req.params.component, 'test', 'procedure problem product allergen vital name smoking_statuses encounter result_set results plan_id payer_name payer number plan_name"', function (err, matchList) {
+=======
+        record.getMatches(req.params.component, req.user.username, 'procedure problem product allergen vital name smoking_statuses encounter result_set results plan_id payer_name payer number plan_name"', function(err, matchList) {
+>>>>>>> master
             if (err) {
                 console.error(err);
                 res.send(400, err);
@@ -299,11 +345,19 @@ app.get('/api/v1/matches/:component', function (req, res) {
 });
 
 // Get single match API.
+<<<<<<< HEAD
 app.get('/api/v1/match/:component/:record_id', function (req, res) {
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         record.getMatch(req.params.component, 'test', req.params.record_id, function (err, match) {
+=======
+app.get('/api/v1/match/:component/:record_id', login.checkAuth, function(req, res) {
+    if (_.contains(bbm.supported_sections, req.params.component) === false) {
+        res.send(404);
+    } else {
+        record.getMatch(req.params.component, req.user.username, req.params.record_id, function(err, match) {
+>>>>>>> master
             if (err) {
                 res.send(400, err);
             } else {
@@ -314,13 +368,21 @@ app.get('/api/v1/match/:component/:record_id', function (req, res) {
 });
 
 //Post partial record updates.
+<<<<<<< HEAD
 app.post('/api/v1/matches/:component/:record_id', function (req, res) {
+=======
+app.post('/api/v1/matches/:component/:record_id', login.checkAuth, function(req, res) {
+>>>>>>> master
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         if (_.contains(['added', 'ignored'], req.body.determination)) {
+<<<<<<< HEAD
             processUpdate(req.params.record_id, null, req.params.component, req.body, function (err) {
+=======
+            processUpdate(req.user.username, req.params.record_id, null, req.params.component, req.body, function(err) {
+>>>>>>> master
                 if (err) {
                     console.error(err);
                     res.send(400, err);
@@ -335,13 +397,21 @@ app.post('/api/v1/matches/:component/:record_id', function (req, res) {
 });
 
 //Post partial record updates.
+<<<<<<< HEAD
 app.post('/api/v1/matches/:component/:record_id/:record_index', function (req, res) {
+=======
+app.post('/api/v1/matches/:component/:record_id/:record_index', login.checkAuth, function(req, res) {
+>>>>>>> master
 
     if (_.contains(bbm.supported_sections, req.params.component) === false) {
         res.send(404);
     } else {
         if (_.contains(['merged'], req.body.determination)) {
+<<<<<<< HEAD
             processUpdate(req.params.record_id, req.params.record_index, req.params.component, req.body, function (err) {
+=======
+            processUpdate(req.user.username, req.params.record_id, req.params.record_index, req.params.component, req.body, function(err) {
+>>>>>>> master
                 if (err) {
                     console.error(err);
                     res.send(400, err);
