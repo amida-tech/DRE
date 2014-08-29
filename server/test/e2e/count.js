@@ -6,145 +6,33 @@ var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 var database = require('mongodb').Db;
-var common = require('./common.js');
+var common2 = require('./common.js');
+var common = require(path.join(__dirname, '../common/common.js'));
 
 
-function removeCollection(inputCollection, callback) {
-    var db;
-    database.connect(databaseLocation, function(err, dbase) {
-        if (err) {
-            throw err;
-        }
-        db = dbase;
-        db.collection(inputCollection, function(err, coll) {
-            if (err) {
-                throw err;
-            }
-            coll.remove({}, function(err, results) {
-                if (err) {
-                    throw err;
-                }
-                db.close();
-                callback();
-            });
-        });
-    });
-}
+describe('Pre Test Cleanup', function() {
 
-function loadTestRecord(fileName, callback) {
-    var filepath = path.join(__dirname, '../artifacts/test-r1.0/' + fileName);
-    api.put('/api/v1/storage')
-        .attach('file', filepath)
-        .expect(200)
-        .end(function(err, res) {
-            if (err) {
-                callback(err);
-            }
-            callback(null);
-        });
-}
-
-describe('Pre Test Cleanup 1', function() {
-
-    it('Remove File Collections', function(done) {
-        removeCollection('storage.files', function(err) {
+    it('Clean Database', function(done) {
+        common.removeAll(function(err, results) {
             if (err) {
                 done(err);
-            }
-            removeCollection('storage.chunks', function(err) {
-                if (err) {
-                    done(err);
-                }
+            } else {
                 done();
-            });
+            }
         });
     });
-});
 
-describe('Pre Test Cleanup 2', function() {
-
-    var supportedComponents = {
-        allergies: 'allergies',
-        procedures: 'procedures',
-        medications: 'medications',
-        encounters: 'encounters',
-        vitals: 'vitals',
-        results: 'results',
-        social_histories: 'social_history',
-        immunizations: 'immunizations',
-        demographics: 'demographics',
-        problems: 'problems',
-        claims: 'claims',
-        insurance: 'insurance'
-
-    };
-
-    it('Remove All Collections', function(done) {
-
-        var secIteration = 0;
-        var secTotal = 0;
-
-        for (var iComponent in supportedComponents) {
-            secTotal++;
-        }
-
-        function checkLoopComplete() {
-            secIteration++;
-            if (secIteration === secTotal) {
-                done();
-            }
-        }
-
-        function removeSections(componentSingular, componentPlural, callback) {
-            removeCollection(componentPlural, function(err) {
-                if (err) {
-                    done(err);
-                }
-                removeCollection(componentSingular + 'merges', function(err) {
-                    if (err) {
-                        console.log(err);
-                        done(err);
-                    }
-                    removeCollection(componentSingular + 'matches', function(err) {
-                        if (err) {
-                            done(err);
-                        }
-                        callback();
-                    });
-                });
-            });
-        }
-
-        var e = function(err) {
-            checkLoopComplete();
-        };
-        for (iComponent in supportedComponents) {
-            removeSections(supportedComponents[iComponent], iComponent, e);
-        }
-
-    });
     it('Login', function(done) {
-        common.register(api, 'test', 'test', function() {
-            common.login(api, 'test', 'test', function() {
+        common2.register(api, 'test', 'test', function() {
+            common2.login(api, 'test', 'test', function() {
                 done();
             });
         });
     });
 });
-
 
 
 describe('Count API - Test New:', function() {
-
-    before(function(done) {
-        common.register(api, 'test', 'test', function() {
-            common.login(api, 'test', 'test', function() {
-                //loadTestRecord(api, 'bluebutton-01-original.xml', done);
-                done();
-            });
-        });
-    });
-
 
     it('File Endpoint PUT', function(done) {
         var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
@@ -169,7 +57,7 @@ describe('Count API - Test New:', function() {
                     return done(err);
                 }
                 expect(res.body.notifications.unreviewed_merges).to.equal(0);
-                expect(res.body.notifications.new_merges).to.equal(26);
+                expect(res.body.notifications.new_merges).to.equal(31);
                 expect(res.body.notifications.duplicate_merges).to.equal(0);
                 expect(res.body.notifications.file_count).to.equal(1);
                 //console.log(JSON.stringify(res.body, null, 10));
@@ -183,7 +71,7 @@ describe('Count API - Test New:', function() {
 describe('Count API - Test Duplicate:', function() {
 
     before(function(done) {
-        loadTestRecord('bluebutton-02-duplicate.xml', function(err) {
+        common.loadTestRecord(api, 'bluebutton-02-duplicate.xml', function(err) {
             if (err) {
                 done(err);
             } else {
@@ -201,8 +89,8 @@ describe('Count API - Test Duplicate:', function() {
                 }
                 //console.log(JSON.stringify(res.body, null, 10));
                 expect(res.body.notifications.unreviewed_merges).to.equal(0);
-                expect(res.body.notifications.new_merges).to.equal(26);
-                expect(res.body.notifications.duplicate_merges).to.equal(26);
+                expect(res.body.notifications.new_merges).to.equal(31);
+                expect(res.body.notifications.duplicate_merges).to.equal(31);
                 expect(res.body.notifications.file_count).to.equal(2);
                 done();
             });
@@ -214,7 +102,7 @@ describe('Count API - Test Duplicate:', function() {
 describe('Count API - Test New/Dupe Mix:', function() {
 
     before(function(done) {
-        loadTestRecord('bluebutton-03-updated.xml', function(err) {
+        common.loadTestRecord(api, 'bluebutton-03-updated.xml', function(err) {
             if (err) {
                 done(err);
             } else {
@@ -231,8 +119,8 @@ describe('Count API - Test New/Dupe Mix:', function() {
                     return done(err);
                 }
                 expect(res.body.notifications.unreviewed_merges).to.equal(0);
-                expect(res.body.notifications.new_merges).to.equal(47);
-                expect(res.body.notifications.duplicate_merges).to.equal(51);
+                expect(res.body.notifications.new_merges).to.equal(52);
+                expect(res.body.notifications.duplicate_merges).to.equal(61);
                 expect(res.body.notifications.file_count).to.equal(3);
                 done();
             });
@@ -244,7 +132,7 @@ describe('Count API - Test New/Dupe Mix:', function() {
 describe('Count API - Test Partial Matches:', function() {
 
     before(function(done) {
-        loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
+        common.loadTestRecord(api, 'bluebutton-04-diff-source-partial-matches.xml', function(err) {
             if (err) {
                 done(err);
             } else {
@@ -261,8 +149,8 @@ describe('Count API - Test Partial Matches:', function() {
                     return done(err);
                 }
                 expect(res.body.notifications.unreviewed_merges).to.equal(29);
-                expect(res.body.notifications.new_merges).to.equal(47);
-                expect(res.body.notifications.duplicate_merges).to.equal(66);
+                expect(res.body.notifications.new_merges).to.equal(52);
+                expect(res.body.notifications.duplicate_merges).to.equal(81);
                 expect(res.body.notifications.file_count).to.equal(4);
                 done();
             });
@@ -310,8 +198,8 @@ describe('Count API - Test Added Matches via Allergies', function() {
                     return done(err);
                 }
                 expect(res.body.notifications.unreviewed_merges).to.equal(28);
-                expect(res.body.notifications.new_merges).to.equal(48);
-                expect(res.body.notifications.duplicate_merges).to.equal(66);
+                expect(res.body.notifications.new_merges).to.equal(53);
+                expect(res.body.notifications.duplicate_merges).to.equal(81);
                 expect(res.body.notifications.file_count).to.equal(4);
                 done();
             });
