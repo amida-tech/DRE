@@ -32,20 +32,23 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             success(function(data, status, headers, config) {
                 $scope.match = data;
                 $scope.match.entry_type_singular = recordFunctions.singularizeSection($scope.match.entry_type);
-
                 $scope.new_entry = $scope.match.entry;
                 $scope.current_entry = $scope.match.matches[0].match_entry;
-                $scope.update_entry = $scope.match.matches[0].match_entry;
+                $scope.update_entry = angular.copy($scope.current_entry);
 
-                /*
-                $scope.diff=$scope.partial_matches.diff;
-                recordFunctions.extractName(data.match_entry);
-                $scope.src_el = data.match_entry;
-                $scope.src_copy_el = angular.copy($scope.src_el);
-                recordFunctions.extractName(data.entry);
-                $scope.dest_el = data.entry;
-                $scope.dest_copy_el = angular.copy($scope.dest_el);
-                */
+                $scope.current_match_index = 0;
+                $scope.current_match = $scope.match.matches[$scope.current_match_index].match_object;
+                $scope.match_diff = $scope.current_match.diff;
+                $scope.match_percent = $scope.current_match.percent;
+
+                //Restructure diff object booleans.
+                for (var diff in $scope.match_diff) {
+                    if ($scope.match_diff[diff] === "duplicate") {
+                        $scope.match_diff[diff] = true;
+                    } else {
+                        $scope.match_diff[diff] = false;
+                    }
+                }
             }).
             error(function(data, status, headers, config) {
                 console.log('error');
@@ -54,17 +57,60 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
         $scope.getMatch();
 
+        $scope.discardMatch = function () {
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
+                data: {determination: 'ignored'}
+            }).
+            success(function(data, status, headers, config) {
+                //Note:  Pill count not refreshing.
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        };
 
+        $scope.createMatch = function () {
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
+                data: {determination: 'added'}
+            }).
+            success(function(data, status, headers, config) {
+                //Note:  Pill count not refreshing.
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        };
 
-        $scope.panelId = 1;
+        $scope.saveMatch = function () {
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id + '/' + $scope.current_match_index,
+                data: {determination: 'merged', updated_entry: $scope.update_entry} 
+            }).
+            success(function(data, status, headers, config) {
+                //Note:  Pill count not refreshing.
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });   
+        };
+
+        $scope.newTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_new.tpl.html";
+        $scope.recordTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_record.tpl.html";
+
 
         //Need to initialize selection array.  May be able to walk original to build.
         $scope.selectedItems = {};
         $scope.selectedItems.reaction = [];
         //$scope.selectedItems.allergen = {};
 
-        $scope.newTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_new.tpl.html";
-        $scope.recordTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_record.tpl.html";
 
         //TODO:  Inject reaction severity into display from object.
 
@@ -101,7 +147,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
         };
 
-        $scope.entryType = function(input) {
+        /*$scope.entryType = function(input) {
             var response = 'str';
             if (angular.isObject(input)) {
                 response = 'obj';
@@ -110,36 +156,10 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 response = 'arr';
             }
             return response;
-        };
+        };*/
 
 
-
-        $scope.update_entry = {
-            "allergen": {
-                "name": "Codeine",
-                "code": "2670",
-                "code_system_name": "RXNORM",
-                "translations": []
-            },
-            "date": [{
-                "date": "2005-05-01T00:00:00.000Z",
-                "precision": "day"
-            }],
-            "identifiers": [{
-                "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a66"
-            }],
-            "reaction": [{
-                "severity": "Mild",
-                "reaction": {
-                    "name": "Wheezing",
-                    "code": "56018004",
-                    "code_system_name": "SNOMED CT",
-                    "translations": []
-                }
-            }],
-            "severity": "Moderate",
-            "status": "Active"
-        };
+        /*
 
         $scope.sample_match = {
             "match": "partial",
@@ -171,15 +191,6 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         }
 
 
-        //Restructure diff object booleans.
-        $scope.match_diff = $scope.sample_match.diff;
-        for (var diff in $scope.match_diff) {
-            if ($scope.match_diff[diff] === "duplicate") {
-                $scope.match_diff[diff] = true;
-            } else {
-                $scope.match_diff[diff] = false;
-            }
-        }
 
         //Build out sub-diff objects.
         var max_src = 0;
@@ -202,7 +213,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 //console.log($scope.sample_match.subelements.reaction[reaction]);
 
             }
-        }
+        }*/
 
         recordFunctions.formatDate($scope.new_entry.date);
         recordFunctions.formatDate($scope.current_entry.date);
