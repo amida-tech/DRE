@@ -336,7 +336,7 @@ describe('Social API - Test Partial Matches:', function() {
 
 });
 
-xdescribe('Social API - Test Added Matches', function() {
+describe('Social API - Test Added Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -351,6 +351,9 @@ xdescribe('Social API - Test Added Matches', function() {
 				} else {
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].entry._id;
+
+					//console.log(update_id);
+
 					api.post('/api/v1/matches/social_history/' + update_id)
 						.send({
 							determination: "added"
@@ -433,7 +436,7 @@ xdescribe('Social API - Test Added Matches', function() {
 
 
 
-xdescribe('Social API - Test Ignored Matches', function() {
+describe('Social API - Test Ignored Matches', function() {
 
 	var update_id = '';
 	var match_id = '';
@@ -457,7 +460,6 @@ xdescribe('Social API - Test Ignored Matches', function() {
 				} else {
 
 					//console.log(res.body.matches);
-
 					update_id = res.body.matches[0]._id;
 					match_id = res.body.matches[0].entry._id;
 					api.post('/api/v1/matches/social_history/' + update_id)
@@ -604,6 +606,7 @@ describe('Social API - Test Merged Matches', function() {
 										base_object = res.body.social_history[i];
 									}
 								}
+
 								api.post('/api/v1/matches/social_history/' + update_id + '/0')
 									.send({
 										determination: "merged",
@@ -640,8 +643,8 @@ describe('Social API - Test Merged Matches', function() {
 						//console.log(tmp_updated_entry);
 
 						//Test each component.
-						expect(res.body.social_history[iEntry].smoking_statuses[0].date).to.deep.equal(tmp_updated_entry.smoking_statuses[0].date);
-						expect(res.body.social_history[iEntry].smoking_statuses[0].value).to.deep.equal(tmp_updated_entry.smoking_statuses[0].value);
+						expect(res.body.social_history[iEntry].date_time).to.deep.equal(tmp_updated_entry.date_time);
+						expect(res.body.social_history[iEntry].value).to.deep.equal(tmp_updated_entry.value);
 						//Metadata slightly different test.
 						expect(res.body.social_history[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
 

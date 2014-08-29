@@ -67,53 +67,69 @@ function reRunMatches(matchComponent, matchUser, callback) {
         });
     }
 
-    function updateMatches(matchUserID, matchOriginalEntry, matchNewEntries, matchPartialEntries, callback) {
+    function updateMatch(matchUserID, matchSection, matchOriginalEntryID, recordOriginalEntryID, matchNewEntries, matchPartialEntries, callback) {
 
-        //Update each match to dead.
+        //console.log(matchSection);
+
+        //Update old match to archived, archives original match as well.
+        record.cancelMatch(matchSection, matchUserID, matchOriginalEntryID, 'ignored', function (err, results) {
+            if (err) {
+                    callback(err);
+            } else {
+
+                if (_.isUndefined(matchNewEntries)) {
+                    matchNewEntries = {};
+                }
+
+                if (_.isUndefined(matchPartialEntries)) {
+                    matchPartialEntries = {};
+                }
+
+                storage.saveComponents(matchNewEntries, matchPartialEntries, recordOriginalEntryID, function(err) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null);
+                    }
+                });
+
+            }
+        });
+
+        //Pare down partials to only valid entries.
+        /*if (!_.isUndefined(matchPartialEntries)) {
+            if (matchPartialEntries[matchSection].length > 0) {
+                
+                //Should just save new entries to db as new match, since old stuff archived off.
+
+                //For each new parital object, no need to save new entry to db, as old match entry should be maintained.
+                //So, should just update partial match to point its entry field to the partial_id, and save it directly to db.
+
+
+            }
+        }*/
+
+        //Then, I will take whatever is in the new Entries, and save those as new records using common entry point.
+
+
+
         //save new match pointing to source record.
         //discard return entry (since I know it already).
         //save added matches to db.
 
-        callback();
+        //console.log(matchUserID);
+
+        //callback();
 
     }
 
-    function reconcile (sourceRecords, mhrRecords, callback) {
-
-        async.map(sourceRecords, function(matchRecord, cb) {
-            
-             var formattedMatchRecord = {};
-            formattedMatchRecord[matchRecord.section] = [matchRecord.entry];
-
-            dre.reconcile(formattedMatchRecord, mhrRecords, matchRecord.record_id, function (err, reconciliation_results, partial_reconciliation_results) {
-                if (err) {
-                    callback(err);
-                } else {
-
-                    var reconcilationResponse = {
-                        newEntries: reconciliation_results,
-                        partialEntries: partial_reconciliation_results
-                    };
-
-                    matchRecord.reconciliation = reconcilationResponse
-                    callback(null, matchRecord);
-                }
-            });
-
-        }, function(err, results) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null, results);    
-            }   
-        });
-
-    }
 
     record.getMatches(matchComponent, matchUser, "", function (err, matchList) {
         if (err) {
             callback(err);
         } else {
+
+            console.log(matchList);
 
             //Select elements from partial match for rerun.
             var reRunSections = _.uniq(_.pluck(matchList, 'entry_type'));
@@ -124,22 +140,42 @@ function reRunMatches(matchComponent, matchUser, callback) {
                 //Generate MHR Records for Match.
                 rebuildMHRRecord(reRunSections, matchUser, function (err, mhrMatchRecords) {
 
-                    reconcile(sourceMatchRecords, mhrMatchRecords, function(err, results) {
+                    async.mapSeries(sourceMatchRecords, function(matchRecord, callback) {
 
-                        //HERE.
-                        console.log(results);
+                        var formattedMatchRecord = {};
+                        formattedMatchRecord[matchRecord.section] = [matchRecord.entry];
 
+                        //console.log(formattedMatchRecord);
+
+                        dre.reconcile(formattedMatchRecord, mhrMatchRecords, matchRecord.record_id, function(err, newResults, partialResults) {
+
+                            updateMatch(matchUser, matchRecord.section, matchRecord.match_id, matchRecord.record_id, newResults, partialResults, function(err, results) {
+                                if (err) {
+                                    callback(err);
+                                } else {
+                                    callback(null);    
+                                }
+                            });
+                        });
+
+                    }, function(err, results) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            callback(null);
+                        }
+                        
 
                     });
+
+
+
 
                 });
 
             });
         }
     });
-
-    //TODO:  Kill this guy.
-    //callback();
 
 }
 
@@ -165,6 +201,7 @@ function updateMerged(updateId, updateComponent, updateIndex, updateParameters, 
                             callback(err);
                         } else {
 
+                            
                             //Use cancel to update to merged.
                             record.cancelMatch(updateComponent, 'test', updateId, 'merged', function (err, results) {
                                 if (err) {
@@ -172,9 +209,9 @@ function updateMerged(updateId, updateComponent, updateIndex, updateParameters, 
                                 } else {
 
                                     //Rerun Matching.
-                                    reRunMatches(updateComponent, 'test', function (err, results) {
+                                    //reRunMatches(updateComponent, 'test', function (err, results) {
                                         callback();
-                                    });
+                                    //});
                                 }
                             });
                         }
@@ -194,7 +231,20 @@ function processUpdate(updateId, updateIndex, updateComponent, updateParameters,
         if (updateComponent === 'demographics') {
             callback('Only one demographic accepted');
         }
-        record.acceptMatch(updateComponent, 'test', updateId, 'added', callback);
+        record.acceptMatch(updateComponent, 'test', updateId, 'added', function(err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                 //Rerun Matching.
+                reRunMatches(updateComponent, 'test', function (err, results) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback();
+                    }
+                });
+            }
+        });
     }
 
     if (updateParameters.determination === 'merged') {
@@ -209,7 +259,23 @@ function processUpdate(updateId, updateIndex, updateComponent, updateParameters,
     }
 
     if (updateParameters.determination === 'ignored') {
-        record.cancelMatch(updateComponent, 'test', updateId, 'ignored', callback)
+        record.cancelMatch(updateComponent, 'test', updateId, 'ignored', function(err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                //Rerun Matching.
+               /* reRunMatches(updateComponent, 'test', function (err, results) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback();
+                    }
+                });*/
+
+                callback();
+
+            }
+        })
     }
 }
 
