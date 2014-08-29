@@ -123,7 +123,13 @@ describe('Pre Test Cleanup 2', function() {
         }
 
     });
-
+    it('Login', function(done) {
+        common.register(api, 'test', 'test', function() {
+            common.login(api, 'test', 'test', function() {
+                done();
+            });
+        });
+    });
 });
 
 
