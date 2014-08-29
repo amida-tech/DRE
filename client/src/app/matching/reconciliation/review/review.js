@@ -32,10 +32,9 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             success(function(data, status, headers, config) {
                 $scope.match = data;
                 $scope.match.entry_type_singular = recordFunctions.singularizeSection($scope.match.entry_type);
-
                 $scope.new_entry = $scope.match.entry;
                 $scope.current_entry = $scope.match.matches[0].match_entry;
-                $scope.update_entry = $scope.match.matches[0].match_entry;
+                $scope.update_entry = angular.copy($scope.current_entry);
 
                 /*
                 $scope.diff=$scope.partial_matches.diff;
@@ -55,8 +54,40 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.getMatch();
 
 
+        $scope.discardMatch = function () {
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
+                data: {determination: 'ignored'}
+            }).
+            success(function(data, status, headers, config) {
+                //Note:  Pill count not refreshing.
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        };
 
-        $scope.panelId = 1;
+        $scope.createMatch = function () {
+            $http({
+                method: 'POST',
+                url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
+                data: {determination: 'added'}
+            }).
+            success(function(data, status, headers, config) {
+                //Note:  Pill count not refreshing.
+                $location.path("match/reconciliation");
+            }).
+            error(function(data, status, headers, config) {
+                console.log('error');
+            });
+        };
+
+
+
+
+
 
         //Need to initialize selection array.  May be able to walk original to build.
         $scope.selectedItems = {};
