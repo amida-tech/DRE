@@ -6,6 +6,8 @@ var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 var database = require('mongodb').Db;
+var common = require('./common.js');
+
 
 function removeCollection(inputCollection, callback) {
     var db;
@@ -113,13 +115,21 @@ describe('Pre Test Cleanup 2', function() {
             });
         }
 
-        var e=function(err){checkLoopComplete();};
+        var e = function(err) {
+            checkLoopComplete();
+        };
         for (iComponent in supportedComponents) {
             removeSections(supportedComponents[iComponent], iComponent, e);
         }
 
     });
-
+    it('Login', function(done) {
+        common.register(api, 'test', 'test', function() {
+            common.login(api, 'test', 'test', function() {
+                done();
+            });
+        });
+    });
 });
 
 
@@ -127,13 +137,28 @@ describe('Pre Test Cleanup 2', function() {
 describe('Count API - Test New:', function() {
 
     before(function(done) {
-        loadTestRecord('bluebutton-01-original.xml', function(err) {
-            if (err) {
-                done(err);
-            } else {
+        common.register(api, 'test', 'test', function() {
+            common.login(api, 'test', 'test', function() {
+                //loadTestRecord(api, 'bluebutton-01-original.xml', done);
                 done();
-            }
+            });
         });
+    });
+
+
+    it('File Endpoint PUT', function(done) {
+        var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
+        api.put('/api/v1/storage')
+            .attach('file', filepath)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    expect(res.body).to.deep.equal({});
+                    done();
+                }
+            });
     });
 
     it('Get Count Records', function(done) {
@@ -177,7 +202,7 @@ describe('Count API - Test Duplicate:', function() {
                 //console.log(JSON.stringify(res.body, null, 10));
                 expect(res.body.notifications.unreviewed_merges).to.equal(0);
                 expect(res.body.notifications.new_merges).to.equal(26);
-                expect(res.body.notifications.duplicate_merges).to.equal(4);
+                expect(res.body.notifications.duplicate_merges).to.equal(26);
                 expect(res.body.notifications.file_count).to.equal(2);
                 done();
             });
