@@ -49,11 +49,11 @@ function newAccount(inputUsername, inputPassword, callback) {
 module.exports.newAccount = newAccount;
 
 function checkAuth(req, res, next) {
-    console.log("is Authenticated: ", req.isAuthenticated());
+    //console.log("is Authenticated: ", req.isAuthenticated());
     if (req.isAuthenticated()) {
         return next();
     }
-    console.log("no auth");
+    //console.log("no auth");
     res.send(401);
 }
 

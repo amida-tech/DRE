@@ -1,61 +1,166 @@
-<div class="col-md-12" ng-controller="reviewCtrl">
-    <br/>
-    <h5 class="lead">Review Update</h5>
-    <div class="panel-group col-md-12">
+<!--div class="fluid-container col-md-12">
+	<div class="row">
+		<div ng-include="navPath"></div-->
+<div class="col-md-9">
+    <div class="col-md-12">
+        <br/>
+        <span class="lead">Allergic Reaction Updates</span>
+        <span class="pull-right">
+            <a href="/#/match/reconciliation"> back
+				<i class="fa fa-undo fa-1x"></i> 
+			</a>
+        </span>
+        <br/>
+        <br/>
+
+        <!-- All in here. -->
+        <div class="panel panel-default col-md-12">
+
+            <!-- Left Pane -->
+
+            <div>
+                <div class="col-md-6" style="padding: 30px 15px 0px 0px;">
+
+                    <div class="panel panel-info">
+
+                        <div class="panel-heading">
+                            <table>
+                                <tr>
+                                    <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                                    </td>
+                                    <td class="col-md-10 pull-right text-right">
+                                        <h4>Entry Update</h4>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="panel-body text-center">
+                            <h6>Select Updates</h6>
+                        </div>
+
+                        <ng-include src="newTemplatePath"></ng-include>
+
+                        <div class="panel-body">
+                            <div class="col-md-2 col-md-offset-8">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                        Options
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Discard this Update</a>
+                                        </li>
+                                        <li><a href="#">Make Update a New Entry</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <h5>
+                                    Ignore this match, and reconcile with next closest entry?
+                                </h5>
+                                <br/>
+                                <div>
+                                    <button type="button" class="btn btn-primary btn-block">Yes</button>
+                                    <button type="button" class="btn btn-default btn-block" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
 
+                <!-- Right Pane -->
+                <div class="col-md-6" style="padding: 30px 0px 0px 15px;">
 
-        <div class="panel panel-default" style="overflow: visible;">
-            <div class="panel-heading ">
-                <div class="panel-title">
-                    <h4 ng-if="partial_matches.entry_type!=='demographics' && partial_matches.entry_type!=='social_history'">Partial ({{partial_matches.percent}}%) Match</h4>
-                    <h4 ng-if="partial_matches.entry_type==='demographics' || partial_matches.entry_type==='social_history'">Updated (Different) Information</h4>
+                    <div class="panel panel-info">
+
+                        <div class="panel-heading">
+                            <table>
+                                <tr>
+                                    <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                                    </td>
+                                    <td class="col-md-10 pull-right text-right">
+                                        <h4>86% Match</h4>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="panel-body text-center">
+                            <h6><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
+                            </h6>
+                        </div>
+
+                        <ng-include src="recordTemplatePath"></ng-include>
+
+                        <div class="panel-body" ng-hide="panelId === 0">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary btn-block">Save Changes</button>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
-            <div class="panel-body">
-                <!--Header-->
-                <ng-include src="dynamicTemplatePath"></ng-include>
+
+            <div class="col-md-6 col-md-offset-6">
+
+                <div class="text-center" style="padding: 15px;">
+                    <h5>Other Matches</h5>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#demo">
+                        <table>
+                            <tr>
+                                <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                                </td>
+                                <td class="col-md-10 pull-right text-right">
+                                    <h4>62% Match</h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="demo" class="panel-body collapse">
+                        <ng-include src="recordTemplatePath"></ng-include>
+                    </div>
+                </div>
 
 
-                <table class="col-md-12 ">
-                    <tbody>
-                        <tr>
-                            <td class="col-md-2" style="text-align: center;">
-                                <button type="button" class="btn btn-default" ng-click="cancelReview()">Cancel</button>
-                            </td>
-                            <td class=" col-md-5" style="text-align: center;">
-                                <button type="button" class="btn btn-warning" ng-click="createNew()" 
-                                ng-if="partial_matches.entry_type!=='demographics' && partial_matches.entry_type!=='social_history'">
-
-                                    <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New</button>
-                            </td>
-                            <td class=" col-md-5" style="text-align: center;">
-                                <button type="button" class="btn btn-primary" ng-click="ignoreUpdate()" ng-if="!modified">
-                                    <i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
-                                <button type="button" class="btn btn-primary" ng-click="saveUpdate()" ng-if="modified">
-                                    <i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="panel panel-info">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#demo2">
+                        <table>
+                            <tr>
+                                <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                                </td>
+                                <td class="col-md-10 pull-right text-right">
+                                    <h4>45% Match</h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="demo2" class="panel-body collapse">
+                        <ng-include src="recordTemplatePath"></ng-include>
+                    </div>
+                </div>
 
             </div>
-        </div>
-
-        <!-- debug JSON output -->
-        <div ng-if="debug">
-            <br/>
-            <br/>
-            <table class="table col-md-12">
-                <tr>
-                    <td class="col-md-6">{{src_el | json}}</td>
-                    <td class="col-md-6">{{dest_el |json}}</td>
-                </tr>
-                <tr>
-                    <td colspan="2">{{partial_matches |json}}</td>
-                </tr>
-            </table>
         </div>
     </div>
 </div>
+<!--/div>
+</div-->

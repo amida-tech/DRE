@@ -28,44 +28,48 @@ angular.module('services.recordFunctions', [])
 
             inputSection.name = " ";
 
-            if (type === "allergies") {
-                inputSection.name = inputSection.observation.allergen.name;
-            } else if (type === "payers") {
-                inputSection.name = "[payers]";
-            } else if (type === "plan_of_care") {
-                inputSection.name = "[plan of care]";
-            } else if (type === "encounters") {
-                inputSection.name = inputSection.encounter.name;
-            } else if (type === "immunizations") {
-                inputSection.name = inputSection.product.product.name;
-            } else if (type === "medications") {
-                inputSection.name = inputSection.product.product.name;
-            } else if (type === "problems") {
-                inputSection.name = inputSection.problem.code.name;
-            } else if (type === "results") {
-                inputSection.name = inputSection.result_set.name;
-            } else if (type === "procedures") {
-                inputSection.name = inputSection.procedure.name;
-            } else if (type === "vitals") {
-                inputSection.name = inputSection.vital.name;
-            }
-            //insurance
-            else if (inputSection.plan_name) {
-                inputSection.name = inputSection.plan_name;
-            } else if (inputSection.payer_name) {
-                inputSection.name = inputSection.payer_name;
-            }
-            //claims
-            else if (inputSection.payer || inputSection.number) {
-                inputSection.name = "";
-                if (inputSection.payer) {
-                    inputSection.name += inputSection.payer;
+            try {
+                if (type === "allergies") {
+                    inputSection.name = inputSection.observation.allergen.name;
+                } else if (type === "payers") {
+                    inputSection.name = "[payers]";
+                } else if (type === "plan_of_care") {
+                    inputSection.name = "[plan of care]";
+                } else if (type === "encounters") {
+                    inputSection.name = inputSection.encounter.name;
+                } else if (type === "immunizations") {
+                    inputSection.name = inputSection.product.product.name;
+                } else if (type === "medications") {
+                    inputSection.name = inputSection.product.product.name;
+                } else if (type === "problems") {
+                    inputSection.name = inputSection.problem.code.name;
+                } else if (type === "results") {
+                    inputSection.name = inputSection.result_set.name;
+                } else if (type === "procedures") {
+                    inputSection.name = inputSection.procedure.name;
+                } else if (type === "vitals") {
+                    inputSection.name = inputSection.vital.name;
                 }
-                if (inputSection.number) {
-                    inputSection.name = inputSection.payer[0];
+                //insurance
+                else if (inputSection.plan_name) {
+                    inputSection.name = inputSection.plan_name;
+                } else if (inputSection.payer_name) {
+                    inputSection.name = inputSection.payer_name;
                 }
-            } else if (type === "social_history") {
-                inputSection.name = inputSection.code.name + " - " + inputSection.value;
+                //claims
+                else if (inputSection.payer || inputSection.number) {
+                    inputSection.name = "";
+                    if (inputSection.payer) {
+                        inputSection.name += inputSection.payer;
+                    }
+                    if (inputSection.number) {
+                        inputSection.name = inputSection.payer[0];
+                    }
+                } else if (type === "social_history") {
+                    inputSection.name = inputSection.code.name + " - " + inputSection.value;
+                }
+            } catch (e) {
+                inputSection.name = "UNKNOWN";
             }
 
             /* merging display bug with date, fixed by BJ with moment.js library
@@ -296,7 +300,13 @@ angular.module('services.recordFunctions', [])
                     //replace attribute with severity
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
 
-                    var severity = entries[i].observation.severity.code.name;
+                    //console.log(JSON.stringify(entries[i], null, 4));
+
+                    var severity;
+                    if (entries[i].observation.severity) {
+                        severity = entries[i].observation.severity.code.name;
+                    }
+
                     entries[i].sort_order = (severity && severityWeight[severity.toUpperCase()]) || 0;
                 } else if (section === "problems") {
                     //replace attribute with resolution flag??
@@ -328,13 +338,9 @@ angular.module('services.recordFunctions', [])
                         }
                     }
 
-                    console.log("minDate ", minDate);
                     entries[i].attribute = this.formatDateTime(minDate);
                     entries[i].sort_order = this.sortOrderDateTime(minDate);
-
-                    console.log(entries[i].attribute);
-                }
-                else if (section==="medications"){
+                } else if (section === "medications") {
                     entries[i].attribute = entries[i].status;
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
                 }
@@ -349,7 +355,7 @@ angular.module('services.recordFunctions', [])
 
         //new method to get all patients entries for specific section
         this.getEntries = function($scope, section) {
-            console.log("fetching " + section + " entires");
+            //console.log("fetching " + section + " entires");
 
             var that = this;
 
@@ -358,11 +364,7 @@ angular.module('services.recordFunctions', [])
                 url: '/api/v1/record/' + section
             }).
             success(function(data, status, headers, config) {
-                console.log(section + JSON.stringify(data));
                 $scope.entries = data[section];
-
-                console.log(section + $scope.entries);
-                console.log(section + " length:", $scope.entries.length);
 
                 if ($scope.entries.length > 0) {
                     $scope.display = true;
