@@ -18,6 +18,7 @@ before_script:
 
 services:
     - mongodb
+    - redis-server
 
 script:
     - grunt --gruntfile client/gruntfile.js

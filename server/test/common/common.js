@@ -4,7 +4,7 @@ var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var path = require('path');
 var async = require('async');
 var _ = require('underscore');
-
+var bbMeta = require('blue-button-meta');
 
 function loadTestRecord(api, fileName, callback) {
     var filepath = path.join(__dirname, '../artifacts/test-r1.0/' + fileName);
@@ -45,7 +45,9 @@ function removeCollection(inputCollection, callback) {
 
 function removeAllCollections (callback) {
 
-	var sections = ['allergies', 'encounters'];
+	var sections = bbMeta.supported_sections;
+
+    sections.push('plan_of_cares', 'social_histories');
 
     async.each(sections, function (entry, callback) {
         removeCollection(entry, function (err) {

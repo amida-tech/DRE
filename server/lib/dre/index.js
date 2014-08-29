@@ -177,7 +177,7 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
                     if (err) {
                         callback(err);
                     } else {
-                        callback();
+                        //callback();
                     }
                 });
 
@@ -233,7 +233,7 @@ function reconcile(username, newObject, baseObject, newRecordID, callback) {
                         if (err) {
                             callback(err);
                         } else {
-                            callback();
+                            //callback();
                         }
                     });
 
