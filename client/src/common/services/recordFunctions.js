@@ -342,7 +342,9 @@ angular.module('services.recordFunctions', [])
                     entries[i].sort_order = this.sortOrderDateTime(minDate);
                 } else if (section === "medications") {
                     entries[i].attribute = entries[i].status;
-                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+                    if (angular.isDefined(entries[i].date_time)) {
+                        entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+                    }
                 }
                 // social_history, vitals, procedures, immunizations, encounters
                 else {
