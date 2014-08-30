@@ -176,7 +176,6 @@ angular.module('directives.matchingObjects', [])
                 template: "<table class='table table-condensed'>" +
                     "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
                 //"<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue[0].displayDate}}</td></tr>" +
-                "<tr ng-show='inputValue.point'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.point.date | date:'medium'}}</td></tr>" +
                     "<tr ng-show='inputValue.point'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.point.date | date:'medium'}}</td></tr>" +
                     "<tr ng-show='inputValue.low && !inputValue.high'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.low.date | date:'medium'}} - PRESENT</td></tr>" +
                     "<tr ng-show='!inputValue.low && inputValue.high'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>... - {{inputValue.high.date | date:'medium'}}</td></tr>" +
@@ -469,6 +468,34 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+
+
+//result for results
+.directive('resultEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div>"+
+                "<div coded-entry input-value='inputValue.result' input-title='Result'></div>"+
+                "<div date-entry input-value='inputValue.date_time' input-title='Date'></div>"+
+                "<div single-entry input-value='inputValue.status' input-title='Status'></div>"+
+                "<div single-entry input-value='inputValue.interpretation' input-title='Interpretation'></div>"+
+                "<div single-entry input-value='inputValue.value' input-title='Value'></div>"+
+                "<div single-entry input-value='inputValue.unit' input-title='Unit'></div>"+
+                "<div single-entry input-value='inputValue.reference_range.range' input-title='Reference Range'></div>"+
+
+                "</div>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
 
 
 
