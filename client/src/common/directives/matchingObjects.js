@@ -18,6 +18,23 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+.directive('physicalquantityEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr><td class='col-md-12'>{{inputValue.value}}&nbsp;{{inputValue.unit}}</td></tr></table>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
 .directive('phoneEntry', ['$parse',
     function($parse) {
         return {
@@ -329,6 +346,30 @@ angular.module('directives.matchingObjects', [])
                 "<tr ng-show='!inputValue.date_time.low && inputValue.date_time.high'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>... - {{inputValue.date_time.high.date | date:'medium'}}</td></tr>" +
                 "</table>" +
                 "</div>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+//administration for medications
+.directive('medsadministrationEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div><h4>{{inputTitle}}</h4>"+
+                "<div coded-entry input-value='inputValue.route' input-title='Route' select-field='selectedItems.route'></div>"+
+                "<div coded-entry input-value='inputValue.form' input-title='Form' select-field='selectedItems.form'></div>"+
+                "<div physicalquantity-entry input-value='inputValue.dose' input-title='Dose' select-field='selectedItems.dose'></div>"+
+                "<div physicalquantity-entry input-value='inputValue.rate' input-title='Rate' select-field='selectedItems.rate'></div>"+
+                "</div>",
+            //templateUrl: "templates/matching/reconciliation/review/templates/sub/medsadministration.tpl.html",
             link: function(scope, element, attrs) {}
         };
     }
