@@ -1,7 +1,7 @@
 angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
 .config(['$routeProvider',
-    function($routeProvider) {
+    function ($routeProvider) {
         $routeProvider.when('/match/reconciliation/review/:section/:match_id', {
             templateUrl: 'templates/matching/reconciliation/review/review.tpl.html',
             controller: 'matchReviewCtrl'
@@ -10,7 +10,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 ])
 
 .controller('matchReviewCtrl', ['$scope', '$http', '$routeParams', '$location', 'getNotifications', 'recordFunctions',
-    function($scope, $http, $routeParams, $location, getNotifications, recordFunctions) {
+    function ($scope, $http, $routeParams, $location, getNotifications, recordFunctions) {
 
         //getting parameters from route/url
         $scope.section = $routeParams["section"];
@@ -21,36 +21,83 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.new_entry = {};
         $scope.current_entry = {};
         $scope.update_entry = {};
+        $scope.selectedItems = {};
 
-        //$scope.match.entry_type_singular
+        if ($scope.section === 'allergies') {
+            $scope.selectedItems.observation = {};
+            $scope.selectedItems.observation.reactions = [];
+        }
 
-        $scope.getMatch = function() {
+        var max_src = 0;
+        var max_dest = 0;
+
+
+        $scope.rotateMatch = function (new_dest_index) {
+            setMatchEntry(new_dest_index);
+        };
+
+
+
+
+        function setMatchEntry(match_index) {
+
+            $scope.current_match_index = match_index;
+            $scope.current_entry = $scope.match.matches[$scope.current_match_index].match_entry;
+            $scope.update_entry = angular.copy($scope.current_entry);
+            $scope.current_match = $scope.match.matches[$scope.current_match_index].match_object;
+            $scope.current_queue = $scope.match.matches.slice($scope.current_match_index + 1);
+            $scope.match_diff = $scope.current_match.diff;
+            $scope.match_percent = $scope.current_match.percent;
+
+            //Restructure diff object booleans.
+            for (var diff in $scope.match_diff) {
+                if ($scope.match_diff[diff] === "duplicate") {
+                    $scope.match_diff[diff] = true;
+                } else {
+                    $scope.match_diff[diff] = false;
+                }
+            }
+
+            if ($scope.section === 'allergies') {
+
+                //Extend Diff Object to include subarray.
+                $scope.match_diff.observation = {};
+                $scope.match_diff.observation.reactions = {};
+                $scope.match_diff.observation.reactions.src = [];
+                $scope.match_diff.observation.reactions.dest = [];
+
+                for (var src_i in $scope.new_entry.observation.reactions) {
+                    $scope.match_diff.observation.reactions.src.push(false);
+                    $scope.selectedItems.observation.reactions.push(false);
+                }
+
+                for (var dest_i in $scope.current_entry.observation.reactions) {
+                    $scope.match_diff.observation.reactions.dest.push(false);
+                }
+                var tempArrayDiff = $scope.current_match.subelements.observation.reactions;
+                for (var i in tempArrayDiff) {
+                    if (tempArrayDiff[i].match === "duplicate") {
+                        $scope.match_diff.observation.reactions.src[tempArrayDiff[i].src_id] = true;
+                        $scope.match_diff.observation.reactions.dest[tempArrayDiff[i].dest_id] = true;
+                    }
+                }
+
+            }
+
+        }
+
+        $scope.getMatch = function () {
             $http({
                 method: 'GET',
                 url: '/api/v1/match/' + $scope.section + '/' + $scope.match_id
             }).
-            success(function(data, status, headers, config) {
+            success(function (data, status, headers, config) {
                 $scope.match = data;
-                $scope.match.entry_type_singular = recordFunctions.singularizeSection($scope.match.entry_type);
                 $scope.new_entry = $scope.match.entry;
-                $scope.current_entry = $scope.match.matches[0].match_entry;
-                $scope.update_entry = angular.copy($scope.current_entry);
-
-                $scope.current_match_index = 0;
-                $scope.current_match = $scope.match.matches[$scope.current_match_index].match_object;
-                $scope.match_diff = $scope.current_match.diff;
-                $scope.match_percent = $scope.current_match.percent;
-
-                //Restructure diff object booleans.
-                for (var diff in $scope.match_diff) {
-                    if ($scope.match_diff[diff] === "duplicate") {
-                        $scope.match_diff[diff] = true;
-                    } else {
-                        $scope.match_diff[diff] = false;
-                    }
-                }
+                setMatchEntry(0);
+                
             }).
-            error(function(data, status, headers, config) {
+            error(function (data, status, headers, config) {
                 console.log('error');
             });
         };
@@ -61,13 +108,15 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             $http({
                 method: 'POST',
                 url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
-                data: {determination: 'ignored'}
+                data: {
+                    determination: 'ignored'
+                }
             }).
-            success(function(data, status, headers, config) {
+            success(function (data, status, headers, config) {
                 //Note:  Pill count not refreshing.
                 $location.path("match/reconciliation");
             }).
-            error(function(data, status, headers, config) {
+            error(function (data, status, headers, config) {
                 console.log('error');
             });
         };
@@ -76,13 +125,15 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             $http({
                 method: 'POST',
                 url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
-                data: {determination: 'added'}
+                data: {
+                    determination: 'added'
+                }
             }).
-            success(function(data, status, headers, config) {
+            success(function (data, status, headers, config) {
                 //Note:  Pill count not refreshing.
                 $location.path("match/reconciliation");
             }).
-            error(function(data, status, headers, config) {
+            error(function (data, status, headers, config) {
                 console.log('error');
             });
         };
@@ -91,30 +142,33 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             $http({
                 method: 'POST',
                 url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id + '/' + $scope.current_match_index,
-                data: {determination: 'merged', updated_entry: $scope.update_entry} 
+                data: {
+                    determination: 'merged',
+                    updated_entry: $scope.update_entry
+                }
             }).
-            success(function(data, status, headers, config) {
+            success(function (data, status, headers, config) {
                 //Note:  Pill count not refreshing.
                 $location.path("match/reconciliation");
             }).
-            error(function(data, status, headers, config) {
+            error(function (data, status, headers, config) {
                 console.log('error');
-            });   
+            });
         };
 
         $scope.newTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_new.tpl.html";
         $scope.recordTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_record.tpl.html";
+        $scope.subTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_sub.tpl.html";
 
+        if ($scope.section === 'allergies') {
+            $scope.selectedItems.observation = {};
+            $scope.selectedItems.observation.reactions = [];
+        }
 
-        //Need to initialize selection array.  May be able to walk original to build.
-        $scope.selectedItems = {};
-        $scope.selectedItems.reaction = [];
         //$scope.selectedItems.allergen = {};
 
-
         //TODO:  Inject reaction severity into display from object.
-
-        $scope.selectField = function(entry, entry_index, entry_status) {
+        $scope.selectField = function (entry, entry_index, entry_status) {
 
             //Don't process hidden items.
             if (entry_status) {
@@ -122,16 +176,28 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             }
 
             if (entry_index >= 0 && entry_index !== null) {
-                if (!$scope.selectedItems[entry][entry_index]) {
-                    $scope.selectedItems[entry][entry_index] = true;
-                    $scope.update_entry[entry][entry_index] = $scope.new_entry[entry][entry_index];
-                } else {
-                    $scope.selectedItems[entry][entry_index] = false;
-                    if ($scope.current_entry[entry][entry_index] !== undefined) {
-                        $scope.update_entry[entry][entry_index] = $scope.current_entry[entry][entry_index];
-                    } else {
-                        $scope.update_entry[entry].splice([entry_index], 1);
+
+                if (entry.indexOf(".") > -1) {
+                    var splitEntry = entry.split(".");
+                    if (splitEntry.length === 2) {
+                        if (!$scope.selectedItems[splitEntry[0]][splitEntry[1]][entry_index]) {
+                            $scope.selectedItems[splitEntry[0]][splitEntry[1]][entry_index] = true;
+                            $scope.update_entry[splitEntry[0]][splitEntry[1]].splice(entry_index, 0, $scope.new_entry[splitEntry[0]][splitEntry[1]][entry_index]);
+                            $scope.match_diff[splitEntry[0]][splitEntry[1]].dest.splice(entry_index, 0, false);
+                        } else {
+                            $scope.selectedItems[splitEntry[0]][splitEntry[1]][entry_index] = false;
+                            $scope.update_entry[splitEntry[0]][splitEntry[1]].splice(entry_index, 1);
+                            $scope.match_diff[splitEntry[0]][splitEntry[1]].dest.splice(entry_index, 0, true);
+                        }
+
                     }
+                } else {
+                    if (!$scope.selectedItems[entry][entry_index]) {
+                        $scope.selectedItems[entry][entry_index] = true;
+                    } else {
+                        $scope.selectedItems[entry][entry_index] = false;
+                    }
+
                 }
 
             } else {
@@ -147,6 +213,23 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
         };
 
+        //Custom code per section below.  Need to account for variations in diff objects.
+
+        /*
+            //Conditionally create sub arrays.
+            if ($scope.section === 'allergies') {
+                $scope.selectedItems.observation = {};
+                $scope.selectedItems.observation.reaction = [];
+                for (var maxi in $scope.current_match.subelements.observation.reactions) {
+                    if ($scope.current_match.subelements.observation.reactions[maxi].src_id > max_src) {
+                        max_src = $scope.current_match.subelements.observation.reactions[maxi].src_id;
+                    }
+                    if ($scope.current_match.subelements.observation.reactions[maxi].dest_id > max_dest) {
+                        max_dest = $scope.current_match.subelements.observation.reactions[maxi].dest_id;
+                    }
+                }
+            }*/
+
         /*$scope.entryType = function(input) {
             var response = 'str';
             if (angular.isObject(input)) {
@@ -157,7 +240,6 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             }
             return response;
         };*/
-
 
         /*
 
@@ -202,21 +284,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             if ($scope.sample_match.subelements.reaction[maxi].dest_id > max_dest) {
                 max_dest = $scope.sample_match.subelements.reaction[maxi].dest_id;
             }
-        }
-
-
-        //Inject subelement reactions to diff.
-        for (var reaction in $scope.sample_match.subelements.reaction) {
-
-            if ($scope.sample_match.subelements.reaction[reaction].match === 'new') {
-
-                //console.log($scope.sample_match.subelements.reaction[reaction]);
-
-            }
         }*/
-
-        recordFunctions.formatDate($scope.new_entry.date);
-        recordFunctions.formatDate($scope.current_entry.date);
 
     }
 ]);
