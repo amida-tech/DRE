@@ -298,13 +298,20 @@ angular.module('services.recordFunctions', [])
                     };
 
                     //replace attribute with severity
-                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    if (entries[i].date_time) {
+                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    } else {
+                        entries[i].attribute = "";
+                    }
+                    
 
                     //console.log(JSON.stringify(entries[i], null, 4));
 
                     var severity;
-                    if (entries[i].observation.severity) {
-                        severity = entries[i].observation.severity.code.name;
+                    if (entries[i].observation) {
+                        if (entries[i].observation.severity) {
+                            severity = entries[i].observation.severity.code.name;    
+                        }
                     }
 
                     entries[i].sort_order = (severity && severityWeight[severity.toUpperCase()]) || 0;
@@ -317,10 +324,14 @@ angular.module('services.recordFunctions', [])
                         resolved: 1
                     };
 
-                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
-
-                    var status = entries[i].status.name;
-                    entries[i].sort_order = (status && statusWeight[status.toLowerCase()]) || 0;
+                    if (angular.isDefined(entries[i].date_time)) {
+                        entries[i].attribute = this.formatDateTime(entries[i].date_time);    
+                    }
+                    if (angular.isDefined(entries[i].status)) {
+                        var status = entries[i].status.name;
+                        entries[i].sort_order = (status && statusWeight[status.toLowerCase()]) || 0;
+                    }
+                    
                 } else if (section === "results") {
                     //Results find date based on array
                     //TODO:  Improve so takes highest accuracy over lowest value.

@@ -40,7 +40,6 @@ angular.module('dre.record.claims', [])
       }).
       success(function(data, status, headers, config) {
         $scope.claims = data.claims;
-        console.log(data.claims);
         if ($scope.claims.length > 0) {
           $scope.displayClaims = true;
           $scope.updateFields();
