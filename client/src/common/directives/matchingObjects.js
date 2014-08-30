@@ -352,6 +352,7 @@ angular.module('directives.matchingObjects', [])
 ])
 
 //administration for medications
+//TODO: need interval support
 .directive('medsadministrationEntry', ['$parse',
     function($parse) {
         return {
@@ -368,6 +369,29 @@ angular.module('directives.matchingObjects', [])
                 "<div coded-entry input-value='inputValue.form' input-title='Form' select-field='selectedItems.form'></div>"+
                 "<div physicalquantity-entry input-value='inputValue.dose' input-title='Dose' select-field='selectedItems.dose'></div>"+
                 "<div physicalquantity-entry input-value='inputValue.rate' input-title='Rate' select-field='selectedItems.rate'></div>"+
+                "</div>",
+            //templateUrl: "templates/matching/reconciliation/review/templates/sub/medsadministration.tpl.html",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+//product for medications
+.directive('medsproductEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div><h4>{{inputTitle}}</h4>"+
+                "<div coded-entry input-value='inputValue.product' input-title='Name'></div>"+
+                "<div single-entry input-value='inputValue.unencoded_name' input-title='Unencoded Name'></div>"+
+                "<div single-entry input-value='inputValue.manufacturer' input-title='Manufacturer'></div>"+
                 "</div>",
             //templateUrl: "templates/matching/reconciliation/review/templates/sub/medsadministration.tpl.html",
             link: function(scope, element, attrs) {}

@@ -4,29 +4,17 @@
         <div single-entry input-value="update_entry.status" input-title="Status" select-field="selectedItems.status"></div>
     </li>
 
+    <li class="list-group-item" ng-click="selectField('sig', null, match_diff.sig)" ng-class="{selected: selectedItems.sig, disabled: match_diff.sig}">
+        <div single-entry input-value="update_entry.sig" input-title="Signature" select-field="selectedItems.sig"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('product', null, match_diff.product)" ng-class="{selected: selectedItems.product, disabled: match_diff.product}">
+        <div medsproduct-entry input-value="update_entry.product" input-title="Product" select-field="selectedItems.product"></div>
+    </li>
+
+
     <li class="list-group-item" ng-click="selectField('administration', null, match_diff.administration)" ng-class="{selected: selectedItems.administration, disabled: match_diff.administration}">
         <div medsadministration-entry input-value="update_entry.administration" input-title="Administration" select-field="selectedItems.administration"></div>
     </li>
-
-
-    <!--li class="list-group-item" ng-click="selectField('encounter', null, match_diff.encounter)" ng-class="{selected: selectedItems.encounter, disabled: match_diff.encounter}">
-        <div encounter-entry input-value="update_entry.encounter" input-title="Encounter" select-field="selectedItems.encounter"></div>
-    </li>
-
-    <li class="list-group-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}">
-        <div date-entry input-value="update_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
-    </li>    
-
-    <li class="list-group-item" ng-click="selectField('performers', null, match_diff.performers)" ng-class="{selected: selectedItems.performers, disabled: match_diff.performers}">
-        <div encounterperformers-entry input-value="update_entry.performers" input-title="Performers" select-field="selectedItems.performers"></div>
-    </li>
-
-    <li class="list-group-item" ng-click="selectField('locations', null, match_diff.locations)" ng-class="{selected: selectedItems.locations, disabled: match_diff.locations}">
-        <div encounterlocations-entry input-value="update_entry.locations" input-title="Locations" select-field="selectedItems.locations"></div>
-    </li>
-
-    <li class="list-group-item" ng-repeat="(finding_id, finding_entry) in update_entry.findings" ng-click="selectField('finding', finding_id, match_diff.findings)" ng-class="{selected: selectedItems.findings[finding_id], disabled: match_diff.findings}">
-        <div finding-entry input-value="finding_entry" input-title="Finding" input-additional="finding_entry" select-field="selectedItems.findings[finding_id]"></div>
-    </li-->
 
 </ul>
