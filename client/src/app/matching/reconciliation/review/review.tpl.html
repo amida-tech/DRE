@@ -72,7 +72,7 @@
                                 </h5>
                                 <br/>
                                 <div>
-                                    <button type="button" class="btn btn-primary btn-block">Yes</button>
+                                    <button type="button" class="btn btn-primary btn-block" ng-click="rotateMatch(current_match_index + 1)" data-dismiss="modal">Yes</button>
                                     <button type="button" class="btn btn-default btn-block" data-dismiss="modal">No</button>
                                 </div>
                             </div>
@@ -100,9 +100,9 @@
                         </div>
 
                         <div class="panel-body text-center">
-                            <h6 ng-if="match.matches.length > 1"><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
+                            <h6 ng-if="current_queue.length > 0"><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
                             </h6>
-                            <h6  ng-if="match.matches.length === 1">Current Record</h6>
+                            <h6  ng-if="current_queue.length === 0">Current Record</h6>
                         </div>
 
                         <ng-include src="recordTemplatePath"></ng-include>
@@ -118,51 +118,33 @@
                 </div>
             </div>
 
-            <div ng-if="match.matches.length > 1" class="col-md-6 col-md-offset-6">
+            <div class="col-md-6 col-md-offset-6" ng-repeat="(queue_index, queue_match) in current_queue">
 
                 <div class="text-center" style="padding: 15px;">
                     <h5>Other Matches</h5>
                 </div>
 
-                <div class="panel panel-info">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#demo">
+                <div class="panel panel-info" style="cursor: pointer;">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#subEntry{{queue_index}}">
                         <table>
                             <tr>
                                 <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
                                 </td>
                                 <td class="col-md-10 pull-right text-right">
-                                    <h4>62% Match</h4>
+                                    <h4>{{queue_match.match_object.percent}}% Match</h4>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    <div id="demo" class="panel-body collapse">
-                        <ng-include src="recordTemplatePath"></ng-include>
-                    </div>
-                </div>
-
-
-                <div class="panel panel-info">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#demo2">
-                        <table>
-                            <tr>
-                                <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
-                                </td>
-                                <td class="col-md-10 pull-right text-right">
-                                    <h4>45% Match</h4>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div id="demo2" class="panel-body collapse">
-                        <ng-include src="recordTemplatePath"></ng-include>
+                    <div id="subEntry{{queue_index}}" class="panel-body collapse">
+                        <ng-include src="subTemplatePath"></ng-include>
                     </div>
                 </div>
 
             </div>
         </div>
         
-        <!--<pre>{{ match | json}}</pre>-->
+        <pre>{{ match | json}}</pre>
 
     </div>
 </div>
