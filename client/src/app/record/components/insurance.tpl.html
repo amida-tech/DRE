@@ -9,7 +9,7 @@
 <div ng-hide="displayInsurance" class="panel-title">No insurance are currently in your record.</div>
 <div ng-show="displayInsurance" class="panel-group" id="#accordian-insurance" ng-repeat="insurance in insurance | orderBy:insurancePredicate">
 
-	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="myInsuranceModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -93,7 +93,7 @@
 					</div>
 
 					
-					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myInsuranceModal{{$index}}">Sources</button>
 				</div>
 
 				<!--<pre>{{insurance | json}}</pre>-->

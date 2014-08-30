@@ -9,7 +9,7 @@
 <div ng-hide="display" class="panel-title">No social history entries are currently in your record.</div>
 <div ng-show="display" class="panel-group" id="#accordian-social_history" ng-repeat="entry in entries | orderBy:sort_predicate">
 
-	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="mySocialModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -22,7 +22,7 @@
 							<tr><td><strong>Source Information</strong></td></tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="attribution in vital.metadata.attribution">
+							<tr ng-repeat="attribution in entry.metadata.attribution">
 								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
 								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
 								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
@@ -63,7 +63,7 @@
 						</div>
 					</div>
 
-					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#mySocialModal{{$index}}">Sources</button>
 				</div>
 			</div>
 		</div>

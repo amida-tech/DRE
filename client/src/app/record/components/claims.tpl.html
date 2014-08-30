@@ -9,7 +9,7 @@
 <div ng-hide="displayClaims" class="panel-title">No claims are currently in your record.</div>
 <div ng-show="displayClaims" class="panel-group" id="#accordian-claims" ng-repeat="claim in claims | orderBy:claimsPredicate">
 
-    <div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myClaimsModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div>Index: {{$index}}</div>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -473,7 +473,7 @@
                 </div>
                 <!--<pre>{{claim | json}}</pre>-->
 
-                <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+                <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myClaimsModal{{$index}}">Sources</button>
             </div>
         </div>
     </div>
