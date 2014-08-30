@@ -54,8 +54,8 @@ angular.module('dre.record.insurance', [])
     $scope.updateFields = function() {
       for (var i in $scope.insurance) {
         recordFunctions.extractName($scope.insurance[i], "insurance");
-        recordFunctions.formatDate($scope.insurance[i].date);
-        $scope.insurance[i].date_weight = $scope.insurance[i].date[0].date;
+        recordFunctions.formatDateTime($scope.insurance[i].date_time);
+        $scope.insurance[i].date_weight = $scope.insurance[i].date_time;
         $scope.insurance[i].name = recordFunctions.truncateName($scope.insurance[i].name);
         if ($scope.insurance[i].addresses) {
           for (var perAddr in $scope.insurance[i].addresses) {

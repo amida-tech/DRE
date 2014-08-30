@@ -40,7 +40,7 @@
 				<div class="panel-title" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-exclamation-sign"></span>
 					<span style="text-transform:uppercase;">{{insurance.name}} </span>
-					<span class="pull-right" style="text-transform:uppercase;">{{insurance.date[0].displayDate}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{insurance.date_time.low.displayDate}}</span>
 				</div>
 			</a>
 		</div>
@@ -95,6 +95,9 @@
 					
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
 				</div>
+
+				<!--<pre>{{insurance | json}}</pre>-->
+
 			</div>
 		</div>
 	</div>
