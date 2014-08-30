@@ -69,11 +69,12 @@ angular.module('dre.record.claims', [])
             claim.name = undefined;
         }
 
-        if(claim.start_date){
+        /*if(claim.start_date){
             //format date for Details section
-            recordFunctions.formatDate(claim.start_date);
+            console.log(claim);
+            recordFunctions.formatDateTime(claim.date_time);
             //prepare the date that is going to be displayed in accordion
-            claim.titleDate = claim.start_date;
+            claim.titleDate = claim.date_time;
         }
         if(claim.end_date){
             recordFunctions(formatDate(claim.end_date));
@@ -93,19 +94,26 @@ angular.module('dre.record.claims', [])
         //just assign UTC 1970 to claim date weight so it's at the bottom of the section
         else{
             claim.date_weight = (new Date(0)).toISOString();
+        }*/
+
+
+        if (claim.date_time) {
+          recordFunctions.formatDateTime(claim.date_time);
         }
 
         for(var x in claim.lines){
             var line = claim.lines[x];
-            if(line.start_date){
-                recordFunctions.formatDate(line.start_date);
+            if(line.date_time){
+                recordFunctions.formatDateTime(line.date_time);
             }
-            if(line.end_date){
-                recordFunctions.formatDate(line.end_date);
-            }
-            if(line.service_date){
-                recordFunctions.formatDate(line.service_date);
-            }
+        }
+
+        if (claim.performer) {
+          for (var y in claim.performer) {
+            for (var z in claim.performer[y].address) {
+              recordFunctions.formatAddress(claim.performer[y].address[z]);
+            }      
+          }
         }
 
 
