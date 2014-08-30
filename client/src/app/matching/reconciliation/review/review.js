@@ -21,8 +21,15 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.new_entry = {};
         $scope.current_entry = {};
         $scope.update_entry = {};
+        $scope.selectedItems = {};
 
-        //$scope.match.entry_type_singular
+         if ($scope.section === 'allergies') {
+                    $scope.selectedItems.observation = {};
+                    $scope.selectedItems.observation.reactions = [];
+                }
+
+        var max_src = 0;
+        var max_dest = 0;
 
         $scope.getMatch = function() {
             $http({
@@ -49,6 +56,59 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                         $scope.match_diff[diff] = false;
                     }
                 }
+
+
+
+                //Flag subarray matches on match_diff;  can only set for src?  no, add separate sub element.
+               if ($scope.section === 'allergies') {
+
+                    //Extend Diff Object to include subarray.
+                    $scope.match_diff.observation = {};
+                    $scope.match_diff.observation.reactions = {};
+                    $scope.match_diff.observation.reactions.src = [];
+                    $scope.match_diff.observation.reactions.dest = [];
+
+                    for (var src_i in $scope.new_entry.observation.reactions) {
+                        $scope.match_diff.observation.reactions.src.push(false);
+                        $scope.selectedItems.observation.reactions.push(false);
+                    }
+
+                    for (var dest_i in $scope.current_entry.observation.reactions) {
+                        $scope.match_diff.observation.reactions.dest.push(false);
+                    }
+                    var tempArrayDiff = $scope.current_match.subelements.observation.reactions;
+                    for (var i in tempArrayDiff) {
+                        if (tempArrayDiff[i].match === "duplicate") {
+                            $scope.match_diff.observation.reactions.src[tempArrayDiff[i].src_id] = true;
+                            $scope.match_diff.observation.reactions.dest[tempArrayDiff[i].dest_id] = true;
+                        }
+                    }
+
+                    //Extend Selected Items to have placeholders for all records by querying object length.
+
+
+
+
+
+                    console.log($scope.selectedItems);
+
+
+
+                    //On push, add to dest array, and save src/dest index in temp table.  On deselect, use temp table to cut.
+
+
+
+
+               }
+
+               //console.log($scope.match_diff);
+
+
+
+
+
+
+
             }).
             error(function(data, status, headers, config) {
                 console.log('error');
@@ -106,14 +166,20 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.recordTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_record.tpl.html";
 
 
-        //Need to initialize selection array.  May be able to walk original to build.
-        $scope.selectedItems = {};
-        $scope.selectedItems.reaction = [];
+        
+
+        if ($scope.section === 'allergies') {
+                $scope.selectedItems.observation = {};
+                $scope.selectedItems.observation.reactions = [];
+        }
+
+
+
+
         //$scope.selectedItems.allergen = {};
 
 
         //TODO:  Inject reaction severity into display from object.
-
         $scope.selectField = function(entry, entry_index, entry_status) {
 
             //Don't process hidden items.
@@ -122,17 +188,29 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             }
 
             if (entry_index >= 0 && entry_index !== null) {
-                if (!$scope.selectedItems[entry][entry_index]) {
-                    $scope.selectedItems[entry][entry_index] = true;
-                    $scope.update_entry[entry][entry_index] = $scope.new_entry[entry][entry_index];
-                } else {
-                    $scope.selectedItems[entry][entry_index] = false;
-                    if ($scope.current_entry[entry][entry_index] !== undefined) {
-                        $scope.update_entry[entry][entry_index] = $scope.current_entry[entry][entry_index];
+
+                    if (entry.indexOf(".") > -1) {
+                        var splitEntry = entry.split(".");
+                        if (splitEntry.length === 2) {
+                            if (!$scope.selectedItems[splitEntry[0]][splitEntry[1]][entry_index]) {
+                                $scope.selectedItems[splitEntry[0]][splitEntry[1]][entry_index] = true;
+                                $scope.update_entry[splitEntry[0]][splitEntry[1]].splice(entry_index, 0, $scope.new_entry[splitEntry[0]][splitEntry[1]][entry_index]);
+                                $scope.match_diff[splitEntry[0]][splitEntry[1]].dest.splice(entry_index, 0, false);
+                           } else {
+                                $scope.selectedItems[splitEntry[0]][splitEntry[1]][entry_index] = false;
+                                $scope.update_entry[splitEntry[0]][splitEntry[1]].splice(entry_index, 1);
+                                $scope.match_diff[splitEntry[0]][splitEntry[1]].dest.splice(entry_index, 0, true);
+                           }
+
+                        }
                     } else {
-                        $scope.update_entry[entry].splice([entry_index], 1);
+                            if (!$scope.selectedItems[entry][entry_index]) {
+                                $scope.selectedItems[entry][entry_index] = true;
+                            } else {
+                                $scope.selectedItems[entry][entry_index] = false;
+                            }
+
                     }
-                }
 
             } else {
                 if (!$scope.selectedItems[entry]) {
@@ -146,6 +224,29 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             }
 
         };
+
+
+        //Custom code per section below.  Need to account for variations in diff objects.
+
+        /*
+            //Conditionally create sub arrays.
+            if ($scope.section === 'allergies') {
+                $scope.selectedItems.observation = {};
+                $scope.selectedItems.observation.reaction = [];
+                for (var maxi in $scope.current_match.subelements.observation.reactions) {
+                    if ($scope.current_match.subelements.observation.reactions[maxi].src_id > max_src) {
+                        max_src = $scope.current_match.subelements.observation.reactions[maxi].src_id;
+                    }
+                    if ($scope.current_match.subelements.observation.reactions[maxi].dest_id > max_dest) {
+                        max_dest = $scope.current_match.subelements.observation.reactions[maxi].dest_id;
+                    }
+                }
+            }*/
+
+
+
+
+
 
         /*$scope.entryType = function(input) {
             var response = 'str';
@@ -202,21 +303,8 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             if ($scope.sample_match.subelements.reaction[maxi].dest_id > max_dest) {
                 max_dest = $scope.sample_match.subelements.reaction[maxi].dest_id;
             }
-        }
-
-
-        //Inject subelement reactions to diff.
-        for (var reaction in $scope.sample_match.subelements.reaction) {
-
-            if ($scope.sample_match.subelements.reaction[reaction].match === 'new') {
-
-                //console.log($scope.sample_match.subelements.reaction[reaction]);
-
-            }
         }*/
 
-        recordFunctions.formatDate($scope.new_entry.date);
-        recordFunctions.formatDate($scope.current_entry.date);
 
     }
 ]);
