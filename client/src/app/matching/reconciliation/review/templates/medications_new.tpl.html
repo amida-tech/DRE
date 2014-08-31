@@ -1,5 +1,9 @@
 <ul class="list-group list-matching">
 
+    <li class="list-group-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}">
+        <div date-entry input-value="new_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
+    </li>
+
     <li class="list-group-item" ng-click="selectField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}">
         <div single-entry input-value="new_entry.status" input-title="Status" select-field="selectedItems.status"></div>
     </li>
@@ -17,4 +21,24 @@
         <div medsadministration-entry input-value="new_entry.administration" input-title="Administration" select-field="selectedItems.administration"></div>
     </li>
 
+    <li class="list-group-item" ng-click="selectField('dispense.performer', null, match_diff.dispense.performer)" ng-class="{selected: selectedItems.dispense.performer, disabled: match_diff.dispense.performer}">
+        <div performer-entry input-value="new_entry.dispense.performer" input-title="Dispense" select-field="selectedItems.dispense.performer"></div>
+    </li>
+
+
+    <li class="list-group-item" ng-click="selectField('supply', null, match_diff.supply)" ng-class="{selected: selectedItems.supply, disabled: match_diff.supply}">
+        <div medssupply-entry input-value="new_entry.supply" input-title="Supply" select-field="selectedItems.supply"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('drug_vehicle', null, match_diff.drug_vehicle)" ng-class="{selected: selectedItems.drug_vehicle, disabled: match_diff.drug_vehicle}">
+        <div coded-entry input-value="new_entry.drug_vehicle" input-title="Drug Vehicle" select-field="selectedItems.drug_vehicle"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('precondition.value', null, match_diff.precondition.value)" ng-class="{selected: selectedItems.precondition.value, disabled: match_diff.precondition.value}">
+        <div coded-entry input-value="new_entry.precondition.value" input-title="Precondition" select-field="selectedItems.precondition.value"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('indication', null, match_diff.indication)" ng-class="{selected: selectedItems.indication, disabled: match_diff.indication}">
+        <div medsindication-entry input-value="new_entry.indication" input-title="Indication" select-field="selectedItems.indication"></div>
+    </li>
 </ul>

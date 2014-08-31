@@ -12,41 +12,16 @@
         <div product-entry input-value="new_entry.product" input-title="Product" select-field="selectedItems.product"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('product.manufacturer', null, match_diff.product.manufacturer)" ng-class="{selected: selectedItems.product.manufacturer, disabled: match_diff.product.manufacturer}">
-        <div single-entry input-value="new_entry.product.manufacturer" input-title="Manufacturer" select-field="selectedItems.product.manufacturer"></div>
+     <li class="list-group-item" ng-click="selectField('administration', null, match_diff.administration)" ng-class="{selected: selectedItems.administration, disabled: match_diff.administration}">
+        <div administration-entry input-value="new_entry.administration" input-title="Administration" select-field="selectedItems.administration"></div>
+    </li>
+ 
+    <li class="list-group-item" ng-click="selectField('performer', null, match_diff.performer)" ng-class="{selected: selectedItems.performer, disabled: match_diff.performer}">
+        <div performer-entry input-value="new_entry.performer" input-title="Performer" select-field="selectedItems.performer"></div>
     </li>    
 
-    <li class="list-group-item" ng-click="selectField('birthplace', null, match_diff.birthplace)" ng-class="{selected: selectedItems.birthplace, disabled: match_diff.birthplace}">
-        <div address-entry input-value="new_entry.birthplace" input-title="Birthplace" select-field="selectedItems.birthplace"></div>
-    </li>
-
-    <li class="list-group-item" ng-click="selectField('marital_status', null, match_diff.marital_status)" ng-class="{selected: selectedItems.marital_status, disabled: match_diff.marital_status}">
-        <div single-entry input-value="new_entry.marital_status" input-title="Marital Status" select-field="selectedItems.marital_status"></div>
-    </li>
-
-    <li class="list-group-item" ng-click="selectField('religion', null, match_diff.religion)" ng-class="{selected: selectedItems.religion, disabled: match_diff.religion}">
-        <div single-entry input-value="new_entry.religion" input-title="Religion" select-field="selectedItems.religion"></div>
-    </li>
-
-    <li class="list-group-item" ng-click="selectField('race_ethnicity', null, match_diff.race_ethnicity)" ng-class="{selected: selectedItems.race_ethnicity, disabled: match_diff.race_ethnicity}">
-        <div single-entry input-value="new_entry.race_ethnicity" input-title="Race/Ethnicity" select-field="selectedItems.race_ethnicity"></div>
-    </li>
-
-    <li class="list-group-item" ng-click="selectField('religion', null, match_diff.religion)" ng-class="{selected: selectedItems.religion, disabled: match_diff.religion}">
-        <div single-entry input-value="new_entry.religion" input-title="Address" select-field="selectedItems.religion"></div>
-    </li>
-
-    <li class="list-group-item" ng-click="selectField('phone', null, match_diff.phone)" ng-class="{selected: selectedItems.phone, disabled: match_diff.phone}">
-        <div phone-entry input-value="new_entry.phone" input-title="Phone" select-field="selectedItems.phone"></div>
-    </li>
-
-    <li class="list-group-item" ng-click="selectField('email', null, match_diff.email)" ng-show="selectedItems.email" ng-class="{selected: selectedItems.email, disabled: match_diff.email}">
-        <div single-entry input-value="new_entry.email" input-title="Email" select-field="selectedItems.email"></div>
-    </li>
-
-
-    <li class="list-group-item" ng-repeat="(reaction_id, reaction_entry) in new_entry.reaction" ng-click="selectField('reaction', reaction_id, match_diff.reaction)" ng-class="{selected: selectedItems.reaction[reaction_id], disabled: match_diff.reaction}">
-        <div coded-entry input-value="reaction_entry.reaction" input-title="Reaction" input-additional="reaction_entry" select-field="selectedItems.reaction[reaction_id]"></div>
+     <li class="list-group-item" ng-click="selectField('instructions', null, match_diff.instructions)" ng-class="{selected: selectedItems.instructions, disabled: match_diff.instructions}">
+        <div instructions-entry input-value="new_entry.instructions" input-title="Instructions" select-field="selectedItems.instructions"></div>
     </li>
 
 </ul>
