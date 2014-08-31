@@ -9,8 +9,25 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
     }
 ])
 
-.controller('matchReviewCtrl', ['$scope', '$http', '$routeParams', '$location', 'getNotifications', 'recordFunctions',
-    function ($scope, $http, $routeParams, $location, getNotifications, recordFunctions) {
+.controller('matchReviewCtrl', ['$rootScope', '$scope', '$http', '$routeParams', '$location', 'getNotifications', 'recordFunctions',
+    function ($rootScope, $scope, $http, $routeParams, $location, getNotifications, recordFunctions) {
+
+        $scope.titles = {
+            allergies: "Allergies",
+            encounters: "Encounters",
+            immunizations: "Immunizations",
+            medications: "Medications",
+            problems: "Problem List",
+            procedures: "Procedures",
+            vitals: "Vital Signs",
+            insurance: "Insurance",
+            claims: "Claims",
+            results: "Results",
+            social_history: "Social History"
+        };
+
+
+
 
         //getting parameters from route/url
         $scope.section = $routeParams["section"];
@@ -198,6 +215,12 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             }).
             success(function (data, status, headers, config) {
                 //Note:  Pill count not refreshing.
+
+
+                getNotifications.getUpdate(function(err, notifications) {
+                          $rootScope.notifications = notifications;
+                });
+
                 $location.path("match/reconciliation");
             }).
             error(function (data, status, headers, config) {
