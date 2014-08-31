@@ -79,7 +79,12 @@ angular.module('dre.storage', ['directives.fileModel'])
 
     $scope.refreshRecords();
 
-
+      $scope.dismissModal = function() {
+        $("#uploadModal").on("hidden.bs.modal", function (e) {
+            $location.path("/storage");
+            $scope.$apply();
+        });
+      };
 
 
     //File upload.
@@ -91,6 +96,9 @@ angular.module('dre.storage', ['directives.fileModel'])
         if (err) {
           console.log(err);
         }
+
+
+
         $scope.myFile = null;
         $scope.refreshRecords();
         $route.reload();
