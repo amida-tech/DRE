@@ -1,0 +1,14 @@
+{
+  "name": "tools",
+  "version": "0.0.0",
+  "description": "",
+  "main": "gen.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dmitry Kachaev <dmitry.kachaev@gmail.com> (http://github.com/kachok)",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^1.0.0"
+  }
+}

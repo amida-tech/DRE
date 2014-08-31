@@ -14,12 +14,12 @@
         <br/>
 
         <!-- All in here. -->
-        <div class="panel panel-default col-md-12">
+        <div class="panel panel-default col-md-12" ng-show="version==='old'">
 
             <!-- Left Pane -->
 
             <div>
-                <div class="col-md-6" style="padding: 30px 15px 0px 0px;">
+                <div class="col-md-6" style="padding: 30px 15px 0px 0px;" >
 
                     <div class="panel panel-info">
 
@@ -144,6 +144,16 @@
             </div>
         </div>
         
+
+        <!-- All in here V2. -->
+        <div class="panel panel-default col-md-12" ng-show="version==='new'">
+
+
+                        <ng-include src="v2TemplatePath"></ng-include>
+
+
+        </div>
+
         <pre>{{ match | json}}</pre>
 
     </div>

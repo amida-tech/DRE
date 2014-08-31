@@ -1,0 +1,51 @@
+<table class="col-md-12">
+    <thead>
+        <tr >
+            <th class='col-md-6'>
+                <div class="panel-heading">
+                    <table>
+                        <tr>
+                            <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                            </td>
+                            <td class="col-md-10 pull-right text-right">
+                                <h4>Entry Update</h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </th>
+            <th class='col-md-6'>
+                <div class="panel-heading">
+                    <table>
+                        <tr>
+                            <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                            </td>
+                            <td class="col-md-10 pull-right text-right">
+                                <h4>{{match_percent}}% Match</h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </th>
+        </tr>
+    </thead>
+
+<% for (var i = 0; i < meta.length; i++) { 
+    var el = meta[i];
+    // display properties of this
+%>
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('<%= el.name %>', null, match_diff.<%= el.name %>)" ng-class="{selected: selectedItems.<%= el.name %>, disabled: match_diff.<%= el.name %>}" ng-show="new_entry.<%= el.name %>">
+                <div <%= el.entry %>-entry input-value="new_entry.<%= el.name %>" input-title="<%= el.title %>" select-field="selectedItems.<%= el.name %>"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="selectField('<%= el.name %>', null, match_diff.<%= el.name %>)" ng-class="{selected: selectedItems.<%= el.name %>, disabled: match_diff.<%= el.name %>}" ng-show="update_entry.<%= el.name %>">
+                <div <%= el.entry %>-entry input-value="update_entry.<%= el.name %>" input-title="<%= el.title %>" select-field="selectedItems.<%= el.name %>"></div>
+            </div>
+
+        </td>
+    </tr>
+<% } %>    
+</table>
