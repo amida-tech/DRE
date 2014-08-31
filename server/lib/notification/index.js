@@ -2,8 +2,11 @@ var express = require('express');
 var app = module.exports = express();
 var record = require('blue-button-record');
 var login = require('../login');
+var _ = require('underscore');
 
 var bbm = require('blue-button-meta');
+
+
 
 function getNotifications (username, callback) {
 
@@ -15,6 +18,20 @@ function getNotifications (username, callback) {
   var fileDone = false;
   var partialCount = 0;
   var partialDone = false;
+
+
+  //console.log(bbm);
+
+  var supported_sections = _.filter(bbm.supported_sections, function(item) {
+  //console.log(item);
+  if (item ==='plan_of_care' || item === 'providers' || item === 'payers') {
+    return false;
+  } else {
+    return true;
+  }
+});
+
+  //console.log(supported_sections);
 
 
   function checkDone() {
@@ -31,7 +48,7 @@ function getNotifications (username, callback) {
 
   function getPartialCount(username, callback) {
     var secIteration = 0;
-    var secTotal = bbm.supported_sections.length;
+    var secTotal = supported_sections.length;
 
     function checkCountComplete() {
       secIteration++;
@@ -41,7 +58,7 @@ function getNotifications (username, callback) {
       }
     }
 
-    bbm.supported_sections.forEach(function(component) {
+    supported_sections.forEach(function(component) {
       record.matchCount(component, username, {}, function(err, count) {
         if (err) {
           callback(err);
@@ -59,7 +76,7 @@ function getNotifications (username, callback) {
 
   function getNewMergeCount(username, callback) {
     var secIteration = 0;
-    var secTotal = bbm.supported_sections.length;
+    var secTotal = supported_sections.length;
   
     function checkCountComplete() {
       secIteration++;
@@ -69,7 +86,7 @@ function getNotifications (username, callback) {
       }
     }
 
-    bbm.supported_sections.forEach(function(component) {
+    supported_sections.forEach(function(component) {
       record.mergeCount(component, username, {merge_reason: "new"}, function(err, count) {
         if (err) {
           callback(err);
@@ -87,7 +104,7 @@ function getNotifications (username, callback) {
 
   function getDupeMergeCount(username, callback) {
     var secIteration = 0;
-    var secTotal = bbm.supported_sections.length;
+    var secTotal = supported_sections.length;
 
     function checkCountComplete() {
       secIteration++;
@@ -98,7 +115,7 @@ function getNotifications (username, callback) {
       }
     }
 
-    bbm.supported_sections.forEach(function(component) {
+    supported_sections.forEach(function(component) {
       record.mergeCount(component, username, {merge_reason: "duplicate"}, function(err, count) {
         if (err) {
           callback(err);
