@@ -4,7 +4,7 @@
         <div coded-entry input-value="update_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set"></div>
     </li>
 
-    <li class="list-group-item" ng-repeat="(result_id, result_entry) in update_entry.results" ng-click="selectField('results', result_id, match_diff.results.src[result_id])" ng-class="{selected: selectedItems.observation.reactions[reaction_id], disabled: match_diff.observation.reactions.src[reaction_id]}">
+    <li class="list-group-item" ng-repeat="(result_id, result_entry) in update_entry.results" ng-click="removeField('results', result_id, match_diff.results.dest[result_id])" ng-class="{selected: selectedItems.results[result_id], disabled: match_diff.results.dest[result_id]}">
         <div result-entry input-value="result_entry" input-title="Result" input-additional="result_entry" select-field="selectedItems.results[result_id]"></div>
     </li>
 
