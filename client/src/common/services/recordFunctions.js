@@ -49,10 +49,12 @@ angular.module('services.recordFunctions', [])
                     inputSection.name = inputSection.plan.name;
                 } else if (type === "payers") {
                     inputSection.name = inputSection.policy.insurance.performer.organization[0].name[0];
-                } else if (inputSection.plan_name) {
-                    inputSection.name = inputSection.plan_name;
-                } else if (inputSection.payer_name) {
-                    inputSection.name = inputSection.payer_name;
+                } else if (type === "insurance") {
+                    if (inputSection.plan_name) {
+                        inputSection.name = inputSection.plan_name;
+                    } else if (inputSection.payer_name) {
+                        inputSection.name = inputSection.payer_name;
+                    }
                 }
                 //claims
                 else if (inputSection.payer || inputSection.number) {
@@ -94,6 +96,12 @@ angular.module('services.recordFunctions', [])
             //console.log('state of the name');
             //console.log(inputSection.name);
 */
+
+            //Trim long names
+            if (inputSection.name.length > 47) {
+                inputSection.name = inputSection.name.substring(0, 47) + "...";
+            }
+
             return inputSection;
         };
 
@@ -305,14 +313,14 @@ angular.module('services.recordFunctions', [])
                     } else {
                         entries[i].attribute = "";
                     }
-                    
+
 
                     //console.log(JSON.stringify(entries[i], null, 4));
 
                     var severity;
                     if (entries[i].observation) {
                         if (entries[i].observation.severity) {
-                            severity = entries[i].observation.severity.code.name;    
+                            severity = entries[i].observation.severity.code.name;
                         }
                     }
 
@@ -327,13 +335,13 @@ angular.module('services.recordFunctions', [])
                     };
 
                     if (angular.isDefined(entries[i].date_time)) {
-                        entries[i].attribute = this.formatDateTime(entries[i].date_time);    
+                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     }
                     if (angular.isDefined(entries[i].status)) {
                         var status = entries[i].status.name;
                         entries[i].sort_order = (status && statusWeight[status.toLowerCase()]) || 0;
                     }
-                    
+
                 } else if (section === "results") {
                     //Results find date based on array
                     //TODO:  Improve so takes highest accuracy over lowest value.
@@ -361,8 +369,7 @@ angular.module('services.recordFunctions', [])
                 } else if (section === "payers") {
 
                     for (var pi in entries[i].policy.insurance.performer.organization) {
-                        for (var api in entries[i].policy.insurance.performer.organization[i].address) {
-                        }
+                        for (var api in entries[i].policy.insurance.performer.organization[i].address) {}
                     }
                 }
                 // social_history, vitals, procedures, immunizations, encounters

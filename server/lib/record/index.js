@@ -64,6 +64,8 @@ function getMHR(username, callback) {
         count = 0,
         components = Object.keys(supportedComponents);
 
+    //var supported_sections=_.difference(bbm.supported_sections, ["plan_of_care", "providers", "payers"]);
+
     bbm.supported_sections.forEach(function(secName) {
         record.getSectionAsync(secName, username).then(function(sec) {
             if (sec.length !== 0) {
