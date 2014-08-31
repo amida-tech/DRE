@@ -79,14 +79,6 @@ angular.module('dre.storage', ['directives.fileModel'])
 
     $scope.refreshRecords();
 
-      $scope.dismissModal = function() {
-        $("#uploadModal").on("hidden.bs.modal", function (e) {
-            $location.path("/storage");
-            $scope.$apply();
-        });
-      };
-
-
     //File upload.
     $scope.uploadRecord = function() {
 
@@ -97,11 +89,10 @@ angular.module('dre.storage', ['directives.fileModel'])
           console.log(err);
         }
 
-
-
+        angular.element("div").removeClass("modal-backdrop fade in");
         $scope.myFile = null;
         $scope.refreshRecords();
-        $route.reload();
+        //$route.reload();
       });
 
     };
