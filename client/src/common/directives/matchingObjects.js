@@ -18,6 +18,23 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+.directive('physicalquantityEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr><td class='col-md-12'>{{inputValue.value}}&nbsp;{{inputValue.unit}}</td></tr></table>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
 .directive('phoneEntry', ['$parse',
     function($parse) {
         return {
@@ -159,7 +176,6 @@ angular.module('directives.matchingObjects', [])
                 template: "<table class='table table-condensed'>" +
                     "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
                 //"<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue[0].displayDate}}</td></tr>" +
-                "<tr ng-show='inputValue.point'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.point.date | date:'medium'}}</td></tr>" +
                     "<tr ng-show='inputValue.point'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.point.date | date:'medium'}}</td></tr>" +
                     "<tr ng-show='inputValue.low && !inputValue.high'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.low.date | date:'medium'}} - PRESENT</td></tr>" +
                     "<tr ng-show='!inputValue.low && inputValue.high'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>... - {{inputValue.high.date | date:'medium'}}</td></tr>" +
@@ -222,6 +238,165 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+//encounter for encounters
+.directive('encounterEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div><table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.name}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.code}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.code_system_name}}</td></tr></table>" +
+                "<table class='table table-condensed' ng-repeat='tran in inputValue.translations'>" +
+                "<thead><tr><th><b>Translation</b></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{tran.name}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{tran.code}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{tran.code_system_name}}</td></tr>" +
+                "</table></div",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+
+//performers for encounters
+//TODO: extra attributed not covered
+.directive('encounterperformersEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div><h4>{{inputTitle}}</h4><div ng-repeat='perf in inputValue'>"+
+                "<table class='table table-condensed' ng-repeat='code in perf.code'>" +
+                "<thead><tr><th><b>Code</b></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{code.name}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{code.code}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{code.code_system_name}}</td></tr></table>" +
+
+                "</div></div",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+//locations for encounters
+//TODO: extra attributed not covered
+.directive('encounterlocationsEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div><h4>{{inputTitle}}</h4><div ng-repeat='loc in inputValue'>"+
+                "<table class='table table-condensed' ng-repeat='address in loc.address'>" +
+                "<thead><tr><th><b>Address</b></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr ng-repeat='line in address.street_lines'><td class='col-md-12'>{{line}}</td></tr>" +
+                "<tr><td class='col-md-12'>{{address.city}}, {{address.state}} {{address.zip}}</td></tr></table>" +
+
+                "</div></div",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+
+//finding for encounter
+.directive('findingEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div>"+
+                "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.value.name}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.value.code}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.value.code_system_name}}</td></tr></table>" +
+
+                "<table class='table table-condensed' ng-show='inputValue.date_time'>" +
+                "<thead><tr><th><b>Effective</b></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
+                "<tr ng-show='inputValue.date_time.low && inputValue.date_time.high'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.date_time.low.date | date:'medium'}} - {{inputValue.date_time.high.date | date:'medium'}}</td></tr>" +
+                "<tr ng-show='inputValue.date_time.low && !inputValue.date_time.high'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>{{inputValue.date_time.low.date | date:'medium'}} - PRESENT</td></tr>" +
+                "<tr ng-show='!inputValue.date_time.low && inputValue.date_time.high'><td class='col-md-4'><label style='text-transform: capitalize;'>Date:</label></td><td class='col-md-4 text-left'>... - {{inputValue.date_time.high.date | date:'medium'}}</td></tr>" +
+                "</table>" +
+                "</div>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+//administration for medications
+//TODO: need interval support
+.directive('medsadministrationEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div><h4>{{inputTitle}}</h4>"+
+                "<div coded-entry input-value='inputValue.route' input-title='Route' select-field='selectedItems.route'></div>"+
+                "<div coded-entry input-value='inputValue.form' input-title='Form' select-field='selectedItems.form'></div>"+
+                "<div physicalquantity-entry input-value='inputValue.dose' input-title='Dose' select-field='selectedItems.dose'></div>"+
+                "<div physicalquantity-entry input-value='inputValue.rate' input-title='Rate' select-field='selectedItems.rate'></div>"+
+                "</div>",
+            //templateUrl: "templates/matching/reconciliation/review/templates/sub/medsadministration.tpl.html",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+//product for medications
+.directive('medsproductEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div><h4>{{inputTitle}}</h4>"+
+                "<div coded-entry input-value='inputValue.product' input-title='Name'></div>"+
+                "<div single-entry input-value='inputValue.unencoded_name' input-title='Unencoded Name'></div>"+
+                "<div single-entry input-value='inputValue.manufacturer' input-title='Manufacturer'></div>"+
+                "</div>",
+            //templateUrl: "templates/matching/reconciliation/review/templates/sub/medsadministration.tpl.html",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
 
 //severity for allergies
 .directive('severityEntry', ['$parse',
@@ -293,6 +468,34 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+
+
+//result for results
+.directive('resultEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<div>"+
+                "<div coded-entry input-value='inputValue.result' input-title='Result'></div>"+
+                "<div date-entry input-value='inputValue.date_time' input-title='Date'></div>"+
+                "<div single-entry input-value='inputValue.status' input-title='Status'></div>"+
+                "<div single-entry input-value='inputValue.interpretation' input-title='Interpretation'></div>"+
+                "<div single-entry input-value='inputValue.value' input-title='Value'></div>"+
+                "<div single-entry input-value='inputValue.unit' input-title='Unit'></div>"+
+                "<div single-entry input-value='inputValue.reference_range.range' input-title='Reference Range'></div>"+
+
+                "</div>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
 
 
 
