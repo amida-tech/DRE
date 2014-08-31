@@ -61,6 +61,22 @@ var dre = angular
 
             return tmpDateArr;
         };
+    })    
+.filter('bb_trunc', function($filter) {
+        //Format Blue Button OIDs (by truncating them)
+
+        return function(oid) {
+            if (typeof oid === "undefined") {
+                return "";
+            }
+
+            if (oid.length > 13) {
+                oid =  "..."+oid.substring(oid.length-10, oid.length);
+                //console.log(inputName);
+            }
+
+            return oid;
+        };
     })
     .filter('bb_name', function($filter) {
         //Format Blue Button name JSON struct into string
