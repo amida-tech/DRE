@@ -52,25 +52,25 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[0].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.low.displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date_time.low.displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.high.displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date_time.high.displayDate}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.onsetAgeDisplay">
 							<div class="pull-left col-md-12"><strong>Onset Age:</strong></div><br/>
 							<div class="pull-left col-md-12">{{entry.onsetAgeDisplay}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.problem.code">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.problem.code.code">
 							<div class="pull-left col-md-12"><strong>Problem Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.problem.code}}</div>
+							<div class="pull-left col-md-12">{{entry.problem.code.code}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.problem.code_system_name">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.problem.code.code_system_name">
 							<div class="pull-left col-md-12"><strong>Problem Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.problem.code_system_name}}</div>
+							<div class="pull-left col-md-12">{{entry.problem.code.code_system_name}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.patient_status">
 							<div class="pull-left col-md-12"><strong>Reported Status:</strong></div><br/>

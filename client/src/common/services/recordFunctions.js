@@ -308,8 +308,8 @@ angular.module('services.recordFunctions', [])
                     };
 
                     //replace attribute with severity
-                    if (entries[i].date_time) {
-                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    if (entries[i].observation.date_time) {
+                        entries[i].attribute = this.formatDateTime(entries[i].observation.date_time);
                     } else {
                         entries[i].attribute = "";
                     }
@@ -342,6 +342,14 @@ angular.module('services.recordFunctions', [])
                         entries[i].sort_order = (status && statusWeight[status.toLowerCase()]) || 0;
                     }
 
+                    if (angular.isDefined(entries[i].onset_age)) {
+                        if (angular.isDefined(entries[i].onset_age_unit)) {
+                            entries[i].onsetAgeDisplay = entries[i].onset_age;
+                        } else {
+                            entries[i].onsetAgeDisplay = entries[i].onset_age;
+                        }
+                    }
+                    
                 } else if (section === "results") {
                     //Results find date based on array
                     //TODO:  Improve so takes highest accuracy over lowest value.
@@ -364,6 +372,7 @@ angular.module('services.recordFunctions', [])
                 } else if (section === "medications") {
                     entries[i].attribute = entries[i].status;
                     if (angular.isDefined(entries[i].date_time)) {
+                        this.formatDateTime(entries[i].date_time);
                         entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
                     }
                 } else if (section === "payers") {
@@ -371,6 +380,29 @@ angular.module('services.recordFunctions', [])
                     for (var pi in entries[i].policy.insurance.performer.organization) {
                         for (var api in entries[i].policy.insurance.performer.organization[i].address) {}
                     }
+                } else if (section === "immunizations") {
+
+                    if (angular.isDefined(entries[i].date_time)) {
+                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    }
+
+                    for (var ipi in entries[i].performer.name) {
+                        this.formatName(entries[i].performer.name[ipi]);
+                    }
+                    for (var ipa in entries[i].performer.address) {
+                        this.formatAddress(entries[i].performer.address[ipa]);
+                    }
+
+                    this.formatQuantity(entries[i].administration.dose);
+                } else if (section === "procedures") {
+
+                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+
+                    //if (angular.isDefined(entries[i].performer[0].address)) {
+                   //     this.formatAddress(entries[i].performer[0].address);
+                    //}
+
                 }
                 // social_history, vitals, procedures, immunizations, encounters
                 else {
