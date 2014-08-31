@@ -1,22 +1,22 @@
 <ul class="list-group list-matching">
 
-    <li class="list-group-item" ng-click="selectField('allergen', null, match_diff.allergen)" ng-class="{selected: selectedItems.allergen, disabled: match_diff.observation.allergen}">
+    <li class="list-group-item" ng-click="selectField('observation.allergen', null, match_diff.allergen)" ng-class="{selected: selectedItems.observation.allergen, disabled: match_diff.observation.allergen}">
         <div coded-entry input-value="new_entry.observation.allergen" input-title="{{new_entry.observation.allergen.name}}" select-field="selectedItems.allergen"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('intolerance', null, match_diff.intolerance)" ng-class="{selected: selectedItems.intolerance, disabled: match_diff.intolerance}">
+    <li class="list-group-item" ng-click="selectField('observation.intolerance', null, match_diff.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}">
         <div coded-entry input-value="new_entry.observation.intolerance" input-title="Intolerance" select-field="selectedItems.intolerance"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}">
+    <li class="list-group-item" ng-click="selectField('observation.status', null, match_diff.status)" ng-class="{selected: selectedItems.observation.status, disabled: match_diff.observation.status}">
         <div coded-entry input-value="new_entry.observation.status" input-title="Status" select-field="selectedItems.status"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('severity', null, match_diff.severity)" ng-class="{selected: selectedItems.severity, disabled: match_diff.severity}">
+    <li class="list-group-item" ng-click="selectField('observation.severity', null, match_diff.severity)" ng-class="{selected: selectedItems.observation.severity, disabled: match_diff.observation.severity}">
         <div severity-entry input-value="new_entry.observation.severity" input-title="Severity" select-field="selectedItems.severity"></div>
     </li>
 
-    <li class="list-group-item" ng-click="selectField('date', null, match_diff.date)" ng-class="{selected: selectedItems.date, disabled: match_diff.date_time}">
+    <li class="list-group-item" ng-click="selectField('observation.date', null, match_diff.date)" ng-class="{selected: selectedItems.observation.date, disabled: match_diff.observation.date_time}">
         <div date-entry input-value="new_entry.observation.date_time" input-title="Effective" select-field="selectedItems.date"></div>
     </li>
 
