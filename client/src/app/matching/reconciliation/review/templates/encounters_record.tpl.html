@@ -16,7 +16,7 @@
         <div encounterlocations-entry input-value="update_entry.locations" input-title="Locations" select-field="selectedItems.locations"></div>
     </li>
 
-    <li class="list-group-item" ng-repeat="(finding_id, finding_entry) in update_entry.findings" ng-click="selectField('finding', finding_id, match_diff.findings)" ng-class="{selected: selectedItems.findings[finding_id], disabled: match_diff.findings}">
+    <li class="list-group-item" ng-repeat="(finding_id, finding_entry) in update_entry.findings" ng-click="selectField('findings', finding_id, match_diff.findings.dest[finding_id])" ng-class="{selected: selectedItems.findings[finding_id], disabled: match_diff.findings.dest[finding_id]}">
         <div finding-entry input-value="finding_entry" input-title="Finding" input-additional="finding_entry" select-field="selectedItems.findings[finding_id]"></div>
     </li>
 

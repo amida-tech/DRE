@@ -26,7 +26,12 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         if ($scope.section === 'allergies') {
             $scope.selectedItems.observation = {};
             $scope.selectedItems.observation.reactions = [];
+        } else if ($scope.section === 'encounters') {
+            $scope.selectedItems.findings = [];
+
         }
+
+
 
         var max_src = 0;
         var max_dest = 0;
@@ -36,9 +41,6 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             setMatchEntry(new_dest_index);
         };
 
-
-
-
         function setMatchEntry(match_index) {
 
             $scope.current_match_index = match_index;
@@ -46,7 +48,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             $scope.update_entry = angular.copy($scope.current_entry);
             $scope.current_match = $scope.match.matches[$scope.current_match_index].match_object;
             $scope.current_queue = $scope.match.matches.slice($scope.current_match_index + 1);
-            $scope.match_diff = $scope.current_match.diff;
+            $scope.match_diff = angular.copy($scope.current_match.diff);
             $scope.match_percent = $scope.current_match.percent;
 
             //Restructure diff object booleans.
@@ -57,6 +59,8 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                     $scope.match_diff[diff] = false;
                 }
             }
+
+            var tempArrayDiff;
 
             if ($scope.section === 'allergies') {
 
@@ -74,7 +78,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 for (var dest_i in $scope.current_entry.observation.reactions) {
                     $scope.match_diff.observation.reactions.dest.push(false);
                 }
-                var tempArrayDiff = $scope.current_match.subelements.observation.reactions;
+                tempArrayDiff = $scope.current_match.subelements.observation.reactions;
                 for (var i in tempArrayDiff) {
                     if (tempArrayDiff[i].match === "duplicate") {
                         $scope.match_diff.observation.reactions.src[tempArrayDiff[i].src_id] = true;
@@ -82,6 +86,30 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                     }
                 }
 
+            }
+
+            if ($scope.section === 'encounters') {
+                $scope.match_diff.findings = {};
+                $scope.match_diff.findings.src = [];
+                $scope.match_diff.findings.dest = [];
+
+
+                for (var src_ei in $scope.new_entry.findings) {
+                    $scope.match_diff.findings.src.push(false);
+                    $scope.selectedItems.findings.push(false);
+                }
+
+                for (var dest_ei in $scope.current_entry.findings) {
+                    $scope.match_diff.findings.dest.push(false);
+                }
+                tempArrayDiff = $scope.current_match.subelements.findings;
+
+                for (var ei in tempArrayDiff) {
+                    if (tempArrayDiff[ei].match === "duplicate") {
+                        $scope.match_diff.findings.src[tempArrayDiff[ei].src_id] = true;
+                        $scope.match_diff.findings.dest[tempArrayDiff[ei].dest_id] = true;
+                    }
+                }
             }
 
         }
@@ -160,10 +188,10 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.recordTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_record.tpl.html";
         $scope.subTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_sub.tpl.html";
 
-        if ($scope.section === 'allergies') {
+        /*if ($scope.section === 'allergies') {
             $scope.selectedItems.observation = {};
             $scope.selectedItems.observation.reactions = [];
-        }
+        }*/
 
         //$scope.selectedItems.allergen = {};
 
@@ -192,10 +220,18 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
                     }
                 } else {
+
+                    //console.log(entry);
+                    //console.log($scope.selectedItems);
+
                     if (!$scope.selectedItems[entry][entry_index]) {
                         $scope.selectedItems[entry][entry_index] = true;
+                        $scope.update_entry[entry].splice(entry_index, 0, $scope.new_entry[entry][entry_index]);
+                        $scope.match_diff[entry].dest.splice(entry_index, 0, false);
                     } else {
                         $scope.selectedItems[entry][entry_index] = false;
+                        $scope.update_entry[entry].splice(entry_index, 1);
+                        $scope.match_diff[entry].dest.splice(entry_index, 0, true);
                     }
 
                 }
