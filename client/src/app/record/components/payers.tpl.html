@@ -2,11 +2,11 @@
 
 <div class="col-md-12">
 	<br/>
-	<span class="lead">Planned Care</span>
+	<span class="lead">Payers</span>
 	<br/>
 	<br/>
 </div>
-<div ng-hide="display" class="panel-title">No plans are currently in your record.</div>
+<div ng-hide="display" class="panel-title">No payers are currently in your record.</div>
 <div ng-show="display" class="panel-group" id="#accordian-plans" ng-repeat="entry in entries | orderBy:sort_predicate">
 
 	<div class="modal fade" id="myPlansModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -49,34 +49,15 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.low.displayDate">
-							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date_time.low.displayDate}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.policy.insurance.performer.organization[0].name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.policy.insurance.performer.organization[0].name[0]}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.high.displayDate">
-							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date_time.high.displayDate}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.policy.insurance.performer.organization[0].addressx">
+							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.policy.insurance.performer.organization[0].address}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.center.displayDate">
-							<div class="pull-left col-md-12"><strong>Date:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date_time.center.displayDate}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.point.displayDate">
-							<div class="pull-left col-md-12"><strong>Date:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date_time.point.displayDate}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.plan.name">
-							<div class="pull-left col-md-12"><strong>Planned:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.plan.name}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.plan.code">
-							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.plan.code}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.plan.code_system_name">
-							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.plan.code_system_name}}</div>
-						</div>
+						
 					</div>
 
 					<div class="col-md-12" ng-show="entry.plan.translations">

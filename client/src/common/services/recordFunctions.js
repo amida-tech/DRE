@@ -26,14 +26,11 @@ angular.module('services.recordFunctions', [])
             //console.log(JSON.stringify(inputSection, null, 4));
             //console.log('----------------');
 
-
             inputSection.name = " ";
 
             try {
                 if (type === "allergies") {
                     inputSection.name = inputSection.observation.allergen.name;
-                } else if (type === "payers") {
-                    inputSection.name = "[payers]";
                 } else if (type === "encounters") {
                     inputSection.name = inputSection.encounter.name;
                 } else if (type === "immunizations") {
@@ -50,6 +47,8 @@ angular.module('services.recordFunctions', [])
                     inputSection.name = inputSection.vital.name;
                 } else if (type === "plan_of_care") {
                     inputSection.name = inputSection.plan.name;
+                } else if (type === "payers") {
+                    inputSection.name = inputSection.policy.insurance.performer.organization[0].name[0];
                 } else if (inputSection.plan_name) {
                     inputSection.name = inputSection.plan_name;
                 } else if (inputSection.payer_name) {
@@ -358,6 +357,12 @@ angular.module('services.recordFunctions', [])
                     entries[i].attribute = entries[i].status;
                     if (angular.isDefined(entries[i].date_time)) {
                         entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+                    }
+                } else if (section === "payers") {
+
+                    for (var pi in entries[i].policy.insurance.performer.organization) {
+                        for (var api in entries[i].policy.insurance.performer.organization[i].address) {
+                        }
                     }
                 }
                 // social_history, vitals, procedures, immunizations, encounters
