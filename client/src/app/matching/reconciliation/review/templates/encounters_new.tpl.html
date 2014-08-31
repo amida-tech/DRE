@@ -1,7 +1,7 @@
 <ul class="list-group list-matching">
 
     <li class="list-group-item" ng-click="selectField('encounter', null, match_diff.encounter)" ng-class="{selected: selectedItems.encounter, disabled: match_diff.encounter}">
-        <div encounter-entry input-value="new_entry.encounter" input-title="Encounter" select-field="selectedItems.encounter"></div>
+        <div coded-entry input-value="new_entry.encounter" input-title="Encounter" select-field="selectedItems.encounter"></div>
     </li>
 
     <li class="list-group-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}">
@@ -9,7 +9,7 @@
     </li>    
 
     <li class="list-group-item" ng-click="selectField('performers', null, match_diff.performers)" ng-class="{selected: selectedItems.performers, disabled: match_diff.performers}">
-        <div encounterperformers-entry input-value="new_entry.performers" input-title="Performers" select-field="selectedItems.performers"></div>
+        <div performers-entry input-value="new_entry.performers" input-title="Performers" select-field="selectedItems.performers"></div>
     </li>
 
     <li class="list-group-item" ng-click="selectField('locations', null, match_diff.locations)" ng-class="{selected: selectedItems.locations, disabled: match_diff.locations}">

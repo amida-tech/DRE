@@ -1,0 +1,31 @@
+<ul class="list-group list-matching">
+
+    <li class="list-group-item" ng-click="selectField('procedure', null, match_diff.procedure)" ng-class="{selected: selectedItems.procedure, disabled: match_diff.procedure}" >
+        <div coded-entry input-value="new_entry.procedure" input-title="Procedure" select-field="selectedItems.procedure"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('procedure_type', null, match_diff.onset_age)" ng-class="{selected: selectedItems.procedure_type, disabled: match_diff.onset_age}" ng-show="new_entry.procedure_type">
+        <div single-entry input-value="new_entry.procedure_type" input-title="Type" select-field="selectedItems.procedure_type"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="new_entry.date_time">
+        <div date-entry input-value="new_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}" ng-show="new_entry.status">
+        <div status-entry input-value="new_entry.status" input-title="Status" select-field="selectedItems.status"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('specimen', null, match_diff.specimen)" ng-class="{selected: selectedItems.specimen, disabled: match_diff.specimen}" >
+        <div coded-entry input-value="new_entry.specimen.code" input-title="Specimen" select-field="selectedItems.specimen"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('body_sites', null, match_diff.body_sites)" ng-class="{selected: selectedItems.body_sites, disabled: match_diff.body_sites}" >
+        <div coded-entry input-value="new_entry.body_sites[0]" input-title="Body Site" select-field="selectedItems.body_sites"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('performer', null, match_diff.performer)" ng-class="{selected: selectedItems.performer, disabled: match_diff.performer}" ng-show="new_entry.performer">
+        <div performers-entry input-value="new_entry.performer" input-title="Performer" select-field="selectedItems.performer"></div>
+    </li>
+
+</ul>
