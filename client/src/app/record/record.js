@@ -16,7 +16,7 @@ limitations under the License.
 
 var supportedComponents = ['demographics', 'allergies', 'encounters', 'immunizations', 'medications', 'problems', 'procedures', 'results', 'social_history', 'vitals', 'claims', 'insurance'];
 
-angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims', 'dre.record.social_history'])
+angular.module('dre.record', ['dre.record.allergies', 'dre.record.medications', 'dre.record.encounters', 'dre.record.procedures', 'dre.record.immunizations', 'dre.record.problems', 'dre.record.results', 'dre.record.vitals', 'dre.record.insurance', 'dre.record.claims', 'dre.record.social_history', 'dre.record.plan_of_care', 'dre.record.payers'])
 .config(['$routeProvider',
 function($routeProvider) {
   $routeProvider.when('/record', {
@@ -27,7 +27,6 @@ function($routeProvider) {
 
   .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 
     function($scope, $filter, $http, $q, $location, fileDownload) {
-
 
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
       $scope.allergiesPath = "templates/record/components/allergies.tpl.html";
@@ -40,6 +39,8 @@ function($routeProvider) {
       $scope.insurancePath  = "templates/record/components/insurance.tpl.html";
       $scope.claimsPath = "templates/record/components/claims.tpl.html";
       $scope.social_historyPath = "templates/record/components/social_history.tpl.html";
+      $scope.planPath = "templates/record/components/plan_of_care.tpl.html";
+      $scope.payerPath = "templates/record/components/payers.tpl.html";
 
       $scope.dismissModal = function(index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {

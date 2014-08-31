@@ -31,10 +31,6 @@ angular.module('services.recordFunctions', [])
             try {
                 if (type === "allergies") {
                     inputSection.name = inputSection.observation.allergen.name;
-                } else if (type === "payers") {
-                    inputSection.name = "[payers]";
-                } else if (type === "plan_of_care") {
-                    inputSection.name = "[plan of care]";
                 } else if (type === "encounters") {
                     inputSection.name = inputSection.encounter.name;
                 } else if (type === "immunizations") {
@@ -49,9 +45,11 @@ angular.module('services.recordFunctions', [])
                     inputSection.name = inputSection.procedure.name;
                 } else if (type === "vitals") {
                     inputSection.name = inputSection.vital.name;
-                }
-                //insurance
-                else if (inputSection.plan_name) {
+                } else if (type === "plan_of_care") {
+                    inputSection.name = inputSection.plan.name;
+                } else if (type === "payers") {
+                    inputSection.name = inputSection.policy.insurance.performer.organization[0].name[0];
+                } else if (inputSection.plan_name) {
                     inputSection.name = inputSection.plan_name;
                 } else if (inputSection.payer_name) {
                     inputSection.name = inputSection.payer_name;
@@ -169,6 +167,8 @@ angular.module('services.recordFunctions', [])
                 return "... - " + this.formatDate(date_time.high);
             } else if (date_time.low) {
                 return this.formatDate(date_time.low) + " - Present";
+            } else if (date_time.center) {
+                return this.formatDate(date_time.center);
             } else {
                 return "Unknown";
             }
@@ -285,6 +285,8 @@ angular.module('services.recordFunctions', [])
 
                 this.extractName(entries[i], section);
 
+                //console.log(entries[i]);
+
                 entries[i].name = this.truncateName(entries[i].name);
 
                 if (section === "allergies") {
@@ -298,13 +300,20 @@ angular.module('services.recordFunctions', [])
                     };
 
                     //replace attribute with severity
-                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    if (entries[i].date_time) {
+                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    } else {
+                        entries[i].attribute = "";
+                    }
+                    
 
                     //console.log(JSON.stringify(entries[i], null, 4));
 
                     var severity;
-                    if (entries[i].observation.severity) {
-                        severity = entries[i].observation.severity.code.name;
+                    if (entries[i].observation) {
+                        if (entries[i].observation.severity) {
+                            severity = entries[i].observation.severity.code.name;    
+                        }
                     }
 
                     entries[i].sort_order = (severity && severityWeight[severity.toUpperCase()]) || 0;
@@ -317,10 +326,14 @@ angular.module('services.recordFunctions', [])
                         resolved: 1
                     };
 
-                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
-
-                    var status = entries[i].status.name;
-                    entries[i].sort_order = (status && statusWeight[status.toLowerCase()]) || 0;
+                    if (angular.isDefined(entries[i].date_time)) {
+                        entries[i].attribute = this.formatDateTime(entries[i].date_time);    
+                    }
+                    if (angular.isDefined(entries[i].status)) {
+                        var status = entries[i].status.name;
+                        entries[i].sort_order = (status && statusWeight[status.toLowerCase()]) || 0;
+                    }
+                    
                 } else if (section === "results") {
                     //Results find date based on array
                     //TODO:  Improve so takes highest accuracy over lowest value.
@@ -342,7 +355,15 @@ angular.module('services.recordFunctions', [])
                     entries[i].sort_order = this.sortOrderDateTime(minDate);
                 } else if (section === "medications") {
                     entries[i].attribute = entries[i].status;
-                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+                    if (angular.isDefined(entries[i].date_time)) {
+                        entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+                    }
+                } else if (section === "payers") {
+
+                    for (var pi in entries[i].policy.insurance.performer.organization) {
+                        for (var api in entries[i].policy.insurance.performer.organization[i].address) {
+                        }
+                    }
                 }
                 // social_history, vitals, procedures, immunizations, encounters
                 else {
@@ -364,6 +385,9 @@ angular.module('services.recordFunctions', [])
                 url: '/api/v1/record/' + section
             }).
             success(function(data, status, headers, config) {
+
+                console.log(data[section]);
+
                 $scope.entries = data[section];
 
                 if ($scope.entries.length > 0) {

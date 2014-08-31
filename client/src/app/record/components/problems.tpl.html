@@ -9,7 +9,7 @@
 <div ng-hide="display" class="panel-title">No problems are currently in your record.</div>
 <div ng-show="display" class="panel-group" id="#accordian-problems" ng-repeat="entry in entries | orderBy:sort_predicate">
 
-	<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="myProblemModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -96,8 +96,10 @@
 						</div>
 					</div>
 
-					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal{{$index}}">Sources</button>
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myProblemModal{{$index}}">Sources</button>
 				</div>
+
+				<!--<pre>{{entry | json}}</pre>-->
 			</div>
 		</div>
 	</div>

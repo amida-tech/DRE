@@ -65,12 +65,6 @@
 					<input type="text" readonly class="form-control" id="religion" placeholder="Enter religion" value="{{demographics.religion}}">
 				</div>
 			</div>
-			<div class="col-md-12">
-				<label for="smoking" class="col-sm-2 control-label">Smoking Status</label>
-				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="smoking" placeholder="Enter smoking status" value="{{demographics.smoking_status}}">
-				</div>
-			</div>
 		</div>
 
 
@@ -142,7 +136,7 @@
 		</div>
 
 		<!--Guardian-->
-		<div class="form-group">
+		<div class="form-group" ng-show="demographics.guardians.length > 0">
 			<legend>Guardian Information</legend>
 			<div class="col-md-12">
 				<label for="gr_first_name" class="col-sm-2 control-label">First Name</label>
