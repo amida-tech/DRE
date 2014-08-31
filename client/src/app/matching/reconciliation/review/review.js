@@ -29,6 +29,8 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         } else if ($scope.section === 'encounters') {
             $scope.selectedItems.findings = [];
 
+        } else if ($scope.section === 'results') {
+            $scope.selectedItems.results = [];
         }
 
 
@@ -112,7 +114,33 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 }
             }
 
+              if ($scope.section === 'results') {
+            $scope.match_diff.results = {};
+            $scope.match_diff.results.src = [];
+            $scope.match_diff.results.dest = [];
+
+            for (var src_ri in $scope.new_entry.results) {
+                $scope.match_diff.results.src.push(false);
+                $scope.selectedItems.results.push(false);
+            }
+
+            for (var dest_ri in $scope.current_entry.results) {
+                $scope.match_diff.results.dest.push(false);
+            }
+            tempArrayDiff = $scope.current_match.subelements.results;
+
+            for (var ri in tempArrayDiff) {
+                if (tempArrayDiff[ri].match === "duplicate") {
+                    $scope.match_diff.findings.src[tempArrayDiff[ri].src_id] = true;
+                    $scope.match_diff.findings.dest[tempArrayDiff[ri].dest_id] = true;
+                }
+            }
         }
+
+        }
+
+
+
 
         $scope.getMatch = function() {
             $http({
