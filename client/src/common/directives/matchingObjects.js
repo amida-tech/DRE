@@ -18,6 +18,25 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+.directive('multisingleEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr ng-repeat='item in inputValue'><td class='col-md-12'>{{item}}</td><!--td class='col-md-4 text-left'></td--></tr>"+
+                "</table>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
 .directive('physicalquantityEntry', ['$parse',
     function($parse) {
         return {
