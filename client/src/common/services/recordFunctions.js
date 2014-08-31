@@ -333,6 +333,14 @@ angular.module('services.recordFunctions', [])
                         var status = entries[i].status.name;
                         entries[i].sort_order = (status && statusWeight[status.toLowerCase()]) || 0;
                     }
+
+                    if (angular.isDefined(entries[i].onset_age)) {
+                        if (angular.isDefined(entries[i].onset_age_unit)) {
+                            entries[i].onsetAgeDisplay = entries[i].onset_age;
+                        } else {
+                            entries[i].onsetAgeDisplay = entries[i].onset_age;
+                        }
+                    }
                     
                 } else if (section === "results") {
                     //Results find date based on array
@@ -379,6 +387,12 @@ angular.module('services.recordFunctions', [])
                     }
 
                     this.formatQuantity(entries[i].administration.dose);
+                } else if (section === "procedures") {
+
+                    //if (angular.isDefined(entries[i].performer[0].address)) {
+                   //     this.formatAddress(entries[i].performer[0].address);
+                    //}
+
                 }
                 // social_history, vitals, procedures, immunizations, encounters
                 else {
