@@ -12,6 +12,23 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 .controller('matchReviewCtrl', ['$scope', '$http', '$routeParams', '$location', 'getNotifications', 'recordFunctions',
     function ($scope, $http, $routeParams, $location, getNotifications, recordFunctions) {
 
+        $scope.titles = {
+            allergies: "Allergies",
+            encounters: "Encounters",
+            immunizations: "Immunizations",
+            medications: "Medications",
+            problems: "Problem List",
+            procedures: "Procedures",
+            vitals: "Vital Signs",
+            insurance: "Insurance",
+            claims: "Claims",
+            results: "Results",
+            social_history: "Social History"
+        };
+
+
+
+
         //getting parameters from route/url
         $scope.section = $routeParams["section"];
         $scope.match_id = $routeParams["match_id"];
