@@ -49,13 +49,17 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[0].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.low.displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date_time.low.displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.high.displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date_time.high.displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.point.displayDate">
+							<div class="pull-left col-md-12"><strong>Date:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.date_time.point.displayDate}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.product.product.code">
 							<div class="pull-left col-md-12"><strong>Product Code:</strong></div><br/>
@@ -101,7 +105,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left">
+					<div class="col-md-12 pull-left" ng-show ="entry.administration">
 						<h4>Administration</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.administration.route.name">
 							<div class="pull-left col-md-12"><strong>Route:</strong></div><br/>
@@ -128,8 +132,19 @@
 							<div class="pull-left col-md-12" ng-repeat="performer_display_address in performer_address.displayAddress">{{performer_display_address}}</div>
 						</div>
 					</div>
+
+					<div class="col-md-12 pull-left" ng-show="entry.instructions">
+						<h4>Instructions</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.instructions.free_text">
+							<div class="pull-left col-md-12"><strong>Instructions:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.instructions.free_text}}</div>
+						</div>
+					</div>
+
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myImmunizationsModal{{$index}}">Sources</button>
 				</div>
+
+				<!--<pre>{{entry | json}}</pre>-->
 			</div>
 		</div>
 	</div>

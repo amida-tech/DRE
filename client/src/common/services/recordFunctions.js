@@ -364,6 +364,20 @@ angular.module('services.recordFunctions', [])
                         for (var api in entries[i].policy.insurance.performer.organization[i].address) {
                         }
                     }
+                } else if (section === "immunizations") {
+
+                    if (angular.isDefined(entries[i].date_time)) {
+                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    }
+
+                    for (var ipi in entries[i].performer.name) {
+                        this.formatName(entries[i].performer.name[ipi]);
+                    }
+                    for (var ipa in entries[i].performer.address) {
+                        this.formatAddress(entries[i].performer.address[ipa]);
+                    }
+
+                    this.formatQuantity(entries[i].administration.dose);
                 }
                 // social_history, vitals, procedures, immunizations, encounters
                 else {
