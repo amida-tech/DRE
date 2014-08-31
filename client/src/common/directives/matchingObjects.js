@@ -72,6 +72,23 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+.directive('emailEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr ng-repeat='email in inputValue'><td class='col-md-12'>{{email.address}}</td></tr>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
 .directive('nameEntry', ['$parse',
     function($parse) {
         return {
@@ -103,7 +120,8 @@ angular.module('directives.matchingObjects', [])
             template: "<table class='table table-condensed'>" +
                 "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
                 "<tr ng-repeat='line in inputValue.street_lines'><td class='col-md-12'>{{line}}</td></tr>" +
-                "<tr><td class='col-md-12'>{{inputValue.city}}, {{inputValue.state}} {{inputValue.zip}}</td></tr>",
+                "<tr><td class='col-md-12'>{{inputValue.city}}, {{inputValue.state}} {{inputValue.zip}}</td></tr>"+
+                "<tr ng-show='inputValue.country'><td class='col-md-12'>{{inputValue.country}}</td></tr></table>",
             link: function(scope, element, attrs) {}
         };
     }
@@ -123,7 +141,8 @@ angular.module('directives.matchingObjects', [])
                 "<thead><tr><th><h4>Address</h4></th><th class='col-md-12'></th></tr></thead>" +
                 "<tr ng-show='address.use'><td class='col-md-12'>({{address.use}})</td></tr>" +
                 "<tr ng-repeat='line in address.street_lines'><td class='col-md-12'>{{line}}</td></tr>" +
-                "<tr><td class='col-md-12'>{{address.city}}, {{address.state}} {{address.zip}}</td></tr></table>",
+                "<tr><td class='col-md-12'>{{address.city}}, {{address.state}} {{address.zip}}</td></tr>"+
+                "<tr ng-show='address.country'><td class='col-md-12'>{{address.country}}</td></tr></table>",
             link: function(scope, element, attrs) {}
         };
     }
