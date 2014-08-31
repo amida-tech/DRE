@@ -389,6 +389,9 @@ angular.module('services.recordFunctions', [])
                     this.formatQuantity(entries[i].administration.dose);
                 } else if (section === "procedures") {
 
+                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+
                     //if (angular.isDefined(entries[i].performer[0].address)) {
                    //     this.formatAddress(entries[i].performer[0].address);
                     //}
