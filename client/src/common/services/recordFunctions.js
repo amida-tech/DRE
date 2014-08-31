@@ -356,6 +356,7 @@ angular.module('services.recordFunctions', [])
                 } else if (section === "medications") {
                     entries[i].attribute = entries[i].status;
                     if (angular.isDefined(entries[i].date_time)) {
+                        this.formatDateTime(entries[i].date_time);
                         entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
                     }
                 } else if (section === "payers") {
