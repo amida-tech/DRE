@@ -39,8 +39,8 @@ function($routeProvider) {
       $scope.insurancePath  = "templates/record/components/insurance.tpl.html";
       $scope.claimsPath = "templates/record/components/claims.tpl.html";
       $scope.social_historyPath = "templates/record/components/social_history.tpl.html";
-      $scope.planPath = "templates/record/components/plan_of_care.tpl.html";
-      $scope.payerPath = "templates/record/components/payers.tpl.html";
+      //$scope.planPath = "templates/record/components/plan_of_care.tpl.html";
+      //$scope.payerPath = "templates/record/components/payers.tpl.html";
 
       $scope.dismissModal = function(index) {
         $("#myModal" + index).on("hidden.bs.modal", function (e) {
