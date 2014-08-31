@@ -300,8 +300,8 @@ angular.module('services.recordFunctions', [])
                     };
 
                     //replace attribute with severity
-                    if (entries[i].date_time) {
-                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    if (entries[i].observation.date_time) {
+                        entries[i].attribute = this.formatDateTime(entries[i].observation.date_time);
                     } else {
                         entries[i].attribute = "";
                     }

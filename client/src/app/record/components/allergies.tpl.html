@@ -66,12 +66,19 @@
                             <br/>
                             <div class="pull-left col-md-12">{{entry.observation.status.name}}</div>
                         </div>
-                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.observation.date[0].displayDate">
+                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.observation.date_time.low.displayDate">
                             <div class="pull-left col-md-12">
                                 <strong>Start:</strong>
                             </div>
                             <br/>
-                            <div class="pull-left col-md-12">{{entry.observation.date[0].displayDate}}</div>
+                            <div class="pull-left col-md-12">{{entry.observation.date_time.low.displayDate}}</div>
+                        </div>
+                        <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.observation.date_time.high.displayDate">
+                            <div class="pull-left col-md-12">
+                                <strong>End:</strong>
+                            </div>
+                            <br/>
+                            <div class="pull-left col-md-12">{{entry.observation.date_time.high.displayDate}}</div>
                         </div>
                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.observation.allergen.code">
                             <div class="pull-left col-md-12">
