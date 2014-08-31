@@ -49,13 +49,13 @@
 				<div id="myTabContent" >
 					<div class="col-md-12">
 						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[0].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.low.displayDate">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date_time.low.displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.high.displayDate">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{entry.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{entry.date_time.high.displayDate}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.sig">
 							<div class="pull-left col-md-12"><strong>Sig:</strong></div><br/>
