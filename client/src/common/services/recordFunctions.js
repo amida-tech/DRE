@@ -26,6 +26,7 @@ angular.module('services.recordFunctions', [])
             //console.log(JSON.stringify(inputSection, null, 4));
             //console.log('----------------');
 
+
             inputSection.name = " ";
 
             try {
@@ -33,8 +34,6 @@ angular.module('services.recordFunctions', [])
                     inputSection.name = inputSection.observation.allergen.name;
                 } else if (type === "payers") {
                     inputSection.name = "[payers]";
-                } else if (type === "plan_of_care") {
-                    inputSection.name = "[plan of care]";
                 } else if (type === "encounters") {
                     inputSection.name = inputSection.encounter.name;
                 } else if (type === "immunizations") {
@@ -49,9 +48,9 @@ angular.module('services.recordFunctions', [])
                     inputSection.name = inputSection.procedure.name;
                 } else if (type === "vitals") {
                     inputSection.name = inputSection.vital.name;
-                }
-                //insurance
-                else if (inputSection.plan_name) {
+                } else if (type === "plan_of_care") {
+                    inputSection.name = inputSection.plan.name;
+                } else if (inputSection.plan_name) {
                     inputSection.name = inputSection.plan_name;
                 } else if (inputSection.payer_name) {
                     inputSection.name = inputSection.payer_name;
@@ -169,6 +168,8 @@ angular.module('services.recordFunctions', [])
                 return "... - " + this.formatDate(date_time.high);
             } else if (date_time.low) {
                 return this.formatDate(date_time.low) + " - Present";
+            } else if (date_time.center) {
+                return this.formatDate(date_time.center);
             } else {
                 return "Unknown";
             }
@@ -285,6 +286,8 @@ angular.module('services.recordFunctions', [])
 
                 this.extractName(entries[i], section);
 
+                //console.log(entries[i]);
+
                 entries[i].name = this.truncateName(entries[i].name);
 
                 if (section === "allergies") {
@@ -377,6 +380,9 @@ angular.module('services.recordFunctions', [])
                 url: '/api/v1/record/' + section
             }).
             success(function(data, status, headers, config) {
+
+                console.log(data[section]);
+
                 $scope.entries = data[section];
 
                 if ($scope.entries.length > 0) {
