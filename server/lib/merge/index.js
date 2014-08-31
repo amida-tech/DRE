@@ -29,16 +29,18 @@ app.get('/api/v1/merges', login.checkAuth, function(req, res) {
     mergeJSON.merges = [];
     mergeCount = 0;
 
-    function checkComplete () {
-        if(mergeCount === bbm.supported_sections.length) {
+    var supported_sections = _.difference(bbm.supported_sections, ["plan_of_care", "providers", "payers"]);
+
+    function checkComplete() {
+        if (mergeCount === supported_sections.length) {
             res.send(mergeJSON);
         }
 
     }
 
 
-    for (var iMerge in bbm.supported_sections) {
-        record.getMerges(bbm.supported_sections[iMerge], req.user.username, 'procedure problem product allergen vital name smoking_statuses encounter result_set results', 'filename uploadDate', function(err, mergeList) {
+    for (var iMerge in supported_sections) {
+        record.getMerges(supported_sections[iMerge], req.user.username, 'procedure problem payer_name plan_name payer number product observation code value allergen vital name smoking_statuses encounter result_set results', 'filename uploadDate', function(err, mergeList) {
             if (err) {
                 res.send(400, err);
             } else {
