@@ -209,16 +209,82 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.recordTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_record.tpl.html";
         $scope.subTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_sub.tpl.html";
 
-        /*if ($scope.section === 'allergies') {
-            $scope.selectedItems.observation = {};
-            $scope.selectedItems.observation.reactions = [];
-        }*/
 
-        //$scope.selectedItems.allergen = {};
 
-        //TODO:  Inject reaction severity into display from object.
-        //Dest flag added so elements can be safely spliced from dest array.
-        $scope.selectField = function (entry, entry_index, entry_status, dest_flag) {
+        $scope.removeField = function(entry, entry_index, entry_status) {
+
+           //Don't process hidden items.
+            if (entry_status) {
+                return;
+            }
+
+            var splitEntry = [];
+
+
+            //Only array objects should get indexes.
+            if (entry_index >= 0 && entry_index !== null) {
+
+                //Handles dot nesting.
+                if (entry.indexOf(".") > -1) {
+                    splitEntry = entry.split(".");
+                    if (splitEntry.length === 2) {
+                        if (!$scope.selectedItems[splitEntry[0]][splitEntry[1]][entry_index]) {
+                            $scope.update_entry[splitEntry[0]][splitEntry[1]].splice(entry_index, 1);
+                            $scope.match_diff[splitEntry[0]][splitEntry[1]].dest.splice(entry_index, 1);
+                        } else {
+                            $scope.selectedItems[splitEntry[0]][splitEntry[1]][entry_index] = false;
+                            $scope.update_entry[splitEntry[0]][splitEntry[1]].splice(entry_index, 1);
+                            $scope.match_diff[splitEntry[0]][splitEntry[1]].dest.splice(entry_index, 1);
+                        }
+
+                    }
+                    //Handles subarrays.
+                } else {
+                    if (!$scope.selectedItems[entry][entry_index]) {
+                        $scope.update_entry[entry].splice(entry_index, 1);
+                        $scope.match_diff[entry].dest.splice(entry_index, 1);
+                    } else {
+                        $scope.selectedItems[entry][entry_index] = false;
+                        $scope.update_entry[entry].splice(entry_index, 1);
+                        $scope.match_diff[entry].dest.splice(entry_index, 1);
+                    }
+                }
+                //Handles regular.
+            } else {
+
+                if (entry.indexOf(".") > -1) {
+                    splitEntry = entry.split(".");
+                    if (splitEntry.length === 2) {
+                        if (!$scope.selectedItems[splitEntry[0]][splitEntry[1]]) {
+                            //console.log($scope.new_entry);
+                            $scope.selectedItems[splitEntry[0]][splitEntry[1]] = true;
+                            $scope.update_entry[splitEntry[0]][splitEntry[1]] = $scope.new_entry[splitEntry[0]][splitEntry[1]];
+                        } else {
+                            $scope.selectedItems[splitEntry[0]][splitEntry[1]] = false;
+                            $scope.update_entry[splitEntry[0]][splitEntry[1]] = $scope.current_entry[splitEntry[0]][splitEntry[1]];
+                        }
+                    }
+                    //Handles subarrays.
+                } else {
+                    if (!$scope.selectedItems[entry]) {
+                        console.log($scope.new_entry);
+                        $scope.selectedItems[entry] = true;
+                        $scope.update_entry[entry] = $scope.new_entry[entry];
+                    } else {
+                        $scope.selectedItems[entry] = false;
+                        $scope.update_entry[entry] = $scope.current_entry[entry];
+                    }
+                }
+
+            }
+
+        };
+
+
+
+
+
+        $scope.selectField = function (entry, entry_index, entry_status) {
 
             //Don't process hidden items.
             if (entry_status) {
