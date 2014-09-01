@@ -88,7 +88,7 @@
                 
             
 
-                <div result-entry input-value="el_entry" input-title="Result" input-additional="1" select-field="selectedItems.result[el_id]"></div>
+                <div result-entry input-value="el_entry" input-title="Result" input-additional="100+el_id" select-field="selectedItems.result[el_id]"></div>
             </div>
              <div ng-hide="new_entry.results" class="disabled">
                     <div class="text-center">
@@ -98,14 +98,27 @@
         </td>
 
         <td class="match" valign="top">
-            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.results" ng-click="removeField('results', el_id, match_diff.results.src[el_id])" ng-class="{selected: selectedItems.results[el_id], disabled: match_diff.results.dest[el_id]}">
+            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.results"  ng-class="{selected: selectedItems.results[el_id], disabled: match_diff.results.dest[el_id]}">
 
+
+
+                <!-- allergies -->
+                
+            
+                <!-- results -->
+                
                 <span ng-show='selectedItems.results[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.results || selectedItems.results'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+                <div 
+                    ng-click="removeField('results', el_id, match_diff.results.src[el_id])"
+                    style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
+                 
 
-                <div result-entry input-value="el_entry" input-title="Result" input-additional="2" select-field="selectedItems.Result[el_id]"></div>
+                <!--encounters-->
+                
 
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
+
+                <div result-entry input-value="el_entry" input-title="Result" input-additional="200+el_id" select-field="selectedItems.Result[el_id]"></div>
+
             </div>
              <div ng-hide="update_entry.results" class="disabled">
                     <div class="text-center">
@@ -116,7 +129,6 @@
     </tr>
 
    
-
 
 
     <tr>

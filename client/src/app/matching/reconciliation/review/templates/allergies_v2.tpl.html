@@ -260,7 +260,7 @@
                 
             
 
-                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="1" select-field="selectedItems.reaction[el_id]"></div>
+                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="100+el_id" select-field="selectedItems.reaction[el_id]"></div>
             </div>
              <div ng-hide="new_entry.observation.reactions" class="disabled">
                     <div class="text-center">
@@ -270,14 +270,27 @@
         </td>
 
         <td class="match" valign="top">
-            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.observation.reactions" ng-click="removeField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])" ng-class="{selected: selectedItems.observation.reactions[el_id], disabled: match_diff.observation.reactions.dest[el_id]}">
+            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.observation.reactions"  ng-class="{selected: selectedItems.observation.reactions[el_id], disabled: match_diff.observation.reactions.dest[el_id]}">
 
+
+
+                <!-- allergies -->
+                
                 <span ng-show='selectedItems.observation.reactions[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.observation_reactions || selectedItems.observation_reactions'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+                <div 
+                    ng-click="removeField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])"
+                    style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
+                
+            
+                <!-- results -->
+                
 
-                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="2" select-field="selectedItems.Reaction[el_id]"></div>
+                <!--encounters-->
+                
 
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
+
+                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="200+el_id" select-field="selectedItems.Reaction[el_id]"></div>
+
             </div>
              <div ng-hide="update_entry.observation.reactions" class="disabled">
                     <div class="text-center">
@@ -288,7 +301,6 @@
     </tr>
 
    
-
 
 
     <tr>

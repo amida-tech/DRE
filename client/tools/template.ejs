@@ -108,7 +108,7 @@ else {
                  <%}%>
             
 
-                <div <%= el.entry %>-entry input-value="el_entry" input-title="<%= el.title %>" input-additional="1" select-field="selectedItems.<%= el.entry %>[el_id]"></div>
+                <div <%= el.entry %>-entry input-value="el_entry" input-title="<%= el.title %>" input-additional="100+el_id" select-field="selectedItems.<%= el.entry %>[el_id]"></div>
             </div>
              <div ng-hide="new_entry.<%= el.dot_name %>" class="disabled">
                     <div class="text-center">
@@ -118,14 +118,37 @@ else {
         </td>
 
         <td class="match" valign="top">
-            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.<%= el.dot_name %>" ng-click="removeField('<%= el.dot_name %>', el_id, match_diff.<%= el.dot_name %>.src[el_id])" ng-class="{selected: selectedItems.<%= el.dot_name %>[el_id], disabled: match_diff.<%= el.dot_name %>.dest[el_id]}">
+            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.<%= el.dot_name %>"  ng-class="{selected: selectedItems.<%= el.dot_name %>[el_id], disabled: match_diff.<%= el.dot_name %>.dest[el_id]}">
 
+
+
+                <!-- allergies -->
+                <% if (section==="allergies") { %>
                 <span ng-show='selectedItems.<%= el.dot_name %>[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.<%= el.name %> || selectedItems.<%= el.name %>'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+                <div 
+                    ng-click="removeField('<%= el.dot_name %>', el_id, match_diff.<%= el.dot_name %>.src[el_id])"
+                    style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
+                <%}%>
+            
+                <!-- results -->
+                <% if (section==="results") { %>
+                <span ng-show='selectedItems.<%= el.dot_name %>[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Updated</span>
+                <div 
+                    ng-click="removeField('<%= el.dot_name %>', el_id, match_diff.<%= el.dot_name %>.src[el_id])"
+                    style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
+                 <%}%>
 
-                <div <%= el.entry %>-entry input-value="el_entry" input-title="<%= el.title %>" input-additional="2" select-field="selectedItems.<%= el.title %>[el_id]"></div>
+                <!--encounters-->
+                <% if (section==="encounters") { %>
+                <span ng-show='selectedItems.<%= el.dot_name %>[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Updated</span>
+                <div
+                    ng-click="removeField('<%= el.dot_name %>', el_id, match_diff.<%= el.dot_name %>.src[el_id])" 
+                    style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
+                 <%}%>
 
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
+
+                <div <%= el.entry %>-entry input-value="el_entry" input-title="<%= el.title %>" input-additional="200+el_id" select-field="selectedItems.<%= el.title %>[el_id]"></div>
+
             </div>
              <div ng-hide="update_entry.<%= el.dot_name %>" class="disabled">
                     <div class="text-center">
@@ -138,7 +161,6 @@ else {
 <% }
 
 } %>   
-
 
 
     <tr>
