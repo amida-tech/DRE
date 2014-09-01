@@ -252,7 +252,7 @@ angular.module('services.recordFunctions', [])
                 allergies: 'allergy',
                 demographics: 'demographic',
                 medications: 'medication',
-                social_history: 'social',
+                social_history: 'social history',
                 procedures: 'procedure',
                 immunizations: 'immunization',
                 vitals: 'vital',
