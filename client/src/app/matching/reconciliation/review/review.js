@@ -33,6 +33,12 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.section = $routeParams["section"];
         $scope.match_id = $routeParams["match_id"];
 
+        //shim for switching on new UI
+        $scope.version="old";
+        if ($scope.section==="demographics"){
+            $scope.version="new";
+        }
+
         //fetching match object based on id
         $scope.match = {};
         $scope.new_entry = {};
@@ -227,6 +233,8 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 console.log('error');
             });
         };
+
+        $scope.v2TemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_v2.tpl.html";
 
         $scope.newTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_new.tpl.html";
         $scope.recordTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_record.tpl.html";

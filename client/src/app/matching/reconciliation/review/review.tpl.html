@@ -14,7 +14,7 @@
         <br/>
 
         <!-- All in here. -->
-        <div class="panel panel-default col-md-12">
+        <div class="panel panel-default col-md-12" ng-show="version==='old'">
 
             <!-- Left Pane -->
 
@@ -102,7 +102,7 @@
                         <div class="panel-body text-center">
                             <h6 ng-if="current_queue.length > 0"><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
                             </h6>
-                            <h6  ng-if="current_queue.length === 0">Current Record</h6>
+                            <h6 ng-if="current_queue.length === 0">Current Record</h6>
                         </div>
 
                         <ng-include src="recordTemplatePath"></ng-include>
@@ -143,7 +143,16 @@
 
             </div>
         </div>
-        
+
+
+        <!-- All in here V2. -->
+        <div class="panel panel-default col-md-12" ng-show="version==='new'">
+
+
+                <!-- new v2 template embedded here -->
+                <ng-include src="v2TemplatePath"></ng-include>
+        </div>
+
         <pre>{{ selectedItems | json}}</pre>
 
     </div>

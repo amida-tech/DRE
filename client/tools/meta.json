@@ -1,0 +1,51 @@
+{
+    "demographics": [{
+        "name": "name",
+        "title": "Name",
+        "entry": "name"
+    }, {
+        "name": "gender",
+        "title": "Gender",
+        "entry": "single"
+    }, {
+        "name": "dob",
+        "title": "Birthday",
+        "entry": "date"
+    }, {
+        "name": "birthplace",
+        "title": "Birthplace",
+        "entry": "address"
+    }, {
+        "name": "marital_status",
+        "title": "Marital Status",
+        "entry": "single"
+    }, {
+        "name": "religion",
+        "title": "Religion",
+        "entry": "single"
+    }, {
+        "name": "race_ethnicity",
+        "title": "Race/Ethnicity",
+        "entry": "single"
+    }, {
+        "name": "languages",
+        "title": "Languages",
+        "entry": "languages"
+    }, {
+        "name": "addresses",
+        "title": "Address",
+        "entry": "addresses"
+    }, {
+        "name": "phone",
+        "title": "Phone",
+        "entry": "phone"
+    }, {
+        "name": "email",
+        "title": "Email",
+        "entry": "email"
+    }, {
+        "name": "guardians",
+        "title": "Guardians",
+        "entry": "guardians"
+    }]
+}
