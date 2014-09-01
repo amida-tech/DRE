@@ -1,4 +1,4 @@
-<table class="col-md-12">
+<table class="col-md-12 table-striped">
     <thead>
         <tr>
             <th class='col-md-6'>
@@ -75,87 +75,153 @@
 
 
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('observation.allergen', null, match_diff.observation.allergen)" ng-class="{selected: selectedItems.observation.allergen, disabled: match_diff.observation.allergen}" ng-show="new_entry.observation.allergen">
+                <span ng-hide='match_diff.observation.allergen' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div coded-entry input-value="new_entry.observation.allergen" input-title="Allergen" select-field="selectedItems.observation.allergen"></div>
             </div>
+             <div ng-hide="new_entry.observation.allergen" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('observation.allergen', null, match_diff.observation.allergen)" ng-class="{selected: selectedItems.observation.allergen, disabled: match_diff.observation.allergen}" ng-show="update_entry.observation.allergen">
                 <div coded-entry input-value="update_entry.observation.allergen" input-title="Allergen" select-field="selectedItems.observation.allergen"></div>
             </div>
-
+             <div ng-hide="update_entry.observation.allergen" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('observation.intolerance', null, match_diff.observation.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}" ng-show="new_entry.observation.intolerance">
+                <span ng-hide='match_diff.observation.intolerance' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div coded-entry input-value="new_entry.observation.intolerance" input-title="Intolerance" select-field="selectedItems.observation.intolerance"></div>
             </div>
+             <div ng-hide="new_entry.observation.intolerance" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('observation.intolerance', null, match_diff.observation.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}" ng-show="update_entry.observation.intolerance">
                 <div coded-entry input-value="update_entry.observation.intolerance" input-title="Intolerance" select-field="selectedItems.observation.intolerance"></div>
             </div>
-
+             <div ng-hide="update_entry.observation.intolerance" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('observation.status', null, match_diff.observation.status)" ng-class="{selected: selectedItems.observation.status, disabled: match_diff.observation.status}" ng-show="new_entry.observation.status">
+                <span ng-hide='match_diff.observation.status' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div coded-entry input-value="new_entry.observation.status" input-title="Status" select-field="selectedItems.observation.status"></div>
             </div>
+             <div ng-hide="new_entry.observation.status" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('observation.status', null, match_diff.observation.status)" ng-class="{selected: selectedItems.observation.status, disabled: match_diff.observation.status}" ng-show="update_entry.observation.status">
                 <div coded-entry input-value="update_entry.observation.status" input-title="Status" select-field="selectedItems.observation.status"></div>
             </div>
-
+             <div ng-hide="update_entry.observation.status" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('observation.severity', null, match_diff.observation.severity)" ng-class="{selected: selectedItems.observation.severity, disabled: match_diff.observation.severity}" ng-show="new_entry.observation.severity">
+                <span ng-hide='match_diff.observation.severity' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div severity-entry input-value="new_entry.observation.severity" input-title="Severity" select-field="selectedItems.observation.severity"></div>
             </div>
+             <div ng-hide="new_entry.observation.severity" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('observation.severity', null, match_diff.observation.severity)" ng-class="{selected: selectedItems.observation.severity, disabled: match_diff.observation.severity}" ng-show="update_entry.observation.severity">
                 <div severity-entry input-value="update_entry.observation.severity" input-title="Severity" select-field="selectedItems.observation.severity"></div>
             </div>
-
+             <div ng-hide="update_entry.observation.severity" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('observation.date_time', null, match_diff.observation.date_time)" ng-class="{selected: selectedItems.observation.date_time, disabled: match_diff.observation.date_time}" ng-show="new_entry.observation.date_time">
+                <span ng-hide='match_diff.observation.date_time' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div date-entry input-value="new_entry.observation.date_time" input-title="Effective" select-field="selectedItems.observation.date_time"></div>
             </div>
+             <div ng-hide="new_entry.observation.date_time" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('observation.date_time', null, match_diff.observation.date_time)" ng-class="{selected: selectedItems.observation.date_time, disabled: match_diff.observation.date_time}" ng-show="update_entry.observation.date_time">
                 <div date-entry input-value="update_entry.observation.date_time" input-title="Effective" select-field="selectedItems.observation.date_time"></div>
             </div>
-
+             <div ng-hide="update_entry.observation.date_time" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('observation.reactions', null, match_diff.observation.reactions)" ng-class="{selected: selectedItems.observation.reactions, disabled: match_diff.observation.reactions}" ng-show="new_entry.observation.reactions">
+                <span ng-hide='match_diff.observation.reactions' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div reaction-entry input-value="new_entry.observation.reactions" input-title="Reaction" select-field="selectedItems.observation.reactions"></div>
             </div>
+             <div ng-hide="new_entry.observation.reactions" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('observation.reactions', null, match_diff.observation.reactions)" ng-class="{selected: selectedItems.observation.reactions, disabled: match_diff.observation.reactions}" ng-show="update_entry.observation.reactions">
                 <div reaction-entry input-value="update_entry.observation.reactions" input-title="Reaction" select-field="selectedItems.observation.reactions"></div>
             </div>
-
+             <div ng-hide="update_entry.observation.reactions" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
    

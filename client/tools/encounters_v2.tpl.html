@@ -1,4 +1,4 @@
-<table class="col-md-12">
+<table class="col-md-12 table-striped">
     <thead>
         <tr>
             <th class='col-md-6'>
@@ -75,73 +75,128 @@
 
 
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('encounter', null, match_diff.encounter)" ng-class="{selected: selectedItems.encounter, disabled: match_diff.encounter}" ng-show="new_entry.encounter">
+                <span ng-hide='match_diff.encounter' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div coded-entry input-value="new_entry.encounter" input-title="Encounter" select-field="selectedItems.encounter"></div>
             </div>
+             <div ng-hide="new_entry.encounter" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('encounter', null, match_diff.encounter)" ng-class="{selected: selectedItems.encounter, disabled: match_diff.encounter}" ng-show="update_entry.encounter">
                 <div coded-entry input-value="update_entry.encounter" input-title="Encounter" select-field="selectedItems.encounter"></div>
             </div>
-
+             <div ng-hide="update_entry.encounter" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="new_entry.date_time">
+                <span ng-hide='match_diff.date_time' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div date-entry input-value="new_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
             </div>
+             <div ng-hide="new_entry.date_time" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="update_entry.date_time">
                 <div date-entry input-value="update_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
             </div>
-
+             <div ng-hide="update_entry.date_time" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('performers', null, match_diff.performers)" ng-class="{selected: selectedItems.performers, disabled: match_diff.performers}" ng-show="new_entry.performers">
+                <span ng-hide='match_diff.performers' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div performers-entry input-value="new_entry.performers" input-title="Performers" select-field="selectedItems.performers"></div>
             </div>
+             <div ng-hide="new_entry.performers" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('performers', null, match_diff.performers)" ng-class="{selected: selectedItems.performers, disabled: match_diff.performers}" ng-show="update_entry.performers">
                 <div performers-entry input-value="update_entry.performers" input-title="Performers" select-field="selectedItems.performers"></div>
             </div>
-
+             <div ng-hide="update_entry.performers" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('locations', null, match_diff.locations)" ng-class="{selected: selectedItems.locations, disabled: match_diff.locations}" ng-show="new_entry.locations">
+                <span ng-hide='match_diff.locations' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div encounterlocations-entry input-value="new_entry.locations" input-title="locations" select-field="selectedItems.locations"></div>
             </div>
+             <div ng-hide="new_entry.locations" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('locations', null, match_diff.locations)" ng-class="{selected: selectedItems.locations, disabled: match_diff.locations}" ng-show="update_entry.locations">
                 <div encounterlocations-entry input-value="update_entry.locations" input-title="locations" select-field="selectedItems.locations"></div>
             </div>
-
+             <div ng-hide="update_entry.locations" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('finding', null, match_diff.finding)" ng-class="{selected: selectedItems.finding, disabled: match_diff.finding}" ng-show="new_entry.finding">
+                <span ng-hide='match_diff.finding' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div finding-entry input-value="new_entry.finding" input-title="Findings" select-field="selectedItems.finding"></div>
             </div>
+             <div ng-hide="new_entry.finding" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('finding', null, match_diff.finding)" ng-class="{selected: selectedItems.finding, disabled: match_diff.finding}" ng-show="update_entry.finding">
                 <div finding-entry input-value="update_entry.finding" input-title="Findings" select-field="selectedItems.finding"></div>
             </div>
-
+             <div ng-hide="update_entry.finding" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
    

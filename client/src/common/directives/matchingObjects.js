@@ -358,6 +358,28 @@ angular.module('directives.matchingObjects', [])
 ])
 
 
+/* compact version draft
+.directive('codedEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12' style='text-transform: capitalize;'>{{inputValue.name}}</th></tr></thead>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code (System):</label></td><td class='col-md-4 text-left'>{{inputValue.code}} ({{inputValue.code_system_name}})</td></tr>" +
+                "</table>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+*/
+
 .directive('codedEntry', ['$parse',
     function($parse) {
         return {

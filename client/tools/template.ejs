@@ -1,4 +1,4 @@
-<table class="col-md-12">
+<table class="col-md-12 table-striped">
     <thead>
         <tr>
             <th class='col-md-6'>
@@ -78,17 +78,28 @@
     var el = meta[i];
     // display properties of this
 %>
+    <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td>
             <div class="list-group-item" ng-click="selectField('<%= el.name %>', null, match_diff.<%= el.name %>)" ng-class="{selected: selectedItems.<%= el.name %>, disabled: match_diff.<%= el.name %>}" ng-show="new_entry.<%= el.name %>">
+                <span ng-hide='match_diff.<%= el.name %>' class='label label-info' style="position:absolute;right:5px;top:5px;">Different</span>
                 <div <%= el.entry %>-entry input-value="new_entry.<%= el.name %>" input-title="<%= el.title %>" select-field="selectedItems.<%= el.name %>"></div>
             </div>
+             <div ng-hide="new_entry.<%= el.name %>" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
         </td>
         <td>
             <div class="list-group-item" ng-click="removeField('<%= el.name %>', null, match_diff.<%= el.name %>)" ng-class="{selected: selectedItems.<%= el.name %>, disabled: match_diff.<%= el.name %>}" ng-show="update_entry.<%= el.name %>">
                 <div <%= el.entry %>-entry input-value="update_entry.<%= el.name %>" input-title="<%= el.title %>" select-field="selectedItems.<%= el.name %>"></div>
             </div>
-
+             <div ng-hide="update_entry.<%= el.name %>" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
         </td>
     </tr>
 <% } %>   
