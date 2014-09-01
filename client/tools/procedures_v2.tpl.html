@@ -282,33 +282,30 @@
    
 
 
+
     <tr>
         <td class="match">
             <div class="panel-body">
                 <div class="col-md-2 col-md-offset-7">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            Options
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" ng-click="discardMatch()">Discard this Update</a>
-                            </li>
-                            <li ng-if="section !== 'demographics'"><a href="#" ng-click="createMatch()">Make Update a New Entry</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <button type="button" class="btn btn-warning ng-scope" ng-click="createMatch()" ng-if="section !== 'demographics'">
+                        <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New
+                    </button>
                 </div>
             </div>
         </td>
-        <td  class="match">
+        <td class="match">
 
 
             <div class="panel-body" ng-hide="panelId === 0">
                 <div class="col-md-12">
-                    <button type="button" class="btn btn-primary btn-block" ng-click="saveMatch()">Save Changes</button>
+                    <button ng-show="changed" type="button" class="btn btn-primary btn-block" ng-click="saveMatch()"><i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
+
+                    <button ng-hide="changed" type="button" class="btn btn-primary btn-block" ng-click="discardMatch()"><i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
+
                 </div>
             </div>
         </td>
     </tr>
+    <!--pre>{{ selectedItems|json}}</pre>
+    <pre>{{ changed }}</pre-->
 </table>

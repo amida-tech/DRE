@@ -47,6 +47,19 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.current_entry = {};
         $scope.update_entry = {};
         $scope.selectedItems = {};
+        $scope.changed=false;
+
+        //function evaluates selectedItems object, and updates flag if any changes to MHR were made
+        function isChanged(){
+            for (var el in $scope.selectedItems){
+                if ($scope.selectedItems[el]) {
+                    $scope.changed=true;
+                    return;
+                }
+            }
+            $scope.changed=false;
+            return;
+        }
 
         if ($scope.section === 'allergies') {
             $scope.selectedItems.observation = {};
@@ -323,6 +336,9 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
             }
 
+            //recalculate changed status
+            isChanged();
+
         };
 
 
@@ -402,6 +418,9 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 }
 
             }
+
+            //recalculate changed status
+            isChanged();
 
         };
 
