@@ -24,7 +24,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.result_set || update_entry.result_set">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('result_set', null, match_diff.result_set)" ng-class="{selected: selectedItems.result_set, disabled: match_diff.result_set}" ng-show="new_entry.result_set">
 

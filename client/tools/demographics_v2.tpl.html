@@ -24,7 +24,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.name || update_entry.name">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('name', null, match_diff.name)" ng-class="{selected: selectedItems.name, disabled: match_diff.name}" ng-show="new_entry.name">
 
@@ -67,7 +67,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.gender || update_entry.gender">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('gender', null, match_diff.gender)" ng-class="{selected: selectedItems.gender, disabled: match_diff.gender}" ng-show="new_entry.gender">
 
@@ -110,7 +110,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.dob || update_entry.dob">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('dob', null, match_diff.dob)" ng-class="{selected: selectedItems.dob, disabled: match_diff.dob}" ng-show="new_entry.dob">
 
@@ -153,7 +153,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.birthplace || update_entry.birthplace">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('birthplace', null, match_diff.birthplace)" ng-class="{selected: selectedItems.birthplace, disabled: match_diff.birthplace}" ng-show="new_entry.birthplace">
 
@@ -196,7 +196,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.marital_status || update_entry.marital_status">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('marital_status', null, match_diff.marital_status)" ng-class="{selected: selectedItems.marital_status, disabled: match_diff.marital_status}" ng-show="new_entry.marital_status">
 
@@ -239,7 +239,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.religion || update_entry.religion">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('religion', null, match_diff.religion)" ng-class="{selected: selectedItems.religion, disabled: match_diff.religion}" ng-show="new_entry.religion">
 
@@ -282,7 +282,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.race_ethnicity || update_entry.race_ethnicity">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('race_ethnicity', null, match_diff.race_ethnicity)" ng-class="{selected: selectedItems.race_ethnicity, disabled: match_diff.race_ethnicity}" ng-show="new_entry.race_ethnicity">
 
@@ -325,7 +325,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.languages || update_entry.languages">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('languages', null, match_diff.languages)" ng-class="{selected: selectedItems.languages, disabled: match_diff.languages}" ng-show="new_entry.languages">
 
@@ -368,7 +368,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.addresses || update_entry.addresses">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('addresses', null, match_diff.addresses)" ng-class="{selected: selectedItems.addresses, disabled: match_diff.addresses}" ng-show="new_entry.addresses">
 
@@ -411,7 +411,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.phone || update_entry.phone">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('phone', null, match_diff.phone)" ng-class="{selected: selectedItems.phone, disabled: match_diff.phone}" ng-show="new_entry.phone">
 
@@ -454,7 +454,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.email || update_entry.email">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('email', null, match_diff.email)" ng-class="{selected: selectedItems.email, disabled: match_diff.email}" ng-show="new_entry.email">
 
@@ -497,7 +497,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.guardians || update_entry.guardians">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('guardians', null, match_diff.guardians)" ng-class="{selected: selectedItems.guardians, disabled: match_diff.guardians}" ng-show="new_entry.guardians">
 

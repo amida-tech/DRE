@@ -29,7 +29,7 @@
     if(el.type!=="subarray") {
 %>
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.<%= el.name %> || update_entry.<%= el.name %>">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('<%= el.name %>', null, match_diff.<%= el.name %>)" ng-class="{selected: selectedItems.<%= el.name %>, disabled: match_diff.<%= el.name %>}" ng-show="new_entry.<%= el.name %>">
 

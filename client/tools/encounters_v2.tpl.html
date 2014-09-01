@@ -24,7 +24,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.encounter || update_entry.encounter">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('encounter', null, match_diff.encounter)" ng-class="{selected: selectedItems.encounter, disabled: match_diff.encounter}" ng-show="new_entry.encounter">
 
@@ -67,7 +67,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.date_time || update_entry.date_time">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="new_entry.date_time">
 
@@ -110,7 +110,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.performers || update_entry.performers">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('performers', null, match_diff.performers)" ng-class="{selected: selectedItems.performers, disabled: match_diff.performers}" ng-show="new_entry.performers">
 
@@ -153,7 +153,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
+    <tr class="list-group list-matching" ng-show="new_entry.locations || update_entry.locations">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('locations', null, match_diff.locations)" ng-class="{selected: selectedItems.locations, disabled: match_diff.locations}" ng-show="new_entry.locations">
 
