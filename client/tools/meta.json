@@ -69,9 +69,8 @@
         "title": "Effective",
         "entry": "date"
     }, {
-        "name": "observation.reactions",
-        "name2": "reaction",
-        "name3": "reactions",
+        "name": "observation_reactions",
+        "dot_name": "observation.reactions",
         "title": "Reaction",
         "entry": "reaction",
         "type": "subarray"
@@ -93,9 +92,8 @@
         "title": "locations",
         "entry": "encounterlocations"
     }, {
-        "name": "finding",
-        "name2": "findings",
-        "name3": "findings",
+        "name": "findings",
+        "dot_name": "findings",
         "title": "Findings",
         "entry": "finding",
         "type": "subarray"
@@ -187,15 +185,10 @@
     "results": [{
         "name": "result_set",
         "title": "Result Set",
-        "entry": "date"
-    }, {
-        "name": "code",
-        "title": "Social History of",
         "entry": "coded"
     }, {
-        "name": "result",
-        "name2": "results",
-        "name3": "results",
+        "name": "results",
+        "dot_name": "results",
         "title": "Result",
         "entry": "result",
         "type": "subarray"

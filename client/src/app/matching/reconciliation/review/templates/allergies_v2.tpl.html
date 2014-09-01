@@ -55,6 +55,9 @@
         </td>
     </tr>
 
+
+
+
     <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td class="match" >
@@ -88,6 +91,9 @@
                 </div>
         </td>
     </tr>
+
+
+
 
     <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
@@ -123,6 +129,9 @@
         </td>
     </tr>
 
+
+
+
     <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td class="match" >
@@ -156,6 +165,9 @@
                 </div>
         </td>
     </tr>
+
+
+
 
     <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
@@ -191,15 +203,18 @@
         </td>
     </tr>
 
+
+
+
     <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
-        <td class="match" >
-            <div class="list-group-item merge-item" ng-click="selectField('observation.reactions', null, match_diff.observation.reactions)" ng-class="{selected: selectedItems.observation.reactions, disabled: match_diff.observation.reactions}" ng-show="new_entry.observation.reactions">
+        <td class="match" valign="top">
+            <div class="list-group-item merge-item" ng-repeat="(el_id, el_entry) in new_entry.observation.reactions" ng-click="selectField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])" ng-class="{selected: selectedItems.observation.reactions[el_id], disabled: match_diff.observation.reactions.src[el_id]}">
 
-                <span ng-hide='match_diff.observation.reactions || selectedItems.observation.reactions' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-                <span ng-hide='match_diff.observation.reactions || selectedItems.observation.reactions'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
+                <span ng-hide='match_diff.observation_reactions || selectedItems.observation_reactions' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.observation_reactions || selectedItems.observation_reactions'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
-                <div reaction-entry input-value="new_entry.observation.reactions" input-title="Reaction" select-field="selectedItems.observation.reactions"></div>
+                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="el_entry" select-field="selectedItems.reaction[el_id]"></div>
             </div>
              <div ng-hide="new_entry.observation.reactions" class="disabled">
                     <div class="text-center">
@@ -207,23 +222,23 @@
                     </div>
                 </div>
         </td>
-        <td class="match">
-            <div class="list-group-item  merge-item" ng-click="removeField('observation.reactions', null, match_diff.observation.reactions)" ng-class="{selected: selectedItems.observation.reactions, disabled: match_diff.observation.reactions}" ng-show="update_entry.observation.reactions">
 
-                <span ng-show='selectedItems.observation.reactions' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.observation.reactions || selectedItems.observation.reactions'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+        <td class="match" valign="top">
+            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.observation.reactions" ng-click="removeField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])" ng-class="{selected: selectedItems.observation.reactions[el_id], disabled: match_diff.observation.reactions.dest[el_id]}">
 
-                
+                <span ng-show='selectedItems.observation_reactions' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
+                <span ng-show='selectedItems.observation_reactions || selectedItems.observation_reactions'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
 
-                <div reaction-entry input-value="update_entry.observation.reactions" input-title="Reaction" select-field="selectedItems.observation.reactions"></div>
+                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="el_entry" select-field="selectedItems.Reaction[el_id]"></div>
             </div>
-             <div ng-hide="update_entry.observation.reactions" class="disabled">
+             <div ng-hide="update_entry.observation_reactions" class="disabled">
                     <div class="text-center">
                         <h4>No Data</h4>
                     </div>
                 </div>
         </td>
     </tr>
+
    
 
 

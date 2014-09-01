@@ -29,7 +29,7 @@
                 <span ng-hide='match_diff.result_set || selectedItems.result_set' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
                 <span ng-hide='match_diff.result_set || selectedItems.result_set'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
-                <div date-entry input-value="new_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set"></div>
+                <div coded-entry input-value="new_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set"></div>
             </div>
              <div ng-hide="new_entry.result_set" class="disabled">
                     <div class="text-center">
@@ -45,7 +45,7 @@
 
                 
 
-                <div date-entry input-value="update_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set"></div>
+                <div coded-entry input-value="update_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set"></div>
             </div>
              <div ng-hide="update_entry.result_set" class="disabled">
                     <div class="text-center">
@@ -55,33 +55,35 @@
         </td>
     </tr>
 
+
+
+
     <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
-        <td class="match" >
-            <div class="list-group-item merge-item" ng-click="selectField('code', null, match_diff.code)" ng-class="{selected: selectedItems.code, disabled: match_diff.code}" ng-show="new_entry.code">
+        <td class="match" valign="top">
+            <div class="list-group-item merge-item" ng-repeat="(el_id, el_entry) in new_entry.results" ng-click="selectField('results', el_id, match_diff.results.src[el_id])" ng-class="{selected: selectedItems.results[el_id], disabled: match_diff.results.src[el_id]}">
 
-                <span ng-hide='match_diff.code || selectedItems.code' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-                <span ng-hide='match_diff.code || selectedItems.code'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
+                <span ng-hide='match_diff.results || selectedItems.results' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.results || selectedItems.results'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
-                <div coded-entry input-value="new_entry.code" input-title="Social History of" select-field="selectedItems.code"></div>
+                <div result-entry input-value="el_entry" input-title="Result" input-additional="el_entry" select-field="selectedItems.result[el_id]"></div>
             </div>
-             <div ng-hide="new_entry.code" class="disabled">
+             <div ng-hide="new_entry.results" class="disabled">
                     <div class="text-center">
                         <h4>No Update</h4>
                     </div>
                 </div>
         </td>
-        <td class="match">
-            <div class="list-group-item  merge-item" ng-click="removeField('code', null, match_diff.code)" ng-class="{selected: selectedItems.code, disabled: match_diff.code}" ng-show="update_entry.code">
 
-                <span ng-show='selectedItems.code' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.code || selectedItems.code'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+        <td class="match" valign="top">
+            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.results" ng-click="removeField('results', el_id, match_diff.results.src[el_id])" ng-class="{selected: selectedItems.results[el_id], disabled: match_diff.results.dest[el_id]}">
 
-                
+                <span ng-show='selectedItems.results' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
+                <span ng-show='selectedItems.results || selectedItems.results'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
 
-                <div coded-entry input-value="update_entry.code" input-title="Social History of" select-field="selectedItems.code"></div>
+                <div result-entry input-value="el_entry" input-title="Result" input-additional="el_entry" select-field="selectedItems.Result[el_id]"></div>
             </div>
-             <div ng-hide="update_entry.code" class="disabled">
+             <div ng-hide="update_entry.results" class="disabled">
                     <div class="text-center">
                         <h4>No Data</h4>
                     </div>
@@ -89,39 +91,6 @@
         </td>
     </tr>
 
-    <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching">
-        <td class="match" >
-            <div class="list-group-item merge-item" ng-click="selectField('result', null, match_diff.result)" ng-class="{selected: selectedItems.result, disabled: match_diff.result}" ng-show="new_entry.result">
-
-                <span ng-hide='match_diff.result || selectedItems.result' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-                <span ng-hide='match_diff.result || selectedItems.result'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
-            
-                <div result-entry input-value="new_entry.result" input-title="Result" select-field="selectedItems.result"></div>
-            </div>
-             <div ng-hide="new_entry.result" class="disabled">
-                    <div class="text-center">
-                        <h4>No Update</h4>
-                    </div>
-                </div>
-        </td>
-        <td class="match">
-            <div class="list-group-item  merge-item" ng-click="removeField('result', null, match_diff.result)" ng-class="{selected: selectedItems.result, disabled: match_diff.result}" ng-show="update_entry.result">
-
-                <span ng-show='selectedItems.result' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.result || selectedItems.result'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
-
-                
-
-                <div result-entry input-value="update_entry.result" input-title="Result" select-field="selectedItems.result"></div>
-            </div>
-             <div ng-hide="update_entry.result" class="disabled">
-                    <div class="text-center">
-                        <h4>No Data</h4>
-                    </div>
-                </div>
-        </td>
-    </tr>
    
 
 
