@@ -311,7 +311,7 @@ angular.module('services.recordFunctions', [])
                     if (entries[i].observation.date_time) {
                         entries[i].attribute = this.formatDateTime(entries[i].observation.date_time);
                     } else {
-                        entries[i].attribute = "";
+                        entries[i].attribute = "DATE NOT REPORTED";
                     }
 
 
