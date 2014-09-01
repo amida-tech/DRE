@@ -75,8 +75,11 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             $scope.match_diff = angular.copy($scope.current_match.diff);
             $scope.match_percent = $scope.current_match.percent;
 
+
+
             //Restructure diff object booleans.
             for (var diff in $scope.match_diff) {
+
                 if ($scope.match_diff[diff] === "duplicate") {
                     $scope.match_diff[diff] = true;
                 } else {
@@ -116,6 +119,15 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                         $scope.match_diff.observation.reactions.dest[tempArrayDiff[i].dest_id] = true;
                     }
                 }
+
+                //Allergies shim based on object brevity.
+                for (var temp_current_diff in $scope.current_entry.observation) {
+                if ($scope.new_entry.observation[temp_current_diff] === undefined) {
+                    console.log(temp_current_diff);
+                    $scope.match_diff.observation[temp_current_diff] = true;
+                }
+
+            }
 
             }
 
@@ -252,11 +264,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
 
         $scope.removeField = function(entry, entry_index, entry_status) {
-            console.log("remove field", entry, entry_status);
-            if ($scope.selectedItems[entry]!==true){
-                console.log("cancel");
-                return;
-            }
+
 
            //Don't process hidden items.
             if (entry_status) {
