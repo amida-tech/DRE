@@ -493,8 +493,8 @@ angular.module('directives.matchingObjects', [])
                 "<table class='table table-condensed'>" +
                 "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
                 "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.value.name}}</td></tr>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.value.code}}</td></tr>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.value.code_system_name}}</td></tr></table>" +
+                "<tr ng-show='inputValue.value.code && inputValue.value.code_system_name'><td class='col-md-4'><label style='text-transform: capitalize;'>Code (System):</label></td><td class='col-md-4 text-left'>{{inputValue.value.code}} ({{inputValue.value.code_system_name}})</td></tr>" +
+                "</table>" +
 
                 "<table class='table table-condensed' ng-show='inputValue.date_time'>" +
                 "<thead><tr><th><b>Effective</b></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
@@ -686,8 +686,8 @@ angular.module('directives.matchingObjects', [])
                 "<table class='table table-condensed'>" +
                 "<thead><tr><th><h4>Reaction</h4></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
                 "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.reaction.name}}</td></tr>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.reaction.code}}</td></tr>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.reaction.code_system_name}}</td></tr></table>" +
+                "<tr ng-show='inputValue.reaction.code && inputValue.reaction.code_system_name'><td class='col-md-4'><label style='text-transform: capitalize;'>Code (System):</label></td><td class='col-md-4 text-left'>{{inputValue.reaction.code}} ({{inputValue.reaction.code_system_name}})</td></tr>" +
+                "</table>" +
 
                 "<table class='table table-condensed'>" +
                 "<thead><tr><th><b>Effective</b></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
@@ -699,14 +699,15 @@ angular.module('directives.matchingObjects', [])
                 "<table class='table table-condensed'>" +
                 "<thead><tr><th><b>Severity</b></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
                 "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.severity.code.name}}</td></tr>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.severity.code.code}}</td></tr>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.severity.code.code_system_name}}</td></tr></table>" +
+                "<tr ng-show='inputValue.severity.code && inputValue.severity.code_system_name'><td class='col-md-4'><label style='text-transform: capitalize;'>Code (System):</label></td><td class='col-md-4 text-left'>{{inputValue.severity.code}} ({{inputValue.severity.code_system_name}})</td></tr>" +
+                "</table>" +
 
-                "<table class='table table-condensed'><thead><tr><th><b>Interpretation</b></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.severity.interpretation.name}}</td></tr>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.severity.interpretation.code}}</td></tr>" +
-                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.severity.interpretation.code_system_name | bb_trunc}}</td></tr>" +
-                "</table></div>",
+                //"<table class='table table-condensed'><thead><tr><th><b>Interpretation</b></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
+                //"<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.severity.interpretation.name}}</td></tr>" +
+                //"<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.severity.interpretation.code}}</td></tr>" +
+                //"<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.severity.interpretation.code_system_name | bb_trunc}}</td></tr>" +
+                //"</table>"+
+                "</div>",
             link: function(scope, element, attrs) {}
         };
     }
