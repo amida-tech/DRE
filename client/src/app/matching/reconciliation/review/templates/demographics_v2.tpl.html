@@ -1,6 +1,6 @@
 <table class="col-md-12">
     <thead>
-        <tr >
+        <tr>
             <th class='col-md-6'>
                 <div class="panel-heading">
                     <table>
@@ -198,5 +198,35 @@
 
         </td>
     </tr>
-    
+
+
+    <tr>
+        <td>
+            <div class="panel-body">
+                <div class="col-md-2 col-md-offset-7">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            Options
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" ng-click="discardMatch()">Discard this Update</a>
+                            </li>
+                            <li ng-if="section !== 'demographics'"><a href="#" ng-click="createMatch()">Make Update a New Entry</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+
+
+            <div class="panel-body" ng-hide="panelId === 0">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="saveMatch()">Save Changes</button>
+                </div>
+            </div>
+        </td>
+    </tr>
 </table>
