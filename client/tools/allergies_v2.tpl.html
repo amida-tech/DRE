@@ -1,0 +1,193 @@
+<table class="col-md-12">
+    <thead>
+        <tr>
+            <th class='col-md-6'>
+                <div class="panel-heading">
+                    <table>
+                        <tr>
+                            <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                            </td>
+                            <td class="col-md-10 pull-right text-right">
+                                <h4>Entry Update</h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="panel-body text-center">
+                    <h6>Select Updates</h6>
+                </div>
+
+
+            </th>
+
+            <th class='col-md-6'>
+                <div class="panel-heading">
+                    <table>
+                        <tr>
+                            <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                            </td>
+                            <td class="col-md-10 pull-right text-right">
+                                <h4>{{match_percent}}% Match</h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="panel-body text-center">
+                    <h6 ng-if="current_queue.length > 0"><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
+                    </h6>
+                    <h6 ng-if="current_queue.length === 0">Current Record</h6>
+                </div>
+            </th>
+        </tr>
+    </thead>
+
+    <tr>
+        <td>
+            <div class="panel-body">
+                <div class="col-md-2 col-md-offset-7">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            Options
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" ng-click="discardMatch()">Discard this Update</a>
+                            </li>
+                            <li ng-if="section !== 'demographics'"><a href="#" ng-click="createMatch()">Make Update a New Entry</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+
+
+            <div class="panel-body" ng-hide="panelId === 0">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="saveMatch()">Save Changes</button>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('observation.allergen', null, match_diff.observation.allergen)" ng-class="{selected: selectedItems.observation.allergen, disabled: match_diff.observation.allergen}" ng-show="new_entry.observation.allergen">
+                <div coded-entry input-value="new_entry.observation.allergen" input-title="Allergen" select-field="selectedItems.observation.allergen"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('observation.allergen', null, match_diff.observation.allergen)" ng-class="{selected: selectedItems.observation.allergen, disabled: match_diff.observation.allergen}" ng-show="update_entry.observation.allergen">
+                <div coded-entry input-value="update_entry.observation.allergen" input-title="Allergen" select-field="selectedItems.observation.allergen"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('observation.intolerance', null, match_diff.observation.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}" ng-show="new_entry.observation.intolerance">
+                <div coded-entry input-value="new_entry.observation.intolerance" input-title="Intolerance" select-field="selectedItems.observation.intolerance"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('observation.intolerance', null, match_diff.observation.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}" ng-show="update_entry.observation.intolerance">
+                <div coded-entry input-value="update_entry.observation.intolerance" input-title="Intolerance" select-field="selectedItems.observation.intolerance"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('observation.status', null, match_diff.observation.status)" ng-class="{selected: selectedItems.observation.status, disabled: match_diff.observation.status}" ng-show="new_entry.observation.status">
+                <div coded-entry input-value="new_entry.observation.status" input-title="Status" select-field="selectedItems.observation.status"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('observation.status', null, match_diff.observation.status)" ng-class="{selected: selectedItems.observation.status, disabled: match_diff.observation.status}" ng-show="update_entry.observation.status">
+                <div coded-entry input-value="update_entry.observation.status" input-title="Status" select-field="selectedItems.observation.status"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('observation.severity', null, match_diff.observation.severity)" ng-class="{selected: selectedItems.observation.severity, disabled: match_diff.observation.severity}" ng-show="new_entry.observation.severity">
+                <div severity-entry input-value="new_entry.observation.severity" input-title="Severity" select-field="selectedItems.observation.severity"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('observation.severity', null, match_diff.observation.severity)" ng-class="{selected: selectedItems.observation.severity, disabled: match_diff.observation.severity}" ng-show="update_entry.observation.severity">
+                <div severity-entry input-value="update_entry.observation.severity" input-title="Severity" select-field="selectedItems.observation.severity"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('observation.date_time', null, match_diff.observation.date_time)" ng-class="{selected: selectedItems.observation.date_time, disabled: match_diff.observation.date_time}" ng-show="new_entry.observation.date_time">
+                <div date-entry input-value="new_entry.observation.date_time" input-title="Effective" select-field="selectedItems.observation.date_time"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('observation.date_time', null, match_diff.observation.date_time)" ng-class="{selected: selectedItems.observation.date_time, disabled: match_diff.observation.date_time}" ng-show="update_entry.observation.date_time">
+                <div date-entry input-value="update_entry.observation.date_time" input-title="Effective" select-field="selectedItems.observation.date_time"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('observation.reactions', null, match_diff.observation.reactions)" ng-class="{selected: selectedItems.observation.reactions, disabled: match_diff.observation.reactions}" ng-show="new_entry.observation.reactions">
+                <div reaction-entry input-value="new_entry.observation.reactions" input-title="Reaction" select-field="selectedItems.observation.reactions"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('observation.reactions', null, match_diff.observation.reactions)" ng-class="{selected: selectedItems.observation.reactions, disabled: match_diff.observation.reactions}" ng-show="update_entry.observation.reactions">
+                <div reaction-entry input-value="update_entry.observation.reactions" input-title="Reaction" select-field="selectedItems.observation.reactions"></div>
+            </div>
+
+        </td>
+    </tr>
+   
+
+
+    <tr>
+        <td>
+            <div class="panel-body">
+                <div class="col-md-2 col-md-offset-7">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            Options
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" ng-click="discardMatch()">Discard this Update</a>
+                            </li>
+                            <li ng-if="section !== 'demographics'"><a href="#" ng-click="createMatch()">Make Update a New Entry</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+
+
+            <div class="panel-body" ng-hide="panelId === 0">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="saveMatch()">Save Changes</button>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

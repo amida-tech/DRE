@@ -1,0 +1,207 @@
+<table class="col-md-12">
+    <thead>
+        <tr>
+            <th class='col-md-6'>
+                <div class="panel-heading">
+                    <table>
+                        <tr>
+                            <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                            </td>
+                            <td class="col-md-10 pull-right text-right">
+                                <h4>Entry Update</h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="panel-body text-center">
+                    <h6>Select Updates</h6>
+                </div>
+
+
+            </th>
+
+            <th class='col-md-6'>
+                <div class="panel-heading">
+                    <table>
+                        <tr>
+                            <td class="col-md-2"><i class="fa fa-leaf fa-2x"></i>
+                            </td>
+                            <td class="col-md-10 pull-right text-right">
+                                <h4>{{match_percent}}% Match</h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="panel-body text-center">
+                    <h6 ng-if="current_queue.length > 0"><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
+                    </h6>
+                    <h6 ng-if="current_queue.length === 0">Current Record</h6>
+                </div>
+            </th>
+        </tr>
+    </thead>
+
+    <tr>
+        <td>
+            <div class="panel-body">
+                <div class="col-md-2 col-md-offset-7">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            Options
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" ng-click="discardMatch()">Discard this Update</a>
+                            </li>
+                            <li ng-if="section !== 'demographics'"><a href="#" ng-click="createMatch()">Make Update a New Entry</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+
+
+            <div class="panel-body" ng-hide="panelId === 0">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="saveMatch()">Save Changes</button>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('negation_indicator', null, match_diff.negation_indicator)" ng-class="{selected: selectedItems.negation_indicator, disabled: match_diff.negation_indicator}" ng-show="new_entry.negation_indicator">
+                <div single-entry input-value="new_entry.negation_indicator" input-title="Negation Indicator" select-field="selectedItems.negation_indicator"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('negation_indicator', null, match_diff.negation_indicator)" ng-class="{selected: selectedItems.negation_indicator, disabled: match_diff.negation_indicator}" ng-show="update_entry.negation_indicator">
+                <div single-entry input-value="update_entry.negation_indicator" input-title="Negation Indicator" select-field="selectedItems.negation_indicator"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="new_entry.date_time">
+                <div date-entry input-value="new_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="update_entry.date_time">
+                <div date-entry input-value="update_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('problem', null, match_diff.problem)" ng-class="{selected: selectedItems.problem, disabled: match_diff.problem}" ng-show="new_entry.problem">
+                <div problem-entry input-value="new_entry.problem" input-title="Problem" select-field="selectedItems.problem"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('problem', null, match_diff.problem)" ng-class="{selected: selectedItems.problem, disabled: match_diff.problem}" ng-show="update_entry.problem">
+                <div problem-entry input-value="update_entry.problem" input-title="Problem" select-field="selectedItems.problem"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}" ng-show="new_entry.status">
+                <div problemstatus-entry input-value="new_entry.status" input-title="Status" select-field="selectedItems.status"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}" ng-show="update_entry.status">
+                <div problemstatus-entry input-value="update_entry.status" input-title="Status" select-field="selectedItems.status"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('patient_status', null, match_diff.patient_status)" ng-class="{selected: selectedItems.patient_status, disabled: match_diff.patient_status}" ng-show="new_entry.patient_status">
+                <div single-entry input-value="new_entry.patient_status" input-title="Patient Status" select-field="selectedItems.patient_status"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('patient_status', null, match_diff.patient_status)" ng-class="{selected: selectedItems.patient_status, disabled: match_diff.patient_status}" ng-show="update_entry.patient_status">
+                <div single-entry input-value="update_entry.patient_status" input-title="Patient Status" select-field="selectedItems.patient_status"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('onset_age', null, match_diff.onset_age)" ng-class="{selected: selectedItems.onset_age, disabled: match_diff.onset_age}" ng-show="new_entry.onset_age">
+                <div single-entry input-value="new_entry.onset_age" input-title="Onset Age" select-field="selectedItems.onset_age"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('onset_age', null, match_diff.onset_age)" ng-class="{selected: selectedItems.onset_age, disabled: match_diff.onset_age}" ng-show="update_entry.onset_age">
+                <div single-entry input-value="update_entry.onset_age" input-title="Onset Age" select-field="selectedItems.onset_age"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('onset_age_unit', null, match_diff.onset_age_unit)" ng-class="{selected: selectedItems.onset_age_unit, disabled: match_diff.onset_age_unit}" ng-show="new_entry.onset_age_unit">
+                <div single-entry input-value="new_entry.onset_age_unit" input-title="Onset Age Unit" select-field="selectedItems.onset_age_unit"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('onset_age_unit', null, match_diff.onset_age_unit)" ng-class="{selected: selectedItems.onset_age_unit, disabled: match_diff.onset_age_unit}" ng-show="update_entry.onset_age_unit">
+                <div single-entry input-value="update_entry.onset_age_unit" input-title="Onset Age Unit" select-field="selectedItems.onset_age_unit"></div>
+            </div>
+
+        </td>
+    </tr>
+   
+
+
+    <tr>
+        <td>
+            <div class="panel-body">
+                <div class="col-md-2 col-md-offset-7">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            Options
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" ng-click="discardMatch()">Discard this Update</a>
+                            </li>
+                            <li ng-if="section !== 'demographics'"><a href="#" ng-click="createMatch()">Make Update a New Entry</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+
+
+            <div class="panel-body" ng-hide="panelId === 0">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="saveMatch()">Save Changes</button>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

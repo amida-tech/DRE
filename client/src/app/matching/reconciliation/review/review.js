@@ -35,7 +35,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
         //shim for switching on new UI
         $scope.version="old";
-        if ($scope.section==="demographics"){
+        if ( ["demographics","-allergies","insurance","vitals","encounters","immunizations","problems", "procedures","results","-social_history"].indexOf($scope.section.toString())>=0){
             $scope.version="new";
         }
 

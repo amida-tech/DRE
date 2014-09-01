@@ -74,24 +74,77 @@
     </tr>
 
 
-<% for (var i = 0; i < meta.length; i++) { 
-    var el = meta[i];
-    // display properties of this
-%>
+
     <tr class="list-group list-matching">
         <td>
-            <div class="list-group-item" ng-click="selectField('<%= el.name %>', null, match_diff.<%= el.name %>)" ng-class="{selected: selectedItems.<%= el.name %>, disabled: match_diff.<%= el.name %>}" ng-show="new_entry.<%= el.name %>">
-                <div <%= el.entry %>-entry input-value="new_entry.<%= el.name %>" input-title="<%= el.title %>" select-field="selectedItems.<%= el.name %>"></div>
+            <div class="list-group-item" ng-click="selectField('vital', null, match_diff.vital)" ng-class="{selected: selectedItems.vital, disabled: match_diff.vital}" ng-show="new_entry.vital">
+                <div coded-entry input-value="new_entry.vital" input-title="Vital Sign" select-field="selectedItems.vital"></div>
             </div>
         </td>
         <td>
-            <div class="list-group-item" ng-click="removeField('<%= el.name %>', null, match_diff.<%= el.name %>)" ng-class="{selected: selectedItems.<%= el.name %>, disabled: match_diff.<%= el.name %>}" ng-show="update_entry.<%= el.name %>">
-                <div <%= el.entry %>-entry input-value="update_entry.<%= el.name %>" input-title="<%= el.title %>" select-field="selectedItems.<%= el.name %>"></div>
+            <div class="list-group-item" ng-click="removeField('vital', null, match_diff.vital)" ng-class="{selected: selectedItems.vital, disabled: match_diff.vital}" ng-show="update_entry.vital">
+                <div coded-entry input-value="update_entry.vital" input-title="Vital Sign" select-field="selectedItems.vital"></div>
             </div>
 
         </td>
     </tr>
-<% } %>   
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}" ng-show="new_entry.status">
+                <div single-entry input-value="new_entry.status" input-title="Status" select-field="selectedItems.status"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}" ng-show="update_entry.status">
+                <div single-entry input-value="update_entry.status" input-title="Status" select-field="selectedItems.status"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="new_entry.date_time">
+                <div date-entry input-value="new_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="update_entry.date_time">
+                <div date-entry input-value="update_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('value', null, match_diff.value)" ng-class="{selected: selectedItems.value, disabled: match_diff.value}" ng-show="new_entry.value">
+                <div single-entry input-value="new_entry.value" input-title="Value" select-field="selectedItems.value"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('value', null, match_diff.value)" ng-class="{selected: selectedItems.value, disabled: match_diff.value}" ng-show="update_entry.value">
+                <div single-entry input-value="update_entry.value" input-title="Value" select-field="selectedItems.value"></div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr class="list-group list-matching">
+        <td>
+            <div class="list-group-item" ng-click="selectField('unit', null, match_diff.unit)" ng-class="{selected: selectedItems.unit, disabled: match_diff.unit}" ng-show="new_entry.unit">
+                <div single-entry input-value="new_entry.unit" input-title="Unit" select-field="selectedItems.unit"></div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group-item" ng-click="removeField('unit', null, match_diff.unit)" ng-class="{selected: selectedItems.unit, disabled: match_diff.unit}" ng-show="update_entry.unit">
+                <div single-entry input-value="update_entry.unit" input-title="Unit" select-field="selectedItems.unit"></div>
+            </div>
+
+        </td>
+    </tr>
+   
 
 
     <tr>

@@ -47,5 +47,215 @@
         "name": "guardians",
         "title": "Guardians",
         "entry": "guardians"
+    }],
+    "allergies": [{
+        "name": "observation.allergen",
+        "title": "Allergen",
+        "entry": "coded"
+    }, {
+        "name": "observation.intolerance",
+        "title": "Intolerance",
+        "entry": "coded"
+    }, {
+        "name": "observation.status",
+        "title": "Status",
+        "entry": "coded"
+    }, {
+        "name": "observation.severity",
+        "title": "Severity",
+        "entry": "severity"
+    }, {
+        "name": "observation.date_time",
+        "title": "Effective",
+        "entry": "date"
+    }, {
+        "name": "observation.reactions",
+        "name2": "reaction",
+        "name3": "reactions",
+        "title": "Reaction",
+        "entry": "reaction",
+        "type": "subarray"
+    }],
+    "encounters": [{
+        "name": "encounter",
+        "title": "Encounter",
+        "entry": "coded"
+    }, {
+        "name": "date_time",
+        "title": "Date",
+        "entry": "date"
+    }, {
+        "name": "performers",
+        "title": "Performers",
+        "entry": "performers"
+    }, {
+        "name": "locations",
+        "title": "locations",
+        "entry": "encounterlocations"
+    }, {
+        "name": "finding",
+        "name2": "findings",
+        "name3": "findings",
+        "title": "Findings",
+        "entry": "finding",
+        "type": "subarray"
+    }],
+    "immunizations": [{
+        "name": "date_time",
+        "title": "Date",
+        "entry": "date"
+    }, {
+        "name": "status",
+        "title": "Status",
+        "entry": "single"
+    }, {
+        "name": "product",
+        "title": "Product",
+        "entry": "product"
+    }, {
+        "name": "administration",
+        "title": "Administration",
+        "entry": "administration"
+    }, {
+        "name": "performer",
+        "title": "Performer",
+        "entry": "performer"
+    }, {
+        "name": "instructions",
+        "title": "Instructions",
+        "entry": "instructions"
+    }],
+    "insurance": [{
+        "name": "payer_name",
+        "title": "Payer",
+        "entry": "single"
+    }, {
+        "name": "name",
+        "title": "Name",
+        "entry": "single"
+    }, {
+        "name": "plan_id",
+        "title": "Plan ID",
+        "entry": "single"
+    }, {
+        "name": "date_time",
+        "title": "Date",
+        "entry": "date"
+    }, {
+        "name": "addresses",
+        "title": "Address",
+        "entry": "addresses"
+    }, {
+        "name": "type",
+        "title": "Type",
+        "entry": "multisingle"
+    }],
+    "vitals": [{
+        "name": "vital",
+        "title": "Vital Sign",
+        "entry": "coded"
+    }, {
+        "name": "status",
+        "title": "Status",
+        "entry": "single"
+    }, {
+        "name": "date_time",
+        "title": "Date",
+        "entry": "date"
+    }, {
+        "name": "value",
+        "title": "Value",
+        "entry": "single"
+    }, {
+        "name": "unit",
+        "title": "Unit",
+        "entry": "single"
+    }],
+    "social_history": [{
+        "name": "date_time",
+        "title": "Effective",
+        "entry": "date"
+    }, {
+        "name": "code",
+        "title": "Social History of",
+        "entry": "coded"
+    }, {
+        "name": "value",
+        "title": "Value",
+        "entry": "single"
+    }],
+    "results": [{
+        "name": "result_set",
+        "title": "Result Set",
+        "entry": "date"
+    }, {
+        "name": "code",
+        "title": "Social History of",
+        "entry": "coded"
+    }, {
+        "name": "result",
+        "name2": "results",
+        "name3": "results",
+        "title": "Result",
+        "entry": "result",
+        "type": "subarray"
+    }],
+    "procedures": [{
+        "name": "procedure",
+        "title": "Procedure",
+        "entry": "coded"
+    }, {
+        "name": "procedure_type",
+        "title": "Procedure Type",
+        "entry": "single"
+    }, {
+        "name": "date_time",
+        "title": "Date",
+        "entry": "date"
+    }, {
+        "name": "status",
+        "title": "Status",
+        "entry": "status"
+    }, {
+        "name": "specimen",
+        "title": "Specimen",
+        "entry": "coded"
+    }, {
+        "name": "body_sites",
+        "title": "Body Site",
+        "entry": "coded"
+    }, {
+        "name": "performer",
+        "title": "Performer",
+        "entry": "performer"
+    }],
+    "problems": [{
+        "name": "negation_indicator",
+        "title": "Negation Indicator",
+        "entry": "single"
+    }, {
+        "name": "date_time",
+        "title": "Date",
+        "entry": "date"
+    }, {
+        "name": "problem",
+        "title": "Problem",
+        "entry": "problem"
+    }, {
+        "name": "status",
+        "title": "Status",
+        "entry": "problemstatus"
+    }, {
+        "name": "patient_status",
+        "title": "Patient Status",
+        "entry": "single"
+    }, {
+        "name": "onset_age",
+        "title": "Onset Age",
+        "entry": "single"
+    }, {
+        "name": "onset_age_unit",
+        "title": "Onset Age Unit",
+        "entry": "single"
     }]
 }
