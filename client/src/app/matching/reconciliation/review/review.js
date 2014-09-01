@@ -245,6 +245,11 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
 
         $scope.removeField = function(entry, entry_index, entry_status) {
+            console.log("remove field", entry, entry_status);
+            if ($scope.selectedItems[entry]!==true){
+                console.log("cancel");
+                return;
+            }
 
            //Don't process hidden items.
             if (entry_status) {
@@ -318,7 +323,11 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
 
         $scope.selectField = function (entry, entry_index, entry_status) {
-
+            console.log("select field", entry, entry_status);
+            if ($scope.selectedItems[entry]===true){
+                console.log("cancel");
+                return;
+            }
             //Don't process hidden items.
             if (entry_status) {
                 return;

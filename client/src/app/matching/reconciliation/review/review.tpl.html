@@ -4,7 +4,8 @@
 <div class="col-md-9">
     <div class="col-md-12">
         <br/>
-        <span class="lead"><span style="text-transform:capitalize;">{{titles[match.entry_type]}}</span> Match</span>
+        <span class="lead">
+            <span style="text-transform:capitalize;">{{titles[match.entry_type]}}</span>&nbsp;Match</span>
         <span class="pull-right">
             <a href="/#/match/reconciliation"> back
                 <i class="fa fa-undo fa-1x"></i> 
@@ -146,11 +147,24 @@
 
 
         <!-- All in here V2. -->
-        <div class="panel panel-default col-md-12" ng-show="version==='new'">
+        <div class="panel panel-info" ng-show="version==='new'">
+            <div class="panel-heading panel-title">
+                <div class="pull-left"><i class="fa fa-arrow-circle-right"></i> Review New Update</div>
 
+                <div class="text-right">
+                    {{match_percent}}% Match
+                </div>
 
+            </div>
+
+            <div class="panel-body">
                 <!-- new v2 template embedded here -->
                 <ng-include src="v2TemplatePath"></ng-include>
+            </div>
+
+
+
+
         </div>
 
         <pre>{{ selectedItems | json}}</pre>
