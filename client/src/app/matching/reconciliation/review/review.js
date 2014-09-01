@@ -136,8 +136,11 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 //Allergies shim based on object brevity.
                 for (var temp_current_diff in $scope.current_entry.observation) {
                 if ($scope.new_entry.observation[temp_current_diff] === undefined) {
-                    console.log(temp_current_diff);
                     $scope.match_diff.observation[temp_current_diff] = true;
+                } else {
+                    if (angular.equals($scope.new_entry.observation[temp_current_diff], $scope.current_entry.observation[temp_current_diff])) {
+                        $scope.match_diff.observation[temp_current_diff] = true;
+                    }
                 }
 
             }
