@@ -35,9 +35,11 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
         //shim for switching on new UI
         $scope.version="old";
-        if ($scope.section==="demographics"){
+        if ( ["demographics","-allergies","insurance","vitals","encounters","immunizations","problems", "procedures","results","-social_history"].indexOf($scope.section.toString())>=0){
             $scope.version="new";
         }
+        $scope.version="new";
+
 
         //fetching match object based on id
         $scope.match = {};
@@ -250,6 +252,11 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
 
         $scope.removeField = function(entry, entry_index, entry_status) {
+            console.log("remove field", entry, entry_status);
+            if ($scope.selectedItems[entry]!==true){
+                console.log("cancel");
+                return;
+            }
 
            //Don't process hidden items.
             if (entry_status) {
@@ -323,7 +330,11 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
 
         $scope.selectField = function (entry, entry_index, entry_status) {
-
+            console.log("select field", entry, entry_status);
+            if ($scope.selectedItems[entry]===true){
+                console.log("cancel");
+                return;
+            }
             //Don't process hidden items.
             if (entry_status) {
                 return;
