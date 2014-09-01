@@ -19,11 +19,16 @@ var supportedComponents = bbm.supported_sections.reduce(function(r, c) {
 }, {});
 
 function formatResponse(srcComponent, srcResponse) {
+
+
+    //console.log(srcResponse);
+
+
     var srcReturn = {};
     //Clean __v tag.
     for (var ir in srcResponse) {
         if (srcResponse[ir].__v >= 0) {
-            delete srcResponse[ir].__v;
+           delete srcResponse[ir].__v;
         }
     }
     srcReturn[srcComponent] = srcResponse;
@@ -60,21 +65,26 @@ function prep(sec, secName) {
 }
 
 function getMHR(username, callback) {
+    
+    supported_sections=_.difference(bbm.supported_sections, ["plan_of_care", "providers", "payers", "claims", "insurance"]);
+
     var aggregatedResponse = {},
         count = 0,
-        components = Object.keys(supportedComponents);
+        components = supported_sections;
 
-    //var supported_sections=_.difference(bbm.supported_sections, ["plan_of_care", "providers", "payers"]);
-
-    bbm.supported_sections.forEach(function(secName) {
+    supported_sections.forEach(function(secName) {
         record.getSectionAsync(secName, username).then(function(sec) {
+            
             if (sec.length !== 0) {
                 _.extend(aggregatedResponse, formatResponse(secName, prep(sec, secName)));
             }
-            if (++count === components.length)
+            if (++count === components.length) {
                 callback(null, aggregatedResponse);
+            }
         }).catch(function(e) {
-            callback("Error");
+            console.log(e);
+            //temporary error shim, need to investigate.
+            //callback("Error");
         });
     });
 }
@@ -98,7 +108,11 @@ app.get('/api/v1/master_health_record/:format?', login.checkAuth, function(req, 
                 res.send(JSON.stringify(result, null, 4)); 
             } else {
                 //return CCDA
-                res.send(bb.generateCCDA(result).toString());
+
+                var response_ccda = bb.generateCCDA(result).toString()
+                //console.log(response_ccda);
+
+                res.send(response_ccda);
             }
         }
     });
