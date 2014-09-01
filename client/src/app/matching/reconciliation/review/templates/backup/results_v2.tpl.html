@@ -12,12 +12,10 @@
 
             <th class='col-md-6'>
                 <div class="panel-body text-center">
-                    <h6 ng-if="current_queue.length > 0">Match #1 out of {{current_queue.length+1}}
+                    <h6 ng-if="current_queue.length > 0"><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
                     </h6>
                     <h6 ng-if="current_queue.length === 0">Current Record</h6>
-
                 </div>
-
             </th>
         </tr>
     </thead>
@@ -29,11 +27,6 @@
             <div class="list-group-item merge-item" ng-click="selectField('result_set', null, match_diff.result_set)" ng-class="{selected: selectedItems.result_set, disabled: match_diff.result_set}" ng-show="new_entry.result_set">
 
                 <span ng-hide='match_diff.result_set || selectedItems.result_set' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
                 <span ng-hide='match_diff.result_set || selectedItems.result_set'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div coded-entry input-value="new_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set"></div>
@@ -53,11 +46,6 @@
                 
 
                 <div coded-entry input-value="update_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set"></div>
-
-<!-- encounters and results
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div> 
--->                
-
             </div>
              <div ng-hide="update_entry.result_set" class="disabled">
                     <div class="text-center">
@@ -75,7 +63,7 @@
         <td class="match" valign="top">
             <div class="list-group-item merge-item" ng-repeat="(el_id, el_entry) in new_entry.results" ng-click="selectField('results', el_id, match_diff.results.src[el_id])" ng-class="{selected: selectedItems.results[el_id], disabled: match_diff.results.src[el_id]}">
 
-                <span ng-hide='match_diff.results || selectedItems.results' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.results.src[el_id]' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
                 <span ng-hide='match_diff.results || selectedItems.results'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div result-entry input-value="el_entry" input-title="Result" input-additional="el_entry" select-field="selectedItems.result[el_id]"></div>
@@ -91,11 +79,10 @@
             <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.results" ng-click="removeField('results', el_id, match_diff.results.src[el_id])" ng-class="{selected: selectedItems.results[el_id], disabled: match_diff.results.dest[el_id]}">
 
                 <span ng-show='selectedItems.results[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.results || selectedItems.results'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>
+
 
                 <div result-entry input-value="el_entry" input-title="Result" input-additional="el_entry" select-field="selectedItems.Result[el_id]"></div>
-
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
             </div>
              <div ng-hide="update_entry.results" class="disabled">
                     <div class="text-center">
@@ -108,33 +95,33 @@
    
 
 
-
     <tr>
         <td class="match">
             <div class="panel-body">
                 <div class="col-md-2 col-md-offset-7">
-                    <button type="button" class="btn btn-warning ng-scope" ng-click="createMatch()" ng-if="(section !== 'demographics')   && !(current_queue.length > 0) ">
-                        <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New
-                    </button>
-
-                    <button ng-if="current_queue.length > 0" type="button" class="btn btn-danger ng-scope" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
-
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            Options
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" ng-click="discardMatch()">Discard this Update</a>
+                            </li>
+                            <li ng-if="section !== 'demographics'"><a href="#" ng-click="createMatch()">Make Update a New Entry</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </td>
-        <td class="match">
+        <td  class="match">
 
 
             <div class="panel-body" ng-hide="panelId === 0">
                 <div class="col-md-12">
-                    <button ng-show="changed" type="button" class="btn btn-primary btn-block" ng-click="saveMatch()"><i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
-
-                    <button ng-hide="changed" type="button" class="btn btn-primary btn-block" ng-click="discardMatch()"><i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
-
+                    <button type="button" class="btn btn-primary btn-block" ng-click="saveMatch()">Save Changes</button>
                 </div>
             </div>
         </td>
     </tr>
-    <!--pre>{{ selectedItems|json}}</pre>
-    <pre>{{ changed }}</pre-->
 </table>

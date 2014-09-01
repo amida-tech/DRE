@@ -12,10 +12,12 @@
 
             <th class='col-md-6'>
                 <div class="panel-body text-center">
-                    <h6 ng-if="current_queue.length > 0"><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
+                    <h6 ng-if="current_queue.length > 0">Match #1 out of {{current_queue.length+1}}
                     </h6>
                     <h6 ng-if="current_queue.length === 0">Current Record</h6>
+
                 </div>
+
             </th>
         </tr>
     </thead>
@@ -27,6 +29,11 @@
             <div class="list-group-item merge-item" ng-click="selectField('encounter', null, match_diff.encounter)" ng-class="{selected: selectedItems.encounter, disabled: match_diff.encounter}" ng-show="new_entry.encounter">
 
                 <span ng-hide='match_diff.encounter || selectedItems.encounter' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+<!-- encounters
+                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+-->
+
+
                 <span ng-hide='match_diff.encounter || selectedItems.encounter'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div coded-entry input-value="new_entry.encounter" input-title="Encounter" select-field="selectedItems.encounter"></div>
@@ -46,6 +53,11 @@
                 
 
                 <div coded-entry input-value="update_entry.encounter" input-title="Encounter" select-field="selectedItems.encounter"></div>
+
+<!-- encounters and results
+                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div> 
+-->                
+
             </div>
              <div ng-hide="update_entry.encounter" class="disabled">
                     <div class="text-center">
@@ -64,6 +76,11 @@
             <div class="list-group-item merge-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="new_entry.date_time">
 
                 <span ng-hide='match_diff.date_time || selectedItems.date_time' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+<!-- encounters
+                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+-->
+
+
                 <span ng-hide='match_diff.date_time || selectedItems.date_time'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div date-entry input-value="new_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
@@ -83,6 +100,11 @@
                 
 
                 <div date-entry input-value="update_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
+
+<!-- encounters and results
+                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div> 
+-->                
+
             </div>
              <div ng-hide="update_entry.date_time" class="disabled">
                     <div class="text-center">
@@ -101,6 +123,11 @@
             <div class="list-group-item merge-item" ng-click="selectField('performers', null, match_diff.performers)" ng-class="{selected: selectedItems.performers, disabled: match_diff.performers}" ng-show="new_entry.performers">
 
                 <span ng-hide='match_diff.performers || selectedItems.performers' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+<!-- encounters
+                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+-->
+
+
                 <span ng-hide='match_diff.performers || selectedItems.performers'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div performers-entry input-value="new_entry.performers" input-title="Performers" select-field="selectedItems.performers"></div>
@@ -120,6 +147,11 @@
                 
 
                 <div performers-entry input-value="update_entry.performers" input-title="Performers" select-field="selectedItems.performers"></div>
+
+<!-- encounters and results
+                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div> 
+-->                
+
             </div>
              <div ng-hide="update_entry.performers" class="disabled">
                     <div class="text-center">
@@ -138,6 +170,11 @@
             <div class="list-group-item merge-item" ng-click="selectField('locations', null, match_diff.locations)" ng-class="{selected: selectedItems.locations, disabled: match_diff.locations}" ng-show="new_entry.locations">
 
                 <span ng-hide='match_diff.locations || selectedItems.locations' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+<!-- encounters
+                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+-->
+
+
                 <span ng-hide='match_diff.locations || selectedItems.locations'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div encounterlocations-entry input-value="new_entry.locations" input-title="locations" select-field="selectedItems.locations"></div>
@@ -157,6 +194,11 @@
                 
 
                 <div encounterlocations-entry input-value="update_entry.locations" input-title="locations" select-field="selectedItems.locations"></div>
+
+<!-- encounters and results
+                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div> 
+-->                
+
             </div>
              <div ng-hide="update_entry.locations" class="disabled">
                     <div class="text-center">
@@ -174,7 +216,7 @@
         <td class="match" valign="top">
             <div class="list-group-item merge-item" ng-repeat="(el_id, el_entry) in new_entry.findings" ng-click="selectField('findings', el_id, match_diff.findings.src[el_id])" ng-class="{selected: selectedItems.findings[el_id], disabled: match_diff.findings.src[el_id]}">
 
-                <span ng-hide='match_diff.findings.src[el_id]' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
                 <span ng-hide='match_diff.findings || selectedItems.findings'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div finding-entry input-value="el_entry" input-title="Findings" input-additional="el_entry" select-field="selectedItems.finding[el_id]"></div>
@@ -190,9 +232,11 @@
             <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.findings" ng-click="removeField('findings', el_id, match_diff.findings.src[el_id])" ng-class="{selected: selectedItems.findings[el_id], disabled: match_diff.findings.dest[el_id]}">
 
                 <span ng-show='selectedItems.findings[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Updated</span>
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>
+                <span ng-show='selectedItems.findings || selectedItems.findings'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
 
                 <div finding-entry input-value="el_entry" input-title="Findings" input-additional="el_entry" select-field="selectedItems.Findings[el_id]"></div>
+
+                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
             </div>
              <div ng-hide="update_entry.findings" class="disabled">
                     <div class="text-center">
@@ -210,9 +254,12 @@
         <td class="match">
             <div class="panel-body">
                 <div class="col-md-2 col-md-offset-7">
-                    <button type="button" class="btn btn-warning ng-scope" ng-click="createMatch()" ng-if="section !== 'demographics'">
+                    <button type="button" class="btn btn-warning ng-scope" ng-click="createMatch()" ng-if="(section !== 'demographics')   && !(current_queue.length > 0) ">
                         <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New
                     </button>
+
+                    <button ng-if="current_queue.length > 0" type="button" class="btn btn-danger ng-scope" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
+
                 </div>
             </div>
         </td>
