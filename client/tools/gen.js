@@ -12,7 +12,8 @@ for (line in meta) {
 
     var st = ejs.render(temp, {
         filename: "template.ejs",
-        meta: meta[line]
+        meta: meta[line],
+        section:line
     });
 
     var o = fs.writeFileSync(line + "_v2.tpl.html", st);

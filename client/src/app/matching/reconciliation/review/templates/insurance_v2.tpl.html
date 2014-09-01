@@ -29,11 +29,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('payer_name', null, match_diff.payer_name)" ng-class="{selected: selectedItems.payer_name, disabled: match_diff.payer_name}" ng-show="new_entry.payer_name">
 
                 <span ng-hide='match_diff.payer_name || selectedItems.payer_name' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.payer_name || selectedItems.payer_name'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div single-entry input-value="new_entry.payer_name" input-title="Payer" select-field="selectedItems.payer_name"></div>
@@ -76,11 +72,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('name', null, match_diff.name)" ng-class="{selected: selectedItems.name, disabled: match_diff.name}" ng-show="new_entry.name">
 
                 <span ng-hide='match_diff.name || selectedItems.name' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.name || selectedItems.name'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div single-entry input-value="new_entry.name" input-title="Name" select-field="selectedItems.name"></div>
@@ -123,11 +115,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('plan_id', null, match_diff.plan_id)" ng-class="{selected: selectedItems.plan_id, disabled: match_diff.plan_id}" ng-show="new_entry.plan_id">
 
                 <span ng-hide='match_diff.plan_id || selectedItems.plan_id' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.plan_id || selectedItems.plan_id'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div single-entry input-value="new_entry.plan_id" input-title="Plan ID" select-field="selectedItems.plan_id"></div>
@@ -170,11 +158,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="new_entry.date_time">
 
                 <span ng-hide='match_diff.date_time || selectedItems.date_time' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.date_time || selectedItems.date_time'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div date-entry input-value="new_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
@@ -217,11 +201,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('addresses', null, match_diff.addresses)" ng-class="{selected: selectedItems.addresses, disabled: match_diff.addresses}" ng-show="new_entry.addresses">
 
                 <span ng-hide='match_diff.addresses || selectedItems.addresses' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.addresses || selectedItems.addresses'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div addresses-entry input-value="new_entry.addresses" input-title="Address" select-field="selectedItems.addresses"></div>
@@ -264,11 +244,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('type', null, match_diff.type)" ng-class="{selected: selectedItems.type, disabled: match_diff.type}" ng-show="new_entry.type">
 
                 <span ng-hide='match_diff.type || selectedItems.type' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.type || selectedItems.type'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div multisingle-entry input-value="new_entry.type" input-title="Type" select-field="selectedItems.type"></div>
@@ -307,16 +283,15 @@
    
 
 
-
     <tr>
         <td class="match">
             <div class="panel-body">
                 <div class="col-md-2 col-md-offset-7">
-                    <button type="button" class="btn btn-warning ng-scope" ng-click="createMatch()" ng-if="(section !== 'demographics')   && !(current_queue.length > 0) ">
+                    <button type="button" class="btn btn-warning ng-scope pull-right" ng-click="createMatch()" ng-if="(section !== 'demographics')   && !(current_queue.length > 0) ">
                         <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New
                     </button>
 
-                    <button ng-if="current_queue.length > 0" type="button" class="btn btn-danger ng-scope" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
+                    <button ng-if="current_queue.length > 0" type="button " class="btn btn-danger ng-scope pull-right" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
 
                 </div>
             </div>
@@ -325,15 +300,17 @@
 
 
             <div class="panel-body" ng-hide="panelId === 0">
-                <div class="col-md-12">
-                    <button ng-show="changed" type="button" class="btn btn-primary btn-block" ng-click="saveMatch()"><i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
+                <div class="col-md-2 col-md-offset-7">
+                    <button ng-show="changed" type="button" class="btn btn-primary pull-right" ng-click="saveMatch()"><i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
 
-                    <button ng-hide="changed" type="button" class="btn btn-primary btn-block" ng-click="discardMatch()"><i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
+                    <button ng-hide="changed" type="button" class="btn btn-primary pull-right" ng-click="discardMatch()"><i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
 
                 </div>
             </div>
         </td>
     </tr>
-    <!--pre>{{ selectedItems|json}}</pre>
-    <pre>{{ changed }}</pre-->
+    <!--
+    <pre>{{ selectedItems|json}}</pre>
+    <pre>{{ match_diff |json }}</pre>
+    -->
 </table>
