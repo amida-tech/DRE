@@ -727,6 +727,7 @@ angular.module('directives.matchingObjects', [])
                 inputAdditional: '=',
                 selectField: "="
             },
+            /*
             template: "<div>"+
                 "<div coded-entry input-value='inputValue.result' input-title='Result'></div>"+
                 "<div date-entry input-value='inputValue.date_time' input-title='Date'></div>"+
@@ -737,11 +738,52 @@ angular.module('directives.matchingObjects', [])
                 "<div single-entry input-value='inputValue.reference_range.range' input-title='Reference Range'></div>"+
 
                 "</div>",
+            */
+            //templateUrl: "templates/matching/reconciliation/review/templates/sub/medsadministration.tpl.html",
+            templateUrl: "templates/matching/reconciliation/review/templates/sub/result.tpl.html",
             link: function(scope, element, attrs) {}
         };
     }
 ])
 
+
+/*
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Header
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="panel panel-default" id="accordion">
+        <div class="panel-heading">
+            <a data-toggle="collapse" data-parent="#accordion" data-target="#blah">
+                <div class="panel-title" style="cursor:pointer;">
+                    <span style="text-transform:uppercase;">name</span>
+                </div>
+            </a>
+        </div>
+        <div id="blah" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div id="myTabContent" >
+
+                    Content Here
+                </div>
+            </div>
+        </div>
+    </div>
+*/
 
 
 .directive('reviewNew', ['$parse',
