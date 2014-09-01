@@ -30,7 +30,7 @@
 			<div class="col-md-12">
 				<label for="dob" class="col-sm-2 control-label">Date of Birth</label>
 				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="dob" placeholder="Enter date of birth" value="{{demographics.dob[0].date | date:'shortDate'}}">
+					<input type="text" readonly class="form-control" id="dob" placeholder="Enter date of birth" value="{{demographics.dob.point.date | date:'shortDate'}}">
 				</div>
 			</div>
 
@@ -88,28 +88,28 @@
 			<div class="col-md-12">
 				<label for="address_line_1" class="col-sm-2 control-label">Street Address</label>
 				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="address_line_1" placeholder="Enter address line 1" value="{{demographics.addresses[0].streetLines[0]}}">
+					<input type="text" readonly class="form-control" id="address_line_1" placeholder="Enter address line 1" value="{{demographics.addresses[0].street_lines[0]}}">
 				</div>
 			</div>
 
 			<div class="col-md-12">
 				<label for="address_line_2" class="col-sm-2 control-label"></label>
 				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="address_line_2" placeholder="Enter address line 2" value="{{demographics.addresses[0].streetLines[1]}}">
+					<input type="text" readonly class="form-control" id="address_line_2" placeholder="Enter address line 2" value="{{demographics.addresses[0].street_lines[1]}}">
 				</div>
 			</div>
 
 			<div class="col-md-12">
 				<label for="address_line_3" class="col-sm-2 control-label"></label>
 				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="address_line_3" placeholder="Enter address line 3" value="{{demographics.addresses[0].streetLines[2]}}">
+					<input type="text" readonly class="form-control" id="address_line_3" placeholder="Enter address line 3" value="{{demographics.addresses[0].street_lines[2]}}">
 				</div>
 			</div>
 
 			<div class="col-md-12">
 				<label for="address_line_4" class="col-sm-2 control-label"></label>
 				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="address_line_4" placeholder="Enter address line 4" value="{{demographics.addresses[0].streetLines[3]}}">
+					<input type="text" readonly class="form-control" id="address_line_4" placeholder="Enter address line 4" value="{{demographics.addresses[0].street_lines[3]}}">
 				</div>
 			</div>
 
@@ -183,28 +183,28 @@
 			<div class="col-md-12">
 				<label for="gr_address_line_1" class="col-sm-2 control-label">Street Address</label>
 				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="gr_address_line_1" placeholder="Enter address line 1" value="{{demographics.guardians[0].addresses[0].streetLines[0]}}">
+					<input type="text" readonly class="form-control" id="gr_address_line_1" placeholder="Enter address line 1" value="{{demographics.guardians[0].addresses[0].street_lines[0]}}">
 				</div>
 			</div>
 
 			<div class="col-md-12">
 				<label for="gr_address_line_2" class="col-sm-2 control-label"></label>
 				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="gr_address_line_2" placeholder="Enter address line 2" value="{{demographics.guardians[0].addresses[0].streetLines[1]}}">
+					<input type="text" readonly class="form-control" id="gr_address_line_2" placeholder="Enter address line 2" value="{{demographics.guardians[0].addresses[0].street_lines[1]}}">
 				</div>
 			</div>
 
 			<div class="col-md-12">
 				<label for="gr_address_line_3" class="col-sm-2 control-label"></label>
 				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="gr_address_line_3" placeholder="Enter address line 3" value="{{demographics.guardians[0].addresses[0].streetLines[2]}}">
+					<input type="text" readonly class="form-control" id="gr_address_line_3" placeholder="Enter address line 3" value="{{demographics.guardians[0].addresses[0].street_lines[2]}}">
 				</div>
 			</div>
 
 			<div class="col-md-12">
 				<label for="gr_address_line_4" class="col-sm-2 control-label"></label>
 				<div class="col-sm-6" style="margin-bottom:20px;">
-					<input type="text" readonly class="form-control" id="gr_address_line_4" placeholder="Enter address line 4" value="{{demographics.addresses[0].streetLines[3]}}">
+					<input type="text" readonly class="form-control" id="gr_address_line_4" placeholder="Enter address line 4" value="{{demographics.addresses[0].street_lines[3]}}">
 				</div>
 			</div>
 
@@ -230,4 +230,5 @@
 			</div>
 		</div>
 	</form>
+	<!--<pre>{{demographics | json}}</pre>-->
 </div>

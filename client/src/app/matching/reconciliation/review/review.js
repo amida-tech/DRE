@@ -82,6 +82,13 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 }
             }
 
+            //Build out empty match diff objects as false.
+            for (var diffEntry in $scope.current_entry) {
+                if ($scope.new_entry[diffEntry] === undefined) {
+                    $scope.match_diff[diffEntry] = true;
+                }
+            }
+
             var tempArrayDiff;
 
             if ($scope.section === 'allergies') {

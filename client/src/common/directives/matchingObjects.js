@@ -83,7 +83,7 @@ angular.module('directives.matchingObjects', [])
                 selectField: '='
             },
             template: "<table class='table table-condensed'>" +
-                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></th></tr></thead>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12'></div></th></tr></thead>" +
                 "<tr ng-repeat='email in inputValue'><td class='col-md-12'>{{email.address}}</td></tr>",
             link: function(scope, element, attrs) {}
         };

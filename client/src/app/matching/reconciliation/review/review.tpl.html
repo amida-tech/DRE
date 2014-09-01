@@ -1,29 +1,22 @@
 <!--div class="fluid-container col-md-12">
     <div class="row">
         <div ng-include="navPath"></div-->
-<div class="col-md-9">
-    <div class="col-md-12">
-        <br/>
-        <span class="lead"><span style="text-transform:capitalize;">{{titles[match.entry_type]}}</span> Match</span>
-        <span class="pull-right">
-            <a href="/#/match/reconciliation"> back
-                <i class="fa fa-undo fa-1x"></i> 
-            </a>
-        </span>
-        <br/>
-        <br/>
+            <div class="col-md-9">
+                <div class="col-md-12">
+                    <br/>
+                    <span class="lead"><span style="text-transform:capitalize;">{{titles[match.entry_type]}}</span> Match</span>
+                    <span class="pull-right">
+                        <a href="/#/match/reconciliation"> back
+                            <i class="fa fa-undo fa-1x"></i> 
+                        </a>
+                    </span>
+                    <br/>
+                    <br/>
 
-        <!-- All in here. -->
-        <div class="panel panel-default col-md-12" ng-show="version==='old'">
+                    <!-- All in here. -->
+                    <div class="panel panel-default col-md-12" ng-show="version==='old'">
 
-            <!-- Left Pane -->
-
-            <div>
-                <div class="col-md-6" style="padding: 30px 15px 0px 0px;">
-
-                    <div class="panel panel-info">
-
-                        <div class="panel-heading">
+                        <div class="panel-heading panel-title">
                             <table>
                                 <tr>
                                     <td class="col-md-2"><i class="fa fa-arrow-circle-right fa-2x"></i>
@@ -35,127 +28,151 @@
                             </table>
                         </div>
 
-                        <div class="panel-body text-center">
-                            <h6>Select Updates</h6>
+
+
+
+                        <!-- Left Pane -->
+
+                        <div>
+                            <div class="col-md-6" style="padding: 30px 15px 0px 0px;">
+
+                                <div class="panel panel-info">
+
+
+                                    <div class="panel-body text-center">
+                                        <h6>Select Updates</h6>
+                                    </div>
+
+                                    <ng-include src="newTemplatePath"></ng-include>
+
+                                    <div class="panel-body">
+                                        <div class="col-md-2 col-md-offset-7">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                                    Options
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#" ng-click="discardMatch()">Discard this Update</a>
+                                                    </li>
+                                                    <li ng-if="section !== 'demographics'"><a href="#" ng-click="createMatch()">Make Update a New Entry</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <h5>
+                                                Ignore this match, and reconcile with next closest entry?
+                                            </h5>
+                                            <br/>
+                                            <div>
+                                                <button type="button" class="btn btn-primary btn-block" ng-click="rotateMatch(current_match_index + 1)" data-dismiss="modal">Yes</button>
+                                                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">No</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Right Pane -->
+                            <div class="col-md-6" style="padding: 30px 0px 0px 15px;">
+
+                                <div class="panel panel-info">
+
+                                    <div class="panel-heading">
+                                        <table>
+                                            <tr>
+                                                <td class="col-md-2"><i class="fa fa-file-o fa-2x"></i>
+                                                </td>
+                                                <td class="col-md-10 pull-right text-right">
+                                                    <h4>{{match_percent}}% Match</h4>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="panel-body text-center">
+                                        <h6 ng-if="current_queue.length > 0"><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
+                                        </h6>
+                                        <h6 ng-if="current_queue.length === 0">Current Record</h6>
+                                    </div>
+
+                                    <ng-include src="recordTemplatePath"></ng-include>
+
+                                    <div class="panel-body" ng-hide="panelId === 0">
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn btn-primary btn-block" ng-click="saveMatch()">Save Changes</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
 
-                        <ng-include src="newTemplatePath"></ng-include>
+                        <div class="col-md-6 col-md-offset-6" ng-repeat="(queue_index, queue_match) in current_queue">
+
+                            <div class="text-center" style="padding: 15px;">
+                                <h5>Other Matches</h5>
+                            </div>
+
+                            <div class="panel panel-info" style="cursor: pointer;">
+                                <div class="panel-heading" data-toggle="collapse" data-target="#subEntry{{queue_index}}">
+                                    <table>
+                                        <tr>
+                                            <td class="col-md-2"><i class="fa fa-file-o fa-2x"></i>
+                                            </td>
+                                            <td class="col-md-10 pull-right text-right">
+                                                <h4>{{queue_match.match_object.percent}}% Match</h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div id="subEntry{{queue_index}}" class="panel-body collapse">
+                                    <ng-include src="subTemplatePath"></ng-include>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- All in here V2. -->
+                    <div class="panel panel-info" ng-show="version==='new'">
+                        <div class="panel-heading panel-title">
+                            <div class="pull-left"><i class="fa fa-arrow-circle-right"></i> Review New Update</div>
+
+                            <div class="text-right">
+                                {{match_percent}}% Match
+                            </div>
+
+                        </div>
 
                         <div class="panel-body">
-                            <div class="col-md-2 col-md-offset-7">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                        Options
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#" ng-click="discardMatch()">Discard this Update</a>
-                                        </li>
-                                        <li ng-if="section !== 'demographics'"><a href="#" ng-click="createMatch()">Make Update a New Entry</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <h5>
-                                    Ignore this match, and reconcile with next closest entry?
-                                </h5>
-                                <br/>
-                                <div>
-                                    <button type="button" class="btn btn-primary btn-block" ng-click="rotateMatch(current_match_index + 1)" data-dismiss="modal">Yes</button>
-                                    <button type="button" class="btn btn-default btn-block" data-dismiss="modal">No</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                           <!-- new v2 template embedded here -->
+                           <ng-include src="v2TemplatePath"></ng-include>
+                       </div>
 
 
-                <!-- Right Pane -->
-                <div class="col-md-6" style="padding: 30px 0px 0px 15px;">
-
-                    <div class="panel panel-info">
-
-                        <div class="panel-heading">
-                            <table>
-                                <tr>
-                                    <td class="col-md-2"><i class="fa fa-file-o fa-2x"></i>
-                                    </td>
-                                    <td class="col-md-10 pull-right text-right">
-                                        <h4>{{match_percent}}% Match</h4>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="panel-body text-center">
-                            <h6 ng-if="current_queue.length > 0"><a style="cursor: pointer;" data-toggle="modal" data-target="#myModal">Updating the wrong entry?</a>
-                            </h6>
-                            <h6 ng-if="current_queue.length === 0">Current Record</h6>
-                        </div>
-
-                        <ng-include src="recordTemplatePath"></ng-include>
-
-                        <div class="panel-body" ng-hide="panelId === 0">
-                            <div class="col-md-12">
-                                <button type="button" class="btn btn-primary btn-block" ng-click="saveMatch()">Save Changes</button>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-md-6 col-md-offset-6" ng-repeat="(queue_index, queue_match) in current_queue">
-
-                <div class="text-center" style="padding: 15px;">
-                    <h5>Other Matches</h5>
-                </div>
-
-                <div class="panel panel-info" style="cursor: pointer;">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#subEntry{{queue_index}}">
-                        <table>
-                            <tr>
-                                <td class="col-md-2"><i class="fa fa-file-o fa-2x"></i>
-                                </td>
-                                <td class="col-md-10 pull-right text-right">
-                                    <h4>{{queue_match.match_object.percent}}% Match</h4>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div id="subEntry{{queue_index}}" class="panel-body collapse">
-                        <ng-include src="subTemplatePath"></ng-include>
-                    </div>
-                </div>
-
-            </div>
-        </div>
 
 
-        <!-- All in here V2. -->
-        <div class="panel panel-default col-md-12" ng-show="version==='new'">
+                   </div>
 
+                   <pre>{{ match_diff | json}}</pre>
 
-                <!-- new v2 template embedded here -->
-                <ng-include src="v2TemplatePath"></ng-include>
-        </div>
-
-        <pre>{{ selectedItems | json}}</pre>
-
-    </div>
-</div>
+               </div>
+           </div>
 <!--/div>
 </div-->
