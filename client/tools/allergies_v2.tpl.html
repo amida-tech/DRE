@@ -29,11 +29,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('observation.allergen', null, match_diff.observation.allergen)" ng-class="{selected: selectedItems.observation.allergen, disabled: match_diff.observation.allergen}" ng-show="new_entry.observation.allergen">
 
                 <span ng-hide='match_diff.observation.allergen || selectedItems.observation.allergen' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.observation.allergen || selectedItems.observation.allergen'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div coded-entry input-value="new_entry.observation.allergen" input-title="Allergen" select-field="selectedItems.observation.allergen"></div>
@@ -76,11 +72,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('observation.intolerance', null, match_diff.observation.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}" ng-show="new_entry.observation.intolerance">
 
                 <span ng-hide='match_diff.observation.intolerance || selectedItems.observation.intolerance' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.observation.intolerance || selectedItems.observation.intolerance'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div coded-entry input-value="new_entry.observation.intolerance" input-title="Intolerance" select-field="selectedItems.observation.intolerance"></div>
@@ -123,11 +115,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('observation.status', null, match_diff.observation.status)" ng-class="{selected: selectedItems.observation.status, disabled: match_diff.observation.status}" ng-show="new_entry.observation.status">
 
                 <span ng-hide='match_diff.observation.status || selectedItems.observation.status' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.observation.status || selectedItems.observation.status'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div coded-entry input-value="new_entry.observation.status" input-title="Status" select-field="selectedItems.observation.status"></div>
@@ -170,11 +158,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('observation.severity', null, match_diff.observation.severity)" ng-class="{selected: selectedItems.observation.severity, disabled: match_diff.observation.severity}" ng-show="new_entry.observation.severity">
 
                 <span ng-hide='match_diff.observation.severity || selectedItems.observation.severity' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.observation.severity || selectedItems.observation.severity'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div severity-entry input-value="new_entry.observation.severity" input-title="Severity" select-field="selectedItems.observation.severity"></div>
@@ -217,11 +201,7 @@
             <div class="list-group-item merge-item" ng-click="selectField('observation.date_time', null, match_diff.observation.date_time)" ng-class="{selected: selectedItems.observation.date_time, disabled: match_diff.observation.date_time}" ng-show="new_entry.observation.date_time">
 
                 <span ng-hide='match_diff.observation.date_time || selectedItems.observation.date_time' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-<!-- encounters
-                <span ng-hide='match_diff.findings || selectedItems.findings' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
--->
-
-
+  
                 <span ng-hide='match_diff.observation.date_time || selectedItems.observation.date_time'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
             
                 <div date-entry input-value="new_entry.observation.date_time" input-title="Effective" select-field="selectedItems.observation.date_time"></div>
@@ -261,12 +241,26 @@
     <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td class="match" valign="top">
-            <div class="list-group-item merge-item" ng-repeat="(el_id, el_entry) in new_entry.observation.reactions" ng-click="selectField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])" ng-class="{selected: selectedItems.observation.reactions[el_id], disabled: match_diff.observation.reactions.src[el_id]}">
+            <div class="list-group-item merge-item" ng-repeat="(el_id, el_entry) in new_entry.observation.reactions" 
+                ng-class="{selected: selectedItems.observation.reactions[el_id], disabled: match_diff.observation.reactions.src[el_id]}">
 
+                <!-- allergies -->
+                
                 <span ng-hide='match_diff.observation_reactions || selectedItems.observation_reactions' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-                <span ng-hide='match_diff.observation_reactions || selectedItems.observation_reactions'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
+                <span 
+                    ng-hide='selectedItems.observation_reactions'  
+                    ng-click="selectField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])"
+                    style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
+                
             
-                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="el_entry" select-field="selectedItems.reaction[el_id]"></div>
+                <!-- results -->
+                
+
+                <!--encounters-->
+                
+            
+
+                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="1" select-field="selectedItems.reaction[el_id]"></div>
             </div>
              <div ng-hide="new_entry.observation.reactions" class="disabled">
                     <div class="text-center">
@@ -281,7 +275,7 @@
                 <span ng-show='selectedItems.observation.reactions[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Updated</span>
                 <span ng-show='selectedItems.observation_reactions || selectedItems.observation_reactions'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
 
-                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="el_entry" select-field="selectedItems.Reaction[el_id]"></div>
+                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="2" select-field="selectedItems.Reaction[el_id]"></div>
 
                 <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
             </div>
@@ -323,6 +317,8 @@
             </div>
         </td>
     </tr>
-    <!--pre>{{ selectedItems|json}}</pre>
-    <pre>{{ changed }}</pre-->
+    <!--
+    <pre>{{ selectedItems|json}}</pre>
+    <pre>{{ match_diff |json }}</pre>
+    -->
 </table>

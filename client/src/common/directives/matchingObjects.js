@@ -725,6 +725,7 @@ angular.module('directives.matchingObjects', [])
                 inputValue: '=',
                 inputTitle: '@',
                 inputAdditional: '=',
+                el: '=',
                 selectField: "="
             },
             /*
