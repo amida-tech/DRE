@@ -30,9 +30,12 @@
 
                 <span ng-hide='match_diff.date_time || selectedItems.date_time' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.date_time || selectedItems.date_time'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
+                <span ng-hide='match_diff.date_time || selectedItems.date_time'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div date-entry input-value="new_entry.date_time" input-title="Effective" select-field="selectedItems.date_time"></div>
+
+                <br/>
+
             </div>
              <div ng-hide="new_entry.date_time" class="disabled">
                     <div class="text-center">
@@ -44,15 +47,15 @@
             <div class="list-group-item  merge-item" ng-click="removeField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}" ng-show="update_entry.date_time">
 
                 <span ng-show='selectedItems.date_time' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.date_time || selectedItems.date_time'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.date_time || selectedItems.date_time'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
-                <div date-entry input-value="update_entry.date_time" input-title="Effective" select-field="selectedItems.date_time"></div>
+                <div date-entry input-value="update_entry.date_time" input-title="Effective" select-field="selectedItems.date_time">
 
-<!-- encounters and results
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div> 
--->                
+                </div>
+
+                <br/>
 
             </div>
              <div ng-hide="update_entry.date_time" class="disabled">
@@ -73,9 +76,12 @@
 
                 <span ng-hide='match_diff.code || selectedItems.code' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.code || selectedItems.code'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
+                <span ng-hide='match_diff.code || selectedItems.code'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div coded-entry input-value="new_entry.code" input-title="History of" select-field="selectedItems.code"></div>
+
+                <br/>
+
             </div>
              <div ng-hide="new_entry.code" class="disabled">
                     <div class="text-center">
@@ -87,15 +93,15 @@
             <div class="list-group-item  merge-item" ng-click="removeField('code', null, match_diff.code)" ng-class="{selected: selectedItems.code, disabled: match_diff.code}" ng-show="update_entry.code">
 
                 <span ng-show='selectedItems.code' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.code || selectedItems.code'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.code || selectedItems.code'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
-                <div coded-entry input-value="update_entry.code" input-title="History of" select-field="selectedItems.code"></div>
+                <div coded-entry input-value="update_entry.code" input-title="History of" select-field="selectedItems.code">
 
-<!-- encounters and results
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div> 
--->                
+                </div>
+
+                <br/>
 
             </div>
              <div ng-hide="update_entry.code" class="disabled">
@@ -116,9 +122,12 @@
 
                 <span ng-hide='match_diff.value || selectedItems.value' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.value || selectedItems.value'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
+                <span ng-hide='match_diff.value || selectedItems.value'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div single-entry input-value="new_entry.value" input-title="Value" select-field="selectedItems.value"></div>
+
+                <br/>
+
             </div>
              <div ng-hide="new_entry.value" class="disabled">
                     <div class="text-center">
@@ -130,15 +139,15 @@
             <div class="list-group-item  merge-item" ng-click="removeField('value', null, match_diff.value)" ng-class="{selected: selectedItems.value, disabled: match_diff.value}" ng-show="update_entry.value">
 
                 <span ng-show='selectedItems.value' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.value || selectedItems.value'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.value || selectedItems.value'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
-                <div single-entry input-value="update_entry.value" input-title="Value" select-field="selectedItems.value"></div>
+                <div single-entry input-value="update_entry.value" input-title="Value" select-field="selectedItems.value">
 
-<!-- encounters and results
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div> 
--->                
+                </div>
+
+                <br/>
 
             </div>
              <div ng-hide="update_entry.value" class="disabled">
@@ -162,7 +171,15 @@
                         <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New
                     </button>
 
+
+                    <div ng-hide="changed">
                     <button ng-if="current_queue.length > 0" type="button " class="btn btn-danger ng-scope pull-right" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
+                    </div>
+
+                    <div ng-show="changed">
+                    <button ng-if="current_queue.length > 0" type="button " class="btn btn-danger ng-scope pull-right disabled" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
+                    </div>
+
 
                 </div>
             </div>
