@@ -257,5 +257,46 @@
         "name": "onset_age_unit",
         "title": "Onset Age Unit",
         "entry": "single"
+    }],
+    "medications": [{
+        "name": "date_time",
+        "title": "Date",
+        "entry": "date"
+    }, {
+        "name": "status",
+        "title": "Status",
+        "entry": "single"
+    }, {
+        "name": "sig",
+        "title": "Signature",
+        "entry": "single"
+    }, {
+        "name": "product",
+        "title": "Product",
+        "entry": "medsproduct"
+    }, {
+        "name": "administration",
+        "title": "Administration",
+        "entry": "medsadministration"
+    }, {
+        "name": "dispense.performer",
+        "title": "Dispense",
+        "entry": "performer"
+    }, {
+        "name": "supply",
+        "title": "Supply",
+        "entry": "medssuply"
+    }, {
+        "name": "drug_vehicle",
+        "title": "Drug Vehicle",
+        "entry": "coded"
+    }, {
+        "name": "precondition.value",
+        "title": "Precondition",
+        "entry": "coded"
+    }, {
+        "name": "indication",
+        "title": "Indication",
+        "entry": "medindication"
     }]
 }

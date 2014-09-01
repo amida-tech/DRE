@@ -38,6 +38,8 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         if ( ["demographics","-allergies","insurance","vitals","encounters","immunizations","problems", "procedures","results","-social_history"].indexOf($scope.section.toString())>=0){
             $scope.version="new";
         }
+        $scope.version="new";
+
 
         //fetching match object based on id
         $scope.match = {};
