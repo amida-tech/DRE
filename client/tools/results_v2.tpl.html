@@ -30,9 +30,12 @@
 
                 <span ng-hide='match_diff.result_set || selectedItems.result_set' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.result_set || selectedItems.result_set'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
+                <span ng-hide='match_diff.result_set || selectedItems.result_set'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div coded-entry input-value="new_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set"></div>
+
+                <br/>
+
             </div>
              <div ng-hide="new_entry.result_set" class="disabled">
                     <div class="text-center">
@@ -44,15 +47,15 @@
             <div class="list-group-item  merge-item" ng-click="removeField('result_set', null, match_diff.result_set)" ng-class="{selected: selectedItems.result_set, disabled: match_diff.result_set}" ng-show="update_entry.result_set">
 
                 <span ng-show='selectedItems.result_set' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.result_set || selectedItems.result_set'  style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.result_set || selectedItems.result_set'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
-                <div coded-entry input-value="update_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set"></div>
+                <div coded-entry input-value="update_entry.result_set" input-title="Result Set" select-field="selectedItems.result_set">
 
-<!-- encounters and results
-                <div style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div> 
--->                
+                </div>
+
+                <br/>
 
             </div>
              <div ng-hide="update_entry.result_set" class="disabled">
@@ -77,11 +80,11 @@
             
                 <!-- results -->
                 
-                <span ng-hide='match_diff.results.src[el_id]' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.results.src[el_id] || selectedItems.results[el_id]' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
                 <span         
                     ng-click="selectField('results', el_id, match_diff.results.src[el_id])"
-                    ng-hide='match_diff.results.src[el_id]' 
-                    style="position:absolute;right:10px;bottom:10px;"><i class='glyphicon glyphicon-import' ></i></span>
+                    ng-hide='match_diff.results.src[el_id] ||selectedItems.results[el_id]' 
+                    style="position:absolute;right:5px;bottom:10px;">add <i class='glyphicon glyphicon-import' ></i></span>
                  
 
                 <!--encounters-->
@@ -107,7 +110,7 @@
             
                 <!-- results -->
                 
-                <span ng-show='selectedItems.results[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Updated</span>
+                <span ng-show='selectedItems.results[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Added</span>
                 <div 
                     ng-click="removeField('results', el_id, match_diff.results.src[el_id])"
                     style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
@@ -139,7 +142,15 @@
                         <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New
                     </button>
 
+
+                    <div ng-hide="changed">
                     <button ng-if="current_queue.length > 0" type="button " class="btn btn-danger ng-scope pull-right" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
+                    </div>
+
+                    <div ng-show="changed">
+                    <button ng-if="current_queue.length > 0" type="button " class="btn btn-danger ng-scope pull-right disabled" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
+                    </div>
+
 
                 </div>
             </div>

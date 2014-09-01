@@ -3,7 +3,7 @@
 
     <div class="panel panel-default"">
         <div class="panel-heading">
-            <a data-toggle="collapse" data-target="#{{inputValue.result.name}}-{{inputAdditional}}">
+            <a data-toggle="collapse" data-target="#coll-{{inputAdditional}}">
                 <div class="panel-title" style="cursor:pointer;">
                     <span style="text-transform:uppercase;">
                         {{inputValue.result.name}} - 
@@ -14,7 +14,7 @@
                 </div>
             </a>
         </div>
-        <div id="{{inputValue.result.name}}-{{inputAdditional}}" class="panel-collapse collapse">
+        <div id="coll-{{inputAdditional}}" class="panel-collapse collapse">
             <div class="panel-body">
                 <div id="myTabContent">
                 	<div coded-entry input-value='inputValue.result' input-title='Result'></div>
