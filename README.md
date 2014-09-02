@@ -1,7 +1,7 @@
 Data Reconciliation Engine (DRE)
 =========
 
-DRE is demo frontend and Node.js server for reconciling health data.
+DRE is a demo frontend and Node.js server for reconciling health data.
 
 aka. Raccoon - Data Raccoonciliation Engine for Health Data.
 
@@ -13,7 +13,7 @@ High Level Overview
 ===================
 ![Raccoon High Level Diagram](docs/images/dre_overview_new.png)
 
-Purpose of Data Raccoonciliation Engine is to take personal health data in variety of formats (starting with BlueButton/CCDA) from multiple sources and parse/normalize/de-duplicate/merge it into single Patient's Master Health Record with patient's assistance (thou, most of hard work will be done automagically).
+The purpose of the Data Raccoonciliation Engine is to take personal health data in a variety of formats (starting with BlueButton/CCDA) from multiple sources and parse/normalize/de-duplicate/merge it into a single Patient's Master Health Record with patient assistance (although most of hard work will be done automagically).
 
 
 Raccoon's components
@@ -31,13 +31,13 @@ Parsing library code: [amida-tech/blue-button](https://github.com/amida-tech/blu
 
 #### 2 - Matching Library.
 
-This takes the standardized data elements and flags probable duplicates values. New patient's records are compared against existing Master Health Record and automatically matched with result produced as all elements of a new record are flagged as duplicates, new and % of match (to be reconciled by patient in a next step).
+This takes the standardized data elements and flags probable duplicate values. New patient records are compared against the existing Master Health Record and automatically matched. The result produces a list of all entries in the new record, labelled as duplicates (0 % match), new entries (100% match), or partial matches (to be reconciled by patient in a next step).
 
 Matching library code: [amida-tech/blue-button-match](https://github.com/amida-tech/blue-button-match)
 
 #### 3 - Reconciliation Interface.
 
-This provides a RESTful API and UI for review and evaluation of duplicates.
+This provides a RESTful API and UI for review and evaluation of duplicate or partially matched entries, by the patient.
 
 #### 4 - Master Record Interface.
 
@@ -53,7 +53,7 @@ Release 0.5 (end of April, 2014)
 
 - Uses existing bluebutton.js lib for parsing (with some fixes/improvements)
 - Matching library detects duplicate, new entries, and partial matches
-- Reconciliation UI supports duplicate and new entries reconciliation
+- Reconciliation UI supports duplicate and new entry reconciliation
 - Master Health Record library supports persistence to MongoDB
 - Data model for CCDA JSON representation is defined for a few sections (e.g. Allergies)
 
@@ -61,10 +61,20 @@ Release 1.0 (end of May, 2014)
 ----------------
 
 - CCDA JSON data model is fully defined as separate library with validation support
-- bluebutton.js parser is rewriten for speed and support of updated CCDA JSON data model.
+- bluebutton.js parser is rewritten for speed and support of updated CCDA JSON data model
 - Matching library supports % match for entries that may be possible match
 - Reconciliation UI support reconciliation of % matched entries (e.g. partial match)
 - Master Health Record library supports persistence and full validation of CCDA JSON into MongoDB
+
+Release 1.1 (September 2014)
+----------------
+
+- CMS JSON data model is fully defined 
+	- Insurance and claims sections added to support CMS files
+- New many-to-many matching library supports multiple partial matches for one entry
+- Updated reconciliation UI supports many-to-many matching library
+- Master Health Record library supports persistence and full validation of CMS JSON into MongoDB
+- Master Health Record can now be exported as a CCDA file
 
 
 ###Screenshots of demo app
