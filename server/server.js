@@ -22,7 +22,7 @@ var app = express();
 var record = require('blue-button-record');
 var passport = require('passport');
 //var redis = require("redis").createClient();
-var redisStore = require('connect-redis')(express);
+//var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
 
 app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
@@ -55,8 +55,8 @@ app.use(express.cookieParser());
 
 //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
 app.use(express.session({
-    secret: 'keyboard cat',
-    store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})
+    secret: 'keyboard cat'
+    //,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
 }));
 
 app.use(passport.initialize());
