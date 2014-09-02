@@ -260,12 +260,9 @@
                 ng-class="{selected: selectedItems.observation.reactions[el_id], disabled: match_diff.observation.reactions.src[el_id]}">
 
                 <!-- allergies -->
-                
-<<<<<<< HEAD
-                <span ng-hide='match_diff.observation.reactions.src[el_id] || selectedItems.observation.reactions[el_id]' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
-=======
-                <span ng-hide='match_diff.observation_reactions || selectedItems.observation.reactions[el_id]' class='label label-info' style="position:absolute;right:50px;top:10px;">Different</span>
->>>>>>> master
+
+                <span ng-hide='match_diff.observation.reactions.src[el_id] || selectedItems.observation.reactions[el_id]' class='label label-info' style="position:absolute;right:50px;top:10px;">Different</span>
+
                 <span 
                     ng-hide='match_diff.observation.reactions.src[el_id] || selectedItems.observation.reactions[el_id]'  
                     ng-click="selectField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])"
