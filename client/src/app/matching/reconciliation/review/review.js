@@ -88,9 +88,8 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             $scope.match_diff = angular.copy($scope.current_match.diff);
             $scope.match_percent = $scope.current_match.percent;
 
-
-
             //Restructure diff object booleans.
+            
             for (var diff in $scope.match_diff) {
 
                 if ($scope.match_diff[diff] === "duplicate") {
@@ -98,6 +97,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 } else {
                     $scope.match_diff[diff] = false;
                 }
+            
             }
 
             //Build out empty match diff objects as false.
@@ -111,40 +111,51 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
             if ($scope.section === 'allergies') {
 
+                var my_match_diff = {};
+
                 //Extend Diff Object to include subarray.
-                $scope.match_diff.observation = {};
-                $scope.match_diff.observation.reactions = {};
-                $scope.match_diff.observation.reactions.src = [];
-                $scope.match_diff.observation.reactions.dest = [];
+                my_match_diff.observation = {};
+                my_match_diff.observation.reactions = {};
+                my_match_diff.observation.reactions.src = [];
+                my_match_diff.observation.reactions.dest = [];
 
                 for (var src_i in $scope.new_entry.observation.reactions) {
-                    $scope.match_diff.observation.reactions.src.push(false);
+                    my_match_diff.observation.reactions.src.push(false);
                     $scope.selectedItems.observation.reactions.push(false);
                 }
 
                 for (var dest_i in $scope.current_entry.observation.reactions) {
-                    $scope.match_diff.observation.reactions.dest.push(false);
+                    my_match_diff.observation.reactions.dest.push(false);
                 }
                 tempArrayDiff = $scope.current_match.subelements.observation.reactions;
                 for (var i in tempArrayDiff) {
                     if (tempArrayDiff[i].match === "duplicate") {
-                        $scope.match_diff.observation.reactions.src[tempArrayDiff[i].src_id] = true;
-                        $scope.match_diff.observation.reactions.dest[tempArrayDiff[i].dest_id] = true;
+                       my_match_diff.observation.reactions.src[tempArrayDiff[i].src_id] = true;
+                       my_match_diff.observation.reactions.dest[tempArrayDiff[i].dest_id] = true;
                     }
                 }
 
                 //Allergies shim based on object brevity.
                 for (var temp_current_diff in $scope.current_entry.observation) {
                 if ($scope.new_entry.observation[temp_current_diff] === undefined) {
-                    $scope.match_diff.observation[temp_current_diff] = true;
+                    if (temp_current_diff !== "reactions") {
+                        my_match_diff.observation[temp_current_diff] = true;    
+                    }
+                    
                 } else {
                     if (angular.equals($scope.new_entry.observation[temp_current_diff], $scope.current_entry.observation[temp_current_diff])) {
-                        $scope.match_diff.observation[temp_current_diff] = true;
+                       if (temp_current_diff !== "reactions") {
+                            my_match_diff.observation[temp_current_diff] = true;
+                       }
+                        
                     }
+
                 }
+
 
             }
 
+            $scope.match_diff = angular.copy(my_match_diff);
             }
 
             if ($scope.section === 'encounters') {
