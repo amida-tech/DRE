@@ -78,7 +78,22 @@ var dre = angular
             return oid;
         };
     })
-    .filter('bb_name', function($filter) {
+.filter('bb_trunc2', function($filter) {
+        //Format Blue Button Result Set names (by truncating them)
+
+        return function(oid) {
+            if (typeof oid === "undefined") {
+                return "";
+            }
+
+            if (oid.length > 13) {
+                oid =  oid.substring(0, 10)+"...";
+                //console.log(inputName);
+            }
+
+            return oid;
+        };
+    })    .filter('bb_name', function($filter) {
         //Format Blue Button name JSON struct into string
 
         return function(input_name) {

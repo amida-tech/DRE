@@ -62,3 +62,8 @@ table {
 table.table {
 	margin-bottom: 0px;
 }
+
+.merge-item{
+	padding:0px;
+	bacground:transparent;
+}
