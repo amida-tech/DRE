@@ -208,19 +208,19 @@
     }, {
         "name": "status",
         "title": "Status",
-        "entry": "status"
+        "entry": "single"
     }, {
-        "name": "specimen.code",
+        "name": "specimen",
         "title": "Specimen",
-        "entry": "coded"
+        "entry": "wrappedcodecoded"
     }, {
         "name": "body_sites",
         "title": "Body Site",
-        "entry": "coded"
+        "entry": "multicoded"
     }, {
         "name": "performer",
         "title": "Performer",
-        "entry": "performer"
+        "entry": "performers"
     }],
     "problems": [{
         "name": "negation_indicator",
@@ -272,24 +272,24 @@
         "title": "Administration",
         "entry": "medsadministration"
     }, {
-        "name": "dispense.performer",
+        "name": "dispense",
         "title": "Dispense",
-        "entry": "performer"
+        "entry": "wrappedperformerperformer"
     }, {
         "name": "supply",
         "title": "Supply",
-        "entry": "medssuply"
+        "entry": "medssupply"
     }, {
         "name": "drug_vehicle",
         "title": "Drug Vehicle",
         "entry": "coded"
     }, {
-        "name": "precondition.value",
+        "name": "precondition",
         "title": "Precondition",
-        "entry": "coded"
+        "entry": "wrappedvaluecoded"
     }, {
         "name": "indication",
         "title": "Indication",
-        "entry": "medindication"
+        "entry": "medsindication"
     }]
 }
