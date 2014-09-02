@@ -138,7 +138,7 @@
         <td class="match">
             <div class="panel-body">
                 <div class="col-md-2 col-md-offset-7">
-                    <button type="button" class="btn btn-warning ng-scope pull-right" ng-click="createMatch()" ng-if="(section !== 'demographics')   && !(current_queue.length > 0) ">
+                    <button type="button" ng-class="{disabled:changed}" class="btn btn-warning ng-scope pull-right" ng-click="createMatch()" ng-if="(section !== 'demographics')   && !(current_queue.length > 0) ">
                         <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New
                     </button>
 
