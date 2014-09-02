@@ -61,7 +61,7 @@ app.get('/api/v1/record/:component', login.checkAuth, function(req, res) {
 // back to caller when done or on error via @callback
 
 function prep(sec, secName) {
-    return secName == "demographics" || secName == "social_history" ? sec[0] : sec;
+    return secName == "demographics" ? sec[0] : sec;
 }
 
 function getMHR(username, callback) {
@@ -108,6 +108,8 @@ app.get('/api/v1/master_health_record/:format?', login.checkAuth, function(req, 
                 res.send(JSON.stringify(result, null, 4)); 
             } else {
                 //return CCDA
+
+                console.log(JSON.stringify(result, null, 10));
 
                 var response_ccda = bb.generateCCDA(result).toString()
                 //console.log(response_ccda);
