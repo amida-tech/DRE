@@ -1,7 +1,7 @@
 angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
 .config(['$routeProvider',
-    function ($routeProvider) {
+    function($routeProvider) {
         $routeProvider.when('/match/reconciliation/review/:section/:match_id', {
             templateUrl: 'templates/matching/reconciliation/review/review.tpl.html',
             controller: 'matchReviewCtrl'
@@ -10,7 +10,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 ])
 
 .controller('matchReviewCtrl', ['$rootScope', '$scope', '$http', '$routeParams', '$location', 'getNotifications', 'recordFunctions',
-    function ($rootScope, $scope, $http, $routeParams, $location, getNotifications, recordFunctions) {
+    function($rootScope, $scope, $http, $routeParams, $location, getNotifications, recordFunctions) {
 
         $scope.titles = {
             allergies: "Allergies",
@@ -26,7 +26,30 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             social_history: "Social History"
         };
 
+        //resetting page and all the data to original state
+        $scope.reset =function() {
+            $scope.match = {};
+            $scope.new_entry = {};
+            $scope.current_entry = {};
+            $scope.update_entry = {};
+            $scope.selectedItems = {};
+            $scope.changed = false;
 
+            if ($scope.section === 'allergies') {
+                $scope.selectedItems.observation = {};
+                $scope.selectedItems.observation.reactions = [];
+            } else if ($scope.section === 'encounters') {
+                $scope.selectedItems.findings = [];
+
+            } else if ($scope.section === 'results') {
+                $scope.selectedItems.results = [];
+            }
+
+            max_src = 0;
+            max_dest = 0;
+
+            $scope.getMatch();
+        };
 
 
         //getting parameters from route/url
@@ -34,11 +57,11 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.match_id = $routeParams["match_id"];
 
         //shim for switching on new UI
-        $scope.version="old";
-        if ( ["demographics","-allergies","insurance","vitals","encounters","immunizations","problems", "procedures","results","-social_history"].indexOf($scope.section.toString())>=0){
-            $scope.version="new";
+        $scope.version = "old";
+        if (["demographics", "-allergies", "insurance", "vitals", "encounters", "immunizations", "problems", "procedures", "results", "-social_history"].indexOf($scope.section.toString()) >= 0) {
+            $scope.version = "new";
         }
-        $scope.version="new";
+        $scope.version = "new";
 
 
         //fetching match object based on id
@@ -47,17 +70,17 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.current_entry = {};
         $scope.update_entry = {};
         $scope.selectedItems = {};
-        $scope.changed=false;
+        $scope.changed = false;
 
         //function evaluates selectedItems object, and updates flag if any changes to MHR were made
-        function isChanged(){
-            for (var el in $scope.selectedItems){
+        function isChanged() {
+            for (var el in $scope.selectedItems) {
                 if ($scope.selectedItems[el]) {
-                    $scope.changed=true;
+                    $scope.changed = true;
                     return;
                 }
             }
-            $scope.changed=false;
+            $scope.changed = false;
             return;
         }
 
@@ -74,7 +97,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         var max_src = 0;
         var max_dest = 0;
 
-        $scope.rotateMatch = function (new_dest_index) {
+        $scope.rotateMatch = function(new_dest_index) {
             setMatchEntry(new_dest_index);
         };
 
@@ -135,15 +158,15 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
                 //Allergies shim based on object brevity.
                 for (var temp_current_diff in $scope.current_entry.observation) {
-                if ($scope.new_entry.observation[temp_current_diff] === undefined) {
-                    $scope.match_diff.observation[temp_current_diff] = true;
-                } else {
-                    if (angular.equals($scope.new_entry.observation[temp_current_diff], $scope.current_entry.observation[temp_current_diff])) {
+                    if ($scope.new_entry.observation[temp_current_diff] === undefined) {
                         $scope.match_diff.observation[temp_current_diff] = true;
+                    } else {
+                        if (angular.equals($scope.new_entry.observation[temp_current_diff], $scope.current_entry.observation[temp_current_diff])) {
+                            $scope.match_diff.observation[temp_current_diff] = true;
+                        }
                     }
-                }
 
-            }
+                }
 
             }
 
@@ -195,25 +218,25 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
         }
 
-        $scope.getMatch = function () {
+        $scope.getMatch = function() {
             $http({
                 method: 'GET',
                 url: '/api/v1/match/' + $scope.section + '/' + $scope.match_id
             }).
-            success(function (data, status, headers, config) {
+            success(function(data, status, headers, config) {
                 $scope.match = data;
                 $scope.new_entry = $scope.match.entry;
                 setMatchEntry(0);
 
             }).
-            error(function (data, status, headers, config) {
+            error(function(data, status, headers, config) {
                 console.log('error');
             });
         };
 
         $scope.getMatch();
 
-        $scope.discardMatch = function () {
+        $scope.discardMatch = function() {
             $http({
                 method: 'POST',
                 url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
@@ -221,16 +244,16 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                     determination: 'ignored'
                 }
             }).
-            success(function (data, status, headers, config) {
+            success(function(data, status, headers, config) {
                 //Note:  Pill count not refreshing.
                 $location.path("match/reconciliation");
             }).
-            error(function (data, status, headers, config) {
+            error(function(data, status, headers, config) {
                 console.log('error');
             });
         };
 
-        $scope.createMatch = function () {
+        $scope.createMatch = function() {
             $http({
                 method: 'POST',
                 url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
@@ -238,16 +261,16 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                     determination: 'added'
                 }
             }).
-            success(function (data, status, headers, config) {
+            success(function(data, status, headers, config) {
                 //Note:  Pill count not refreshing.
                 $location.path("match/reconciliation");
             }).
-            error(function (data, status, headers, config) {
+            error(function(data, status, headers, config) {
                 console.log('error');
             });
         };
 
-        $scope.saveMatch = function () {
+        $scope.saveMatch = function() {
             $http({
                 method: 'POST',
                 url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id + '/' + $scope.current_match_index,
@@ -256,17 +279,17 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                     updated_entry: $scope.update_entry
                 }
             }).
-            success(function (data, status, headers, config) {
+            success(function(data, status, headers, config) {
                 //Note:  Pill count not refreshing.
 
 
                 getNotifications.getUpdate(function(err, notifications) {
-                          $rootScope.notifications = notifications;
+                    $rootScope.notifications = notifications;
                 });
 
                 $location.path("match/reconciliation");
             }).
-            error(function (data, status, headers, config) {
+            error(function(data, status, headers, config) {
                 console.log('error');
             });
         };
@@ -282,7 +305,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.removeField = function(entry, entry_index, entry_status) {
 
 
-           //Don't process hidden items.
+            //Don't process hidden items.
             if (entry_status) {
                 return;
             }
@@ -356,9 +379,9 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
 
 
-        $scope.selectField = function (entry, entry_index, entry_status) {
+        $scope.selectField = function(entry, entry_index, entry_status) {
             console.log("select field", entry, entry_status);
-            if ($scope.selectedItems[entry]===true){
+            if ($scope.selectedItems[entry] === true) {
                 console.log("cancel");
                 return;
             }
