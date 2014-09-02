@@ -70,7 +70,7 @@ Release 1.1 (September 2014)
 ----------------
 
 - CMS JSON data model is fully defined 
-- Updated bluebutton.js parser is rewritten for speed and support of updated CCDA JSON data model
+	- Insurance and claims sections added to support CMS files
 - New many-to-many matching library supports multiple partial matches for one entry
 - Reconciliation UI supports many-to-many matching library
 - Master Health Record library supports persistence and full validation of CMS JSON into MongoDB
