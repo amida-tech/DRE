@@ -1,7 +1,7 @@
 Data Reconciliation Engine (DRE)
 =========
 
-DRE is demo frontend and Node.js server for reconciling health data.
+DRE is a demo frontend and Node.js server for reconciling health data.
 
 aka. Raccoon - Data Raccoonciliation Engine for Health Data.
 
@@ -13,7 +13,7 @@ High Level Overview
 ===================
 ![Raccoon High Level Diagram](docs/images/dre_overview_new.png)
 
-Purpose of Data Raccoonciliation Engine is to take personal health data in variety of formats (starting with BlueButton/CCDA) from multiple sources and parse/normalize/de-duplicate/merge it into single Patient's Master Health Record with patient's assistance (thou, most of hard work will be done automagically).
+The purpose of the Data Raccoonciliation Engine is to take personal health data in a variety of formats (starting with BlueButton/CCDA) from multiple sources and parse/normalize/de-duplicate/merge it into a single Patient's Master Health Record with patient assistance (although most of hard work will be done automagically).
 
 
 Raccoon's components
@@ -31,13 +31,13 @@ Parsing library code: [amida-tech/blue-button](https://github.com/amida-tech/blu
 
 #### 2 - Matching Library.
 
-This takes the standardized data elements and flags probable duplicates values. New patient's records are compared against existing Master Health Record and automatically matched with result produced as all elements of a new record are flagged as duplicates, new and % of match (to be reconciled by patient in a next step).
+This takes the standardized data elements and flags probable duplicate values. New patient records are compared against the existing Master Health Record and automatically matched. The result produces a list of all entries in the new record, labelled as duplicates (0 % match), new entries (100% match), or partial matches (to be reconciled by patient in a next step).
 
 Matching library code: [amida-tech/blue-button-match](https://github.com/amida-tech/blue-button-match)
 
 #### 3 - Reconciliation Interface.
 
-This provides a RESTful API and UI for review and evaluation of duplicates.
+This provides a RESTful API and UI for review and evaluation of duplicate or partially matched entries, by the patient.
 
 #### 4 - Master Record Interface.
 
