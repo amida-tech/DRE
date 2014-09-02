@@ -260,10 +260,11 @@
                 ng-class="{selected: selectedItems.observation.reactions[el_id], disabled: match_diff.observation.reactions.src[el_id]}">
 
                 <!-- allergies -->
-                
-                <span ng-hide='match_diff.observation_reactions || selectedItems.observation.reactions[el_id]' class='label label-info' style="position:absolute;right:50px;top:10px;">Different</span>
+
+                <span ng-hide='match_diff.observation.reactions.src[el_id] || selectedItems.observation.reactions[el_id]' class='label label-info' style="position:absolute;right:50px;top:10px;">Different</span>
+
                 <span 
-                    ng-hide='selectedItems.observation_reactions || selectedItems.observation.reactions[el_id]'  
+                    ng-hide='match_diff.observation.reactions.src[el_id] || selectedItems.observation.reactions[el_id]'  
                     ng-click="selectField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])"
                     style="position:absolute;right:5px;top:8px;">add <i class='glyphicon glyphicon-import' ></i></span>
                 
