@@ -189,6 +189,29 @@ angular.module('directives.matchingObjects', [])
         };
     }
 ])
+
+
+.directive('wrappedperformerperformerEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<div><h4> {{inputTitle}} </h4>" +
+                "<div addresses-entry input-value='inputValue.performer.address' input-title='Address'  ></div>"+
+                "<div phone-entry input-value='inputValue.performer.phone' input-title='Phone' ></div>"+
+                "<div org-entry input-value='inputValue.performer.organization' input-title='Organization' ></div>"+
+                "<div coded-entry input-value='inputValue.performer.code' input-title='Code' ng-show='inputValue.performer.code'></div>"+
+                "</div>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
 .directive('performersEntry', ['$parse',
     function($parse) {
         return {
@@ -396,6 +419,50 @@ angular.module('directives.matchingObjects', [])
                 "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.name}}</td></tr>" +
                 "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.code}}</td></tr>" +
                 "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.code_system_name}}</td></tr>" +
+                "</table>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+.directive('wrappedcodecodedEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.code.name}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.code.code}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.code.code_system_name}}</td></tr>" +
+                "</table>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+.directive('wrappedvaluecodedEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                inputAdditional: '=',
+                selectField: "="
+            },
+            template: "<table class='table table-condensed'>" +
+                "<thead><tr><th><h4>{{inputTitle}}</h4></th><th class='col-md-12' style='text-transform: capitalize;'></th></tr></thead>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Name:</label></td><td class='col-md-4 text-left'>{{inputValue.value.name}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code:</label></td><td class='col-md-4 text-left'>{{inputValue.value.code}}</td></tr>" +
+                "<tr><td class='col-md-4'><label style='text-transform: capitalize;'>Code System:</label></td><td class='col-md-4 text-left'>{{inputValue.value.code_system_name}}</td></tr>" +
                 "</table>",
             link: function(scope, element, attrs) {}
         };

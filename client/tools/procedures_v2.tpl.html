@@ -170,7 +170,7 @@
   
                 <span ng-hide='match_diff.status || selectedItems.status'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
-                <div status-entry input-value="new_entry.status" input-title="Status" select-field="selectedItems.status"></div>
+                <div single-entry input-value="new_entry.status" input-title="Status" select-field="selectedItems.status"></div>
 
                 <br/>
 
@@ -189,7 +189,7 @@
 
                 
 
-                <div status-entry input-value="update_entry.status" input-title="Status" select-field="selectedItems.status">
+                <div single-entry input-value="update_entry.status" input-title="Status" select-field="selectedItems.status">
 
                 </div>
 
@@ -208,41 +208,41 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching" ng-show="new_entry.specimen.code || update_entry.specimen.code">
+    <tr class="list-group list-matching" ng-show="new_entry.specimen || update_entry.specimen">
         <td class="match" >
-            <div class="list-group-item merge-item" ng-click="selectField('specimen.code', null, match_diff.specimen.code)" ng-class="{selected: selectedItems.specimen.code, disabled: match_diff.specimen.code}" ng-show="new_entry.specimen.code">
+            <div class="list-group-item merge-item" ng-click="selectField('specimen', null, match_diff.specimen)" ng-class="{selected: selectedItems.specimen, disabled: match_diff.specimen}" ng-show="new_entry.specimen">
 
-                <span ng-hide='match_diff.specimen.code || selectedItems.specimen.code' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
+                <span ng-hide='match_diff.specimen || selectedItems.specimen' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.specimen.code || selectedItems.specimen.code'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+                <span ng-hide='match_diff.specimen || selectedItems.specimen'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
-                <div coded-entry input-value="new_entry.specimen.code" input-title="Specimen" select-field="selectedItems.specimen.code"></div>
+                <div wrappedcodecoded-entry input-value="new_entry.specimen" input-title="Specimen" select-field="selectedItems.specimen"></div>
 
                 <br/>
 
             </div>
-             <div ng-hide="new_entry.specimen.code" class="disabled">
+             <div ng-hide="new_entry.specimen" class="disabled">
                     <div class="text-center">
                         <h4>No Update</h4>
                     </div>
                 </div>
         </td>
         <td class="match">
-            <div class="list-group-item  merge-item" ng-click="removeField('specimen.code', null, match_diff.specimen.code)" ng-class="{selected: selectedItems.specimen.code, disabled: match_diff.specimen.code}" ng-show="update_entry.specimen.code">
+            <div class="list-group-item  merge-item" ng-click="removeField('specimen', null, match_diff.specimen)" ng-class="{selected: selectedItems.specimen, disabled: match_diff.specimen}" ng-show="update_entry.specimen">
 
-                <span ng-show='selectedItems.specimen.code' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.specimen.code || selectedItems.specimen.code'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.specimen' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
+                <span ng-show='selectedItems.specimen || selectedItems.specimen'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
-                <div coded-entry input-value="update_entry.specimen.code" input-title="Specimen" select-field="selectedItems.specimen.code">
+                <div wrappedcodecoded-entry input-value="update_entry.specimen" input-title="Specimen" select-field="selectedItems.specimen">
 
                 </div>
 
                 <br/>
 
             </div>
-             <div ng-hide="update_entry.specimen.code" class="disabled">
+             <div ng-hide="update_entry.specimen" class="disabled">
                     <div class="text-center">
                         <h4>No Data</h4>
                     </div>
@@ -262,7 +262,7 @@
   
                 <span ng-hide='match_diff.body_sites || selectedItems.body_sites'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
-                <div coded-entry input-value="new_entry.body_sites" input-title="Body Site" select-field="selectedItems.body_sites"></div>
+                <div multicoded-entry input-value="new_entry.body_sites" input-title="Body Site" select-field="selectedItems.body_sites"></div>
 
                 <br/>
 
@@ -281,7 +281,7 @@
 
                 
 
-                <div coded-entry input-value="update_entry.body_sites" input-title="Body Site" select-field="selectedItems.body_sites">
+                <div multicoded-entry input-value="update_entry.body_sites" input-title="Body Site" select-field="selectedItems.body_sites">
 
                 </div>
 
@@ -308,7 +308,7 @@
   
                 <span ng-hide='match_diff.performer || selectedItems.performer'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
-                <div performer-entry input-value="new_entry.performer" input-title="Performer" select-field="selectedItems.performer"></div>
+                <div performers-entry input-value="new_entry.performer" input-title="Performer" select-field="selectedItems.performer"></div>
 
                 <br/>
 
@@ -327,7 +327,7 @@
 
                 
 
-                <div performer-entry input-value="update_entry.performer" input-title="Performer" select-field="selectedItems.performer">
+                <div performers-entry input-value="update_entry.performer" input-title="Performer" select-field="selectedItems.performer">
 
                 </div>
 
