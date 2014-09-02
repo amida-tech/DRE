@@ -10,7 +10,7 @@ The second release of the DRE includes:
 - Login and Authorization added
 - Uses blue-button.js v1.1.0 JSON data model and parser
 - Uses blue-button-match.js v1.1.0 matching engine
-- Uses blue-button-record.js library (embedded into this repo)
+- Uses blue-button-record.js library v1.1.0
 	- Currently supports MongoDB persistence
 - Sample Blue Button data for 4 demo scenarios (at ./server/test/artifacts/demo-r1.2)
 
