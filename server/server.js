@@ -21,8 +21,8 @@ var path = require('path');
 var app = express();
 var record = require('blue-button-record');
 var passport = require('passport');
-//var redis = require("redis").createClient();
-//var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
+var redis = require("redis").createClient();
+var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
 
 app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
