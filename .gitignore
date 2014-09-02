@@ -14,3 +14,5 @@ coverage
 */**/.DS_Store
 
 .rdb
+
+npm-debug.log

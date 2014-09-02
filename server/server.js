@@ -56,7 +56,7 @@ app.use(express.cookieParser());
 //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
 app.use(express.session({
     secret: 'keyboard cat'
-    //,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
+    ,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
 }));
 
 app.use(passport.initialize());
@@ -94,7 +94,7 @@ record.connectDatabase(databaseServer, function(err) {
     if (err) {
         console.log(err);
     } else {
-        app.listen(3000);
+        app.listen(3000, '0.0.0.0');
         console.log("Server listening on port " + 3000);
     }
 });
