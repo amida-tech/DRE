@@ -188,10 +188,12 @@
 
 
             <div class="panel-body" ng-hide="panelId === 0">
-                <div class="col-md-2 col-md-offset-7">
-                    <button ng-show="changed" type="button" class="btn btn-primary pull-right" ng-click="saveMatch()"><i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
+                <div class="col-md-10 col-md-offset-2">
+                    <button ng-show="changed" type="button" class="btn btn-primary pull-left" ng-click="saveMatch()"><i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
 
-                    <button ng-hide="changed" type="button" class="btn btn-primary pull-right" ng-click="discardMatch()"><i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
+                    <button ng-show="changed" type="button" class="btn btn-default pull-right col-md-offset-2" ng-click="reset()"><i class="glyphicon glyphicon-repeat fa-1x"></i> Undo All</button>
+
+                    <button ng-hide="changed" type="button" class="btn btn-primary pull-left" ng-click="discardMatch()"><i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
 
                 </div>
             </div>
