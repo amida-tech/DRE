@@ -47,7 +47,7 @@
             <div class="list-group-item  merge-item" ng-click="removeField('result_set', null, match_diff.result_set)" ng-class="{selected: selectedItems.result_set, disabled: match_diff.result_set}" ng-show="update_entry.result_set">
 
                 <span ng-show='selectedItems.result_set' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.result_set || selectedItems.result_set'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.result_set || selectedItems.result_set'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
@@ -80,11 +80,11 @@
             
                 <!-- results -->
                 
-                <span ng-hide='match_diff.results.src[el_id] || selectedItems.results[el_id]' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.results.src[el_id] || selectedItems.results[el_id]' class='label label-info' style="position:absolute;right:50px;top:10px;">Different</span>
                 <span         
                     ng-click="selectField('results', el_id, match_diff.results.src[el_id])"
                     ng-hide='match_diff.results.src[el_id] ||selectedItems.results[el_id]' 
-                    style="position:absolute;right:5px;bottom:20px;">add <i class='glyphicon glyphicon-import' ></i></span>
+                    style="position:absolute;right:5px;top:10px;">add <i class='glyphicon glyphicon-import' ></i></span>
                  
 
                 <!--encounters-->

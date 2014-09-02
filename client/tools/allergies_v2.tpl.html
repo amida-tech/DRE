@@ -47,7 +47,7 @@
             <div class="list-group-item  merge-item" ng-click="removeField('observation.allergen', null, match_diff.observation.allergen)" ng-class="{selected: selectedItems.observation.allergen, disabled: match_diff.observation.allergen}" ng-show="update_entry.observation.allergen">
 
                 <span ng-show='selectedItems.observation.allergen' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.observation.allergen || selectedItems.observation.allergen'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.observation.allergen || selectedItems.observation.allergen'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
@@ -93,7 +93,7 @@
             <div class="list-group-item  merge-item" ng-click="removeField('observation.intolerance', null, match_diff.observation.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}" ng-show="update_entry.observation.intolerance">
 
                 <span ng-show='selectedItems.observation.intolerance' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.observation.intolerance || selectedItems.observation.intolerance'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.observation.intolerance || selectedItems.observation.intolerance'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
@@ -139,7 +139,7 @@
             <div class="list-group-item  merge-item" ng-click="removeField('observation.status', null, match_diff.observation.status)" ng-class="{selected: selectedItems.observation.status, disabled: match_diff.observation.status}" ng-show="update_entry.observation.status">
 
                 <span ng-show='selectedItems.observation.status' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.observation.status || selectedItems.observation.status'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.observation.status || selectedItems.observation.status'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
@@ -185,7 +185,7 @@
             <div class="list-group-item  merge-item" ng-click="removeField('observation.severity', null, match_diff.observation.severity)" ng-class="{selected: selectedItems.observation.severity, disabled: match_diff.observation.severity}" ng-show="update_entry.observation.severity">
 
                 <span ng-show='selectedItems.observation.severity' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.observation.severity || selectedItems.observation.severity'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.observation.severity || selectedItems.observation.severity'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
@@ -231,7 +231,7 @@
             <div class="list-group-item  merge-item" ng-click="removeField('observation.date_time', null, match_diff.observation.date_time)" ng-class="{selected: selectedItems.observation.date_time, disabled: match_diff.observation.date_time}" ng-show="update_entry.observation.date_time">
 
                 <span ng-show='selectedItems.observation.date_time' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.observation.date_time || selectedItems.observation.date_time'  style="position:absolute;right:10px;bottom:10px;">revert <i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.observation.date_time || selectedItems.observation.date_time'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
@@ -261,11 +261,11 @@
 
                 <!-- allergies -->
                 
-                <span ng-hide='match_diff.observation_reactions || selectedItems.observation.reactions[el_id]' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.observation_reactions || selectedItems.observation.reactions[el_id]' class='label label-info' style="position:absolute;right:50px;top:10px;">Different</span>
                 <span 
                     ng-hide='selectedItems.observation_reactions || selectedItems.observation.reactions[el_id]'  
                     ng-click="selectField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])"
-                    style="position:absolute;right:5px;bottom:10px;">add <i class='glyphicon glyphicon-import' ></i></span>
+                    style="position:absolute;right:5px;top:10px;">add <i class='glyphicon glyphicon-import' ></i></span>
                 
             
                 <!-- results -->
