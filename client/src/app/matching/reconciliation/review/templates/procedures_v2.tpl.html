@@ -208,41 +208,41 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching" ng-show="new_entry.specimen || update_entry.specimen">
+    <tr class="list-group list-matching" ng-show="new_entry.specimen.code || update_entry.specimen.code">
         <td class="match" >
-            <div class="list-group-item merge-item" ng-click="selectField('specimen', null, match_diff.specimen)" ng-class="{selected: selectedItems.specimen, disabled: match_diff.specimen}" ng-show="new_entry.specimen">
+            <div class="list-group-item merge-item" ng-click="selectField('specimen.code', null, match_diff.specimen.code)" ng-class="{selected: selectedItems.specimen.code, disabled: match_diff.specimen.code}" ng-show="new_entry.specimen.code">
 
-                <span ng-hide='match_diff.specimen || selectedItems.specimen' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.specimen.code || selectedItems.specimen.code' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.specimen || selectedItems.specimen'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+                <span ng-hide='match_diff.specimen.code || selectedItems.specimen.code'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
-                <div coded-entry input-value="new_entry.specimen" input-title="Specimen" select-field="selectedItems.specimen"></div>
+                <div coded-entry input-value="new_entry.specimen.code" input-title="Specimen" select-field="selectedItems.specimen.code"></div>
 
                 <br/>
 
             </div>
-             <div ng-hide="new_entry.specimen" class="disabled">
+             <div ng-hide="new_entry.specimen.code" class="disabled">
                     <div class="text-center">
                         <h4>No Update</h4>
                     </div>
                 </div>
         </td>
         <td class="match">
-            <div class="list-group-item  merge-item" ng-click="removeField('specimen', null, match_diff.specimen)" ng-class="{selected: selectedItems.specimen, disabled: match_diff.specimen}" ng-show="update_entry.specimen">
+            <div class="list-group-item  merge-item" ng-click="removeField('specimen.code', null, match_diff.specimen.code)" ng-class="{selected: selectedItems.specimen.code, disabled: match_diff.specimen.code}" ng-show="update_entry.specimen.code">
 
-                <span ng-show='selectedItems.specimen' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
-                <span ng-show='selectedItems.specimen || selectedItems.specimen'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
+                <span ng-show='selectedItems.specimen.code' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
+                <span ng-show='selectedItems.specimen.code || selectedItems.specimen.code'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
 
                 
 
-                <div coded-entry input-value="update_entry.specimen" input-title="Specimen" select-field="selectedItems.specimen">
+                <div coded-entry input-value="update_entry.specimen.code" input-title="Specimen" select-field="selectedItems.specimen.code">
 
                 </div>
 
                 <br/>
 
             </div>
-             <div ng-hide="update_entry.specimen" class="disabled">
+             <div ng-hide="update_entry.specimen.code" class="disabled">
                     <div class="text-center">
                         <h4>No Data</h4>
                     </div>

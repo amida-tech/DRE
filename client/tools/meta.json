@@ -210,7 +210,7 @@
         "title": "Status",
         "entry": "status"
     }, {
-        "name": "specimen",
+        "name": "specimen.code",
         "title": "Specimen",
         "entry": "coded"
     }, {
