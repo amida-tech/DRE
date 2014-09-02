@@ -72,9 +72,9 @@ Release 1.1 (September 2014)
 - CMS JSON data model is fully defined 
 	- Insurance and claims sections added to support CMS files
 - New many-to-many matching library supports multiple partial matches for one entry
-- Reconciliation UI supports many-to-many matching library
+- Updated reconciliation UI supports many-to-many matching library
 - Master Health Record library supports persistence and full validation of CMS JSON into MongoDB
-- Master Health Record can now be exported as a CCDA record
+- Master Health Record can now be exported as a CCDA file
 
 
 ###Screenshots of demo app
