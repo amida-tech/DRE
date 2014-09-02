@@ -53,7 +53,7 @@ Release 0.5 (end of April, 2014)
 
 - Uses existing bluebutton.js lib for parsing (with some fixes/improvements)
 - Matching library detects duplicate, new entries, and partial matches
-- Reconciliation UI supports duplicate and new entries reconciliation
+- Reconciliation UI supports duplicate and new entry reconciliation
 - Master Health Record library supports persistence to MongoDB
 - Data model for CCDA JSON representation is defined for a few sections (e.g. Allergies)
 
@@ -61,10 +61,20 @@ Release 1.0 (end of May, 2014)
 ----------------
 
 - CCDA JSON data model is fully defined as separate library with validation support
-- bluebutton.js parser is rewriten for speed and support of updated CCDA JSON data model.
+- bluebutton.js parser is rewritten for speed and support of updated CCDA JSON data model
 - Matching library supports % match for entries that may be possible match
 - Reconciliation UI support reconciliation of % matched entries (e.g. partial match)
 - Master Health Record library supports persistence and full validation of CCDA JSON into MongoDB
+
+Release 1.1 (September 2014)
+----------------
+
+- CMS JSON data model is fully defined 
+- Updated bluebutton.js parser is rewritten for speed and support of updated CCDA JSON data model
+- New many-to-many matching library supports multiple partial matches for one entry
+- Reconciliation UI supports many-to-many matching library
+- Master Health Record library supports persistence and full validation of CMS JSON into MongoDB
+- Master Health Record can now be exported as a CCDA record
 
 
 ###Screenshots of demo app
