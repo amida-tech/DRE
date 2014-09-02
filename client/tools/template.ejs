@@ -33,9 +33,9 @@
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('<%= el.name %>', null, match_diff.<%= el.name %>)" ng-class="{selected: selectedItems.<%= el.name %>, disabled: match_diff.<%= el.name %>}" ng-show="new_entry.<%= el.name %>">
 
-                <span ng-hide='match_diff.<%= el.name %> || selectedItems.<%= el.name %>' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.<%= el.name %> || selectedItems.<%= el.name %>' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.<%= el.name %> || selectedItems.<%= el.name %>'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+                <span ng-hide='match_diff.<%= el.name %> || selectedItems.<%= el.name %>'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div <%= el.entry %>-entry input-value="new_entry.<%= el.name %>" input-title="<%= el.title %>" select-field="selectedItems.<%= el.name %>"></div>
 
@@ -89,7 +89,7 @@ else {
                 <span 
                     ng-hide='selectedItems.<%= el.name %> || selectedItems.<%= el.dot_name %>[el_id]'  
                     ng-click="selectField('<%= el.dot_name %>', el_id, match_diff.<%= el.dot_name %>.src[el_id])"
-                    style="position:absolute;right:5px;top:10px;">add <i class='glyphicon glyphicon-import' ></i></span>
+                    style="position:absolute;right:5px;top:8px;">add <i class='glyphicon glyphicon-import' ></i></span>
                 <%}%>
             
                 <!-- results -->
@@ -98,7 +98,7 @@ else {
                 <span         
                     ng-click="selectField('<%= el.dot_name %>', el_id, match_diff.<%= el.dot_name %>.src[el_id])"
                     ng-hide='match_diff.results.src[el_id] ||selectedItems.<%= el.dot_name %>[el_id]' 
-                    style="position:absolute;right:5px;top:10px;">add <i class='glyphicon glyphicon-import' ></i></span>
+                    style="position:absolute;right:5px;top:8px;">add <i class='glyphicon glyphicon-import' ></i></span>
                  <%}%>
 
                 <!--encounters-->
@@ -107,7 +107,7 @@ else {
                 <span 
                     ng-hide='match_diff.findings.src[el_id] || selectedItems.<%= el.dot_name %>[el_id]'  
                     ng-click="selectField('<%= el.dot_name %>', el_id, match_diff.<%= el.dot_name %>.src[el_id])"
-                    style="position:absolute;right:5px;top:10px;">add <i class='glyphicon glyphicon-import' ></i></span>
+                    style="position:absolute;right:5px;top:8px;">add <i class='glyphicon glyphicon-import' ></i></span>
                  <%}%>
             
 

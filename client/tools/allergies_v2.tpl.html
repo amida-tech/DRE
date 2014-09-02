@@ -28,9 +28,9 @@
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.allergen', null, match_diff.observation.allergen)" ng-class="{selected: selectedItems.observation.allergen, disabled: match_diff.observation.allergen}" ng-show="new_entry.observation.allergen">
 
-                <span ng-hide='match_diff.observation.allergen || selectedItems.observation.allergen' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.observation.allergen || selectedItems.observation.allergen' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.observation.allergen || selectedItems.observation.allergen'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+                <span ng-hide='match_diff.observation.allergen || selectedItems.observation.allergen'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div coded-entry input-value="new_entry.observation.allergen" input-title="Allergen" select-field="selectedItems.observation.allergen"></div>
 
@@ -74,9 +74,9 @@
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.intolerance', null, match_diff.observation.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}" ng-show="new_entry.observation.intolerance">
 
-                <span ng-hide='match_diff.observation.intolerance || selectedItems.observation.intolerance' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.observation.intolerance || selectedItems.observation.intolerance' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.observation.intolerance || selectedItems.observation.intolerance'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+                <span ng-hide='match_diff.observation.intolerance || selectedItems.observation.intolerance'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div coded-entry input-value="new_entry.observation.intolerance" input-title="Intolerance" select-field="selectedItems.observation.intolerance"></div>
 
@@ -120,9 +120,9 @@
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.status', null, match_diff.observation.status)" ng-class="{selected: selectedItems.observation.status, disabled: match_diff.observation.status}" ng-show="new_entry.observation.status">
 
-                <span ng-hide='match_diff.observation.status || selectedItems.observation.status' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.observation.status || selectedItems.observation.status' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.observation.status || selectedItems.observation.status'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+                <span ng-hide='match_diff.observation.status || selectedItems.observation.status'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div coded-entry input-value="new_entry.observation.status" input-title="Status" select-field="selectedItems.observation.status"></div>
 
@@ -166,9 +166,9 @@
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.severity', null, match_diff.observation.severity)" ng-class="{selected: selectedItems.observation.severity, disabled: match_diff.observation.severity}" ng-show="new_entry.observation.severity">
 
-                <span ng-hide='match_diff.observation.severity || selectedItems.observation.severity' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.observation.severity || selectedItems.observation.severity' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.observation.severity || selectedItems.observation.severity'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+                <span ng-hide='match_diff.observation.severity || selectedItems.observation.severity'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div severity-entry input-value="new_entry.observation.severity" input-title="Severity" select-field="selectedItems.observation.severity"></div>
 
@@ -212,9 +212,9 @@
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.date_time', null, match_diff.observation.date_time)" ng-class="{selected: selectedItems.observation.date_time, disabled: match_diff.observation.date_time}" ng-show="new_entry.observation.date_time">
 
-                <span ng-hide='match_diff.observation.date_time || selectedItems.observation.date_time' class='label label-info' style="position:absolute;right:10px;top:10px;">Different</span>
+                <span ng-hide='match_diff.observation.date_time || selectedItems.observation.date_time' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
   
-                <span ng-hide='match_diff.observation.date_time || selectedItems.observation.date_time'  style="position:absolute;right:10px;bottom:5px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+                <span ng-hide='match_diff.observation.date_time || selectedItems.observation.date_time'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
             
                 <div date-entry input-value="new_entry.observation.date_time" input-title="Effective" select-field="selectedItems.observation.date_time"></div>
 
@@ -265,7 +265,7 @@
                 <span 
                     ng-hide='selectedItems.observation_reactions || selectedItems.observation.reactions[el_id]'  
                     ng-click="selectField('observation.reactions', el_id, match_diff.observation.reactions.src[el_id])"
-                    style="position:absolute;right:5px;top:10px;">add <i class='glyphicon glyphicon-import' ></i></span>
+                    style="position:absolute;right:5px;top:8px;">add <i class='glyphicon glyphicon-import' ></i></span>
                 
             
                 <!-- results -->
