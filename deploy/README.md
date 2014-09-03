@@ -8,6 +8,7 @@ Note:  These scripts are designed to work with Red Hat Enterprise Linux 6.5 (or 
 ###Vagrant Instructions
 
 Navigate to /vagrant folder of this directory, and type:
+
 ```
 vagrant up
 ```
@@ -15,6 +16,7 @@ vagrant up
 Vagrant will automatically execute the Ansible script and deploy the instance locally.
 
 You can access the box via ssh by typing: 
+
 ```
 vagrant ssh
 ```
@@ -22,9 +24,10 @@ vagrant ssh
 
 ###Server Instructions
 
+To deploy to a server aside from a Vagrant VM, you will need to configure that server to allow you to access it from your computer.
 
-Check if mongo is running (on server):
+To get a webserver running, you typically need to specify a hosts file, a private key, and the script.  There is a hosts file which can be amended in the `ansible/hosts` directory with your servers.  It is usually required to specify a private key as well.  The below command, when run from the `ansible` directory, will work.
 
-service mongod status
-
-To get a webserver running, you need to specify a hosts file, and a private key, and the script:
+```
+ansible-playbook playbook.yml -i "hosts/hosts.ini" --private-key="your_key.pem"
+```
