@@ -95,6 +95,7 @@ Release 1.1 (September 2014)
 - Node.js (v0.10+) and NPM
 - Grunt.js
 - MongoDB
+- Redis
 
 ```
 # you need Node.js and Grunt.js installed
