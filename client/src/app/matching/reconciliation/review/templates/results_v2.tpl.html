@@ -73,17 +73,17 @@
     <tr class="list-group list-matching">
         <td class="match" valign="top">
             <div class="list-group-item merge-item" ng-repeat="(el_id, el_entry) in new_entry.results" 
-                ng-class="{selected: selectedItems.results[el_id], disabled: match_diff.results.src[el_id]}">
+                ng-class="{selected: selectedItems.results.src_id[el_id], disabled: match_diff.results.src[el_id]}">
 
                 <!-- allergies -->
                 
             
                 <!-- results -->
                 
-                <span ng-hide='match_diff.results.src[el_id] || selectedItems.results[el_id]' class='label label-info' style="position:absolute;right:50px;top:10px;">Different</span>
+                <span ng-hide='match_diff.results.src[el_id] || selectedItems.results.src_id[el_id]' class='label label-info' style="position:absolute;right:50px;top:10px;">Different</span>
                 <span         
                     ng-click="selectField_subel('results', el_id, match_diff.results.src[el_id])"
-                    ng-hide='match_diff.results.src[el_id] ||selectedItems.results[el_id]' 
+                    ng-hide='match_diff.results.src[el_id] ||selectedItems.results.src_id[el_id]' 
                     style="position:absolute;right:5px;top:8px;">add <i class='glyphicon glyphicon-import' ></i></span>
                  
 
@@ -101,7 +101,7 @@
         </td>
 
         <td class="match" valign="top">
-            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.results"  ng-class="{selected: selectedItems.results[el_id], disabled: match_diff.results.dest[el_id]}">
+            <div class="list-group-item  merge-item" ng-repeat="(el_id, el_entry) in update_entry.results"  ng-class="{selected: selectedItems.results.dest_id[el_id], disabled: match_diff.results.dest[el_id]}">
 
 
 
@@ -110,7 +110,7 @@
             
                 <!-- results -->
                 
-                <span ng-show='selectedItems.results[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Added</span>
+                <span ng-show='selectedItems.results.src_id[el_id]' class='label label-success' style="position:absolute;right:30px;top:10px;">Added</span>
                 <div 
                     ng-click="removeField_subel('results', el_id, match_diff.results.src[el_id])"
                     style="position:absolute;right:10px;top:10px;"><span class="glyphicon glyphicon-remove-circle"></span></div>                
@@ -172,7 +172,7 @@
     </tr>
     
     <pre>{{ selectedItems|json}}</pre>
-    <pre>{{ match_diff |json }}</pre>
+    <!-- <pre>{{ match_diff |json }}</pre> -->
     <!-- <pre>{{ update_entry.results |json }}</pre> -->
     
 </table>
