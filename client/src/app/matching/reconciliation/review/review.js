@@ -317,9 +317,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
         $scope.subTemplatePath = "templates/matching/reconciliation/review/templates/" + $scope.section + "_sub.tpl.html";
 
 
-        // for subelements
-
-
+        // for subelements (results)
         $scope.removeField_subel = function(entry, entry_index, entry_status) {
 
             //Don't process hidden items.
@@ -329,35 +327,22 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
             var splitEntry = [];
 
-            //Only array objects should get indexes.
-            if (entry_index >= 0 && entry_index !== null) {
-                    if (!$scope.selectedItems[entry][entry_index]) {
-                        $scope.update_entry[entry].splice(entry_index, 1);
-                        $scope.match_diff[entry].dest.splice(entry_index, 1);
-                    } else {
-                        $scope.selectedItems[entry][entry_index] = false;
-                        $scope.update_entry[entry].splice(entry_index, 1);
-                        $scope.match_diff[entry].dest.splice(entry_index, 1);
-                    }
-                
-                //Handles regular.
+            if (!$scope.selectedItems.results.src_id[entry_index]) {
+                $scope.selectedItems.results.dest_id.splice(entry_index, 1);
+                $scope.update_entry[entry].splice(entry_index, 1);
+                $scope.match_diff[entry].dest.splice(entry_index, 1);
             } else {
-                    if (!$scope.selectedItems[entry]) {
-                        console.log($scope.new_entry);
-                        $scope.selectedItems[entry] = true;
-                        $scope.update_entry[entry] = $scope.new_entry[entry];
-                    } else {
-                        $scope.selectedItems[entry] = false;
-                        $scope.update_entry[entry] = $scope.current_entry[entry];
-                    }
-                }
-
+                $scope.selectedItems.results.src_id[entry_index] = false;
+                $scope.selectedItems.results.dest_id.splice(entry_index, 1);
+                $scope.update_entry[entry].splice(entry_index, 1);
+                $scope.match_diff[entry].dest.splice(entry_index, 1);
+            }
             //recalculate changed status
             isChanged();
 
         };
 
-
+        // for subelements (results)
         $scope.selectField_subel = function(entry, entry_index, entry_status) {
             console.log("select field", entry, entry_status);
             if ($scope.selectedItems[entry] === true) {
@@ -371,37 +356,25 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
             var splitEntry = [];
 
-            if (entry_index >= 0 && entry_index !== null) {
-                    if (!$scope.selectedItems[entry][entry_index]) {
-                        $scope.selectedItems[entry][entry_index] = true;
-                        $scope.update_entry[entry].splice(entry_index, 0, $scope.new_entry[entry][entry_index]);
-                        //Need to inject because adding a record
-                        $scope.match_diff[entry].dest.splice(entry_index, 0, false);
-                        //$scope.match_diff[entry].dest[entry_index] = false;
-                    } else {
-                        $scope.selectedItems[entry][entry_index] = false;
-                        $scope.update_entry[entry].splice(entry_index, 1);
-                        $scope.match_diff[entry].dest.splice(entry_index, 1);
-                    }
-                //Handles regular.
+            if (!$scope.selectedItems.results.src_id[entry_index]) {
+                $scope.selectedItems.results.src_id[entry_index] = true;
+                $scope.selectedItems.results.dest_id.splice(entry_index, 0, true);
+                $scope.update_entry[entry].splice(entry_index, 0, $scope.new_entry[entry][entry_index]);
+                //Need to inject because adding a record
+                $scope.match_diff[entry].dest.splice(entry_index, 0, false);
+                //$scope.match_diff[entry].dest[entry_index] = false;
             } else {
-                    if (!$scope.selectedItems[entry]) {
-                        console.log($scope.new_entry);
-                        $scope.selectedItems[entry] = true;
-                        $scope.update_entry[entry] = $scope.new_entry[entry];
-                    } else {
-                        $scope.selectedItems[entry] = false;
-                        $scope.update_entry[entry] = $scope.current_entry[entry];
-                    }
-                }
+                $scope.selectedItems.results.src_id[entry_index] = false;
+                $scope.selectedItems.results.dest_id.splice(entry_index, 1, false);
+                $scope.update_entry[entry].splice(entry_index, 1);
+                $scope.match_diff[entry].dest.splice(entry_index, 1);
+            }
 
             //recalculate changed status
             isChanged();
 
         };
-
-
-        // end subelements
+        // end subelements functions
 
 
         $scope.removeField = function(entry, entry_index, entry_status) {
