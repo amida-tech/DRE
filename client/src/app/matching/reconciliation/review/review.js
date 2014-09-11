@@ -45,6 +45,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 $scope.selectedItems.results = {};
                 $scope.selectedItems.results.src_id = [];
                 $scope.selectedItems.results.dest_id = [];
+                $scope.selectedItems.results.key = [];
             }
 
             max_src = 0;
@@ -96,6 +97,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             $scope.selectedItems.results = {};
             $scope.selectedItems.results.src_id = [];
             $scope.selectedItems.results.dest_id = [];
+            $scope.selectedItems.results.key = [];
         }
 
         var max_src = 0;
@@ -221,6 +223,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
                 for (var dest_ri in $scope.current_entry.results) {
                     $scope.match_diff.results.dest.push(false);
                     $scope.selectedItems.results.dest_id.push(false);
+                    $scope.selectedItems.results.key.push(null);
                 }
                 tempArrayDiff = $scope.current_match.subelements.results;
 
@@ -327,13 +330,15 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
 
             var splitEntry = [];
 
-            if (!$scope.selectedItems.results.src_id[entry_index]) {
+            if (!$scope.selectedItems.results.src_id[$scope.selectedItems.results.key[entry_index]]) {
                 $scope.selectedItems.results.dest_id.splice(entry_index, 1);
+                $scope.selectedItems.results.key.splice(entry_index, 1);
                 $scope.update_entry[entry].splice(entry_index, 1);
                 $scope.match_diff[entry].dest.splice(entry_index, 1);
             } else {
-                $scope.selectedItems.results.src_id[entry_index] = false;
+                $scope.selectedItems.results.src_id[$scope.selectedItems.results.key[entry_index]] = false;
                 $scope.selectedItems.results.dest_id.splice(entry_index, 1);
+                $scope.selectedItems.results.key.splice(entry_index, 1);
                 $scope.update_entry[entry].splice(entry_index, 1);
                 $scope.match_diff[entry].dest.splice(entry_index, 1);
             }
@@ -359,13 +364,13 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             if (!$scope.selectedItems.results.src_id[entry_index]) {
                 $scope.selectedItems.results.src_id[entry_index] = true;
                 $scope.selectedItems.results.dest_id.splice(entry_index, 0, true);
+                $scope.selectedItems.results.key.splice(entry_index, 0, entry_index);
                 $scope.update_entry[entry].splice(entry_index, 0, $scope.new_entry[entry][entry_index]);
                 //Need to inject because adding a record
                 $scope.match_diff[entry].dest.splice(entry_index, 0, false);
                 //$scope.match_diff[entry].dest[entry_index] = false;
             } else {
                 $scope.selectedItems.results.src_id[entry_index] = false;
-                $scope.selectedItems.results.dest_id.splice(entry_index, 1, false);
                 $scope.update_entry[entry].splice(entry_index, 1);
                 $scope.match_diff[entry].dest.splice(entry_index, 1);
             }
