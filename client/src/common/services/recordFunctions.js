@@ -47,14 +47,21 @@ angular.module('services.recordFunctions', [])
                     inputSection.name = inputSection.vital.name;
                 } else if (type === "plan_of_care") {
                     inputSection.name = inputSection.plan.name;
-                } else if (type === "payers") {
-                    inputSection.name = inputSection.policy.insurance.performer.organization[0].name[0];
                 } else if (type === "insurance") {
-                    if (inputSection.plan_name) {
-                        inputSection.name = inputSection.plan_name;
-                    } else if (inputSection.payer_name) {
-                        inputSection.name = inputSection.payer_name;
+
+                    //Just take first organizational name.
+                    if (inputSection.policy) {
+                        if (inputSection.policy.insurance) {
+                            if (inputSection.policy.insurance.performer) {
+                                if (inputSection.policy.insurance.performer.organization.length > 0) {
+                                    if (inputSection.policy.insurance.performer.organization[0].name.length > 0) {
+                                        inputSection.name = inputSection.policy.insurance.performer.organization[0].name[0];
+                                    }
+                                }
+                            }
+                        }
                     }
+
                 }
                 //claims
                 else if (inputSection.payer || inputSection.number) {
@@ -424,8 +431,6 @@ angular.module('services.recordFunctions', [])
                 url: '/api/v1/record/' + section
             }).
             success(function(data, status, headers, config) {
-
-                console.log(data[section]);
 
                 $scope.entries = data[section];
 
