@@ -18,9 +18,9 @@
   ],
   "dependencies": {
     "async": "0.9.x",
-    "blue-button": "^1.1.0",
-    "blue-button-match": "^1.1.0",
-    "blue-button-meta": "^1.1.0",
+    "blue-button": "^1.2.0",
+    "blue-button-match": "^1.2.0",
+    "blue-button-meta": "^1.2.0",
     "blue-button-record": "^1.1.0",
     "bluebird": "2.2.x",
     "connect-redis": "1.4.7",

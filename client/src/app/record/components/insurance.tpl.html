@@ -35,58 +35,112 @@
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-
 			<a data-toggle="collapse" data-parent="#accordian-insurance" data-target="#insurance-{{$index}}">
 				<div class="panel-title" style="cursor:pointer;">
 					<span style="text-transform:uppercase;">{{insurance.name}} </span>
-					<span class="pull-right" style="text-transform:uppercase;">{{insurance.date_time.low.displayDate}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{insurance.participant.date_time.low.displayDate}}</span>
 				</div>
 			</a>
 		</div>
 		<div id="insurance-{{$index}}" class="panel-collapse collapse">
 			<div class="panel-body">
 				<div id="myTabContent" >
-					<div class="col-md-12">
-						<h4>Details</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.policy_number">
-							<div class="pull-left col-md-12"><strong>Policy Number:</strong></div><br/>
-							<div class="pull-left col-md-12">{{insurance.policy_number}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.plan_id">
-							<div class="pull-left col-md-12"><strong>Plan id:</strong></div><br/>
-							<div class="pull-left col-md-12">{{insurance.plan_id.identifier}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.date[0].displayDate">
+					<div class="col-md-12" ng-show="insurance.participant">
+						<h4>Insured</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.participant.date_time.low">
 							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
-							<div class="pull-left col-md-12">{{insurance.date[0].displayDate}}</div>
+							<div class="pull-left col-md-12">{{insurance.participant.date_time.low.displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.date[1].displayDate">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.participant.date_time.high">
 							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
-							<div class="pull-left col-md-12">{{insurance.date[1].displayDate}}</div>
+							<div class="pull-left col-md-12">{{insurance.participant.date_time.high.displayDate}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.type">
-							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
-							<div class="pull-left col-md-12" ng-repeat="each_type in insurance.type">{{each_type}}{{$last ? '' : ', '}}</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.participant.performer.identifiers" ng-repeat="each_identifier in insurance.participant.performer.identifiers">
+							<div class="pull-left col-md-12"><strong>Plan ID:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-show="each_identifier.extension">{{each_identifier.extension}}</div>
+							<div class="pull-left col-md-12" ng-hide="each_identifier.extension">{{each_identifier.identifier}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.participant.name" ng-repeat="each_name in insurance.participant.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{each_name.displayName}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.participant.performer.address" ng-repeat="each_address in insurance.participant.performer.address">
+							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="each_line in each_address.displayAddress">{{each_line}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" ng-show="insurance.policy.insurance.performer.organization">
+						<h4>Insurance</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="(ins_number, insurance_name) in insurance.policy.insurance.performer.organization[0].name">
+							<div class="pull-left col-md-12" ng-show="ins_number === 0"><strong>Title:</strong></div>
+							<div class="pull-left col-md-12" ng-hide="ins_number === 0"><strong>Detail {{ins_number}}:</strong></div><br/>
+							<div class="pull-left col-md-12">{{insurance_name}}</div>
+						</div>
+
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.policy.insurance.performer.organization[0].address" ng-repeat="each_address in insurance.policy.insurance.performer.organization[0].address">
+							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="each_line in each_address.displayAddress">{{each_line}}</div>
+						</div>
+
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.policy.insurance.performer.organization[0].phone" ng-repeat="each_phone in insurance.policy.insurance.performer.organization[0].phone">
+							<div class="pull-left col-md-12"><strong>Phone:</strong></div><br/>
+							<div class="pull-left col-md-12">{{each_phone.number}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" ng-show="insurance.guarantor">
+						<h4>Guarantor</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.guarantor.name" ng-repeat="each_name in insurance.guarantor.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{each_name.displayName}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.guarantor.address" ng-repeat="each_address in insurance.guarantor.address">
+							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="each_line in each_address.displayAddress">{{each_line}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.guarantor.phone" ng-repeat="each_phone in insurance.guarantor.phone">
+							<div class="pull-left col-md-12"><strong>Phone:</strong></div><br/>
+							<div class="pull-left col-md-12">{{each_phone.number}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.guarantor.identifiers" ng-repeat="each_identifier in insurance.guarantor.identifiers">
+							<div class="pull-left col-md-12"><strong>Identifier:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-show="each_identifier.extension">{{each_identifier.extension}}</div>
+							<div class="pull-left col-md-12" ng-hide="each_identifier.extension">{{each_identifier.identifier}}</div>
 						</div>
 					</div>
 					
-					<div class="col-md-12 pull-left" ng-show="insurance.payer_name || insurance.payer_id">
-						<h4>Payer</h4>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.payer_name">
-							<div class="pull-left col-md-12"><strong>Payer Name:</strong></div><br/>
-							<div class="pull-left col-md-12">{{insurance.payer_name}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.payer_id.identifier">
-							<div class="pull-left col-md-12"><strong>Payer Identifier:</strong></div><br/>
-							<div class="pull-left col-md-12">{{insurance.payer_id.identifier}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.payer_id.identifier_type">
-							<div class="pull-left col-md-12"><strong>Identifier Type:</strong></div><br/>
-							<div class="pull-left col-md-12">{{insurance.payer_id.identifier_type}}</div>
-						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="single_address in insurance.addresses" ng-show="insurance.addresses">
+					<div class="col-md-12" ng-show="insurance.policy_holder.performer">
+						<h4>Policy Holder</h4>
+
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.policy_holder.performer.address" ng-repeat="each_address in insurance.policy_holder.performer.address">
 							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
-							<div class="pull-left col-md-12" ng-repeat="each_address in single_address.displayAddress">{{each_address}}</div>
+							<div class="pull-left col-md-12" ng-repeat="each_line in each_address.displayAddress">{{each_line}}</div>
+						</div>
+
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.policy_holder.performer.identifiers" ng-repeat="each_identifier in insurance.policy_holder.performer.identifiers">
+							<div class="pull-left col-md-12"><strong>Plan ID:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-show="each_identifier.extension">{{each_identifier.extension}}</div>
+							<div class="pull-left col-md-12" ng-hide="each_identifier.extension">{{each_identifier.identifier}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" ng-show="insurance.authorization.procedure.code">
+						<h4>Authorization</h4>
+
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.authorization.procedure.code.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{insurance.authorization.procedure.code.name}}</div>
+						</div>
+
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.authorization.procedure.code.code">
+							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{insurance.authorization.procedure.code.code}}</div>
+						</div>
+
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.authorization.procedure.code.code_system_name">
+							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{insurance.authorization.procedure.code.code_system_name}}</div>
 						</div>
 
 					</div>

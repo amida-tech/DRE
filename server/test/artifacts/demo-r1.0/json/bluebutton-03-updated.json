@@ -1244,7 +1244,7 @@
                             "interpretation": {
                                 "name": "Suceptible",
                                 "code": "S",
-                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                                "code_system_name": "Observation Interpretation"
                             }
                         }
                     }
@@ -1258,7 +1258,7 @@
                     "interpretation": {
                         "name": "Normal",
                         "code": "N",
-                        "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                        "code_system_name": "Observation Interpretation"
                     }
                 }
             }
@@ -1328,7 +1328,7 @@
                             "interpretation": {
                                 "name": "Suceptible",
                                 "code": "S",
-                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                                "code_system_name": "Observation Interpretation"
                             }
                         }
                     }
@@ -1342,7 +1342,7 @@
                     "interpretation": {
                         "name": "Normal",
                         "code": "N",
-                        "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                        "code_system_name": "Observation Interpretation"
                     }
                 }
             }
@@ -1413,7 +1413,7 @@
                             "interpretation": {
                                 "name": "Suceptible",
                                 "code": "S",
-                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                                "code_system_name": "Observation Interpretation"
                             }
                         }
                     }
@@ -1485,7 +1485,7 @@
                             "interpretation": {
                                 "name": "Suceptible",
                                 "code": "S",
-                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                                "code_system_name": "Observation Interpretation"
                             }
                         }
                     }
@@ -1499,7 +1499,7 @@
                     "interpretation": {
                         "name": "Normal",
                         "code": "N",
-                        "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                        "code_system_name": "Observation Interpretation"
                     }
                 }
             }
@@ -1563,7 +1563,7 @@
                             "interpretation": {
                                 "name": "Suceptible",
                                 "code": "S",
-                                "code_system_name": "OID 2.16.840.1.113883.1.11.78"
+                                "code_system_name": "Observation Interpretation"
                             }
                         }
                     }
