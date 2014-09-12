@@ -63,6 +63,10 @@
 							<div class="pull-left col-md-12"><strong>Onset Age:</strong></div><br/>
 							<div class="pull-left col-md-12">{{entry.onsetAgeDisplay}}</div>
 						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.status">
+							<div class="pull-left col-md-12"><strong>Status:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.status.name}}</div>
+						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.problem.code.code">
 							<div class="pull-left col-md-12"><strong>Problem Code:</strong></div><br/>
 							<div class="pull-left col-md-12">{{entry.problem.code.code}}</div>
@@ -77,9 +81,9 @@
 						</div>
 					</div>
 
-					<div class="col-md-12" ng-show="problem.problem.translations">
+					<div class="col-md-12" ng-show="entry.problem.code.translations">
 						<h4>Other Descriptions</h4>
-						<div ng-repeat=" translation in problem.problem.translations" class="col-md-12">
+						<div ng-repeat=" translation in entry.problem.code.translations" class="col-md-12">
 							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
 								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
 								<div class="pull-left col-md-12">{{translation.name}}</div>

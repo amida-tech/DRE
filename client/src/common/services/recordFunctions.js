@@ -193,6 +193,7 @@ angular.module('services.recordFunctions', [])
         };
 
         this.formatDateTime = function (date_time) {
+
             if (date_time.point) {
                 return this.formatDate(date_time.point);
             } else if (date_time.low && date_time.high) {
@@ -420,14 +421,33 @@ angular.module('services.recordFunctions', [])
                         this.formatAddress(entries[i].performer.address[ipa]);
                     }
 
-                    this.formatQuantity(entries[i].administration.dose);
+                    if (entries[i].administration) {
+                        this.formatQuantity(entries[i].administration.dose);    
+                    }
+                    
                 } else if (section === "procedures") {
 
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
 
+                } else if (section === "encounters") {
+
+                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+
+                    if (entries[i].performers) {
+                        for (var iper in entries[i].performers) {
+                            if (entries[i].performers[iper].name) {
+                                for (var ipername in entries[i].performers[iper].name) {
+                                    this.formatName(entries[i].performers[iper].name[ipername]);    
+                                }
+                                
+                            }
+                        }
+                    }
+
                 }
-                // social_history, vitals, procedures, immunizations, encounters
+                // social_history, vitals, procedures, immunizations
                 else {
 
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);

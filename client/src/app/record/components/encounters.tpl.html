@@ -104,6 +104,14 @@
 						</div>
 					</div>
 
+					<div class="col-md-12 pull-left" ng-repeat="performer in entry.performers">
+						<h4>Performer</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="performer.name" ng-repeat="performer_name in performer.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{performer_name.displayName}}</div>
+						</div>
+					</div>
+
 					<div class="col-md-12 pull-left" ng-repeat="location in entry.locations">
 						<h4>Location</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="location.name">
