@@ -401,8 +401,10 @@ angular.module('services.recordFunctions', [])
                         entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
                     }
 
-                    if (angular.isDefined(entries[i].supply.date_time)) {
-                        this.formatDateTime(entries[i].supply.date_time);
+                    if (angular.isDefined(entries[i].supply)) {
+                        if (angular.isDefined(entries[i].supply.date_time)) {
+                            this.formatDateTime(entries[i].supply.date_time);
+                        }
                     }
 
                 } else if (section === "payers") {
@@ -460,7 +462,7 @@ angular.module('services.recordFunctions', [])
                         }
                     }
 
-                }
+                } 
                 // social_history, vitals, procedures, immunizations
                 else {
 

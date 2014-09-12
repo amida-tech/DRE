@@ -73,7 +73,7 @@
 					<div class="col-md-12" ng-show="insurance.policy">
 						<h4>Insurance</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.policy.identifiers" ng-repeat="each_identifier in insurance.policy.identifiers">
-							<div class="pull-left col-md-12"><strong>Group ID:</strong></div><br/>
+							<div class="pull-left col-md-12"><strong>Identifier:</strong></div><br/>
 							<div class="pull-left col-md-12" ng-show="each_identifier.extension">{{each_identifier.extension}}</div>
 							<div class="pull-left col-md-12" ng-hide="each_identifier.extension">{{each_identifier.identifier}}</div>
 						</div>
