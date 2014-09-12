@@ -1,7 +1,8 @@
 var express = require('express');
 var app = module.exports = express();
 var bb = require('blue-button');
-
+var bbm = require('blue-button-meta');
+var _ = require("underscore");
 
 function extractRecord(inputRecord, callback) {
     // now supports following formats:
@@ -32,8 +33,14 @@ function extractRecord(inputRecord, callback) {
         callback(parseError);
     }
 
-    console.log(">>>>");
     console.log("record format: ", bbRecordType.type);
+
+    //filter all unsupported sections
+    var diff= _.difference(Object.keys(bbRecord.data), bbm.supported_sections);
+    for (var sec in diff){
+    	console.log("removing extra section: ",diff[sec]);
+    	delete bbRecord.data[diff[sec]];
+    }
 
     if (supported_formats.indexOf(bbRecordType.type) >= 0) {
         callback(null, bbRecordType.type, bbRecord.data);
