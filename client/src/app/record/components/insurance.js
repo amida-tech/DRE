@@ -77,6 +77,15 @@ angular.module('dre.record.insurance', [])
                     }
                 }
 
+                if ($scope.insurance[i].participant.date_time) {
+                    $scope.insurance[i].attribute = $scope.insurance[i].participant.date_time.low.displayDate;
+                } else {
+                    $scope.insurance[i].attribute = 'DATE NOT REPORTED';
+                }
+
+
+
+
                 if ($scope.insurance[i].policy) {
                     if ($scope.insurance[i].policy.insurance) {
                         if ($scope.insurance[i].policy.insurance.performer) {

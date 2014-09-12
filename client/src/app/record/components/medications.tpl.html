@@ -108,7 +108,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-show="entry.supply">
+					<div class="col-md-12 pull-left" ng-show="entry.supply.date_time || entry.supply.quantity || entry.supply.repeatNumber || entry.supply.author.organization">
 						<h4>Supply</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.supply.date_time.point">
 							<div class="pull-left col-md-12"><strong>Date:</strong></div><br/>

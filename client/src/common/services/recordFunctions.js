@@ -193,6 +193,7 @@ angular.module('services.recordFunctions', [])
         };
 
         this.formatDateTime = function (date_time) {
+
             if (date_time.point) {
                 return this.formatDate(date_time.point);
             } else if (date_time.low && date_time.high) {
@@ -356,8 +357,10 @@ angular.module('services.recordFunctions', [])
                         resolved: 1
                     };
 
-                    if (angular.isDefined(entries[i].problem.date_time)) {
-                        entries[i].attribute = this.formatDateTime(entries[i].problem.date_time);
+                    if (angular.isDefined(entries[i].date_time)) {
+                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    } else {
+                        entries[i].attribute = 'DATE NOT REPORTED';
                     }
                     if (angular.isDefined(entries[i].status)) {
                         var status = entries[i].status.name;
@@ -398,8 +401,10 @@ angular.module('services.recordFunctions', [])
                         entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
                     }
 
-                    if (angular.isDefined(entries[i].supply.date_time)) {
-                        this.formatDateTime(entries[i].supply.date_time);
+                    if (angular.isDefined(entries[i].supply)) {
+                        if (angular.isDefined(entries[i].supply.date_time)) {
+                            this.formatDateTime(entries[i].supply.date_time);
+                        }
                     }
 
                 } else if (section === "payers") {
@@ -420,14 +425,45 @@ angular.module('services.recordFunctions', [])
                         this.formatAddress(entries[i].performer.address[ipa]);
                     }
 
-                    this.formatQuantity(entries[i].administration.dose);
+                    if (entries[i].administration) {
+                        this.formatQuantity(entries[i].administration.dose);    
+                    }
+                    
                 } else if (section === "procedures") {
 
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
 
-                }
-                // social_history, vitals, procedures, immunizations, encounters
+                    if (entries[i].performer) {
+                        for (var iperf in entries[i].performer) {
+                            if (entries[i].performer[iperf].name) {
+                                for (var iperfname in entries[i].performer[iperf].name) {
+                                    this.formatName(entries[i].performer[iperf].name[iperfname]);
+                                }
+                            }
+                        }
+                    }
+
+
+
+                } else if (section === "encounters") {
+
+                    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+
+                    if (entries[i].performers) {
+                        for (var iper in entries[i].performers) {
+                            if (entries[i].performers[iper].name) {
+                                for (var ipername in entries[i].performers[iper].name) {
+                                    this.formatName(entries[i].performers[iper].name[ipername]);    
+                                }
+                                
+                            }
+                        }
+                    }
+
+                } 
+                // social_history, vitals, procedures, immunizations
                 else {
 
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);

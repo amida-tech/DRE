@@ -130,6 +130,11 @@
 							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
 							<div class="pull-left col-md-12" ng-repeat="performer_display_address in performer_address.displayAddress">{{performer_display_address}}</div>
 						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.performer.identifiers" ng-repeat="each_identifier in entry.performer.identifiers">
+							<div class="pull-left col-md-12"><strong>Identifier:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-show="each_identifier.extension">{{each_identifier.extension}}</div>
+							<div class="pull-left col-md-12" ng-hide="each_identifier.extension">{{each_identifier.identifier}}</div>
+						</div>
 					</div>
 
 					<div class="col-md-12 pull-left" ng-show="entry.instructions">
