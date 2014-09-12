@@ -357,8 +357,10 @@ angular.module('services.recordFunctions', [])
                         resolved: 1
                     };
 
-                    if (angular.isDefined(entries[i].problem.date_time)) {
-                        entries[i].attribute = this.formatDateTime(entries[i].problem.date_time);
+                    if (angular.isDefined(entries[i].date_time)) {
+                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    } else {
+                        entries[i].attribute = 'DATE NOT REPORTED';
                     }
                     if (angular.isDefined(entries[i].status)) {
                         var status = entries[i].status.name;
