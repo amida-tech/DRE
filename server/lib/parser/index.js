@@ -22,7 +22,7 @@ function extractRecord(inputRecord, callback) {
         } else if (bbRecordType.type === 'blue-button.js') {
             bbRecord = {
                 "type": "blue-button.js",
-                "data": JSON.parse(inputRecord)
+                "data": JSON.parse(inputRecord).data
             };
         }
 
