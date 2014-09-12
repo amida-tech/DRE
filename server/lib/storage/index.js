@@ -141,13 +141,14 @@ function getSavedRecords(username, saved_sections, callback) {
 
 //Parses raw inbound records into components.
 function parseRecord(record_type, record_data, callback) {
-    if (record_type === 'application/xml' || record_type === 'text/xml' || record_type == 'text/plain') {
-        extractRecord(record_data, function(err, xml_type, parsed_record) {
+    var supported_formats = ["ccda", "c32", "cda", "cms", "blue-button.js"];
+    if (record_type === 'application/xml' || record_type === 'text/xml' || record_type == 'text/plain' || record_type == 'application/json') {
+        extractRecord(record_data, function(err, format_type, parsed_record) {
             if (err) {
                 callback(err);
             } else {
-                if (xml_type === 'ccda' || xml_type === 'cms') {
-                    callback(null, xml_type, parsed_record);
+                if (supported_formats.indexOf(format_type) >= 0) {
+                    callback(null, format_type, parsed_record);
                 } else {
                     callback(null, null);
                 }
