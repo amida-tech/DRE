@@ -430,6 +430,18 @@ angular.module('services.recordFunctions', [])
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
 
+                    if (entries[i].performer) {
+                        for (var iperf in entries[i].performer) {
+                            if (entries[i].performer[iperf].name) {
+                                for (var iperfname in entries[i].performer[iperf].name) {
+                                    this.formatName(entries[i].performer[iperf].name[iperfname]);
+                                }
+                            }
+                        }
+                    }
+
+
+
                 } else if (section === "encounters") {
 
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);

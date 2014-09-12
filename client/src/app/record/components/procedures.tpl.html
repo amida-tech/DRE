@@ -95,8 +95,12 @@
 					<div class="col-md-12 pull-left" ng-repeat="provider in entry.performer">
 						<h4>Performer</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="provider.organization[0].name">
-							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12"><strong>Organization Name:</strong></div><br/>
 							<div class="pull-left col-md-12" ng-repeat="name in provider.organization[0].name">{{name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="provider.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="name in provider.name">{{name.displayName}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="provider.organization[0].phone" ng-repeat="phone in provider.organization[0].phone">
 							<div class="pull-left col-md-12"><strong>Phone:</strong></div><br/>
@@ -138,7 +142,7 @@
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myProceduresModal{{$index}}">Sources</button>
 				</div>
 
-				<!--<pre>{{entry | json}}</pre>-->
+				<pre>{{entry | json}}</pre>
 			</div>
 		</div>
 	</div>
