@@ -98,6 +98,10 @@
 							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
 							<div class="pull-left col-md-12" ng-repeat="name in provider.organization[0].name">{{name}}</div>
 						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="provider.organization[0].phone" ng-repeat="phone in provider.organization[0].phone">
+							<div class="pull-left col-md-12"><strong>Phone:</strong></div><br/>
+							<div class="pull-left col-md-12" >{{phone.number}}</div>
+						</div>
 					</div>
 
 					<div class="col-md-12 pull-left" ng-repeat="location in entry.locations" ng-show="entry.locations">

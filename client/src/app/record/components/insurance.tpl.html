@@ -70,8 +70,14 @@
 						</div>
 					</div>
 
-					<div class="col-md-12" ng-show="insurance.policy.insurance.performer.organization">
+					<div class="col-md-12" ng-show="insurance.policy">
 						<h4>Insurance</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="insurance.policy.identifiers" ng-repeat="each_identifier in insurance.policy.identifiers">
+							<div class="pull-left col-md-12"><strong>Group ID:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-show="each_identifier.extension">{{each_identifier.extension}}</div>
+							<div class="pull-left col-md-12" ng-hide="each_identifier.extension">{{each_identifier.identifier}}</div>
+						</div>
+
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="(ins_number, insurance_name) in insurance.policy.insurance.performer.organization[0].name">
 							<div class="pull-left col-md-12" ng-show="ins_number === 0"><strong>Title:</strong></div>
 							<div class="pull-left col-md-12" ng-hide="ins_number === 0"><strong>Detail {{ins_number}}:</strong></div><br/>

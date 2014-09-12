@@ -108,6 +108,26 @@
 						</div>
 					</div>
 
+					<div class="col-md-12 pull-left" ng-show="entry.supply">
+						<h4>Supply</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.supply.date_time.point">
+							<div class="pull-left col-md-12"><strong>Date:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.supply.date_time.point.displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.supply.quantity">
+							<div class="pull-left col-md-12"><strong>Quantity:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.supply.quantity}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.supply.repeatNumber >= 0">
+							<div class="pull-left col-md-12"><strong>Repeat:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.supply.repeatNumber}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.supply.author.organization.name" ng-repeat="org_name in entry.supply.author.organization.name">
+							<div class="pull-left col-md-12"><strong>Organization:</strong></div><br/>
+							<div class="pull-left col-md-12">{{org_name}}</div>
+						</div>
+					</div>
+
 					<div class="col-md-12 pull-left" ng-show="entry.precondition">
 						<h4>Precondition</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.precondition.code.code">

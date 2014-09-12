@@ -2,15 +2,14 @@ angular.module('services.recordFunctions', [])
 
 .service('recordFunctions', ['$filter', '$http',
 
-    function($filter, $http) {
+    function ($filter, $http) {
 
-        this.minDateFromArray = function(inputArray) {
+        this.minDateFromArray = function (inputArray) {
             var sortedArray = $filter('orderBy')(inputArray, "-date");
             return sortedArray[0];
         };
 
-
-        this.truncateName = function(inputName) {
+        this.truncateName = function (inputName) {
             //console.log(inputName.length);
             if (inputName.length > 47) {
                 inputName = inputName.substring(0, 47) + "...";
@@ -20,7 +19,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //Builds field displayName attribute.
-        this.extractName = function(inputSection, type) {
+        this.extractName = function (inputSection, type) {
 
             //console.log('input section - ', type);
             //console.log(JSON.stringify(inputSection, null, 4));
@@ -42,12 +41,22 @@ angular.module('services.recordFunctions', [])
                 } else if (type === "results") {
                     inputSection.name = inputSection.result_set.name;
                 } else if (type === "procedures") {
-                    inputSection.name = inputSection.procedure.name;
+
+                    if (inputSection.procedure.name) {
+                        inputSection.name = inputSection.procedure.name;
+                    } else if (inputSection.procedure.code) {
+                        inputSection.name = "Procedure #" + inputSection.procedure.code;
+                    } else {
+                        inputSection.name = "Procedure Unknown";
+                    }
+
                 } else if (type === "vitals") {
                     inputSection.name = inputSection.vital.name;
                 } else if (type === "plan_of_care") {
                     inputSection.name = inputSection.plan.name;
                 } else if (type === "insurance") {
+
+                    var default_name = "Insurance";
 
                     //Just take first organizational name.
                     if (inputSection.policy) {
@@ -56,10 +65,20 @@ angular.module('services.recordFunctions', [])
                                 if (inputSection.policy.insurance.performer.organization.length > 0) {
                                     if (inputSection.policy.insurance.performer.organization[0].name.length > 0) {
                                         inputSection.name = inputSection.policy.insurance.performer.organization[0].name[0];
+                                    } else {
+                                        inputSection.name = default_name;
                                     }
+                                } else {
+                                    inputSection.name = default_name;
                                 }
+                            } else {
+                                inputSection.name = default_name;
                             }
+                        } else {
+                            inputSection.name = default_name;
                         }
+                    } else {
+                        inputSection.name = default_name;
                     }
 
                 }
@@ -105,16 +124,17 @@ angular.module('services.recordFunctions', [])
 */
 
             //Trim long names
-            if (inputSection.name.length > 47) {
-                inputSection.name = inputSection.name.substring(0, 47) + "...";
+            if (inputSection.name) {
+                if (inputSection.name.length > 47) {
+                    inputSection.name = inputSection.name.substring(0, 47) + "...";
+                }
             }
 
             return inputSection;
         };
 
-
         //Returns printable array from address.
-        this.formatAddress = function(address) {
+        this.formatAddress = function (address) {
             var displayAddress = [];
             if (address.street_lines.length > 0) {
                 for (var addrLine in address.street_lines) {
@@ -140,7 +160,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //Returns printable person name.
-        this.formatName = function(inputName) {
+        this.formatName = function (inputName) {
             var outputName = "";
 
             //console.log(inputName);
@@ -160,7 +180,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //Returns printable quantity/unit pair from values.
-        this.formatQuantity = function(inputQuantity) {
+        this.formatQuantity = function (inputQuantity) {
             var returnQuantity = "";
             if (inputQuantity.value) {
                 returnQuantity = inputQuantity.value;
@@ -172,8 +192,7 @@ angular.module('services.recordFunctions', [])
             return inputQuantity;
         };
 
-
-        this.formatDateTime = function(date_time) {
+        this.formatDateTime = function (date_time) {
             if (date_time.point) {
                 return this.formatDate(date_time.point);
             } else if (date_time.low && date_time.high) {
@@ -191,7 +210,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //Returns printable Date.
-        this.formatDate = function(date) {
+        this.formatDate = function (date) {
 
             function formatOutput(input_date) {
                 var tmpDateArr;
@@ -254,7 +273,7 @@ angular.module('services.recordFunctions', [])
             }
         };
 
-        this.singularizeSection = (function() {
+        this.singularizeSection = (function () {
             var sectionMap = {
                 allergies: 'allergy',
                 demographics: 'demographic',
@@ -271,15 +290,14 @@ angular.module('services.recordFunctions', [])
                 claims: 'claims'
             };
 
-            return function(sectionName) {
+            return function (sectionName) {
                 var result = sectionMap[sectionName];
                 return result ? result : sectionName;
             };
         })();
 
-
         //makes sortable value out of date_time structure
-        this.sortOrderDateTime = function(date_time) {
+        this.sortOrderDateTime = function (date_time) {
             if (date_time.high) {
                 return date_time.high.date;
             } else if (date_time.point) {
@@ -291,11 +309,9 @@ angular.module('services.recordFunctions', [])
             }
         };
 
-
-
-
         //this method calculates display name and attribute on right side of display name e.g. date(or severity), sort order and other stuff
-        this.updateFields = function(entries, section) {
+        this.updateFields = function (entries, section) {
+
             for (var i in entries) {
 
                 this.extractName(entries[i], section);
@@ -321,7 +337,6 @@ angular.module('services.recordFunctions', [])
                         entries[i].attribute = "DATE NOT REPORTED";
                     }
 
-
                     //console.log(JSON.stringify(entries[i], null, 4));
 
                     var severity;
@@ -341,8 +356,8 @@ angular.module('services.recordFunctions', [])
                         resolved: 1
                     };
 
-                    if (angular.isDefined(entries[i].date_time)) {
-                        entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    if (angular.isDefined(entries[i].problem.date_time)) {
+                        entries[i].attribute = this.formatDateTime(entries[i].problem.date_time);
                     }
                     if (angular.isDefined(entries[i].status)) {
                         var status = entries[i].status.name;
@@ -356,7 +371,7 @@ angular.module('services.recordFunctions', [])
                             entries[i].onsetAgeDisplay = entries[i].onset_age;
                         }
                     }
-                    
+
                 } else if (section === "results") {
                     //Results find date based on array
                     //TODO:  Improve so takes highest accuracy over lowest value.
@@ -382,6 +397,11 @@ angular.module('services.recordFunctions', [])
                         this.formatDateTime(entries[i].date_time);
                         entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
                     }
+
+                    if (angular.isDefined(entries[i].supply.date_time)) {
+                        this.formatDateTime(entries[i].supply.date_time);
+                    }
+
                 } else if (section === "payers") {
 
                     for (var pi in entries[i].policy.insurance.performer.organization) {
@@ -406,22 +426,20 @@ angular.module('services.recordFunctions', [])
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
 
-                    //if (angular.isDefined(entries[i].performer[0].address)) {
-                   //     this.formatAddress(entries[i].performer[0].address);
-                    //}
-
                 }
                 // social_history, vitals, procedures, immunizations, encounters
                 else {
+
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+
                 }
 
             }
         };
 
         //new method to get all patients entries for specific section
-        this.getEntries = function($scope, section) {
+        this.getEntries = function ($scope, section) {
             //console.log("fetching " + section + " entires");
 
             var that = this;
@@ -430,7 +448,7 @@ angular.module('services.recordFunctions', [])
                 method: 'GET',
                 url: '/api/v1/record/' + section
             }).
-            success(function(data, status, headers, config) {
+            success(function (data, status, headers, config) {
 
                 $scope.entries = data[section];
 
@@ -444,7 +462,7 @@ angular.module('services.recordFunctions', [])
                 }
 
             }).
-            error(function(data, status, headers, config) {
+            error(function (data, status, headers, config) {
                 console.log('error while fetching ' + section + ' entries');
             });
 
