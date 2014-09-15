@@ -17,7 +17,23 @@ angular.module('directives.matchingObjects', [])
         };
     }
 ])
-
+.directive('singlesmallEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<table class='table table-condensed'>" +
+                "<thead><tr><th><b>{{inputTitle}}</b></th><th class='col-md-12'></th></tr></thead>" +
+                "<tr><td class='col-md-12'>{{inputValue}}</td><!--td class='col-md-4 text-left'></td--></tr>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
 .directive('multisingleEntry', ['$parse',
     function($parse) {
         return {
@@ -815,6 +831,68 @@ angular.module('directives.matchingObjects', [])
     }
 ])
 
+
+
+.directive('policyEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<div><h4> Insurance </h4>" +
+                "<div multisingle-entry input-value='inputValue.insurance.performer.organization[0].name' input-title='Name' ></div>"+
+                "<div addresses-entry input-value='inputValue.insurance.performer.organization[0].address' input-title='Address'  ></div>"+
+                //"<div phone-entry input-value='inputValue.phone' input-title='Phone' ></div>"+
+                //"<div org-entry input-value='inputValue.organization' input-title='Organization' ></div>"+
+                //"<div coded-entry input-value='inputValue.code' input-title='Code' ng-show='inputValue.code'></div>"+
+                "</div>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+
+.directive('policyholderEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<div><h4> Policy Holder </h4>" +
+                "<div single-entry input-value='inputValue.performer.identifiers[0].identifier' input-title='Plan ID'  ></div>"+
+                //"<div phone-entry input-value='inputValue.phone' input-title='Phone' ></div>"+
+                //"<div org-entry input-value='inputValue.organization' input-title='Organization' ></div>"+
+                //"<div coded-entry input-value='inputValue.code' input-title='Code' ng-show='inputValue.code'></div>"+
+                "</div>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
+.directive('participantEntry', ['$parse',
+    function($parse) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                inputValue: '=',
+                inputTitle: '@',
+                selectField: '='
+            },
+            template: "<div><h4> Insured </h4>" +
+                "<div singlesmall-entry input-value='inputValue.performer.identifiers[0].identifier' input-title='Plan ID'  ></div>"+
+                "<div date-entry input-value='inputValue.date_time' input-title='' ng-show='inputValue.date_time'></div>"+
+                "</div>",
+            link: function(scope, element, attrs) {}
+        };
+    }
+])
 
 /*
 <div class="panel-group" id="accordion">

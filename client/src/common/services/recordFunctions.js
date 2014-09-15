@@ -54,9 +54,12 @@ angular.module('services.recordFunctions', [])
                     inputSection.name = inputSection.vital.name;
                 } else if (type === "plan_of_care") {
                     inputSection.name = inputSection.plan.name;
-                } else if (type === "insurance") {
+                } else if (type === "insurance" || type==='payers') {
 
                     var default_name = "Insurance";
+
+                    console.log("insurance:", type,  JSON.stringify(inputSection,null,4));
+                    console.log("basd");
 
                     //Just take first organizational name.
                     if (inputSection.policy) {

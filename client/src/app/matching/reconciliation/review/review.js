@@ -20,7 +20,7 @@ angular.module('dre.match.review_new', ['directives.matchingObjects'])
             problems: "Problem List",
             procedures: "Procedures",
             vitals: "Vital Signs",
-            insurance: "Insurance",
+            payers: "Insurance",
             claims: "Claims",
             results: "Results",
             social_history: "Social History"

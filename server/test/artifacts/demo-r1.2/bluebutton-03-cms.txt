@@ -516,13 +516,13 @@ Source: MyMedicare.gov
 
 
 
-Contract ID/Plan ID: H9999/9999
+Contract ID/Plan ID: H9999/9999A
 
-Plan Period: 09/01/2011 - current
+Plan Period: 09/02/2011 - current
 
 Plan Name: Aetna Medicare Value Plan (HMO)
 
-Marketing Name: Aetna Medicare
+Marketing Name: Aetna Medicare 2
 
 Plan Address: 123 Any Road Anytown PA 00003
 
