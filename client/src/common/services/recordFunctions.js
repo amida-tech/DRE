@@ -194,7 +194,7 @@ angular.module('services.recordFunctions', [])
 
         this.formatDateTime = function(date_time) {
             if (!date_time) {
-                return "Unknown";
+                return "DATE NOT REPORTED";
             }
 
             if (date_time.point) {
@@ -208,7 +208,7 @@ angular.module('services.recordFunctions', [])
             } else if (date_time.center) {
                 return this.formatDate(date_time.center);
             } else {
-                return "Unknown";
+                return "DATE NOT REPORTED";
             }
 
         };
@@ -422,9 +422,12 @@ angular.module('services.recordFunctions', [])
                     }
                 } else if (section === "immunizations") {
 
-                    if (angular.isDefined(entries[i].date_time)) {
+                    //if (angular.isDefined(entries[i].date_time)) {
+                    //    entries[i].attribute = this.formatDateTime(entries[i].date_time);
+                    //}
+
                         entries[i].attribute = this.formatDateTime(entries[i].date_time);
-                    }
+
 
                     if (entries[i].performer) {
                         for (var ipi in entries[i].performer.name) {
@@ -437,7 +440,7 @@ angular.module('services.recordFunctions', [])
 
                     }
 
-                    if (entries[i].administration) {
+                    if (entries[i].administration && entries[i].administration.dose) {
                         this.formatQuantity(entries[i].administration.dose);
                     }
 
