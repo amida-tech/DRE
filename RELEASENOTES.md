@@ -1,5 +1,18 @@
 # DRE Release Notes
 
+# v1.2.0 - September 15, 2014
+
+This release of the DRE includes:
+
+- VA Blue Button (C32) file support
+- CDA file support
+- Improved CCDA file generation
+- Improved sensing of file formats of uploaded files
+- Uses blue-button.js v1.2.0 JSON data model and parser
+- Uses blue-button-match.js v1.2.0 matching engine
+- Uses blue-button-record.js library v1.1.0
+
+
 # v1.1.0 - September 2, 2014
 
 The second release of the DRE includes:
