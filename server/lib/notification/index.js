@@ -24,7 +24,7 @@ function getNotifications (username, callback) {
 
   var supported_sections = _.filter(bbm.supported_sections, function(item) {
   //console.log(item);
-  if (item ==='plan_of_care' || item === 'providers' || item === 'payers') {
+  if (item ==='plan_of_care' || item === 'providers' ) {
     return false;
   } else {
     return true;

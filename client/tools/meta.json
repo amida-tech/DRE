@@ -291,5 +291,18 @@
         "name": "indication",
         "title": "Indication",
         "entry": "medsindication"
+    }],
+    "payers": [{
+        "name": "policy",
+        "title": "Policy",
+        "entry": "policy"
+    }, {
+        "name": "policy_holder",
+        "title": "Policy Holder",
+        "entry": "policyholder"
+    }, {
+        "name": "participant",
+        "title": "Participant",
+        "entry": "participant"
     }]
 }
