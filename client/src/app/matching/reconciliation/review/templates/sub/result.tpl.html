@@ -7,9 +7,12 @@
                 <div class="panel-title" style="cursor:pointer;">
                     <span style="text-transform:uppercase;">
                         {{inputValue.result.name | bb_trunc2}} - 
+                    </span>
+                    <span style="text-transform:uppercase;" ng-show="inputValue.value">
                         {{inputValue.value}} / {{inputValue.unit}}
-
-
+                    </span>
+                    <span style="text-transform:uppercase;" ng-show="inputValue.text">
+                        {{inputValue.text}}
                     </span>
                 </div>
             </a>
@@ -21,8 +24,9 @@
                     <div date-entry input-value='inputValue.date_time' input-title='Date'></div>
                     <div single-entry input-value='inputValue.status' input-title='Status'></div>
                     <div single-entry input-value='inputValue.interpretation' input-title='Interpretation' ng-show="inputValue.interpretation"></div>
-                    <div single-entry input-value='inputValue.value' input-title='Value'></div>
-                    <div single-entry input-value='inputValue.unit' input-title='Unit'></div>
+                    <div single-entry input-value='inputValue.value' input-title='Value' ng-show="inputValue.value"></div>
+                    <div single-entry input-value='inputValue.unit' input-title='Unit' ng-show="inputValue.unit"></div>
+                    <div single-entry input-value='inputValue.text' input-title='Value' ng-show="inputValue.text"></div>
                     <div single-entry input-value='inputValue.reference_range.range' input-title='Reference Range'  ng-show="inputValue.reference_range.range"></div>
 
                 </div>
