@@ -2,14 +2,14 @@ angular.module('services.recordFunctions', [])
 
 .service('recordFunctions', ['$filter', '$http',
 
-    function ($filter, $http) {
+    function($filter, $http) {
 
-        this.minDateFromArray = function (inputArray) {
+        this.minDateFromArray = function(inputArray) {
             var sortedArray = $filter('orderBy')(inputArray, "-date");
             return sortedArray[0];
         };
 
-        this.truncateName = function (inputName) {
+        this.truncateName = function(inputName) {
             //console.log(inputName.length);
             if (inputName.length > 47) {
                 inputName = inputName.substring(0, 47) + "...";
@@ -19,7 +19,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //Builds field displayName attribute.
-        this.extractName = function (inputSection, type) {
+        this.extractName = function(inputSection, type) {
 
             //console.log('input section - ', type);
             //console.log(JSON.stringify(inputSection, null, 4));
@@ -134,7 +134,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //Returns printable array from address.
-        this.formatAddress = function (address) {
+        this.formatAddress = function(address) {
             var displayAddress = [];
             if (address.street_lines.length > 0) {
                 for (var addrLine in address.street_lines) {
@@ -160,7 +160,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //Returns printable person name.
-        this.formatName = function (inputName) {
+        this.formatName = function(inputName) {
             var outputName = "";
 
             //console.log(inputName);
@@ -180,7 +180,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //Returns printable quantity/unit pair from values.
-        this.formatQuantity = function (inputQuantity) {
+        this.formatQuantity = function(inputQuantity) {
             var returnQuantity = "";
             if (inputQuantity.value) {
                 returnQuantity = inputQuantity.value;
@@ -192,7 +192,10 @@ angular.module('services.recordFunctions', [])
             return inputQuantity;
         };
 
-        this.formatDateTime = function (date_time) {
+        this.formatDateTime = function(date_time) {
+            if (!date_time) {
+                return "Unknown";
+            }
 
             if (date_time.point) {
                 return this.formatDate(date_time.point);
@@ -211,7 +214,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //Returns printable Date.
-        this.formatDate = function (date) {
+        this.formatDate = function(date) {
 
             function formatOutput(input_date) {
                 var tmpDateArr;
@@ -274,7 +277,7 @@ angular.module('services.recordFunctions', [])
             }
         };
 
-        this.singularizeSection = (function () {
+        this.singularizeSection = (function() {
             var sectionMap = {
                 allergies: 'allergy',
                 demographics: 'demographic',
@@ -291,14 +294,18 @@ angular.module('services.recordFunctions', [])
                 claims: 'claims'
             };
 
-            return function (sectionName) {
+            return function(sectionName) {
                 var result = sectionMap[sectionName];
                 return result ? result : sectionName;
             };
         })();
 
         //makes sortable value out of date_time structure
-        this.sortOrderDateTime = function (date_time) {
+        this.sortOrderDateTime = function(date_time) {
+            if (!date_time) {
+                return "Unknown";
+            }
+
             if (date_time.high) {
                 return date_time.high.date;
             } else if (date_time.point) {
@@ -311,7 +318,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //this method calculates display name and attribute on right side of display name e.g. date(or severity), sort order and other stuff
-        this.updateFields = function (entries, section) {
+        this.updateFields = function(entries, section) {
 
             for (var i in entries) {
 
@@ -379,7 +386,7 @@ angular.module('services.recordFunctions', [])
                     //Results find date based on array
                     //TODO:  Improve so takes highest accuracy over lowest value.
 
-                    var minDate;
+                    var minDate="";
 
                     //find earlies date in test result and use it as attribute for entire battery/cluster
                     for (var j in entries[i].results) {
@@ -394,6 +401,7 @@ angular.module('services.recordFunctions', [])
 
                     entries[i].attribute = this.formatDateTime(minDate);
                     entries[i].sort_order = this.sortOrderDateTime(minDate);
+
                 } else if (section === "medications") {
                     entries[i].attribute = entries[i].status;
                     if (angular.isDefined(entries[i].date_time)) {
@@ -418,17 +426,21 @@ angular.module('services.recordFunctions', [])
                         entries[i].attribute = this.formatDateTime(entries[i].date_time);
                     }
 
-                    for (var ipi in entries[i].performer.name) {
-                        this.formatName(entries[i].performer.name[ipi]);
-                    }
-                    for (var ipa in entries[i].performer.address) {
-                        this.formatAddress(entries[i].performer.address[ipa]);
+                    if (entries[i].performer) {
+                        for (var ipi in entries[i].performer.name) {
+                            this.formatName(entries[i].performer.name[ipi]);
+                        }
+
+                        for (var ipa in entries[i].performer.address) {
+                            this.formatAddress(entries[i].performer.address[ipa]);
+                        }
+
                     }
 
                     if (entries[i].administration) {
-                        this.formatQuantity(entries[i].administration.dose);    
+                        this.formatQuantity(entries[i].administration.dose);
                     }
-                    
+
                 } else if (section === "procedures") {
 
                     entries[i].attribute = this.formatDateTime(entries[i].date_time);
@@ -455,14 +467,14 @@ angular.module('services.recordFunctions', [])
                         for (var iper in entries[i].performers) {
                             if (entries[i].performers[iper].name) {
                                 for (var ipername in entries[i].performers[iper].name) {
-                                    this.formatName(entries[i].performers[iper].name[ipername]);    
+                                    this.formatName(entries[i].performers[iper].name[ipername]);
                                 }
-                                
+
                             }
                         }
                     }
 
-                } 
+                }
                 // social_history, vitals, procedures, immunizations
                 else {
 
@@ -475,7 +487,7 @@ angular.module('services.recordFunctions', [])
         };
 
         //new method to get all patients entries for specific section
-        this.getEntries = function ($scope, section) {
+        this.getEntries = function($scope, section) {
             //console.log("fetching " + section + " entires");
 
             var that = this;
@@ -484,7 +496,7 @@ angular.module('services.recordFunctions', [])
                 method: 'GET',
                 url: '/api/v1/record/' + section
             }).
-            success(function (data, status, headers, config) {
+            success(function(data, status, headers, config) {
 
                 $scope.entries = data[section];
 
@@ -498,7 +510,7 @@ angular.module('services.recordFunctions', [])
                 }
 
             }).
-            error(function (data, status, headers, config) {
+            error(function(data, status, headers, config) {
                 console.log('error while fetching ' + section + ' entries');
             });
 
