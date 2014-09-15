@@ -71,9 +71,13 @@
 							<div class="pull-left col-md-12"><strong>Measured:</strong></div><br/>
 							<div class="pull-left col-md-12">{{result_value.date_time.point.date | date}}</div>
 						</div>
-						<div class="col-md-2 pull-left" style="margin-bottom: 10px;">
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="result_value.value">
 							<div class="pull-left col-md-12"><strong>Measurement:</strong></div><br/>
 							<div class="pull-left col-md-12">{{result_value.value + " " + result_value.unit}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="result_value.text">
+							<div class="pull-left col-md-12"><strong>Measurement:</strong></div><br/>
+							<div class="pull-left col-md-12">{{result_value.text}}</div>
 						</div>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="result_value.interpretations[0]">
 							<div class="pull-left col-md-12"><strong>Interpretation:</strong></div><br/>
@@ -81,6 +85,8 @@
 						</div>
 					</div>
 					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myResultsModal{{$index}}">Sources</button>
+<pre>{{entry.results|json}}</pre>
+
 				</div>
 			</div>
 		</div>
