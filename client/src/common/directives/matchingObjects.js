@@ -615,6 +615,9 @@ angular.module('directives.matchingObjects', [])
             },
             template: "<div><h4>{{inputTitle}}</h4>"+
                 "<div coded-entry input-value='inputValue.product' input-title='Name'></div>"+
+                "<div ng-repeat='translation in inputValue.product.translations'>"+
+                "<div coded-entry input-value='translation' input-title='Translation'></div>"+
+                "</div>"+
                 "<div single-entry input-value='inputValue.unencoded_name' input-title='Unencoded Name'></div>"+
                 "<div single-entry input-value='inputValue.manufacturer' input-title='Manufacturer'></div>"+
                 "</div>",
