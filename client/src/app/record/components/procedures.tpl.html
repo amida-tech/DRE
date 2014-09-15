@@ -76,7 +76,7 @@
 
 					<div class="col-md-12" ng-show="entry.procedure.translations">
 						<h4>Other Descriptions</h4>
-						<div ng-repeat=" translation in procedure.procedure.translations" class="col-md-12">
+						<div ng-repeat=" translation in procedure.procedure.translations">
 							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
 								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
 								<div class="pull-left col-md-12">{{translation.name}}</div>
@@ -92,7 +92,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="provider in entry.performer">
+					<div class="col-md-12 pull-left" ng-repeat="provider in entry.performer" ng-show="entry.performer">
 						<h4>Performer</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="provider.organization[0].name">
 							<div class="pull-left col-md-12"><strong>Organization Name:</strong></div><br/>
@@ -124,7 +124,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 pull-left" ng-repeat="body_site in entry.body_sites">
+					<div class="col-md-12 pull-left" ng-repeat="body_site in entry.body_sites" ng-show="entry.body_sites">
 						<h4>Body Sites</h4>
 						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="body_site.name">
 							<div class="pull-left col-md-12"><strong>Location:</strong></div><br/>
