@@ -7,9 +7,12 @@
                 <div class="panel-title" style="cursor:pointer;">
                     <span style="text-transform:uppercase;">
                         {{inputValue.result.name | bb_trunc2}} - 
+                    </span>
+                    <span style="text-transform:uppercase;" ng-show="inputValue.value">
                         {{inputValue.value}} / {{inputValue.unit}}
-
-
+                    </span>
+                    <span style="text-transform:uppercase;" ng-show="inputValue.text">
+                        {{inputValue.text}}
                     </span>
                 </div>
             </a>
