@@ -406,11 +406,25 @@ angular.module('services.recordFunctions', [])
                     entries[i].sort_order = this.sortOrderDateTime(minDate);
 
                 } else if (section === "medications") {
-                    entries[i].attribute = entries[i].status;
                     if (angular.isDefined(entries[i].date_time)) {
                         this.formatDateTime(entries[i].date_time);
                         entries[i].sort_order = this.sortOrderDateTime(entries[i].date_time);
+
+                        if (entries[i].date_time.low) {
+                            entries[i].attribute = entries[i].date_time.low.displayDate;
+                        } else if (entries[i].date_time.high) {
+                            entries[i].attribute = entries[i].date_time.high.displayDate;
+                        } else if (entries[i].date_time.point) {
+                            entries[i].attribute = entries[i].date_time.point.displayDate;
+                        }
+
+
+
+                    } else {
+                        entries[i].attribute = "DATE NOT REPORTED";
                     }
+
+
 
                     if (angular.isDefined(entries[i].supply)) {
                         if (angular.isDefined(entries[i].supply.date_time)) {
