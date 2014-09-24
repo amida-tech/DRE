@@ -86,6 +86,8 @@ app.use(login);
 var account = require('./lib/account');
 app.use(account);
 
+app.set('port', (process.env.PORT || 3000))
+
 //Initialize Database Connection.
 var databaseServer = 'localhost';
 
@@ -94,7 +96,7 @@ record.connectDatabase(databaseServer, function(err) {
     if (err) {
         console.log(err);
     } else {
-        app.listen(3000, '0.0.0.0');
-        console.log("Server listening on port " + 3000);
+        app.listen(app.get('port'), '0.0.0.0');
+        console.log("Server listening on port " + app.get('port'));
     }
 });
