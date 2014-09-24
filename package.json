@@ -32,9 +32,8 @@
         "passport-local-mongoose": "0.3.x",
         "redis": "0.10.3",
         "request": "2.33.x",
-        "underscore": "1.6.x"
-    },
-    "devDependencies": {
+        "underscore": "1.6.x",
+        
         "grunt": "0.4.x",
         "grunt-contrib-jshint": "0.8.x",
         "grunt-contrib-watch": "0.6.x",
