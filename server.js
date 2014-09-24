@@ -24,7 +24,7 @@ var passport = require('passport');
 //var redis = require("redis").createClient();
 var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
 
-app.set('client_location', path.resolve(__dirname, '../client/dist'));
+app.set('client_location', path.resolve(__dirname, './client/dist'));
 
 //app.use(express.favicon(config.client.location + '/favicon.ico'));
 app.use(express.static(app.get('client_location')));
