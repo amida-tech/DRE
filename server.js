@@ -62,6 +62,14 @@ app.use(express.session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Initialize Database Connection.
+//var databaseServer = process.env.DB || 'mongodb://localhost:27017';
+//var databaseServer = process.env.DB || 'localhost:27017';
+
+app.set('db_url', process.env.DB || 'localhost:27017');
+app.set('db_name', 'dre');
+
+
 var storage = require('./lib/storage');
 app.use(storage);
 
@@ -88,14 +96,10 @@ app.use(account);
 
 app.set('port', (process.env.PORT || 3000))
 
-//Initialize Database Connection.
-//var databaseServer = process.env.DB || 'mongodb://localhost:27017';
-var databaseServer = process.env.DB || 'localhost:27017';
-
-console.log(databaseServer);
 
 //Launch Application.
-record.connectDatabase(databaseServer, function(err) {
+record.connectDatabase(app.get('db_url'), function(err) {
+    console.log(app.get('db_url'));
     if (err) {
         console.log("DB error");
         console.log(err);
