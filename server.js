@@ -22,7 +22,7 @@ var app = express();
 var record = require('blue-button-record');
 var passport = require('passport');
 //var redis = require("redis").createClient();
-var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
+//var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
 
 app.set('client_location', path.resolve(__dirname, './client/dist'));
 
@@ -56,7 +56,7 @@ app.use(express.cookieParser());
 //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
 app.use(express.session({
     secret: 'keyboard cat'
-    ,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
+    //,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
 }));
 
 app.use(passport.initialize());
@@ -89,11 +89,15 @@ app.use(account);
 app.set('port', (process.env.PORT || 3000))
 
 //Initialize Database Connection.
-var databaseServer = 'localhost';
+//var databaseServer = process.env.DB || 'mongodb://localhost:27017';
+var databaseServer = process.env.DB || 'localhost:27017';
+
+console.log(databaseServer);
 
 //Launch Application.
 record.connectDatabase(databaseServer, function(err) {
     if (err) {
+        console.log("DB error");
         console.log(err);
     } else {
         app.listen(app.get('port'), '0.0.0.0');
