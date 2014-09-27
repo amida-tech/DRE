@@ -69,6 +69,8 @@ app.use(passport.session());
 app.set('db_url', process.env.DB || 'localhost:27017');
 app.set('db_name', 'dre');
 
+console.log("DB URL: ",app.get('db_url'));
+
 
 var storage = require('./lib/storage');
 app.use(storage);
