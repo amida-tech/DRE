@@ -1,0 +1,211 @@
+<table class="col-md-12 table-striped match">
+    <thead>
+        <tr>
+            <th class='col-md-6'>
+
+                <div class="panel-body text-center">
+                    <h6>Select Updates</h6>
+                </div>
+
+
+            </th>
+
+            <th class='col-md-6'>
+                <div class="panel-body text-center">
+                    <h6 ng-if="current_queue.length > 0">Match #1 out of {{current_queue.length+1}}
+                    </h6>
+                    <h6 ng-if="current_queue.length === 0">Current Record</h6>
+
+                </div>
+
+            </th>
+        </tr>
+    </thead>
+
+
+    <!--tr><td colspan = "2"><hr></td></tr-->
+    <tr class="list-group list-matching" ng-show="new_entry.policy || update_entry.policy">
+        <td class="match" >
+            <div class="list-group-item merge-item" ng-click="selectField('policy', null, match_diff.policy)" ng-class="{selected: selectedItems.policy, disabled: match_diff.policy}" ng-show="new_entry.policy">
+
+                <span ng-hide='match_diff.policy || selectedItems.policy' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
+  
+                <span ng-hide='match_diff.policy || selectedItems.policy'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+            
+                <div policy-entry input-value="new_entry.policy" input-title="Policy" select-field="selectedItems.policy"></div>
+
+                <br/>
+
+            </div>
+             <div ng-hide="new_entry.policy" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
+        </td>
+        <td class="match">
+            <div class="list-group-item  merge-item" ng-click="removeField('policy', null, match_diff.policy)" ng-class="{selected: selectedItems.policy, disabled: match_diff.policy}" ng-show="update_entry.policy">
+
+                <span ng-show='selectedItems.policy' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
+                <span ng-show='selectedItems.policy || selectedItems.policy'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
+
+                
+
+                <div policy-entry input-value="update_entry.policy" input-title="Policy" select-field="selectedItems.policy">
+
+                </div>
+
+                <br/>
+
+            </div>
+             <div ng-hide="update_entry.policy" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
+        </td>
+    </tr>
+
+
+
+
+    <!--tr><td colspan = "2"><hr></td></tr-->
+    <tr class="list-group list-matching" ng-show="new_entry.policy_holder || update_entry.policy_holder">
+        <td class="match" >
+            <div class="list-group-item merge-item" ng-click="selectField('policy_holder', null, match_diff.policy_holder)" ng-class="{selected: selectedItems.policy_holder, disabled: match_diff.policy_holder}" ng-show="new_entry.policy_holder">
+
+                <span ng-hide='match_diff.policy_holder || selectedItems.policy_holder' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
+  
+                <span ng-hide='match_diff.policy_holder || selectedItems.policy_holder'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+            
+                <div policyholder-entry input-value="new_entry.policy_holder" input-title="Policy Holder" select-field="selectedItems.policy_holder"></div>
+
+                <br/>
+
+            </div>
+             <div ng-hide="new_entry.policy_holder" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
+        </td>
+        <td class="match">
+            <div class="list-group-item  merge-item" ng-click="removeField('policy_holder', null, match_diff.policy_holder)" ng-class="{selected: selectedItems.policy_holder, disabled: match_diff.policy_holder}" ng-show="update_entry.policy_holder">
+
+                <span ng-show='selectedItems.policy_holder' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
+                <span ng-show='selectedItems.policy_holder || selectedItems.policy_holder'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
+
+                
+
+                <div policyholder-entry input-value="update_entry.policy_holder" input-title="Policy Holder" select-field="selectedItems.policy_holder">
+
+                </div>
+
+                <br/>
+
+            </div>
+             <div ng-hide="update_entry.policy_holder" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
+        </td>
+    </tr>
+
+
+
+
+    <!--tr><td colspan = "2"><hr></td></tr-->
+    <tr class="list-group list-matching" ng-show="new_entry.participant || update_entry.participant">
+        <td class="match" >
+            <div class="list-group-item merge-item" ng-click="selectField('participant', null, match_diff.participant)" ng-class="{selected: selectedItems.participant, disabled: match_diff.participant}" ng-show="new_entry.participant">
+
+                <span ng-hide='match_diff.participant || selectedItems.participant' class='label label-info' style="position:absolute;right:95px;top:10px;">Different</span>
+  
+                <span ng-hide='match_diff.participant || selectedItems.participant'  style="position:absolute;right:10px;top:8px;">copy over <i class='glyphicon glyphicon-import' > </i></span>
+            
+                <div participant-entry input-value="new_entry.participant" input-title="Participant" select-field="selectedItems.participant"></div>
+
+                <br/>
+
+            </div>
+             <div ng-hide="new_entry.participant" class="disabled">
+                    <div class="text-center">
+                        <h4>No Update</h4>
+                    </div>
+                </div>
+        </td>
+        <td class="match">
+            <div class="list-group-item  merge-item" ng-click="removeField('participant', null, match_diff.participant)" ng-class="{selected: selectedItems.participant, disabled: match_diff.participant}" ng-show="update_entry.participant">
+
+                <span ng-show='selectedItems.participant' class='label label-success' style="position:absolute;right:10px;top:10px;">Updated</span>
+                <span ng-show='selectedItems.participant || selectedItems.participant'  style="position:absolute;right:10px;bottom:10px;">undo <i class='glyphicon glyphicon-refresh' ></i></span>
+
+                
+
+                <div participant-entry input-value="update_entry.participant" input-title="Participant" select-field="selectedItems.participant">
+
+                </div>
+
+                <br/>
+
+            </div>
+             <div ng-hide="update_entry.participant" class="disabled">
+                    <div class="text-center">
+                        <h4>No Data</h4>
+                    </div>
+                </div>
+        </td>
+    </tr>
+
+
+
+   
+
+
+    <tr>
+        <td class="match">
+            <div class="panel-body">
+                <div class="col-md-2 col-md-offset-7">
+                    <button type="button" ng-class="{disabled:changed}" class="btn btn-warning ng-scope pull-right" ng-click="createMatch()" ng-if="(section !== 'demographics')   && !(current_queue.length > 0) ">
+                        <i class="glyphicon glyphicon-arrow-down"></i><i class="glyphicon glyphicon-arrow-down"></i> Create New
+                    </button>
+
+
+                    <div ng-hide="changed">
+                    <button ng-if="current_queue.length > 0" type="button " class="btn btn-danger ng-scope pull-right" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
+                    </div>
+
+                    <div ng-show="changed">
+                    <button ng-if="current_queue.length > 0" type="button " class="btn btn-danger ng-scope pull-right disabled" ng-click="rotateMatch(current_match_index + 1)"><i class="glyphicon glyphicon-remove-circle"></i> Not a match</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </td>
+        <td class="match">
+
+
+            <div class="panel-body" ng-hide="panelId === 0">
+                <div class="col-md-10 col-md-offset-2">
+                    <button ng-show="changed" type="button" class="btn btn-primary pull-left" ng-click="saveMatch()"><i class="glyphicon glyphicon-save  fa-rotate-270"></i> Save Update</button>
+
+                    <button ng-show="changed" type="button" class="btn btn-default pull-right col-md-offset-2" ng-click="reset()"><i class="glyphicon glyphicon-repeat fa-1x"></i> Undo All</button>
+
+                    <button ng-hide="changed" type="button" class="btn btn-primary pull-left" ng-click="discardMatch()"><i class="glyphicon glyphicon-ban-circle"></i> Ignore Update</button>
+
+                </div>
+            </div>
+        </td>
+    </tr>
+    <!--
+    <pre>{{ selectedItems|json}}</pre>
+    <pre>{{ match_diff |json }}</pre>
+
+    <pre>{{ new_entry |json }}</pre>
+
+    -->
+
+
+</table>

@@ -1,0 +1,70 @@
+.tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 0 0 4px 4px;
+}
+
+.nav-tabs {
+    margin-bottom: 0;
+}
+
+
+
+
+.list-matching li:hover {
+	background-color: #dff0d8;
+	cursor: pointer;
+}
+
+
+.list-matching .selected {
+	background-color: #dff0d8;
+	margin-bottom:1px;
+}
+
+
+.list-matching .disabled {
+	color: #AAAAAA;
+}
+
+.list-matching li.disabled:hover {
+	background-color: #fff;
+	cursor: auto;
+}
+
+.list-group-item {
+}
+
+.merge-item {
+	background-color: transparent;
+	padding: 5px 15px;
+	border-color: transparent;	
+}
+
+/* http://stackoverflow.com/questions/3934535/css-space-between-rows-separated-by-a-line */
+table.match {
+    border-collapse: collapse; 
+}
+
+td.match {
+    padding: 0px 0;     /* 10px top & bottom padding, 0px left & right */
+    border-width: 1px 0; /*  1px top & bottom border,  0px left & right */
+    border-color: #000;
+    border-style: solid;
+}
+
+table {
+	margin-bottom: 0px;
+}
+
+table.table {
+	margin-bottom: 0px;
+}
+
+.merge-item{
+	padding:0px;
+	bacground:transparent;
+}
+
