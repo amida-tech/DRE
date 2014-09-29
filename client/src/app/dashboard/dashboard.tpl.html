@@ -1,36 +1,89 @@
 <div class="col-md-12" ng-controller="dashboardCtrl">
-	<br/>
-	<h5 class="lead">Notifications</h5>
-	<div class="container">
-		<div class="panel panel-primary col-md-3 col-md-offset-1">
-			<a href="/#/match" style="text-decoration: none;">
-				<div class="panel-body">
-					<h5 class="lead text-primary"><i class="fa fa-arrow-circle-down fa-lg"></i>  {{notifications.unreviewed_merges}} entries require your review.</h5>
-				</div>
-			</a>
-		</div>
-		<div class="panel panel-danger col-md-3 col-md-offset-1">
-			<a href="/#/match" style="text-decoration: none;">
-				<div class="panel-body">
-					<h5 class="lead text-danger"><i class="fa fa-files-o fa-lg"></i>  {{notifications.duplicate_merges}}  duplicates have been merged.</h5>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="container">
-		<div class="panel panel-success col-md-3 col-md-offset-1">
-			<a href="/#/record" style="text-decoration: none;">
-				<div class="panel-body">
-					<h5 class="lead text-success"><i class="fa fa-medkit fa-lg"></i>   {{notifications.new_count}} total entries on your record.</h5>
-				</div>
-			</a>
-		</div>
-		<div class="panel panel-success col-md-3 col-md-offset-1">
-			<a href="/#/storage" style="text-decoration: none;">
-				<div class="panel-body">
-					<h5 class="lead text-success"><i class="fa fa-archive fa-lg"></i>   {{notifications.file_count}} total files in storage.</h5>
-				</div>
-			</a>
-		</div>
-	</div>
+    <br/>
+
+    <div class="row">
+        <button class="btn btn-primary col-md-12" data-toggle="modal" data-target="#myModal" ng-show="notifications.file_count===0">New to the DRE? Click here for help!
+        </button>
+    </div>
+    <br/>
+    <!-- Button trigger modal -->
+    <div class="row">
+
+        <h5 class="lead col-md-12">Home</h5>
+        <div class="alert alert-info col-md-12" ng-hide="notifications.file_count===0">Congratulations, you have established your Master Health Record!
+            <a ng-href="/api/v1/master_health_record/xml">
+                <button type="button" class="btn btn-info pull-right col-sm-2">
+                    <span class="glyphicon glyphicon-cloud-download"></span>Download</button>
+            </a>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Hi there!</h4>
+                    </div>
+                    <div class="modal-body">
+                        We see that you currently have no files in storage yet. Would you like to upload your health data and establish your Master Health Record now?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No Thanks</button>
+                        <button type="button" class="btn btn-primary">Yes!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <h5 class="lead col-md-12">Uploaded Files
+            <button type="button" class="btn btn-info pull-right col-sm-2" data-target="#uploadModal" data-toggle="modal">
+                <span class="glyphicon glyphicon-cloud-upload"></span>Upload</button>
+        </h5>
+
+        <div id="uploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <div class="modal-title">Upload Record</div>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <input class="form-control" type="file" id="uploadFile" file-model="myFile" />
+                            </div>
+                        </form>
+
+                        <button class="btn btn-primary" type="submit" ng-click="uploadRecord()" data-dismiss="modal" aria-hidden="true">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-hide="displayRecords" class="panel-title">No files are currently in storage.</div>
+        <div class="panel-group" ng-show="displayRecords">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <span style="cursor:pointer;" ng-click="nameSort();"><i class="fa fa-sort pull-left" style="margin-right: 10px; line-height: 1.6em;"></i>File Name</span>
+                        <span style="cursor:pointer;" ng-click="dateSort();" class="pull-right"><i class="fa fa-sort pull-right" style="margin-right: 10px; line-height: 1.6em;"></i>Upload Date</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group" ng-repeat="file in file_array | orderBy:predicate">
+                        <a ng-href="/api/v1/storage/record/{{file.file_id}}">
+                            <li class="list-group-item" style="cursor:pointer;">
+                                <i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
+                                <span style="text-transform:lowercase;">{{file.file_name}}</span>
+                                <span class="pull-right" style="text-transform:lowercase;">{{file.file_upload_date | date: 'short'}}</span>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
