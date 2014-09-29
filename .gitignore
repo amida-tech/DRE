@@ -16,5 +16,5 @@ coverage
 
 npm-debug.log
 
-test/artifacts/demo-r1.0/json
+./test/artifacts/demo-r1.0/json/*.json
 .anvil
