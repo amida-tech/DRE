@@ -16,12 +16,4 @@ coverage
 
 npm-debug.log
 
-./test/artifacts/demo-r1.0/json/*.json
 .anvil
-test/artifacts/demo-r1.0/json/bluebutton-01-original.json
-
-test/artifacts/demo-r1.0/json/bluebutton-02-duplicate.json
-
-test/artifacts/demo-r1.0/json/bluebutton-03-updated.json
-
-test/artifacts/demo-r1.0/json/bluebutton-04-diff-source-partial-matches.json
