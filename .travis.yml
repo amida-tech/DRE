@@ -16,8 +16,8 @@ services:
 - mongodb
 - redis-server
 script:
-- grunt --gruntfile client/gruntfile.js
-#- grunt --gruntfile ./gruntfile.js
+#- grunt --gruntfile client/gruntfile.js
+- grunt --gruntfile ./gruntfile.js
 deploy:
   provider: heroku
   api_key:
