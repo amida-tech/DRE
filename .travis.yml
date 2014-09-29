@@ -22,3 +22,6 @@ deploy:
   provider: heroku
   api_key:
     secure: Vd+ZApYihHFIquQXWElWtJjv4Y9Jchy/48GL7DwOH/WHVOdUJT2PlYypSugtQvJI09QbW4Kb/C471kS4+iH/vyg3ZUkc4TCcHnI50EI8F0V2p/CX2GWvA9IS9bUICHseIqfUtrWowGOhOg2gAlPMhqAETgMMB0Z8OWVqnzKr0aU=
+  app:
+    master: hidden-falls-6396
+    deployment: hidden-falls-6396
