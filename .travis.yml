@@ -9,15 +9,15 @@ before_script:
 - node server.js &
 - sleep 3
 - cd ./client
-- npm install --quiet
-- grunt
+#- npm install --quiet
+#- grunt
 - cd ..
 services:
 - mongodb
 - redis-server
 script:
 - grunt --gruntfile client/gruntfile.js
-- grunt --gruntfile ./gruntfile.js
+#- grunt --gruntfile ./gruntfile.js
 deploy:
   provider: heroku
   api_key:

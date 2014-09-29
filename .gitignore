@@ -15,3 +15,6 @@ coverage
 .rdb
 
 npm-debug.log
+
+test/artifacts/demo-r1.0/json
+.anvil
