@@ -18,6 +18,8 @@ services:
 script:
 - grunt --gruntfile client/gruntfile.js
 - grunt --gruntfile ./gruntfile.js
+- git config --global user.email "dmitry.kachaev@gmail.com"
+- git config --global user.name "Dmitry Kachaev"
 - git add -A
 - git commit -a -m "commit post-build files"
 deploy:
