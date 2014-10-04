@@ -21,6 +21,18 @@ var path = require('path');
 var app = express();
 var record = require('blue-button-record');
 var passport = require('passport');
+
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var methodOverride = require('method-override');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var multer = require('multer');
+var errorHandler = require('errorhandler');
+var cookieParser = require('cookie-parser');
+var static = require('serve-static');
+
+
 //var redis = require("redis").createClient();
 //var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
 
@@ -48,10 +60,10 @@ app.use(function(req, res, next) {
     });
 });
 
-app.use(express.logger());
+app.use(logger('dev'));
 app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser());
+app.use(methodOverride());
+app.use(cookieParser());
 
 //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
 app.use(express.session({
