@@ -15,6 +15,7 @@ limitations under the License.
 ======================================================================*/
 
 var express = require('express');
+var express3 = require('express3');
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
@@ -24,13 +25,26 @@ var passport = require('passport');
 
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var multer = require('multer');
+var multiparty = require('connect-multiparty');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var multer = require('multer');
-var errorHandler = require('errorhandler');
+//var multer = require('multer');
+//var errorHandler = require('errorhandler');
 var cookieParser = require('cookie-parser');
 var static = require('serve-static');
+
+//app.use(express3.bodyParser());
+app.use(multiparty());
+app.use(multer({ dest: './uploads/' }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({'strict':false}));
+
+
+app.use(logger('dev'));
+app.use(methodOverride());
+app.use(cookieParser());
 
 
 //var redis = require("redis").createClient();
@@ -60,13 +74,14 @@ app.use(function(req, res, next) {
     });
 });
 
-app.use(logger('dev'));
-app.use(express.bodyParser());
-app.use(methodOverride());
-app.use(cookieParser());
+//app.use(express3.bodyParser());
+
+//app.use(connect.json());
+ //     app.use(connect.urlencoded());
+ //     app.use(connect.multipart());
 
 //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
-app.use(express.session({
+app.use(session({
     secret: 'keyboard cat'
     //,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
 }));
