@@ -15,7 +15,6 @@ limitations under the License.
 ======================================================================*/
 
 var express = require('express');
-var express3 = require('express3');
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
@@ -25,7 +24,6 @@ var passport = require('passport');
 
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var multer = require('multer');
 var multiparty = require('connect-multiparty');
 var methodOverride = require('method-override');
 var session = require('express-session');
@@ -37,15 +35,16 @@ var static = require('serve-static');
 
 //app.use(express3.bodyParser());
 app.use(multiparty());
-app.use(multer({ dest: './uploads/' }));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({'strict':false}));
-
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json({
+    'strict': false
+}));
 
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(cookieParser());
-
 
 //var redis = require("redis").createClient();
 //var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
@@ -54,7 +53,7 @@ app.set('client_location', path.resolve(__dirname, './client/dist'));
 
 //app.use(express.favicon(config.client.location + '/favicon.ico'));
 app.use(express.static(app.get('client_location')));
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     var requestPath = '';
     if (req.path.substring(req.path.length - 1) === '/') {
         requestPath = req.path.substring(0, req.path.length - 1);
@@ -62,7 +61,7 @@ app.use(function(req, res, next) {
         requestPath = req.path;
     }
     var viewPath = app.get('client_location') + requestPath + '.html';
-    fs.exists(viewPath, function(exists) {
+    fs.exists(viewPath, function (exists) {
         console.log(viewPath);
         if (exists) {
 
@@ -74,11 +73,12 @@ app.use(function(req, res, next) {
     });
 });
 
-//app.use(express3.bodyParser());
-
-//app.use(connect.json());
- //     app.use(connect.urlencoded());
- //     app.use(connect.multipart());
+/*      Porting notes from express 3: Item 1 was what it was before, 2s are
+        equivalent versions from previous express 3 versions */
+//     1) app.use(express.bodyParser());
+//     2)app.use(connect.json());
+//     2)app.use(connect.urlencoded());
+//     2)app.use(connect.multipart());
 
 //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
 app.use(session({
@@ -96,8 +96,7 @@ app.use(passport.session());
 app.set('db_url', process.env.DB || 'localhost:27017');
 app.set('db_name', 'dre');
 
-console.log("DB URL: ",app.get('db_url'));
-
+console.log("DB URL: ", app.get('db_url'));
 
 var storage = require('./lib/storage');
 app.use(storage);
@@ -125,9 +124,8 @@ app.use(account);
 
 app.set('port', (process.env.PORT || 3000))
 
-
 //Launch Application.
-record.connectDatabase(app.get('db_url'), function(err) {
+record.connectDatabase(app.get('db_url'), function (err) {
     console.log(app.get('db_url'));
     if (err) {
         console.log("DB error");
