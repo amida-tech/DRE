@@ -24,7 +24,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching" ng-show="new_entry.observation.allergen || update_entry.observation.allergen">
+    <tr class="list-group list-matching" ng-show="new_entry.observation.allergen && update_entry.observation.allergen && !match_diff.observation.allergen">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.allergen', null, match_diff.observation.allergen)" ng-class="{selected: selectedItems.observation.allergen, disabled: match_diff.observation.allergen}" ng-show="new_entry.observation.allergen">
 
@@ -70,7 +70,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching" ng-show="new_entry.observation.intolerance || update_entry.observation.intolerance">
+    <tr class="list-group list-matching" ng-show="new_entry.observation.intolerance && update_entry.observation.intolerance && !match_diff.observation.intolerance">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.intolerance', null, match_diff.observation.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}" ng-show="new_entry.observation.intolerance">
 
@@ -87,7 +87,7 @@
                     <div class="text-center">
                         <h4>No Update</h4>
                     </div>
-                </div>
+            </div>
         </td>
         <td class="match">
             <div class="list-group-item  merge-item" ng-click="removeField('observation.intolerance', null, match_diff.observation.intolerance)" ng-class="{selected: selectedItems.observation.intolerance, disabled: match_diff.observation.intolerance}" ng-show="update_entry.observation.intolerance">
@@ -116,7 +116,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching" ng-show="new_entry.observation.status || update_entry.observation.status">
+    <tr class="list-group list-matching" ng-show="new_entry.observation.status && update_entry.observation.status && !match_diff.observation.status">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.status', null, match_diff.observation.status)" ng-class="{selected: selectedItems.observation.status, disabled: match_diff.observation.status}" ng-show="new_entry.observation.status">
 
@@ -162,7 +162,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching" ng-show="new_entry.observation.severity || update_entry.observation.severity">
+    <tr class="list-group list-matching" ng-show="new_entry.observation.severity && update_entry.observation.severity && !match_diff.observation.severity">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.severity', null, match_diff.observation.severity)" ng-class="{selected: selectedItems.observation.severity, disabled: match_diff.observation.severity}" ng-show="new_entry.observation.severity">
 
@@ -208,7 +208,7 @@
 
 
     <!--tr><td colspan = "2"><hr></td></tr-->
-    <tr class="list-group list-matching" ng-show="new_entry.observation.date_time || update_entry.observation.date_time">
+    <tr class="list-group list-matching" ng-show="new_entry.observation.date_time && update_entry.observation.date_time && !match_diff.observation.date_time">
         <td class="match" >
             <div class="list-group-item merge-item" ng-click="selectField('observation.date_time', null, match_diff.observation.date_time)" ng-class="{selected: selectedItems.observation.date_time, disabled: match_diff.observation.date_time}" ng-show="new_entry.observation.date_time">
 
@@ -256,7 +256,7 @@
     <!--tr><td colspan = "2"><hr></td></tr-->
     <tr class="list-group list-matching">
         <td class="match" valign="top">
-            <div class="list-group-item merge-item" ng-repeat="(el_id, el_entry) in new_entry.observation.reactions" 
+            <div class="list-group-item merge-item" ng-repeat="(el_id, el_entry) in new_entry.observation.reactions" ng-show="new_entry.observation.reactions"
                 ng-class="{selected: selectedItems.observation.reactions[el_id], disabled: match_diff.observation.reactions.src[el_id]}">
 
                 <!-- allergies -->
@@ -276,7 +276,7 @@
                 
             
 
-                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="100+el_id" select-field="selectedItems.reaction[el_id]"></div>
+                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="100+el_id" select-field="selectedItems.observation.reactions[el_id]"></div>
             </div>
              <div ng-hide="new_entry.observation.reactions" class="disabled">
                     <div class="text-center">
@@ -305,7 +305,7 @@
                 
 
 
-                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="200+el_id" select-field="selectedItems.Reaction[el_id]"></div>
+                <div reaction-entry input-value="el_entry" input-title="Reaction" input-additional="200+el_id" select-field="selectedItems.observation.reactions[el_id]"></div>
 
             </div>
              <div ng-hide="update_entry.observation.reactions" class="disabled">
@@ -355,8 +355,5 @@
             </div>
         </td>
     </tr>
-    <!--
-    <pre>{{ selectedItems|json}}</pre>
-    <pre>{{ match_diff |json }}</pre>
-    -->
+         
 </table>
