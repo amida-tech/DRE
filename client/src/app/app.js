@@ -658,8 +658,25 @@ dre.controller('MainCtrl', ['$http','$location','$rootScope', '$scope', 'getNoti
             $rootScope.notifications = notifications;
         });
 
+        $scope.toggleCollapse = function (status) {
+
+            angular.element('#test').collapse({
+                toggle: false
+            });
+
+            if (status === true) {
+                angular.element('#test').collapse('hide');
+            } else {
+                angular.element('#test').collapse('show');
+            }
+
+        };
+
 
         $scope.logout = function() {
+
+            $scope.toggleCollapse(true);
+
             $http.post('api/v1/logout')
                 .success(function() {
                     $rootScope.isAuthenticated=false;

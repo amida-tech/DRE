@@ -19,13 +19,27 @@ angular.module('dre.nav', [])
 .controller('navCtrl', ['$rootScope', '$scope', '$http', '$location', '$window', '$anchorScroll',
     function ($rootScope, $scope, $http, $location, $window, $anchorScroll) {
 
+        $scope.toggleCollapse = function (status) {
+
+            angular.element('#test').collapse({
+                toggle: false
+            });
+
+            if (status === true) {
+                angular.element('#test').collapse('hide');
+            } else {
+                angular.element('#test').collapse('show');
+            }
+
+        };
+
         $scope.navClick = function (element) {
 
             var old = $location.hash();
-			$location.hash(element);
-			$anchorScroll();
-			//reset to old to keep any additional routing logic from kicking in
-			$location.hash(old);
+            $location.hash(element);
+            $anchorScroll();
+            //reset to old to keep any additional routing logic from kicking in
+            $location.hash(old);
         };
 
         $scope.logout = function () {
