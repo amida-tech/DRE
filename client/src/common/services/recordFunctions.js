@@ -58,8 +58,8 @@ angular.module('services.recordFunctions', [])
 
                     var default_name = "Insurance";
 
-                    console.log("insurance:", type,  JSON.stringify(inputSection,null,4));
-                    console.log("basd");
+                    //console.log("insurance:", type,  JSON.stringify(inputSection,null,4));
+                    //console.log("basd");
 
                     //Just take first organizational name.
                     if (inputSection.policy) {

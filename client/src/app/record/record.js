@@ -25,8 +25,8 @@ function($routeProvider) {
   });
 }])
 
-  .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', 
-    function($scope, $filter, $http, $q, $location, fileDownload) {
+  .controller('recordCtrl', ['$scope', '$filter', '$http', '$q', '$location', 'fileDownload', '$window', '$anchorScroll',
+    function ($scope, $filter, $http, $q, $location, fileDownload, $window, $anchorScroll) {
 
       $scope.medicationsPath = "templates/record/components/medications.tpl.html";
       $scope.allergiesPath = "templates/record/components/allergies.tpl.html";

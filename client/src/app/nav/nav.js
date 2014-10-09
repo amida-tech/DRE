@@ -16,17 +16,26 @@ limitations under the License.
 
 angular.module('dre.nav', [])
 
-.controller('navCtrl', ['$rootScope','$scope', '$http', '$location',
-	function($rootScope, $scope, $http, $location) {
+.controller('navCtrl', ['$rootScope', '$scope', '$http', '$location', '$window', '$anchorScroll',
+    function ($rootScope, $scope, $http, $location, $window, $anchorScroll) {
 
-		$scope.logout = function() {
-			$http.post('/api/v1/logout')
-			.success(function (data) {
-				$rootScope.isAuthenticated=false;
-				$location.path('/home');
-			}).error(function (data) {
-				callback(data);
-			});
-		};
-	}
+        $scope.navClick = function (element) {
+
+            var old = $location.hash();
+			$location.hash(element);
+			$anchorScroll();
+			//reset to old to keep any additional routing logic from kicking in
+			$location.hash(old);
+        };
+
+        $scope.logout = function () {
+            $http.post('/api/v1/logout')
+                .success(function (data) {
+                    $rootScope.isAuthenticated = false;
+                    $location.path('/home');
+                }).error(function (data) {
+                    callback(data);
+                });
+        };
+    }
 ]);
