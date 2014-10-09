@@ -14,37 +14,37 @@
             <a data-toggle="collapse" data-target="#test" href="#/record">MY RECORD<span class="badge pull-right" ng-show="notifications.displayNotifications">{{notifications.new_count}}</span></a>
             <ul class="collapse children sub-nav" id="test">
                 <li>
-                <a href="#/record#allergies">Allergies</a>
+                <a ng-click="navClick('allergies')">Allergies</a>
                 </li>
                 <li>
-                <a href="#/record#encounters">Encounters</a>
+                <a ng-click="navClick('encounters')">Encounters</a>
                 </li>
                 <li>
-                <a href="#/record#immunizations">Immunizations</a>
+                <a ng-click="navClick('immunizations')">Immunizations</a>
                 </li>
                 <li>
-                <a href="#/record#medications">Medications</a>
+                <a ng-click="navClick('medications')">Medications</a>
                 </li>
                 <li>
-                <a href="#/record#problems">Problem List</a>
+                <a ng-click="navClick('problems')">Problem List</a>
                 </li>
                 <li>
-                <a href="#/record#procedures">Procedures</a>
+                <a ng-click="navClick('procedures')">Procedures</a>
                 </li>
                 <li>
-                <a href="#/record#vitals">Vital Signs</a>
+                <a ng-click="navClick('vitals')">Vital Signs</a>
                 </li>
                 <li>
-                <a href="#/record#insurance">Insurance</a>
+                <a ng-click="navClick('insurance')">Insurance</a>
                 </li>
                 <li>
-                <a href="#/record#claims">Claims</a>
+                <a ng-click="navClick('claims')">Claims</a>
                 </li>
                 <li>
-                <a href="#/record#results">Lab Results</a>
+                <a ng-click="navClick('results')">Lab Results</a>
                 </li>
                 <li>
-                <a href="#/record#social_history">Social History</a>
+                <a ng-click="navClick('social_history')">Social History</a>
                 </li>
             </ul>
         </li>
