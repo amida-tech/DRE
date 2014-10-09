@@ -5,14 +5,57 @@
     <a href="#/profile">
         <p class="text-center lead">{{notifications.displayName}}</p>
     </a>
-    <ul class="nav nav-pills nav-stacked">
-        <li><a href="#/dashboard">HOME</a>
+    
+    <ul class="nav nav-pills nav-stacked" id="menu">
+        <li class="collapse in">
+            <a href="#/dashboard">HOME</a>
         </li>
-        <li><a href="#/record">MY RECORD<span class="badge pull-right" ng-show="notifications.displayNotifications">{{notifications.new_count}}</span></a>
+        <li class="parent">
+            <a data-toggle="collapse" data-target="#test" href="#/record">MY RECORD<span class="badge pull-right" ng-show="notifications.displayNotifications">{{notifications.new_count}}</span></a>
+            <ul class="collapse children sub-nav" id="test">
+                <li>
+                <a href="#/record#allergies">Allergies</a>
+                </li>
+                <li>
+                <a href="#/record#encounters">Encounters</a>
+                </li>
+                <li>
+                <a href="#/record#immunizations">Immunizations</a>
+                </li>
+                <li>
+                <a href="#/record#medications">Medications</a>
+                </li>
+                <li>
+                <a href="#/record#problems">Problem List</a>
+                </li>
+                <li>
+                <a href="#/record#procedures">Procedures</a>
+                </li>
+                <li>
+                <a href="#/record#vitals">Vital Signs</a>
+                </li>
+                <li>
+                <a href="#/record#insurance">Insurance</a>
+                </li>
+                <li>
+                <a href="#/record#claims">Claims</a>
+                </li>
+                <li>
+                <a href="#/record#results">Lab Results</a>
+                </li>
+                <li>
+                <a href="#/record#social_history">Social History</a>
+                </li>
+            </ul>
         </li>
-        <li><a href="#/match">MY UPDATES<span class="badge pull-right" ng-show="notifications.unreviewed_merges > 0">{{notifications.unreviewed_merges}}</span></a>
+        <li><a href="#/match/reconciliation">MY UPDATES<span class="badge pull-right" ng-show="notifications.unreviewed_merges > 0">{{notifications.unreviewed_merges}}</span></a>
         </li>
         <li><a href="#/storage">MY FILES</a>
         </li>
     </ul>
+
+    <!-- 
+    <div class="panel-group" id="navigation-menu">
+        <div class="panel panel-default" -->
+
 </div>
