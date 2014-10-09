@@ -83,6 +83,20 @@ angular.module('dre.dashboard', [])
             }
         };
 
+        function formatMerges(inputMerge) {
+            var trimLength = 35;
+            for (var iMerge in inputMerge) {
+                if (inputMerge[iMerge].entry_type !== 'demographics') {
+                    recordFunctions.extractName(inputMerge[iMerge].entry, inputMerge[iMerge].entry_type);
+                }
+
+                if (inputMerge[iMerge].entry_type === 'demographics') {
+                    var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry.name);
+                    inputMerge[iMerge].entry.name = tmpName.displayName;
+                }
+            }
+        }
+
         $scope.file_array = [];
         $scope.displayRecords = false;
 
@@ -125,19 +139,6 @@ angular.module('dre.dashboard', [])
 
         };
 
-        function formatMerges(inputMerge) {
-            var trimLength = 35;
-            for (var iMerge in inputMerge) {
-                if (inputMerge[iMerge].entry_type !== 'demographics') {
-                    recordFunctions.extractName(inputMerge[iMerge].entry, inputMerge[iMerge].entry_type);
-                }
-
-                if (inputMerge[iMerge].entry_type === 'demographics') {
-                    var tmpName = recordFunctions.formatName(inputMerge[iMerge].entry.name);
-                    inputMerge[iMerge].entry.name = tmpName.displayName;
-                }
-            }
-        }
 
 
         $http({

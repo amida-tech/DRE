@@ -1,6 +1,7 @@
 <div class="col-md-12" ng-controller="reconciliationCtrl">
     <br/>
-    <h5 class="lead">Unreviewed Updates</h5>
+    <h5 class="lead">My Updates</h5>
+    <div class="alert alert-info">There are {{notifications.unreviewed_merges}} record updates awaiting your review.</div>
 
     <div class="panel panel-default" ng-repeat="match_section in matches" ng-show="match_section">
         <div class="panel-body">

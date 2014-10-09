@@ -10,8 +10,23 @@
     margin-bottom: 0;
 }
 
+.sub-nav {
+	list-style: none;
+	margin-left:10px;
+}
 
+.sub-nav li {
+	padding: 5px;
+}
 
+.sub-nav li:hover {
+	background-color: #eee;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.sub-nav li > a:hover {
+	text-decoration: none;
+}
 
 .list-matching li:hover {
 	background-color: #dff0d8;
@@ -63,8 +78,8 @@ table.table {
 	margin-bottom: 0px;
 }
 
-.merge-item{
+.merge-item {
 	padding:0px;
-	bacground:transparent;
+	background:transparent;
 }
 

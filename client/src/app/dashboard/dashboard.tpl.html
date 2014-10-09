@@ -52,19 +52,19 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">No Thanks</button>
-                        <button type="button" class="btn btn-primary">Yes!</button>
+                        <button type="button" class="btn btn-primary">Continue!</button>
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <h5 class="lead col-md-12" ng-show="displayMerges">Completed Updates</h5>
-
         <div class="alert alert-success col-md-12" ng-show="notifications.file_count===0">Welcome to the Data Reconciliation Engine! You currently have no files in storage.
             <button class="btn btn-primary pull-right col-sm-2" data-toggle="modal" data-target="#myModal">Take a Tour
             </button>
         </div>
+
+        <h5 class="lead col-md-12" ng-show="displayMerges">Completed Updates</h5>
 
         <div class="panel-group" ng-show="displayMerges">
             <div class="panel panel-default">
