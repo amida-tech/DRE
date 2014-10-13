@@ -25,7 +25,6 @@
         "deep-equal": "0.2.x",
         "express": "4.9.x",
         "body-parser": "1.9.0",
-        "connect-multiparty": "1.2.4",
         "cookie-parser": "1.3.3",
         "express-session":"1.8.2",
         "morgan": "1.3.2",

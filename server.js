@@ -24,7 +24,7 @@ var passport = require('passport');
 
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var multiparty = require('connect-multiparty');
+//var multiparty = require('connect-multiparty');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -34,7 +34,7 @@ var cookieParser = require('cookie-parser');
 var static = require('serve-static');
 
 //app.use(express3.bodyParser());
-app.use(multiparty());
+//app.use(multiparty());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -82,7 +82,9 @@ app.use(function (req, res, next) {
 
 //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
 app.use(session({
-    secret: 'keyboard cat'
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true
     //,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
 }));
 
