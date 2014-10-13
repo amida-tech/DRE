@@ -24,7 +24,7 @@ var passport = require('passport');
 
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-//var multiparty = require('connect-multiparty');
+var multiparty = require('connect-multiparty');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -34,7 +34,6 @@ var cookieParser = require('cookie-parser');
 var static = require('serve-static');
 
 //app.use(express3.bodyParser());
-//app.use(multiparty());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -45,6 +44,7 @@ app.use(bodyParser.json({
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(cookieParser());
+app.use(multiparty());
 
 //var redis = require("redis").createClient();
 //var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
