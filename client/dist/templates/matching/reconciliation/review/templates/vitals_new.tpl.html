@@ -1,0 +1,23 @@
+<ul class="list-group list-matching">
+
+    <li class="list-group-item" ng-click="selectField('vital', null, match_diff.vital)" ng-class="{selected: selectedItems.vital, disabled: match_diff.vital}">
+        <div coded-entry input-value="new_entry.vital" input-title="Vital Sign" select-field="selectedItems.vital"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('status', null, match_diff.status)" ng-class="{selected: selectedItems.status, disabled: match_diff.status}">
+        <div single-entry input-value="new_entry.status" input-title="Status" select-field="selectedItems.status"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('date_time', null, match_diff.date_time)" ng-class="{selected: selectedItems.date_time, disabled: match_diff.date_time}">
+        <div date-entry input-value="new_entry.date_time" input-title="Date" select-field="selectedItems.date_time"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('value', null, match_diff.value)" ng-class="{selected: selectedItems.value, disabled: match_diff.value}">
+        <div single-entry input-value="new_entry.value" input-title="Value" select-field="selectedItems.value"></div>
+    </li>
+
+    <li class="list-group-item" ng-click="selectField('unit', null, match_diff.unit)" ng-class="{selected: selectedItems.unit, disabled: match_diff.unit}">
+        <div single-entry input-value="new_entry.unit" input-title="Unit" select-field="selectedItems.unit"></div>
+    </li>
+
+</ul>

@@ -1,0 +1,141 @@
+<!--Begin Medications-->
+
+<div class="col-md-12">
+	<br/>
+	<span class="lead">Encounters</span>
+	<br/>
+	<br/>
+</div>
+<div ng-hide="display" class="panel-title">No encounters are currently in your record.</div>
+<div ng-show="display" class="panel-group" id="#accordian-encounters" ng-repeat="entry in entries | orderBy:sort_predicate">
+
+	<div class="modal fade" id="myEncountersModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Record Sources</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+							<tr><td><strong>Source Information</strong></td></tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="attribution in entry.metadata.attribution">
+								<td><strong>Source:</strong>  <a ng-click="dismissModal($parent.$index)" data-dismiss="modal" style="cursor: pointer;">{{attribution.record.filename}}</a></td>
+								<td><strong>Status:</strong>  <span style="text-transform: capitalize;">{{attribution.merge_reason}}</span></td>
+								<td><strong>Merged:</strong>  {{attribution.merged | date: 'short'}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+
+			<a data-toggle="collapse" data-parent="#accordian-encounters" data-target="#encounter-{{$index}}">
+				<div class="panel-title" style="cursor:pointer;">
+					<span style="text-transform:uppercase;">{{entry.name}}</span>
+					<span class="pull-right" style="text-transform:uppercase;">{{entry.attribute}}</span>
+				</div>
+			</a>
+		</div>
+		<div id="encounter-{{$index}}" class="panel-collapse collapse">
+			<div class="panel-body">
+				<div id="myTabContent" >
+					<div class="col-md-12">
+						<h4>Details</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.low.displayDate">
+							<div class="pull-left col-md-12"><strong>Started:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.date_time.low.displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.high.displayDate">
+							<div class="pull-left col-md-12"><strong>Ended:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.date_time.high.displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.date_time.point.displayDate">
+							<div class="pull-left col-md-12"><strong>Date:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.date_time.point.displayDate}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.encounter.code">
+							<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.encounter.code}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="entry.encounter.code_system_name">
+							<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+							<div class="pull-left col-md-12">{{entry.encounter.code_system_name}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" ng-show="entry.encounter.translations">
+						<h4>Other Descriptions</h4>
+						<div ng-repeat=" translation in entry.encounter.translations">
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.name">
+								<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.name}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code">
+								<div class="pull-left col-md-12"><strong>Code:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="translation.code_system_name">
+								<div class="pull-left col-md-12"><strong>Code System:</strong></div><br/>
+								<div class="pull-left col-md-12">{{translation.code_system_name}}</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" ng-repeat="finding in entry.findings" ng-show="finding.value">
+						<h4>Findings</h4>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="finding.value.name">
+								<div class="pull-left col-md-12"><strong>Name:</strong></div>
+								<br/>
+								<div class="pull-left col-md-12">{{finding.value.name}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="finding.value.code">
+								<div class="pull-left col-md-12"><strong>Code:</strong></div>
+								<br/>
+								<div class="pull-left col-md-12">{{finding.value.code}}</div>
+							</div>
+							<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="finding.value.code_system_name">
+								<div class="pull-left col-md-12"><strong>Code System:</strong></div>
+								<br/>
+								<div class="pull-left col-md-12">{{finding.value.code_system_name}}</div>
+							</div>
+					</div>
+
+					<div class="col-md-12 pull-left" ng-repeat="performer in entry.performers" ng-show="performer.name">
+						<h4>Performer</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-repeat="performer_name in performer.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{performer_name.displayName}}</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 pull-left" ng-repeat="location in entry.locations" ng-show="entry.locations">
+						<h4>Location</h4>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="location.name">
+							<div class="pull-left col-md-12"><strong>Name:</strong></div><br/>
+							<div class="pull-left col-md-12">{{location.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="location.location_type.name">
+							<div class="pull-left col-md-12"><strong>Type:</strong></div><br/>
+							<div class="pull-left col-md-12">{{location.location_type.name}}</div>
+						</div>
+						<div class="col-md-2 pull-left" style="margin-bottom: 10px;" ng-show="location.addresses[0].displayAddress">
+							<div class="pull-left col-md-12"><strong>Address:</strong></div><br/>
+							<div class="pull-left col-md-12" ng-repeat="location_address in location.addresses[0].displayAddress">{{location_address}}</div>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myEncountersModal{{$index}}">Sources</button>
+				</div>
+
+				<!--<pre> {{entry | json}} </pre>-->
+			</div>
+		</div>
+	</div>
+</div>

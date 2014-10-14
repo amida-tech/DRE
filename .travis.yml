@@ -1,26 +1,31 @@
 language: node_js
 node_js:
-    - "0.10"
-
+- '0.10'
 before_script:
-    - npm install -g grunt-cli@0.1.x
-    - npm install -g mocha
-    - npm install -g istanbul
-
-    - cd server
-    - npm install --quiet
-    - node server.js &
-    - sleep 3
-    - cd ../client
-    - npm install --quiet
-    - grunt
-    - cd ..
-
+- npm install -g grunt-cli@0.1.x
+- npm install -g mocha
+- npm install -g istanbul
+- npm install --quiet
+- node server.js &
+- sleep 3
+- cd ./client
+- npm install --quiet
+- grunt
+- cd ..
 services:
-    - mongodb
-    - redis-server
-
+- mongodb
+- redis-server
 script:
-    - grunt --gruntfile client/gruntfile.js
-    - grunt --gruntfile server/gruntfile.js
-    #- istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+- grunt --gruntfile client/gruntfile.js
+- grunt --gruntfile ./gruntfile.js
+- git config --global user.email "dmitry.kachaev@gmail.com"
+- git config --global user.name "Dmitry Kachaev"
+- git add -A
+- git commit -a -m "commit post-build files"
+deploy:
+  provider: heroku
+  api_key:
+    secure: Vd+ZApYihHFIquQXWElWtJjv4Y9Jchy/48GL7DwOH/WHVOdUJT2PlYypSugtQvJI09QbW4Kb/C471kS4+iH/vyg3ZUkc4TCcHnI50EI8F0V2p/CX2GWvA9IS9bUICHseIqfUtrWowGOhOg2gAlPMhqAETgMMB0Z8OWVqnzKr0aU=
+  app:
+    master: amida-dre
+    deployment: amida-dre
