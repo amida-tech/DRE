@@ -1313,6 +1313,11 @@
                 },
                 "reactions": [
                     {
+                        "identifiers": [
+                            {
+                                "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a64"
+                            }
+                        ],
                         "date_time": {
                             "low": {
                                 "date": "2007-05-01T00:00:00Z",
@@ -1397,6 +1402,11 @@
                 },
                 "reactions": [
                     {
+                        "identifiers": [
+                            {
+                                "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a64"
+                            }
+                        ],
                         "date_time": {
                             "low": {
                                 "date": "2006-05-01T00:00:00Z",
@@ -1481,6 +1491,11 @@
                 },
                 "reactions": [
                     {
+                        "identifiers": [
+                            {
+                                "identifier": "4adc1020-7b14-11db-9fe1-0800200c9a64"
+                            }
+                        ],
                         "date_time": {
                             "low": {
                                 "date": "2008-05-01T00:00:00Z",
@@ -2269,7 +2284,7 @@
                 {
                     "name": "colon",
                     "code": "appropriate_code",
-                    "code_system_name": "OID 2.16.840.1.113883.3.88.12.3221.8.9"
+                    "code_system_name": "Body Site Value Set"
                 }
             ],
             "specimen": {
@@ -2371,7 +2386,7 @@
             "priority": {
                 "name": "Callback results",
                 "code": "CR",
-                "code_system_name": "OID 2.16.840.1.113883.5.7"
+                "code_system_name": "ActPriority"
             },
             "performer": [
                 {
@@ -2457,7 +2472,7 @@
             "priority": {
                 "name": "Callback results",
                 "code": "CR",
-                "code_system_name": "OID 2.16.840.1.113883.5.7"
+                "code_system_name": "ActPriority"
             },
             "performer": [
                 {
