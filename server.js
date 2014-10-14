@@ -44,7 +44,7 @@ app.use(bodyParser.json({
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(cookieParser());
-app.use(multiparty());
+app.use('/api/v1/storage', multiparty());
 
 //var redis = require("redis").createClient();
 //var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
