@@ -36,32 +36,10 @@
                     <span class="glyphicon glyphicon-cloud-download"></span>Download</button>
             </a>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">Hi there!</h4>
-                    </div>
-                    <div class="modal-body">
-                        *Introductory Tour*
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">No Thanks</button>
-                        <button type="button" class="btn btn-primary">Continue!</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
 
         <div class="alert alert-success col-md-12" ng-show="notifications.file_count===0">Welcome to the Data Reconciliation Engine! You currently have no files in storage.
-            <button class="btn btn-primary pull-right col-sm-2" data-toggle="modal" data-target="#myModal">Take a Tour
-            </button>
         </div>
 
         <h5 class="lead col-md-12" ng-show="displayMerges">Completed Updates</h5>
