@@ -28,7 +28,3 @@ From the base project directory, you can use Grunt to build and execute the foll
 ```grunt test``` - Runs all test cases against current build.
 
 ```grunt serve``` - Runs build and serves pages on localhost.
-
-```grunt build-dev``` - Runs a non-optimized build for quick development.
-
-```grunt serve-dev``` - Serves build-dev builds for quick development.

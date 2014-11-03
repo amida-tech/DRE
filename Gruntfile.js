@@ -408,24 +408,6 @@ module.exports = function (grunt) {
     grunt.task.run(['serve:' + target]);
   });
 
-
-  //Dev serve for rapid reload/build.
-  grunt.registerTask('serve-dev', 'Compile then start a connect web server', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build-dev', 'connect:dist:keepalive']);
-    }
-
-    grunt.task.run([
-      'clean:server',
-      'wiredep',
-      'concurrent:server',
-      'autoprefixer',
-      'connect:livereload',
-      'watch'
-    ]);
-  });
-
-
   //Run test cases only.
   grunt.registerTask('test', [
     'clean:server',
@@ -452,16 +434,6 @@ module.exports = function (grunt) {
     'usemin',
     'htmlmin'
   ]);
-
-  //Quicker build for rapid development.
-  grunt.registerTask('build-dev', [
-    'clean:dist',
-    'wiredep',
-    'ngAnnotate',
-    'copy:dist',
-    'cdnify'
-  ]);
-
 
   grunt.registerTask('default', [
     'newer:jshint',
