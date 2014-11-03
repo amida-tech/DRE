@@ -1,4 +1,6 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// $fa-font-path: "../fonts" !default;
+
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
@@ -14,3 +16,26 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // Bootstrap Postprocessing
 @import "fonts";
 @import "images";
+
+.landing-panel {
+	background: #fff;
+	margin-top: -20px;
+	padding: 20px;
+}
+
+.landing-advertising {
+	margin: 20px;
+}
+
+.icon-circle {
+    @extend .img-circle;
+	background: #fff;
+	width: 100px;
+	height:100px;
+	margin: 0 auto;
+	text-align: center;
+
+	i {
+	  margin-top: 20px;
+	}
+}

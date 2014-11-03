@@ -5,6 +5,12 @@ $font-family-sans-serif:  "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-
 $font-family-serif:       "Roboto Condensed", serif !default;
 $font-family-impact:     "Montserrat", serif !default;
 
+$gray-darker:            lighten(#000, 13.5%) !default; // #222
+$gray-dark:              lighten(#000, 20%) !default;   // #333
+$gray:                   lighten(#000, 33.5%) !default; // #555
+$gray-light:             lighten(#000, 46.7%) !default; // #777
+$gray-lighter:           lighten(#000, 93.5%) !default; // #eee
+
 $brand-blue-light: #E1EDFF;
 $brand-blue: #6AA6FF;
 $brand-blue-dark:  #3869B2;
@@ -15,4 +21,7 @@ $brand-primary:         $brand-blue !default;
 $link-color:            $brand-primary !default;
 $headings-font-family:    $font-family-serif;
 $font-family-base:        $font-family-sans-serif !default;
+
 $brand-primary:         $brand-blue !default;
+
+$body-bg:               $gray-lighter !default;
