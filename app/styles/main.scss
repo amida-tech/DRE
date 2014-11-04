@@ -17,6 +17,27 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "fonts";
 @import "images";
 
+
+
+// Custom HTML for footer responsiveness.
+* {
+    margin: 0;
+}
+html, body {
+    height: 100%;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -40px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+    height: 40px; /* .push must be the same height as .footer */
+}
+// End footer responsiveness.
+
+
 .landing-panel {
 	background: #fff;
 	margin-top: -20px;
