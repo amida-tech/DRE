@@ -90,3 +90,33 @@ html, body {
 	}
 
 }
+
+.alert-row {
+	text-align: right;
+	margin: 15px 0;
+
+	.primary {
+	  color: $brand-primary;
+	}
+
+	.success {
+	  color: $brand-success;
+	}
+
+	.info {
+	  color: $brand-info;
+	}
+
+	.warning {
+	  color: $brand-warning;
+	}
+
+	.danger {
+	  color: $brand-danger;
+	}
+
+}
+
+
+
+
