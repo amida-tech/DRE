@@ -10,7 +10,6 @@
 angular.module('phrPrototypeApp')
   .controller('MainCtrl', function ($scope, $location, authentication) {
     
-
   	$scope.login = function () {
   		authentication.login($scope.inputLogin, $scope.inputPassword, function(err) {
   			if (err) {
@@ -20,7 +19,5 @@ angular.module('phrPrototypeApp')
   			}
  		});
   	};
-
-
 
   });
