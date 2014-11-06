@@ -37,6 +37,9 @@ html, body {
 }
 // End footer responsiveness.
 
+a:hover {
+	cursor: pointer;
+}
 
 .landing-panel {
 	background: #fff;
@@ -124,5 +127,38 @@ html, body {
 	margin: 5px 15px; height: 50px;
 }
 
+.timeline-panel {
+}
+
+.timeline-header {
+	border-bottom: medium solid $brand-info;
+}
+
+.timeline-body {
+	background-image: url('../images/bg-line.png');
+	background-repeat: repeat-y;
+	background-position: center top;
+}
+
+.timeline-entry-header {
+	border-bottom: medium solid $brand-info;
+	margin-bottom: 20px;
+}
+
+.timeline-entry-icon {
+	@extend .img-circle;
+	background: #fff;
+	height: 60px;
+	width: 60px;
+	border: thick solid $brand-info;
+	line-height: 4.0em;
+	position: relative;
+	bottom: -30px;
+	z-index: 100;
+}
+
+.timeline-footer circle {
+	fill: $brand-info
+}
 
 

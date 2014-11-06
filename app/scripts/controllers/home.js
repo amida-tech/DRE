@@ -8,10 +8,22 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('HomeCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('HomeCtrl', function ($scope, history) {
+    
+  	$scope.accountHistory = {};
+    
+
+  	function getHistory () {
+      history.account(function(err, history) {
+        if (err) {
+          console.log(err);
+        } else {
+          $scope.accountHistory = history;
+        }
+      });
+    }
+
+    getHistory();
+
+
   });

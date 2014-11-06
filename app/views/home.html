@@ -3,94 +3,136 @@
 
 <div class="row" style="margin:20px;">
 	<div class="col-sm-3" style="padding-right: 20px;">
-	<div class="profile">
-		<div class="profile-body">
-			<div class="profile-image">
-				<img class="img-responsive center-block" src="images/img-demo.png">
-			</div>
-			<div class="profile-content">
-				<h4>Suzie Demo</h4>
-				<p>suzie@amida-demo.com</p>
-				<p>Born: 6/25/1982</p>
+		<div class="profile">
+			<div class="profile-body">
+				<div class="profile-image">
+					<img class="img-responsive center-block" src="images/img-demo.png">
+				</div>
+				<div class="profile-content">
+					<h4>Suzie Demo</h4>
+					<p>suzie@amida-demo.com</p>
+					<p>Born: 6/25/1982</p>
+				</div>
 			</div>
 		</div>
-	</div>
-	</div>
-
-	<div class="panel col-sm-9">
-	  <div class="panel-body">
-
-	  	<div class="col-sm-7">
-			<h2>Home</h2>
-			<p>Welcome to your Personal Health Record.</p>
-			<p>Last Login: 12/24/2012</p>
-			<p>Last Updated: 12/24/2012</p>
-		</div>
-		<div class="col-sm-5">
-
-			<div class="row alert-row">
-				<div class="col-sm-3 success">
-					<i class="fa fa-check fa-2x"></i>
-				</div>
-				<div class="col-sm-9">
-					<span>60 Total Entries</span>
-				</div>
-			</div>
-
-			<div class="row alert-row">
-				<div class="col-sm-3 warning">
-					<i class="fa fa-flag fa-2x"></i>
-				</div>
-				<div class="col-sm-9">
-					<span>60 Possible Updates</span>
-				</div>
-			</div>
-
-			<div class="row alert-row">
-				<div class="col-sm-3 info">
-					<i class="fa fa-folder fa-2x"></i>
-				</div>
-				<div class="col-sm-9">
-					<span>60 Files Saved</span>
-				</div>
-			</div>
-
-		</div>
-	  </div>
-
 	</div>
 
 	<div class="col-sm-9">
 
-	  <!--Slider Element-->
-	  <div>
 
-	  	<!--Timeline Row-->
-	  	<div class="timeline">
+		<!--Intro Panel.-->
+		<div class="panel">
+			<div class="panel-body">
+				<div class="col-sm-7">
+					<h2>Home</h2>
+					<p>Welcome to your Personal Health Record.</p>
+					<p>Last Login: 12/24/2012</p>
+					<p>Last Updated: 12/24/2012</p>
+				</div>
+				<div class="col-sm-5">
 
-	  	 <div style="width: 100%">
+					<div class="row alert-row">
+						<div class="col-sm-3 success">
+							<i class="fa fa-check fa-2x"></i>
+						</div>
+						<div class="col-sm-9">
+							<span>60 Total Entries</span>
+						</div>
+					</div>
 
-	  	 	<a href="">
-			<svg width="500" height="50">
-  				<circle cx="40" cy="25" r="5"></circle>
-  				<circle cx="80" cy="25" r="5"></circle>
-  				<circle cx="320" cy="25" r="5"></circle>
+					<div class="row alert-row">
+						<div class="col-sm-3 warning">
+							<i class="fa fa-flag fa-2x"></i>
+						</div>
+						<div class="col-sm-9">
+							<span>60 Possible Updates</span>
+						</div>
+					</div>
+
+					<div class="row alert-row">
+						<div class="col-sm-3 info">
+							<i class="fa fa-folder fa-2x"></i>
+						</div>
+						<div class="col-sm-9">
+							<span>60 Files Saved</span>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!--Slider Element-->
+		<div style="padding-bottom: 20px;">
+			<!--Timeline Row-->
+			<div class="timeline">
+
+				<div style="width: 100%">
+
+					<a href="">
+						<svg width="500" height="50">
+							<circle cx="40" cy="25" r="5"></circle>
+							<circle cx="80" cy="25" r="5"></circle>
+							<circle cx="320" cy="25" r="5"></circle>
+						</svg>
+					</a>
+
+
+				</div>
+			</div>
+			<!--Label Row-->
+			<div style="float: left;">1999</div>
+			<div style="float: right;">2010</div>
+		</div>
+
+		<!--Timeline Header.-->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="timeline-header text-center">
+				<h4>Account History</h4>
+			</div>
+		</div>
+
+		<!--Timeline Body.-->
+		<div class="col-sm-12 timeline-body">
+			<div ng-repeat="recordEntry in accountHistory.recordHistory" class="col-sm-12">
+
+				<div class="col-sm-12">
+					<div class="timeline-entry-icon text-center center-block">
+						<i class="fa fa-check fa-2x"></i>
+					</div>
+
+				</div>
+
+				<div class="panel timeline-panel col-sm-12">
+
+					<div class="panel-body">
+						<div class="timeline-entry-header col-sm-12">
+							<div class="col-sm-6">
+								<h4 class="text-left">{{recordEntry.type}}</h4>
+							</div>
+							<div class="col-sm-6">
+								<h4 class="text-right">{{recordEntry.date}}</h4>
+							</div>
+						</div>
+
+						<div class="col-sm-10 col-sm-offset-1">
+							<div ng-show="recordEntry.file.name"><a>{{recordEntry.file.name}}</a></div>
+							<div ng-hide="recordEntry.file.name">Your medical history</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-12 center-block text-center timeline-footer">
+			<svg width="30" height="30">
+				<circle cx="15" cy="15" r="15"></circle>
 			</svg>
-			</a>
+		</div>
 
-
-	  	</div>
-	  	</div>
-
-
-	  	<!--Label Row-->
-	  	<div style="float: left;">1999</div>
-	  	<div style="float: right;">2010</div>
-
-	  </div>
 
 	</div>
-
 
 
 	
