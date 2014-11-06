@@ -9,6 +9,9 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // Bootstrap Preprocessing
 @import "variables";
 
+$padding-base-vertical:     10px !default;
+$padding-base-horizontal:   20px !default;
+
 $grid-gutter-width:         0px !default;
 
 // bower:scss
@@ -19,7 +22,9 @@ $grid-gutter-width:         0px !default;
 @import "fonts";
 @import "images";
 
-
+.btn {
+	@include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-small, $line-height-base, $border-radius-base);
+}
 
 // Custom HTML for footer responsiveness.
 * {
@@ -171,4 +176,10 @@ a:hover {
 	fill: $brand-info
 }
 
-
+.btn {
+  font-weight: $btn-font-weight;
+  font-family: $font-family-impact;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  
+}

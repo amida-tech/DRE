@@ -2,7 +2,7 @@
 
 
 <div class="row" style="margin:20px;">
-	<div class="col-sm-3" style="padding-right: 20px;">
+	<div class="col-sm-3" style="padding-right: 20px; padding-bottom: 20px;">
 		<div class="profile">
 			<div class="profile-body">
 				<div class="profile-image">
@@ -15,6 +15,13 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="btn-group-vertical col-sm-12">
+			<button type="button" class="btn btn-default btn-block">My Record</button>
+			<button type="button" class="btn btn-default btn-block">My Billing</button>
+			<button type="button" class="btn btn-default btn-block">My Files</button>
+		</div>
+
 	</div>
 
 	<div class="col-sm-9">
@@ -26,8 +33,8 @@
 				<div class="col-sm-7">
 					<h2>Home</h2>
 					<p>Welcome to your Personal Health Record.</p>
-					<p>Last Login: 12/24/2012</p>
-					<p>Last Updated: 12/24/2012</p>
+					<p>Last Login: {{accountHistory.lastLogin}}</p>
+					<p>Last Updated: {{accountHistory.lastUpdate}}</p>
 				</div>
 				<div class="col-sm-5">
 
@@ -98,7 +105,8 @@
 
 				<div class="col-sm-12">
 					<div class="timeline-entry-icon text-center center-block">
-						<i class="fa fa-check fa-2x"></i>
+						<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x"></i>
+						<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x"></i>
 					</div>
 
 				</div>
