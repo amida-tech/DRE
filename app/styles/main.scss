@@ -9,6 +9,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // Bootstrap Preprocessing
 @import "variables";
 
+$grid-gutter-width:         0px !default;
+
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
 // endbower
@@ -62,6 +64,10 @@ a:hover {
 	i {
 	  margin-top: 20px;
 	}
+}
+
+.panel {
+	border-color: #ddd;
 }
 
 .profile {
@@ -147,14 +153,18 @@ a:hover {
 
 .timeline-entry-icon {
 	@extend .img-circle;
-	background: #fff;
+	background: $brand-primary;
 	height: 60px;
 	width: 60px;
-	border: thick solid $brand-info;
+	border: thick solid $brand-primary;
 	line-height: 4.0em;
 	position: relative;
 	bottom: -30px;
 	z-index: 100;
+
+	i {
+	color: #fff;
+	}
 }
 
 .timeline-footer circle {
