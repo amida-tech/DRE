@@ -2,6 +2,7 @@
   "name": "phr-prototype",
   "version": "0.0.0",
   "dependencies": {
+    "d3": "~3.4.0",
     "angular": "~1.2.0",
     "json3": "~3.3.1",
     "es5-shim": "~3.1.0",
