@@ -13,9 +13,11 @@ angular.module('phrPrototypeApp')
             template: "<svg style='width:100%;'></svg>",
             link: function postLink(scope, element, attrs) {
 
-            	var plotHeight = 50;
-            	var boundaryOffset = 15;
-            	var boundaryWidth = 5;
+                var plotHeight = 80;
+                var boundaryOffset = 15;
+                var boundaryWidth = 5;
+                var boundaryLabelOffset = 15;
+                var boundaryLabelPadding = 5;
 
                 var plotCircles = [];
                 var plotDomain = [];
@@ -50,7 +52,7 @@ angular.module('phrPrototypeApp')
 
                 function renderPlot() {
 
-                	var width;
+                    var width;
 
                     function getSVGWidth() {
                         width = parseInt(svg.style('width'), 10);
@@ -59,14 +61,14 @@ angular.module('phrPrototypeApp')
                     function buildScale() {
 
                         timeScale = d3.time.scale()
-                            .range([(boundaryOffset + (boundaryWidth / 2)),width - (boundaryOffset - (boundaryWidth / 2 ))])
+                            .range([(boundaryOffset + (boundaryWidth / 2)), width - (boundaryOffset - (boundaryWidth / 2))])
                             .domain(plotDomain);
                     }
 
                     function structureData() {
                         for (var i in plotCircles) {
                             plotCircles[i].x_axis = timeScale(plotCircles[i].date);
-                            plotCircles[i].y_axis = plotHeight / 2;
+                            plotCircles[i].y_axis = (plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2;
                             plotCircles[i].radius = 10;
                             plotCircles[i].color = "green";
                         }
@@ -75,23 +77,52 @@ angular.module('phrPrototypeApp')
                     function plotData() {
                         svg.selectAll('*').remove();
 
-var boundaryData = [{
-                        "x": boundaryOffset,
-                        "y": 0,
-                        "width": boundaryWidth,
-                        "height": plotHeight,
-                        "color": "orange"
-                    }, {
-                        "x": width - boundaryOffset,
-                        "y": 0,
-                        "width": boundaryWidth,
-                        "height": plotHeight,
-                        "color": "orange"
-                    }];
+                        var boundaryData = [{
+                            "x": boundaryOffset,
+                            "y": 0,
+                            "width": boundaryWidth,
+                            "height": plotHeight - boundaryLabelOffset - boundaryLabelPadding,
+                            "color": "#5bc0de"
+                        }, {
+                            "x": width - boundaryOffset,
+                            "y": 0,
+                            "width": boundaryWidth,
+                            "height": plotHeight - boundaryLabelOffset - boundaryLabelPadding,
+                            "color": "#5bc0de"
+                        }];
 
-                    var boundaries = svg.selectAll("rect").data(boundaryData).enter().append("rect");
+                        var boundaryDisplayFormat = d3.time.format("%b, %Y");
 
-                    var boundaryAttributes = boundaries
+                        var boundaryLabel = [{
+                            "x": 0,
+                            "y": plotHeight - boundaryLabelPadding,
+                            "anchor": "start",
+                            "text": boundaryDisplayFormat(plotDomain[0])
+                        }, {
+                            "x": width,
+                            "y": plotHeight - boundaryLabelPadding,
+                            "anchor": "end",
+                            "text": boundaryDisplayFormat(plotDomain[1])
+                        }];
+
+                        var boundaryLabels = svg.selectAll("text").data(boundaryLabel).enter().append("text");
+                        var boundaryLabelAttributes = boundaryLabels
+                        	.attr("x", function (d) {
+                                return d.x;
+                            })
+                            .attr("y", function (d) {
+                                return d.y;
+                            })
+                            .text(function (d) {
+                                return d.text;
+                            })
+                            .style("text-anchor", function (d) {
+                                return d.anchor;
+                            });
+
+
+                        var boundaries = svg.selectAll("rect").data(boundaryData).enter().append("rect");
+                        var boundaryAttributes = boundaries
                             .attr("x", function (d) {
                                 return d.x;
                             })
@@ -108,9 +139,6 @@ var boundaryData = [{
                                 return d.color;
                             });
 
-
-
-
                         var circles = svg.selectAll("circle").data(plotCircles).enter().append("circle");
                         var circleAttributes = circles
                             .attr("cx", function (d) {
@@ -125,11 +153,6 @@ var boundaryData = [{
                             .style("fill", function (d) {
                                 return d.color;
                             });
-
-
-
-                    
-
 
                     }
 
