@@ -24,8 +24,10 @@
       <div class="wrapper">
 
         <!--Site Header.-->
-        <div class="navbar navbar-default" role="navigation">
-          <div class="container-fluid">
+        <div class="navbar navbar-default" role="navigation" ng-controller="NavbarCtrl">
+
+          <!--Logged In Navbar-->
+          <div ng-if="loginStatus === true" class="container-fluid">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#user-menu">
                 <span class="sr-only">Toggle navigation</span>
@@ -57,6 +59,22 @@
               </ul>
             </div>
           </div>
+
+          <!--Logged Out Navbar-->
+          <div ng-if="loginStatus === false" class="container-fluid">
+          <div style="margin: 0px 20px;">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#"><img class="img-navbar-logo" src="images/bb-logo-vector.png"></a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Sign Up</a></li>
+                <li><a href="#/login">Log In</a></li>
+            </ul>
+            </div>
+          </div>
+
+
+
         </div>
         <div ng-view=""></div>
         <div class="push"></div>
@@ -120,6 +138,7 @@
     <script src="scripts/controllers/home.js"></script>
     <script src="scripts/services/history.js"></script>
     <script src="scripts/directives/timeline.js"></script>
+    <script src="scripts/controllers/navbar.js"></script>
     <!-- endbuild -->
   </body>
   </html>

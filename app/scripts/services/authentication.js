@@ -8,7 +8,7 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-    .service('authentication', function authentication() {
+    .service('authentication', function authentication($location) {
 
         this.login = function (username, password, callback) {
             if (username && password) {
@@ -31,6 +31,17 @@ angular.module('phrPrototypeApp')
         	} else {
         		callback(null);
         	}
+        };
+
+        //This would be a server call, but now just stubbed with $location.
+        this.authStatus = function (callback) {
+
+            if ($location.path() === "/") {
+                callback(null, false);
+            } else {
+                callback(null, true);
+            }
+
         };
 
     });
