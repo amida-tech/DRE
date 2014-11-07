@@ -22,6 +22,7 @@ angular.module('phrPrototypeApp')
                 var plotCircles = [];
                 var plotDomain = [];
                 var timeScale;
+                var timeScaleTicks = [];
                 var d3 = $window.d3;
                 var rawSvg = element.find("svg")[0];
                 var svg = d3.select(rawSvg).attr("height", plotHeight);
@@ -59,24 +60,37 @@ angular.module('phrPrototypeApp')
                     }
 
                     function buildScale() {
-
                         timeScale = d3.time.scale()
                             .range([(boundaryOffset + (boundaryWidth / 2)), width - (boundaryOffset - (boundaryWidth / 2))])
                             .domain(plotDomain);
+                    }
+
+                    function buildTicks () {
+
+                    	timeScaleTicks = [];
+                    	 //TODO:  Configure this for monthly ticks.
+                        var tmpTimeScaleTicks = timeScale.ticks(20);
+                        
+                        for (var i in tmpTimeScaleTicks) {
+                        	timeScaleTicks.push({
+                        		"x_axis": timeScale(tmpTimeScaleTicks[i]),
+                        		"y_axis": (plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2
+                        	});
+                        }
                     }
 
                     function structureData() {
                         for (var i in plotCircles) {
                             plotCircles[i].x_axis = timeScale(plotCircles[i].date);
                             plotCircles[i].y_axis = (plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2;
-                            plotCircles[i].radius = 10;
-                            plotCircles[i].color = "green";
+                            plotCircles[i].radius = 12;
+                            plotCircles[i].color = "#6AA6FF";
+                            plotCircles[i].href = "entry" + i;
                         }
                     }
 
                     function plotData() {
                         svg.selectAll('*').remove();
-
                         var boundaryData = [{
                             "x": boundaryOffset,
                             "y": 0,
@@ -139,7 +153,25 @@ angular.module('phrPrototypeApp')
                                 return d.color;
                             });
 
-                        var circles = svg.selectAll("circle").data(plotCircles).enter().append("circle");
+                        console.log(timeScaleTicks);
+
+                        var plotLines = svg.selectAll("plotLines").data(timeScaleTicks).enter().append("circle");
+
+                        var plotLineAttributes = plotLines
+                        	.attr("cx", function (d) {
+                        		console.log(d);
+                                return d.x_axis;
+                            })
+                            .attr("cy", function (d) {
+                                return d.y_axis;
+                            })
+                            .attr("r", 2)
+                            .style("fill", "#5bc0de")
+                            .attr("class", "plotLines");
+
+
+
+                        var circles = svg.selectAll("plotPoint").data(plotCircles).enter().append("circle");
                         var circleAttributes = circles
                             .attr("cx", function (d) {
                                 return d.x_axis;
@@ -152,12 +184,16 @@ angular.module('phrPrototypeApp')
                             })
                             .style("fill", function (d) {
                                 return d.color;
+                            })
+                            .attr("class", "plotPoint")
+                            .on("click", function() {
+                            	//Stubbed for clicking.
                             });
-
                     }
 
                     getSVGWidth();
                     buildScale();
+                    buildTicks();
                     structureData();
                     plotData();
 
@@ -173,55 +209,6 @@ angular.module('phrPrototypeApp')
                     renderPlot();
                 };
 
-                /*function resize() {
-    // update width
-    width = parseInt(d3.select('#chart').style('width'), 10);
-    width = width - margin.left - margin.right;
-
-    // reset x range
-    x.range([0, width]);
-
-    // do the actual resize...
-}*/
-
-                //console.log(plotDomain);
-                //console.log(plotCircles);
-
-                //console.log(timeScale(plotDomain[1]));
-
-                /*
-            	// Sample Circles.  Real circles will css class applied, x-axis only adjustment.
-                var jsonCircles = [
-                	{ "x_axis": 30, "y_axis": 30, "radius": 20, "color" : "green" },
-					{ "x_axis": 60, "y_axis": 30, "radius": 20, "color" : "blue" },
-					{ "x_axis": 90, "y_axis": 30, "radius": 20, "color" : "red" }
-                ];
-
-
-
-                //Set SVG size.
-                
-
-                //Start by grabbing all circles.
-                var circles = svg.selectAll("circle").data(jsonCircles).enter().append("circle");
-
-                var circleAttributes = circles
-                     .attr("cx", function (d) { 
-
-                     	d.x_axis = d.x_axis + 30;
-                     	return d.x_axis; }
-
-                       )
-                      .attr("cy", function (d) { return d.y_axis; })
-                      .attr("r", function (d) { return d.radius; })
-                      .style("fill", function(d) { return d.color; });
-
-                 //To make responsive, need to listen to $window resize event, and re-render.
-
-
-                //Saved sample of click event.
-                //var circle = svg.append("circle").attr("cx", 300).attr("cy", 30).attr("r",20).on("click", function() { window.open("http://google.com"); });
-	*/
             }
         };
     });
