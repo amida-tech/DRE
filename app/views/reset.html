@@ -1,0 +1,42 @@
+<div ng-show="step === 0" class="col-sm-4 col-sm-offset-4">
+	<div class="text-center">
+		<h4>Reset Password</h4>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+
+			<form novalidate role="form">
+				<div class="form-group">
+					<label for="inputEmail">Email Address:</label>
+					<input type="email" class="form-control" id="inputEmail" ng-model="inputEmail">
+				</div>
+				<button type="submit" class="btn btn-block btn-primary" ng-click="nextStep()">Submit</button>
+				<div class="text-center">
+					<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div ng-show="step === 1" class="col-sm-4 col-sm-offset-4">
+	<div class="text-center">
+		<h4>Reset Password</h4>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<p class="text-center">
+				<i class="fa fa-envelope-o"></i> Email Sent!
+			</p>
+			<p class="text-center">
+				Password Reset Instructions have been sent to your personal inbox.
+			</p>
+			<button type="submit" class="btn btn-block btn-success" ng-click="finish()">Done</button>
+	          <div class="text-center">
+	            <h5><a ng-click="resend()">Re-Send Email</a></h5>
+	          </div>
+		</div>
+	</div>
+</div>
