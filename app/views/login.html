@@ -1,17 +1,18 @@
 <div class="col-sm-4 col-sm-offset-4">
     <div class="panel panel-default">
       <div class="panel-body">
-        <form role="form">
+        <form novalidate role="form">
           <div class="form-group">
-            <label for="exampleInputEmail1">User ID:</label>
-            <input type="email" class="form-control" id="exampleInputEmail1">
+            <label for="inputLogin">User ID:</label>
+            <input type="text" class="form-control" id="inputLogin" ng-model="inputLogin">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Password:</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="inputPassword">Password:</label>
+            <input type="password" class="form-control" id="inputPassword" ng-model="inputPassword">
           </div>
-          <button type="submit" class="btn btn-block btn-primary">Log In</button>
+          <button type="submit" class="btn btn-block btn-primary" ng-click="login()">Log In</button>
           <div class="text-center">
+          <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
             <h5><a href="">Forgot Password</a></h5>
           </div>
         </form>

@@ -11,7 +11,6 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 $padding-base-vertical:     10px !default;
 $padding-base-horizontal:   20px !default;
-
 $grid-gutter-width:         0px !default;
 
 // bower:scss
@@ -60,7 +59,7 @@ a:hover {
 
 .icon-circle {
     @extend .img-circle;
-	background: #fff;
+	background: $brand-blue;
 	width: 100px;
 	height:100px;
 	margin: 0 auto;
@@ -68,6 +67,7 @@ a:hover {
 
 	i {
 	  margin-top: 20px;
+	  color: #fff;
 	}
 }
 
@@ -182,4 +182,37 @@ a:hover {
   letter-spacing: 1px;
   text-transform: uppercase;
   
+}
+
+.navbar-brand {
+	padding: 12px 0;
+}
+
+.navbar-default {
+	background: #fff;
+}
+
+.landing-panel {
+	background-image: url('../images/hero.png');
+	background-position: left;
+	background-repeat: no-repeat;
+	background-color: $gray-dark;
+	min-height: 400px;
+
+	h1 {
+		color: #fff;
+	}
+}
+
+.landing-login {
+	margin-top: 20px;
+}
+
+.login-alert {
+	color: $brand-danger;
+	margin: 10px;
+}
+
+.panel {
+	border-radius: 0px;
 }

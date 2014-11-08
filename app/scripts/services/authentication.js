@@ -16,7 +16,7 @@ angular.module('phrPrototypeApp')
                 if (username === 'test' && password === 'test') {
                     callback(null);
                 } else {
-                    callback('Invalid Login');
+                    callback('Invalid Login or Password');
                 }
             }
         };
@@ -36,7 +36,7 @@ angular.module('phrPrototypeApp')
         //This would be a server call, but now just stubbed with $location.
         this.authStatus = function (callback) {
 
-            if ($location.path() === "/") {
+            if ($location.path() === "/" || $location.path() === "/login" || $location.path() === "/register") {
                 callback(null, false);
             } else {
                 callback(null, true);

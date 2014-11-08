@@ -8,10 +8,14 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('LoginCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('LoginCtrl', function ($scope, $location, authentication) {
+    $scope.login = function () {
+  		authentication.login($scope.inputLogin, $scope.inputPassword, function(err) {
+  			if (err) {
+  				$scope.error = err;
+  			} else {
+  				$location.path('/home');
+  			}
+ 		});
+  	};
   });
