@@ -10,8 +10,7 @@
 angular.module('phrPrototypeApp')
   .controller('MainCtrl', function ($scope, $location, authentication) {
 
-
-  	$scope.login = function () {
+  	$scope.login = function (isValid) {
   		authentication.login($scope.inputLogin, $scope.inputPassword, function(err) {
   			if (err) {
   				$scope.error = err;

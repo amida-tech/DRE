@@ -10,6 +10,8 @@
 angular.module('phrPrototypeApp')
     .service('authentication', function authentication($location) {
 
+
+        //TODO:  Hygiene here for max length of inputs.
         this.login = function (username, password, callback) {
             if (username && password) {
                 //Stubbed login.

@@ -3,16 +3,18 @@
   <div class="col-sm-4 col-sm-offset-3">
     <div class="panel panel-default landing-login">
       <div class="panel-body">
-        <form novalidate role="form">
+        <form novalidate role="form" name="loginForm" ng-submit="login()">
           <div class="form-group">
             <label for="inputLogin">User ID:</label>
-            <input type="text" class="form-control" id="inputLogin" ng-model="inputLogin">
+            <input type="text" class="form-control" name="inputLogin" ng-model="inputLogin" required ng-required="true" ng-minLength="1">
+            <p ng-show="loginForm.inputLogin.$invalid && !loginForm.inputLogin.$pristine" class="help-block">Username or email is required.</p>
           </div>
           <div class="form-group">
             <label for="inputPassword">Password:</label>
-            <input type="password" class="form-control" id="inputPassword" ng-model="inputPassword">
+            <input type="password" class="form-control" name="inputPassword" ng-model="inputPassword" required ng-required="true" ng-minLength = "1">
+            <p ng-show="loginForm.inputPassword.$invalid && !loginForm.inputPassword.$pristine" class="help-block">Password is required.</p>
           </div>
-          <button type="submit" class="btn btn-block btn-primary" ng-click="login()">Log In</button>
+          <button type="submit" class="btn btn-block btn-primary" ng-disabled="loginForm.$invalid">Log In</button>
           <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
           <div class="text-center">
             <h5><a href="#/reset">Forgot Password</a></h5>
