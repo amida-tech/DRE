@@ -18,7 +18,7 @@ angular.module('phrPrototypeApp')
                 if ((username === 'test' && password === 'test') || (username === 'test@amida-demo.com' && password === 'test')) {
                     callback(null);
                 } else {
-                    callback('Invalid Login or Password');
+                    callback('Invalid Login and/or Password.');
                 }
             }
         };
