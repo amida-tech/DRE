@@ -16,7 +16,19 @@ angular.module('phrPrototypeApp')
 
 
     $scope.nextStep = function () {
-    	$scope.step = $scope.step + 1;
+
+      if ($scope.step === 0) {
+        if ($scope.inputPassword === $scope.inputRepeatPassword) {
+          $scope.step = $scope.step + 1;
+        } else {
+           $scope.error = "Entered Passwords did not match";
+           return;
+        }
+      } else { 
+    	 $scope.step = $scope.step + 1;
+       console.log($scope.step);
+      }
+
     };
 
     $scope.finish = function () {

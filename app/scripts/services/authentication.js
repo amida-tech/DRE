@@ -38,7 +38,7 @@ angular.module('phrPrototypeApp')
         //This would be a server call, but now just stubbed with $location.
         this.authStatus = function (callback) {
 
-            if ($location.path() === "/" || $location.path() === "/login" || $location.path() === "/register") {
+            if ($location.path() === "/" || $location.path() === "/login" || $location.path() === "/register" || $location.path() === "/reset") {
                 callback(null, false);
             } else {
                 callback(null, true);
