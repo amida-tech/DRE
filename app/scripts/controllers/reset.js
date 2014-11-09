@@ -10,7 +10,7 @@
 angular.module('phrPrototypeApp')
   .controller('ResetCtrl', function ($scope, $location) {
     
-  	$scope.step = 0;
+  	$scope.step = 1;
 
     $scope.nextStep = function () {
     	$scope.step = $scope.step + 1;
@@ -21,6 +21,7 @@ angular.module('phrPrototypeApp')
     };
 
     $scope.resend = function () {
+    	$scope.inputEmail = "";
     	$scope.step = 0;
     };
 
