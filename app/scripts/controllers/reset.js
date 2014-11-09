@@ -10,7 +10,7 @@
 angular.module('phrPrototypeApp')
   .controller('ResetCtrl', function ($scope, $location) {
     
-  	$scope.step = 1;
+  	$scope.step = 0;
 
     $scope.nextStep = function () {
     	$scope.step = $scope.step + 1;
