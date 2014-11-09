@@ -15,7 +15,7 @@ angular.module('phrPrototypeApp')
         this.login = function (username, password, callback) {
             if (username && password) {
                 //Stubbed login.
-                if (username === 'test' && password === 'test') {
+                if ((username === 'test' && password === 'test') || (username === 'test@amida-demo.com' && password === 'test')) {
                     callback(null);
                 } else {
                     callback('Invalid Login or Password');
