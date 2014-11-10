@@ -51,6 +51,10 @@ angular
         templateUrl: 'views/reset.html',
         controller: 'ResetCtrl'
       })
+      .when('/account', {
+        templateUrl: 'views/account.html',
+        controller: 'AccountCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
