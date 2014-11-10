@@ -1,70 +1,72 @@
+<div class="row col-sm-12" style="padding-left:20px; padding-right:20px;">
 
-
-
-<div class="row" style="margin:20px;">
-	<div class="col-sm-3" style="padding-right: 20px; padding-bottom: 20px;">
-		<div class="profile">
-			<div class="profile-body">
-				<div class="profile-image">
-					<img class="img-responsive center-block" src="images/img-demo.png">
+	<div class="col-sm-12" style="height: 240px; margin-bottom: 20px;">
+		<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+			<div class="profile" style="height: 100%;">
+				<div class="profile-body">
+					<div class="profile-image">
+						<img class="img-responsive center-block" src="images/img-demo.png">
+					</div>
+					<div class="profile-content">
+						<h4>Suzie Demo</h4>
+						<p>suzie@amida-demo.com</p>
+						<p>Born: 6/25/1982</p>
+					</div>
 				</div>
-				<div class="profile-content">
-					<h4>Suzie Demo</h4>
-					<p>suzie@amida-demo.com</p>
-					<p>Born: 6/25/1982</p>
+			</div>
+		</div>
+		<div class="col-sm-9" style="height: 100%;">
+			<div class="panel" style="height: 100%;">
+				<div class="panel-body">
+					<div class="col-sm-12">
+						<h5><a>Breadcrumb</a> > <a>Ohyea!</a></h5>
+						<h1 style="margin-top: 0px;">Account Settings</h1>
+						<p>Adjust settings associated with your account.</p>
+						<p>Account settings are for managing how you log in to the system.</p>
+						<p>Profile Settings, such as changes to address information, can be accessed in <a href="#/profile">profile settings</a>.</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-sm-9">
+	<div class="col-sm-12">
+		<div class="col-sm-3"></div>
 
-		<!--Intro Panel.-->
-		<div class="panel">
-			<div class="panel-body">
-				<div class="col-sm-12">
-					<h1>My Account</h1>
-					<p>Adjust settings associated with your profile.</p>
-					<p>Providing a detailed profile helps us perform more accurate searches for your records.</p>
-					<p>The information contained here can also be helpful for doctors in emergency situations.</p>
-					<p>Account Settings, such as password changes, can be accessed in <a href="#/account">account settings</a>.</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="panel">
-			<div class="panel-body">
+		<div class="col-sm-9">
+			<div class="panel col-sm-12">
+				<div class="panel-body">
 				<h3>Reset Password</h3>
-				<h5>* Denotes required fields.</h5>
-				<form novalidate role="form" name="resetForm" ng-submit="nextStep()" class="col-sm-12">
-					<div class="form-group col-sm-7">
-						<label for="inputOldPassword">Old Password*</label>
-						<input type="password" class="form-control" name="inputOldPassword" ng-model="inputOldPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
-						<p ng-show="resetForm.inputOldPassword.$invalid && !resetForm.inputOldPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+					<h5>* Denotes required fields.</h5>
+					<form novalidate role="form" name="resetForm" ng-submit="nextStep()" class="col-sm-12">
+						<div class="col-sm-12">
+						<div class="form-group col-sm-5">
+							<label for="inputOldPassword">Old Password*</label>
+							<input type="password" class="form-control" name="inputOldPassword" ng-model="inputOldPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
+							<p ng-show="resetForm.inputOldPassword.$invalid && !resetForm.inputOldPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+						</div>
+						</div>
+						<div class="form-group col-sm-5">
+							<label for="inputNewPassword">New Password*</label>
+							<input type="password" class="form-control" name="inputNewPassword" ng-model="inputNewPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
+							<p ng-show="resetForm.inputNewPassword.$invalid && !resetForm.inputNewPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+						</div>
+						<div class="form-group col-sm-5 col-sm-offset-1">
+							<label for="inputRepeatPassword"> Repeat New Password*</label>
+							<input type="password" class="form-control" name="inputRepeatPassword" ng-model="inputRepeatPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
+							<p ng-show="resetForm.inputRepeatPassword.$invalid && !resetForm.inputRepeatPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+						</div>
+						<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="resetForm.$invalid">Reset Password</button>
+						
+							<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+					</form>
+					<div class="text-center col-sm-12">
+						<h5><a href="#/reset">Forgot Password</a></h5>
 					</div>
-					<div class="form-group col-sm-7">
-						<label for="inputNewPassword">New Password*</label>
-						<input type="password" class="form-control" name="inputNewPassword" ng-model="inputNewPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
-						<p ng-show="resetForm.inputNewPassword.$invalid && !resetForm.inputNewPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
-					</div>
-					<div class="form-group col-sm-7">
-						<label for="inputRepeatPassword"> Repeat New Password*</label>
-						<input type="password" class="form-control" name="inputRepeatPassword" ng-model="inputRepeatPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
-						<p ng-show="resetForm.inputRepeatPassword.$invalid && !resetForm.inputRepeatPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
-					</div>
-					<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="resetForm.$invalid">Reset Password</button>
-					<div class="text-center">
-						<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
-					</div>
-				</form>
-				<div class="text-center col-sm-12">
-          			<h5><a href="#/reset">Forgot Password</a></h5>
-        		</div>
-			</div>
+				</div>
+			</div>	
+			<!--<pre>{{profile | json}}</pre>-->
 		</div>
-
-		
-		<!--<pre>{{profile | json}}</pre>-->
 	</div>
 
 </div>
