@@ -1,0 +1,246 @@
+
+
+
+<div class="row" style="margin:20px;">
+	<div class="col-sm-3" style="padding-right: 20px; padding-bottom: 20px;">
+		<div profile></div>
+
+		<div class="btn-group-vertical col-sm-12">
+			<button type="button" class="btn btn-default btn-block" ng-click="navClick('profile')">Profile</button>
+			<button type="button" class="btn btn-default btn-block" ng-click="navClick('contact')">Contact Info</button>
+			<button type="button" class="btn btn-default btn-block" ng-click="navClick('languages')">Languages</button>
+		</div>
+
+	</div>
+
+	<div class="col-sm-9">
+
+		<!--Intro Panel.-->
+		<div class="panel">
+			<div class="panel-body">
+				<div class="col-sm-12">
+					<h1>My Profile</h1>
+					<p>Adjust settings associated with your profile.</p>
+					<p>Providing a detailed profile helps us perform more accurate searches for your records.</p>
+					<p>The information contained here can also be helpful for doctors in emergency situations.</p>
+					<p>Account Settings, such as password changes, can be accessed in <a href="#/account">account settings</a>.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel">
+			<div class="panel-body" id="profile">
+				<h3>Profile</h3>
+				<h5>* Denotes required fields.</h5>
+				<form novalidate role="form" name="profileForm" ng-submit="nextStep()">
+					<div class="form-group col-sm-3">
+						<label for="inputFirst">First Name*</label>
+						<input type="text" class="form-control" name="inputFirst" ng-model="profile.name.first" required ng-required="true" ng-minLength="1" ng-maxLength="80">
+						<p ng-show="profileForm.inputFirst.$invalid && !profileForm.inputFirst.$pristine" class="help-block">First name must be between 1 and 80 characters.</p>
+					</div>
+					<div class="form-group col-sm-3 col-sm-offset-1">
+						<label for="inputMiddle">Middle Name</label>
+						<input type="text" class="form-control" name="inputMiddle" ng-model="profile.name.middle" ng-maxLength="80">
+						<p ng-show="profileForm.inputMiddle.$invalid && !profileForm.inputMiddle.$pristine" class="help-block">Middle name must be under 80 characters.</p>
+					</div>
+					<div class="form-group col-sm-4 col-sm-offset-1">
+						<label for="inputLast">Last Name*</label>
+						<input type="text" class="form-control" name="inputLast" ng-model="profile.name.last" required ng-required="true" ng-minLength="1" ng-maxLength="80">
+						<p ng-show="profileForm.inputLast.$invalid && !profileForm.inputLast.$pristine" class="help-block">Last name must be between 1 and 80 characters.</p>
+					</div>
+					<div class="form-group col-sm-7">
+						<label for="inputEmail">Email Address*</label>
+						<input type="email" class="form-control" name="inputEmail" ng-model="profile.primaryEmail" required ng-required="true" ng-minLength="1">
+						<p ng-show="profileForm.inputEmail.$invalid && !profileForm.inputEmail.$pristine" class="help-block">Must be a valid email address.</p>
+					</div>
+					<div class="form-group col-sm-4 col-sm-offset-1">
+						<label for="inputDOB">Date of Birth*</label>
+						<input type="date" class="form-control" name="inputDOB" ng-model="profile.dob" required ng-required="true">
+						<p ng-show="profileForm.inputDOB.$invalid && !profileForm.inputDOB.$pristine" class="help-block">Must be a valid date.</p>
+					</div>
+					<div class="form-group col-sm-3">
+						<label for="inputGender">Gender*</label>
+						<select class="form-control" name="inputGender" ng-model="profile.gender" required ng-required="true">
+							<option>Male</option>
+							<option>Female</option>
+							<option>Undifferentiated</option>
+						</select>
+						<p ng-show="profileForm.inputGender.$invalid && !profileForm.inputGender.$pristine" class="help-block">Gender is required.</p>
+					</div>
+					<div class="form-group col-sm-3 col-sm-offset-1">
+						<label for="inputRace">Race/Ethnicity</label>
+						<select class="form-control" name="inputRace" ng-model="profile.race_ethnicity" required ng-required="true">
+							<option>White</option>
+							<option>Female</option>
+							<option>Undifferentiated</option>
+						</select>
+						<p ng-show="profileForm.inputGender.$invalid && !profileForm.inputGender.$pristine" class="help-block">Gender is required.</p>
+					</div>
+					<div class="form-group col-sm-4 col-sm-offset-1">
+						<label for="inputMaritalStatus">Marital Status</label>
+						<select class="form-control" name="inputMaritalStatus" ng-model="profile.marital_status">
+							<option>Married</option>
+							<option>Female</option>
+							<option>Undifferentiated</option>
+						</select>
+					</div>
+					<div class="form-group col-sm-7">
+						<label for="inputReligion">Religion</label>
+						<select class="form-control" name="inputReligion" ng-model="profile.religion">
+							<option>Christian (non-Catholic, non-specific)</option>
+							<option>Female</option>
+							<option>Undifferentiated</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="profileForm.$invalid">Update Profile</button>
+					<div class="text-center">
+						<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="panel">
+			<div class="panel-body" id="contact">
+				<h3>Contact Information</h3>
+
+				<!--Address section-->
+				<div class="col-sm-12" style="border-bottom: 1px solid #ccc; margin-bottom: 20px;">
+					<h4>Address</h4>
+				</div>
+				<div class="panel col-sm-4" ng-repeat="(addrIndex, addr) in profile.addresses" ng-mouseover="this.hoverEdit = true;" ng-mouseleave="this.hoverEdit = false;">
+					<a href="">
+						<div class="panel-body">
+							<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>
+							<div id="address{{addressIndex}}">
+								<p style="text-transform: capitalize;">{{addr.use}}</p>
+								<p ng-repeat="(addrLineIndex, addrLine) in addr.streetLines">{{addrLine}}</p>
+								<p>{{addr.city}}, {{addr.state}} {{addr.zip}}</p>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-sm-12" style="margin-bottom: 20px;">
+					<a href="">
+						<div class="pull-left"><i class="fa fa-plus-circle fa-2x"></i></div>
+						<div class="pull-left" style="margin:3px 5px;">Add New Address</div>
+					</a>
+				</div>
+
+
+				<!--Phone section-->
+				<div class="col-sm-12" style="border-bottom: 1px solid #ccc; margin-bottom: 20px;">
+					<h4>Phone Number</h4>
+				</div>
+				<div class="panel col-sm-4 panel-editable" ng-repeat="(phIndex, ph) in profile.phone" ng-mouseover="this.hoverEdit = true;" ng-mouseleave="this.hoverEdit = false;">
+					<a href="">
+						<div class="panel-body">
+							<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>
+							<div id="ph{{phIndex}}">
+								<p style="text-transform: capitalize;">{{ph.type}}</p>
+								<p>{{ph.number}}</p>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-sm-12">
+					<a href="">
+						<div class="pull-left"><i class="fa fa-plus-circle fa-2x"></i></div>
+						<div class="pull-left" style="margin:3px 5px;">Add New Phone</div>
+					</a>
+				</div>
+
+				<!--Email section-->
+				<div class="col-sm-12" style="border-bottom: 1px solid #ccc; margin-bottom: 20px;">
+					<h4>Additional Email</h4>
+				</div>
+				<div class="panel col-sm-4" ng-repeat="(emIndex, em) in profile.email" ng-show="!$first"  ng-mouseover="this.hoverEdit = true;" ng-mouseleave="this.hoverEdit = false;">
+					<a href="">
+						<div class="panel-body">
+							<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>
+							<div id="em{{emIndex}}">
+								<p style="text-transform: capitalize;">{{em.type}}</p>
+								<p>{{em.email}}</p>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-sm-12">
+					<a href="">
+						<div class="pull-left"><i class="fa fa-plus-circle fa-2x"></i></div>
+						<div class="pull-left" style="margin:3px 5px;">Add New Email</div>
+					</a>
+				</div>
+				<!--<pre>{{profile | json}}</pre>-->
+			</div>
+		</div>
+
+		<div class="panel">
+			<div class="panel-body" id="languages">
+				<h3>Languages</h3>
+				<a id="languages"></a>
+				<h5>* Denotes required fields.</h5>
+				<form novalidate role="form" name="languageForm" ng-submit="nextStep()">
+					<div ng-repeat="language in profile.languages">
+						<div class="form-group col-sm-4">
+							<label for="inputLanguage">Language*</label>
+							<select class="form-control" name="inputLanguage" ng-model="language.language">
+								<option>en</option>
+								<option>Female</option>
+								<option>Undifferentiated</option>
+							</select>
+						</div>
+						<div class="form-group col-sm-3 col-sm-offset-1">
+							<label for="inputLanguageModel">Mode</label>
+							<select class="form-control" name="inputLanguageMode" ng-model="language.mode">
+								<option>Expressed spoken</option>
+								<option>Female</option>
+								<option>Undifferentiated</option>
+							</select>
+						</div>
+
+						<div class="form-group col-sm-2 col-sm-offset-1">
+							<label for="inputLanguageProficiency">Proficiency</label>
+							<select class="form-control" name="inputLanguageProficiency" ng-model="language.proficiency">
+								<option>Good</option>
+								<option>Female</option>
+								<option>Undifferentiated</option>
+							</select>
+						</div>
+
+						<div class="form-group col-sm-12"  style="border-bottom: 1px solid #ccc; margin-bottom: 20px;">
+							<div class="pull-left">
+								<input type="checkbox" name="inputLanguagePreferred"> <label for="inputLanguagePreferred">Preferred</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-12">
+					<a href="">
+						<div class="pull-left"><i class="fa fa-plus-circle fa-2x"></i></div>
+						<div class="pull-left" style="margin:3px 5px;">Add New Language</div>
+					</a>
+				</div>
+
+					<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="profileForm.$invalid">Update Languages</button>
+						<div class="text-center">
+							<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+					</div>
+				</form>
+
+			</div>
+
+		</div>
+		<!--<pre>{{profile | json}}</pre>-->
+	</div>
+
+
+
+
+</div>
+
+
+
+</div>

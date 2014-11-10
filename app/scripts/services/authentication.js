@@ -8,15 +8,17 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-    .service('authentication', function authentication() {
+    .service('authentication', function authentication($location) {
 
+
+        //TODO:  Hygiene here for max length of inputs.
         this.login = function (username, password, callback) {
             if (username && password) {
                 //Stubbed login.
-                if (username === 'test' && password === 'test') {
+                if ((username === 'test' && password === 'test') || (username === 'test@amida-demo.com' && password === 'test')) {
                     callback(null);
                 } else {
-                    callback('Invalid Login');
+                    callback('Invalid Login and/or Password.');
                 }
             }
         };
@@ -31,6 +33,17 @@ angular.module('phrPrototypeApp')
         	} else {
         		callback(null);
         	}
+        };
+
+        //This would be a server call, but now just stubbed with $location.
+        this.authStatus = function (callback) {
+
+            if ($location.path() === "/" || $location.path() === "/login" || $location.path() === "/register" || $location.path() === "/reset") {
+                callback(null, false);
+            } else {
+                callback(null, true);
+            }
+
         };
 
     });

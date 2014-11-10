@@ -24,8 +24,11 @@
       <div class="wrapper">
 
         <!--Site Header.-->
-        <div class="navbar navbar-default" role="navigation">
-          <div class="container-fluid">
+        <div class="navbar navbar-default" role="navigation" ng-controller="NavbarCtrl">
+
+          <!--Logged In Navbar-->
+          <div ng-if="loginStatus === true" class="container-fluid">
+            <div style="margin: 0px 20px;">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#user-menu">
                 <span class="sr-only">Toggle navigation</span>
@@ -33,30 +36,47 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#"><img class="img-navbar-logo" src="images/bb-logo-vector.png"></a>
+              <a class="navbar-brand" href="#/home"><img class="img-navbar-logo" src="images/bb-logo-vector.png"></a>
             </div>
             <div class="collapse navbar-collapse" id="user-menu">
               <ul class="nav navbar-nav">
-                <li><a href="#">Link #1</a></li>
-                <li><a href="#">Link #2</a></li>
+                <li><a href="#/record">My Record</a></li>
+                <li><a href="#/billing">My Billing</a></li>
+                <li><a href="#/files">My Files</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li>
                   <img class="img-navbar-avatar" src="images/img-demo.png">
                 </li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Suzie Demo <span class="caret"></span></a>
+                  <a class="dropdown-toggle" data-toggle="dropdown"> Suzie Demo <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
+                    <li><a href="#/profile">My Profile</a></li>
+                    <li><a href="#/account">My Account</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">Log out</a></li>
                   </ul>
                 </li>
               </ul>
             </div>
+            </div>
           </div>
+
+          <!--Logged Out Navbar-->
+          <div ng-if="loginStatus === false" class="container-fluid">
+          <div style="margin: 0px 20px;">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#"><img class="img-navbar-logo" src="images/bb-logo-vector.png"></a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/register">Sign Up</a></li>
+                <li><a href="#/login">Log In</a></li>
+            </ul>
+            </div>
+          </div>
+
+
+
         </div>
         <div ng-view=""></div>
         <div class="push"></div>
@@ -90,6 +110,7 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
     <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
     <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
@@ -120,6 +141,13 @@
     <script src="scripts/controllers/home.js"></script>
     <script src="scripts/services/history.js"></script>
     <script src="scripts/directives/timeline.js"></script>
+    <script src="scripts/controllers/navbar.js"></script>
+    <script src="scripts/controllers/register.js"></script>
+    <script src="scripts/controllers/profile.js"></script>
+    <script src="scripts/controllers/account.js"></script>
+    <script src="scripts/controllers/reset.js"></script>
+    <script src="scripts/services/account.js"></script>
+    <script src="scripts/directives/profile.js"></script>
     <!-- endbuild -->
   </body>
   </html>
