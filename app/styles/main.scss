@@ -79,6 +79,7 @@ a:hover {
 
 	@extend .panel;
 	@extend .panel-default;
+	height: 100%;
 
     .profile-body {
 	  @extend .panel-body;
