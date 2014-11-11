@@ -7,11 +7,19 @@
  * # timeline
  */
 angular.module('phrPrototypeApp')
-    .directive('timeline', function ($window) {
+    .directive('timeline', function ($window, $location, $anchorScroll) {
         return {
             restrict: 'EA',
             template: "<svg style='width:100%;'></svg>",
             link: function postLink(scope, element, attrs) {
+
+                var navClick = function (element) {
+                    var old = $location.hash();
+                    $location.hash(element);
+                    $anchorScroll();
+                    //reset to old to keep any additional routing logic from kicking in
+                    $location.hash(old);
+                };
 
                 var plotHeight = 60;
                 var boundaryOffset = 15;
@@ -28,6 +36,9 @@ angular.module('phrPrototypeApp')
                 var rawSvg = element.find("svg")[0];
                 var svg = d3.select(rawSvg).attr("height", plotHeight);
                 var format = d3.time.format("%m/%d/%Y");
+
+                var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return '<span>' + '100' + '</span>' + ' entries'; });
+                svg.call(tip);
 
                 function gatherData() {
                     var dataToPlot = scope[attrs.chartData];
@@ -84,7 +95,7 @@ angular.module('phrPrototypeApp')
                         for (var i in plotCircles) {
                             plotCircles[i].x_axis = timeScale(plotCircles[i].date);
                             plotCircles[i].y_axis = (plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2;
-                            plotCircles[i].radius = 12;
+                            plotCircles[i].radius = 10;
                             plotCircles[i].color = plotBaseColor;
                             plotCircles[i].href = "entry" + i;
                         }
@@ -209,12 +220,20 @@ angular.module('phrPrototypeApp')
                             .attr("r", function (d) {
                                 return d.radius;
                             })
-                            .style("fill", function (d) {
-                                return d.color;
-                            })
                             .attr("class", "plotPoint")
-                            .on("click", function() {
-                            	//Stubbed for clicking.
+                            .on('mouseover', function (d) {
+
+                                var tipFormat = d3.time.format("%m/%d/%Y");
+
+
+                                tip.attr('class', 'd3-tip animate').html(function(d) { return '<span>' + tipFormat(d.date) + '</span>'; }).show(d);
+                            })
+                            .on('mouseout', function (d) {
+                                tip.attr('class', 'd3-tip').show(d);
+                                tip.hide();
+                            })
+                            .on("click", function(d) {
+                                navClick(d.href);
                             });
                     }
 
