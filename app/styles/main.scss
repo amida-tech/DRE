@@ -3,7 +3,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
-@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
+@import url(http://fonts.googleapis.com/css?family=Roboto);
 @import url(http://fonts.googleapis.com/css?family=Montserrat);
 
 // Bootstrap Preprocessing
@@ -153,8 +153,7 @@ a:hover {
 }
 
 .timeline-entry-header {
-	border-bottom: medium solid $brand-primary;
-	margin-bottom: 20px;
+	//border-bottom: 1px solid #ccc;
 }
 
 .timeline-entry-icon {
@@ -165,7 +164,7 @@ a:hover {
 	border: thick solid $brand-primary;
 	line-height: 3.5em;
 	position: relative;
-	bottom: -30px;
+	bottom: -20px;
 	z-index: 100;
 
 	i {
@@ -173,8 +172,12 @@ a:hover {
 	}
 }
 
-.timeline-footer circle {
-	fill: $brand-primary
+.timeline-entry-icon:hover {
+	background: $brand-primary;
+	i {
+		color: #fff;
+	}
+	
 }
 
 .btn {
@@ -226,4 +229,28 @@ a:hover {
 	@media (max-width: $screen-sm-max) {
 		background: none;
 	}
+
+	@media (min-width: $screen-sm-min) {
+		background-image: url('../images/bg-line.png');
+	background-repeat: repeat-y;
+	background-position: 8.2% 0%;
+	}
+
+}
+
+.timeline-entry {
+	border: 1px solid #ccc;
+}
+
+.timeline-footer circle {
+	fill: #ccc;
+
+	@media (max-width: $screen-sm-max) {
+		display: none;
+	}
+
+	@media (min-width: $screen-sm-min) {
+		display: inherit;
+	}
+
 }

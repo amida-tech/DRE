@@ -13,11 +13,12 @@ angular.module('phrPrototypeApp')
             template: "<svg style='width:100%;'></svg>",
             link: function postLink(scope, element, attrs) {
 
-                var plotHeight = 80;
+                var plotHeight = 60;
                 var boundaryOffset = 15;
-                var boundaryWidth = 5;
-                var boundaryLabelOffset = 15;
+                var boundaryWidth = 3;
+                var boundaryLabelOffset = 30;
                 var boundaryLabelPadding = 5;
+                var plotBaseColor = "#6AA6FF";
 
                 var plotCircles = [];
                 var plotDomain = [];
@@ -45,8 +46,8 @@ angular.module('phrPrototypeApp')
 
                         var minDate = d3.min(tmpDomain);
                         var maxDate = d3.max(tmpDomain);
-                        var plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -1));
-                        var plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 1));
+                        var plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
+                        var plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
                         plotDomain = [plotFloor, plotCeiling];
                     }
                 }
@@ -84,7 +85,7 @@ angular.module('phrPrototypeApp')
                             plotCircles[i].x_axis = timeScale(plotCircles[i].date);
                             plotCircles[i].y_axis = (plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2;
                             plotCircles[i].radius = 12;
-                            plotCircles[i].color = "#6AA6FF";
+                            plotCircles[i].color = plotBaseColor;
                             plotCircles[i].href = "entry" + i;
                         }
                     }
@@ -96,16 +97,25 @@ angular.module('phrPrototypeApp')
                             "y": 0,
                             "width": boundaryWidth,
                             "height": plotHeight - boundaryLabelOffset - boundaryLabelPadding,
-                            "color": "#5bc0de"
+                            "color": plotBaseColor
                         }, {
                             "x": width - boundaryOffset,
                             "y": 0,
                             "width": boundaryWidth,
                             "height": plotHeight - boundaryLabelOffset - boundaryLabelPadding,
-                            "color": "#5bc0de"
+                            "color": plotBaseColor
                         }];
 
-                        var boundaryDisplayFormat = d3.time.format("%b, %Y");
+                        var plotLineData = [{
+                            "x": boundaryOffset,
+                            "y": ((plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2) - 1,
+                            "width": width - boundaryOffset - boundaryOffset,
+                            "height": 3,
+                            "color": plotBaseColor
+                        }];
+
+
+                        var boundaryDisplayFormat = d3.time.format("%b %Y");
 
                         var boundaryLabel = [{
                             "x": 0,
@@ -135,7 +145,7 @@ angular.module('phrPrototypeApp')
                             });
 
 
-                        var boundaries = svg.selectAll("rect").data(boundaryData).enter().append("rect");
+                        var boundaries = svg.selectAll("plotBoundary").data(boundaryData).enter().append("rect");
                         var boundaryAttributes = boundaries
                             .attr("x", function (d) {
                                 return d.x;
@@ -153,10 +163,27 @@ angular.module('phrPrototypeApp')
                                 return d.color;
                             });
 
-                        //console.log(timeScaleTicks);
+                            console.log(plotLineData);
 
-                        var plotLines = svg.selectAll("plotLines").data(timeScaleTicks).enter().append("circle");
+                        var plotLine = svg.selectAll("plotLine").data(plotLineData).enter().append("rect");
+                        var plotLineAttributes = plotLine
+                            .attr("x", function (d) {
+                                return d.x;
+                            })
+                            .attr("y", function (d) {
+                                return d.y;
+                            })
+                            .attr("width", function (d) {
+                                return d.width;
+                            })
+                            .attr("height", function (d) {
+                                return d.height;
+                            })
+                            .style("fill", function (d) {
+                                return d.color;
+                            });
 
+                        /*var plotLines = svg.selectAll("plotLines").data(timeScaleTicks).enter().append("circle");
                         var plotLineAttributes = plotLines
                         	.attr("cx", function (d) {
                         		//console.log(d);
@@ -167,7 +194,7 @@ angular.module('phrPrototypeApp')
                             })
                             .attr("r", 2)
                             .style("fill", "#5bc0de")
-                            .attr("class", "plotLines");
+                            .attr("class", "plotLines");*/
 
 
 

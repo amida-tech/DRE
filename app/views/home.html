@@ -31,7 +31,7 @@
 		<div class="panel">
 			<div class="panel-body">
 				<div class="col-sm-7">
-					<h1>Home</h1>
+					<h1>Hi Suzie!</h1>
 					<p>Welcome to your Personal Health Record.</p>
 					<p>Last Login: {{accountHistory.lastLogin}}</p>
 					<p>Last Updated: {{accountHistory.lastUpdate}}</p>
@@ -71,41 +71,40 @@
 
 		<!--d3.js-->
 
-
+		<h4 class="text-center">Account History</h4>
 		<div class="panel">
 			<div class="panel-body">
-				<div class="text-center">
-					<h3>Account History</h3>
+				<div>
+					<h5>Activity Timeline</h5>
 				</div>
-				<div timeline chart-data="accountHistory" chart-type="account" style="border-bottom: 3px solid #6AA6FF; width: 100%;"></div>
+				<div timeline chart-data="accountHistory" chart-type="account" style="border-bottom: 1px solid #ccc; width: 100%;"></div>
 
 				<div ng-repeat="(recordIndex, recordEntry) in accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
 
 					<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
 
 						<div class="col-sm-2">
-							<div class="timeline-entry-icon text-center center-block">
-								<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x"></i>
-								<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x"></i>
-							</div>
+							<a class="timeline-entry-icon text-center center-block">
+								
+									<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x"></i>
+									<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x"></i>
+
+							</a>
 						</div>
 
 
 						<div class="col-sm-10">
-							<div class="panel">
+							<div class="panel timeline-entry">
 								<div class="panel-body">
 									<div class="timeline-entry-header col-sm-12">
 										<div class="col-sm-6">
-											<h4 class="text-left">{{recordEntry.type}}</h4>
+											<h4 class="text-left">{{recordEntry.displayType}}</h4>
+											<h5 class="text-left">{{recordEntry.date}} - <span ng-show="recordEntry.file.name"><a>{{recordEntry.file.name}}</a></span>
+										<span ng-hide="recordEntry.file.name">Generated medical history</span></h5>
+											
 										</div>
 										<div class="col-sm-6">
-											<h4 class="text-right">{{recordEntry.date}}</h4>
 										</div>
-									</div>
-
-									<div class="col-sm-10 col-sm-offset-1">
-										<div ng-show="recordEntry.file.name"><a>{{recordEntry.file.name}}</a></div>
-										<div ng-hide="recordEntry.file.name">Your medical history</div>
 									</div>
 								</div>
 							</div>
