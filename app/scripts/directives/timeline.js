@@ -153,13 +153,13 @@ angular.module('phrPrototypeApp')
                                 return d.color;
                             });
 
-                        console.log(timeScaleTicks);
+                        //console.log(timeScaleTicks);
 
                         var plotLines = svg.selectAll("plotLines").data(timeScaleTicks).enter().append("circle");
 
                         var plotLineAttributes = plotLines
                         	.attr("cx", function (d) {
-                        		console.log(d);
+                        		//console.log(d);
                                 return d.x_axis;
                             })
                             .attr("cy", function (d) {

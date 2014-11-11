@@ -153,28 +153,28 @@ a:hover {
 }
 
 .timeline-entry-header {
-	border-bottom: medium solid $brand-info;
+	border-bottom: medium solid $brand-primary;
 	margin-bottom: 20px;
 }
 
 .timeline-entry-icon {
 	@extend .img-circle;
-	background: $brand-primary;
-	height: 60px;
-	width: 60px;
+	background: #fff;
+	height: 50px;
+	width: 50px;
 	border: thick solid $brand-primary;
-	line-height: 4.0em;
+	line-height: 3.5em;
 	position: relative;
 	bottom: -30px;
 	z-index: 100;
 
 	i {
-	color: #fff;
+	color: $brand-primary;
 	}
 }
 
 .timeline-footer circle {
-	fill: $brand-info
+	fill: $brand-primary
 }
 
 .btn {
@@ -218,3 +218,12 @@ a:hover {
 	border-radius: 0px;
 }
 
+.timeline-side {
+	background-image: url('../images/bg-line.png');
+	background-repeat: repeat-y;
+	background-position: 8.2% 0%;
+
+	@media (max-width: $screen-sm-max) {
+		background: none;
+	}
+}
