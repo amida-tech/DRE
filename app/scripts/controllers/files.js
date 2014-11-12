@@ -8,13 +8,18 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('FilesCtrl', function ($scope, files) {
+  .controller('FilesCtrl', function ($scope, files, breadcrumb) {
+
+
 
   	$scope.fileList = [];
 
   	files.getFiles(function (err, results) {
   		$scope.fileList = results;
   	});
+
+
+
 
   	$scope.predicate = "name";
 
