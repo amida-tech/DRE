@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('FilesCtrl', function ($scope, files, breadcrumb) {
+  .controller('FilesCtrl', function ($scope, files) {
 
 
 
