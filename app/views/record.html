@@ -1,0 +1,102 @@
+<div class="row" style="margin: 20px;">
+	<!--Profile-->
+	<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+		<div profile></div>
+	</div>
+
+	<!--Body-->
+	<div class="col-sm-9">
+		<div class="panel">
+			<div class="panel-body">
+
+				<!--Header Items-->
+				<div class="col-sm-12">
+					<div class="row col-sm-12" breadcrumb></div>
+					<div class="col-sm-12">
+						
+						<div class="col-sm-8">
+							<div>
+								<h1>Suzie's Record Overview</h1>
+								<p>This page gives an overview of your health record activity.</p>
+								<p>Last updated:  July 31, 2014</p>
+							</div>
+							
+						</div>
+						<div class="col-sm-3 col-sm-offset-1" style="position: relative; min-height: 150px;">
+							<div style="position: absolute; top:50%; transform: translateY(-50%);">
+								<button class="btn btn-primary">Download</button>
+							</div>
+						</div>
+						
+					</div>
+				</div>			
+			</div>
+		</div>
+
+		<!--d3.-->
+		<div class="col-sm-12">
+
+			<div class="col-sm-6" style="padding-right: 20px;">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="col-sm-12">
+							<h4>Measurements</h4>
+						</div>
+						<div class="col-sm-6">
+							<h5>Height</h5>
+							<h3>5' 11"</h3>
+							<h5>Weight</h5>
+							<h3>146 lbs</h3>
+							<h5>BMI</h5>
+							<h3>12.3</h3>
+						</div>
+						<div class="col-sm-6">
+							<div class="col-sm-12 text-center">
+								2014
+							</div>
+							<div measurements svg-width="200" svg-height="200" graph-type="weight" class="pull-right"></div>
+							<div class="col-sm-12 text-center">
+								Weight (lbs)
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-6">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="col-sm-12">
+							<h4>Blood Pressure</h4>
+						</div>
+						<div class="col-sm-6">
+							<h5>Diastolic</h5>
+							<h3>142</h3>
+							<h5>Systolic</h5>
+							<h3>80</h3>
+						</div>
+						<div class="col-sm-6">
+							<div class="col-sm-12 text-center">
+								2014
+							</div>
+							<div measurements svg-width="200" svg-height="200" graph-type="bloodPressure" class="pull-right" id="graphOne"></div>
+							<div class="col-sm-12 text-center">
+								Blood Pressure
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<pre>{{masterRecord | json}}</pre>
+
+</div>
