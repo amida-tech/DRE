@@ -29,8 +29,8 @@ angular.module('phrPrototypeApp')
                 "interpretations": [
                     "Normal"
                 ],
-                "value": 180,
-                "unit": "cm"
+                "value": 67,
+                "unit": "[in_i]"
             }, {
                 "identifiers": [{
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
@@ -42,14 +42,14 @@ angular.module('phrPrototypeApp')
                 },
                 "status": "completed",
                 "date": [{
-                    "date": "2000-04-07T00:00:00Z",
+                    "date": "2012-09-07T00:00:00Z",
                     "precision": "day"
                 }],
                 "interpretations": [
                     "Normal"
                 ],
-                "value": 177,
-                "unit": "cm"
+                "value": 68,
+                "unit": "[in_i]"
             },  {
                 "identifiers": [{
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"

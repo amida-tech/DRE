@@ -41,8 +41,6 @@ angular.module('phrPrototypeApp')
                 svg.attr("height", height);
                 svg.attr("width", width);
 
-                console.log(attrs.graphType);
-
                 //Restructure for graph.
                 _.each(vitals, function (entry) {
                     var tmpVital = {};
@@ -81,8 +79,6 @@ angular.module('phrPrototypeApp')
 
                 });
 
-                console.log(graphVitalsTwo);
-
                 var padding = 30;
                 var pathClass = "path";
                 var xTimeScale, yTimeScale, xAxisGen, yAxisGen, lineFun;
@@ -102,8 +98,6 @@ angular.module('phrPrototypeApp')
                         .tickFormat(d3.time.format("%m/%d"))
                         .outerTickSize([2])
                         .tickValues([d3.min(graphDates), d3.max(graphDates)]);
-
-                    console.log(graphVitals);
 
                     yAxisGen = d3.svg.axis()
                         .scale(yTimeScale)
