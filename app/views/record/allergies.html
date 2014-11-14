@@ -18,7 +18,7 @@
 						<div class="col-sm-8">
 							<div class="pull-left">
 								<h1>Suzie's Allergies</h1>
-								<p>Last updated:  July 31, 2014</p>
+								<p>Last Updated:  {{updateDate}}</p>
 							</div>
 						</div>
 						<div class="text-right col-sm-3 ">
@@ -40,7 +40,7 @@
 				<div>
 					<p>Timeline</p>
 				</div>
-				<div timeline chart-data="entries" chart-type="allergies" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+				<div timeline chart-data="entries" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
 
 				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
@@ -64,9 +64,9 @@
 
 									<div class="timeline-entry-header col-sm-12">
 										<div class="col-sm-6">
-											<h4 class="text-left">{{recordEntry.allergen.name}}</h4>
-											<h5 class="text-left">{{recordEntry.severity}}</h5>
-											<h5 class="text-left">{{recordEntry.date[0].date}}</h5>
+											<h4 class="text-left">{{recordEntry.observation.allergen.name}}</h4>
+											<h5 class="text-left">{{recordEntry.observation.severity.code.name}}</h5>
+											<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
 										</div>
 										<div style="position: absolute; bottom: 0px; right: 0px;">
 											<button class=" btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">
@@ -80,11 +80,11 @@
 										<table class="table table-hover">
 											<tr>
 												<td>Code:</td>
-												<td>{{recordEntry.allergen.code}}</td>
+												<td>{{recordEntry.observation.allergen.code}}</td>
 											</tr>
 											<tr>
 												<td>Code System:</td>
-												<td>{{recordEntry.allergen.code_system_name}}</td>
+												<td>{{recordEntry.observation.allergen.code_system_name}}</td>
 											</tr>
 											<tr ng-repeat="(reactionIndex, reactionEntry) in recordEntry.reaction">
 												<td>Reactions:</td>
@@ -142,6 +142,6 @@
 
 		</div>
 
-		<!--<pre>{{entries | json}}</pre>-->
+		<!--<pre>{{masterEntries | json}}</pre>-->
 
 	</div>

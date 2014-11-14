@@ -52,6 +52,12 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;
                         }
 
+                        if (parsedPath[i] === "encounters") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Encounters";
+                            tmpObject.path = pathString;
+                        }
+
 
                         breadCrumb.push(tmpObject);
                     }
