@@ -36,14 +36,23 @@ angular.module('phrPrototypeApp')
                 var rawSvg = element.find("svg")[0];
                 var svg = d3.select(rawSvg).attr("height", plotHeight);
                 var format = d3.time.format("%m/%d/%Y");
+                var isoFormat = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
 
-                var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return '<span>' + '100' + '</span>' + ' entries'; });
+                var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return 'Entry'; });
                 svg.call(tip);
 
                 function gatherData() {
-                    var dataToPlot = scope[attrs.chartData];
+
+                    //Clean variables (needed for refresh).
+                    var dataToPlot = [];
+                    plotCircles = [];
+                    plotDomain = [];
+
+                    dataToPlot = scope[attrs.chartData];
+                    
                     var dataType = attrs.chartType;
                     var tmpDomain = [];
+                    var minDate, maxDate, plotFloor, plotCeiling;
 
                     if (dataType === 'account') {
 
@@ -55,11 +64,32 @@ angular.module('phrPrototypeApp')
                             tmpDomain.push(plotDate);
                         }
 
-                        var minDate = d3.min(tmpDomain);
-                        var maxDate = d3.max(tmpDomain);
-                        var plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
-                        var plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
+                        minDate = d3.min(tmpDomain);
+                        maxDate = d3.max(tmpDomain);
+                        plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
+                        plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
                         plotDomain = [plotFloor, plotCeiling];
+                    }
+
+                    if (dataType === 'allergies') {
+
+                        _.each(dataToPlot, function(entry) {
+                            //Note:  Only taking first date for now.
+                            var plotDate = isoFormat.parse(entry.date[0].date);
+
+                            plotCircles.push({
+                                "date": plotDate
+                            });
+                            tmpDomain.push(plotDate);
+                        });
+
+                        minDate = d3.min(tmpDomain);
+                        maxDate = d3.max(tmpDomain);
+                        plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
+                        plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
+                        plotDomain = [plotFloor, plotCeiling];
+
+
                     }
                 }
 
@@ -174,7 +204,6 @@ angular.module('phrPrototypeApp')
                                 return d.color;
                             });
 
-                            console.log(plotLineData);
 
                         var plotLine = svg.selectAll("plotLine").data(plotLineData).enter().append("rect");
                         var plotLineAttributes = plotLine
@@ -254,6 +283,15 @@ angular.module('phrPrototypeApp')
                     scope.$apply();
                     renderPlot();
                 };
+
+                //console.log(attrs.inactiveFlag);
+
+
+                //Expose function on master scope.
+                scope.$watch('inactiveFlag', function(newValue, oldValue) {
+                    gatherData();
+                    renderPlot();
+                }, true);
 
             }
         };

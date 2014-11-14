@@ -46,6 +46,12 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;
                         }
 
+                        if (parsedPath[i] === "allergies") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Allergies";
+                            tmpObject.path = pathString;
+                        }
+
 
                         breadCrumb.push(tmpObject);
                     }
@@ -55,7 +61,7 @@ angular.module('phrPrototypeApp')
                 };
 
                 scope.pageBreadCrumb = getBreadcrumb();
-                console.log(scope.pageBreadCrumb);
+                //console.log(scope.pageBreadCrumb);
             }
         };
     });
