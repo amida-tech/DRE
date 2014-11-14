@@ -1,0 +1,59 @@
+
+<div class="row" style="margin: 20px;">
+	<!--Profile-->
+	<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+		<div profile></div>
+	</div>
+
+	<!--Body-->
+	<div class="col-sm-9">
+		<div class="panel">
+			<div class="panel-body">
+
+				<!--Header Items-->
+				<div class="col-sm-12 row">
+					<div class="col-sm-3">
+						<div breadcrumb></div>
+						<h1>My Files</h1>
+					</div>
+					<div class="col-sm-8  col-sm-offset-1 text-left">
+						<div class="col-sm-4">
+							<button class="btn btn-link"><i class="fa fa-upload"></i> Upload File</button>
+						</div>
+						<div class="col-sm-4">
+							<button class="btn btn-link"><i class="fa fa-folder-open"></i> Make Folder</button>
+						</div>
+						<div class="col-sm-4">
+							<button class="btn btn-link"><i class="fa fa-clock-o"></i> View History</button>
+						</div>
+					</div>
+				</div>
+
+				<!--File Listing Header-->
+				<div class="col-sm-12 row">
+					<table class="table table-hover table-responsive">
+						<thead>
+							<td></td>
+							<td>
+								<a ng-click="nameSort();">Name <i class="fa fa-caret-down" ng-show="predicate === 'name'"></i><i class="fa fa-caret-up" ng-show="predicate === '-name'"></i></a>
+							</td>
+							<td><a ng-click="typeSort();">Type <i class="fa fa-caret-down" ng-show="predicate === 'type'"></i><i class="fa fa-caret-up" ng-show="predicate === '-type'"></i></a></td>
+							<td><a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'modified'"></i><i class="fa fa-caret-up" ng-show="predicate === '-modified'"></i></a></td>
+						</thead>
+					<tr ng-repeat="file in fileList | orderBy:predicate">
+						<td>
+							<a ng-show="file.type === 'Health Summary'"><i class="fa fa-file-text-o"></i></a>
+							<a ng-show="file.type === 'Image'"><i class="fa fa-file-image-o"></i></a>
+						</td>
+						<td><a>{{file.name}}</a></td>
+						<td>{{file.type}}</td>
+						<td>{{file.modified}}</td>
+					</tr>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+</div>

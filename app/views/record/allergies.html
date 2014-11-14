@@ -1,0 +1,148 @@
+
+<div class="row" style="margin: 20px;">
+	<!--Profile-->
+	<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+		<div profile></div>
+		<div record-navigation></div>
+	</div>
+
+	<!--Body Header-->
+	<div class="col-sm-9">
+		<div class="panel">
+			<div class="panel-body">
+
+				<!--Header Items-->
+				<div class="col-sm-12">
+					<div class="row col-sm-12" breadcrumb></div>
+					<div class="col-sm-12">
+						
+						<div class="col-sm-8">
+							<div class="pull-left">
+								<h1>Suzie's Allergies</h1>
+								<p>Last Updated:  {{updateDate}}</p>
+							</div>
+						</div>
+						<div class="text-right col-sm-3 ">
+								<label>
+      							<input type="checkbox" ng-model="inactiveFlag"> Show Inactive
+    							</label>
+							</div>
+						
+					</div>
+				</div>			
+			</div>
+		</div>
+
+
+		<!--Timeline View-->
+		<h4 class="text-center">Allergies</h4>
+		<div class="panel">
+			<div class="panel-body">
+				<div>
+					<p>Timeline</p>
+				</div>
+				<div timeline chart-data="entries" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+
+				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
+
+					<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
+
+						<div class="col-sm-2">
+							<a class="timeline-entry-icon text-center center-block">
+								
+								<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="entryType === 'allergies'" class="fa fa-exclamation-triangle fa-2x" id="entry{{recordIndex}}"></i>
+
+							</a>
+						</div>
+
+
+						<div class="col-sm-10">
+							<div class="panel timeline-entry">
+								<div class="panel-body" id="accordian">
+
+
+									<div class="timeline-entry-header col-sm-12">
+										<div class="col-sm-6">
+											<h4 class="text-left">{{recordEntry.observation.allergen.name}}</h4>
+											<h5 class="text-left">{{recordEntry.observation.severity.code.name}}</h5>
+											<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
+										</div>
+										<div style="position: absolute; bottom: 0px; right: 0px;">
+											<button class=" btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">
+												<i class="fa fa-chevron-down"></i> More
+											</button>
+											
+										</div>
+									</div>
+
+									<div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+										<table class="table table-hover">
+											<tr>
+												<td>Code:</td>
+												<td>{{recordEntry.observation.allergen.code}}</td>
+											</tr>
+											<tr>
+												<td>Code System:</td>
+												<td>{{recordEntry.observation.allergen.code_system_name}}</td>
+											</tr>
+											<tr ng-repeat="(reactionIndex, reactionEntry) in recordEntry.reaction">
+												<td>Reactions:</td>
+												<td>
+
+													<div class="panel">
+													<table class="table sub-table">
+															<thead>
+																<tr>
+																	<td>Reaction:</td>
+																	<td>{{reactionEntry.reaction.name}}</td>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>Severity:</td>
+																	<td>{{reactionEntry.severity}}</td>
+																</tr>
+																<tr>
+																	<td>Code:</td>
+																	<td>{{reactionEntry.reaction.code}}</td>
+																</tr>
+																<tr>
+																	<td>Code System:</td>
+																	<td>{{reactionEntry.reaction.code_system_name}}</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</td>
+											</tr>
+
+										</table>
+									</div>
+									<!--<pre>{{recordEntry | json}}</pre>-->
+								</div>
+							</div>
+						</div>
+
+
+
+
+					</div>
+				</div>
+
+				<div class="col-sm-2 center-block text-center timeline-footer">
+					<svg width="30" height="30">
+						<circle cx="15" cy="15" r="15"></circle>
+					</svg>
+				</div>
+
+
+			</div>
+
+
+		</div>
+
+		<!--<pre>{{masterEntries | json}}</pre>-->
+
+	</div>

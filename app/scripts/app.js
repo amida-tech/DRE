@@ -55,6 +55,26 @@ angular
         templateUrl: 'views/account.html',
         controller: 'AccountCtrl'
       })
+      .when('/files', {
+        templateUrl: 'views/files.html',
+        controller: 'FilesCtrl'
+      })
+      .when('/record', {
+        templateUrl: 'views/record.html',
+        controller: 'RecordCtrl'
+      })
+      .when('/record/allergies', {
+        templateUrl: 'views/record/allergies.html',
+        controller: 'RecordAllergiesCtrl'
+      })
+      .when('/record/encounters', {
+        templateUrl: 'views/record/encounters.html',
+        controller: 'RecordEncountersCtrl'
+      })
+      .when('/record/immunizations', {
+        templateUrl: 'views/record/immunizations.html',
+        controller: 'RecordImmunizationsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -3,18 +3,7 @@
 
 <div class="row" style="margin:20px;">
 	<div class="col-sm-3" style="padding-right: 20px; padding-bottom: 20px;">
-		<div class="profile">
-			<div class="profile-body">
-				<div class="profile-image">
-					<img class="img-responsive center-block" src="images/img-demo.png">
-				</div>
-				<div class="profile-content">
-					<h4>Suzie Demo</h4>
-					<p>suzie@amida-demo.com</p>
-					<p>Born: 6/25/1982</p>
-				</div>
-			</div>
-		</div>
+		<div profile></div>
 
 		<div class="btn-group-vertical col-sm-12">
 			<button type="button" class="btn btn-default btn-block">My Record</button>
@@ -38,6 +27,8 @@
 				</div>
 				<div class="col-sm-5">
 
+					<div class="panel"  style="margin-bottom: 0;">
+					<div class="panel-body">
 					<div class="row alert-row">
 						<div class="col-sm-3 success">
 							<i class="fa fa-check fa-2x"></i>
@@ -64,7 +55,8 @@
 							<span>60 Files Saved</span>
 						</div>
 					</div>
-
+					</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -75,7 +67,7 @@
 		<div class="panel">
 			<div class="panel-body">
 				<div>
-					<h5>Activity Timeline</h5>
+					<p>Timeline</p>
 				</div>
 				<div timeline chart-data="accountHistory" chart-type="account" style="border-bottom: 1px solid #ccc; width: 100%;"></div>
 
@@ -86,8 +78,8 @@
 						<div class="col-sm-2">
 							<a class="timeline-entry-icon text-center center-block">
 								
-									<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x"></i>
-									<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x"></i>
+									<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
+									<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x" id="entry{{recordIndex}}"></i>
 
 							</a>
 						</div>
