@@ -130,12 +130,32 @@ angular.module('phrPrototypeApp')
         };
 
         this.formatQuantity = function (inputQuantity) {
+
+            var quantityUnit = "";
             var returnQuantity = "";
+
+            if (inputQuantity.unit) {
+
+                if (inputQuantity.unit === "[in_i]") {
+                    quantityUnit = "inches";
+                } else if (inputQuantity.unit === "[lb_av]") {
+                    quantityUnit = "lbs";
+                } else if (inputQuantity.unit === "mm[Hg]") {
+                    quantityUnit = "mm";
+                } else {
+                    quantityUnit = inputQuantity.unit;
+                }
+
+            }
+
+
+
+
             if (inputQuantity.value) {
                 returnQuantity = inputQuantity.value;
             }
             if (inputQuantity.unit && inputQuantity.value) {
-                returnQuantity = returnQuantity + " " + inputQuantity.unit;
+                returnQuantity = returnQuantity + " " + quantityUnit;
             }
             inputQuantity.displayQuantity = returnQuantity;
             return inputQuantity;

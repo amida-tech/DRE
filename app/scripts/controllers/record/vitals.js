@@ -2,15 +2,15 @@
 
 /**
  * @ngdoc function
- * @name phrPrototypeApp.controller:RecordProceduresCtrl
+ * @name phrPrototypeApp.controller:RecordVitalsCtrl
  * @description
- * # RecordProceduresCtrl
+ * # RecordVitalsCtrl
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('RecordProceduresCtrl', function ($scope, procedures, format) {
+  .controller('RecordVitalsCtrl', function ($scope, vitals, format) {
     
-        $scope.entryType = 'procedures';
+        $scope.entryType = 'vitals';
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp')
         }
 
         function getRecords(callback) {
-            procedures.getRecord(function (err, results) {
+            vitals.getRecord(function (err, results) {
                 $scope.masterEntries = results;
                 callback();
             });
@@ -30,6 +30,7 @@ angular.module('phrPrototypeApp')
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
+
                 if (entry.date_time) {
                     _.each(entry.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
@@ -43,26 +44,8 @@ angular.module('phrPrototypeApp')
         function formatDisplay() {
         	_.each($scope.masterEntries, function(entry) {
         		
-        	
-            _.each(entry.performer, function(perf) {
-
-                _.each(perf.address, function(perfAddr) {
-
-                    format.formatAddress(perfAddr);
-
-                });
-
-                _.each(perf.organization, function(org) {
-
-                        _.each(org.address, function(orgAddr) {
-
-                            format.formatAddress(orgAddr);
-
-                        });
-
-                    });
-
-            });
+        		format.formatQuantity(entry);
+        
 
 
 
