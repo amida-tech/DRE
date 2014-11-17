@@ -18,28 +18,28 @@ angular.module('phrPrototypeApp')
                     icon: 'fa-exclamation-triangle'
                 }, {
                     type: 'encounters',
-                    icon: 'fa-exclamation-triangle'
+                    icon: 'fa-stethoscope'
                 }, {
                     type: 'immunizations',
-                    icon: 'fa-exclamation-triangle'
+                    icon: 'fa-shield'
                 }, {
                     type: 'medications',
-                    icon: 'fa-exclamation-triangle'
+                    icon: 'fa-plus-circle'
                 }, {
                     type: 'conditions',
-                    icon: 'fa-exclamation-triangle'
+                    icon: 'fa-list'
                 }, {
                     type: 'procedures',
-                    icon: 'fa-exclamation-triangle'
+                    icon: 'fa-medkit'
                 }, {
                     type: 'vitals',
-                    icon: 'fa-exclamation-triangle'
+                    icon: 'fa-heart'
                 }, {
                     type: 'results',
-                    icon: 'fa-exclamation-triangle'
+                    icon: 'fa-flask'
                 }, {
                     type: 'social',
-                    icon: 'fa-exclamation-triangle'
+                    icon: 'fa-group'
                 }];
 
                 var iconEntry = _.findWhere(iconMap, {

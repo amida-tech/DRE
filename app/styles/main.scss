@@ -183,13 +183,13 @@ a:hover {
 	position: relative;
 	bottom: -20px;
 	z-index: 100;
-
 	i {
 	color: $brand-primary;
 	}
 }
 
 .timeline-entry-icon:hover {
+	cursor: default;
 	background: $brand-primary;
 	i {
 		color: #fff;
