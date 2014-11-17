@@ -111,4 +111,34 @@ angular.module('phrPrototypeApp')
             return address;
         };
 
+        //Returns printable person name.
+        //TODO:  Add middle name handler, prefix, and suffix.
+        this.formatName = function(inputName) {
+            var outputName = "";
+
+            if (inputName.last && inputName.first) {
+                outputName = inputName.first + " " + inputName.last;
+            } else if (inputName.first) {
+                outputName = inputName.first;
+            } else if (inputName.last) {
+                outputName = inputName.last;
+            }
+
+            inputName.displayName = outputName;
+
+            return inputName;
+        };
+
+        this.formatQuantity = function(inputQuantity) {
+            var returnQuantity = "";
+            if (inputQuantity.value) {
+                returnQuantity = inputQuantity.value;
+            }
+            if (inputQuantity.unit && inputQuantity.value) {
+                returnQuantity = returnQuantity + " " + inputQuantity.unit;
+            }
+            inputQuantity.displayQuantity = returnQuantity;
+            return inputQuantity;
+        };
+
     });

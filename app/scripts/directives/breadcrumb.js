@@ -59,6 +59,12 @@ angular.module('phrPrototypeApp')
                         }
 
 
+                        if (parsedPath[i] === "immunizations") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Immunizations";
+                            tmpObject.path = pathString;
+                        }
+
                         breadCrumb.push(tmpObject);
                     }
 

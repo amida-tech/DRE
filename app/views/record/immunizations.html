@@ -1,1 +1,276 @@
-<p>This is the record/immunizations view.</p>
+
+<div class="row" style="margin: 20px;">
+	<!--Profile-->
+	<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+		<div profile></div>
+		<div record-navigation></div>
+	</div>
+
+	<!--Body Header-->
+	<div class="col-sm-9">
+		<div class="panel">
+			<div class="panel-body">
+
+				<!--Header Items-->
+				<div class="col-sm-12">
+					<div class="row col-sm-12" breadcrumb></div>
+					<div class="col-sm-12">
+						
+						<div class="col-sm-8">
+							<div class="pull-left">
+								<h1 style="text-transform: Capitalize;">Suzie's {{entryType}}</h1>
+								<p>Last Updated:  {{updateDate}}</p>
+							</div>
+						</div>
+					</div>
+				</div>			
+			</div>
+		</div>
+
+
+		<!--Timeline View-->
+		<h4 class="text-center">{{entryType}}</h4>
+		<div class="panel">
+			<div class="panel-body">
+				<div>
+					<p>Timeline</p>
+				</div>
+				<div timeline chart-data="entries" class="timeline-graph"></div>
+
+				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
+
+					<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
+
+						<div class="col-sm-2">
+							<a class="timeline-entry-icon text-center center-block">
+								
+								<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="entryType === 'immunizations'" class="fa fa-shield fa-2x" id="entry{{recordIndex}}"></i>
+
+							</a>
+						</div>
+
+
+						<div class="col-sm-10">
+							<div class="panel timeline-entry">
+								<div class="panel-body" id="accordian">
+									<div class="timeline-entry-header col-sm-12">
+										<div class="col-sm-6">
+											<h4 class="text-left">{{recordEntry.product.product.name}}</h4>
+											<h5 class="text-left" ng-if="recordEntry.performer.name" ng-repeat="(performerIndex, performerEntry) in recordEntry.performer.name">{{performerEntry.displayName}}</h5>
+											<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
+										</div>
+										<div class="col-sm-6 text-right">
+										</div>
+										<div style="position: absolute; bottom: 0px; right: 0px;">
+											<button class=" btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">
+												<i class="fa fa-chevron-down"></i> More
+											</button>		
+										</div>
+									</div>
+
+									<div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+										<table class="table table-hover">
+											<tr>
+												<td>Lot Number:</td>
+												<td>{{recordEntry.product.lot_number}}</td>
+											</tr>
+											<tr>
+												<td>Manufacturer:</td>
+												<td>{{recordEntry.product.manufacturer}}</td>
+											</tr>
+											<tr>
+												<td>Code:</td>
+												<td>{{recordEntry.product.product.code}}</td>
+											</tr>
+											<tr>
+												<td>Code System:</td>
+												<td>{{recordEntry.product.product.code_system_name}}</td>
+											</tr>
+											<tr ng-show="recordEntry.product.product.translations">
+												<td>Other Descriptions:</td>
+												<td>
+													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.product.product.translations">
+														<table class="table sub-table">
+															<thead>
+																<tr>
+																	<td>Name:</td>
+																	<td>{{itemEntry.name}}</td>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>Code:</td>
+																	<td>{{itemEntry.code}}</td>
+																</tr>
+																<tr>
+																	<td>Code System:</td>
+																	<td>{{itemEntry.code_system_name}}</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.performer">
+												<td>Performer:</td>
+												<td>
+													<div class="panel">
+														<table class="table sub-table">
+															<tr>
+																<td>Name:</td>
+																<td  ng-repeat="(nameIndex, nameEntry) in recordEntry.performer.name">{{nameEntry.displayName}}</td>
+															</tr>
+															<tr>
+																<td>Address:</td>
+																<td ng-repeat="(addrIndex, addrEntry) in recordEntry.performer.address">
+																	<div ng-repeat="addrLine in addrEntry.displayAddress">
+																		{{addrLine}}
+																	</div>
+																</td>
+															</tr>
+															<tr ng-repeat="(orgIndex, orgEntry) in recordEntry.performer.organization">
+																<td>Organization:</td>
+																<td ng-repeat="orgName in orgEntry.name">{{orgName}}</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.administration">
+												<td>Administration:</td>
+												<td>
+													<div class="panel">
+														<table class="table sub-table">
+															<tr>
+																<td>Dose:</td>
+																<td>{{recordEntry.administration.dose.displayQuantity}}</td>
+															</tr>
+															<tr>
+																<td>Route:</td>
+																<td>
+																	{{recordEntry.administration.route.name}}
+																</td>
+															</tr>
+															<tr>
+																<td>Route Code:</td>
+																<td>
+																	{{recordEntry.administration.route.code}}
+																</td>
+															</tr>
+															<tr>
+																<td>Route Code System:</td>
+																<td>
+																	{{recordEntry.administration.route.code_system_name}}
+																</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.instructions">
+												<td>Instructions:</td>
+												<td>
+													<div class="panel">
+														<table class="table">
+															<tr>
+																<td>Text:</td>
+																<td>{{recordEntry.instructions.free_text}}</td>
+															</tr>
+															<tr>
+																<td>Name:</td>
+																<td>{{recordEntry.instructions.code.name}}</td>
+															</tr>
+															<tr>
+																<td>Code:</td>
+																<td>{{recordEntry.instructions.code.code}}</td>
+															</tr>
+															<tr>
+																<td>Code System:</td>
+																<td>{{recordEntry.instructions.code.code_system_name}}</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.locations">
+												
+												<td>Locations:</td>
+												<td>
+													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.locations">
+														<table class="table sub-table">
+															<tr>
+																<td>Name:</td>
+																<td>{{itemEntry.name}}</td>
+															</tr>
+
+															<tr ng-show="itemEntry.address">
+																<td>Address:</td>
+
+																<td ng-repeat="(addrindex, addrEntry) in itemEntry.address">
+																	<p ng-repeat="(addrLineIndex, addrLineEntry) in addrEntry.displayAddress">{{addrLineEntry}}</p>
+																</td>
+															</tr>
+															<tr>
+																<td>Type:</td>
+
+																<td>
+																	<div class="panel">
+																		<table class="table sub-table">
+																			<tr>
+																				<td>Name:</td>
+																				<td>{{itemEntry.location_type.name}}</td>
+																			</tr>
+																			<tr>
+																				<td>Code:</td>
+																				<td>{{itemEntry.location_type.code}}</td>
+																			</tr>
+																			<tr>
+																				<td>Code System:</td>
+																				<td>{{itemEntry.location_type.code_system_name}}</td>
+																			</tr>
+																		</table>
+																	</div>
+																</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<!--<pre>{{recordEntry | json}}</pre>-->
+			</div>
+
+		</div>
+		
+	</div>
+	<div class="col-sm-2 center-block text-center timeline-footer">
+		<svg width="30" height="30">
+			<circle cx="15" cy="15" r="15"></circle>
+		</svg>
+	</div>
+
+
+
+
+</div>
+</div>
+
+
+
+</div>
+
+
+</div>
+
+<!--<pre>{{entries | json}}</pre>-->
+
+</div>
