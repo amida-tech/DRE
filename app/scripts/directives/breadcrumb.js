@@ -89,6 +89,18 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;
                         }
 
+                        if (parsedPath[i] === "results") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Test Results";
+                            tmpObject.path = pathString;
+                        }
+
+                        if (parsedPath[i] === "social") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Social History";
+                            tmpObject.path = pathString;
+                        }
+
                         breadCrumb.push(tmpObject);
                     }
 
