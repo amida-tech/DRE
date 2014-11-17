@@ -37,6 +37,7 @@ angular.module('phrPrototypeApp')
                 var svg = d3.select(rawSvg).attr("height", plotHeight);
                 var format = d3.time.format("%m/%d/%Y");
                 var isoFormat = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
+                var isoFormatSubsecond = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ");
 
                 var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return 'Entry'; });
                 svg.call(tip);
@@ -91,8 +92,13 @@ angular.module('phrPrototypeApp')
                     } else {
 
                         _.each(dataToPlot, function(entry) {
-                            
+
                             var plotDate = isoFormat.parse(entry.date_time.plotDate);
+
+                            //Redundancy for isoFormat subsecond support.
+                            if (_.isNull(plotDate)) {
+                                plotDate = isoFormatSubsecond.parse(entry.date_time.plotDate);
+                            }
 
                             plotCircles.push({
                                 "date": plotDate

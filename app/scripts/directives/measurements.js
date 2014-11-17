@@ -49,7 +49,7 @@ angular.module('phrPrototypeApp')
                         if (entry.vital.name === "Patient Body Weight - Measured") {
                             tmpVital.value = entry.value;
                             tmpVital.unit = entry.unit;
-                            tmpVital.date = format.parse(entry.date[0].date);
+                            tmpVital.date = format.parse(entry.date_time.point.date);
                             graphVitals.push(tmpVital);
                             graphDates.push(tmpVital.date);
                             graphValues.push(tmpVital.value);
@@ -61,7 +61,7 @@ angular.module('phrPrototypeApp')
                         if (entry.vital.name === "Intravascular Diastolic") {
                             tmpVital.value = entry.value;
                             tmpVital.unit = entry.unit;
-                            tmpVital.date = format.parse(entry.date[0].date);
+                            tmpVital.date = format.parse(entry.date_time.point.date);
                             graphVitals.push(tmpVital);
                             graphDates.push(tmpVital.date);
                             graphValues.push(tmpVital.value);
@@ -70,7 +70,7 @@ angular.module('phrPrototypeApp')
                         if (entry.vital.name === "Intravascular Systolic") {
                             tmpVital.value = entry.value;
                             tmpVital.unit = entry.unit;
-                            tmpVital.date = format.parse(entry.date[0].date);
+                            tmpVital.date = format.parse(entry.date_time.point.date);
                             graphVitalsTwo.push(tmpVital);
                             graphDates.push(tmpVital.date);
                             graphValues.push(tmpVital.value);

@@ -2,15 +2,15 @@
 
 /**
  * @ngdoc function
- * @name phrPrototypeApp.controller:RecordImmunizationsCtrl
+ * @name phrPrototypeApp.controller:RecordConditionsCtrl
  * @description
- * # RecordImmunizationsCtrl
+ * # RecordConditionsCtrl
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RecordImmunizationsCtrl', function ($scope, immunizations, format) {
+    .controller('RecordConditionsCtrl', function ($scope, conditions, format) {
 
-        $scope.entryType = 'immunizations';
+        $scope.entryType = 'conditions';
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp')
         }
 
         function getRecords(callback) {
-            immunizations.getRecord(function (err, results) {
+            conditions.getRecord(function (err, results) {
                 $scope.masterEntries = results;
                 callback();
             });
@@ -41,17 +41,17 @@ angular.module('phrPrototypeApp')
         }
 
         function formatDisplay() {
-        	_.each($scope.masterEntries, function(entry) {
-        		_.each(entry.performer, function(perf) {
-        			_.each(entry.performer.name, function(name) {
-        				format.formatName(name);
-        			});
-        			_.each(entry.performer.address, function(addr) {
-        				format.formatAddress(addr);
-        			});
-        		});
-        		format.formatQuantity(entry.administration.dose);
-        	});
+            _.each($scope.masterEntries, function (entry) {
+            	if (entry.problem) {
+            		_.each(entry.problem.date_time, function(dateEntry) {
+            			format.formatDate(dateEntry);
+            		});
+            		entry.problem.date_time.displayDate = format.outputDate(entry.problem.date_time);
+            	}
+
+
+
+            });
         }
 
         $scope.refresh = function () {
@@ -64,5 +64,4 @@ angular.module('phrPrototypeApp')
         }
 
         $scope.refresh();
-
     });

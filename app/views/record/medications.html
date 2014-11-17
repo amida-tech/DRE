@@ -46,7 +46,7 @@
 								
 								<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
 								<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x" id="entry{{recordIndex}}"></i>
-								<i ng-if="entryType === 'immunizations'" class="fa fa-shield fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="entryType === 'medications'" class="fa fa-plus-circle fa-2x" id="entry{{recordIndex}}"></i>
 
 							</a>
 						</div>
@@ -58,7 +58,7 @@
 									<div class="timeline-entry-header col-sm-12">
 										<div class="col-sm-6">
 											<h4 class="text-left">{{recordEntry.product.product.name}}</h4>
-											<h5 class="text-left" ng-if="recordEntry.performer.name" ng-repeat="(performerIndex, performerEntry) in recordEntry.performer.name">{{performerEntry.displayName}}</h5>
+											<h5 class="text-left">{{recordEntry.administration.route.name}}</h5>
 											<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
 										</div>
 										<div class="col-sm-6 text-right">
@@ -73,20 +73,40 @@
 									<div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
 										<table class="table table-hover">
 											<tr>
-												<td>Lot Number:</td>
-												<td>{{recordEntry.product.lot_number}}</td>
+												<td>Status:</td>
+												<td>{{recordEntry.status}}</td>
+											</tr>
+											<tr>
+												<td>Sig:</td>
+												<td>{{recordEntry.sig}}</td>
+											</tr>
+											<tr ng-show="recordEntry.administration.dose">
+												<td>Dose:</td>
+												<td>{{recordEntry.administration.dose.displayQuantity}}</td>
+											</tr>
+											<tr ng-show="recordEntry.administration.rate">
+												<td>Rate:</td>
+												<td>{{recordEntry.administration.rate.displayQuantity}}</td>
+											</tr>
+											<tr ng-show="recordEntry.administration.interval">
+												<td>Interval:</td>
+												<td>{{recordEntry.administration.interval.displayInterval}}</td>
 											</tr>
 											<tr>
 												<td>Manufacturer:</td>
 												<td>{{recordEntry.product.manufacturer}}</td>
 											</tr>
 											<tr>
-												<td>Code:</td>
+												<td>Product Code:</td>
 												<td>{{recordEntry.product.product.code}}</td>
 											</tr>
 											<tr>
-												<td>Code System:</td>
+												<td>Product Code System:</td>
 												<td>{{recordEntry.product.product.code_system_name}}</td>
+											</tr>
+											<tr>
+												<td>Unencoded Name:</td>
+												<td>{{recordEntry.product.unencoded_name}}</td>
 											</tr>
 											<tr ng-show="recordEntry.product.product.translations">
 												<td>Other Descriptions:</td>
@@ -113,126 +133,136 @@
 													</div>
 												</td>
 											</tr>
-											<tr ng-show="recordEntry.performer">
-												<td>Performer:</td>
+											<tr ng-show="recordEntry.supply">
+												<td>Supply:</td>
 												<td>
 													<div class="panel">
 														<table class="table sub-table">
 															<tr>
-																<td>Name:</td>
-																<td  ng-repeat="(nameIndex, nameEntry) in recordEntry.performer.name">{{nameEntry.displayName}}</td>
+																<td>Date:</td>
+																<td>{{recordEntry.supply.date_time.displayDate}}</td>
 															</tr>
 															<tr>
-																<td>Address:</td>
-																<td ng-repeat="(addrIndex, addrEntry) in recordEntry.performer.address">
-																	<div ng-repeat="addrLine in addrEntry.displayAddress">
-																		{{addrLine}}
+																<td>Repeat Number:</td>
+																<td>
+																	<div>
+																		{{recordEntry.supply.repeatNumber}}
 																	</div>
 																</td>
 															</tr>
-															<tr ng-repeat="(orgIndex, orgEntry) in recordEntry.performer.organization">
-																<td>Organization:</td>
-																<td ng-repeat="orgName in orgEntry.name">{{orgName}}</td>
+															<tr>
+																<td>Quantity:</td>
+																<td>{{recordEntry.supply.quantity}}</td>
+															</tr>
+															<tr>
+																<td>Author:</td>
+																<td>{{recordEntry.supply.author.name.displayName}}</td>
 															</tr>
 														</table>
 													</div>
 												</td>
 											</tr>
-											<tr ng-show="recordEntry.administration">
-												<td>Administration:</td>
+											<tr ng-show="recordEntry.administration.route">
+												<td>Route:</td>
 												<td>
 													<div class="panel">
 														<table class="table sub-table">
 															<tr>
-																<td>Dose:</td>
-																<td>{{recordEntry.administration.dose.displayQuantity}}</td>
-															</tr>
-															<tr>
-																<td>Route:</td>
-																<td>
-																	{{recordEntry.administration.route.name}}
-																</td>
-															</tr>
-															<tr>
-																<td>Route Code:</td>
-																<td>
-																	{{recordEntry.administration.route.code}}
-																</td>
-															</tr>
-															<tr>
-																<td>Route Code System:</td>
-																<td>
-																	{{recordEntry.administration.route.code_system_name}}
-																</td>
-															</tr>
-														</table>
-													</div>
-												</td>
-											</tr>
-											<tr ng-show="recordEntry.instructions">
-												<td>Instructions:</td>
-												<td>
-													<div class="panel">
-														<table class="table">
-															<tr>
-																<td>Text:</td>
-																<td>{{recordEntry.instructions.free_text}}</td>
-															</tr>
-															<tr>
 																<td>Name:</td>
-																<td>{{recordEntry.instructions.code.name}}</td>
+																<td>{{recordEntry.administration.route.name}}</td>
 															</tr>
 															<tr>
 																<td>Code:</td>
-																<td>{{recordEntry.instructions.code.code}}</td>
+																<td>{{recordEntry.administration.route.code}}</td>
 															</tr>
 															<tr>
 																<td>Code System:</td>
-																<td>{{recordEntry.instructions.code.code_system_name}}</td>
+																<td>{{recordEntry.administration.route.code_system_name}}</td>
+															</tr>
+															
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.administration.form">
+												<td>Form:</td>
+												<td>
+													<div class="panel">
+														<table class="table sub-table">
+															<tr>
+																<td>Name:</td>
+																<td>{{recordEntry.administration.form.name}}</td>
+															</tr>
+															<tr>
+																<td>Code:</td>
+																<td>{{recordEntry.administration.form.code}}</td>
+															</tr>
+															<tr>
+																<td>Code System:</td>
+																<td>{{recordEntry.administration.form.code_system_name}}</td>
 															</tr>
 														</table>
 													</div>
 												</td>
 											</tr>
-											<tr ng-show="recordEntry.locations">
-												
-												<td>Locations:</td>
+											<tr ng-show="recordEntry.drug_vehicle">
+												<td>Drug Vehicle:</td>
 												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.locations">
+													<div class="panel">
 														<table class="table sub-table">
 															<tr>
 																<td>Name:</td>
-																<td>{{itemEntry.name}}</td>
-															</tr>
-
-															<tr ng-show="itemEntry.address">
-																<td>Address:</td>
-
-																<td ng-repeat="(addrindex, addrEntry) in itemEntry.address">
-																	<p ng-repeat="(addrLineIndex, addrLineEntry) in addrEntry.displayAddress">{{addrLineEntry}}</p>
-																</td>
+																<td>{{recordEntry.drug_vehicle.name}}</td>
 															</tr>
 															<tr>
-																<td>Type:</td>
-
-																<td>
-																	<div class="panel">
-																		<table class="table sub-table">
-																			<tr>
-																				<td>Name:</td>
-																				<td>{{itemEntry.location_type.name}}</td>
-																			</tr>
-																			<tr>
-																				<td>Code:</td>
-																				<td>{{itemEntry.location_type.code}}</td>
-																			</tr>
-																			<tr>
-																				<td>Code System:</td>
-																				<td>{{itemEntry.location_type.code_system_name}}</td>
-																			</tr>
-																		</table>
-																	</div>
-																</td>
+																<td>Code:</td>
+																<td>{{recordEntry.drug_vehicle.code}}</td>
+															</tr>
+															<tr>
+																<td>Code System:</td>
+																<td>{{recordEntry.drug_vehicle.code_system_name}}</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.precondition">
+												<td>Precondition:</td>
+												<td>
+													<div class="panel">
+														<table class="table sub-table">
+															<tr>
+																<td>Name:</td>
+																<td>{{recordEntry.precondition.value.name}}</td>
+															</tr>
+															<tr>
+																<td>Code:</td>
+																<td>{{recordEntry.precondition.value.code}}</td>
+															</tr>
+															<tr>
+																<td>Code System:</td>
+																<td>{{recordEntry.precondition.value.code_system_name}}</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.indication">
+												<td>Indication:</td>
+												<td>
+													<div class="panel">
+														<table class="table sub-table">
+															<tr>
+																<td>Name:</td>
+																<td>{{recordEntry.indication.value.name}}</td>
+															</tr>
+															<tr>
+																<td>Code:</td>
+																<td>{{recordEntry.indication.value.code}}</td>
+															</tr>
+															<tr>
+																<td>Code System:</td>
+																<td>{{recordEntry.indication.value.code_system_name}}</td>
 															</tr>
 														</table>
 													</div>

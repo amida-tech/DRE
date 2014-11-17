@@ -12,7 +12,7 @@ angular.module('phrPrototypeApp')
       template: '<div class="btn-group-vertical col-sm-12">' +
       			'<a href="#/record/allergies" class="btn btn-default btn-block">Allergies</a>' + 
       			'<a href="#/record/encounters" class="btn btn-default btn-block">Encounters</a>' +
-      			'<a href="#/record/immunization" class="btn btn-default btn-block">Immunizations</a>' +
+      			'<a href="#/record/immunizations" class="btn btn-default btn-block">Immunizations</a>' +
       			'<a href="#/record/medications" class="btn btn-default btn-block">Medications</a>' +
       			'<a href="#/record/conditions" class="btn btn-default btn-block">Conditions</a>' +
       			'<a href="#/record/procedures" class="btn btn-default btn-block">Procedures</a>' +

@@ -44,7 +44,7 @@ angular.module('phrPrototypeApp')
             return tmpDateArr;
         };
 
-       this.outputDate = function(date_time) {
+        this.outputDate = function (date_time) {
             if (!date_time) {
                 return "Date Not Reported";
             }
@@ -62,10 +62,10 @@ angular.module('phrPrototypeApp')
             } else {
                 return "Date Not Reported";
             }
-       };
+        };
 
-       //Returns a plot date for timeline graphing.
-       this.plotDate = function(date_time) {
+        //Returns a plot date for timeline graphing.
+        this.plotDate = function (date_time) {
             if (!date_time) {
                 return null;
             }
@@ -83,10 +83,10 @@ angular.module('phrPrototypeApp')
             } else {
                 return null;
             }
-       };
+        };
 
-       //Collapse Address to text entry.
-       this.formatAddress = function(address) {
+        //Collapse Address to text entry.
+        this.formatAddress = function (address) {
             var displayAddress = [];
             if (address.street_lines.length > 0) {
                 for (var addrLine in address.street_lines) {
@@ -109,6 +109,66 @@ angular.module('phrPrototypeApp')
             }
             address.displayAddress = displayAddress;
             return address;
+        };
+
+        //Returns printable person name.
+        //TODO:  Add middle name handler, prefix, and suffix.
+        this.formatName = function (inputName) {
+            var outputName = "";
+
+            if (inputName.last && inputName.first) {
+                outputName = inputName.first + " " + inputName.last;
+            } else if (inputName.first) {
+                outputName = inputName.first;
+            } else if (inputName.last) {
+                outputName = inputName.last;
+            }
+
+            inputName.displayName = outputName;
+
+            return inputName;
+        };
+
+        this.formatQuantity = function (inputQuantity) {
+
+            var quantityUnit = "";
+            var returnQuantity = "";
+
+            if (inputQuantity.unit) {
+
+                if (inputQuantity.unit === "[in_i]") {
+                    quantityUnit = "inches";
+                } else if (inputQuantity.unit === "[lb_av]") {
+                    quantityUnit = "lbs";
+                } else if (inputQuantity.unit === "mm[Hg]") {
+                    quantityUnit = "mm";
+                } else {
+                    quantityUnit = inputQuantity.unit;
+                }
+
+            }
+
+
+
+
+            if (inputQuantity.value) {
+                returnQuantity = inputQuantity.value;
+            }
+            if (inputQuantity.unit && inputQuantity.value) {
+                returnQuantity = returnQuantity + " " + quantityUnit;
+            }
+            inputQuantity.displayQuantity = returnQuantity;
+            return inputQuantity;
+        };
+
+        //TODO:  Revisit this for better output formatting.
+        this.formatInterval = function (inputInterval) {
+            var returnInterval = "";
+            if (inputInterval.period) {
+                returnInterval = inputInterval.period.value + " " + inputInterval.period.unit;
+            }
+            inputInterval.displayInterval = returnInterval;
+            return returnInterval;
         };
 
     });

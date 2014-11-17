@@ -2,15 +2,15 @@
 
 /**
  * @ngdoc function
- * @name phrPrototypeApp.controller:RecordImmunizationsCtrl
+ * @name phrPrototypeApp.controller:RecordProceduresCtrl
  * @description
- * # RecordImmunizationsCtrl
+ * # RecordProceduresCtrl
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RecordImmunizationsCtrl', function ($scope, immunizations, format) {
-
-        $scope.entryType = 'immunizations';
+  .controller('RecordProceduresCtrl', function ($scope, procedures, format) {
+    
+        $scope.entryType = 'procedures';
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp')
         }
 
         function getRecords(callback) {
-            immunizations.getRecord(function (err, results) {
+            procedures.getRecord(function (err, results) {
                 $scope.masterEntries = results;
                 callback();
             });
@@ -42,15 +42,31 @@ angular.module('phrPrototypeApp')
 
         function formatDisplay() {
         	_.each($scope.masterEntries, function(entry) {
-        		_.each(entry.performer, function(perf) {
-        			_.each(entry.performer.name, function(name) {
-        				format.formatName(name);
-        			});
-        			_.each(entry.performer.address, function(addr) {
-        				format.formatAddress(addr);
-        			});
-        		});
-        		format.formatQuantity(entry.administration.dose);
+        		
+        	
+            _.each(entry.performer, function(perf) {
+
+                _.each(perf.address, function(perfAddr) {
+
+                    format.formatAddress(perfAddr);
+
+                });
+
+                _.each(perf.organization, function(org) {
+
+                        _.each(org.address, function(orgAddr) {
+
+                            format.formatAddress(orgAddr);
+
+                        });
+
+                    });
+
+            });
+
+
+
+
         	});
         }
 
@@ -65,4 +81,4 @@ angular.module('phrPrototypeApp')
 
         $scope.refresh();
 
-    });
+  });

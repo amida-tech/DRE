@@ -22,54 +22,39 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "1999-11-14T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2012-09-07T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],
-                "value": 67,
+                "value": 68,
                 "unit": "[in_i]"
             }, {
                 "identifiers": [{
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }],
                 "vital": {
-                    "name": "Height",
-                    "code": "8302-2",
-                    "code_system_name": "LOINC"
-                },
-                "status": "completed",
-                "date": [{
-                    "date": "2012-09-07T00:00:00Z",
-                    "precision": "day"
-                }],
-                "interpretations": [
-                    "Normal"
-                ],
-                "value": 68,
-                "unit": "[in_i]"
-            },  {
-                "identifiers": [{
-                    "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
-                }],
-                "vital": {
                     "name": "Intravascular Systolic",
                     "code": "8480-6",
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "2014-05-07T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2014-05-07T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],
                 "value": 124,
                 "unit": "mm[Hg]"
-            },  {
+            }, {
                 "identifiers": [{
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }],
@@ -79,16 +64,18 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "2014-06-14T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2014-06-14T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],
                 "value": 130,
                 "unit": "mm[Hg]"
-            },  {
+            }, {
                 "identifiers": [{
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }],
@@ -98,16 +85,18 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "2014-09-01T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2014-09-01T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],
                 "value": 115,
                 "unit": "mm[Hg]"
-            },   {
+            }, {
                 "identifiers": [{
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }],
@@ -117,16 +106,18 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "2014-05-07T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2014-05-07T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],
                 "value": 80,
                 "unit": "mm[Hg]"
-            },  {
+            }, {
                 "identifiers": [{
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }],
@@ -136,16 +127,18 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "2014-06-14T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2014-06-14T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],
                 "value": 82,
                 "unit": "mm[Hg]"
-            },  {
+            }, {
                 "identifiers": [{
                     "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
                 }],
@@ -155,10 +148,12 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "2014-09-01T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2014-09-01T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],
@@ -174,10 +169,12 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "2014-10-08T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2014-10-08T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],
@@ -193,10 +190,12 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "2014-10-12T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2014-10-12T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],
@@ -212,10 +211,12 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "LOINC"
                 },
                 "status": "completed",
-                "date": [{
-                    "date": "2014-10-16T00:00:00Z",
-                    "precision": "day"
-                }],
+                "date_time": {
+                    "point": {
+                        "date": "2014-10-16T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
                 "interpretations": [
                     "Normal"
                 ],

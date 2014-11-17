@@ -75,6 +75,30 @@ angular
         templateUrl: 'views/record/immunizations.html',
         controller: 'RecordImmunizationsCtrl'
       })
+      .when('/record/medications', {
+        templateUrl: 'views/record/medications.html',
+        controller: 'RecordMedicationsCtrl'
+      })
+      .when('/record/conditions', {
+        templateUrl: 'views/record/conditions.html',
+        controller: 'RecordConditionsCtrl'
+      })
+      .when('/record/procedures', {
+        templateUrl: 'views/record/procedures.html',
+        controller: 'RecordProceduresCtrl'
+      })
+      .when('/record/vitals', {
+        templateUrl: 'views/record/vitals.html',
+        controller: 'RecordVitalsCtrl'
+      })
+      .when('/record/results', {
+        templateUrl: 'views/record/results.html',
+        controller: 'RecordResultsCtrl'
+      })
+      .when('/record/social', {
+        templateUrl: 'views/record/social.html',
+        controller: 'RecordSocialCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

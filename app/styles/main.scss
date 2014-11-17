@@ -2,9 +2,26 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // $fa-font-path: "../fonts" !default;
 
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
-@import url(http://fonts.googleapis.com/css?family=Roboto);
-@import url(http://fonts.googleapis.com/css?family=Montserrat);
+//@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+//@import url(http://fonts.googleapis.com/css?family=Roboto);
+//@import url(http://fonts.googleapis.com/css?family=Montserrat);
+
+
+//Using local fonts for dev, need to configure grunt for CDN pointers.
+@font-face {
+    font-family: "Open Sans";
+    src: url(../../fonts/OpenSans.ttf);
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url(../../fonts/Montserrat.ttf);
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url(../../fonts/Roboto.ttf);
+}
 
 // Bootstrap Preprocessing
 @import "variables";

@@ -2,15 +2,15 @@
 
 /**
  * @ngdoc function
- * @name phrPrototypeApp.controller:RecordImmunizationsCtrl
+ * @name phrPrototypeApp.controller:RecordVitalsCtrl
  * @description
- * # RecordImmunizationsCtrl
+ * # RecordVitalsCtrl
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RecordImmunizationsCtrl', function ($scope, immunizations, format) {
-
-        $scope.entryType = 'immunizations';
+  .controller('RecordVitalsCtrl', function ($scope, vitals, format) {
+    
+        $scope.entryType = 'vitals';
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp')
         }
 
         function getRecords(callback) {
-            immunizations.getRecord(function (err, results) {
+            vitals.getRecord(function (err, results) {
                 $scope.masterEntries = results;
                 callback();
             });
@@ -30,6 +30,7 @@ angular.module('phrPrototypeApp')
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
+
                 if (entry.date_time) {
                     _.each(entry.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
@@ -42,15 +43,13 @@ angular.module('phrPrototypeApp')
 
         function formatDisplay() {
         	_.each($scope.masterEntries, function(entry) {
-        		_.each(entry.performer, function(perf) {
-        			_.each(entry.performer.name, function(name) {
-        				format.formatName(name);
-        			});
-        			_.each(entry.performer.address, function(addr) {
-        				format.formatAddress(addr);
-        			});
-        		});
-        		format.formatQuantity(entry.administration.dose);
+        		
+        		format.formatQuantity(entry);
+        
+
+
+
+
         	});
         }
 
@@ -65,4 +64,4 @@ angular.module('phrPrototypeApp')
 
         $scope.refresh();
 
-    });
+  });

@@ -59,6 +59,48 @@ angular.module('phrPrototypeApp')
                         }
 
 
+                        if (parsedPath[i] === "immunizations") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Immunizations";
+                            tmpObject.path = pathString;
+                        }
+
+                        if (parsedPath[i] === "medications") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Medications";
+                            tmpObject.path = pathString;
+                        }
+
+                        if (parsedPath[i] === "conditions") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Conditions";
+                            tmpObject.path = pathString;
+                        }
+
+                        if (parsedPath[i] === "procedures") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Procedures";
+                            tmpObject.path = pathString;
+                        }
+
+                        if (parsedPath[i] === "vitals") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Vital Signs";
+                            tmpObject.path = pathString;
+                        }
+
+                        if (parsedPath[i] === "results") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Test Results";
+                            tmpObject.path = pathString;
+                        }
+
+                        if (parsedPath[i] === "social") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Social History";
+                            tmpObject.path = pathString;
+                        }
+
                         breadCrumb.push(tmpObject);
                     }
 

@@ -28,25 +28,25 @@ angular.module('phrPrototypeApp')
   		_.each($scope.masterRecord.vitals, function(vitalEntry) {
 
   			if (vitalEntry.vital.name === "Height") {
-  				_.each(vitalEntry.date, function(dateArr) {
+  				_.each(vitalEntry.date_time, function(dateArr) {
   					heightDateArray.push(moment(dateArr.date));
   				});
   			}
 
   			if (vitalEntry.vital.name === "Patient Body Weight - Measured") {
-  				_.each(vitalEntry.date, function(dateArr) {
+  				_.each(vitalEntry.date_time, function(dateArr) {
   					weightDateArray.push(moment(dateArr.date));
   				});
   			}
 
 			if (vitalEntry.vital.name === "Intravascular Systolic") {
-  				_.each(vitalEntry.date, function(dateArr) {
+  				_.each(vitalEntry.date_time, function(dateArr) {
   					bpDateArraySystolic.push(moment(dateArr.date));
   				});
   			}
 
   			if (vitalEntry.vital.name === "Intravascular Diastolic") {
-  				_.each(vitalEntry.date, function(dateArr) {
+  				_.each(vitalEntry.date_time, function(dateArr) {
   					bpDateArrayDiastolic.push(moment(dateArr.date));
   				});
   			}  					
@@ -58,14 +58,13 @@ angular.module('phrPrototypeApp')
   		var weightMaxDate = moment.max(weightDateArray);
   		var bpMaxDateDiastolic = moment.max(bpDateArrayDiastolic);
   		var bpMaxDateSystolic = moment.max(bpDateArraySystolic);
-  		
 
   		//Recover associated max value.
   		_.each($scope.masterRecord.vitals, function(vitalEntry) {
 
   			//Find most current height.
   			if (vitalEntry.vital.name === "Height") {
-  				_.each(vitalEntry.date, function(dateArr) {
+  				_.each(vitalEntry.date_time, function(dateArr) {
 
   					if (moment(moment(dateArr.date)).isSame(heightMaxDate, 'day')) {
   						$scope.dashMetrics.height = {
@@ -78,7 +77,7 @@ angular.module('phrPrototypeApp')
   			}
 
   			if (vitalEntry.vital.name === "Patient Body Weight - Measured") {
-  				_.each(vitalEntry.date, function(dateArr) {
+  				_.each(vitalEntry.date_time, function(dateArr) {
   					if (moment(moment(dateArr.date)).isSame(weightMaxDate, 'day')) {
   						$scope.dashMetrics.weight = {
   							value: vitalEntry.value,
@@ -90,7 +89,7 @@ angular.module('phrPrototypeApp')
   			}
 
   			if (vitalEntry.vital.name === "Intravascular Systolic") {
-  				_.each(vitalEntry.date, function(dateArr) {
+  				_.each(vitalEntry.date_time, function(dateArr) {
   					if (moment(moment(dateArr.date)).isSame(bpMaxDateSystolic, 'day')) {
   						$scope.dashMetrics.systolic = {
   							value: vitalEntry.value,
@@ -102,7 +101,7 @@ angular.module('phrPrototypeApp')
   			}
 
   			if (vitalEntry.vital.name === "Intravascular Diastolic") {
-  				_.each(vitalEntry.date, function(dateArr) {
+  				_.each(vitalEntry.date_time, function(dateArr) {
   					if (moment(moment(dateArr.date)).isSame(bpMaxDateDiastolic, 'day')) {
   						$scope.dashMetrics.diastolic = {
   							value: vitalEntry.value,
