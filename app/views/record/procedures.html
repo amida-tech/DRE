@@ -1,0 +1,242 @@
+
+<div class="row" style="margin: 20px;">
+	<!--Profile-->
+	<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+		<div profile></div>
+		<div record-navigation></div>
+	</div>
+
+	<!--Body Header-->
+	<div class="col-sm-9">
+		<div class="panel">
+			<div class="panel-body">
+
+				<!--Header Items-->
+				<div class="col-sm-12">
+					<div class="row col-sm-12" breadcrumb></div>
+					<div class="col-sm-12">
+						
+						<div class="col-sm-8">
+							<div class="pull-left">
+								<h1 style="text-transform: Capitalize;">Suzie's {{entryType}}</h1>
+								<p>Last Updated:  {{updateDate}}</p>
+							</div>
+						</div>
+					</div>
+				</div>			
+			</div>
+		</div>
+
+
+		<!--Timeline View-->
+		<h4 class="text-center">{{entryType}}</h4>
+		<div class="panel">
+			<div class="panel-body">
+				<div>
+					<p>Timeline</p>
+				</div>
+				<div timeline chart-data="entries" class="timeline-graph"></div>
+
+				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
+
+					<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
+
+						<div class="col-sm-2">
+							<a class="timeline-entry-icon text-center center-block">
+								
+								<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="entryType === 'procedures'" class="fa fa-medkit fa-2x" id="entry{{recordIndex}}"></i>
+
+							</a>
+						</div>
+
+
+						<div class="col-sm-10">
+							<div class="panel timeline-entry">
+								<div class="panel-body" id="accordian">
+									<div class="timeline-entry-header col-sm-12">
+										<div class="col-sm-6">
+											<h4 class="text-left">{{recordEntry.procedure.name}}</h4>
+											<h5 class="text-left">{{recordEntry.status}}</h5>
+											<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
+										</div>
+										<div class="col-sm-6 text-right">
+										</div>
+										<div style="position: absolute; bottom: 0px; right: 0px;">
+											<button class=" btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">
+												<i class="fa fa-chevron-down"></i> More
+											</button>		
+										</div>
+									</div>
+
+									<div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+										<table class="table table-hover">
+											<tr>
+												<td>Code:</td>
+												<td>{{recordEntry.procedure.code}}</td>
+											</tr>
+											<tr>
+												<td>Code System:</td>
+												<td>{{recordEntry.procedure.code_system_name}}</td>
+											</tr>
+											<tr>
+												<td>Type:</td>
+												<td>{{recordEntry.procedure_type}}</td>
+											</tr>
+											<tr ng-show="recordEntry.procedure.translations">
+												<td>Other Descriptions:</td>
+												<td>
+													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.procedure.translations">
+														<table class="table sub-table">
+															<thead>
+																<tr>
+																	<td>Name:</td>
+																	<td>{{itemEntry.name}}</td>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>Code:</td>
+																	<td>{{itemEntry.code}}</td>
+																</tr>
+																<tr>
+																	<td>Code System:</td>
+																	<td>{{itemEntry.code_system_name}}</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.body_sites">
+												<td>Body Site:</td>
+												<td>
+													<div class="panel" ng-repeat="site in recordEntry.body_sites">
+														<table class="table sub-table">
+															<tr>
+																<td>Name:</td>
+																<td>{{site.name}}</td>
+															</tr>
+															<tr>
+																<td>Code:</td>
+																<td>{{site.code}}</td>
+															</tr>
+															<tr>
+																<td>Code System:</td>
+																<td>{{site.code_system_name}}</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.specimen">
+												<td>Specimen:</td>
+												<td>
+													<div class="panel">
+														<table class="table sub-table">
+															<tr>
+																<td>Name:</td>
+																<td>{{recordEntry.specimen.code.name}}</td>
+															</tr>
+															<tr>
+																<td>Code:</td>
+																<td>{{recordEntry.specimen.code.code}}</td>
+															</tr>
+															<tr>
+																<td>Code System:</td>
+																<td>{{recordEntry.specimen.code.code_system_name}}</td>
+															</tr>
+															
+														</table>
+													</div>
+												</td>
+											</tr>
+											<tr ng-show="recordEntry.performer">
+												<td>Performer:</td>
+												<td>
+													<div class="panel" ng-repeat="performer in recordEntry.performer">
+														<table class="table sub-table">
+															<tr>
+																<td>Address:</td>
+																<td ng-repeat="perfAddr in performer.address">
+																	<div ng-repeat="addrLine in perfAddr.displayAddress">
+																		{{addrLine}}
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<td>Phone:</td>
+																<td ng-repeat="perfPhone in performer.phone">
+																	{{perfPhone.number}}
+																</td>
+															</tr>
+															<tr ng-show="performer.organization">
+																<td>Organization:</td>
+																<td ng-repeat="perfOrg in performer.organization">
+
+																	<table class="table">
+																		<tr>
+																			<td>Name:</td>
+																			<td ng-repeat="orgName in perfOrg.name">
+																				{{orgName}}
+																			</td>
+																		</tr>
+																		<tr>
+																			<td>Address:</td>
+																			<td ng-repeat="orgAddr in perfOrg.address">
+																				<div ng-repeat="perfOrgAddrLine in orgAddr.displayAddress">
+																					{{perfOrgAddrLine}}
+																				</div>
+																			</td>
+																		</tr>
+																		<tr>
+																		<td>Phone:</td>
+																		<td ng-repeat="orgPhone in perfOrg.phone">
+																		{{orgPhone.number}}
+																		</td>
+
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<!--<pre>{{recordEntry | json}}</pre>-->
+			</div>
+
+		</div>
+		
+	</div>
+	<div class="col-sm-2 center-block text-center timeline-footer">
+		<svg width="30" height="30">
+			<circle cx="15" cy="15" r="15"></circle>
+		</svg>
+	</div>
+
+
+
+
+</div>
+</div>
+
+
+
+</div>
+
+
+</div>
+
+<!--<pre>{{entries | json}}</pre>-->
+
+</div>
