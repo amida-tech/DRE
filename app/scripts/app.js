@@ -75,6 +75,10 @@ angular
         templateUrl: 'views/record/immunizations.html',
         controller: 'RecordImmunizationsCtrl'
       })
+      .when('/record/medications', {
+        templateUrl: 'views/record/medications.html',
+        controller: 'RecordMedicationsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
