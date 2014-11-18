@@ -22,12 +22,18 @@
 							</div>
 						</div>
 						<div class="text-right col-sm-3 ">
-								<label>
-      							<input type="checkbox" ng-model="inactiveFlag"> Show Inactive
-    							</label>
-							</div>	
+							<label>
+								<input type="checkbox" ng-model="inactiveFlag"> Show Inactive
+							</label>
+						</div>	
 					</div>
-				</div>			
+				</div>	
+
+						<!--Alert-->
+		<div class="alert alert-info col-sm-10 col-sm-offset-1" ng-show="alertShow">
+			<span class="pull-left"><span style="margin-right: 20px;"><i class="fa fa-flag"></i></span> There is 1 update to your allergies requiring review.</span>
+			<span class="pull-right" ng-click="closeAlert()"><i class="fa fa-close"></i></span>
+		</div>
 			</div>
 		</div>
 
@@ -61,6 +67,12 @@
 											<h5 class="text-left">{{recordEntry.observation.severity.code.name}}</h5>
 											<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
 										</div>
+
+										<div class="col-sm-6 text-right">
+										<h5><a href="#/record/allergies/review"><i class="fa fa-flag-o" style="margin-right: 10px;"></i> Review 1 Update</a></h5>
+										</div>
+
+
 										<div style="position: absolute; bottom: 0px; right: 0px;">
 											<button class="btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">
 												<span><i class="fa fa-chevron-down"></i> More</span>
@@ -84,7 +96,7 @@
 												<td>
 
 													<div class="panel">
-													<table class="table sub-table">
+														<table class="table sub-table">
 															<thead>
 																<tr>
 																	<td>Reaction:</td>

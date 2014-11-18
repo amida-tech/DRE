@@ -101,6 +101,12 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;
                         }
 
+                        if (parsedPath[i] === "review") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "Review Updates";
+                            tmpObject.path = pathString;
+                        }
+
                         breadCrumb.push(tmpObject);
                     }
 
