@@ -99,6 +99,18 @@ angular
         templateUrl: 'views/record/social.html',
         controller: 'RecordSocialCtrl'
       })
+      .when('/review', {
+        templateUrl: 'views/review.html',
+        controller: 'ReviewCtrl'
+      })
+      .when('/review/allergies', {
+        templateUrl: 'views/review/allergies.html',
+        controller: 'ReviewAllergiesCtrl'
+      })
+      .when('/record/allergies/review', {
+        templateUrl: 'views/record/allergies/review.html',
+        controller: 'RecordAllergiesReviewCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

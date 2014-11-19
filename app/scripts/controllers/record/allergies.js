@@ -8,13 +8,19 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RecordAllergiesCtrl', function ($scope, allergies, format) {
+    .controller('RecordAllergiesCtrl', function ($scope, allergies, format, partial) {
 
         $scope.entryType = 'allergies';
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
         $scope.inactiveFlag = false;
+        $scope.partialEntries = [];
+        $scope.alertShow = true;
+
+        $scope.closeAlert = function () {
+            $scope.alertShow = false;
+        }
 
         function getUpdateDate () {
         	//Should grab from files/update history.  Stubbed for now.
@@ -25,6 +31,14 @@ angular.module('phrPrototypeApp')
             allergies.getRecord(function (err, results) {
                 $scope.masterEntries = results;
                 callback();
+            });
+        }
+
+        function getPartials() {
+            partial.getPartialMatches($scope.entryType, function(err, results) {
+
+                $scope.partialEntries = results;
+
             });
         }
 
@@ -73,6 +87,7 @@ angular.module('phrPrototypeApp')
             	getUpdateDate();
             	formatDates();
                 filterInactive();
+                getPartials();
             });
         }
 

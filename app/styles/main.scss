@@ -183,13 +183,13 @@ a:hover {
 	position: relative;
 	bottom: -20px;
 	z-index: 100;
-
 	i {
 	color: $brand-primary;
 	}
 }
 
 .timeline-entry-icon:hover {
+	cursor: default;
 	background: $brand-primary;
 	i {
 		color: #fff;
@@ -347,5 +347,41 @@ a:hover {
 }
 
 .table .table {
-	background-color: #fff;
+	background-color: inherit;
+	margin-bottom: 0px;
+}
+
+.body-content {
+	margin: 20px;
+}
+
+.body-left {
+	padding-right: 20px;
+}
+
+.update-selected {
+	background-color: $brand-blue-light;
+}
+
+.update-pill {
+
+	:hover {
+		color: #fff;
+	}
+	
+
+}
+
+.table .update-spacer {
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-top: 0px;
+
+	:hover {
+		background-color: #fff;
+	}
+}
+
+.table tbody tr:hover td.update-spacer {
+    background-color: transparent;
 }

@@ -18,8 +18,6 @@ angular.module('phrPrototypeApp')
                     $scope.loginStatus = false;
                     console.log(err);
                 } else {
-
-                    console.log(res);
                     if (!res) {
                         $scope.loginStatus = false;
                     } else {

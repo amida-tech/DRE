@@ -17,7 +17,7 @@ angular.module('phrPrototypeApp')
                 var d3 = $window.d3;
                 var rawSvg = element.find("svg")[0];
                 var svg = d3.select(rawSvg);
-                var vitals = scope.masterRecord.vitals;
+                var vitals = scope.entries.vitals;
                 var graphVitals = [];
                 var graphVitalsTwo = [];
                 var graphDates = [];
