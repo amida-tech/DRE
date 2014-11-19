@@ -155,6 +155,13 @@
 
     this.getRecord = getRecord;
 
+    var saveEntry = function (entry, callback) {
+        console.log(entry);
+        callback(null);
+    }
+
+    this.saveEntry = saveEntry;
+
     var getPartialMatch = function (callback) {
 
         getPartialRecord(function (err, partialResults) {

@@ -363,6 +363,15 @@ a:hover {
 	background-color: $brand-blue-light;
 }
 
+.update-pill {
+
+	:hover {
+		color: #fff;
+	}
+	
+
+}
+
 .table .update-spacer {
 	border-left: 1px solid #ccc;
 	border-right: 1px solid #ccc;

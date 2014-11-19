@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RecordAllergiesReviewCtrl', function ($scope, allergies, format) {
+    .controller('RecordAllergiesReviewCtrl', function ($scope, $location, allergies, format) {
 
         $scope.entryType = 'allergies';
         $scope.masterEntries = [];
@@ -88,6 +88,7 @@ angular.module('phrPrototypeApp')
                     $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].newMatch[name];
                 } else if (elem === false) {
                     $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].origMatch[name];
+                    formatDates();
                 } else if (_.isObject(elem)) {
 
                     //Explicitly handle reactions.
@@ -133,6 +134,19 @@ angular.module('phrPrototypeApp')
             $scope.selected = angular.copy(selectedOriginal);  
             $scope.match[matchIndex].srcMatch = angular.copy($scope.match[matchIndex].origMatch);
             formatDates();
+
+        }
+
+        $scope.saveUpdate = function (matchIndex) {
+
+            console.log($scope.match[matchIndex].srcMatch);
+
+            allergies.saveEntry($scope.match[matchIndex].srcMatch, function (err) {
+
+                $location.path('/record/allergies');
+
+
+            });
 
         }
 
