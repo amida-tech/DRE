@@ -134,35 +134,6 @@
                     "code": "73425007",
                     "code_system_name": "SNOMED CT"
                 },
-                "reactions": [{
-                    "date_time": {
-                        "low": {
-                            "date": "2007-05-01T00:00:00Z",
-                            "precision": "day"
-                        },
-                        "high": {
-                            "date": "2009-02-27T13:00:00Z",
-                            "precision": "second"
-                        }
-                    },
-                    "reaction": {
-                        "name": "Nausea",
-                        "code": "422587007",
-                        "code_system_name": "SNOMED CT"
-                    },
-                    "severity": {
-                        "code": {
-                            "name": "Mild",
-                            "code": "255604002",
-                            "code_system_name": "SNOMED CT"
-                        },
-                        "interpretation": {
-                            "name": "Suceptible",
-                            "code": "S",
-                            "code_system_name": "Observation Interpretation"
-                        }
-                    }
-                }],
                 "severity": {
                     "code": {
                         "name": "Moderate to severe",

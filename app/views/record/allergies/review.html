@@ -52,23 +52,21 @@
 								<tr>
 									<td class="col-sm-6" style="border: 1px solid #ccc;">
 										<div class="col-sm-11">
-										<h4 class="text-left">{{matchEntry.newMatch.observation.allergen.name}}</h4>
-										<h5 class="text-left">{{matchEntry.newMatch.observation.severity.code.name}}</h5>
-										<h5 class="text-left">{{matchEntry.newMatch.date_time.displayDate}}</h5>
+											<h4 class="text-left">{{matchEntry.newMatch.observation.allergen.name}}</h4>
+											<h5 class="text-left">{{matchEntry.newMatch.observation.severity.code.name}}</h5>
+											<h5 class="text-left">{{matchEntry.newMatch.date_time.displayDate}}</h5>
 										</div>
 									</td>
-									<td class="text-center" style="border-top: 0px;">
+									<td class="text-center update-spacer">
 										<svg height="40" width="20" style="position: relative; left: -9px; top: 20px;">
 											<polygon points="0,0 20,20 0,40 -10,40" style="fill:#fff;stroke:#ddd;stroke-width:1"></polygon>
 										</svg>
-
-
 									</td>
 									<td class="col-sm-6" style="border: 1px solid #ccc;">
 										<div class="col-sm-11">
-										<h4 class="text-left">{{matchEntry.srcMatch.observation.allergen.name}}</h4>
-										<h5 class="text-left">{{matchEntry.srcMatch.observation.severity.code.name}}</h5>
-										<h5 class="text-left">{{matchEntry.srcMatch.date_time.displayDate}}</h5>
+											<h4 class="text-left">{{matchEntry.srcMatch.observation.allergen.name}}</h4>
+											<h5 class="text-left">{{matchEntry.srcMatch.observation.severity.code.name}}</h5>
+											<h5 class="text-left">{{matchEntry.srcMatch.date_time.displayDate}}</h5>
 										</div>
 									</td>
 								</tr>
@@ -77,13 +75,13 @@
 
 								<!--Date Diff.-->
 								<tr ng-if="matchEntry.diff.date_time">
-									<td style="border: 1px solid #ccc;">
+									<td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.date_time}">
 										<table class="table table-condensed col-sm-12">
 											<thead>
 												<tr>
 													<td>
 														<label>
-															<input type="checkbox">
+															<input type="checkbox" ng-model="selected.date_time" ng-change="selectEntry(matchIndex)">
 														</label>
 													</td>
 													<td class="col-sm-3">
@@ -99,8 +97,8 @@
 											</thead>
 										</table>
 									</td>
-									<td class="text-center" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-top: 0px;"></td>
-									<td style="border: 1px solid #ccc;">
+									<td class="text-center update-spacer"></td>
+									<td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.date_time}">
 										<table class="table table-condensed col-sm-12">
 											<thead>
 												<tr>
@@ -126,7 +124,7 @@
 														Reactions:
 													</td>
 													<td class="col-sm-9">
-														<div class="panel" ng-repeat="(reactionIndex, reactionEntry) in matchEntry.subelements.observation.reactions">
+														<div class="panel" ng-repeat="(reactionIndex, reactionEntry) in matchEntry.subelements.observation.reactions" ng-class="{'update-selected': selected.observation.reactions[reactionIndex]}">
 
 															<table class="table sub-table">
 																<thead>
@@ -134,7 +132,7 @@
 																	<tr>
 																		<td colspan="2">
 																			<label>
-																				<h5><input type="checkbox" style="margin-right: 10px;">{{matchEntry.newMatch.observation.reactions[reactionIndex].reaction.name}}</h5>
+																				<h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.observation.reactions[reactionIndex]" ng-change="selectEntry(matchIndex)">{{matchEntry.newMatch.observation.reactions[reactionIndex].reaction.name}}</h5>
 																			</label>
 																			<div class="pull-right" ng-if="matchEntry.diff.observation.reactions === 'new'">
 																				<span class="label label-primary">New</span>
@@ -164,7 +162,7 @@
 													</thead>
 												</table>
 											</td>
-											<td class="text-center" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-top: 0px;"></td>
+											<td class="text-center update-spacer"></td>
 											<td style="border: 1px solid #ccc;">
 												<table class="table table-condensed col-sm-12">
 													<thead>
@@ -173,7 +171,7 @@
 																Reactions:
 															</td>
 															<td class="col-sm-9">
-																<div class="panel" ng-repeat="(reactionIndex, reactionEntry) in recordEntry.observation.reactions">
+																<div class="panel" ng-repeat="(reactionIndex, reactionEntry) in matchEntry.srcMatch.observation.reactions" ng-class="{'update-selected': selected.observation.reactions[reactionIndex]}">
 																	<table class="table sub-table">
 																		<thead>
 
@@ -212,24 +210,20 @@
 										</table>
 
 										<div class="col-sm-12">
-													<div class="col-sm-6">
-													</div>
-													<div class="col-sm-6">
+											<div class="col-sm-6">
+											</div>
+											<div class="col-sm-6">
 
-														<div class="col-sm-8 col-sm-offset-2">
-															<button class="btn btn-primary btn-block">Save Updates</button>
-															<button class="btn btn-link btn-block"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
-														</div>
-													</div>
-
-
+												<div class="col-sm-8 col-sm-offset-2">
+													<button class="btn btn-primary btn-block">Save Updates</button>
+													<button class="btn btn-link btn-block" ng-click="clearAll(matchIndex)"><i class="fa fa-undo" style="margin-right: 10px;" ></i>Undo All</button>
 												</div>
-
-
+											</div>
+										</div>
 
 									</div>
 								</div>
 							</div>	
 						</div>
 
-
+<!--<pre>{{match[0].origMatch | json}}</pre>-->
