@@ -1,0 +1,107 @@
+
+<div class="container-fluid body-content">
+	<!--Profile-->
+	<div class="col-sm-3 body-left" >
+		<div profile></div>
+	</div>
+
+	
+	<div class="col-sm-9">
+
+		<!--Header-->	
+		<div class="panel">
+			<div class="panel-body">
+				<div class="col-sm-12">
+					<div class="row col-sm-12" breadcrumb></div>
+					<div class="col-sm-12">
+						<div class="col-sm-8">
+							<div class="pull-left">
+								<h1>Download My Record</h1>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-12 row">
+
+						<form role="form">
+
+							<div class="col-sm-5 col-sm-offset-1 form-group">
+								<h4>Components</h4>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="selected.allergies"> Allergies
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="selected.encounters"> Encounters
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="selected.immunizations"> Immunizations
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="selected.medications"> Medications
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="selected.conditions"> Conditions
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="selected.procedures"> Procedures
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="selected.vitals"> Vital Signs
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="selected.results"> Test Results
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model="selected.social"> Social History
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-5 form-group">
+								<h4>Format</h4>
+
+								<div class="radio">
+									<label>
+										<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+										PDF
+										<p>This format can be easily read by you, but isn't meant for use by other systems.</p>
+										<h6>PDFs can be read using <a>Adobe Acrobat Reader</a>.</h6>
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+										XML
+										<p>This industry standard format isn't meant for reading, but can be read by other systems.</p>
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12">
+							<div class="col-sm-4 col-sm-offset-7">
+								<button type="button" class="btn btn-primary btn-block" ng-click="downloadClick()">Download</button>
+							</div>
+
+						</form>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>

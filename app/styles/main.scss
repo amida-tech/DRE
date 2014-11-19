@@ -385,3 +385,15 @@ a:hover {
 .table tbody tr:hover td.update-spacer {
     background-color: transparent;
 }
+
+.record-navigation {
+
+	border-radius: 0px;
+
+	.active {
+		box-shadow: none;
+	}
+
+
+
+}

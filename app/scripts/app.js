@@ -111,6 +111,10 @@ angular
         templateUrl: 'views/record/allergies/review.html',
         controller: 'RecordAllergiesReviewCtrl'
       })
+      .when('/record/download', {
+        templateUrl: 'views/record/download.html',
+        controller: 'RecordDownloadCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

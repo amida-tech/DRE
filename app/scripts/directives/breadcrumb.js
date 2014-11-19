@@ -107,6 +107,12 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;
                         }
 
+                        if (parsedPath[i] === "download") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "Download Record";
+                            tmpObject.path = pathString;   
+                        }
+
                         breadCrumb.push(tmpObject);
                     }
 
