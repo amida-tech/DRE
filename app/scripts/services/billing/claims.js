@@ -19,8 +19,10 @@ angular.module('phrPrototypeApp')
                     ],
                     "number": "1234567890000",
                     "date_time": {
-                        "date": "2012-10-18T00:00:00Z",
-                        "precision": "day"
+                        "low": {
+                            "date": "2012-10-18T00:00:00Z",
+                            "precision": "day"
+                        }
                     },
                     "lines": [{
                         "line": "1",

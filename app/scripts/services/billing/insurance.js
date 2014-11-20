@@ -35,11 +35,11 @@ angular.module('phrPrototypeApp')
                     "employer subsidy"
                 ],
                 "date_time": {
-	                low: {
+	                "low": {
 	                    "date": "2011-01-01T00:00:00Z",
 	                    "precision": "day"
 	                }, 
-	                high: {
+	                "high": {
 	                    "date": "2011-12-31T00:00:00Z",
 	                    "precision": "day"
 	                }

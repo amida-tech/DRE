@@ -154,7 +154,7 @@
                                                             <tr ng-show="claimLine.line">
                                                                 <td>Line {{claimLine.line}}</td>
                                                             </tr>
-                                                            <tr ng-show="claimLine.date_time">
+                                                            <tr ng-show="claimLine.date_time.displayDate">
                                                                 <td>Date:</td>
                                                                 <td>{{claimLine.date_time.displayDate}}</td>
                                                             </tr>
@@ -329,7 +329,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-sm-2 center-block text-center timeline-footer">
                         <svg width="30" height="30">
                             <circle cx="15" cy="15" r="15"></circle>
