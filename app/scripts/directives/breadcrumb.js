@@ -136,6 +136,13 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;   
                         }
 
+
+                        if (parsedPath[i] === "account") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Account";
+                            tmpObject.path = pathString;   
+                        }
+
                         breadCrumb.push(tmpObject);
                     }
 
