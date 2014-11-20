@@ -18,26 +18,28 @@ angular.module('phrPrototypeApp')
                         "medicare"
                     ],
                     "number": "1234567890000",
-                    "start_date": {
+                    "date_time": {
                         "date": "2012-10-18T00:00:00Z",
                         "precision": "day"
                     },
                     "lines": [{
                         "line": "1",
-                        "start_date": {
-                            "date": "2012-10-18T00:00:00Z",
-                            "precision": "day"
-                        },
-                        "end_date": {
-                            "date": "2012-10-18T00:00:00Z",
-                            "precision": "day"
-                        },
+                        "date_time": {
+                        	"low": {
+                            	"date": "2012-10-18T00:00:00Z",
+                            	"precision": "day"
+                        	},
+	                        "high": {
+	                            "date": "2012-10-18T00:00:00Z",
+	                            "precision": "day"
+	                        }
+	                    },
                         "procedure": {
                             "code": "98941",
                             "description": "Chiropractic Manipulative Treatment (Cmt); Spinal, Three To Four Regions"
                         },
                         "quantity": 1,
-                        "modifier": [{
+                        "modifiers": [{
                             "code": "98941",
                             "description": "Chiropractic Manipulative Treatment (Cmt); Spinal, Three To Four Regions"
                         }],
@@ -66,7 +68,7 @@ angular.module('phrPrototypeApp')
                     "type": [
                         "medicare PartB"
                     ],
-                    "diagnosis": [{
+                    "diagnoses": [{
                         "code": "3534"
                     }, {
                         "code": "7393"

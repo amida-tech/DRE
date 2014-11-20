@@ -59,8 +59,6 @@ angular.module('phrPrototypeApp')
                 return date_time.low.displayDate + " - Present";
             } else if (date_time.center) {
                 return date_time.center.displayDate;
-            } else if (date_time.date) {
-                return date_time.displayDate;
             } else {
                 return "Date Not Reported";
             }

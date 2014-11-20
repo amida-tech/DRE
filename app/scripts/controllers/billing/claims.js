@@ -31,12 +31,12 @@ angular.module('phrPrototypeApp')
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
-                if (entry.start_date) {
-                    _.each(entry.start_date, function(dateEntry) {
+                if (entry.date_time) {
+                    _.each(entry.date_time, function(dateEntry) {
                         format.formatDate(dateEntry);
                     });
-                    entry.start_date.displayDate = format.outputDate(entry.start_date);
-                    entry.start_date.plotDate = format.plotDate(entry.start_date);
+                    entry.date_time.displayDate = format.outputDate(entry.date_time);
+                    entry.date_time.plotDate = format.plotDate(entry.date_time);
                 }
             });
         }
