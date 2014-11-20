@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc directive
- * @name phrPrototypeApp.directive:billingnavigation
+ * @name phrPrototypeApp.directive:billingNavigation
  * @description
- * # billingnavigation
+ * # billingNavigation
  */
 angular.module('phrPrototypeApp')
     .directive('billingnavigation', function() {
@@ -14,7 +14,8 @@ angular.module('phrPrototypeApp')
                 '<a href="#/billing/claims" class="btn btn-default btn-block">Claims</a>' +
                 '</div>',
             restrict: 'EA',
-            link: function postLink(scope, element, attrs) {;
+            link: function postLink(scope, element, attrs) {
+            	
             }
         };
     });
