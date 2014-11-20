@@ -79,6 +79,10 @@ angular
         templateUrl: 'views/billing/claims.html',
         controller: 'BillingClaimsCtrl'
       })
+      .when('/billing/insurance', {
+        templateUrl: 'views/billing/insurance.html',
+        controller: 'BillingInsuranceCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
