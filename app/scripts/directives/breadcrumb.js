@@ -113,6 +113,12 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;   
                         }
 
+                        if (parsedPath[i] === "upload") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "Upload Record";
+                            tmpObject.path = pathString;   
+                        }
+
                         breadCrumb.push(tmpObject);
                     }
 

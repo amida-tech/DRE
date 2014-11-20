@@ -115,6 +115,10 @@ angular
         templateUrl: 'views/record/download.html',
         controller: 'RecordDownloadCtrl'
       })
+      .when('/files/upload', {
+        templateUrl: 'views/files/upload.html',
+        controller: 'FilesUploadCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
