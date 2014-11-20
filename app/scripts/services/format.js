@@ -80,8 +80,6 @@ angular.module('phrPrototypeApp')
                 return date_time.low.date;
             } else if (date_time.center) {
                 return date_time.center.date;
-            } else if (date_time.date) {
-                return date_time.date;
             } else {
                 return null;
             }
