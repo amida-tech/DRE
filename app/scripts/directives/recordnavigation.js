@@ -9,7 +9,7 @@
 angular.module('phrPrototypeApp')
   .directive('recordNavigation', function ($location) {
     return {
-      template: '<div class="btn-group-vertical col-sm-12">' +
+      template: '<div class="btn-group-vertical col-sm-12 record-navigation">' +
       			'<a href="#/record/allergies" id="navallergies" class="btn btn-default btn-block">Allergies</a>' + 
       			'<a href="#/record/encounters" id="navencounters" class="btn btn-default btn-block">Encounters</a>' +
       			'<a href="#/record/immunizations" id="navimmunizations" class="btn btn-default btn-block">Immunizations</a>' +

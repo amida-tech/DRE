@@ -71,7 +71,7 @@ a:hover {
 }
 
 .landing-advertising {
-	margin: 20px;
+	margin: 50px;
 }
 
 .icon-circle {
@@ -384,4 +384,16 @@ a:hover {
 
 .table tbody tr:hover td.update-spacer {
     background-color: transparent;
+}
+
+.record-navigation {
+
+	border-radius: 0px;
+
+	.active {
+		box-shadow: none;
+	}
+
+
+
 }
