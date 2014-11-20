@@ -75,6 +75,7 @@ angular
         templateUrl: 'views/record/immunizations.html',
         controller: 'RecordImmunizationsCtrl'
       })
+<<<<<<< HEAD
       .when('/billing/claims', {
         templateUrl: 'views/billing/claims.html',
         controller: 'BillingClaimsCtrl'
@@ -82,6 +83,51 @@ angular
       .when('/billing/insurance', {
         templateUrl: 'views/billing/insurance.html',
         controller: 'BillingInsuranceCtrl'
+=======
+      .when('/record/medications', {
+        templateUrl: 'views/record/medications.html',
+        controller: 'RecordMedicationsCtrl'
+      })
+      .when('/record/conditions', {
+        templateUrl: 'views/record/conditions.html',
+        controller: 'RecordConditionsCtrl'
+      })
+      .when('/record/procedures', {
+        templateUrl: 'views/record/procedures.html',
+        controller: 'RecordProceduresCtrl'
+      })
+      .when('/record/vitals', {
+        templateUrl: 'views/record/vitals.html',
+        controller: 'RecordVitalsCtrl'
+      })
+      .when('/record/results', {
+        templateUrl: 'views/record/results.html',
+        controller: 'RecordResultsCtrl'
+      })
+      .when('/record/social', {
+        templateUrl: 'views/record/social.html',
+        controller: 'RecordSocialCtrl'
+      })
+      .when('/review', {
+        templateUrl: 'views/review.html',
+        controller: 'ReviewCtrl'
+      })
+      .when('/review/allergies', {
+        templateUrl: 'views/review/allergies.html',
+        controller: 'ReviewAllergiesCtrl'
+      })
+      .when('/record/allergies/review', {
+        templateUrl: 'views/record/allergies/review.html',
+        controller: 'RecordAllergiesReviewCtrl'
+      })
+      .when('/record/download', {
+        templateUrl: 'views/record/download.html',
+        controller: 'RecordDownloadCtrl'
+      })
+      .when('/files/upload', {
+        templateUrl: 'views/files/upload.html',
+        controller: 'FilesUploadCtrl'
+>>>>>>> master
       })
       .otherwise({
         redirectTo: '/'
