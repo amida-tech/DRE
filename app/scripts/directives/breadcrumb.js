@@ -58,6 +58,23 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;
                         }
 
+                        if (parsedPath[i] === "billing") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Billing";
+                            tmpObject.path = pathString;
+                        }
+
+                        if (parsedPath[i] === "claims") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Claims";
+                            tmpObject.path = pathString;
+                        }
+
+                        if (parsedPath[i] === "insurance") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Insurance";
+                            tmpObject.path = pathString;
+                        }
 
                         breadCrumb.push(tmpObject);
                     }
