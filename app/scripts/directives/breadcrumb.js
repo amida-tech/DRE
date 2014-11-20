@@ -29,19 +29,19 @@ angular.module('phrPrototypeApp')
 
                         //Make Names User Friendly.
                         if (parsedPath[i] === "") {
-                        	pathString = pathString + "#/";
+                        	pathString = "#/home/";
                             tmpObject.name = "Home";
                             tmpObject.path = pathString;
                         }
 
                         if (parsedPath[i] === "files") {
-                        	pathString = pathString + "files/";
+                        	pathString = "#/files";
                             tmpObject.name = "My Files";
                             tmpObject.path = pathString;
                         }
 
                         if (parsedPath[i] === "record") {
-                            pathString = pathString + "record/";
+                            pathString = "#/record/";
                             tmpObject.name = "My Record";
                             tmpObject.path = pathString;
                         }
@@ -59,7 +59,7 @@ angular.module('phrPrototypeApp')
                         }
 
                         if (parsedPath[i] === "billing") {
-                            pathString = pathString + parsedPath[i] + "/";
+                            pathString = "#/billing/insurance/";
                             tmpObject.name = "My Billing";
                             tmpObject.path = pathString;
                         }
