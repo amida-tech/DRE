@@ -75,7 +75,6 @@ angular
         templateUrl: 'views/record/immunizations.html',
         controller: 'RecordImmunizationsCtrl'
       })
-<<<<<<< HEAD
       .when('/billing/claims', {
         templateUrl: 'views/billing/claims.html',
         controller: 'BillingClaimsCtrl'
@@ -83,7 +82,7 @@ angular
       .when('/billing/insurance', {
         templateUrl: 'views/billing/insurance.html',
         controller: 'BillingInsuranceCtrl'
-=======
+      })
       .when('/record/medications', {
         templateUrl: 'views/record/medications.html',
         controller: 'RecordMedicationsCtrl'
@@ -127,7 +126,6 @@ angular
       .when('/files/upload', {
         templateUrl: 'views/files/upload.html',
         controller: 'FilesUploadCtrl'
->>>>>>> master
       })
       .otherwise({
         redirectTo: '/'
