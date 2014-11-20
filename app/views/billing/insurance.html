@@ -31,9 +31,6 @@
         <h4 class="text-center">{{entryType}}</h4>
         <div class="panel">
             <div class="panel-body">
-                <div>
-                    <p>Timeline</p>
-                </div>
                 <div timeline chart-data="entries" class="timeline-graph"></div>
 
                 <div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
@@ -56,7 +53,7 @@
                                     <div class="timeline-entry-header col-sm-12">
                                         <div class="col-sm-6">
                                             <h4 class="text-left">{{recordEntry.name}}</h4>
-                                            <h5 class="text-left">{{recordEntry.date.displayDate}}</h5>
+                                            <h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
                                         </div>
                                         <div style="position: absolute; bottom: 0px; right: 0px;">
                                             <button class=" btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">

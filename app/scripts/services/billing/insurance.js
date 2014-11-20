@@ -34,13 +34,16 @@ angular.module('phrPrototypeApp')
                 "type": [
                     "employer subsidy"
                 ],
-                "date": [{
-                    "date": "2011-01-01T00:00:00Z",
-                    "precision": "day"
-                }, {
-                    "date": "2011-12-31T00:00:00Z",
-                    "precision": "day"
-                }]
+                "date_time": {
+	                low: {
+	                    "date": "2011-01-01T00:00:00Z",
+	                    "precision": "day"
+	                }, 
+	                high: {
+	                    "date": "2011-12-31T00:00:00Z",
+	                    "precision": "day"
+	                }
+            	}
             }];
 
                 callback(null, tmpInsurance);
