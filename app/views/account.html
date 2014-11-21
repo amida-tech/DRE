@@ -42,7 +42,7 @@
 							<input type="password" class="form-control" name="inputRepeatPassword" ng-model="inputRepeatPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
 							<p ng-show="resetForm.inputRepeatPassword.$invalid && !resetForm.inputRepeatPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
 						</div>
-						<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="resetForm.$invalid">Reset Password</button>
+						<a ng-click="resetPassword()"<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="resetForm.$invalid">Reset Password</button></a>
 						
 							<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
 					</form>
