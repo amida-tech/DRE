@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 	<div class="row" style="margin: 20px;">
 		<div class="col-sm-3" style="padding-right: 20px; padding-bottom: 20px;">
@@ -8,21 +9,37 @@
 				<div class="panel-body">
 					<div class="col-sm-12">
 						<h1>Account Settings</h1>
+=======
+<div class="container-fluid body-content">
+	<!--Profile-->
+	<div class="col-sm-3 body-left" >
+		<div profile></div>
+	</div>
+
+	
+	<div class="col-sm-9">
+			<div class="panel" style="height: 100%;">
+				<div class="panel-body">
+					<div class="col-sm-12">
+						<div class="row col-sm-12" breadcrumb></div>
+						<h1 style="margin-top: 0px;">Account Settings</h1>
+>>>>>>> bug-squash-jamboree
 						<p>Adjust settings associated with your account.</p>
 						<p>Account settings are for managing how you log in to the system.</p>
 						<p>Profile Settings, such as changes to address information, can be accessed in <a href="#/profile">profile settings</a>.</p>
 					</div>
 				</div>
 			</div>
+<<<<<<< HEAD
 		</div>
+=======
+>>>>>>> bug-squash-jamboree
 
 	<div class="col-sm-12">
-		<div class="col-sm-3"></div>
 
-		<div class="col-sm-9">
+			<div class="text-center"><h4>Reset Password</h4></div>
 			<div class="panel col-sm-12">
 				<div class="panel-body">
-				<h3>Reset Password</h3>
 					<h5>* Denotes required fields.</h5>
 					<form novalidate role="form" name="resetForm" ng-submit="nextStep()" class="col-sm-12">
 						<div class="col-sm-12">
@@ -42,7 +59,7 @@
 							<input type="password" class="form-control" name="inputRepeatPassword" ng-model="inputRepeatPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
 							<p ng-show="resetForm.inputRepeatPassword.$invalid && !resetForm.inputRepeatPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
 						</div>
-						<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="resetForm.$invalid">Reset Password</button>
+						<a ng-click="resetPassword()"<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="resetForm.$invalid">Reset Password</button></a>
 						
 							<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
 					</form>
@@ -50,7 +67,6 @@
 						<h5><a href="#/reset">Forgot Password</a></h5>
 					</div>
 				</div>
-			</div>	
 			<!--<pre>{{profile | json}}</pre>-->
 		</div>
 	</div>

@@ -8,10 +8,11 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('AccountCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('AccountCtrl', function ($scope, $location) {
+    
+    $scope.resetPassword = function () {
+    	$location.path('/home');
+
+    };
+
   });
