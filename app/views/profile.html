@@ -71,25 +71,27 @@
 						<label for="inputRace">Race/Ethnicity</label>
 						<select class="form-control" name="inputRace" ng-model="profile.race_ethnicity" required ng-required="true">
 							<option>White</option>
-							<option>Female</option>
-							<option>Undifferentiated</option>
+							<option>Black</option>
+							<option>Hispanic</option>
+							<option>Other</option>
 						</select>
 						<p ng-show="profileForm.inputGender.$invalid && !profileForm.inputGender.$pristine" class="help-block">Gender is required.</p>
 					</div>
 					<div class="form-group col-sm-4 col-sm-offset-1">
 						<label for="inputMaritalStatus">Marital Status</label>
 						<select class="form-control" name="inputMaritalStatus" ng-model="profile.marital_status">
+							<option>Unmarried</option>
 							<option>Married</option>
-							<option>Female</option>
-							<option>Undifferentiated</option>
+							<option>Divorced</option>
+							<option>Widowed</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-7">
 						<label for="inputReligion">Religion</label>
 						<select class="form-control" name="inputReligion" ng-model="profile.religion">
 							<option>Christian (non-Catholic, non-specific)</option>
-							<option>Female</option>
-							<option>Undifferentiated</option>
+							<option>Buddhist</option>
+							<option>Atheist</option>
 						</select>
 					</div>
 					<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="profileForm.$invalid">Update Profile</button>
@@ -187,17 +189,17 @@
 						<div class="form-group col-sm-4">
 							<label for="inputLanguage">Language*</label>
 							<select class="form-control" name="inputLanguage" ng-model="language.language">
-								<option>en</option>
-								<option>Female</option>
-								<option>Undifferentiated</option>
+								<option>English</option>
+								<option>Spanish</option>
+								<option>French</option>
 							</select>
 						</div>
 						<div class="form-group col-sm-3 col-sm-offset-1">
 							<label for="inputLanguageModel">Mode</label>
 							<select class="form-control" name="inputLanguageMode" ng-model="language.mode">
 								<option>Expressed spoken</option>
-								<option>Female</option>
-								<option>Undifferentiated</option>
+								<option>Signed</option>
+								<option>Other</option>
 							</select>
 						</div>
 
@@ -205,8 +207,8 @@
 							<label for="inputLanguageProficiency">Proficiency</label>
 							<select class="form-control" name="inputLanguageProficiency" ng-model="language.proficiency">
 								<option>Good</option>
-								<option>Female</option>
-								<option>Undifferentiated</option>
+								<option>Intermediate</option>
+								<option>Proficient</option>
 							</select>
 						</div>
 
