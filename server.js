@@ -46,8 +46,7 @@ app.use(methodOverride());
 app.use(cookieParser());
 app.use('/api/v1/storage', multiparty());
 
-//var redis = require("redis").createClient();
-//var redisStore = require('connect-redis')(express); //uncomment for Redis session support during development
+var redisStore = require('connect-redis')(session); //uncomment for Redis session support during development
 
 app.set('client_location', path.resolve(__dirname, './client/dist'));
 
@@ -85,7 +84,7 @@ app.use(session({
     secret: 'keyboard cat',
     resave: true,
     saveUninitialized: true
-    //,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
+    ,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
 }));
 
 app.use(passport.initialize());
@@ -136,4 +135,22 @@ record.connectDatabase(app.get('db_url'), function (err) {
         app.listen(app.get('port'), '0.0.0.0');
         console.log("Server listening on port " + app.get('port'));
     }
+});
+
+//Launch MLLP server/listener
+var mllp=require('mllp-node');
+
+var server = new mllp.MLLPServer();
+
+server.on('hl7', function(data){
+    console.log("just an example", data);
+    //mime type: application/edi-hl7
+
+    var username='test';
+    var record_metadata={'type':'application/edi-hl7', 'name': 'labs.hl7', 'size': data.length,};
+    var record_data=data;
+
+    storage.importRecord(username, record_metadata, record_data, function(){
+        console.log("hl7 message saved");
+    });
 });
