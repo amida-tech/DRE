@@ -19,7 +19,10 @@ var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var app = express();
+
 var record = require('blue-button-record');
+//var record = require('../blue-button-record/index.js');
+
 var passport = require('passport');
 
 var favicon = require('serve-favicon');
@@ -52,7 +55,7 @@ app.set('client_location', path.resolve(__dirname, './client/dist'));
 
 //app.use(express.favicon(config.client.location + '/favicon.ico'));
 app.use(express.static(app.get('client_location')));
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     var requestPath = '';
     if (req.path.substring(req.path.length - 1) === '/') {
         requestPath = req.path.substring(0, req.path.length - 1);
@@ -60,7 +63,7 @@ app.use(function (req, res, next) {
         requestPath = req.path;
     }
     var viewPath = app.get('client_location') + requestPath + '.html';
-    fs.exists(viewPath, function (exists) {
+    fs.exists(viewPath, function(exists) {
         console.log(viewPath);
         if (exists) {
 
@@ -83,8 +86,12 @@ app.use(function (req, res, next) {
 app.use(session({
     secret: 'keyboard cat',
     resave: true,
-    saveUninitialized: true
-    ,store: new redisStore({host:'127.0.0.1', port:6379, prefix:'chs-sess'})  //uncomment for Redis session support during development
+    saveUninitialized: true,
+    store: new redisStore({
+            host: '127.0.0.1',
+            port: 6379,
+            prefix: 'chs-sess'
+        }) //uncomment for Redis session support during development
 }));
 
 app.use(passport.initialize());
@@ -126,7 +133,7 @@ app.use(account);
 app.set('port', (process.env.PORT || 3000))
 
 //Launch Application.
-record.connectDatabase(app.get('db_url'), function (err) {
+record.connectDatabase(app.get('db_url'), function(err) {
     console.log(app.get('db_url'));
     if (err) {
         console.log("DB error");
@@ -138,19 +145,52 @@ record.connectDatabase(app.get('db_url'), function (err) {
 });
 
 //Launch MLLP server/listener
-var mllp=require('mllp-node');
+var mllp = require('mllp-node');
 
 var server = new mllp.MLLPServer();
 
-server.on('hl7', function(data){
+server.on('hl7', function(data) {
     console.log("just an example", data);
     //mime type: application/edi-hl7
 
-    var username='test';
-    var record_metadata={'type':'application/edi-hl7', 'name': 'labs.hl7', 'size': data.length,};
-    var record_data=data;
+    var record_metadata = {
+        'type': 'application/edi-hl7',
+        'name': 'labs.hl7',
+        'size': data.length,
+    };
+    var record_data = data;
 
-    storage.importRecord(username, record_metadata, record_data, function(){
-        console.log("hl7 message saved");
+    var hl7 = require('hl7');
+
+    //var parsed_record = hl7.parseString(record_data);
+
+    var tr=require('blue-button-hl7');
+
+    var parsed_record = tr.translate(record_data);
+
+    console.log("parsed HL7 data", JSON.stringify(parsed_record, null, 4));
+
+
+    //call PIM from BB-record to get candidates
+    var ptInfo = null; //patient ignored for now, return list of all patients in DB
+    record.getCandidates(ptInfo, function(smth, docs) {
+        //PIM call here based on candidates
+        console.log("candidates", JSON.stringify(docs, null, 4));
+
+
+        //assign patient=test for now
+        var username = 'test';
+
+        //parse HL7 data into BB JSON
+
+
+
+        //import HL7 data into patient record based on identified username
+        storage.importHL7Record(username, record_metadata, record_data, parsed_record, function() {
+            console.log("hl7 message saved");
+        });
+
     });
+
+
 });
