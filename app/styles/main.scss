@@ -37,6 +37,7 @@ $grid-gutter-width:         0px !default;
 // Bootstrap Postprocessing
 @import "fonts";
 @import "images";
+@import "profile";
 
 .btn {
 	@include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-small, $line-height-base, $border-radius-base);
@@ -92,36 +93,7 @@ a:hover {
 	border-color: #ddd;
 }
 
-.profile {
 
-	@extend .panel;
-	@extend .panel-default;
-	height: 100%;
-
-    .profile-body {
-	  @extend .panel-body;
-	  @extend .row;
-
-      text-align: center;
-
-    }
-
-	.profile-image {
-
-	    @extend .center-block;
-		img {
-		  max-width: 100px;
-		  max-height: 100px;
-		  @extend .img-circle;
-		}
-		margin-bottom: 20px;
-
-	}
-
-	.profile-content {
-	}
-
-}
 
 .alert-row {
 	text-align: right;
