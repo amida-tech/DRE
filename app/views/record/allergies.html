@@ -82,7 +82,7 @@
 												<span><i class="fa fa-clock-o"></i> History</span>
 											</button>
 											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)">
-												<span><i class="fa fa-comment"></i> Comments</span>
+												<span><i class="fa fa-comment"></i> Notes</span>
 											</button>
 											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#details{{recordIndex}}" aria-expanded="false" aria-controls="details{{recordIndex}}" ng-click="swapTabs('details', recordIndex)">
 												<span><i class="fa fa-ellipsis-h"></i> Details</span>
@@ -100,7 +100,7 @@
 
 													<thead>
 													<tr><td colspan="2">
-													<h3>Record Details</h3>
+													<h3>Entry Details</h3>
 													</td>
 													</tr>
 													</thead>
@@ -154,7 +154,7 @@
 											<div role="tabpanel" class="collapse" id="history{{recordIndex}}">
 
 											<div class="sub-entry">
-												<h3>Record History</h3>
+												<h3>Entry History</h3>
 												<table class="table table-hover table-condensed">
 													<thead>
 														<tr>
@@ -177,7 +177,39 @@
 											<!--Record comments pane.-->
 											<div role="tabpanel" class="collapse" id="comments{{recordIndex}}" data-parent="#selector">
 												<div class="sub-entry">
-													Comments
+													<h3>Entry Notes</h3>
+													<div class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in recordEntry.metadata.comments">
+														<div class="col-sm-12">
+															<h5>{{commentEntry.date | date:'short'}}</h5>
+														</div>
+														<div class="panel col-sm-12">
+															<div class="panel-body">
+																<p>{{commentEntry.comment}}</p>
+															</div>
+														</div>
+													</div>
+
+													<form novalidate role="form" name="commentForm">
+														<div class="form-group">
+															<label for="commentEntry">New Note:</label>
+    														<textarea class="form-control" placeholder="Enter Comment" rows="2" required ng-required="true" ng-minLength="1" ng-model="commentEntry" name="commentEntry"></textarea>
+														</div>
+														<div class="form-group col-sm-12">
+															<div class="col-sm-8">
+																<div class="checkbox">
+																    <label>
+																      <input type="checkbox" id="checkboxSuccess" value="option1">
+																      Flag this record as having an error.
+																    </label>
+																</div>
+															</div>
+															<div class="col-sm-3 pull-right">
+																<button type="button" class="btn btn-primary" ng-disabled="commentForm.$invalid">Add Comment</button>
+															</div>
+														</div>
+													</form>
+
+
 												</div>
 											</div>
 											

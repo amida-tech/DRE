@@ -105,6 +105,10 @@
                 'source': 'blue-button.xml',
                 'status': 'new',
                 'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': [{
+                'comment': 'I should make sure I let my aunt know about this!',
+                'date': '2007-05-01T00:00:00Z'
             }]
         };
 
