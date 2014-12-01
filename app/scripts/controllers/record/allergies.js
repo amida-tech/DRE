@@ -18,6 +18,22 @@ angular.module('phrPrototypeApp')
         $scope.partialEntries = [];
         $scope.alertShow = true;
 
+
+        $scope.swapTabs = function(entryClass, entryIndex) {
+            
+            if (entryClass === "details") {
+                $("#comments" + entryIndex).removeClass("in");  
+                $("#history" + entryIndex).removeClass("in");    
+            } else if (entryClass === "comments") {
+                $("#details" + entryIndex).removeClass("in");  
+                $("#history" + entryIndex).removeClass("in");    
+            } else if (entryClass === "history") {
+                $("#details" + entryIndex).removeClass("in");  
+                $("#comments" + entryIndex).removeClass("in");    
+            }
+
+        };
+
         $scope.closeAlert = function () {
             $scope.alertShow = false;
         }

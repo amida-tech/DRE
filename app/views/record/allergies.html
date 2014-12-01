@@ -74,35 +74,38 @@
 									</div>
 
 									
-									<div class="col-sm-12 tabpanel">
+									<div class="col-sm-12">
 
 										<!--Tab nav-->
-										<div style="margin-bottom: 20px;">
-											<ul class="nav nav-tabs" role="tablist">
-												<li role="presentation" class="pull-right">
-													<a class="pull-right" data-toggle="collapse" data-target="#history{{recordIndex}}" aria-expanded="false" aria-controls="history{{recordIndex}}" role="tab">
-														<span><i class="fa fa-clock-o"></i> History</span>
-													</a>
-												</li>
-												<li role="presentation" class="pull-right">
-													<a class="pull-right" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" role="tab">
-														<span><i class="fa fa-comment"></i> Comments</span>
-													</a>
-												</li>
-												<li role="presentation" class="pull-right">
-													<a class="pull-right" data-toggle="collapse" data-target="#details{{recordIndex}}" aria-expanded="false" aria-controls="details{{recordIndex}}" role="tab"  id="detailTab{{recordIndex}}">
-														<span><i class="fa fa-ellipsis-h"></i> Details</span>
-													</a>
-												</li>
-											</ul>
+										<div class="col-sm-12">
+										<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#history{{recordIndex}}" aria-expanded="false" aria-controls="history{{recordIndex}}" ng-click="swapTabs('history', recordIndex)">
+												<span><i class="fa fa-clock-o"></i> History</span>
+											</button>
+											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)">
+												<span><i class="fa fa-comment"></i> Comments</span>
+											</button>
+											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#details{{recordIndex}}" aria-expanded="false" aria-controls="details{{recordIndex}}" ng-click="swapTabs('details', recordIndex)">
+												<span><i class="fa fa-ellipsis-h"></i> Details</span>
+											</button>
 										</div>
 
 										<!--Tab panes-->
-										<div class="tab-content">
+										<div class="col-sm-12" >
 
 											<!--Record detail pane.-->
-											<div role="tabpanel" class="collapse in" id="details{{recordIndex}}" data-parent="#detailTab{{recordIndex}}">
+											<div role="tabpanel" class="collapse" id="details{{recordIndex}}">
+											<div class="sub-entry">
+
 												<table class="table table-hover">
+
+													<thead>
+													<tr><td colspan="2">
+													<h3>Record Details</h3>
+													</td>
+													</tr>
+													</thead>
+
+													<tbody>
 													<tr>
 														<td>Code:</td>
 														<td>{{recordEntry.data.observation.allergen.code}}</td>
@@ -111,6 +114,7 @@
 														<td>Code System:</td>
 														<td>{{recordEntry.data.observation.allergen.code_system_name}}</td>
 													</tr>
+
 													<tr ng-repeat="(reactionIndex, reactionEntry) in recordEntry.data.observation.reactions">
 														<td>Reactions:</td>
 														<td>
@@ -141,12 +145,16 @@
 															</div>
 														</td>
 													</tr>
+													</tbody>
 												</table>
+												</div>
 											</div>
 
 											<!--Record history pane.-->
 											<div role="tabpanel" class="collapse" id="history{{recordIndex}}">
 
+											<div class="sub-entry">
+												<h3>Record History</h3>
 												<table class="table table-hover table-condensed">
 													<thead>
 														<tr>
@@ -158,34 +166,24 @@
 													<tbody>
 													<tr ng-repeat="(attrIndex, attrEntry) in recordEntry.metadata.attribution">
 														<td><a href="#/files">{{attrEntry.source}}</a></td>
-														<td>{{attrEntry.status}}</td>
+														<td style="text-transform: capitalize;">{{attrEntry.status}}</td>
 														<td>{{attrEntry.merged | date:'short'}}</td>
 													</tr>
 													</tbody>
 												</table>
-
+												</div>
 											</div>
 
 											<!--Record comments pane.-->
-											<div role="tabpanel" class="collapse" id="comments{{recordIndex}}">
-												<p>Comments</p>
+											<div role="tabpanel" class="collapse" id="comments{{recordIndex}}" data-parent="#selector">
+												<div class="sub-entry">
+													Comments
+												</div>
 											</div>
 											
 										</div>
 
 									</div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
