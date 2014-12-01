@@ -70,34 +70,15 @@ angular.module('phrPrototypeApp')
                         plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
                         plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
                         plotDomain = [plotFloor, plotCeiling];
-                    } else if (dataType === 'allergies') {
-
-                        _.each(dataToPlot, function(entry) {
-                            //Note:  Only taking first date for now.
-                            var plotDate = isoFormat.parse(entry.date[0].date);
-
-                            plotCircles.push({
-                                "date": plotDate
-                            });
-                            tmpDomain.push(plotDate);
-                        });
-
-                        minDate = d3.min(tmpDomain);
-                        maxDate = d3.max(tmpDomain);
-                        plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
-                        plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
-                        plotDomain = [plotFloor, plotCeiling];
-
-
                     } else {
 
                         _.each(dataToPlot, function(entry) {
 
-                            var plotDate = isoFormat.parse(entry.date_time.plotDate);
+                            var plotDate = isoFormat.parse(entry.data.date_time.plotDate);
 
                             //Redundancy for isoFormat subsecond support.
                             if (_.isNull(plotDate)) {
-                                plotDate = isoFormatSubsecond.parse(entry.date_time.plotDate);
+                                plotDate = isoFormatSubsecond.parse(entry.data.date_time.plotDate);
                             }
 
                             plotCircles.push({

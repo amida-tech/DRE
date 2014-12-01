@@ -44,7 +44,7 @@
 				<div>
 					<p>Timeline</p>
 				</div>
-				<div timeline chart-data="entries.data" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+				<div timeline chart-data="entries" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
 
 				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
@@ -69,7 +69,8 @@
 
 										<div class="col-sm-6 text-right">
 
-											<a  href="#/record/allergies/review"><button class="btn btn-link"><i class="fa fa-flag-o" style="margin-right: 10px;"></i> Review 1 Update</button></a>
+											<a href="#/record/allergies/review"><button class="btn btn-link"><i class="fa fa-flag" style="margin-right: 10px;"></i>1 pending update</button></a>
+											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star" style="margin-right: 10px;"></i>1 note to review</button>
 										</div>
 									</div>
 
@@ -192,14 +193,14 @@
 													<form novalidate role="form" name="commentForm">
 														<div class="form-group">
 															<label for="commentEntry">New Note:</label>
-    														<textarea class="form-control" placeholder="Enter Comment" rows="2" required ng-required="true" ng-minLength="1" ng-model="commentEntry" name="commentEntry"></textarea>
+    														<textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="commentEntry" name="commentEntry"></textarea>
 														</div>
 														<div class="form-group col-sm-12">
 															<div class="col-sm-8">
 																<div class="checkbox">
 																    <label>
-																      <input type="checkbox" id="checkboxSuccess" value="option1">
-																      Flag this record as having an error.
+																      <input type="checkbox" id="checkboxSuccess" ng-model="commentFlag">
+																      Star this note for review 
 																    </label>
 																</div>
 															</div>
@@ -274,6 +275,6 @@
 				</div>
 			</div>
 		</div>
-		<pre>{{masterEntries | json}}</pre>
+		<!--<pre>{{masterEntries | json}}</pre>-->
 	</div>
 </div>

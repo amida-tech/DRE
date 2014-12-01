@@ -75,7 +75,6 @@ angular.module('phrPrototypeApp')
                 });
             } else {
                 $scope.entries = _.clone($scope.masterEntries);
-
             }
         }
 
