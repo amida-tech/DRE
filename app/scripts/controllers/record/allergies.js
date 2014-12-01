@@ -46,19 +46,16 @@ angular.module('phrPrototypeApp')
             if ($scope.inactiveFlag === false) {
                 $scope.entries = _.filter(_.clone($scope.masterEntries), function(entry) {
 
-                    if (entry.observation) {
-                        if (entry.observation.status) {
+                    if (entry.data.observation) {
+                        if (entry.data.observation.status) {
 
-                            if (entry.observation.status.name === "Active") {
+                            if (entry.data.observation.status.name === "Active") {
                                 return true;
                             } else {
                                 return false;
                             }
                         }
                     }
-
-
-
                 });
             } else {
                 $scope.entries = _.clone($scope.masterEntries);
@@ -70,12 +67,12 @@ angular.module('phrPrototypeApp')
 
         	//Add displayDate to all entries.
         	_.each($scope.masterEntries, function(entry) {
-        		if (entry.date_time) {
-        			_.each(entry.date_time, function(dateEntry) {
+        		if (entry.data.date_time) {
+        			_.each(entry.data.date_time, function(dateEntry) {
         				format.formatDate(dateEntry);
         			});
-                    entry.date_time.displayDate = format.outputDate(entry.date_time);
-                    entry.date_time.plotDate = format.plotDate(entry.date_time);
+                    entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
+                    entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
         		}
         	});
 

@@ -99,7 +99,18 @@
 
     var getRecord = function (callback) {
 
-        var tmpAllergies = [{
+       
+        var tmpMetaData = {
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }]
+        };
+
+
+
+        var tmpAllergy = {
             "identifiers": [{
                 "identifier": "36e3e930-7b14-11db-9fe1-0800200c9a66"
             }],
@@ -147,6 +158,13 @@
                     }
                 }
             }
+        };
+
+
+
+        var tmpAllergies = [{
+            'metadata': tmpMetaData,
+            'data': tmpAllergy
         }];
 
         callback(null, tmpAllergies);
