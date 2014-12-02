@@ -127,6 +127,10 @@ angular
         templateUrl: 'views/files/upload.html',
         controller: 'FilesUploadCtrl'
       })
+      .when('/notes', {
+        templateUrl: 'views/notes.html',
+        controller: 'NotesCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

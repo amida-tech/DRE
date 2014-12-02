@@ -97,10 +97,7 @@
 
     this.getPartialRecord = getPartialRecord;
 
-    var getRecord = function (callback) {
-
-       
-        var tmpMetaData = {
+    var tmpMetaData = {
             'attribution': [{
                 'source': 'blue-button.xml',
                 'status': 'new',
@@ -108,11 +105,18 @@
             }],
             'comments': [{
                 'comment': 'I should make sure I let my aunt know about this!',
-                'date': '2007-05-01T00:00:00Z'
+                'date': '2007-05-01T00:00:00Z',
+                'starred': false
             }]
         };
 
+    var getRecordMeta = function(callback) {
+        callback(null, tmpMetaData);
+    }
 
+    this.getRecordMeta = getRecordMeta;
+
+    var getRecord = function (callback) {
 
         var tmpAllergy = {
             "identifiers": [{

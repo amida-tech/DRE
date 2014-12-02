@@ -1,0 +1,48 @@
+
+<div class="row" style="margin:20px;">
+	<div class="col-sm-3" style="padding-right: 20px; padding-bottom: 20px;">
+		<div profile></div>
+	</div>
+
+	<div class="col-sm-9">
+		<div class="panel">
+			<div class="panel-body">
+
+				<!--Header Items-->
+				<div class="col-sm-12 row">
+					<div class="col-sm-12">
+						<div breadcrumb></div>
+						<h1>My Notes</h1>
+						<p>This is consolidated view of all notes across your record.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="text-center"><h4>Review Notes</h4></div>
+		<div class="panel">
+			<div class="panel-body">
+				
+				<!--Each Entry-->
+				<div ng-repeat="(noteIndex, noteEntry) in notes">
+					<div class="col-sm-1 panel-body text-center">
+						<h5 ng-show="noteEntry.starred === true" ng-click="clickStar(true, noteIndex)"><a><i class="fa fa-star"></i></a></h5>
+						<h5 ng-show="noteEntry.starred === false" ng-click="clickStar(false, noteIndex)"><a><i class="fa fa-star-o"></i></a></h5>
+					</div>
+
+					<div class="panel col-sm-11">
+						<div class="panel-body">
+							<div class="col-sm-8">
+								<h5>{{noteEntry.comment}}</h5>
+							</div>
+							<div class="col-sm-4 text-right">
+							<a><h5>{{noteEntry.date | date:'short'}}</h5></a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--<pre>{{notes | json}}</pre>-->
+
+			</div>
+		</div>
+	</div>

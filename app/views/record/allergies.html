@@ -70,7 +70,7 @@
 										<div class="col-sm-6 text-right">
 
 											<a href="#/record/allergies/review"><button class="btn btn-link"><i class="fa fa-flag" style="margin-right: 10px;"></i>1 pending update</button></a>
-											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star" style="margin-right: 10px;"></i>1 note to review</button>
+											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star" style="margin-right: 10px;"></i>1 starred note</button>
 										</div>
 									</div>
 
@@ -79,7 +79,7 @@
 
 										<!--Tab nav-->
 										<div class="col-sm-12">
-										<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#history{{recordIndex}}" aria-expanded="false" aria-controls="history{{recordIndex}}" ng-click="swapTabs('history', recordIndex)">
+											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#history{{recordIndex}}" aria-expanded="false" aria-controls="history{{recordIndex}}" ng-click="swapTabs('history', recordIndex)">
 												<span><i class="fa fa-clock-o"></i> History</span>
 											</button>
 											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)">
@@ -95,64 +95,64 @@
 
 											<!--Record detail pane.-->
 											<div role="tabpanel" class="collapse" id="details{{recordIndex}}">
-											<div class="sub-entry">
+												<div class="sub-entry">
 
-												<table class="table table-hover">
+													<table class="table table-hover">
 
-													<thead>
-													<tr><td colspan="2">
-													<h3>Entry Details</h3>
-													</td>
-													</tr>
+														<thead>
+															<tr><td colspan="2">
+																<h3>Entry Details</h3>
+															</td>
+														</tr>
 													</thead>
 
 													<tbody>
-													<tr>
-														<td>Code:</td>
-														<td>{{recordEntry.data.observation.allergen.code}}</td>
-													</tr>
-													<tr>
-														<td>Code System:</td>
-														<td>{{recordEntry.data.observation.allergen.code_system_name}}</td>
-													</tr>
+														<tr>
+															<td>Code:</td>
+															<td>{{recordEntry.data.observation.allergen.code}}</td>
+														</tr>
+														<tr>
+															<td>Code System:</td>
+															<td>{{recordEntry.data.observation.allergen.code_system_name}}</td>
+														</tr>
 
-													<tr ng-repeat="(reactionIndex, reactionEntry) in recordEntry.data.observation.reactions">
-														<td>Reactions:</td>
-														<td>
+														<tr ng-repeat="(reactionIndex, reactionEntry) in recordEntry.data.observation.reactions">
+															<td>Reactions:</td>
+															<td>
 
-															<div class="panel">
-																<table class="table sub-table">
-																	<thead>
-																		<tr>
-																			<td>Reaction:</td>
-																			<td>{{reactionEntry.reaction.name}}</td>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td>Severity:</td>
-																			<td>{{reactionEntry.severity.code.name}}</td>
-																		</tr>
-																		<tr>
-																			<td>Code:</td>
-																			<td>{{reactionEntry.reaction.code}}</td>
-																		</tr>
-																		<tr>
-																			<td>Code System:</td>
-																			<td>{{reactionEntry.reaction.code_system_name}}</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</td>
-													</tr>
+																<div class="panel">
+																	<table class="table sub-table">
+																		<thead>
+																			<tr>
+																				<td>Reaction:</td>
+																				<td>{{reactionEntry.reaction.name}}</td>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<tr>
+																				<td>Severity:</td>
+																				<td>{{reactionEntry.severity.code.name}}</td>
+																			</tr>
+																			<tr>
+																				<td>Code:</td>
+																				<td>{{reactionEntry.reaction.code}}</td>
+																			</tr>
+																			<tr>
+																				<td>Code System:</td>
+																				<td>{{reactionEntry.reaction.code_system_name}}</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</div>
+															</td>
+														</tr>
 													</tbody>
 												</table>
-												</div>
 											</div>
+										</div>
 
-											<!--Record history pane.-->
-											<div role="tabpanel" class="collapse" id="history{{recordIndex}}">
+										<!--Record history pane.-->
+										<div role="tabpanel" class="collapse" id="history{{recordIndex}}">
 
 											<div class="sub-entry">
 												<h3>Entry History</h3>
@@ -165,116 +165,124 @@
 														</tr>
 													</thead>
 													<tbody>
-													<tr ng-repeat="(attrIndex, attrEntry) in recordEntry.metadata.attribution">
-														<td><a href="#/files">{{attrEntry.source}}</a></td>
-														<td style="text-transform: capitalize;">{{attrEntry.status}}</td>
-														<td>{{attrEntry.merged | date:'short'}}</td>
-													</tr>
+														<tr ng-repeat="(attrIndex, attrEntry) in recordEntry.metadata.attribution">
+															<td><a href="#/files">{{attrEntry.source}}</a></td>
+															<td style="text-transform: capitalize;">{{attrEntry.status}}</td>
+															<td>{{attrEntry.merged | date:'short'}}</td>
+														</tr>
 													</tbody>
 												</table>
-												</div>
 											</div>
+										</div>
 
-											<!--Record comments pane.-->
-											<div role="tabpanel" class="collapse" id="comments{{recordIndex}}" data-parent="#selector">
-												<div class="sub-entry">
-													<h3>Entry Notes</h3>
-													<div class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in recordEntry.metadata.comments">
-														<div class="col-sm-12">
-															<h5>{{commentEntry.date | date:'short'}}</h5>
-														</div>
-														<div class="panel col-sm-12">
+										<!--Record comments pane.-->
+										<div role="tabpanel" class="collapse" id="comments{{recordIndex}}" data-parent="#selector">
+											<div class="sub-entry">
+												<h3>Entry Notes</h3>
+												<div class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in recordEntry.metadata.comments">
+													<div class="col-sm-11 col-sm-offset-1"><h5>{{commentEntry.date | date:'short'}}</h5></div>
+													<div class="col-sm-1 panel-body text-center">
+														<h5 ng-show="commentEntry.starred === true" ng-click="clickStar(true, commentIndex)"><a><i class="fa fa-star"></i></a></h5>
+														<h5 ng-show="commentEntry.starred === false" ng-click="clickStar(false, commentIndex)"><a><i class="fa fa-star-o"></i></a></h5>
+													</div>
+													<div class="col-sm-10">
+														<div class="panel">
 															<div class="panel-body">
 																<p>{{commentEntry.comment}}</p>
 															</div>
 														</div>
-													</div>
 
+													</div>
+													
+												</div>
+
+												<div class="col-sm-12">
 													<form novalidate role="form" name="commentForm">
-														<div class="form-group">
-															<label for="commentEntry">New Note:</label>
-    														<textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="commentEntry" name="commentEntry"></textarea>
+
+														<div class="col-sm-1 panel-body text-center">
+														<label for="commentEntry"></label>
+														<h5><a><i class="fa fa-star-o"></i></a></h5>
+
 														</div>
-														<div class="form-group col-sm-12">
-															<div class="col-sm-8">
-																<div class="checkbox">
-																    <label>
-																      <input type="checkbox" id="checkboxSuccess" ng-model="commentFlag">
-																      Star this note for review 
-																    </label>
-																</div>
-															</div>
+
+
+														<div class="form-group col-sm-10">
+															<label for="commentEntry">New Note:</label>
+															<textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="commentEntry" name="commentEntry"></textarea>
+														</div>
+														<div class="form-group col-sm-10">
 															<div class="col-sm-3 pull-right">
 																<button type="button" class="btn btn-primary" ng-disabled="commentForm.$invalid">Add Comment</button>
 															</div>
 														</div>
 													</form>
-
-
 												</div>
+
+
 											</div>
-											
 										</div>
 
 									</div>
 
+								</div>
 
 
-									<div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-										<table class="table table-hover">
-											<tr>
-												<td>Code:</td>
-												<td>{{recordEntry.observation.allergen.code}}</td>
-											</tr>
-											<tr>
-												<td>Code System:</td>
-												<td>{{recordEntry.observation.allergen.code_system_name}}</td>
-											</tr>
-											<tr ng-repeat="(reactionIndex, reactionEntry) in recordEntry.observation.reactions">
-												<td>Reactions:</td>
-												<td>
 
-													<div class="panel">
-														<table class="table sub-table">
-															<thead>
-																<tr>
-																	<td>Reaction:</td>
-																	<td>{{reactionEntry.reaction.name}}</td>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>Severity:</td>
-																	<td>{{reactionEntry.severity.code.name}}</td>
-																</tr>
-																<tr>
-																	<td>Code:</td>
-																	<td>{{reactionEntry.reaction.code}}</td>
-																</tr>
-																<tr>
-																	<td>Code System:</td>
-																	<td>{{reactionEntry.reaction.code_system_name}}</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</td>
-											</tr>
-										</table>
-									</div>
+								<div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+									<table class="table table-hover">
+										<tr>
+											<td>Code:</td>
+											<td>{{recordEntry.observation.allergen.code}}</td>
+										</tr>
+										<tr>
+											<td>Code System:</td>
+											<td>{{recordEntry.observation.allergen.code_system_name}}</td>
+										</tr>
+										<tr ng-repeat="(reactionIndex, reactionEntry) in recordEntry.observation.reactions">
+											<td>Reactions:</td>
+											<td>
+
+												<div class="panel">
+													<table class="table sub-table">
+														<thead>
+															<tr>
+																<td>Reaction:</td>
+																<td>{{reactionEntry.reaction.name}}</td>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>Severity:</td>
+																<td>{{reactionEntry.severity.code.name}}</td>
+															</tr>
+															<tr>
+																<td>Code:</td>
+																<td>{{reactionEntry.reaction.code}}</td>
+															</tr>
+															<tr>
+																<td>Code System:</td>
+																<td>{{reactionEntry.reaction.code_system_name}}</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</td>
+										</tr>
+									</table>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 
-				<div class="col-sm-2 center-block text-center timeline-footer">
-					<svg width="30" height="30">
-						<circle cx="15" cy="15" r="15"></circle>
-					</svg>
-				</div>
+			<div class="col-sm-2 center-block text-center timeline-footer">
+				<svg width="30" height="30">
+					<circle cx="15" cy="15" r="15"></circle>
+				</svg>
 			</div>
 		</div>
-		<!--<pre>{{masterEntries | json}}</pre>-->
 	</div>
+	<!--<pre>{{masterEntries | json}}</pre>-->
+</div>
 </div>
