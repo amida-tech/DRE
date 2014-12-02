@@ -105,7 +105,11 @@
             }],
             'comments': [{
                 'comment': 'I should make sure I let my aunt know about this!',
-                'date': '2007-05-01T00:00:00Z',
+                'date': '2005-05-01T00:12:00Z',
+                'starred': true
+            }, {
+                'comment': 'Remember Macrolides are a good alternative.',
+                'date': '2009-05-18T00:08:00Z',
                 'starred': false
             }]
         };

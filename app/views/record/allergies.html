@@ -70,7 +70,11 @@
 										<div class="col-sm-6 text-right">
 
 											<a href="#/record/allergies/review"><button class="btn btn-link"><i class="fa fa-flag" style="margin-right: 10px;"></i>1 pending update</button></a>
-											<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star" style="margin-right: 10px;"></i>1 starred note</button>
+											
+											<div ng-show="recordEntry.metadata.starred_comments > 0">
+												<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star" style="margin-right: 10px;"></i>{{recordEntry.metadata.starred_comments}} starred note<span ng-show="recordEntry.metadata.starred_comments > 1">s</span></button>
+
+											</div>
 										</div>
 									</div>
 
@@ -182,8 +186,8 @@
 												<div class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in recordEntry.metadata.comments">
 													<div class="col-sm-11 col-sm-offset-1"><h5>{{commentEntry.date | date:'short'}}</h5></div>
 													<div class="col-sm-1 panel-body text-center">
-														<h5 ng-show="commentEntry.starred === true" ng-click="clickStar(true, commentIndex)"><a><i class="fa fa-star"></i></a></h5>
-														<h5 ng-show="commentEntry.starred === false" ng-click="clickStar(false, commentIndex)"><a><i class="fa fa-star-o"></i></a></h5>
+														<h5 ng-show="commentEntry.starred === true" ng-click="clickStar(true, commentIndex, recordIndex)"><a><i class="fa fa-star"></i></a></h5>
+														<h5 ng-show="commentEntry.starred === false" ng-click="clickStar(false, commentIndex, recordIndex)"><a><i class="fa fa-star-o"></i></a></h5>
 													</div>
 													<div class="col-sm-10">
 														<div class="panel">
@@ -191,28 +195,24 @@
 																<p>{{commentEntry.comment}}</p>
 															</div>
 														</div>
-
 													</div>
-													
 												</div>
 
 												<div class="col-sm-12">
-													<form novalidate role="form" name="commentForm">
+													<form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
 
 														<div class="col-sm-1 panel-body text-center">
-														<label for="commentEntry"></label>
-														<h5><a><i class="fa fa-star-o"></i></a></h5>
+															<h5 ng-show="newComment.starred === true" ng-click="newStar(true, recordIndex)"><a><i class="fa fa-star"></i></a></h5>
+															<h5 ng-show="newComment.starred === false" ng-click="newStar(false, recordIndex)"><a><i class="fa fa-star-o"></i></a></h5>
 
 														</div>
-
-
 														<div class="form-group col-sm-10">
 															<label for="commentEntry">New Note:</label>
-															<textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="commentEntry" name="commentEntry"></textarea>
+															<textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="newComment.comment" name="commentEntry"></textarea>
 														</div>
 														<div class="form-group col-sm-10">
-															<div class="col-sm-3 pull-right">
-																<button type="button" class="btn btn-primary" ng-disabled="commentForm.$invalid">Add Comment</button>
+															<div class="col-sm-2 pull-right">
+																<button type="submit" class="btn btn-primary" ng-disabled="commentForm.$invalid">Add Note</button>
 															</div>
 														</div>
 													</form>
