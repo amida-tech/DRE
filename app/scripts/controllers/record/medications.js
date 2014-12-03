@@ -14,6 +14,9 @@ angular.module('phrPrototypeApp')
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
+        $scope.newComment = {
+            'starred': false
+        };
 
         function getUpdateDate() {
             //Should grab from files/update history.  Stubbed for now.
@@ -30,12 +33,12 @@ angular.module('phrPrototypeApp')
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
-                if (entry.date_time) {
-                    _.each(entry.date_time, function (dateEntry) {
+                if (entry.data.date_time) {
+                    _.each(entry.data.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
                     });
-                    entry.date_time.displayDate = format.outputDate(entry.date_time);
-                    entry.date_time.plotDate = format.plotDate(entry.date_time);
+                    entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
+                    entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
                 }
             });
         }
@@ -43,14 +46,14 @@ angular.module('phrPrototypeApp')
         function formatDisplay() {
         	_.each($scope.masterEntries, function(entry) {
         		
-        		_.each(entry.supply.date_time, function(date) {
+        		_.each(entry.data.supply.date_time, function(date) {
         			format.formatDate(date);
         		});
-				entry.supply.date_time.displayDate = format.outputDate(entry.supply.date_time);
-				format.formatName(entry.supply.author.name);
-        		format.formatInterval(entry.administration.interval);
-        		format.formatQuantity(entry.administration.dose);
-        		format.formatQuantity(entry.administration.rate);
+				entry.data.supply.date_time.displayDate = format.outputDate(entry.data.supply.date_time);
+				format.formatName(entry.data.supply.author.name);
+        		format.formatInterval(entry.data.administration.interval);
+        		format.formatQuantity(entry.data.administration.dose);
+        		format.formatQuantity(entry.data.administration.rate);
         	});
         }
 

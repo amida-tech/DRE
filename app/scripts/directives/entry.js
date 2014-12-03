@@ -44,6 +44,12 @@
                   scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
                   scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
                   break;
+                  case 'medications':
+                  scope.entryTitle = scope.entryData.product.product.name;
+                  scope.entrySubTitleOne = scope.entryData.administration.route.name;
+                  scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                  scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
+                  break;
       	}
 
       	function countStarredComments (recordIndex) {
