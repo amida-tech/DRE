@@ -14,7 +14,6 @@ angular.module('phrPrototypeApp')
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
-
         $scope.newComment = {
             'starred': false
         };

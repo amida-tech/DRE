@@ -31,13 +31,19 @@
       		scope.entryTitle = scope.entryData.observation.allergen.name;
       		scope.entrySubTitleOne = scope.entryData.observation.severity.code.name;
       		scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
-      		scope.entryTemplatePath = "/views/templates/details/allergies.html";
+      		scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
       		break;
       		case 'encounters':
       		scope.entryTitle = scope.entryData.encounter.name;
       		scope.entrySubTitleOne = scope.entryData.locations[0].name;
       		scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
-      		scope.entryTemplatePath = "/views/templates/details/encounters.html";
+      		scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
+                  break;
+                  case 'immunizations':
+                  scope.entryTitle = scope.entryData.product.product.name;
+                  scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
+                  scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
+                  break;
       	}
 
       	function countStarredComments (recordIndex) {
