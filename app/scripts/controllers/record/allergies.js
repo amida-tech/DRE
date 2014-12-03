@@ -22,22 +22,6 @@
         'starred': false
     };
 
-
-    $scope.swapTabs = function(entryClass, entryIndex) {
-
-        if (entryClass === "details") {
-            $("#comments" + entryIndex).removeClass("in");  
-            $("#history" + entryIndex).removeClass("in");    
-        } else if (entryClass === "comments") {
-            $("#details" + entryIndex).removeClass("in");  
-            $("#history" + entryIndex).removeClass("in");    
-        } else if (entryClass === "history") {
-            $("#details" + entryIndex).removeClass("in");  
-            $("#comments" + entryIndex).removeClass("in");    
-        }
-
-    };
-
     $scope.closeAlert = function () {
         $scope.alertShow = false;
     }
@@ -97,67 +81,13 @@
             });
         }
 
-
-        //Adds to record metadata a count of all starred comments for display.
-        //Optionally takes recordIndex for updating count as stars are clicked.
-        function countStarredComments (recordIndex) {
-            if (!_.isUndefined(recordIndex)) {
-                var commentCount = 0;
-                _.each($scope.masterEntries[recordIndex].metadata.comments, function(comment) {
-                    if (comment.starred) {
-                        commentCount++;
-                    }
-                });
-                $scope.masterEntries[recordIndex].metadata.starred_comments = commentCount;
-            } else {
-             _.each($scope.masterEntries, function(entry) {
-                var commentCount = 0;
-                _.each(entry.metadata.comments, function(comment) {
-                    if (comment.starred) {
-                        commentCount++;
-                    }
-                });
-                entry.metadata.starred_comments = commentCount;
-            });
-
-         }
-     }
-
      $scope.refresh = function () {
         getRecords(function (err) {
          getUpdateDate();
          formatDates();
          filterInactive();
-         countStarredComments();
          getPartials();
      });
-    }
-
-    $scope.clickStar = function(starVal, starIndex, recordIndex) {
-        if (starVal) {
-            $scope.entries[recordIndex].metadata.comments[starIndex].starred = false;
-        } else {
-            $scope.entries[recordIndex].metadata.comments[starIndex].starred = true;
-        }
-        countStarredComments(recordIndex);
-
-    };
-
-    $scope.newStar = function(starVal, recordIndex) {
-        if (starVal) {
-            $scope.newComment.starred = false;
-        } else {
-            $scope.newComment.starred = true;
-        }  
-    }
-
-    $scope.addNote = function(recordIndex) {
-        $scope.newComment.date = new Date();
-        $scope.entries[recordIndex].metadata.comments.push($scope.newComment);
-        $scope.newComment = {
-            "starred": false
-        }
-        countStarredComments(recordIndex);
     }
 
     $scope.$watch('inactiveFlag', function() {
