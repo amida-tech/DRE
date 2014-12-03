@@ -15,6 +15,10 @@ angular.module('phrPrototypeApp')
         $scope.entries = [];
         $scope.updateDate = null;
 
+        $scope.newComment = {
+            'starred': false
+        };
+
         function getUpdateDate() {
             //Should grab from files/update history.  Stubbed for now.
             $scope.updateDate = '12/1/2014';
@@ -30,16 +34,20 @@ angular.module('phrPrototypeApp')
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
-                if (entry.date_time) {
-                    _.each(entry.date_time, function (dateEntry) {
+
+                console.log(entry);
+
+
+                if (entry.data.date_time) {
+                    _.each(entry.data.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
                     });
-					entry.date_time.displayDate = format.outputDate(entry.date_time);
-					entry.date_time.plotDate = format.plotDate(entry.date_time);
+					entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
+					entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
                 }
 
-                if (entry.findings) {
-                	_.each(entry.findings, function (finding) {
+                if (entry.data.findings) {
+                	_.each(entry.data.findings, function (finding) {
                 		if (finding.date_time) {
                 			_.each(finding.date_time, function(dateEntry) {
                 				format.formatDate(dateEntry);
