@@ -17,7 +17,31 @@ Additional dependencies exist for this project, and are managed through Bower.
 
 ####Getting Started
 
-To get started you will need to install Bower, Compass, Yeoman and Grunt.  Instructions for installation of those packages are available on the respective websites.
+To get started you will need to install Bower, Compass, Yeoman and Grunt.  Instructions for installation of those packages are available on the respective websites. 
+
+Below is quick summary, assuming you have Ruby, Node.js and NPM running.
+
+```
+npm install -g bower
+
+gem update --system
+gem install compass
+
+npm install -g yo
+
+npm install -g grunt-cli
+
+npm install -g generator-angular
+
+```
+
+Install dependencies from base project directory:
+
+```
+npm install
+
+bower install
+```
 
 From the base project directory, you can use Grunt to build and execute the following commands:
 
