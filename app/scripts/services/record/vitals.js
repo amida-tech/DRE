@@ -252,7 +252,7 @@ angular.module('phrPrototypeApp')
             _.each(tmpVitals, function (entry) {
 
                 var tmpReturn = {
-                    'metadata': tmpMetaData,
+                    'metadata': angular.copy(tmpMetaData),
                     'data': entry
                 };
 

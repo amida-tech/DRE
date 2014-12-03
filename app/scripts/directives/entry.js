@@ -15,7 +15,7 @@
 
       	//Attribute Variables.
       	var entryType = attrs.entryType;
-      	var entryIndex = attrs.entryIndex;
+      	scope.entryIndex = attrs.entryIndex;
 
       	//Scope Inherited Variables.
       	scope.entryData = scope.recordEntry.data;
@@ -65,6 +65,11 @@
                   scope.entryTitle = scope.entryData.displayQuantity;
                   scope.entrySubTitleOne = scope.entryData.vital.name;
                   scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                  scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
+                  break;
+                  case 'results':
+                  scope.entryTitle = scope.entryData.result_set.name;
+                  scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
                   scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
                   break;
       	}
