@@ -7,15 +7,16 @@
  * # measurements
  */
 angular.module('phrPrototypeApp')
-.directive('linechart', ['$window', '$timeout', 'd3Service',
+.directive('d3template', ['$window', '$timeout', 'd3Service',
             function ($window, $timeout, d3Service) {
                 return {
                     restrict: 'A',
-                    transclude: true,
                     scope: {
                         data: '='
                     },
-                    link: function (scope, ele, attrs, controller) {
+                    link: function (scope, ele, attrs) {
+                        
+                        //bring in d3 code as a service
                         d3Service.d3().then(function (d3) {
 
 
@@ -24,7 +25,7 @@ angular.module('phrPrototypeApp')
                             w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right,
                                     h = 200 - margin.top - margin.bottom;
 
-
+                            //set initial svg values
                             var svg = d3.select(ele[0])
                                     .append('svg')
                                     .attr('class', 'chart')
@@ -33,36 +34,36 @@ angular.module('phrPrototypeApp')
                                     .append('g')
                                     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+                            
+                            //watch window resize to re-render
                             $window.onresize = function () {
                                 scope.$apply();
                             };
-
-
-
                             scope.$watch(function () {
                                 return angular.element($window)[0].innerWidth;
                             }, function () {
-
-                                //w = ele[0].offsetWidth;
-
-                                scope.render(scope.users);
+                                scope.render(scope.data);
                             });
 
-
-                            scope.$watch('users', function (newVals, oldVals) {
+                            //watch your attributes for changes to re-render
+                            scope.$watch('data', function (newVals, oldVals) {
                                 scope.render(newVals);
                             }, true);
 
-                            scope.render = function (data) {
-                                svg.selectAll('*').remove();
 
+                            //called to render chart
+                            scope.render = function (data) {
+                                
+                                //clean svg
+                                svg.selectAll('*').remove();
+                                //check to see if there is any data before drawing the chart (enable when using data attribute)
                                 //if (!data)
                                   //  return;
                                 if (renderTimeout)
                                     clearTimeout(renderTimeout);
 
                                 renderTimeout = $timeout(function () {
-
+                                    //updates chart size on page resize
                                     if (d3.select(ele[0]).node().offsetWidth > 0) {
                                         var w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right;
                                         var h = d3.select(ele[0]).node().offsetHeight - margin.top - margin.bottom;
@@ -70,6 +71,7 @@ angular.module('phrPrototypeApp')
                                                 .attr('height', h + margin.top + margin.bottom);
 
                                     }
+                                    //write your chart code here!
                                     svg.append('rect')
                                         .attr('width',w)
                                         .attr('height',h)
