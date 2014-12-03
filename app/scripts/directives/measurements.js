@@ -7,6 +7,82 @@
  * # measurements
  */
 angular.module('phrPrototypeApp')
+.directive('d3template', ['$window', '$timeout', 'd3Service',
+            function ($window, $timeout, d3Service) {
+                return {
+                    restrict: 'A',
+                    scope: {
+                        data: '='
+                    },
+                    link: function (scope, ele, attrs) {
+                        
+                        //bring in d3 code as a service
+                        d3Service.d3().then(function (d3) {
+
+
+                            var renderTimeout;
+                            var margin = {top: 0, right: 20, bottom: 28, left: 50},
+                            w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right,
+                                    h = 200 - margin.top - margin.bottom;
+
+                            //set initial svg values
+                            var svg = d3.select(ele[0])
+                                    .append('svg')
+                                    .attr('class', 'chart')
+                                    .attr('width', w + margin.left + margin.right)
+                                    .attr('height', h + margin.top + margin.bottom)
+                                    .append('g')
+                                    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+                            
+                            //watch window resize to re-render
+                            $window.onresize = function () {
+                                scope.$apply();
+                            };
+                            scope.$watch(function () {
+                                return angular.element($window)[0].innerWidth;
+                            }, function () {
+                                scope.render(scope.data);
+                            });
+
+                            //watch your attributes for changes to re-render
+                            scope.$watch('data', function (newVals, oldVals) {
+                                scope.render(newVals);
+                            }, true);
+
+
+                            //called to render chart
+                            scope.render = function (data) {
+                                
+                                //clean svg
+                                svg.selectAll('*').remove();
+                                //check to see if there is any data before drawing the chart (enable when using data attribute)
+                                //if (!data)
+                                  //  return;
+                                if (renderTimeout)
+                                    clearTimeout(renderTimeout);
+
+                                renderTimeout = $timeout(function () {
+                                    //updates chart size on page resize
+                                    if (d3.select(ele[0]).node().offsetWidth > 0) {
+                                        var w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right;
+                                        var h = d3.select(ele[0]).node().offsetHeight - margin.top - margin.bottom;
+                                        svg.attr('width', w + margin.left + margin.right)
+                                                .attr('height', h + margin.top + margin.bottom);
+
+                                    }
+                                    //write your chart code here!
+                                    svg.append('rect')
+                                        .attr('width',w)
+                                        .attr('height',h)
+                                        .attr('fill','black');
+
+
+                                }, 100);
+                            };
+                        });
+                    }};
+            }])
     .directive('measurements', function ($window) {
         return {
             template: '<svg></svg>',
