@@ -7,6 +7,80 @@
  * # measurements
  */
 angular.module('phrPrototypeApp')
+.directive('linechart', ['$window', '$timeout', 'd3Service',
+            function ($window, $timeout, d3Service) {
+                return {
+                    restrict: 'A',
+                    transclude: true,
+                    scope: {
+                        data: '='
+                    },
+                    link: function (scope, ele, attrs, controller) {
+                        d3Service.d3().then(function (d3) {
+
+
+                            var renderTimeout;
+                            var margin = {top: 0, right: 20, bottom: 28, left: 50},
+                            w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right,
+                                    h = 200 - margin.top - margin.bottom;
+
+
+                            var svg = d3.select(ele[0])
+                                    .append('svg')
+                                    .attr('class', 'chart')
+                                    .attr('width', w + margin.left + margin.right)
+                                    .attr('height', h + margin.top + margin.bottom)
+                                    .append('g')
+                                    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+                            $window.onresize = function () {
+                                scope.$apply();
+                            };
+
+
+
+                            scope.$watch(function () {
+                                return angular.element($window)[0].innerWidth;
+                            }, function () {
+
+                                //w = ele[0].offsetWidth;
+
+                                scope.render(scope.users);
+                            });
+
+
+                            scope.$watch('users', function (newVals, oldVals) {
+                                scope.render(newVals);
+                            }, true);
+
+                            scope.render = function (data) {
+                                svg.selectAll('*').remove();
+
+                                //if (!data)
+                                  //  return;
+                                if (renderTimeout)
+                                    clearTimeout(renderTimeout);
+
+                                renderTimeout = $timeout(function () {
+
+                                    if (d3.select(ele[0]).node().offsetWidth > 0) {
+                                        var w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right;
+                                        var h = d3.select(ele[0]).node().offsetHeight - margin.top - margin.bottom;
+                                        svg.attr('width', w + margin.left + margin.right)
+                                                .attr('height', h + margin.top + margin.bottom);
+
+                                    }
+                                    svg.append('rect')
+                                        .attr('width',w)
+                                        .attr('height',h)
+                                        .attr('fill','black');
+
+
+                                }, 100);
+                            };
+                        });
+                    }};
+            }])
     .directive('measurements', function ($window) {
         return {
             template: '<svg></svg>',
