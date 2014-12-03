@@ -15,7 +15,13 @@ angular.module('phrPrototypeApp')
   		var tmpNotes = [];
 
   		allergies.getRecordMeta (function(err, allergiesMeta) {
-  			tmpNotes = tmpNotes.concat(allergiesMeta.comments);
+  			
+        var tmpSection = {
+          'section': 'allergies',
+          'notes': allergiesMeta.comments
+        };
+
+        tmpNotes.push(tmpSection);
   			callback(null, tmpNotes);
   		});
   	};

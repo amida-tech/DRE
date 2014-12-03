@@ -2,6 +2,26 @@
 <div class="row" style="margin:20px;">
 	<div class="col-sm-3" style="padding-right: 20px; padding-bottom: 20px;">
 		<div profile></div>
+
+		<div>
+			<div class="panel-body">
+				<form novalidate>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.allergies">
+							Allergies
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.encounters">
+							Encounters
+						</label>
+					</div>
+				</form>
+			</div>
+		</div>
+
 	</div>
 
 	<div class="col-sm-9">
@@ -23,19 +43,26 @@
 			<div class="panel-body">
 				
 				<!--Each Entry-->
-				<div ng-repeat="(noteIndex, noteEntry) in notes">
-					<div class="col-sm-1 panel-body text-center">
-						<h5 ng-show="noteEntry.starred === true" ng-click="clickStar(true, noteIndex)"><a><i class="fa fa-star"></i></a></h5>
-						<h5 ng-show="noteEntry.starred === false" ng-click="clickStar(false, noteIndex)"><a><i class="fa fa-star-o"></i></a></h5>
-					</div>
+				<div ng-repeat="(sectionIndex, sectionEntry) in notes">
+					
+					<div ng-show="visible_sections[sectionEntry.section]">
+						<h4>{{sectionEntry.section}}</h4>
+						<div ng-repeat="(noteIndex, noteEntry) in sectionEntry.notes">
 
-					<div class="panel col-sm-11">
-						<div class="panel-body">
-							<div class="col-sm-8">
-								<h5>{{noteEntry.comment}}</h5>
+							<div class="col-sm-1 panel-body text-center">
+								<h5 ng-show="noteEntry.starred === true" ng-click="clickStar(true, noteIndex, sectionEntry.section)"><a><i class="fa fa-star"></i></a></h5>
+								<h5 ng-show="noteEntry.starred === false" ng-click="clickStar(false, noteIndex, sectionEntry.section)"><a><i class="fa fa-star-o"></i></a></h5>
 							</div>
-							<div class="col-sm-4 text-right">
-							<a><h5>{{noteEntry.date | date:'short'}}</h5></a>
+
+							<div class="panel col-sm-11">
+								<div class="panel-body">
+									<div class="col-sm-8">
+										<h5>{{noteEntry.comment}}</h5>
+									</div>
+									<div class="col-sm-4 text-right">
+										<a><h5>{{noteEntry.date | date:'short'}}</h5></a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
