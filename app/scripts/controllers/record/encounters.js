@@ -34,10 +34,6 @@ angular.module('phrPrototypeApp')
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
-
-                console.log(entry);
-
-
                 if (entry.data.date_time) {
                     _.each(entry.data.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
@@ -61,7 +57,7 @@ angular.module('phrPrototypeApp')
 
         function formatAddress() {
         	_.each($scope.masterEntries, function (entry) {
-        		_.each(entry.locations, function (loc) {
+        		_.each(entry.data.locations, function (loc) {
         			_.each(loc.address, function (addr) {
         				format.formatAddress(addr);
         			});
