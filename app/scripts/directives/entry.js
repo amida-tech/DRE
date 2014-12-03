@@ -61,6 +61,12 @@
                   scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
                   scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
                   break;
+                  case 'vitals':
+                  scope.entryTitle = scope.entryData.displayQuantity;
+                  scope.entrySubTitleOne = scope.entryData.vital.name;
+                  scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                  scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
+                  break;
       	}
 
       	function countStarredComments (recordIndex) {
