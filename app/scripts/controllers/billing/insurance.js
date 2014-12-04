@@ -13,6 +13,9 @@ angular.module('phrPrototypeApp')
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
+        $scope.newComment = {
+            'starred': false
+        };
 
         function getUpdateDate() {
             //Should grab from files/update history.  Stubbed for now.
@@ -29,16 +32,16 @@ angular.module('phrPrototypeApp')
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
-                if (entry.date_time) {
-                    _.each(entry.date_time, function (dateEntry) {
+                if (entry.data.date_time) {
+                    _.each(entry.data.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
                     });
-					entry.date_time.displayDate = format.outputDate(entry.date_time);
-					entry.date_time.plotDate = format.plotDate(entry.date_time);
-                }
+					entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
+					entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
+                } 
 
                 if (entry.findings) {
-                	_.each(entry.findings, function (finding) {
+                	_.each(entry.data.findings, function (finding) {
                 		if (finding.date_time) {
                 			_.each(finding.date_time, function(dateEntry) {
                 				format.formatDate(dateEntry);
@@ -52,7 +55,7 @@ angular.module('phrPrototypeApp')
 
         function formatAddress() {
         	_.each($scope.masterEntries, function (entry) {
-        		_.each(entry.locations, function (loc) {
+        		_.each(entry.data.locations, function (loc) {
         			_.each(loc.address, function (addr) {
         				format.formatAddress(addr);
         			});

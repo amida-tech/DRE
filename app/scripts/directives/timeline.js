@@ -6,17 +6,17 @@
  * @Takes two inputs, chartData and chartType.
  * # timeline
  */
-angular.module('phrPrototypeApp')
-    .directive('timeline', function ($window, $location, $anchorScroll) {
-        return {
-            restrict: 'EA',
-            template: "<svg style='width:100%;'></svg>",
-            link: function postLink(scope, element, attrs) {
+ angular.module('phrPrototypeApp')
+ .directive('timeline', function ($window, $location, $anchorScroll) {
+    return {
+        restrict: 'EA',
+        template: "<svg style='width:100%;'></svg>",
+        link: function postLink(scope, element, attrs) {
 
-                var navClick = function (element) {
-                    var old = $location.hash();
-                    $location.hash(element);
-                    $anchorScroll();
+            var navClick = function (element) {
+                var old = $location.hash();
+                $location.hash(element);
+                $anchorScroll();
                     //reset to old to keep any additional routing logic from kicking in
                     $location.hash(old);
                 };
@@ -74,7 +74,8 @@ angular.module('phrPrototypeApp')
 
                         _.each(dataToPlot, function(entry) {
 
-                            var plotDate = isoFormat.parse(entry.data.date_time.plotDate);
+                            if (entry.data.date_time) {
+                                var plotDate = isoFormat.parse(entry.data.date_time.plotDate);
 
                             //Redundancy for isoFormat subsecond support.
                             if (_.isNull(plotDate)) {
@@ -85,7 +86,9 @@ angular.module('phrPrototypeApp')
                                 "date": plotDate
                             });
                             tmpDomain.push(plotDate);
-                        });
+                        }
+                        
+                    });
 
                         minDate = d3.min(tmpDomain);
                         maxDate = d3.max(tmpDomain);
@@ -105,125 +108,125 @@ angular.module('phrPrototypeApp')
 
                     function buildScale() {
                         timeScale = d3.time.scale()
-                            .range([(boundaryOffset + (boundaryWidth / 2)), width - (boundaryOffset - (boundaryWidth / 2))])
-                            .domain(plotDomain);
+                        .range([(boundaryOffset + (boundaryWidth / 2)), width - (boundaryOffset - (boundaryWidth / 2))])
+                        .domain(plotDomain);
                     }
 
                     function buildTicks () {
 
                     	timeScaleTicks = [];
                     	 //TODO:  Configure this for monthly ticks.
-                        var tmpTimeScaleTicks = timeScale.ticks(20);
-                        
-                        for (var i in tmpTimeScaleTicks) {
-                        	timeScaleTicks.push({
-                        		"x_axis": timeScale(tmpTimeScaleTicks[i]),
-                        		"y_axis": (plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2
-                        	});
-                        }
+                         var tmpTimeScaleTicks = timeScale.ticks(20);
+                         
+                         for (var i in tmpTimeScaleTicks) {
+                           timeScaleTicks.push({
+                              "x_axis": timeScale(tmpTimeScaleTicks[i]),
+                              "y_axis": (plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2
+                          });
+                       }
+                   }
+
+                   function structureData() {
+                    for (var i in plotCircles) {
+                        plotCircles[i].x_axis = timeScale(plotCircles[i].date);
+                        plotCircles[i].y_axis = (plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2;
+                        plotCircles[i].radius = 10;
+                        plotCircles[i].color = plotBaseColor;
+                        plotCircles[i].href = "entry" + i;
                     }
+                }
 
-                    function structureData() {
-                        for (var i in plotCircles) {
-                            plotCircles[i].x_axis = timeScale(plotCircles[i].date);
-                            plotCircles[i].y_axis = (plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2;
-                            plotCircles[i].radius = 10;
-                            plotCircles[i].color = plotBaseColor;
-                            plotCircles[i].href = "entry" + i;
-                        }
-                    }
+                function plotData() {
+                    svg.selectAll('*').remove();
+                    var boundaryData = [{
+                        "x": boundaryOffset,
+                        "y": 0,
+                        "width": boundaryWidth,
+                        "height": plotHeight - boundaryLabelOffset - boundaryLabelPadding,
+                        "color": plotBaseColor
+                    }, {
+                        "x": width - boundaryOffset,
+                        "y": 0,
+                        "width": boundaryWidth,
+                        "height": plotHeight - boundaryLabelOffset - boundaryLabelPadding,
+                        "color": plotBaseColor
+                    }];
 
-                    function plotData() {
-                        svg.selectAll('*').remove();
-                        var boundaryData = [{
-                            "x": boundaryOffset,
-                            "y": 0,
-                            "width": boundaryWidth,
-                            "height": plotHeight - boundaryLabelOffset - boundaryLabelPadding,
-                            "color": plotBaseColor
-                        }, {
-                            "x": width - boundaryOffset,
-                            "y": 0,
-                            "width": boundaryWidth,
-                            "height": plotHeight - boundaryLabelOffset - boundaryLabelPadding,
-                            "color": plotBaseColor
-                        }];
-
-                        var plotLineData = [{
-                            "x": boundaryOffset,
-                            "y": ((plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2) - 1,
-                            "width": width - boundaryOffset - boundaryOffset,
-                            "height": 3,
-                            "color": plotBaseColor
-                        }];
+                    var plotLineData = [{
+                        "x": boundaryOffset,
+                        "y": ((plotHeight - boundaryLabelOffset - boundaryLabelPadding) / 2) - 1,
+                        "width": width - boundaryOffset - boundaryOffset,
+                        "height": 3,
+                        "color": plotBaseColor
+                    }];
 
 
-                        var boundaryDisplayFormat = d3.time.format("%b %Y");
+                    var boundaryDisplayFormat = d3.time.format("%b %Y");
 
-                        var boundaryLabel = [{
-                            "x": 0,
-                            "y": plotHeight - boundaryLabelPadding,
-                            "anchor": "start",
-                            "text": boundaryDisplayFormat(plotDomain[0])
-                        }, {
-                            "x": width,
-                            "y": plotHeight - boundaryLabelPadding,
-                            "anchor": "end",
-                            "text": boundaryDisplayFormat(plotDomain[1])
-                        }];
+                    var boundaryLabel = [{
+                        "x": 0,
+                        "y": plotHeight - boundaryLabelPadding,
+                        "anchor": "start",
+                        "text": boundaryDisplayFormat(plotDomain[0])
+                    }, {
+                        "x": width,
+                        "y": plotHeight - boundaryLabelPadding,
+                        "anchor": "end",
+                        "text": boundaryDisplayFormat(plotDomain[1])
+                    }];
 
-                        var boundaryLabels = svg.selectAll("text").data(boundaryLabel).enter().append("text");
-                        var boundaryLabelAttributes = boundaryLabels
-                        	.attr("x", function (d) {
-                                return d.x;
-                            })
-                            .attr("y", function (d) {
-                                return d.y;
-                            })
-                            .text(function (d) {
-                                return d.text;
-                            })
-                            .style("text-anchor", function (d) {
-                                return d.anchor;
-                            });
-
-
-                        var boundaries = svg.selectAll("plotBoundary").data(boundaryData).enter().append("rect");
-                        var boundaryAttributes = boundaries
-                            .attr("x", function (d) {
-                                return d.x;
-                            })
-                            .attr("y", function (d) {
-                                return d.y;
-                            })
-                            .attr("width", function (d) {
-                                return d.width;
-                            })
-                            .attr("height", function (d) {
-                                return d.height;
-                            })
-                            .style("fill", function (d) {
-                                return d.color;
-                            });
+                    var boundaryLabels = svg.selectAll("text").data(boundaryLabel).enter().append("text");
+                    var boundaryLabelAttributes = boundaryLabels
+                    .attr("x", function (d) {
+                        return d.x;
+                    })
+                    .attr("y", function (d) {
+                        return d.y;
+                    })
+                    .text(function (d) {
+                        return d.text;
+                    })
+                    .style("text-anchor", function (d) {
+                        return d.anchor;
+                    });
 
 
-                        var plotLine = svg.selectAll("plotLine").data(plotLineData).enter().append("rect");
-                        var plotLineAttributes = plotLine
-                            .attr("x", function (d) {
-                                return d.x;
-                            })
-                            .attr("y", function (d) {
-                                return d.y;
-                            })
-                            .attr("width", function (d) {
-                                return d.width;
-                            })
-                            .attr("height", function (d) {
-                                return d.height;
-                            })
-                            .style("fill", function (d) {
-                                return d.color;
-                            });
+                    var boundaries = svg.selectAll("plotBoundary").data(boundaryData).enter().append("rect");
+                    var boundaryAttributes = boundaries
+                    .attr("x", function (d) {
+                        return d.x;
+                    })
+                    .attr("y", function (d) {
+                        return d.y;
+                    })
+                    .attr("width", function (d) {
+                        return d.width;
+                    })
+                    .attr("height", function (d) {
+                        return d.height;
+                    })
+                    .style("fill", function (d) {
+                        return d.color;
+                    });
+
+
+                    var plotLine = svg.selectAll("plotLine").data(plotLineData).enter().append("rect");
+                    var plotLineAttributes = plotLine
+                    .attr("x", function (d) {
+                        return d.x;
+                    })
+                    .attr("y", function (d) {
+                        return d.y;
+                    })
+                    .attr("width", function (d) {
+                        return d.width;
+                    })
+                    .attr("height", function (d) {
+                        return d.height;
+                    })
+                    .style("fill", function (d) {
+                        return d.color;
+                    });
 
                         /*var plotLines = svg.selectAll("plotLines").data(timeScaleTicks).enter().append("circle");
                         var plotLineAttributes = plotLines
@@ -240,8 +243,8 @@ angular.module('phrPrototypeApp')
 
 
 
-                        var circles = svg.selectAll("plotPoint").data(plotCircles).enter().append("circle");
-                        var circleAttributes = circles
+                            var circles = svg.selectAll("plotPoint").data(plotCircles).enter().append("circle");
+                            var circleAttributes = circles
                             .attr("cx", function (d) {
                                 return d.x_axis;
                             })
@@ -266,15 +269,15 @@ angular.module('phrPrototypeApp')
                             .on("click", function(d) {
                                 navClick(d.href);
                             });
+                        }
+
+                        getSVGWidth();
+                        buildScale();
+                        buildTicks();
+                        structureData();
+                        plotData();
+
                     }
-
-                    getSVGWidth();
-                    buildScale();
-                    buildTicks();
-                    structureData();
-                    plotData();
-
-                }
 
                 //gatherData only on first run.
                 gatherData();

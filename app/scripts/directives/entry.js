@@ -78,6 +78,19 @@
                   scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
                   scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
                   break;
+                  case 'claims':
+                  scope.entryTitle = scope.entryData.payer[0];
+                  scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
+                  scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
+                  break;
+                  case 'insurance':
+                  scope.entryTitle = scope.entryData.name;
+                  if (scope.entryData.date_time) {
+                        scope.entrySubTitleOne = scope.entryData.date_time.displayDate;      
+                  }
+                  scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
+                  break;
+
       	}
 
       	function countStarredComments (recordIndex) {
