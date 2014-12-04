@@ -8,7 +8,7 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-    .service('notes', function notes(allergies, format) {
+    .service('notes', function notes(allergies, encounters, format) {
 
         var tmpNotes = [];
 
@@ -60,13 +60,79 @@ angular.module('phrPrototypeApp')
 
         }
 
+        function getEncounters(callback) {
+            encounters.getRecord(function (err, entries) {
+
+                var returnEntries = [];
+
+                _.each(entries, function (entry) {
+
+                    //Loop each note.
+                    if (entry.metadata.comments) {
+                        _.each(entry.metadata.comments, function (comment) {
+
+                            var commentObject = {
+                                'note': comment,
+                            };
+
+                            if (entry.data.encounter.name) {
+                                commentObject.entryTitle = entry.data.encounter.name;
+                            }
+
+                            if (entry.data.locations[0].name) {
+                                commentObject.entrySubTitleOne = entry.data.locations[0].name;
+                            }
+
+                            if (entry.data.date_time) {
+                                _.each(entry.data.date_time, function (dateEntry) {
+                                    format.formatDate(dateEntry);
+                                });
+                                entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
+                                commentObject.entrySubTitleTwo = entry.data.date_time.displayDate;
+                            }
+
+                            returnEntries.push(commentObject);
+
+                        });
+                    }
+
+                });
+
+                var returnObject = {
+                    'section': 'encounters',
+                    'notes': returnEntries
+                };
+
+                callback(null, returnObject);
+            });
+
+        }
+
+
+
+
+
+
         var getNotes = function (callback) {
 
             tmpNotes = [];
+            var iter = 0;
+
+            function checkDone() {
+              iter++;
+              if (iter === 2) {
+                callback(null, tmpNotes);  
+              }
+            }
 
             getAllergies(function (err, results) {
                 tmpNotes = tmpNotes.concat(results);
-                callback(null, tmpNotes);
+                checkDone();
+            });
+
+            getEncounters(function (err, results) {
+                tmpNotes = tmpNotes.concat(results);
+                checkDone();
             });
 
         };
