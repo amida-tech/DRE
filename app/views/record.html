@@ -57,11 +57,11 @@
                                     </tr>
                                     <tr>
                                         <td><h5>BMI</h5></td>
-                                        <td><h6>{{dashMetrics.bmi.disp}}</h6></td>
+                                        <td><h6>{{dashMetrics.bmi}}</h6></td>
                                     </tr>
                                     <tr>
                                         <td><h5>Systolic/Diastolic</h5></td>
-                                        <td><h6>{{dashMetrics.systolic.disp}}/{{dashMetrics.diastolic.disp}}</h6></td>
+                                        <td><h6>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h6></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -99,57 +99,7 @@
             </div>
         </div>
         <div class="col-sm-12">
-            <div class="col-sm-6" style="padding-right: 20px;">
-                <div class="panel">
-                    <div class="panel-body">
-                        <div class="col-sm-12">
-                            <h4>Measurements</h4>
-                        </div>
-                        <div class="col-sm-3">
-                            <h5>Height</h5>
-                            <h4>{{dashMetrics.height.disp}}</h4>
-                            <h5>Weight</h5>
-                            <h4>{{dashMetrics.weight.disp}}</h4>
-                            <h5>BMI</h5>
-                            <h4>{{dashMetrics.bmi}}</h4>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="col-sm-12 text-center">
-                                2014
-                            </div>
-                            <div measurements svg-width="200" svg-height="200" graph-type="weight" class="pull-right" id="graphTwo"></div>
-                            <div class="col-sm-12 text-center">
-                                Weight (lbs)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="panel">
-                    <div class="panel-body">
-                        <div class="col-sm-12">
-                            <h4>Blood Pressure</h4>
-                        </div>
-                        <div class="col-sm-6">
-                            <h3>Systolic</h3>
-                            <h4>{{dashMetrics.systolic.value}}</h4>
-                            <h3>Diastolic</h3>
-                            <h4>{{dashMetrics.diastolic.value}}</h4>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="col-sm-12 text-center">
-                                2014
-                            </div>
-                            <div measurements svg-width="200" svg-height="200" graph-type="bloodPressure" class="pull-right" id="graphOne"></div>
-                            <div class="col-sm-12 text-center">
-                                Blood Pressure
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div><!--end d3-->
+            <!--end d3-->
             <!--Timeline View-->
             <div class="col-sm-12">
                 <h4 class="text-center">Record History</h4>

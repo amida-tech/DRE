@@ -82,8 +82,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, reco
                 _.each(vitalEntry.data.date_time, function(dateArr) {
                     if (moment(moment(dateArr.date)).isSame(bpMaxDateSystolic, 'day')) {
                         $scope.dashMetrics.systolic = {
-                            value: vitalEntry.value,
-                            unit: vitalEntry.unit
+                            value: vitalEntry.data.value,
+                            unit: vitalEntry.data.unit
                         };
                     }
                 });
