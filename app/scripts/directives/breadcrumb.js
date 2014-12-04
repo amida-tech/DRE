@@ -143,6 +143,12 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;   
                         }
 
+                        if (parsedPath[i] === "notes") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Notes";
+                            tmpObject.path = pathString;   
+                        }
+
                         breadCrumb.push(tmpObject);
                     }
 

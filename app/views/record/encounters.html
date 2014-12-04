@@ -1,7 +1,6 @@
-
-<div class="row" style="margin: 20px;">
+<div class="container-fluid body-content">
 	<!--Profile-->
-	<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+	<div class="col-sm-3 body-left" >
 		<div profile></div>
 		<div record-navigation></div>
 	</div>
@@ -23,7 +22,7 @@
 							</div>
 						</div>
 					</div>
-				</div>			
+				</div>	
 			</div>
 		</div>
 
@@ -45,186 +44,21 @@
 						<div class="col-sm-2">
 							<a class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{entryType}}" timeline-index="{{recordIndex}}"></a>
 						</div>
-						
+
 						<div class="col-sm-10">
-							<div class="panel timeline-entry">
-								<div class="panel-body" id="accordian">
-									<div class="timeline-entry-header col-sm-12">
-										<div class="col-sm-6">
-											<h4 class="text-left">{{recordEntry.encounter.name}}</h4>
-											<h5 ng-repeat = "location in recordEntry.locations" class="text-left">{{location.name}}</h5>
-											<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
-										</div>
-										<div style="position: absolute; bottom: 0px; right: 0px;">
-											<button class=" btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">
-												<i class="fa fa-chevron-down"></i> More
-											</button>		
-										</div>
-									</div>
+							<entry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
+						</div>		
+						
+					</div>
 
-									<div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-										<table class="table table-hover">
-											<tr>
-												<td>Code:</td>
-												<td>{{recordEntry.encounter.code}}</td>
-											</tr>
-											<tr>
-												<td>Code System:</td>
-												<td>{{recordEntry.encounter.code_system_name}}</td>
-											</tr>
-											<tr ng-show="recordEntry.encounter.translations">
-												<td>Other Descriptions:</td>
-												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.encounter.translations">
-														<table class="table sub-table">
-															<thead>
-																<tr>
-																	<td>Name:</td>
-																	<td>{{itemEntry.name}}</td>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>Code:</td>
-																	<td>{{itemEntry.code}}</td>
-																</tr>
-																<tr>
-																	<td>Code System:</td>
-																	<td>{{itemEntry.code_system_name}}</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</td>
-											</tr>
-											<tr ng-show="recordEntry.findings">
-												<td>Findings:</td>
-												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.findings">
-														<table class="table sub-table">
-															<tr>
-																<td>Name:</td>
-																<td>{{itemEntry.value.name}}</td>
-															</tr>
-															<tr>
-																<td>Code:</td>
-																<td>{{itemEntry.value.code}}</td>
-															</tr>
-															<tr>
-																<td>Code System:</td>
-																<td>{{itemEntry.value.code_system_name}}</td>
-															</tr>
-															<tr>
-																<td>Date:</td>
-																<td>{{itemEntry.date_time.displayDate}}</td>
-															</tr>
-														</table>
-													</div>
-												</td>
-											</tr>
-											<tr ng-show="recordEntry.performers">
-												<td>Performers:</td>
-												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.performers">
-														<table class="table sub-table" ng-repeat="(codeIndex, codeEntry) in itemEntry.code">
-															<thead>
-																{{codeEntry}}
-																<tr>
-																	<td>Name:</td>
-																	<td>{{codeEntry.name}}</td>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>Code:</td>
-																	<td>{{codeEntry.code}}</td>
-																</tr>
-																<tr>
-																	<td>Code System:</td>
-																	<td>{{codeEntry.code_system_name}}</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</td>
-											</tr>
-											<tr ng-show="recordEntry.locations">
-												
-												<td>Locations:</td>
-												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.locations">
-														<table class="table sub-table">
-															<tr>
-																<td>Name:</td>
-																<td>{{itemEntry.name}}</td>
-															</tr>
-
-															<tr ng-show="itemEntry.address">
-																<td>Address:</td>
-
-																<td ng-repeat="(addrindex, addrEntry) in itemEntry.address">
-																	<p ng-repeat="(addrLineIndex, addrLineEntry) in addrEntry.displayAddress">{{addrLineEntry}}</p>
-																</td>
-															</tr>
-															<tr>
-																<td>Type:</td>
-
-																<td>
-																	<div class="panel">
-																		<table class="table sub-table">
-																			<tr>
-																				<td>Name:</td>
-																				<td>{{itemEntry.location_type.name}}</td>
-																			</tr>
-																			<tr>
-																				<td>Code:</td>
-																				<td>{{itemEntry.location_type.code}}</td>
-																			</tr>
-																			<tr>
-																				<td>Code System:</td>
-																				<td>{{itemEntry.location_type.code_system_name}}</td>
-																			</tr>
-																		</table>
-																	</div>
-																</td>
-															</tr>
-														</table>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</td>
-						</tr>
-					</table>
 				</div>
 
-				<!--<pre>{{recordEntry | json}}</pre>-->
+				<div class="col-sm-2 center-block text-center timeline-footer">
+					<svg width="30" height="30">
+						<circle cx="15" cy="15" r="15"></circle>
+					</svg>
+				</div>
 			</div>
-
 		</div>
-		
 	</div>
-	<div class="col-sm-2 center-block text-center timeline-footer">
-		<svg width="30" height="30">
-			<circle cx="15" cy="15" r="15"></circle>
-		</svg>
-	</div>
-
-
-
-
-</div>
-</div>
-
-
-
-</div>
-
-
-</div>
-
-<!--<pre>{{entries | json}}</pre>-->
-
 </div>

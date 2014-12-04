@@ -48,97 +48,10 @@
                         </div>
 
                         <div class="col-sm-10">
-                            <div class="panel timeline-entry">
-                                <div class="panel-body" id="accordian">
-                                    <div class="timeline-entry-header col-sm-12">
-                                        <div class="col-sm-6">
-                                            <h4 class="text-left">{{recordEntry.name}}</h4>
-                                            <h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
-                                        </div>
-                                        <div style="position: absolute; bottom: 0px; right: 0px;">
-                                            <button class=" btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">
-                                                <i class="fa fa-chevron-down"></i> More
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    <div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-                                        <table class="table table-hover">
-                                            <tr ng-show="recordEntry.address">
-                                                <td>Address:</td>
-                                                <td>{{recordEntry.address}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.phone">
-                                                <td>Phone:</td>
-                                                <td>{{recordEntry.phone}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.assigned_person">
-                                                <td>Assigned Person:</td>
-                                                <td>{{recordEntry.assigned_person}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.email">
-                                                <td>Email:</td>
-                                                <td>{{recordEntry.email}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.group_name">
-                                                <td>Group Name:</td>
-                                                <td>{{recordEntry.group_name}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.group_number">
-                                                <td>Group Number:</td>
-                                                <td>{{recordEntry.group_number}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.member_name">
-                                                <td>Member Name:</td>
-                                                <td>{{recordEntry.member_name}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.payer_name">
-                                                <td>Payer Name:</td>
-                                                <td>{{recordEntry.payer_name}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.payer_id">
-                                                <td>Payer ID:</td>
-                                                <td>{{recordEntry.payer_id}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.payer_id_type">
-                                                <td>Payer ID Type:</td>
-                                                <td>{{recordEntry.payer_id_type}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.plan_name">
-                                                <td>Plan Name:</td>
-                                                <td>{{recordEntry.plan_name}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.plan_id">
-                                                <td>Plan ID:</td>
-                                                <td>{{recordEntry.plan_id}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.plan_information">
-                                                <td>Plan Information:</td>
-                                                <td>{{recordEntry.plan_information}}</td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.type">
-                                                <td>Plan Type:</td>
-                                                <td>
-                                                    <div class="panel">
-                                                        <table class="table sub-table">
-                                                            <tr ng-repeat="planType in recordEntry.type">
-                                                                <td style="text-transform: Capitalize;">{{planType}}</td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr ng-show="recordEntry.policy_number">
-                                                <td>Policy Number:</td>
-                                                <td>{{recordEntry.policy_number}}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
+                            <entry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
+                        </div>  
 
-                                <!--<pre>{{recordEntry | json}}</pre>-->
-                            </div>
-                        </div>
+
                     </div>                    
                 </div>
                     <div class="col-sm-2 center-block text-center timeline-footer">
@@ -150,6 +63,6 @@
         </div>
     </div>
 
-    <!-- <pre>{{entries | json}}</pre> -->
+    <!--<pre>{{entries | json}}</pre>-->
 
 </div>

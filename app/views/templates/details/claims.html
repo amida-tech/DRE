@@ -1,0 +1,266 @@
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<td colspan="2">
+				<h3>Entry Details</h3>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-show="entryData.number">
+			<td>Claim number:</td>
+			<td>{{entryData.number}}</td>
+		</tr>
+		<tr ng-show="entryData.name">
+			<td>Name:</td>
+			<td>{{entryData.name}}</td>
+		</tr>
+		<tr ng-show="entryData.service">
+			<td>Service:</td>
+			<td>{{entryData.service}}</td>
+		</tr>
+		<tr ng-show="entryData.type">
+			<td>Type:</td>
+			<td style="text-transform: Capitalize" ng-repeat="entryType in entryData.type">{{entryType}}</td>
+		</tr>
+		<tr ng-show="entryData.charges">
+			<td>Charges:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr ng-show="entryData.charges.price_billed">
+							<td>Billed:</td>
+							<td>{{entryData.charges.price_billed}}</td>
+						</tr>
+						<tr ng-show="entryData.charges.negotiated_price">
+							<td>Negotiated Price:</td>
+							<td>{{entryData.charges.negotiated_price}}</td>
+						</tr>
+						<tr ng-show="entryData.charges.provider_paid">
+							<td>Provider Paid:</td>
+							<td>{{entryData.charges.provider_paid}}</td>
+						</tr>
+						<tr ng-show="entryData.charges.insurance_paid">
+							<td>Insurance Paid:</td>
+							<td>{{entryData.charges.insurance_paid}}</td>
+						</tr>
+						<tr ng-show="entryData.charges.patient_responsibility">
+							<td>Patient Responsibility:</td>
+							<td>{{entryData.charges.patient_responsibility}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.provider">
+			<td>Provider:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Provider Name:</td>
+							<td>{{entryData.provider.name}}</td>
+						</tr>
+						<tr ng-show="entryData.provider.type">
+							<td>Type:</td>
+							<td>{{entryData.provider.type}}</td>
+						</tr>
+						<tr ng-show="entryData.provider.provider_billing_address">
+							<td>Provider Billing Address:</td>
+							<td>{{entryData.provider.provider_billing_address}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.diagnoses">
+			<td>Diagnoses:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr ng-repeat="(itemIndex, itemEntry) in entryData.diagnoses">
+							<td>Code:</td>
+							<td>{{itemEntry.code}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.lines">
+			<td>Lines:</td>
+			<td>
+				<div class="panel" ng-repeat="claimLine in entryData.lines">
+					<table class="table sub-table">
+						<tr ng-show="claimLine.line">
+							<td>Line {{claimLine.line}}</td>
+						</tr>
+						<tr ng-show="claimLine.date_time.displayDate">
+							<td>Date:</td>
+							<td>{{claimLine.date_time.displayDate}}</td>
+						</tr>
+						<tr ng-show="claimLine.charges">
+							<td>Charges:</td>
+							<td>
+								<div class="panel">
+									<table class="table sub-table">
+										<tr ng-show="claimLine.charges.price_billed">
+											<td>Billed:</td>
+											<td>{{claimLine.charges.price_billed}}</td>
+										</tr>
+										<tr ng-show="claimLine.charges.negotiated_price">
+											<td>Negotiated Price:</td>
+											<td>{{claimLine.charges.negotiated_price}}</td>
+										</tr>
+										<tr ng-show="claimLine.charges.provider_paid">
+											<td>Provider Paid:</td>
+											<td>{{claimLine.charges.provider_paid}}</td>
+										</tr>
+										<tr ng-show="claimLine.charges.insurance_paid">
+											<td>Insurance Paid:</td>
+											<td>{{claimLine.charges.insurance_paid}}</td>
+										</tr>
+										<tr ng-show="claimLine.charges.patient_responsibility">
+											<td>Patient Responsibility:</td>
+											<td>{{claimLine.charges.patient_responsibility}}</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="claimLine.number">
+							<td>Number:</td>
+							<td>{{claimLine.number}}</td>
+						</tr>
+						<tr ng-show="claimLine.drug">
+							<td>Drug:</td>
+							<td>
+								<div class="panel">
+									<table class="table sub-table">
+										<tr ng-show="claimLine.drug.code">
+											<td>Code:</td>
+											<td>{{claimLine.drug.code}}</td>
+										</tr>
+										<tr ng-show="claimLine.drug.name">
+											<td>Name:</td>
+											<td>{{claimLine.drug.name}}</td>
+										</tr>
+										<tr ng-show="claimLine.drug.description">
+											<td>Description:</td>
+											<td>{{claimLine.drug.description}</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="claimLine.procedure">
+							<td>Procedure:</td>
+							<td>
+								<div class="panel">
+									<table class="table sub-table">
+										<tr ng-show="claimLine.procedure.code">
+											<td>Code:</td>
+											<td>{{claimLine.procedure.code}}</td>
+										</tr>
+										<tr ng-show="claimLine.procedure.name">
+											<td>Name:</td>
+											<td>{{claimLine.procedure.name}</td>
+										</tr>
+										<tr ng-show="claimLine.procedure.description">
+											<td>Description:</td>
+											<td>{{claimLine.procedure.description}}</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="claimLine.modifiers">
+							<td>Modifiers:</td>
+							<td>
+								<div class="panel">
+									<table class="table sub-table" ng-repeat="modifier in claimLine.modifiers">
+										<tr ng-show="modifier.code">
+											<td>Code:</td>
+											<td>{{modifier.code}}</td>
+										</tr>
+										<tr ng-show="modifier.name">
+											<td>Name:</td>
+											<td>{{modifier.name}</td>
+										</tr>
+										<tr ng-show="modifier.description">
+											<td>Description:</td>
+											<td>{{modifier.description}}</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="claimLine.place_of_service">
+							<td>Place of Service:</td>
+							<td>
+								<div class="panel">
+									<table class="table sub-table">
+										<tr ng-show="claimLine.place_of_service.code">
+											<td>Code:</td>
+											<td>{{claimLine.place_of_service.code}}</td>
+										</tr>
+										<tr ng-show="claimLine.place_of_service.name">
+											<td>Name:</td>
+											<td>{{claimLine.place_of_service.name}</td>
+										</tr>
+										<tr ng-show="claimLine.place_of_service.description">
+											<td>Description:</td>
+											<td>{{claimLine.place_of_service.description}}</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="claimLine.prescriber">
+							<td>Prescriber:</td>
+							<td>{{claimLine.prescriber.name}}</td>
+						</tr>
+						<tr ng-show="claimLine.rendering_provider">
+							<td>Rendering Provider:</td>
+							<td>
+								<div class="panel">
+									<table class="table sub-table">
+										<tr ng-show="claimLine.rendering_provider.npi">
+											<td>NPI:</td>
+											<td>{{claimLine.rendering_provider.npi}}</td>
+										</tr>
+										<tr ng-show="claimLine.rendering_provider.number">
+											<td>Number:</td>
+											<td>{{claimLine.rendering_provider.number}}</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="claimLine.revenue">
+							<td>Revenue:</td>
+							<td>
+								<div class="panel">
+									<table class="table sub-table">
+										<tr ng-show="claimLine.revenue.code">
+											<td>Code:</td>
+											<td>{{claimLine.revenue.code}}</td>
+										</tr>
+										<tr ng-show="claimLine.revenue.name">
+											<td>Name:</td>
+											<td>{{claimLine.revenue.name}</td>
+										</tr>
+										<tr ng-show="claimLine.revenue.description">
+											<td>Description:</td>
+											<td>{{claimLine.revenue.description}}</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+

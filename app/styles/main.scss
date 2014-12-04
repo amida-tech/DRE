@@ -367,7 +367,10 @@ a:hover {
 	.active {
 		box-shadow: none;
 	}
+}
 
 
-
+.sub-entry {
+	border-top: 1px solid #ccc;
+	margin-top: 20px;
 }
