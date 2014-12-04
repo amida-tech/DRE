@@ -72,6 +72,12 @@
                   scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
                   scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
                   break;
+                  case 'social':
+                  scope.entryTitle = scope.entryData.value;
+                  scope.entrySubTitleOne = scope.entryData.code.name;
+                  scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                  scope.entryTemplatePath = "/views/templates/details/" + entryType + ".html";
+                  break;
       	}
 
       	function countStarredComments (recordIndex) {
