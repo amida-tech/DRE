@@ -19,7 +19,7 @@
 
  	function getNotes() {
  		notes.getNotes(function(err, returnNotes) {
- 			console.log(returnNotes);
+ 			$scope.notes = [];
  			$scope.notes = returnNotes;
  		});
  	}
