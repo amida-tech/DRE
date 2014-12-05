@@ -35,11 +35,12 @@
 
  	$scope.clickStar = function(starVal, starIndex, section) {
 
- 		_.filter($scope.notes, {'section': section});
+ 		var tmpSection = _.where($scope.notes, {'section': section});
+
  		if (starVal) {
- 			$scope.notes[0].notes[starIndex].starred = false;
+ 			tmpSection[0].notes[starIndex].note.starred = false;
  		} else {
- 			$scope.notes[0].notes[starIndex].starred = true;
+ 			tmpSection[0].notes[starIndex].note.starred = true;
  		}
  	};
 
