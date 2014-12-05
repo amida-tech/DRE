@@ -1,34 +1,44 @@
 'use strict';
-
 /**
  * @ngdoc directive
  * @name phrPrototypeApp.directive:recordNavigation
  * @description
  * # recordNavigation
  */
-angular.module('phrPrototypeApp')
-  .directive('recordNavigation', function ($location) {
-    return {
-      template: '<div class="col-sm-12 ">' +
-            '<div class="">' +
-            '<ul class="nav ">' +
-      			'<li><a href="#/record/allergies" id="navallergies" class="">Allergies</a></li>' + 
-      			'<li><a href="#/record/encounters" id="navencounters" class="">Encounters</a></li>' +
-      			'<li><a href="#/record/immunizations" id="navimmunizations" class="">Immunizations</a></li>' +
-      			'<li><a href="#/record/medications" id="navmedications" class="">Medications</a></li>' +
-      			'<li><a href="#/record/conditions" id="navconditions" class="">Conditions</a></li>' +
-      			'<li><a href="#/record/procedures" id="navprocedures" class="">Procedures</a></li>' +
-      			'<li><a href="#/record/vitals" id="navvitals" class="">Vital Signs</a></li>' +
-      			'<li><a href="#/record/results" id="navresults" class="">Test Results</a></li>' +
-      			'<li><a href="#/record/social" id="navsocial" class="">Social History</a></li>' +
-            '</ul>' +
-      			'</div>',
-      restrict: 'EA',
-      link: function postLink(scope, element, attrs) {
-        
-          //Active Link Highlighting.
-          element.find("a#nav" + scope.entryType).addClass("active");
-
-      }
-    };
-  });
+angular.module('phrPrototypeApp').directive('recordNavigation', ['$window',
+    function($window) {
+        return {
+            templateUrl: 'views/templates/recordnavigation.html',
+            restrict: 'EA',
+            link: function postLink(scope, element, attrs) {
+                //Active Link Highlighting.
+                element.find("#nav" + scope.entryType).addClass("active");
+                var eTop = $('.fixedElement').offset().top - 20;
+                var eWidth = $('.fixedElement').width();
+                var eHeight = $('.fixedElement').height();
+                
+                
+                $(window).scroll(function(e) {
+                    var $el = $('.fixedElement');
+                    if ($(this).scrollTop() > eTop && $el.css('position') != 'fixed') {
+                        $('.fixedElement').css({
+                            'position': 'fixed',
+                            'top': '20px',
+                            'left': '20px',
+                            'width': '160px',
+                            'height': eHeight + 'px'
+                        });
+                    }
+                    if ($(this).scrollTop() < eTop && $el.css('position') == 'fixed') {
+                        $('.fixedElement').css({
+                            'position': 'static',
+                            'top': '0px',
+                            'left': '0px',
+                            'width': '160px'
+                        });
+                    }
+                });
+            }
+        };
+    }
+]);

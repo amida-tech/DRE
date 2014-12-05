@@ -1,6 +1,6 @@
 <div class="row" style="margin: 20px;">
     <!--Profile-->
-    <div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+    <div id="profileSidebar" class="col-sm-3" style="padding-right: 20px; height: 100%;">
         <div profile></div>
         <div record-navigation></div>
     </div>
@@ -42,26 +42,26 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="col-sm-6">
+                    <div class="col-sm-5">
                         <div class="row">
-                            <h4>Measurements</h4>
+                            <h3>Measurements</h3>
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <td><h5>Height</h5></td>
-                                        <td><h6>{{dashMetrics.height.disp}}</h6></td>
+                                        <td><h4>Height</h4></td>
+                                        <td><h5>{{dashMetrics.height.disp}}</h5></td>
                                     </tr>
                                     <tr>
-                                        <td><h5>Weight</h5></td>
-                                        <td><h6>{{dashMetrics.weight.disp}}</h6></td>
+                                        <td><h4>Weight</h4></td>
+                                        <td><h5>{{dashMetrics.weight.disp}}</h5></td>
                                     </tr>
                                     <tr>
-                                        <td><h5>BMI</h5></td>
-                                        <td><h6>{{dashMetrics.bmi}}</h6></td>
+                                        <td><h4>BMI</h4></td>
+                                        <td><h5>{{dashMetrics.bmi}}</h5></td>
                                     </tr>
                                     <tr>
-                                        <td><h5>Systolic/Diastolic</h5></td>
-                                        <td><h6>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h6></td>
+                                        <td><h4>Systolic/Diastolic</h4></td>
+                                        <td><h5>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h5></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -69,14 +69,14 @@
                     </div>
                     <div class="col-sm-1">
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-6">
 
 
-                        <div bs-tabs>
+                        <div bs-active-pane="tabs.activeTab" bs-tabs>
                             <div title="{{ tabs[0].title }}" bs-pane>
 
 
-                                <div measurements svg-width="300" svg-height="200" graph-type="weight"></div>
+                                <div linechart></div>
                                 <div class="col-sm-12 text-center">
                                     Weight (lbs)
                                 </div>
@@ -85,7 +85,7 @@
                             <div title="{{ tabs[1].title }}" bs-pane>
 
 
-                                <div measurements svg-width="300" svg-height="200" graph-type="bloodPressure"></div>
+                                <div linechart></div>
                                 <div class="col-sm-12 text-center">
                                     Blood Pressure
                                 </div>

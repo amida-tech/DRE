@@ -20,9 +20,9 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                         top: 0,
                         right: 20,
                         bottom: 28,
-                        left: 50
+                        left: 20
                     },
-                        w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right,
+                        w = 300 - margin.left - margin.right,
                         h = 200 - margin.top - margin.bottom;
                     //set initial svg values
                     var svg = d3.select(ele[0]).append('svg').attr('class', 'chart').attr('width', w + margin.left + margin.right).attr('height', h + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
@@ -46,7 +46,9 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                         //check to see if there is any data before drawing the chart (enable when using data attribute)
                         //if (!data)
                         //  return;
-                        if (renderTimeout) {clearTimeout(renderTimeout);}
+                        if (renderTimeout) {
+                            clearTimeout(renderTimeout);
+                        }
                         renderTimeout = $timeout(function() {
                             //updates chart size on page resize
                             if (d3.select(ele[0]).node().offsetWidth > 0) {
@@ -64,7 +66,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
     }
 ]).directive('measurements', function($window) {
     return {
-        template: '<svg></svg>',
+        template: '<svg width="1000"></svg>',
         restrict: 'EA',
         link: function postLink(scope, element, attrs) {
             //Initial Variables.
@@ -77,7 +79,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
             var graphDates = [];
             var graphValues = [];
             var margin = 60;
-            var width = 400;
+            var width = 1000;
             var height = 200;
             //Override variables.
             if (attrs.svgWidth) {
@@ -140,15 +142,8 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
 
             function drawLineChart() {
                 setChartParameters();
-                svg.append("svg:g")
-                    .attr("class", "x axis")
-                    .attr("transform", "translate(0," + (height - (padding) + 10) + ")")
-                    .call(xAxisGen);
-                
-                svg.append("svg:g")
-                    .attr("class", "y axis").attr("transform", "translate(" + (padding) + ",10)")
-                    .call(yAxisGen);
-
+                svg.append("svg:g").attr("class", "x axis").attr("transform", "translate(0," + (height - (padding) + 10) + ")").call(xAxisGen);
+                svg.append("svg:g").attr("class", "y axis").attr("transform", "translate(" + (padding) + ",10)").call(yAxisGen);
                 if (graphVitals.length > 0) {
                     svg.append("svg:path").attr({
                         d: lineFun(graphVitals),
@@ -171,4 +166,66 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
             drawLineChart();
         }
     };
-});
+}).directive('linechart', ['$window', '$timeout', 'd3Service',
+    function($window, $timeout, d3Service) {
+        return {
+            restrict: 'A',
+            scope: {
+                data: '='
+            },
+            link: function(scope, ele, attrs) {
+                //bring in d3 code as a service
+                d3Service.d3().then(function(d3) {
+                    var renderTimeout;
+                    var margin = {
+                        top: 0,
+                        right: 20,
+                        bottom: 28,
+                        left: 20
+                    },
+                        w = 1000 - margin.left - margin.right,
+                        h = 250 - margin.top - margin.bottom;
+                    //set initial svg values
+                    var svg = d3.select(ele[0]).append('svg').attr('class', 'chart').attr('width', w + margin.left + margin.right).attr('height', h + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+                    //watch window resize to re-render
+                    $window.onresize = function() {
+                        scope.$apply();
+                    };
+                    scope.$watch(function() {
+                        return angular.element($window)[0].innerWidth;
+                    }, function() {
+                        scope.render(scope.data);
+                    });
+                    scope.$on('tabchange', function(event, args) {
+                        scope.render(scope.data);
+                    });
+                    //watch your attributes for changes to re-render
+                    scope.$watch('data', function(newVals, oldVals) {
+                        scope.render(newVals);
+                    }, true);
+                    //called to render chart
+                    scope.render = function(data) {
+                        //clean svg
+                        svg.selectAll('*').remove();
+                        //check to see if there is any data before drawing the chart (enable when using data attribute)
+                        //if (!data)
+                        //  return;
+                        if (renderTimeout) {
+                            clearTimeout(renderTimeout);
+                        }
+                        renderTimeout = $timeout(function() {
+                            //updates chart size on page resize
+                            if (d3.select(ele[0]).node().offsetWidth > 0) {
+                                w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right;
+                                h = d3.select(ele[0]).node().offsetHeight - margin.top - margin.bottom;
+                                svg.attr('width', w + margin.left + margin.right).attr('height', h + margin.top + margin.bottom);
+                            }
+                            //write your chart code here!
+                            svg.append('rect').attr('width', w).attr('height', h).attr('fill', 'black');
+                        }, 100);
+                    };
+                });
+            }
+        };
+    }
+]);
