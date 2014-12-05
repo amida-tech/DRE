@@ -127,7 +127,8 @@
 										<div role="tabpanel" class="collapse" id="details{{sectionEntry.section}}{{noteIndex}}">
 											<div class="sub-entry">
 											<h3>Entry Details</h3>
-												<a href="#/record/allergies"><h5>{{noteEntry.entryTitle}}</h5></a>
+												<a ng-hide="sectionEntry.section === 'claims' || sectionEntry.section === 'insurance'" href="#/record/{{sectionEntry.section}}"><h5>{{noteEntry.entryTitle}}</h5></a>
+												<a ng-show="sectionEntry.section === 'claims' || sectionEntry.section === 'insurance'" href="#/billing/{{sectionEntry.section}}"><h5>{{noteEntry.entryTitle}}</h5></a>
 												<h5>{{noteEntry.entrySubTitleOne}}</h5>
 												<h5>{{noteEntry.entrySubTitleTwo}}</h5>
 											</div>
