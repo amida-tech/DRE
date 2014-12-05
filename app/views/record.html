@@ -44,7 +44,7 @@
                 <div class="panel-body">
                     <div class="col-sm-5">
                         <div class="row">
-                            <h3>Measurements</h3>
+                            <h4 class="text-muted">Measurements</h4>
                             <table class="table">
                                 <tbody>
                                     <tr>
@@ -76,7 +76,7 @@
                             <div title="{{ tabs[0].title }}" bs-pane>
 
 
-                                <div linechart></div>
+                                <div linechart graph-type="weight" data="entries.vitals"></div>
                                 <div class="col-sm-12 text-center">
                                     Weight (lbs)
                                 </div>
@@ -85,7 +85,7 @@
                             <div title="{{ tabs[1].title }}" bs-pane>
 
 
-                                <div linechart></div>
+                                <div linechart graph-type="bloodPressure" data="entries.vitals"></div>
                                 <div class="col-sm-12 text-center">
                                     Blood Pressure
                                 </div>
