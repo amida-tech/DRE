@@ -20,7 +20,7 @@ angular.module('phrPrototypeApp').directive('recordNavigation', ['$window',
                 
                 $(window).scroll(function(e) {
                     var $el = $('.fixedElement');
-                    if ($(this).scrollTop() > eTop && $el.css('position') != 'fixed') {
+                    if ($(this).scrollTop() > eTop && $el.css('position') !== 'fixed') {
                         $('.fixedElement').css({
                             'position': 'fixed',
                             'top': '20px',
@@ -29,7 +29,7 @@ angular.module('phrPrototypeApp').directive('recordNavigation', ['$window',
                             'height': eHeight + 'px'
                         });
                     }
-                    if ($(this).scrollTop() < eTop && $el.css('position') == 'fixed') {
+                    if ($(this).scrollTop() < eTop && $el.css('position') === 'fixed') {
                         $('.fixedElement').css({
                             'position': 'static',
                             'top': '0px',
