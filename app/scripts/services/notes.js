@@ -8,7 +8,7 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-    .service('notes', function notes(allergies, encounters, format) {
+    .service('notes', function notes(allergies, encounters, immunizations, medications, conditions, procedures, vitals, results, social, format) {
 
         var tmpNotes = [];
 
@@ -108,6 +108,49 @@ angular.module('phrPrototypeApp')
 
         }
 
+        function getImmunizations(callback) {
+            immunizations.getRecord(function (err, entries) {
+
+                var returnEntries = [];
+
+                _.each(entries, function (entry) {
+
+                    //Loop each note.
+                    if (entry.metadata.comments) {
+                        _.each(entry.metadata.comments, function (comment) {
+
+                            var commentObject = {
+                                'note': comment,
+                            };
+
+                            if (entry.data.product.product.name) {
+                                commentObject.entryTitle = entry.data.product.product.name;
+                            }
+
+                            if (entry.data.date_time) {
+                                _.each(entry.data.date_time, function (dateEntry) {
+                                    format.formatDate(dateEntry);
+                                });
+                                entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
+                                commentObject.entrySubTitleOne = entry.data.date_time.displayDate;
+                            }
+
+                            returnEntries.push(commentObject);
+
+                        });
+                    }
+
+                });
+
+                var returnObject = {
+                    'section': 'immunizations',
+                    'notes': returnEntries
+                };
+
+                callback(null, returnObject);
+            });
+
+        }
 
 
 
@@ -120,7 +163,7 @@ angular.module('phrPrototypeApp')
 
             function checkDone() {
               iter++;
-              if (iter === 2) {
+              if (iter === 3) {
                 callback(null, tmpNotes);  
               }
             }
@@ -131,6 +174,11 @@ angular.module('phrPrototypeApp')
             });
 
             getEncounters(function (err, results) {
+                tmpNotes = tmpNotes.concat(results);
+                checkDone();
+            });
+
+            getImmunizations(function (err, results) {
                 tmpNotes = tmpNotes.concat(results);
                 checkDone();
             });

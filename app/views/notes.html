@@ -17,6 +17,48 @@
 							Encounters
 						</label>
 					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.immunizations">
+							Immunizations
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.medications">
+							Medications
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.conditions">
+							Conditions
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.conditions">
+							Procedures
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.vitals">
+							Vital Signs
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.results">
+							Test Results
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.social">
+							Social History
+						</label>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -63,14 +105,14 @@
 										<div class="pull-left">
 											<h6>{{noteEntry.note.date | date:'short'}}</h6>
 										</div>
-										<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#details{{noteIndex}}" aria-expanded="false" aria-controls="details{{noteIndex}}" >
+										<button class="pull-right btn btn-link" data-toggle="collapse" data-target="#details{{sectionEntry.section}}{{noteIndex}}" aria-expanded="false" aria-controls="details{{sectionEntry.section}}{{noteIndex}}" >
 											<span><i class="fa fa-ellipsis-h"></i> Entry</span>
 										</button>
 									</div>
 									<div class="col-sm-12" >
 
 										<!--Record detail pane.-->
-										<div role="tabpanel" class="collapse" id="details{{noteIndex}}">
+										<div role="tabpanel" class="collapse" id="details{{sectionEntry.section}}{{noteIndex}}">
 											<div class="sub-entry">
 											<h3>Entry Details</h3>
 												<a href="#/record/allergies"><h5>{{noteEntry.entryTitle}}</h5></a>

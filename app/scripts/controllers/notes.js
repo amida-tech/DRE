@@ -14,7 +14,14 @@
 
  	$scope.visible_sections = {
  		'allergies': true,
- 		'encounters': true
+ 		'encounters': true,
+ 		'immunizations': true,
+ 		'medications': true,
+ 		'conditions': true,
+ 		'procedures': true,
+ 		'vitals': true,
+ 		'results': true,
+ 		'social': true
  	};
 
  	function getNotes() {
