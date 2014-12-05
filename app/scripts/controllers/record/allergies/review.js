@@ -21,8 +21,8 @@ angular.module('phrPrototypeApp')
 
         //Instantiate empty clone of object structure.
         var selectedOriginal = {
-            "date_time": null,
             "observation": {
+                "status": null,
                 "reactions": {}
             }
         };
@@ -81,7 +81,6 @@ angular.module('phrPrototypeApp')
         }
 
         $scope.selectEntry = function (matchIndex) {
-
             _.each($scope.selected, function (elem, name, list) {
 
                 if (elem === true) {
@@ -90,7 +89,12 @@ angular.module('phrPrototypeApp')
                     $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].origMatch[name];
                     formatDates();
                 } else if (_.isObject(elem)) {
-
+                    // Handle status
+                    if (elem.status === true) {
+                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].newMatch[name].status;
+                    } else if (elem.status === false) {
+                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].origMatch[name].status;
+                    }
                     //Explicitly handle reactions.
                     _.each(elem.reactions, function (rElem, rName, rList) {
 

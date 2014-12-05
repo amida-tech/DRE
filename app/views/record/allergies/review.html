@@ -73,40 +73,40 @@
 							</thead>
 							<tbody>
 
-								<!--Date Diff.-->
-								<tr ng-if="matchEntry.diff.date_time">
-									<td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.date_time}">
+								<!--Status Diff.-->
+								<tr ng-if="matchEntry.diff.observation.status">
+									<td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.observation.status}">
 										<table class="table table-condensed col-sm-12">
 											<thead>
 												<tr>
 													<td>
 														<label>
-															<input type="checkbox" ng-model="selected.date_time" ng-change="selectEntry(matchIndex)">
+															<input type="checkbox" ng-model="selected.observation.status" ng-change="selectEntry(matchIndex)">
 														</label>
 													</td>
 													<td class="col-sm-3">
-														Date:
+														Status:
 													</td>
 													<td class="col-sm-9">
-														<div class="pull-right" ng-if="matchEntry.diff.date_time === 'diff'">
+														<div class="pull-right" ng-if="matchEntry.diff.observation.status === 'diff'">
 															<span class="label label-info">Different</span>
 														</div>
-														{{matchEntry.newMatch.date_time.displayDate}}
+														{{matchEntry.newMatch.observation.status.name}}
 													</td>
 												</tr>
 											</thead>
 										</table>
 									</td>
 									<td class="text-center update-spacer"></td>
-									<td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.date_time}">
+									<td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.observation.status}">
 										<table class="table table-condensed col-sm-12">
 											<thead>
 												<tr>
 													<td class="col-sm-3">
-														Date:
+														Status:
 													</td>
 													<td class="col-sm-9">
-														{{matchEntry.srcMatch.date_time.displayDate}}
+														{{matchEntry.srcMatch.observation.status.name}}
 													</td>
 												</tr>
 											</thead>
@@ -134,8 +134,8 @@
 																			<label>
 																				<h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.observation.reactions[reactionIndex]" ng-change="selectEntry(matchIndex)">{{matchEntry.newMatch.observation.reactions[reactionIndex].reaction.name}}</h5>
 																			</label>
-																			<div class="pull-right" ng-if="matchEntry.diff.observation.reactions === 'new'">
-																				<span class="label label-primary">New</span>
+																			<div class="pull-right" ng-if="matchEntry.diff.observation.reactions === 'diff'">
+																				<span class="label label-info">Different</span>
 																			</div>
 																			<td>
 																			</tr>
@@ -177,27 +177,24 @@
 
 																			<tr>
 																				<td colspan="2">
-
-
-																					<h5>{{reactionEntry.reaction.name}}</h5>
-
-																					<td>
+																					<h5>{{matchEntry.srcMatch.observation.reactions[reactionIndex].reaction.name}}</h5>
+																					</td>
 																					</tr>
 																				</thead>
-																				<tbody>
-																					<tr>
-																						<td>Severity:</td>
-																						<td>{{reactionEntry.severity.code.name}}</td>
-																					</tr>
-																					<tr>
-																						<td>Code:</td>
-																						<td>{{reactionEntry.reaction.code}}</td>
-																					</tr>
-																					<tr>
-																						<td>Code System:</td>
-																						<td>{{reactionEntry.reaction.code_system_name}}</td>
-																					</tr>
-																				</tbody>
+																		<tbody>
+																			<tr>
+																				<td>Severity:</td>
+																				<td>{{matchEntry.srcMatch.observation.reactions[reactionIndex].severity.code.name}}</td>
+																			</tr>
+																			<tr>
+																				<td>Code:</td>
+																				<td>{{matchEntry.srcMatch.observation.reactions[reactionIndex].severity.code.code}}</td>
+																			</tr>
+																			<tr>
+																				<td>Code System:</td>
+																				<td>{{matchEntry.srcMatch.observation.reactions[reactionIndex].severity.code.code_system_name}}</td>
+																			</tr>
+																		</tbody>
 																			</table>
 																		</div>
 																	</td>
