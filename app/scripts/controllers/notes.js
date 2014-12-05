@@ -26,6 +26,23 @@
  		'insurance': true
  	};
 
+ 	$scope.no_sections = false;
+
+ 	$scope.switchSections = function () {
+ 		var tmpCount = 0;
+ 		_.each($scope.visible_sections, function(entry) {
+ 			if (entry) {
+ 				tmpCount++;
+ 			}
+ 		});
+
+ 		if (tmpCount > 0) {
+ 			$scope.no_sections = false;
+ 		} else {
+ 			$scope.no_sections = true;
+ 		}
+ 	};
+
  	function getNotes() {
  		notes.getNotes(function(err, returnNotes) {
  			$scope.notes = [];

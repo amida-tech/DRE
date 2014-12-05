@@ -7,67 +7,67 @@
 				<form novalidate>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.allergies">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.allergies" ng-change="switchSections()">
 							Allergies
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.encounters">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.encounters" ng-change="switchSections()">
 							Encounters
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.immunizations">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.immunizations" ng-change="switchSections()">
 							Immunizations
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.medications">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.medications" ng-change="switchSections()">
 							Medications
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.conditions">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.conditions" ng-change="switchSections()">
 							Conditions
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.procedures">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.procedures" ng-change="switchSections()">
 							Procedures
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.vitals">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.vitals" ng-change="switchSections()">
 							Vital Signs
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.results">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.results" ng-change="switchSections()">
 							Test Results
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.social">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.social" ng-change="switchSections()">
 							Social History
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.claims">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.claims" ng-change="switchSections()">
 							Claims
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.insurance">
+							<input type="checkbox" checked="checked" value="true" ng-model="visible_sections.insurance" ng-change="switchSections()">
 							Insurance
 						</label>
 					</div>
@@ -95,7 +95,8 @@
 		<div class="text-center"><h4>Review Notes</h4></div>
 		<div class="panel">
 			<div class="panel-body">
-				
+
+				<div ng-show="no_sections" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
 				<!--Each Entry-->
 				<div ng-repeat="(sectionIndex, sectionEntry) in notes">
 					
