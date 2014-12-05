@@ -127,6 +127,10 @@ angular
         templateUrl: 'views/files/upload.html',
         controller: 'FilesUploadCtrl'
       })
+      .when('/record/encounters/review', {
+        templateUrl: 'views/record/encounters/review.html',
+        controller: 'RecordEncountersReviewCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
