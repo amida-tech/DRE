@@ -20,8 +20,15 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, reco
         "data": {},
         "chartName": "d3template"
     }];
-    $scope.tabs.activeTab = 1;
-
+    $scope.tabs.activeTab = 0;
+    $scope.$watch('tabs.activeTab', function(newVal, oldVal) {
+        if (newVal !== oldVal) {
+            $scope.$broadcast('tabchange', {
+                "val": newVal
+            });
+        }
+    });
+    $scope.entryType = "all";
     function dashPrep() {
         var weightDateArray = [];
         var heightDateArray = [];
