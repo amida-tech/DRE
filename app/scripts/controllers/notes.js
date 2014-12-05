@@ -21,7 +21,9 @@
  		'procedures': true,
  		'vitals': true,
  		'results': true,
- 		'social': true
+ 		'social': true,
+ 		'claims': true,
+ 		'insurance': true
  	};
 
  	function getNotes() {
