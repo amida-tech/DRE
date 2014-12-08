@@ -1,8 +1,7 @@
-<div class="row" style="margin: 20px;">
-    <!--Profile-->
-    <div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+<div class="container-fluid body-content">
+    <div id="profileSidebar" class="col-sm-3 body-left">
         <div profile></div>
-        <div billingnavigation></div>
+        <div record-navigation></div>
     </div>
 
     <!--Body Header-->
@@ -17,7 +16,7 @@
 
                         <div class="col-sm-8">
                             <div class="pull-left">
-                                <h1 style="text-transform: Capitalize;">Suzie's {{entryType}}</h1>
+                                <h1 class="capitalize">Suzie's {{entryType}}</h1>
                                 <p>Last Updated: {{updateDate}}</p>
                             </div>
                         </div>
@@ -35,14 +34,10 @@
 
                 <div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
-                    <div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
+                    <div class="col-sm-12 row timeline-side">
+                        <entry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
+                    </div>   
 
-                        
-                            <entry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
-                        
-
-
-                    </div>                    
                 </div>
                     <div class="col-sm-2 center-block text-center timeline-footer">
                         <svg width="30" height="30">
