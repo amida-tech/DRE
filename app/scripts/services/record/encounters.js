@@ -75,6 +75,25 @@ angular.module('phrPrototypeApp')
                             "precision": "day"
                         }
                     }
+                },
+                {
+                    "identifiers": [
+                        {
+                            "identifier": "db734647-fc99-424c-a864-7e3cda82e703",
+                            "extension": "45665"
+                        }
+                    ],
+                    "value": {
+                        "name": "Diarrea",
+                        "code": "12345",
+                        "code_system_name": "SNOMED CT"
+                    },
+                    "date_time": {
+                        "low": {
+                            "date": "2007-01-03T00:00:00Z",
+                            "precision": "day"
+                        }
+                    }
                 }]
             }];
 
@@ -174,21 +193,16 @@ angular.module('phrPrototypeApp')
                     "match": "partial",
                     "percent": 75,
                     "subelements": {
-                        "observation": {
-                            "reactions": [{
-                                "match": "new",
-                                "percent": 0,
-                                "src_id": "0",
-                                "dest_id": "0",
-                                "dest": "dest"
-                            }]
-                        }
+                        "findings": [{
+                            "match": "new",
+                            "percent": 0,
+                            "src_id": "1",
+                            "dest_id": "0",
+                            "dest": "dest"
+                        }]
                     },
                     "diff": {
-                        "observation": {
-                            "status": "diff",
-                            "reactions": "diff"
-                        }
+                        "findings": "new"
                     },
                     "srcMatch": recordResults[0],
                     "newMatch": partialResults[0]
@@ -197,6 +211,8 @@ angular.module('phrPrototypeApp')
                 callback(null, tmpMatch);
 
             });
+
+
         });
     }
 

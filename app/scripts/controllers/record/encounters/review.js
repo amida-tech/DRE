@@ -20,10 +20,7 @@ angular.module('phrPrototypeApp')
 
         //Instantiate empty clone of object structure.
         var selectedOriginal = {
-            "observation": {
-                "status": null,
-                "reactions": {}
-            }
+            "findings": {}
         };
 
         $scope.selected = angular.copy(selectedOriginal);
@@ -95,30 +92,30 @@ angular.module('phrPrototypeApp')
                         $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].origMatch[name].status;
                     }
                     //Explicitly handle reactions.
-                    _.each(elem.reactions, function (rElem, rName, rList) {
+                    _.each(elem.findings, function (rElem, rName, rList) {
 
                         if (rElem === true) {
 
-                            var newReaction = $scope.match[matchIndex].newMatch[name].reactions[rName];
-                            newReaction.srcMatchIndex = rName;
+                            var newFinding = $scope.match[matchIndex].newMatch[name].finding[rName];
+                            newFinding.srcMatchIndex = rName;
 
-                            if (!$scope.match[matchIndex].srcMatch[name].reactions) {
-                                $scope.match[matchIndex].srcMatch[name].reactions = [];
+                            if (!$scope.match[matchIndex].srcMatch[name].findings) {
+                                $scope.match[matchIndex].srcMatch[name].findings = [];
                             }
 
-                            $scope.match[matchIndex].srcMatch[name].reactions.push(newReaction);
+                            $scope.match[matchIndex].srcMatch[name].findings.push(newFinding);
                         } else if (rElem === false) {
 
                             //Index to splice.
                             //console.log(rName);
 
-                            _.each($scope.match[matchIndex].srcMatch[name].reactions, function (rxElem, rxName, rxList) {
+                            _.each($scope.match[matchIndex].srcMatch[name].findings, function (rxElem, rxName, rxList) {
 
                                 if (rxElem.srcMatchIndex) {
                                     if (rxElem.srcMatchIndex === rName) {
                                         //Splice ID.
                                         console.log(rxName);
-                                        $scope.match[matchIndex].srcMatch[name].reactions.splice(rxName);
+                                        $scope.match[matchIndex].srcMatch[name].findings.splice(rxName);
                                     }
                                 }
                             });
@@ -144,9 +141,9 @@ angular.module('phrPrototypeApp')
 
             console.log($scope.match[matchIndex].srcMatch);
 
-            allergies.saveEntry($scope.match[matchIndex].srcMatch, function (err) {
+            encounters.saveEntry($scope.match[matchIndex].srcMatch, function (err) {
 
-                $location.path('/record/allergies');
+                $location.path('/record/encounters');
 
 
             });
