@@ -33,6 +33,8 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     	});
     };
 
+    $.lockfixed(".sidebar-control",{offset: {top: 10}});
+
     function getNotes() {
         notes.getNotes(function(err, returnNotes) {
             $scope.notes = [];
