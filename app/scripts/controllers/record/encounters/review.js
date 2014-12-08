@@ -61,17 +61,44 @@ angular.module('phrPrototypeApp')
             //Add displayDate to all entries.
             _.each($scope.match, function (entry) {
 
-                //Format newMatch Date Display.
-                _.each(entry.newMatch.date_time, function (dateEntry) {
-                    format.formatDate(dateEntry);
-                });
-                entry.newMatch.date_time.displayDate = format.outputDate(entry.newMatch.date_time);
+            	//newMatch
+                if (entry.newMatch.date_time) {
+                    _.each(entry.newMatch.date_time, function (dateEntry) {
+                        format.formatDate(dateEntry);
+                    });
+					entry.newMatch.date_time.displayDate = format.outputDate(entry.newMatch.date_time);
+					entry.newMatch.date_time.plotDate = format.plotDate(entry.newMatch.date_time);
+                }
 
-                //Format srcMatch Date Display.
-                _.each(entry.srcMatch.date_time, function (dateEntry) {
-                    format.formatDate(dateEntry);
-                });
-                entry.srcMatch.date_time.displayDate = format.outputDate(entry.srcMatch.date_time);
+                if (entry.newMatch.findings) {
+                	_.each(entry.newMatch.findings, function (finding) {
+                		if (finding.date_time) {
+                			_.each(finding.date_time, function(dateEntry) {
+                				format.formatDate(dateEntry);
+                			});
+                			finding.date_time.displayDate = format.outputDate(finding.date_time);
+                		}
+                	});
+                }
+            	//srcMatch
+                if (entry.srcMatch.date_time) {
+                    _.each(entry.srcMatch.date_time, function (dateEntry) {
+                        format.formatDate(dateEntry);
+                    });
+					entry.srcMatch.date_time.displayDate = format.outputDate(entry.srcMatch.date_time);
+					entry.srcMatch.date_time.plotDate = format.plotDate(entry.srcMatch.date_time);
+                }
+
+                if (entry.srcMatch.findings) {
+                	_.each(entry.srcMatch.findings, function (finding) {
+                		if (finding.date_time) {
+                			_.each(finding.date_time, function(dateEntry) {
+                				format.formatDate(dateEntry);
+                			});
+                			finding.date_time.displayDate = format.outputDate(finding.date_time);
+                		}
+                	});
+                }
 
             });
         }
@@ -85,22 +112,16 @@ angular.module('phrPrototypeApp')
                     $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].origMatch[name];
                     formatDates();
                 } else if (_.isObject(elem)) {
-                    // Handle status
-                    if (elem.status === true) {
-                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].newMatch[name].status;
-                    } else if (elem.status === false) {
-                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].origMatch[name].status;
-                    }
-                    //Explicitly handle reactions.
+                    //Explicitly handle findings.
                     _.each(elem.findings, function (rElem, rName, rList) {
 
                         if (rElem === true) {
 
-                            var newFinding = $scope.match[matchIndex].newMatch[name].finding[rName];
+                            var newFinding = $scope.match[matchIndex].newMatch[name].findings[rName];
                             newFinding.srcMatchIndex = rName;
 
-                            if (!$scope.match[matchIndex].srcMatch[name].findings) {
-                                $scope.match[matchIndex].srcMatch[name].findings = [];
+                            if (!$scope.match[matchIndex].srcMatch[name].findings[rName]) {
+                                $scope.match[matchIndex].srcMatch[name].findings[rName] = [];
                             }
 
                             $scope.match[matchIndex].srcMatch[name].findings.push(newFinding);
