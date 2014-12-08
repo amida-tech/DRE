@@ -1,155 +1,142 @@
 <div class="row" style="margin: 20px;">
-	<!--Profile-->
-	<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
-		<div profile></div>
-		<div record-navigation></div>
-	</div>
+    <!--Profile-->
+    <div id="profileSidebar" class="col-sm-3" style="padding-right: 20px; height: 100%;">
+        <div profile></div>
+        <div record-navigation></div>
+    </div>
+    <!--Body-->
+    <div class="col-sm-9">
+        <div class="panel">
+            <div class="panel-body">
+                <!--Header Items-->
+                <div class="col-sm-12">
+                    <div class="row col-sm-12" breadcrumb></div>
+                    <div class="col-sm-12">
 
-	<!--Body-->
-	<div class="col-sm-9">
-		<div class="panel">
-			<div class="panel-body">
-
-				<!--Header Items-->
-				<div class="col-sm-12">
-					<div class="row col-sm-12" breadcrumb></div>
-					<div class="col-sm-12">
-						
-						<div class="pull-left">
-							<h1>Suzie's Record Overview</h1>
-							<p>This page gives an overview of your health record activity.</p>
-							<p>Last updated:  July 31, 2014</p>
-						</div>
-
-						<div class="pull-right">
-							<a href="#/record/download">
-								<button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
-									<div class="col-sm-12 text-left" style="text-transform: none;">
-										<div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
-											<img class="img-navbar-logo img-responsive"src="images/bb-logo-vector.png" style="margin: 0px;">
-										</div>
-										<div class="pull-right">
-											<h6 style="text-transform: none; margin: 0px;">BlueButton</h6>
-											<h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Download</br>my data<span style="font-size: 8px; vertical-align: top;">&reg;</span></h5>
-										</div>
-									</div>
-								</button>
-							</a>
-							<h6 style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
-						</div>
-
-					</div>
-				</div>			
-			</div>
-		</div>
-
-		<!--d3.-->
-		<div class="col-sm-12">
-
-			<div class="col-sm-6" style="padding-right: 20px;">
-				<div class="panel">
-					<div class="panel-body">
-						<div class="col-sm-12">
-							<h4>Measurements</h4>
-						</div>
-						<div class="col-sm-3">
-							<h5>Height</h5>
-							<h4>{{dashMetrics.height.disp}}</h4>
-							<h5>Weight</h5>
-							<h4>{{dashMetrics.weight.disp}}</h4>
-							<h5>BMI</h5>
-							<h4>{{dashMetrics.bmi}}</h4>
-						</div>
-						<div class="col-sm-9">
-							<div class="col-sm-12 text-center">
-								2014
-							</div>
-							<div measurements svg-width="200" svg-height="200" graph-type="weight" class="pull-right" id="graphTwo"></div>
-							<div class="col-sm-12 text-center">
-								Weight (lbs)
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-			<div class="col-sm-6">
-				<div class="panel">
-					<div class="panel-body">
-						<div class="col-sm-12">
-							<h4>Blood Pressure</h4>
-						</div>
-						<div class="col-sm-6">
-							<h3>Systolic</h3>
-							<h4>{{dashMetrics.systolic.value}}</h4>
-							<h3>Diastolic</h3>
-							<h4>{{dashMetrics.diastolic.value}}</h4>
-						</div>
-						<div class="col-sm-6">
-							<div class="col-sm-12 text-center">
-								2014
-							</div>
-							<div measurements svg-width="200" svg-height="200" graph-type="bloodPressure" class="pull-right" id="graphOne"></div>
-							<div class="col-sm-12 text-center">
-								Blood Pressure
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div><!--end d3-->
-
-		<!--Timeline View-->
-		<div class="col-sm-12">
-			<h4 class="text-center">Record History</h4>
-			<div class="panel">
-				<div class="panel-body">
-					<div>
-						<p>Timeline</p>
-					</div>
-					<div timeline chart-data="entryList" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
-
-					<div ng-repeat="(recordIndex, recordEntry) in entryList" class="col-sm-12 row" id="record{{recordIndex}}">
-
-						<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
-
-							<!--Timeline Icon-->
-							<div class="col-sm-2">
-								<a href="#/record/{{recordEntry.category}}" class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{recordEntry.category}}" timeline-index="{{recordIndex}}"></a>
-							</div>
+                        <div class="pull-left">
+                            <h1>Suzie's Record Overview</h1>
+                            <p>This page gives an overview of your health record activity.</p>
+                            <p>Last updated:  July 31, 2014</p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#/record/download">
+                            <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
+                            <div class="col-sm-12 text-left" style="text-transform: none;">
+                                <div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
+                                    <img class="img-navbar-logo img-responsive"src="images/bb-logo-vector.png" style="margin: 0px;">
+                                </div>
+                                <div class="pull-right">
+                                    <h6 style="text-transform: none; margin: 0px;">BlueButton</h6>
+                                    <h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Download</br>my data<span style="font-size: 8px; vertical-align: top;">&reg;</span></h5>
+                                </div>
+                            </div>
+                            </button>
+                            </a>
+                            <h6 style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--d3.-->
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-sm-5">
+                        <div class="row">
+                            <h4 class="text-muted">Measurements</h4>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td><h4>Height</h4></td>
+                                        <td><h5>{{dashMetrics.height.disp}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h4>Weight</h4></td>
+                                        <td><h5>{{dashMetrics.weight.disp}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h4>BMI</h4></td>
+                                        <td><h5>{{dashMetrics.bmi}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h4>Systolic/Diastolic</h4></td>
+                                        <td><h5>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h5></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-6">
 
 
-							<div class="col-sm-10">
-								<div class="panel timeline-entry">
-									<div class="panel-body" id="accordian">
-
-										<div class="timeline-entry-header col-sm-12">
-											<div class="col-sm-6">
-												<h4 class="text-left">{{recordEntry.category}} Added</h4>
-												<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-2 center-block text-center timeline-footer">
-						<svg width="30" height="30">
-							<circle cx="15" cy="15" r="15"></circle>
-						</svg>
-					</div>
-				</div>
-			</div><!--end timeline-->
-		</div>
-
-	</div>
+                        <div bs-active-pane="tabs.activeTab" bs-tabs>
+                            <div title="{{ tabs[0].title }}" bs-pane>
 
 
-	<pre>{{masterRecord | json}}</pre>
+                                <div linechart graph-type="weight" data="entries.vitals"></div>
+                                <div class="col-sm-12 text-center">
+                                    Weight (lbs)
+                                </div>
 
-</div>
+                            </div>
+                            <div title="{{ tabs[1].title }}" bs-pane>
+
+
+                                <div linechart graph-type="bloodPressure" data="entries.vitals"></div>
+                                <div class="col-sm-12 text-center">
+                                    Blood Pressure
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <!--end d3-->
+            <!--Timeline View-->
+            <div class="col-sm-12">
+                <h4 class="text-center">Record History</h4>
+                <div class="panel">
+                    <div class="panel-body">
+                        <div>
+                            <p>Timeline</p>
+                        </div>
+                        <div timeline chart-data="entryList" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+                        <div ng-repeat="(recordIndex, recordEntry) in entryList" class="col-sm-12 row" id="record{{recordIndex}}">
+                            <div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
+                                <!--Timeline Icon-->
+                                <div class="col-sm-2">
+                                    <a href="#/record/{{recordEntry.category}}" class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{recordEntry.category}}" timeline-index="{{recordIndex}}"></a>
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="panel timeline-entry">
+                                        <div class="panel-body" id="accordian">
+                                            <div class="timeline-entry-header col-sm-12">
+                                                <div class="col-sm-6">
+                                                    <h4 class="text-left">{{recordEntry.category}} Added</h4>
+                                                    <h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 center-block text-center timeline-footer">
+                            <svg width="30" height="30">
+                            <circle cx="15" cy="15" r="15"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                    </div><!--end timeline-->
+                </div>
+            </div>
+<pre>{{masterRecord | json}}</pre>
+        </div>

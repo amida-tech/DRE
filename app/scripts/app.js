@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'mgcrea.ngStrap',
     'd3'
   ])
   .config(function ($routeProvider) {

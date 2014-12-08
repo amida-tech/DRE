@@ -16,7 +16,7 @@ angular.module('d3', [])
   scriptTag.async = true;
   scriptTag.src = 'bower_components/d3/d3.js';
   scriptTag.onreadystatechange = function () {
-    if (this.readyState === 'complete') onScriptLoad();
+    if (this.readyState === 'complete') {onScriptLoad();}
   };
   scriptTag.onload = onScriptLoad;
  
