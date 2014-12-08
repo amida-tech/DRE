@@ -1,7 +1,8 @@
-<div class="container-fluid body-content">
-	<div id="profileSidebar" class="col-sm-3 body-left">
+
+<div class="row" style="margin: 20px;">
+	<!--Profile-->
+	<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
 		<div profile></div>
-		<div record-navigation></div>
 	</div>
 
 	<!--Upload File Dialogue 1.-->
@@ -23,7 +24,7 @@
 					<form role="form">
 						<div class="form-group col-sm-12 file">
 							<input class="form-control" type="file" id="uploadFile" file-model="myFile"/>
-							<div class="pull-right button-well">
+							<div class="pull-right" style="margin: 10px;">
 								<button class="btn btn-primary" ng-click="incrementStep()">Continue</button>
 							</div>
 						</div>
@@ -56,11 +57,11 @@
 						<div class="panel-body">
 
 							<!--Labels-->
-							<div class="col-sm-12 diff">
-								<div class="col-sm-6 diff-left">
+							<div class="col-sm-12">
+								<div class="col-sm-6" style="padding-right: 20px;">
 									<h5 class="text-center">New Record</h5>
 								</div>
-								<div class="col-sm-6 diff-right">
+								<div class="col-sm-6" style="padding-left: 20px;">
 									<h5 class="text-center">Current Record</h5>
 								</div>
 							</div>
@@ -73,7 +74,7 @@
 
 										<!--Name Diff-->
 										<tr>
-											<td class="bordered">
+											<td style="border: 1px solid #ccc;">
 												<table class="table table-condensed col-sm-12">
 													<thead>
 														<tr>
@@ -88,7 +89,7 @@
 												</table>
 											</td>
 											<td class="text-center update-spacer"></td>
-											<td class="bordered">
+											<td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.date_time}">
 												<table class="table table-condensed col-sm-12">
 													<thead>
 														<tr>
@@ -106,7 +107,7 @@
 
 										<!--DOB Diff-->
 										<tr>
-											<td class="bordered">
+											<td style="border: 1px solid #ccc;">
 												<table class="table table-condensed col-sm-12">
 													<thead>
 														<tr>
@@ -121,9 +122,13 @@
 												</table>
 											</td>
 											<td class="text-center update-spacer">
-												<i class="fa fa-arrow-circle-o-right fa-2x"></i>
+												<svg height="40" width="20" style="position: relative; left: -14px; top: 3px;">
+													<polygon points="0,0 20,20 0,40 -10,40" style="fill:#fff;stroke:#ddd;stroke-width:1"></polygon>
+												</svg>
+
+
 											</td>
-											<td class="bordered">
+											<td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.date_time}">
 												<table class="table table-condensed col-sm-12">
 													<thead>
 														<tr>
@@ -141,7 +146,7 @@
 
 										<!--Gender Diff-->
 										<tr>
-											<td class="bordered">
+											<td style="border: 1px solid #ccc;">
 												<table class="table table-condensed col-sm-12">
 													<thead>
 														<tr>
@@ -156,7 +161,7 @@
 												</table>
 											</td>
 											<td class="text-center update-spacer"></td>
-											<td class="bordered">
+											<td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.date_time}">
 												<table class="table table-condensed col-sm-12">
 													<thead>
 														<tr>
@@ -183,9 +188,10 @@
 
 					</div>
 
-					<div class="pull-right button-well">
+					<div class="pull-right" style="margin: 10px;">
 						<button class="btn btn-default" ng-click="return()">Cancel</button>
 						<button class="btn btn-primary" ng-click="incrementStep()">Confirm</button>
+
 					</div>
 
 
@@ -223,7 +229,7 @@
 
 					</div>
 
-					<div class="pull-right button-well">
+					<div class="pull-right" style="margin: 10px;">
 						<button class="btn btn-default" ng-click="return()">Cancel</button>
 						<button class="btn btn-info" ng-click="return()">Save Only</button>
 						<button class="btn btn-primary" ng-click="return()">Import & Save</button>

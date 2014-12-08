@@ -11,9 +11,9 @@
                     <h5 class="text-left">{{entrySubTitleTwo}}</h5>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="#/record/allergies/review"><button class="btn btn-link"><i class="fa fa-flag fa-inline"></i>1 pending update</button></a>
+                    <a href="#/record/allergies/review"><button class="btn btn-link"><i class="fa fa-flag" style="margin-right: 10px;"></i>1 pending update</button></a>
                     <div ng-show="recordEntry.metadata.starred_comments > 0">
-                        <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star fa-inline"></i>{{recordEntry.metadata.starred_comments}} starred note<span ng-show="recordEntry.metadata.starred_comments > 1">s</span></button>
+                        <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star" style="margin-right: 10px;"></i>{{recordEntry.metadata.starred_comments}} starred note<span ng-show="recordEntry.metadata.starred_comments > 1">s</span></button>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                                 <tbody>
                                     <tr ng-repeat="(attrIndex, attrEntry) in entryMetaData.attribution">
                                         <td><a href="#/files">{{attrEntry.source}}</a></td>
-                                        <td class="capitalize">{{attrEntry.status}}</td>
+                                        <td style="text-transform: capitalize;">{{attrEntry.status}}</td>
                                         <td>{{attrEntry.merged | date:'short'}}</td>
                                     </tr>
                                 </tbody>
