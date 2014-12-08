@@ -1,1 +1,80 @@
-<p>This is the record/encounters/review view.</p>
+
+<div class="container-fluid body-content">
+	<!--Profile-->
+	<div class="col-sm-3 body-left" >
+		<div profile></div>
+	</div>
+
+	
+	<div class="col-sm-9">
+
+		<!--Header-->	
+		<div class="panel">
+			<div class="panel-body">
+				<div class="col-sm-12">
+					<div class="row col-sm-12" breadcrumb></div>
+					<div class="col-sm-12">
+						<div class="col-sm-12">
+							<div class="pull-left">
+								<h1>Review <span style="text-transform: capitalize;">Encounter Updates</span></h1>
+								<p>Entries to the left are possible updates to a current entry in your record, displayed to the right.</p>
+								<p>Use the checkboxes to select updates you wish to apply.</p>
+								<h6>Note:  Only differences between the entries are displayed.</h6>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+
+
+		<!--Implementation-->
+		<div ng-repeat="(matchIndex, matchEntry) in match">
+			<h4 class="text-center">Update #{{matchIndex + 1}}</h4>		
+			<div class="panel col-sm-12">
+				<div class="panel-body">
+
+					<!--Labels-->
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+							<h5 class="text-center">Record Updates</h5>
+						</div>
+						<div class="col-sm-6">
+							<h5 class="text-center">Current Record</h5>
+						</div>
+					</div>
+
+					<div class="col-sm-12">
+
+						<table class="table col-sm-12 table-hover">
+							<thead>
+								<tr>
+									<td class="col-sm-6" style="border: 1px solid #ccc;">
+										<div class="col-sm-11">
+											<h4 class="text-left">{{matchEntry.newMatch.encounter.name}}</h4>
+											<h5 ng-repeat="location in matchEntry.newMatch" class="text-left">{{location.name}}</h5>
+											<h5 class="text-left">{{matchEntry.newMatch.date_time.displayDate}}</h5>
+										</div>
+									</td>
+									<td class="text-center update-spacer">
+										<svg height="40" width="20" style="position: relative; left: -9px; top: 20px;">
+											<polygon points="0,0 20,20 0,40 -10,40" style="fill:#fff;stroke:#ddd;stroke-width:1"></polygon>
+										</svg>
+									</td>
+									<td class="col-sm-6" style="border: 1px solid #ccc;">
+										<div class="col-sm-11">
+											<h4 class="text-left">{{matchEntry.srcMatch.encounter.name}}</h4>
+											<h5 ng-repeat="location in matchEntry.srcMatch" class="text-left">{{location.name}}</h5>
+											<h5 class="text-left">{{matchEntry.srcMatch.date_time.displayDate}}</h5>
+										</div>
+									</td>
+								</tr>
+							</thead>
+
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
