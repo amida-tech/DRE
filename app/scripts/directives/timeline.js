@@ -75,11 +75,11 @@
                         _.each(dataToPlot, function(entry) {
 
                             if (entry.data.date_time) {
-                                var plotDate = isoFormat.parse(entry.data.date_time.plotDate);
+                                var plotDate = isoFormat.parse(entry.date_time.plotDate);
 
                             //Redundancy for isoFormat subsecond support.
                             if (_.isNull(plotDate)) {
-                                plotDate = isoFormatSubsecond.parse(entry.data.date_time.plotDate);
+                                plotDate = isoFormatSubsecond.parse(entry.date_time.plotDate);
                             }
 
                             plotCircles.push({
