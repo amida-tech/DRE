@@ -16,3 +16,11 @@
 .table tbody tr:hover td.update-spacer {
     background-color: transparent;
 }
+
+.bordered {
+	border: 1px solid #ccc;
+}
+
+.table i {
+    color: $brand-primary;
+}
