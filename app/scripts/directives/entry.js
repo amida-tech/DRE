@@ -106,7 +106,7 @@
       	countStarredComments();
 
       	scope.swapTabs = function(entryClass, entryIndex) {
-
+                  
       		if (entryClass === "details") {
       			$("#comments" + entryIndex).removeClass("in");  
       			$("#history" + entryIndex).removeClass("in");    
