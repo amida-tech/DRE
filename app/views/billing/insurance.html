@@ -37,19 +37,9 @@
 
                     <div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
 
-                        <div class="col-sm-2">
-                            <a class="timeline-entry-icon text-center center-block">
-
-                                <i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
-                                <i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x" id="entry{{recordIndex}}"></i>
-                                <i ng-if="entryType === 'insurance'" class="fa fa-institution fa-2x" id="entry{{recordIndex}}"></i>
-
-                            </a>
-                        </div>
-
-                        <div class="col-sm-10">
+                        
                             <entry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
-                        </div>  
+                        
 
 
                     </div>                    
