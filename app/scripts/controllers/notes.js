@@ -12,7 +12,9 @@
 
  	$scope.notes = [];
 
- 	$scope.visible_sections = {
+ 	$scope.filters = {
+ 		'starred': true,
+ 		'unStarred': false,
  		'allergies': true,
  		'encounters': true,
  		'immunizations': true,
@@ -24,23 +26,6 @@
  		'social': true,
  		'claims': true,
  		'insurance': true
- 	};
-
- 	$scope.no_sections = false;
-
- 	$scope.switchSections = function () {
- 		var tmpCount = 0;
- 		_.each($scope.visible_sections, function(entry) {
- 			if (entry) {
- 				tmpCount++;
- 			}
- 		});
-
- 		if (tmpCount > 0) {
- 			$scope.no_sections = false;
- 		} else {
- 			$scope.no_sections = true;
- 		}
  	};
 
  	function getNotes() {
