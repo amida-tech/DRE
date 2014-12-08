@@ -1,7 +1,10 @@
-<div class="container-fluid body-content">
-	<!--Profile-->
-	<div class="col-sm-3 body-left" >
+
+
+
+<div class="row" style="margin:20px;">
+	<div class="col-sm-3" style="padding-right: 20px; padding-bottom: 20px;">
 		<div profile></div>
+
 		<div class="btn-group-vertical col-sm-12">
 			<button type="button" class="btn btn-default btn-block" ng-click="navClick('profile')">Profile</button>
 			<button type="button" class="btn btn-default btn-block" ng-click="navClick('contact')">Contact Info</button>
@@ -104,7 +107,7 @@
 				<h3>Contact Information</h3>
 
 				<!--Address section-->
-				<div class="col-sm-12 profile-divider">
+				<div class="col-sm-12" style="border-bottom: 1px solid #ccc; margin-bottom: 20px;">
 					<h4>Address</h4>
 				</div>
 				<div class="panel col-sm-4" ng-repeat="(addrIndex, addr) in profile.addresses" ng-mouseover="this.hoverEdit = true;" ng-mouseleave="this.hoverEdit = false;">
@@ -112,23 +115,23 @@
 						<div class="panel-body">
 							<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>
 							<div id="address{{addressIndex}}">
-								<p class="capitalize">{{addr.use}}</p>
+								<p style="text-transform: capitalize;">{{addr.use}}</p>
 								<p ng-repeat="(addrLineIndex, addrLine) in addr.streetLines">{{addrLine}}</p>
 								<p>{{addr.city}}, {{addr.state}} {{addr.zip}}</p>
 							</div>
 						</div>
 					</a>
 				</div>
-				<div class="col-sm-12 body-bottom">
+				<div class="col-sm-12" style="margin-bottom: 20px;">
 					<a href="">
-						<div class="pull-left"><i class="fa fa-plus-circle fa-2x fa-inline"></i></div>
-						<div class="pull-left">Add New Address</div>
+						<div class="pull-left"><i class="fa fa-plus-circle fa-2x"></i></div>
+						<div class="pull-left" style="margin:3px 5px;">Add New Address</div>
 					</a>
 				</div>
 
 
 				<!--Phone section-->
-				<div class="col-sm-12 profile-divider">
+				<div class="col-sm-12" style="border-bottom: 1px solid #ccc; margin-bottom: 20px;">
 					<h4>Phone Number</h4>
 				</div>
 				<div class="panel col-sm-4 panel-editable" ng-repeat="(phIndex, ph) in profile.phone" ng-mouseover="this.hoverEdit = true;" ng-mouseleave="this.hoverEdit = false;">
@@ -136,7 +139,7 @@
 						<div class="panel-body">
 							<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>
 							<div id="ph{{phIndex}}">
-								<p class="Capitalize">{{ph.type}}</p>
+								<p style="text-transform: capitalize;">{{ph.type}}</p>
 								<p>{{ph.number}}</p>
 							</div>
 						</div>
@@ -145,13 +148,13 @@
 
 				<div class="col-sm-12">
 					<a href="">
-						<div class="pull-left"><i class="fa fa-plus-circle fa-2x fa-inline"></i></div>
-						<div class="pull-left">Add New Phone</div>
+						<div class="pull-left"><i class="fa fa-plus-circle fa-2x"></i></div>
+						<div class="pull-left" style="margin:3px 5px;">Add New Phone</div>
 					</a>
 				</div>
 
 				<!--Email section-->
-				<div class="col-sm-12 profile-divider">
+				<div class="col-sm-12" style="border-bottom: 1px solid #ccc; margin-bottom: 20px;">
 					<h4>Additional Email</h4>
 				</div>
 				<div class="panel col-sm-4" ng-repeat="(emIndex, em) in profile.email" ng-show="!$first"  ng-mouseover="this.hoverEdit = true;" ng-mouseleave="this.hoverEdit = false;">
@@ -159,7 +162,7 @@
 						<div class="panel-body">
 							<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>
 							<div id="em{{emIndex}}">
-								<p class="capitalize">{{em.type}}</p>
+								<p style="text-transform: capitalize;">{{em.type}}</p>
 								<p>{{em.email}}</p>
 							</div>
 						</div>
@@ -168,8 +171,8 @@
 
 				<div class="col-sm-12">
 					<a href="">
-						<div class="pull-left"><i class="fa fa-plus-circle fa-2x fa-inline"></i></div>
-						<div class="pull-left">Add New Email</div>
+						<div class="pull-left"><i class="fa fa-plus-circle fa-2x"></i></div>
+						<div class="pull-left" style="margin:3px 5px;">Add New Email</div>
 					</a>
 				</div>
 				<!--<pre>{{profile | json}}</pre>-->
@@ -209,7 +212,7 @@
 							</select>
 						</div>
 
-						<div class="form-group col-sm-12 profile-divider">
+						<div class="form-group col-sm-12"  style="border-bottom: 1px solid #ccc; margin-bottom: 20px;">
 							<div class="pull-left">
 								<input type="checkbox" name="inputLanguagePreferred"> <label for="inputLanguagePreferred">Preferred</label>
 							</div>
@@ -217,15 +220,15 @@
 					</div>
 
 					<div class="col-sm-12">
-						<a href="">
-							<div class="pull-left"><i class="fa fa-plus-circle fa-2x fa-inline"></i></div>
-							<div class="pull-left">Add New Language</div>
-						</a>
-					</div>
+					<a href="">
+						<div class="pull-left"><i class="fa fa-plus-circle fa-2x"></i></div>
+						<div class="pull-left" style="margin:3px 5px;">Add New Language</div>
+					</a>
+				</div>
 
 					<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="profileForm.$invalid">Update Languages</button>
-					<div class="text-center">
-						<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+						<div class="text-center">
+							<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
 					</div>
 				</form>
 
@@ -234,4 +237,12 @@
 		</div>
 		<!--<pre>{{profile | json}}</pre>-->
 	</div>
+
+
+
+
+</div>
+
+
+
 </div>
