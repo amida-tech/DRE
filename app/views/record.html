@@ -108,7 +108,7 @@
                         <div>
                             <p>Timeline</p>
                         </div>
-                        <div timeline chart-data="entryList" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+                        <div ng-show="entryList" timeline chart-data="entryList" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
                         <div ng-repeat="(recordIndex, recordEntry) in entryList" class="col-sm-12 row" id="record{{recordIndex}}">
                             <div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
                                 <!--Timeline Icon-->
@@ -121,7 +121,7 @@
                                             <div class="timeline-entry-header col-sm-12">
                                                 <div class="col-sm-6">
                                                     <h4 class="text-left">{{recordEntry.category}} Added</h4>
-                                                    <h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
+                                                    <h5 class="text-left">{{recordEntry.data.date_time.displayDate}}</h5>
                                                 </div>
                                             </div>
                                         </div>

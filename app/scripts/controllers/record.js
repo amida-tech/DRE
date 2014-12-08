@@ -10,6 +10,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     record.getRecord(function(err, results) {
         $scope.entries = results;
     });
+
     $scope.dashMetrics = {};
     $scope.tabs = [{
         "title": "Weight",
@@ -137,40 +138,50 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 $scope.entryList.push(tmpItem);
             });
         });
+
         _.each($scope.entryList, function(entry) {
-            _.each(entry.date_time, function(dateEntry) {
+            _.each(entry.data.date_time, function(dateEntry) {
                 format.formatDate(dateEntry);
             });
-            if (!entry.date_time) { //start it.
+
+            //Have to generate date for results.
+            if (entry.category === 'results') {
                 var dateArray = [];
-                entry.date_time = {};
-                _.each(entry.results, function(result) {
-                    _.each(result.date_time, function(dateEntry) {
-                        format.formatDate(dateEntry);
-                        dateArray.push(moment(dateEntry.date));
+                entry.data.date_time = {};
+
+                //Fill out each result's individual date.
+                if (entry.data.results) {
+                    _.each(entry.data.results, function(result) {
+                        _.each(result.date_time, function(dateEntry) {
+                            format.formatDate(dateEntry);
+                            dateArray.push(moment(dateEntry.date));
+                        });
+                        result.date_time.displayDate = format.outputDate(result.date_time);
                     });
-                    result.date_time.displayDate = format.outputDate(result.date_time);
-                });
-                //Construct low-high based on range.
+                }
+
                 var momentMin = moment.min(dateArray);
                 var momentMax = moment.max(dateArray);
+
+                //If date min and max are equal, consolidate.
+                //Only have test data, should expand to other cases in deploy.
                 if (momentMin.isSame(momentMax, 'day')) {
-                    entry.date_time.point = {};
-                    entry.date_time.point.date = momentMin.toISOString();
-                    entry.date_time.point.precision = 'day';
+                    entry.data.date_time.point = {};
+                    entry.data.date_time.point.date = momentMin.toISOString();
+                    entry.data.date_time.point.precision = 'day';
+                    entry.data.date_time.point.displayDate = format.formatDate(entry.data.date_time.point);
                 }
-                _.each(entry.date_time, function(dateTime) {
-                    dateTime.displayDate = format.formatDate(dateTime);
-                });
-            } //end it.
-            entry.date_time.displayDate = format.outputDate(entry.date_time);
-            entry.date_time.plotDate = format.plotDate(entry.date_time);
+
+            }
+
+            entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
+            entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
         });
     }
 
     function sortList() {
         $scope.entryList = _.sortBy($scope.entryList, function(entry) {
-            return entry.date_time.plotDate;
+            return entry.data.date_time.plotDate;
         });
         $scope.entryList.reverse();
     }
