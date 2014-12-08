@@ -6,7 +6,7 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, record, format) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format) {
     record.getRecord(function(err, results) {
         $scope.entries = results;
     });
@@ -28,7 +28,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, reco
             });
         }
     });
-    $scope.entryType = "all";
+    
+
     function dashPrep() {
         var weightDateArray = [];
         var heightDateArray = [];

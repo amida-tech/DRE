@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('BillingInsuranceCtrl', function ($scope, insurance, format) {
+  .controller('BillingInsuranceCtrl', function ($scope, $window, insurance, format) {
         $scope.entryType = 'insurance';
         $scope.masterEntries = [];
         $scope.entries = [];
