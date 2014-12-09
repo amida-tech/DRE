@@ -59,23 +59,7 @@ angular.module('phrPrototypeApp')
                         "country": "US"
                     }]
                 }],
-                "findings": [{
-                    "identifiers": [{
-                        "identifier": "db734647-fc99-424c-a864-7e3cda82e703",
-                        "extension": "45665"
-                    }],
-                    "value": {
-                        "name": "Pneumonia",
-                        "code": "233604007",
-                        "code_system_name": "SNOMED CT"
-                    },
-                    "date_time": {
-                        "low": {
-                            "date": "2007-01-03T00:00:00Z",
-                            "precision": "day"
-                        }
-                    }
-                },
+                "findings": [
                 {
                     "identifiers": [
                         {
@@ -151,23 +135,6 @@ angular.module('phrPrototypeApp')
                         "zip": "02368",
                         "country": "US"
                     }]
-                }],
-                "findings": [{
-                    "identifiers": [{
-                        "identifier": "db734647-fc99-424c-a864-7e3cda82e703",
-                        "extension": "45665"
-                    }],
-                    "value": {
-                        "name": "Pneumonia",
-                        "code": "233604007",
-                        "code_system_name": "SNOMED CT"
-                    },
-                    "date_time": {
-                        "low": {
-                            "date": "2007-01-03T00:00:00Z",
-                            "precision": "day"
-                        }
-                    }
                 }]
             }];
 

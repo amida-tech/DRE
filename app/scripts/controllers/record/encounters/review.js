@@ -113,33 +113,34 @@ angular.module('phrPrototypeApp')
                     formatDates();
                 } else if (_.isObject(elem)) {
                     //Explicitly handle findings.
-                    _.each(elem.findings, function (rElem, rName, rList) {
+                    _.each(elem, function (rElem, rName, rList) {
 
                         if (rElem === true) {
 
-                            var newFinding = $scope.match[matchIndex].newMatch[name].findings[rName];
+                            var newFinding = $scope.match[matchIndex].newMatch[name];
                             newFinding.srcMatchIndex = rName;
 
-                            if (!$scope.match[matchIndex].srcMatch[name].findings[rName]) {
-                                $scope.match[matchIndex].srcMatch[name].findings[rName] = [];
+                            if (!$scope.match[matchIndex].srcMatch[name]) {
+                                $scope.match[matchIndex].srcMatch[name] = [];
                             }
-
-                            $scope.match[matchIndex].srcMatch[name].findings.push(newFinding);
+                            $scope.match[matchIndex].srcMatch[name].push(newFinding[rName]);
                         } else if (rElem === false) {
+
+                        	$scope.match[matchIndex].srcMatch[name].splice(rName);
 
                             //Index to splice.
                             //console.log(rName);
 
-                            _.each($scope.match[matchIndex].srcMatch[name].findings, function (rxElem, rxName, rxList) {
+                            // _.each($scope.match[matchIndex].srcMatch[name], function (rxElem, rxName, rxList) {
 
-                                if (rxElem.srcMatchIndex) {
-                                    if (rxElem.srcMatchIndex === rName) {
-                                        //Splice ID.
-                                        console.log(rxName);
-                                        $scope.match[matchIndex].srcMatch[name].findings.splice(rxName);
-                                    }
-                                }
-                            });
+                            //     if (rxElem.srcMatchIndex) {
+                            //         if (rxElem.srcMatchIndex === rName) {
+                            //             //Splice ID.
+                            //             console.log(rxName);
+                            //             $scope.match[matchIndex].srcMatch[name].splice(rxName);
+                            //         }
+                            //     }
+                            // });
                         }
 
                     });
