@@ -1,0 +1,195 @@
+<div class="container-fluid body-content">
+    <!--Profile-->
+    <div class="col-sm-3 body-left">
+        <div profile></div>
+    </div>
+
+
+    <div class="col-sm-9">
+
+        <!--Header-->
+        <div class="panel">
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <div class="row col-sm-12" breadcrumb></div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="pull-left">
+                                <h1>Review <span style="text-transform: capitalize;">Immunization Updates</span></h1>
+                                <p>Entries to the left are possible updates to a current entry in your record, displayed to the right.</p>
+                                <p>Use the checkboxes to select updates you wish to apply.</p>
+                                <h6>Note:  Only differences between the entries are displayed.</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--Implementation-->
+        <div ng-repeat="(matchIndex, matchEntry) in match">
+            <h4 class="text-center">Update #{{matchIndex + 1}}</h4>
+            <div class="panel col-sm-12">
+                <div class="panel-body">
+
+                    <!--Labels-->
+                    <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <h5 class="text-center">Record Updates</h5>
+                        </div>
+                        <div class="col-sm-6">
+                            <h5 class="text-center">Current Record</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+
+                        <table class="table col-sm-12 table-hover">
+                            <thead>
+                                <tr>
+                                    <td class="col-sm-6" style="border: 1px solid #ccc;">
+                                        <div class="col-sm-11">
+                                            <h4 class="text-left">{{matchEntry.newMatch.encounter.name}}</h4>
+                                            <h5 ng-repeat="location in matchEntry.newMatch" class="text-left">{{location.name}}</h5>
+                                            <h5 class="text-left">{{matchEntry.newMatch.date_time.displayDate}}</h5>
+                                        </div>
+                                    </td>
+                                    <td class="text-center update-spacer">
+                                        <svg height="40" width="20" style="position: relative; left: -9px; top: 20px;">
+                                            <polygon points="0,0 20,20 0,40 -10,40" style="fill:#fff;stroke:#ddd;stroke-width:1"></polygon>
+                                        </svg>
+                                    </td>
+                                    <td class="col-sm-6" style="border: 1px solid #ccc;">
+                                        <div class="col-sm-11">
+                                            <h4 class="text-left">{{matchEntry.srcMatch.encounter.name}}</h4>
+                                            <h5 ng-repeat="location in matchEntry.srcMatch" class="text-left">{{location.name}}</h5>
+                                            <h5 class="text-left">{{matchEntry.srcMatch.date_time.displayDate}}</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <!--Findings-->
+                                <tr ng-if="matchEntry.diff.findings">
+                                    <td style="border: 1px solid #ccc;">
+                                        <table class="table table-condensed col-sm-12">
+                                            <thead>
+                                                <tr>
+                                                    <td class="col-sm-3">
+                                                        Findings:
+                                                    </td>
+                                                    <td class="col-sm-9">
+                                                        <div class="panel" ng-repeat="(findingIndex, findingEntry) in matchEntry.newMatch.findings" ng-class="{'update-selected': selected.findings[findingIndex]}">
+
+                                                            <table class="table sub-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <label>
+                                                                                <h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.findings[findingIndex]" ng-change="selectEntry(matchIndex)">{{matchEntry.newMatch.findings[findingIndex].value.name}}</h5>
+                                                                            </label>
+                                                                            <div class="pull-right" ng-if="matchEntry.diff.findings === 'new'">
+                                                                                <span class="label label-primary">New</span>
+                                                                            </div>
+                                                                            <td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Date:</td>
+                                                                        <td>{{matchEntry.newMatch.findings[findingIndex].date_time.displayDate}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code:</td>
+                                                                        <td>{{matchEntry.newMatch.findings[findingIndex].value.code}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code System:</td>
+                                                                        <td>{{matchEntry.newMatch.findings[findingIndex].value.code_system_name}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        </td>
+                                        <td class="text-center update-spacer"></td>
+                                        <td style="border: 1px solid #ccc;">
+                                            <table class="table table-condensed col-sm-12">
+                                                <thead>
+                                                    <tr>
+                                                        <td class="col-sm-3">
+                                                            Findings:
+                                                        </td>
+                                                        <td class="col-sm-9">
+                                                            <div class="panel" ng-repeat="(findingIndex, findingEntry) in matchEntry.srcMatch.findings" ng-class="{'update-selected': selected.findings[findingIndex]}">
+
+                                                                <table class="table sub-table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                <h5>{{matchEntry.srcMatch.findings[findingIndex].value.name}}</h5>
+                                                                            <td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>Date:</td>
+                                                                            <td>{{matchEntry.srcMatch.findings[findingIndex].date_time.displayDate}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Code:</td>
+                                                                            <td>{{matchEntry.srcMatch.findings[findingIndex].value.code}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Code System:</td>
+                                                                            <td>{{matchEntry.srcMatch.findings[findingIndex].value.code_system_name}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+                                                            </td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+
+                        <div class="col-sm-12">
+                            <div class="col-sm-6">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <button class="btn btn-default btn-block" ng-click="saveUpdate(matchIndex)">Ignore Updates</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <button class="btn btn-primary btn-block" ng-click="saveUpdate(matchIndex)">Save Updates</button>
+                                    <button class="btn btn-link btn-block" ng-click="clearAll(matchIndex)"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- col-sm-12 -->
+                    </div>
+                    <!-- panel body -->
+                </div>
+                <!-- panel col-sm-12 -->
+            </div>
+            <!-- ng-repeat in match -->
+        </div>
+        <!-- col-sm-9 -->
+    </div>
+    <!-- container -->
+</div>

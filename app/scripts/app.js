@@ -131,6 +131,34 @@ angular
         templateUrl: 'views/record/encounters/review.html',
         controller: 'RecordEncountersReviewCtrl'
       })
+      .when('/record/immunizations/review', {
+        templateUrl: 'views/record/immunizations/review.html',
+        controller: 'RecordImmunizationsReviewCtrl'
+      })
+      .when('/record/conditions/review', {
+        templateUrl: 'views/record/conditions/review.html',
+        controller: 'RecordConditionsReviewCtrl'
+      })
+      .when('/record/medications/review', {
+        templateUrl: 'views/record/medications/review.html',
+        controller: 'RecordMedicationsReviewCtrl'
+      })
+      .when('/record/procedures/review', {
+        templateUrl: 'views/record/procedures/review.html',
+        controller: 'RecordProceduresReviewCtrl'
+      })
+      .when('/record/results/review', {
+        templateUrl: 'views/record/results/review.html',
+        controller: 'RecordResultsReviewCtrl'
+      })
+      .when('/record/vitals/review', {
+        templateUrl: 'views/record/vitals/review.html',
+        controller: 'RecordVitalsReviewCtrl'
+      })
+      .when('/record/social/review', {
+        templateUrl: 'views/record/social/review.html',
+        controller: 'RecordSocialReviewCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
