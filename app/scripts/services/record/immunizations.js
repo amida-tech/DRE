@@ -10,7 +10,73 @@
 angular.module('phrPrototypeApp')
     .service('immunizations', function immunizations() {
 
-        this.getRecord = function (callback) {
+        var getPartialRecord = function(callback) {
+
+            var tmpImmunizations = [{
+                "date_time": {
+                    "point": {
+                        "date": "1999-11-01T00:00:00Z",
+                        "precision": "month"
+                    }
+                },
+                "identifiers": [{
+                    "identifier": "e6f1ba43-c0ed-4b9b-9f12-f435d8ad8f92"
+                }],
+                "status": "complete",
+                "product": {
+                    "product": {
+                        "name": "Influenza virus vaccine"
+                    }
+                },
+                "administration": {
+                    "route": {
+                        "name": "Intramuscular injection"
+                    }
+                },
+                "performer": {
+                    "identifiers": [{
+                        "identifier": "2.16.840.1.113883.19.5.9999.456",
+                        "extension": "2981824"
+                    }],
+                    "name": [{
+                        "last": "Assigned",
+                        "first": "Amanda"
+                    }],
+                    "address": [{
+                        "street_lines": [
+                            "1021 Health Drive"
+                        ],
+                        "city": "Ann Arbor",
+                        "state": "MI",
+                        "zip": "99099",
+                        "country": "US"
+                    }],
+                    "organization": [{
+                        "identifiers": [{
+                            "identifier": "2.16.840.1.113883.19.5.9999.1394"
+                        }],
+                        "name": [
+                            "Good Health Clinic"
+                        ]
+                    }]
+                },
+                "instructions": {
+                    "code": {
+                        "name": "immunization education",
+                        "code": "171044003",
+                        "code_system_name": "SNOMED CT"
+                    },
+                    "free_text": "Possible flu-like symptoms for three days."
+                }
+            }];
+
+            callback(null, tmpImmunizations);
+
+        }
+
+        this.getPartialRecord = getPartialRecord;
+
+        var getRecord = function(callback) {
 
             var tmpImmunizations = [{
                 "date_time": {
@@ -86,7 +152,50 @@ angular.module('phrPrototypeApp')
             }];
 
             callback(null, tmpImmunizations);
-
         }
+
+        this.getRecord = getRecord;
+
+        var saveEntry = function(entry, callback) {
+            console.log(entry);
+            callback(null);
+        }
+
+        this.saveEntry = saveEntry;
+
+        var getPartialMatch = function(callback) {
+
+            getPartialRecord(function(err, partialResults) {
+                getRecord(function(err, recordResults) {
+
+                    var tmpMatch = [{
+                        "match": "partial",
+                        "percent": 75,
+                        "subelements": {
+                            "product": {
+                                "name": [{
+                                    "match": "new",
+                                    "percent": 0,
+                                    "src_id": "0",
+                                    "dest_id": "0",
+                                    "dest": "dest"
+                                }]
+                            }
+                        },
+                        "diff": {
+                            "product": "diff",
+                            "administration": "diff"
+                        },
+                        "srcMatch": recordResults[0],
+                        "newMatch": partialResults[0]
+                    }];
+
+                    callback(null, tmpMatch);
+
+                });
+            });
+        }
+
+        this.getPartialMatch = getPartialMatch;
 
     });

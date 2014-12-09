@@ -50,8 +50,8 @@
                                 <tr>
                                     <td class="col-sm-6" style="border: 1px solid #ccc;">
                                         <div class="col-sm-11">
-                                            <h4 class="text-left">{{matchEntry.newMatch.encounter.name}}</h4>
-                                            <h5 ng-repeat="location in matchEntry.newMatch" class="text-left">{{location.name}}</h5>
+                                            <h4 class="text-left">{{matchEntry.newMatch.product.product.name}}</h4>
+                                            <h5 ng-repeat="(performerIndex, performerEntry) in matchEntry.newMatch.performer.name" class="text-left">{{performerEntry.displayName}}</h5>
                                             <h5 class="text-left">{{matchEntry.newMatch.date_time.displayDate}}</h5>
                                         </div>
                                     </td>
@@ -62,8 +62,8 @@
                                     </td>
                                     <td class="col-sm-6" style="border: 1px solid #ccc;">
                                         <div class="col-sm-11">
-                                            <h4 class="text-left">{{matchEntry.srcMatch.encounter.name}}</h4>
-                                            <h5 ng-repeat="location in matchEntry.srcMatch" class="text-left">{{location.name}}</h5>
+                                            <h4 class="text-left">{{matchEntry.srcMatch.product.product.name}}</h4>
+                                            <h5 ng-repeat="(performerIndex, performerEntry) in matchEntry.srcMatch.performer.name" class="text-left">{{performerEntry.displayName}}</h5>
                                             <h5 class="text-left">{{matchEntry.srcMatch.date_time.displayDate}}</h5>
                                         </div>
                                     </td>
@@ -72,49 +72,78 @@
 
                             <tbody>
 
-                                <!--Findings-->
-                                <tr ng-if="matchEntry.diff.findings">
+                                <!--Product-->
+                                <tr ng-if="matchEntry.diff.product">
                                     <td style="border: 1px solid #ccc;">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                        Findings:
+                                                        Product:
                                                     </td>
                                                     <td class="col-sm-9">
-                                                        <div class="panel" ng-repeat="(findingIndex, findingEntry) in matchEntry.newMatch.findings" ng-class="{'update-selected': selected.findings[findingIndex]}">
+                                                        <div class="panel" ng-class="{'update-selected': selected.product}">
 
                                                             <table class="table sub-table">
                                                                 <thead>
                                                                     <tr>
                                                                         <td colspan="2">
                                                                             <label>
-                                                                                <h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.findings[findingIndex]" ng-change="selectEntry(matchIndex)">{{matchEntry.newMatch.findings[findingIndex].value.name}}</h5>
+                                                                                <h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.product" ng-change="selectEntry(matchIndex)">{{matchEntry.newMatch.product.product.name}}</h5>
                                                                             </label>
-                                                                            <div class="pull-right" ng-if="matchEntry.diff.findings === 'new'">
-                                                                                <span class="label label-primary">New</span>
+                                                                            <div class="pull-right" ng-if="matchEntry.diff.product === 'diff'">
+                                                                                <span class="label label-info">Different</span>
                                                                             </div>
                                                                             <td>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td>Date:</td>
-                                                                        <td>{{matchEntry.newMatch.findings[findingIndex].date_time.displayDate}}</td>
+                                                                        <td>Lot Number:</td>
+                                                                        <td>{{matchEntry.newMatch.product.lot_number}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Manufacturer:</td>
+                                                                        <td>{{matchEntry.newMatch.product.manufacturer}}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>Code:</td>
-                                                                        <td>{{matchEntry.newMatch.findings[findingIndex].value.code}}</td>
+                                                                        <td>{{matchEntry.newMatch.product.product.code}}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>Code System:</td>
-                                                                        <td>{{matchEntry.newMatch.findings[findingIndex].value.code_system_name}}</td>
+                                                                        <td>{{matchEntry.newMatch.product.product.code_system_name}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Other Descriptions:</td>
+                                                                        <td>
+                                                                            <div class="panel" ng-repeat="(itemIndex, itemEntry) in matchEntry.newMatch.product.product.translations">
+                                                                                <table class="table sub-table">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <td>Name:</td>
+                                                                                            <td>{{itemEntry.name}}</td>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>Code:</td>
+                                                                                            <td>{{itemEntry.code}}</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Code System:</td>
+                                                                                            <td>{{itemEntry.code_system_name}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
 
                                                         </div>
-                                                    </td>
+                                                        </td>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -125,41 +154,150 @@
                                                 <thead>
                                                     <tr>
                                                         <td class="col-sm-3">
-                                                            Findings:
+                                                            Product:
                                                         </td>
                                                         <td class="col-sm-9">
-                                                            <div class="panel" ng-repeat="(findingIndex, findingEntry) in matchEntry.srcMatch.findings" ng-class="{'update-selected': selected.findings[findingIndex]}">
-
-                                                                <table class="table sub-table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <td colspan="2">
-                                                                                <h5>{{matchEntry.srcMatch.findings[findingIndex].value.name}}</h5>
+                                                            <div class="panel" ng-class="{'update-selected': selected.product}">
+                                                            <table class="table sub-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                                <h5>{{matchEntry.srcMatch.product.product.name}}</h5>
                                                                             <td>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>Date:</td>
-                                                                            <td>{{matchEntry.srcMatch.findings[findingIndex].date_time.displayDate}}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Code:</td>
-                                                                            <td>{{matchEntry.srcMatch.findings[findingIndex].value.code}}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Code System:</td>
-                                                                            <td>{{matchEntry.srcMatch.findings[findingIndex].value.code_system_name}}</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Lot Number:</td>
+                                                                        <td>{{matchEntry.srcMatch.product.lot_number}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Manufacturer:</td>
+                                                                        <td>{{matchEntry.srcMatch.product.manufacturer}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code:</td>
+                                                                        <td>{{matchEntry.srcMatch.product.product.code}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code System:</td>
+                                                                        <td>{{matchEntry.srcMatch.product.product.code_system_name}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Other Descriptions:</td>
+                                                                        <td>
+                                                                            <div class="panel" ng-repeat="(itemIndex, itemEntry) in matchEntry.srcMatch.product.product.translations">
+                                                                                <table class="table sub-table">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <td>Name:</td>
+                                                                                            <td>{{itemEntry.name}}</td>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>Code:</td>
+                                                                                            <td>{{itemEntry.code}}</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Code System:</td>
+                                                                                            <td>{{itemEntry.code_system_name}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
 
                                                             </div>
                                                             </td>
                                                     </tr>
                                                 </thead>
                                             </table>
+                                            </td>
+                                </tr>
+
+                                <!--Administration-->
+                                <tr ng-if="matchEntry.diff.administration">
+                                    <td style="border: 1px solid #ccc;">
+                                        <table class="table table-condensed col-sm-12">
+                                            <thead>
+                                                <tr>
+                                                    <td class="col-sm-3">
+                                                        Administration:
+                                                    </td>
+                                                    <td class="col-sm-9">
+                                                        <div class="panel" ng-class="{'update-selected': selected.administration}">
+
+                                                            <table class="table sub-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <label>
+                                                                                <h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.administration" ng-change="selectEntry(matchIndex)">{{matchEntry.newMatch.administration.route.name}}</h5>
+                                                                            </label>
+                                                                            <div class="pull-right" ng-if="matchEntry.diff.administration === 'diff'">
+                                                                                <span class="label label-info">Different</span>
+                                                                            </div>
+                                                                            <td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Code:</td>
+                                                                        <td>{{matchEntry.newMatch.administration.route.code}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code System:</td>
+                                                                        <td>{{matchEntry.newMatch.administration.route.code_system_name}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                        </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
                                         </td>
+                                        <td class="text-center update-spacer"></td>
+                                        <td style="border: 1px solid #ccc;">
+                                            <table class="table table-condensed col-sm-12">
+                                                <thead>
+                                                    <tr>
+                                                        <td class="col-sm-3">
+                                                            Administration:
+                                                        </td>
+                                                        <td class="col-sm-9">
+                                                            <div class="panel" ng-class="{'update-selected': selected.administration}">
+                                                            <table class="table sub-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                                <h5>{{matchEntry.srcMatch.administration.route.name}}</h5>
+                                                                            <td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Code:</td>
+                                                                        <td>{{matchEntry.srcMatch.administration.route.code}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code System:</td>
+                                                                        <td>{{matchEntry.srcMatch.administration.route.code_system_name}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                            </div>
+                                                            </td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            </td>
                                 </tr>
 
                             </tbody>

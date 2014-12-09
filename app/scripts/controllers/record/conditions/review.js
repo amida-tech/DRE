@@ -66,14 +66,12 @@ angular.module('phrPrototypeApp')
                         format.formatDate(dateEntry);
                     });
                     entry.newMatch.date_time.displayDate = format.outputDate(entry.newMatch.date_time);
-                    entry.newMatch.date_time.plotDate = format.plotDate(entry.newMatch.date_time);
                 
                 	//srcMatch
                     _.each(entry.srcMatch.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
                     });
                     entry.srcMatch.date_time.displayDate = format.outputDate(entry.srcMatch.date_time);
-                    entry.srcMatch.date_time.plotDate = format.plotDate(entry.srcMatch.date_time);
                 
             });
         }
