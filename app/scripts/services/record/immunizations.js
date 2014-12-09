@@ -7,13 +7,10 @@
  * # record/immunizations
  * Service in the phrPrototypeApp.
  */
- angular.module('phrPrototypeApp')
- .service('immunizations', function immunizations() {
+angular.module('phrPrototypeApp')
+    .service('immunizations', function immunizations() {
 
-<<<<<<< HEAD
-        var getPartialRecord = function(callback) {
-
-            var tmpImmunizations = [{
+        var tmpPartial = {
                 "date_time": {
                     "point": {
                         "date": "1999-11-01T00:00:00Z",
@@ -69,173 +66,117 @@
                     },
                     "free_text": "Possible flu-like symptoms for three days."
                 }
-            }];
+            };
 
-            callback(null, tmpImmunizations);
+        var tmpMetaData = {
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': [{
+                'comment': 'I should make sure I let my aunt know about this!',
+                'date': '2005-05-01T00:12:00Z',
+                'starred': true
+            }, {
+                'comment': 'Remember Macrolides are a good alternative.',
+                'date': '2009-05-18T00:08:00Z',
+                'starred': false
+            }]
+        };
 
-        }
-
-        this.getPartialRecord = getPartialRecord;
-
-        var getRecord = function(callback) {
-=======
-    var tmpMetaData = {
-        'attribution': [{
-            'source': 'blue-button.xml',
-            'status': 'new',
-            'merged': '2007-05-01T00:00:00Z'
-        }],
-        'comments': [{
-            'comment': 'I should make sure I let my aunt know about this!',
-            'date': '2005-05-01T00:12:00Z',
-            'starred': true
-        }, {
-            'comment': 'Remember Macrolides are a good alternative.',
-            'date': '2009-05-18T00:08:00Z',
-            'starred': false
-        }]
-    };
->>>>>>> master
-
-    var tmpImmunization = {
-        "date_time": {
-            "point": {
-                "date": "1999-11-01T00:00:00Z",
-                "precision": "month"
-            }
-        },
-        "identifiers": [{
-            "identifier": "e6f1ba43-c0ed-4b9b-9f12-f435d8ad8f92"
-        }],
-        "status": "complete",
-        "product": {
+        var tmpImmunization = {
+            "date_time": {
+                "point": {
+                    "date": "1999-11-01T00:00:00Z",
+                    "precision": "month"
+                }
+            },
+            "identifiers": [{
+                "identifier": "e6f1ba43-c0ed-4b9b-9f12-f435d8ad8f92"
+            }],
+            "status": "complete",
             "product": {
-                "name": "Influenza virus vaccine",
-                "code": "88",
-                "code_system_name": "CVX",
-                "translations": [{
-                    "name": "Influenza, seasonal, injectable",
-                    "code": "141",
-                    "code_system_name": "CVX"
+                "product": {
+                    "name": "Influenza virus vaccine",
+                    "code": "88",
+                    "code_system_name": "CVX",
+                    "translations": [{
+                        "name": "Influenza, seasonal, injectable",
+                        "code": "141",
+                        "code_system_name": "CVX"
+                    }]
+                },
+                "lot_number": "1",
+                "manufacturer": "Health LS - Immuno Inc."
+            },
+            "administration": {
+                "route": {
+                    "name": "Intramuscular injection",
+                    "code": "C28161",
+                    "code_system_name": "Medication Route FDA"
+                },
+                "dose": {
+                    "value": 50,
+                    "unit": "mcg"
+                }
+            },
+            "performer": {
+                "identifiers": [{
+                    "identifier": "2.16.840.1.113883.19.5.9999.456",
+                    "extension": "2981824"
+                }],
+                "name": [{
+                    "last": "Assigned",
+                    "first": "Amanda"
+                }],
+                "address": [{
+                    "street_lines": [
+                        "1021 Health Drive"
+                    ],
+                    "city": "Ann Arbor",
+                    "state": "MI",
+                    "zip": "99099",
+                    "country": "US"
+                }],
+                "organization": [{
+                    "identifiers": [{
+                        "identifier": "2.16.840.1.113883.19.5.9999.1394"
+                    }],
+                    "name": [
+                        "Good Health Clinic"
+                    ]
                 }]
             },
-            "lot_number": "1",
-            "manufacturer": "Health LS - Immuno Inc."
-        },
-        "administration": {
-            "route": {
-                "name": "Intramuscular injection",
-                "code": "C28161",
-                "code_system_name": "Medication Route FDA"
-            },
-            "dose": {
-                "value": 50,
-                "unit": "mcg"
+            "instructions": {
+                "code": {
+                    "name": "immunization education",
+                    "code": "171044003",
+                    "code_system_name": "SNOMED CT"
+                },
+                "free_text": "Possible flu-like symptoms for three days."
             }
-        },
-        "performer": {
-            "identifiers": [{
-                "identifier": "2.16.840.1.113883.19.5.9999.456",
-                "extension": "2981824"
-            }],
-            "name": [{
-                "last": "Assigned",
-                "first": "Amanda"
-            }],
-            "address": [{
-                "street_lines": [
-                "1021 Health Drive"
-                ],
-                "city": "Ann Arbor",
-                "state": "MI",
-                "zip": "99099",
-                "country": "US"
-            }],
-            "organization": [{
-                "identifiers": [{
-                    "identifier": "2.16.840.1.113883.19.5.9999.1394"
-                }],
-                "name": [
-                "Good Health Clinic"
-                ]
-            }]
-        },
-        "instructions": {
-            "code": {
-                "name": "immunization education",
-                "code": "171044003",
-                "code_system_name": "SNOMED CT"
-            },
-            "free_text": "Possible flu-like symptoms for three days."
-        }
-    };
+        };
 
-<<<<<<< HEAD
-            callback(null, tmpImmunizations);
+        this.getRecord = function (callback) {
+
+            var tmpReturn = [{
+                'metadata': tmpMetaData,
+                'data': tmpImmunization
+            }];
+
+            callback(null, tmpReturn);
+
         }
 
-        this.getRecord = getRecord;
+        this.getPartialRecord = function (callback) {
 
-        var saveEntry = function(entry, callback) {
-            console.log(entry);
-            callback(null);
+            var tmpReturn = [{
+                'metadata': '',
+                'data': tmpPartial
+            }];
+
+            callback(null, tmpReturn);
         }
-
-        this.saveEntry = saveEntry;
-
-        var getPartialMatch = function(callback) {
-
-            getPartialRecord(function(err, partialResults) {
-                getRecord(function(err, recordResults) {
-
-                    var tmpMatch = [{
-                        "match": "partial",
-                        "percent": 75,
-                        "subelements": {
-                            "product": {
-                                "name": [{
-                                    "match": "new",
-                                    "percent": 0,
-                                    "src_id": "0",
-                                    "dest_id": "0",
-                                    "dest": "dest"
-                                }]
-                            }
-                        },
-                        "diff": {
-                            "product": "diff",
-                            "administration": "diff"
-                        },
-                        "srcMatch": recordResults[0],
-                        "newMatch": partialResults[0]
-                    }];
-
-                    callback(null, tmpMatch);
-
-                });
-            });
-        }
-
-        this.getPartialMatch = getPartialMatch;
 
     });
-=======
-    var getRecordMeta = function (callback) {
-        callback(null, tmpMetaData);
-    }
-
-    this.getRecordMeta = getRecordMeta;
-
-    this.getRecord = function (callback) {
-
-        var tmpReturn = [{
-            'metadata': tmpMetaData,
-            'data': tmpImmunization
-        }];
-
-        callback(null, tmpReturn);
-
-    }
-
-});
->>>>>>> master

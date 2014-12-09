@@ -80,7 +80,7 @@ angular.module('phrPrototypeApp')
             }]
         };
 
-        var tmpPartialCondition = {
+        var tmpPartial = {
             "date_time": {
                 "low": {
                     "date": "2008-01-03T00:00:00Z",
@@ -136,7 +136,7 @@ angular.module('phrPrototypeApp')
 
             var tmpReturn = [{
                 'metadata': '',
-                'data': tmpPartialCondition
+                'data': tmpPartial
             }];
 
             callback(null, tmpReturn);
