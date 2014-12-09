@@ -1,0 +1,7 @@
+.btn {
+  @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-small, $line-height-base, $border-radius-base);
+  font-weight: $btn-font-weight;
+  font-family: $font-family-impact;
+  letter-spacing: 1px;
+  text-transform: uppercase; 
+}

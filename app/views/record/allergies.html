@@ -1,6 +1,5 @@
 <div class="container-fluid body-content">
-	<!--Profile-->
-	<div id="profileSidebar" class="col-sm-3 body-left" >
+	<div id="profileSidebar" class="col-sm-3 body-left">
 		<div profile></div>
 		<div record-navigation></div>
 	</div>
@@ -8,7 +7,6 @@
 	
 	<div class="col-sm-9">
 
-		<!--Header-->	
 		<div class="panel">
 			<div class="panel-body">
 				<div class="col-sm-12">
@@ -16,7 +14,7 @@
 					<div class="col-sm-12">
 						<div class="col-sm-8">
 							<div class="pull-left">
-								<h1>Suzie's <span style="text-transform: capitalize;">{{entryType}}</span></h1>
+								<h1>Suzie's <span class="capitalize">{{entryType}}</span></h1>
 								<p>Last Updated:  {{updateDate}}</p>
 							</div>
 						</div>
@@ -27,12 +25,6 @@
 						</div>	
 					</div>
 				</div>	
-
-				<!--Alert-->
-				<!--<div class="col-sm-10 col-sm-offset-1 text-center" ng-show="alertShow">
-					<span><button class="btn btn-link" style="margin-right: 20px;"><i class="fa fa-flag-o"></i></span> There is 1 update to your allergies requiring review.</button>
-				</div>-->
-
 			</div>
 		</div>
 
@@ -47,16 +39,10 @@
 
 				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
-					<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
-
-						<!--Timeline Icon-->
-						
-
-						
-							<entry entry-type="allergies" entry-index="{{recordIndex}}"></entry>
-						
-
+					<div class="col-sm-12 row timeline-side">
+						<entry entry-type="allergies" entry-index="{{recordIndex}}"></entry>
 					</div>
+					
 				</div>
 
 				<div class="col-sm-2 center-block text-center timeline-footer">

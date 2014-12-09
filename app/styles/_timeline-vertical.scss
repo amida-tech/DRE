@@ -1,0 +1,56 @@
+//Vertical timeline components.
+
+.timeline-side {
+  padding-top: 20px;
+  background-image: url('../images/bg-line.png');
+  background-repeat: repeat-y;
+  background-position: 8.2% 0%;
+
+  @media (max-width: $screen-sm-max) {
+    background: none;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    background-image: url('../images/bg-line.png');
+  background-repeat: repeat-y;
+  background-position: 8.2% 0%;
+  }
+
+}
+
+.timeline-entry-icon {
+  @extend .img-circle;
+  background: #fff;
+  height: 50px;
+  width: 50px;
+  border: thick solid $brand-primary;
+  line-height: 3.5em;
+  position: relative;
+  bottom: -20px;
+  z-index: 100;
+  i {
+  color: $brand-primary;
+  }
+}
+
+.timeline-entry-icon:hover {
+  cursor: default;
+  background: $brand-primary;
+  i {
+    color: #fff;
+  }
+  
+}
+
+.timeline-footer circle {
+  fill: #ccc;
+
+  @media (max-width: $screen-sm-max) {
+    display: none;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    display: inherit;
+  }
+
+}
