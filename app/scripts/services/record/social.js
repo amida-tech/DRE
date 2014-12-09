@@ -10,9 +10,27 @@
 angular.module('phrPrototypeApp')
     .service('social', function social() {
 
-<<<<<<< HEAD
-        var getPartialRecord = function (callback) {
-=======
+        var tmpPartial = {
+            "date_time": {
+                "low": {
+                    "date": "2005-04-30T00:00:00Z",
+                    "precision": "day"
+                },
+                "high": {
+                    "date": "2012-02-27T13:00:00Z",
+                    "precision": "second"
+                }
+            },
+            "identifiers": [{
+                "identifier": "2.16.840.1.113883.19",
+                "extension": "123456789"
+            }],
+            "code": {
+                "name": "Smoking Status"
+            },
+            "value": "Former smoker"
+        };
+
         var tmpMetaData = {
             'attribution': [{
                 'source': 'blue-button.xml',
@@ -29,65 +47,27 @@ angular.module('phrPrototypeApp')
                 'starred': false
             }]
         };
->>>>>>> master
 
         var tmpSocial = {
-                "date_time": {
-                    "low": {
-                        "date": "2005-04-30T00:00:00Z",
-                        "precision": "day"
-                    },
-                    "high": {
-                        "date": "2012-02-27T13:00:00Z",
-                        "precision": "second"
-                    }
+            "date_time": {
+                "low": {
+                    "date": "2005-05-01T00:00:00Z",
+                    "precision": "day"
                 },
-                "identifiers": [{
-                    "identifier": "2.16.840.1.113883.19",
-                    "extension": "123456789"
-                }],
-                "code": {
-                    "name": "Smoking Status"
-                },
-                "value": "Former smoker"
-            }];
-
-            callback(null, tmpSocial);
-
-        }
-
-        this.getPartialRecord = getPartialRecord;
-
-        var getRecord = function (callback) {
-
-            var tmpSocial = [{
-                "date_time": {
-                    "low": {
-                        "date": "2005-04-30T00:00:00Z",
-                        "precision": "day"
-                    },
-                    "high": {
-                        "date": "2009-02-27T13:00:00Z",
-                        "precision": "second"
-                    }
-                },
-                "identifiers": [{
-                    "identifier": "2.16.840.1.113883.19",
-                    "extension": "123456789"
-                }],
-                "code": {
-                    "name": "Smoking Status"
-                },
-                "value": "Former smoker"
-            };
-
-
-
-        var getRecordMeta = function (callback) {
-            callback(null, tmpMetaData);
-        }
-
-        this.getRecordMeta = getRecordMeta;
+                "high": {
+                    "date": "2009-02-27T13:00:00Z",
+                    "precision": "second"
+                }
+            },
+            "identifiers": [{
+                "identifier": "2.16.840.1.113883.19",
+                "extension": "123456789"
+            }],
+            "code": {
+                "name": "Smoking Status"
+            },
+            "value": "Former smoker"
+        };
 
         this.getRecord = function (callback) {
             var tmpReturn = [{
@@ -98,38 +78,14 @@ angular.module('phrPrototypeApp')
             callback(null, tmpReturn);
         }
 
-        this.getRecord = getRecord;
+        this.getPartialRecord = function (callback) {
 
-                var saveEntry = function(entry, callback) {
-            console.log(entry);
-            callback(null);
+            var tmpReturn = [{
+                'metadata': '',
+                'data': tmpPartial
+            }];
+
+            callback(null, tmpReturn);
         }
-
-        this.saveEntry = saveEntry;
-
-        var getPartialMatch = function(callback) {
-
-            getPartialRecord(function(err, partialResults) {
-                getRecord(function(err, recordResults) {
-
-                    var tmpMatch = [{
-                        "match": "partial",
-                        "percent": 75,
-                        "subelements": {},
-                        "diff": {
-                            "date_time": "diff"
-                        },
-                        "srcMatch": recordResults[0],
-                        "newMatch": partialResults[0]
-                    }];
-
-                    callback(null, tmpMatch);
-
-                });
-            });
-        }
-
-        this.getPartialMatch = getPartialMatch;
-
 
     });
