@@ -15,11 +15,11 @@
  		var tmpMedications = [    {
  			"date_time": {
  				"low": {
- 					"date": "2007-01-03T00:00:00Z",
+ 					"date": "2006-12-31T00:00:00Z",
  					"precision": "day"
  				},
  				"high": {
- 					"date": "2012-05-15T00:00:00Z",
+ 					"date": "2012-04-30T00:00:00Z",
  					"precision": "day"
  				}
  			},
@@ -205,16 +205,16 @@
 
  		var tmpMedications = [    {
 
- 			"date_time": {
- 				"low": {
- 					"date": "2007-01-03T00:00:00Z",
- 					"precision": "day"
- 				},
- 				"high": {
- 					"date": "2012-05-15T00:00:00Z",
- 					"precision": "day"
- 				}
- 			},
+ 			"date_time": { 
+                "high":  { 
+                    "precision": "day",
+                    "date": "2012-05-15T00:00:00Z"
+                 },
+                "low":  { 
+                    "precision": "day",
+                    "date": "2007-01-03T00:00:00Z"
+                 } 
+            } ,
  			"identifiers": [
  			{
  				"identifier": "cdbd33f0-6cde-11db-9fe1-0800200c9a66"
