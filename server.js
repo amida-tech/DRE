@@ -172,23 +172,49 @@ server.on('hl7', function(data) {
 
 
     //call PIM from BB-record to get candidates
-    var ptInfo = null; //patient ignored for now, return list of all patients in DB
-    record.getCandidates(ptInfo, function(smth, docs) {
+    var ptInfo = parsed_record.demographics; //patient ignored for now, return list of all patients in DB
+
+    console.log(JSON.stringify({"data":ptInfo},null,4));
+    record.getCandidates({"data":ptInfo}, function(smth, docs) {
         //PIM call here based on candidates
         console.log("candidates", JSON.stringify(docs, null, 4));
 
 
+        var username;
         //assign patient=test for now
-        var username = 'test';
-
-        //parse HL7 data into BB JSON
+        username = '';
 
 
+        //parsed_record - incoming data from HL7
+        //docs - list of candidates fetched from Mongo
 
-        //import HL7 data into patient record based on identified username
-        storage.importHL7Record(username, record_metadata, record_data, parsed_record, function() {
-            console.log("hl7 message saved");
-        });
+        var pim = require('blue-button-pim');
+
+
+        //var configs = require('configs')
+
+        console.log({data:parsed_record.demographics});
+
+        var match = pim.compare_candidates(parsed_record.demographics, docs);
+
+        console.log(match);
+
+        //extract username from list of candidates
+        for (var i=0; i<match.length; i++){
+            if (match[i].match==="automatic") {
+                username=match[i].pat_key;
+                console.log("patient matched to ", username);
+            }
+        }
+
+        if (username!==""){
+            //import HL7 data into patient record based on identified username
+            storage.importHL7Record(username, record_metadata, record_data, parsed_record, function() {
+                console.log("hl7 message saved");
+            });
+        } else {
+            console.log("patient match not found");
+        }
 
     });
 

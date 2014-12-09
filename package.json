@@ -20,6 +20,7 @@
     "async": "0.9.x",
     "blue-button": "^1.2.0",
     "blue-button-hl7": "0.0.x",
+    "blue-button-pim": "0.0.x",
     "blue-button-match": "^1.2.0",
     "blue-button-meta": "^1.2.0",
     "blue-button-record": "^1.2.0-beta.1",
