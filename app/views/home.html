@@ -1,60 +1,63 @@
-
-
-
-<div class="row" style="margin:20px;">
-	<div class="col-sm-3" style="padding-right: 20px; padding-bottom: 20px;">
+<div class="container-fluid body-content">
+	<!--Profile-->
+	<div class="col-sm-3 body-left" >
 		<div profile></div>
 	</div>
 
+
 	<div class="col-sm-9">
-
-
-		<!--Intro Panel.-->
 		<div class="panel">
 			<div class="panel-body">
-			<div class="row col-sm-12" breadcrumb></div>
-				<div class="col-sm-7">
-					<h1>Hi Suzie!</h1>
-					<p>Welcome to your Personal Health Record. You can review your record summary and account history from this home page.</p>
-					<p>Last Login: {{accountHistory.lastLogin}}</p>
-					<p>Last Updated: {{accountHistory.lastUpdate}}</p>
-				</div>
-				<div class="col-sm-5">
-
-					<div class="panel"  style="margin-bottom: 0;">
-					<div class="panel-body">
-					<div class="row alert-row">
-						<div class="col-sm-3 success">
-							<i class="fa fa-check fa-2x"></i>
-						</div>
-						<div class="col-sm-9">
-							<span>60 Total Entries</span>
-						</div>
+				<div class="col-sm-12">
+					<div class="row col-sm-12" breadcrumb></div>
+					<div class="col-sm-7">
+						<h1>Hi Suzie!</h1>
+						<p>Welcome to your Personal Health Record. You can review your record summary and account history from this home page.</p>
+						<p>Last Login: {{accountHistory.lastLogin}}</p>
+						<p>Last Updated: {{accountHistory.lastUpdate}}</p>
 					</div>
 
-					<div class="row alert-row">
-						<div class="col-sm-3 warning">
-							<i class="fa fa-flag fa-2x"></i>
-						</div>
-						<div class="col-sm-9">
-							<span>60 Possible Updates</span>
-						</div>
-					</div>
+					<div class="col-sm-5">
 
-					<div class="row alert-row">
-						<div class="col-sm-3 info">
-							<i class="fa fa-folder fa-2x"></i>
+						<div class="panel">
+							<div class="panel-body">
+								<div class="row alert-row">
+									<div class="col-sm-3 success">
+										<i class="fa fa-check fa-2x"></i>
+									</div>
+									<div class="col-sm-9">
+										<span>60 Total Entries</span>
+									</div>
+								</div>
+
+								<div class="row alert-row">
+									<div class="col-sm-3 warning">
+										<i class="fa fa-flag fa-2x"></i>
+									</div>
+									<div class="col-sm-9">
+										<span>60 Possible Updates</span>
+									</div>
+								</div>
+
+								<div class="row alert-row">
+									<div class="col-sm-3 info">
+										<i class="fa fa-folder fa-2x"></i>
+									</div>
+									<div class="col-sm-9">
+										<span>60 Files Saved</span>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="col-sm-9">
-							<span>60 Files Saved</span>
-						</div>
-					</div>
-					</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
+	</div>
+
+	<div class="col-sm-3"></div>
+	<div class="col-sm-9">
 		<!--d3.js-->
 
 		<h4 class="text-center">Account History</h4>
@@ -63,17 +66,17 @@
 				<div>
 					<p>Timeline</p>
 				</div>
-				<div timeline chart-data="accountHistory" chart-type="account" style="border-bottom: 1px solid #ccc; width: 100%;"></div>
+				<div timeline chart-data="accountHistory" chart-type="account" class="timeline-graph"></div>
 
 				<div ng-repeat="(recordIndex, recordEntry) in accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
 
-					<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
+					<div class="col-sm-12 row timeline-side">
 
 						<div class="col-sm-2">
 							<a class="timeline-entry-icon text-center center-block">
 								
-									<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
-									<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x" id="entry{{recordIndex}}"></i>
 
 							</a>
 						</div>
@@ -86,41 +89,30 @@
 										<div class="col-sm-6">
 											<h4 class="text-left">{{recordEntry.displayType}}</h4>
 											<h5 class="text-left">{{recordEntry.date}} - <span ng-show="recordEntry.file.name"><a>{{recordEntry.file.name}}</a></span>
-										<span ng-hide="recordEntry.file.name">Generated medical history</span></h5>
-											
-										</div>
-										<div class="col-sm-6">
+												<span ng-hide="recordEntry.file.name">Generated medical history</span></h5>
+
+											</div>
+											<div class="col-sm-6">
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-
-
-
-
 					</div>
-				</div>
 
-				<div class="col-sm-2 center-block text-center timeline-footer">
-					<svg width="30" height="30">
-						<circle cx="15" cy="15" r="15"></circle>
-					</svg>
+					<div class="col-sm-2 center-block text-center timeline-footer">
+						<svg width="30" height="30">
+							<circle cx="15" cy="15" r="15"></circle>
+						</svg>
+					</div>
+
+
 				</div>
 
 
 			</div>
-
-
 		</div>
+
+
 	</div>
-
-
-
-
-
-</div>
-
-
-
-</div>

@@ -1,9 +1,9 @@
-<div class="row" style="margin: 20px;">
-    <!--Profile-->
-    <div id="profileSidebar" class="col-sm-3" style="padding-right: 20px; height: 100%;">
+<div class="container-fluid body-content">
+    <div id="profileSidebar" class="col-sm-3 body-left">
         <div profile></div>
         <div record-navigation></div>
     </div>
+
     <!--Body-->
     <div class="col-sm-9">
         <div class="panel">
@@ -20,17 +20,17 @@
                         </div>
                         <div class="pull-right">
                             <a href="#/record/download">
-                            <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
-                            <div class="col-sm-12 text-left" style="text-transform: none;">
-                                <div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
-                                    <img class="img-navbar-logo img-responsive"src="images/bb-logo-vector.png" style="margin: 0px;">
-                                </div>
-                                <div class="pull-right">
-                                    <h6 style="text-transform: none; margin: 0px;">BlueButton</h6>
-                                    <h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Download</br>my data<span style="font-size: 8px; vertical-align: top;">&reg;</span></h5>
-                                </div>
-                            </div>
-                            </button>
+                                <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
+                                    <div class="col-sm-12 text-left" style="text-transform: none;">
+                                        <div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
+                                            <img class="img-navbar-logo img-responsive"src="images/bb-logo-vector.png" style="margin: 0px;">
+                                        </div>
+                                        <div class="pull-right">
+                                            <h6 style="text-transform: none; margin: 0px;">BlueButton</h6>
+                                            <h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Download</br>my data<span style="font-size: 8px; vertical-align: top;">&reg;</span></h5>
+                                        </div>
+                                    </div>
+                                </button>
                             </a>
                             <h6 style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
                         </div>
@@ -110,7 +110,7 @@
                         </div>
                         <div ng-show="entryList" timeline chart-data="entryList" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
                         <div ng-repeat="(recordIndex, recordEntry) in entryList" class="col-sm-12 row" id="record{{recordIndex}}">
-                            <div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
+                            <div class="col-sm-12 row timeline-side">
                                 <!--Timeline Icon-->
                                 <div class="col-sm-2">
                                     <a href="#/record/{{recordEntry.category}}" class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{recordEntry.category}}" timeline-index="{{recordIndex}}"></a>
@@ -131,12 +131,12 @@
                         </div>
                         <div class="col-sm-2 center-block text-center timeline-footer">
                             <svg width="30" height="30">
-                            <circle cx="15" cy="15" r="15"></circle>
+                                <circle cx="15" cy="15" r="15"></circle>
                             </svg>
                         </div>
                     </div>
-                    </div><!--end timeline-->
-                </div>
+                </div><!--end timeline-->
             </div>
-<pre>{{masterRecord | json}}</pre>
         </div>
+        <pre>{{masterRecord | json}}</pre>
+    </div>
