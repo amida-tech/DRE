@@ -209,12 +209,36 @@
                     "diff": {
                         "observation": {
                             "status": "diff",
-                            "reactions": "diff"
+                            "reactions": "new"
                         }
                     },
                     "srcMatch": recordResults[0],
                     "newMatch": partialResults[0]
-                }];
+                } 
+                // {
+                //     "match": "partial",
+                //     "percent": 75,
+                //     "subelements": {
+                //         "observation": {
+                //             "reactions": [{
+                //                 "match": "new",
+                //                 "percent": 0,
+                //                 "src_id": "0",
+                //                 "dest_id": "0",
+                //                 "dest": "dest"
+                //             }]
+                //         }
+                //     },
+                //     "diff": {
+                //         "observation": {
+                //             "status": "diff",
+                //             "reactions": "diff"
+                //         }
+                //     },
+                //     "srcMatch": recordResults[0],
+                //     "newMatch": partialResults[0]
+                // }
+                ];
 
                 callback(null, tmpMatch);
 

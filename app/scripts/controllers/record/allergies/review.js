@@ -103,26 +103,31 @@ angular.module('phrPrototypeApp')
                             var newReaction = $scope.match[matchIndex].newMatch[name].reactions[rName];
                             newReaction.srcMatchIndex = rName;
 
+                            var srcReaction = $scope.match[matchIndex].srcMatch[name].reactions[rName];
+                            srcReaction.srcMatchIndex = rName;
+
                             if (!$scope.match[matchIndex].srcMatch[name].reactions) {
                                 $scope.match[matchIndex].srcMatch[name].reactions = [];
                             }
 
-                            $scope.match[matchIndex].srcMatch[name].reactions.push(newReaction);
+                            $scope.match[matchIndex].newMatch[name].reactions.push(srcReaction);
+                            $scope.match[matchIndex].srcMatch[name].reactions = $scope.match[matchIndex].newMatch[name].reactions;
                         } else if (rElem === false) {
 
+                            $scope.match[matchIndex].srcMatch[name].reactions = $scope.match[matchIndex].origMatch[name].reactions;
                             //Index to splice.
                             //console.log(rName);
 
-                            _.each($scope.match[matchIndex].srcMatch[name].reactions, function (rxElem, rxName, rxList) {
+                            // _.each($scope.match[matchIndex].srcMatch[name].reactions, function (rxElem, rxName, rxList) {
 
-                                if (rxElem.srcMatchIndex) {
-                                    if (rxElem.srcMatchIndex === rName) {
-                                        //Splice ID.
-                                        console.log(rxName);
-                                        $scope.match[matchIndex].srcMatch[name].reactions.splice(rxName);
-                                    }
-                                }
-                            });
+                            //     if (rxElem.srcMatchIndex) {
+                            //         if (rxElem.srcMatchIndex === rName) {
+                            //             //Splice ID.
+                            //             console.log(rxName);
+                            //             $scope.match[matchIndex].srcMatch[name].reactions.splice(rxName);
+                            //         }
+                            //     }
+                            // });
                         }
 
                     });
