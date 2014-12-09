@@ -10,7 +10,7 @@
 angular.module('phrPrototypeApp')
     .service('vitals', function vitals() {
 
-        this.getRecord = function (callback) {
+        var getPartialRecord = function (callback) {
 
             var tmpVitals = [{
                 "identifiers": [{
@@ -31,7 +31,38 @@ angular.module('phrPrototypeApp')
                 "interpretations": [
                     "Normal"
                 ],
-                "value": 68,
+                "value": 66,
+                "unit": "[in_i]"
+            }];
+
+            callback(null, tmpVitals);
+
+        }
+
+        this.getPartialRecord = getPartialRecord;
+
+        var getRecord = function(callback) {
+
+            var tmpVitals = [{
+                "identifiers": [{
+                    "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
+                }],
+                "vital": {
+                    "name": "Height",
+                    "code": "8302-2",
+                    "code_system_name": "LOINC"
+                },
+                "status": "completed",
+                "date_time": {
+                    "point": {
+                        "date": "2012-09-07T00:00:00Z",
+                        "precision": "day"
+                    }
+                },
+                "interpretations": [
+                    "Normal"
+                ],
+                "value": 64,
                 "unit": "[in_i]"
             }, {
                 "identifiers": [{
@@ -227,4 +258,39 @@ angular.module('phrPrototypeApp')
             callback(null, tmpVitals);
 
         }
+
+        this.getRecord = getRecord;
+
+        var saveEntry = function(entry, callback) {
+            console.log(entry);
+            callback(null);
+        }
+
+        this.saveEntry = saveEntry;
+
+        var getPartialMatch = function(callback) {
+
+            getPartialRecord(function(err, partialResults) {
+                getRecord(function(err, recordResults) {
+
+                    var tmpMatch = [{
+                        "match": "partial",
+                        "percent": 75,
+                        "subelements": {},
+                        "diff": {
+                            "value": "diff"
+                        },
+                        "srcMatch": recordResults[0],
+                        "newMatch": partialResults[0]
+                    }];
+
+                    callback(null, tmpMatch);
+
+                });
+            });
+        }
+
+        this.getPartialMatch = getPartialMatch;
+
+
     });
