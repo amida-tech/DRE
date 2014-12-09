@@ -42,84 +42,8 @@
 
 				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
-<<<<<<< HEAD
-					<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
-
-						<!--Timeline Icon-->
-						<div class="col-sm-2">
-							<a class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{entryType}}" timeline-index="{{recordIndex}}"></a>
-						</div>
-
-						<div class="col-sm-10">
-							<div class="panel timeline-entry">
-								<div class="panel-body" id="accordian">
-									<div class="timeline-entry-header col-sm-12">
-										<div class="col-sm-6">
-											<h4 class="text-left">{{recordEntry.displayQuantity}}</h4>
-											<h5 class="text-left">{{recordEntry.vital.name}}</h5>
-											<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
-										</div>
-										<div class="col-sm-6 text-right" ng-show="recordIndex===0">
-										
-										<a  href="#/record/vitals/review"><button class="btn btn-link"><i class="fa fa-flag-o" style="margin-right: 10px;"></i> Review 1 Update</button></a>
-										</div>
-										<div style="position: absolute; bottom: 0px; right: 0px;">
-											<button class=" btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">
-												<i class="fa fa-chevron-down"></i> More
-											</button>		
-										</div>
-									</div>
-
-									<div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-										<table class="table table-hover">
-											<tr>
-												<td>Code:</td>
-												<td>{{recordEntry.vital.code}}</td>
-											</tr>
-											<tr>
-												<td>Code System:</td>
-												<td>{{recordEntry.vital.code_system_name}}</td>
-											</tr>
-											<tr ng-show="recordEntry.vital.translations">
-												<td>Other Descriptions:</td>
-												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.vital.translations">
-														<table class="table sub-table">
-															<thead>
-																<tr>
-																	<td>Name:</td>
-																	<td>{{itemEntry.name}}</td>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>Code:</td>
-																	<td>{{itemEntry.code}}</td>
-																</tr>
-																<tr>
-																	<td>Code System:</td>
-																	<td>{{itemEntry.code_system_name}}</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</td>
-											</tr>
-											<tr ng-show="recordEntry.interpretations">
-												<td>Interpretation:</td>
-												<td ng-repeat="int in recordEntry.interpretations">
-													{{int}}
-												</td>
-											</tr>
-									</table>
-								</div>
-							</td>
-						</tr>
-					</table>
-=======
 					<div class="col-sm-12 row timeline-side">
 						<entry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
->>>>>>> master
 					</div>
 
 				</div>

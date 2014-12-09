@@ -19,17 +19,7 @@
 							</div>
 						</div>
 					</div>
-<<<<<<< HEAD
-				</div>
-
-		<!--Alert-->
-		<div class="col-sm-10 col-sm-offset-1 text-center" ng-show="alertShow">
-			<span><button class="btn btn-link" style="margin-right: 20px;"><i class="fa fa-flag-o" style="margin-right: 10px;"></i>There is 1 update to your encounters requiring review.</button></span>
-		</div>
-
-=======
 				</div>	
->>>>>>> master
 			</div>
 		</div>
 
@@ -45,147 +35,9 @@
 
 				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
-<<<<<<< HEAD
-					<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
-
-						<!--Timeline Icon-->
-						<div class="col-sm-2">
-							<a class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{entryType}}" timeline-index="{{recordIndex}}"></a>
-						</div>
-						
-						<div class="col-sm-10">
-							<div class="panel timeline-entry">
-								<div class="panel-body" id="accordian">
-									<div class="timeline-entry-header col-sm-12">
-										<div class="col-sm-6">
-											<h4 class="text-left">{{recordEntry.encounter.name}}</h4>
-											<h5 ng-repeat = "location in recordEntry.locations" class="text-left">{{location.name}}</h5>
-											<h5 class="text-left">{{recordEntry.date_time.displayDate}}</h5>
-										</div>
-
-										<div class="col-sm-6 text-right">
-										
-										<a  href="#/record/encounters/review"><button class="btn btn-link"><i class="fa fa-flag-o" style="margin-right: 10px;"></i> Review 1 Update</button></a>
-										</div>
-
-										<div style="position: absolute; bottom: 0px; right: 0px;">
-											<button class=" btn btn-primary btn-link pull-right" data-toggle="collapse" data-target="#collapse{{recordIndex}}" aria-expanded="false" aria-controls="collapse{{recordIndex}}">
-												<i class="fa fa-chevron-down"></i> More
-											</button>		
-										</div>
-									</div>
-
-									<div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-										<table class="table table-hover">
-											<tr>
-												<td>Code:</td>
-												<td>{{recordEntry.encounter.code}}</td>
-											</tr>
-											<tr>
-												<td>Code System:</td>
-												<td>{{recordEntry.encounter.code_system_name}}</td>
-											</tr>
-											<tr ng-show="recordEntry.encounter.translations">
-												<td>Other Descriptions:</td>
-												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.encounter.translations">
-														<table class="table sub-table">
-															<thead>
-																<tr>
-																	<td>Name:</td>
-																	<td>{{itemEntry.name}}</td>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>Code:</td>
-																	<td>{{itemEntry.code}}</td>
-																</tr>
-																<tr>
-																	<td>Code System:</td>
-																	<td>{{itemEntry.code_system_name}}</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</td>
-											</tr>
-											<tr ng-show="recordEntry.findings">
-												<td>Findings:</td>
-												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.findings">
-														<table class="table sub-table">
-															<tr>
-																<td>Name:</td>
-																<td>{{itemEntry.value.name}}</td>
-															</tr>
-															<tr>
-																<td>Code:</td>
-																<td>{{itemEntry.value.code}}</td>
-															</tr>
-															<tr>
-																<td>Code System:</td>
-																<td>{{itemEntry.value.code_system_name}}</td>
-															</tr>
-															<tr>
-																<td>Date:</td>
-																<td>{{itemEntry.date_time.displayDate}}</td>
-															</tr>
-														</table>
-													</div>
-												</td>
-											</tr>
-											<tr ng-show="recordEntry.performers">
-												<td>Performers:</td>
-												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.performers">
-														<table class="table sub-table" ng-repeat="(codeIndex, codeEntry) in itemEntry.code">
-															<thead>
-																{{codeEntry}}
-																<tr>
-																	<td>Name:</td>
-																	<td>{{codeEntry.name}}</td>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>Code:</td>
-																	<td>{{codeEntry.code}}</td>
-																</tr>
-																<tr>
-																	<td>Code System:</td>
-																	<td>{{codeEntry.code_system_name}}</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</td>
-											</tr>
-											<tr ng-show="recordEntry.locations">
-												
-												<td>Locations:</td>
-												<td>
-													<div class="panel" ng-repeat="(itemIndex, itemEntry) in recordEntry.locations">
-														<table class="table sub-table">
-															<tr>
-																<td>Name:</td>
-																<td>{{itemEntry.name}}</td>
-															</tr>
-
-															<tr ng-show="itemEntry.address">
-																<td>Address:</td>
-
-																<td ng-repeat="(addrindex, addrEntry) in itemEntry.address">
-																	<p ng-repeat="(addrLineIndex, addrLineEntry) in addrEntry.displayAddress">{{addrLineEntry}}</p>
-																</td>
-															</tr>
-															<tr>
-																<td>Type:</td>
-=======
 					<div class="col-sm-12 row timeline-side">
 						<entry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
 					</div>
->>>>>>> master
 
 				</div>
 
