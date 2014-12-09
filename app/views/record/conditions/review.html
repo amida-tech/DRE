@@ -92,7 +92,7 @@
                                                                             <div class="pull-right" ng-if="matchEntry.diff.problem === 'diff'">
                                                                                 <span class="label label-info">Different</span>
                                                                             </div>
-                                                                            <td>
+                                                                        </td>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -112,44 +112,44 @@
                                                 </tr>
                                             </thead>
                                         </table>
-                                        </td>
-                                        <td class="text-center update-spacer"></td>
-                                        <td style="border: 1px solid #ccc;">
-                                            <table class="table table-condensed col-sm-12">
-                                                <thead>
-                                                    <tr>
-                                                        <td class="col-sm-3">
-                                                            Problem:
-                                                        </td>
-                                                        <td class="col-sm-9">
-                                                            <div class="panel" ng-class="{'update-selected': selected.problem}">
+                                    </td>
+                                    <td class="text-center update-spacer"></td>
+                                    <td style="border: 1px solid #ccc;">
+                                        <table class="table table-condensed col-sm-12">
+                                            <thead>
+                                                <tr>
+                                                    <td class="col-sm-3">
+                                                        Problem:
+                                                    </td>
+                                                    <td class="col-sm-9">
+                                                        <div class="panel" ng-class="{'update-selected': selected.problem}">
 
-                                                                <table class="table sub-table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <td colspan="2">
-                                                                                <h5>{{matchEntry.srcMatch.problem.code.name}}</h5>
-                                                                            <td>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>Code:</td>
-                                                                            <td>{{matchEntry.srcMatch.problem.code.code}}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Code System:</td>
-                                                                            <td>{{matchEntry.srcMatch.problem.code.code_system_name}}</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                                            <table class="table sub-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <h5>{{matchEntry.srcMatch.problem.code.name}}</h5>
+                                                                            </td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Code:</td>
+                                                                        <td>{{matchEntry.srcMatch.problem.code.code}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code System:</td>
+                                                                        <td>{{matchEntry.srcMatch.problem.code.code_system_name}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
 
-                                                            </div>
-                                                            </td>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                        </td>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </td>
                                 </tr>
 
                             </tbody>
