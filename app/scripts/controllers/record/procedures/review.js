@@ -122,44 +122,9 @@ angular.module('phrPrototypeApp')
                 } else if (elem === false) {
                     $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].origMatch[name];
                     formatDates();
+                    formatDisplay();
                 } else if (_.isObject(elem)) {
-                    // Handle status
-                    if (elem.status === true) {
-                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].newMatch[name].status;
-                    } else if (elem.status === false) {
-                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].origMatch[name].status;
-                    }
-                    //Explicitly handle reactions.
-                    _.each(elem.reactions, function (rElem, rName, rList) {
 
-                        if (rElem === true) {
-
-                            var newReaction = $scope.match[matchIndex].newMatch[name].reactions[rName];
-                            newReaction.srcMatchIndex = rName;
-
-                            if (!$scope.match[matchIndex].srcMatch[name].reactions) {
-                                $scope.match[matchIndex].srcMatch[name].reactions = [];
-                            }
-
-                            $scope.match[matchIndex].srcMatch[name].reactions.push(newReaction);
-                        } else if (rElem === false) {
-
-                            //Index to splice.
-                            //console.log(rName);
-
-                            _.each($scope.match[matchIndex].srcMatch[name].reactions, function (rxElem, rxName, rxList) {
-
-                                if (rxElem.srcMatchIndex) {
-                                    if (rxElem.srcMatchIndex === rName) {
-                                        //Splice ID.
-                                        console.log(rxName);
-                                        $scope.match[matchIndex].srcMatch[name].reactions.splice(rxName);
-                                    }
-                                }
-                            });
-                        }
-
-                    });
 
                 }
 
