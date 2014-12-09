@@ -6,17 +6,19 @@
  * @Takes two inputs, chartData and chartType.
  * # timeline
  */
-angular.module('phrPrototypeApp')
-    .directive('timeline', function ($window, $location, $anchorScroll) {
-        return {
-            restrict: 'EA',
-            template: "<svg style='width:100%;'></svg>",
-            link: function postLink(scope, element, attrs) {
+ angular.module('phrPrototypeApp')
+ .directive('timeline', function ($window, $location, $anchorScroll, d3Service) {
+    return {
+        restrict: 'EA',
+        template: "<svg style='width:100%;'></svg>",
+        link: function postLink(scope, element, attrs) {
 
-                var navClick = function (element) {
-                    var old = $location.hash();
-                    $location.hash(element);
-                    $anchorScroll();
+            d3Service.d3tip().then(function(d3) {
+
+            var navClick = function (element) {
+                var old = $location.hash();
+                $location.hash(element);
+                $anchorScroll();
                     //reset to old to keep any additional routing logic from kicking in
                     $location.hash(old);
                 };
@@ -39,7 +41,8 @@ angular.module('phrPrototypeApp')
                 var isoFormat = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
                 var isoFormatSubsecond = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ");
 
-                var tip = d3.tip().attr('class', 'd3-tip').html(function (d) {
+                var tip = d3.tip()
+                tip.attr('class', 'd3-tip').html(function (d) {
                     return 'Entry';
                 });
                 svg.call(tip);
@@ -82,7 +85,7 @@ angular.module('phrPrototypeApp')
                                 if (entry.data.date_time.plotDate) {
                                     plotDate = isoFormat.parse(entry.data.date_time.plotDate);
                                 }
-                                
+
                                 //Redundancy for isoFormat subsecond support.
                                 if (_.isNull(plotDate)) {
                                     plotDate = isoFormatSubsecond.parse(entry.data.date_time.plotDate);
@@ -114,8 +117,8 @@ angular.module('phrPrototypeApp')
 
                     function buildScale() {
                         timeScale = d3.time.scale()
-                            .range([(boundaryOffset + (boundaryWidth / 2)), width - (boundaryOffset - (boundaryWidth / 2))])
-                            .domain(plotDomain);
+                        .range([(boundaryOffset + (boundaryWidth / 2)), width - (boundaryOffset - (boundaryWidth / 2))])
+                        .domain(plotDomain);
                     }
 
                     function buildTicks() {
@@ -182,54 +185,54 @@ angular.module('phrPrototypeApp')
 
                         var boundaryLabels = svg.selectAll("text").data(boundaryLabel).enter().append("text");
                         var boundaryLabelAttributes = boundaryLabels
-                            .attr("x", function (d) {
-                                return d.x;
-                            })
-                            .attr("y", function (d) {
-                                return d.y;
-                            })
-                            .text(function (d) {
-                                return d.text;
-                            })
-                            .style("text-anchor", function (d) {
-                                return d.anchor;
-                            });
+                        .attr("x", function (d) {
+                            return d.x;
+                        })
+                        .attr("y", function (d) {
+                            return d.y;
+                        })
+                        .text(function (d) {
+                            return d.text;
+                        })
+                        .style("text-anchor", function (d) {
+                            return d.anchor;
+                        });
 
                         var boundaries = svg.selectAll("plotBoundary").data(boundaryData).enter().append("rect");
                         var boundaryAttributes = boundaries
-                            .attr("x", function (d) {
-                                return d.x;
-                            })
-                            .attr("y", function (d) {
-                                return d.y;
-                            })
-                            .attr("width", function (d) {
-                                return d.width;
-                            })
-                            .attr("height", function (d) {
-                                return d.height;
-                            })
-                            .style("fill", function (d) {
-                                return d.color;
-                            });
+                        .attr("x", function (d) {
+                            return d.x;
+                        })
+                        .attr("y", function (d) {
+                            return d.y;
+                        })
+                        .attr("width", function (d) {
+                            return d.width;
+                        })
+                        .attr("height", function (d) {
+                            return d.height;
+                        })
+                        .style("fill", function (d) {
+                            return d.color;
+                        });
 
                         var plotLine = svg.selectAll("plotLine").data(plotLineData).enter().append("rect");
                         var plotLineAttributes = plotLine
-                            .attr("x", function (d) {
-                                return d.x;
-                            })
-                            .attr("y", function (d) {
-                                return d.y;
-                            })
-                            .attr("width", function (d) {
-                                return d.width;
-                            })
-                            .attr("height", function (d) {
-                                return d.height;
-                            })
-                            .style("fill", function (d) {
-                                return d.color;
-                            });
+                        .attr("x", function (d) {
+                            return d.x;
+                        })
+                        .attr("y", function (d) {
+                            return d.y;
+                        })
+                        .attr("width", function (d) {
+                            return d.width;
+                        })
+                        .attr("height", function (d) {
+                            return d.height;
+                        })
+                        .style("fill", function (d) {
+                            return d.color;
+                        });
 
                         /*var plotLines = svg.selectAll("plotLines").data(timeScaleTicks).enter().append("circle");
                         var plotLineAttributes = plotLines
@@ -244,8 +247,8 @@ angular.module('phrPrototypeApp')
                             .style("fill", "#5bc0de")
                             .attr("class", "plotLines");*/
 
-                        var circles = svg.selectAll("plotPoint").data(plotCircles).enter().append("circle");
-                        var circleAttributes = circles
+                            var circles = svg.selectAll("plotPoint").data(plotCircles).enter().append("circle");
+                            var circleAttributes = circles
                             .attr("cx", function (d) {
                                 return d.x_axis;
                             })
@@ -271,15 +274,15 @@ angular.module('phrPrototypeApp')
                             .on("click", function (d) {
                                 navClick(d.href);
                             });
+                        }
+
+                        getSVGWidth();
+                        buildScale();
+                        buildTicks();
+                        structureData();
+                        plotData();
+
                     }
-
-                    getSVGWidth();
-                    buildScale();
-                    buildTicks();
-                    structureData();
-                    plotData();
-
-                }
 
                 //gatherData only on first run.
                 gatherData();
@@ -291,14 +294,16 @@ angular.module('phrPrototypeApp')
                     renderPlot();
                 };
 
-                //console.log(attrs.inactiveFlag);
-
                 //Expose function on master scope.
                 scope.$watch('inactiveFlag', function (newValue, oldValue) {
                     gatherData();
                     renderPlot();
                 }, true);
 
+            });
+
             }
+
         };
+
     });
