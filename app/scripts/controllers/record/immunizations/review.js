@@ -77,29 +77,29 @@ angular.module('phrPrototypeApp')
             });
         }
 
-        function formatDisplay() {
-        	_.each($scope.match, function(entry) {
-        		_.each(entry.newMatch.performer, function(perf) {
-        			_.each(entry.newMatch.performer.name, function(name) {
-        				format.formatName(name);
-        			});
-        			_.each(entry.newMatch.performer.address, function(addr) {
-        				format.formatAddress(addr);
-        			});
-        		});
-        		format.formatQuantity(entry.newMatch.administration.dose);
+        // function formatDisplay() {
+        // 	_.each($scope.match, function(entry) {
+        // 		_.each(entry.newMatch.performer, function(perf) {
+        // 			_.each(entry.newMatch.performer.name, function(name) {
+        // 				format.formatName(name);
+        // 			});
+        // 			_.each(entry.newMatch.performer.address, function(addr) {
+        // 				format.formatAddress(addr);
+        // 			});
+        // 		});
+        // 		format.formatQuantity(entry.newMatch.administration.dose);
 
-        		_.each(entry.srcMatch.performer, function(perf) {
-        			_.each(entry.srcMatch.performer.name, function(name) {
-        				format.formatName(name);
-        			});
-        			_.each(entry.srcMatch.performer.address, function(addr) {
-        				format.formatAddress(addr);
-        			});
-        		});
-        		format.formatQuantity(entry.srcMatch.administration.dose);
-        	});
-        }
+        // 		_.each(entry.srcMatch.performer, function(perf) {
+        // 			_.each(entry.srcMatch.performer.name, function(name) {
+        // 				format.formatName(name);
+        // 			});
+        // 			_.each(entry.srcMatch.performer.address, function(addr) {
+        // 				format.formatAddress(addr);
+        // 			});
+        // 		});
+        // 		format.formatQuantity(entry.srcMatch.administration.dose);
+        // 	});
+        // }
 
         $scope.selectEntry = function (matchIndex) {
             _.each($scope.selected, function (elem, name, list) {
