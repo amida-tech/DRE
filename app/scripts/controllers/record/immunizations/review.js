@@ -77,29 +77,32 @@ angular.module('phrPrototypeApp')
             });
         }
 
-        // function formatDisplay() {
-        // 	_.each($scope.match, function(entry) {
-        // 		_.each(entry.newMatch.performer, function(perf) {
-        // 			_.each(entry.newMatch.performer.name, function(name) {
-        // 				format.formatName(name);
-        // 			});
-        // 			_.each(entry.newMatch.performer.address, function(addr) {
-        // 				format.formatAddress(addr);
-        // 			});
-        // 		});
-        // 		format.formatQuantity(entry.newMatch.administration.dose);
+        function formatDisplay() {
+        	_.each($scope.match, function(entry) {
+        		_.each(entry.newMatch.performer, function(perf) {
 
-        // 		_.each(entry.srcMatch.performer, function(perf) {
-        // 			_.each(entry.srcMatch.performer.name, function(name) {
-        // 				format.formatName(name);
-        // 			});
-        // 			_.each(entry.srcMatch.performer.address, function(addr) {
-        // 				format.formatAddress(addr);
-        // 			});
-        // 		});
-        // 		format.formatQuantity(entry.srcMatch.administration.dose);
-        // 	});
-        // }
+        			_.each(perf.name, function(name) {
+        				format.formatName(name);
+        			});
+
+        			_.each(perf.address, function(addr) {
+        				format.formatAddress(addr);
+        			});
+        		});
+        		// format.formatQuantity(entry.newMatch.administration.dose);
+
+        		_.each(entry.srcMatch.performer, function(perf) {
+
+        			_.each(perf.name, function(name) {
+        				format.formatName(name);
+        			});
+        			_.each(perf.address, function(addr) {
+        				format.formatAddress(addr);
+        			});
+        		});
+        		// format.formatQuantity(entry.srcMatch.administration.dose);
+        	});
+        }
 
         $scope.selectEntry = function (matchIndex) {
             _.each($scope.selected, function (elem, name, list) {
@@ -109,6 +112,7 @@ angular.module('phrPrototypeApp')
                 } else if (elem === false) {
                     $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].origMatch[name];
                     formatDates();
+                    formatDisplay();
                 } else if (_.isObject(elem)) {
                     // Handle status
                     if (elem.status === true) {
@@ -116,37 +120,7 @@ angular.module('phrPrototypeApp')
                     } else if (elem.status === false) {
                         $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].origMatch[name].status;
                     }
-                    //Explicitly handle reactions.
-                    _.each(elem.reactions, function (rElem, rName, rList) {
 
-                        if (rElem === true) {
-
-                            var newReaction = $scope.match[matchIndex].newMatch[name].reactions[rName];
-                            newReaction.srcMatchIndex = rName;
-
-                            if (!$scope.match[matchIndex].srcMatch[name].reactions) {
-                                $scope.match[matchIndex].srcMatch[name].reactions = [];
-                            }
-
-                            $scope.match[matchIndex].srcMatch[name].reactions.push(newReaction);
-                        } else if (rElem === false) {
-
-                            //Index to splice.
-                            //console.log(rName);
-
-                            _.each($scope.match[matchIndex].srcMatch[name].reactions, function (rxElem, rxName, rxList) {
-
-                                if (rxElem.srcMatchIndex) {
-                                    if (rxElem.srcMatchIndex === rName) {
-                                        //Splice ID.
-                                        console.log(rxName);
-                                        $scope.match[matchIndex].srcMatch[name].reactions.splice(rxName);
-                                    }
-                                }
-                            });
-                        }
-
-                    });
 
                 }
 
@@ -159,6 +133,7 @@ angular.module('phrPrototypeApp')
             $scope.selected = angular.copy(selectedOriginal);  
             $scope.match[matchIndex].srcMatch = angular.copy($scope.match[matchIndex].origMatch);
             formatDates();
+            formatDisplay();
 
         }
 
@@ -178,6 +153,7 @@ angular.module('phrPrototypeApp')
         $scope.refresh = function () {
             getMatch(function (err) {
                 formatDates();
+                formatDisplay();
             });
         }
 

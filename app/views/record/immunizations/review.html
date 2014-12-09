@@ -51,7 +51,8 @@
                                     <td class="col-sm-6" style="border: 1px solid #ccc;">
                                         <div class="col-sm-11">
                                             <h4 class="text-left">{{matchEntry.newMatch.product.product.name}}</h4>
-                                            <h5 ng-repeat="(performerIndex, performerEntry) in matchEntry.newMatch.performer.name" class="text-left">{{performerEntry.displayName}}</h5>
+                                            <h5 ng-repeat="nameEntry in matchEntry.newMatch.performer.name" class="text-left">
+                                            {{nameEntry.displayName}}</h5>
                                             <h5 class="text-left">{{matchEntry.newMatch.date_time.displayDate}}</h5>
                                         </div>
                                     </td>
