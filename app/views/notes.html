@@ -1,99 +1,31 @@
 <div class="container-fluid body-content">
+
+
+
 	<div class="col-sm-3 body-left">
 		<div profile></div>
-
 		<div>
 			<div class="panel-body">
-				<form novalidate>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.starred">
-							Starred
-						</label>
+				<div class="btn-toolbar sidebar-control" role="toolbar">
+					<div class="btn-group-vertical col-sm-12" role="group">
+						<button class="btn btn-default btn-block" ng-click="toggleAll()">All </button>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" value="false" ng-model="filters.unStarred">
-							Not Starred
-						</label>
+					<p>&nbsp</p>
+					<div class="btn-group-vertical col-sm-12" role="group">
+						<button class="btn btn-default btn-block" ng-click="toggle('starred')">Starred <i class="fa fa-check" ng-show="filters.starred"></i></button>
+						<button class="btn btn-default btn-block" ng-click="toggle('unStarred')">Unstarred <i class="fa fa-check" ng-show="filters.unStarred"></i></button>
 					</div>
-					<hr>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.allergies">
-							Allergies
-						</label>
+					<p>&nbsp</p>
+					<div class="btn-group-vertical col-sm-12" role="group">
+						<button class="btn btn-default btn-block" ng-repeat="(name,state) in filters" ng-hide="name === 'starred' || name === 'unStarred'" ng-click="toggle(name)">{{name}} <i class="fa fa-check" ng-show="state"></i></button>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.encounters">
-							Encounters
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.immunizations">
-							Immunizations
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.medications">
-							Medications
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.conditions">
-							Conditions
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.procedures">
-							Procedures
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.vitals">
-							Vital Signs
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.results">
-							Test Results
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.social">
-							Social History
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.claims">
-							Claims
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked="checked" value="true" ng-model="filters.insurance">
-							Insurance
-						</label>
-					</div>
-				</form>
+				</div>
 			</div>
 		</div>
-
 	</div>
-
 	<div class="col-sm-9">
 		<div class="panel">
 			<div class="panel-body">
-
 				<!--Header Items-->
 				<div class="col-sm-12 row">
 					<div class="col-sm-12">
@@ -108,24 +40,18 @@
 		<div class="text-center"><h4>Review Notes</h4></div>
 		<div class="panel">
 			<div class="panel-body">
-
-				
 				<!--Each Entry-->
 				<div ng-show="sections.length === 0" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
 				<div ng-hide="filters.starred || filters.unStarred" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
-
 				<div ng-repeat="(sectionIndex, sectionEntry) in sections = (notes | sections:filters)">
 					<div ng-repeat="(noteIndex, noteEntry) in subNotes = (sectionEntry.notes | starred:filters)">
-
 						<div ng-show="noteIndex === 0">
 							<h4>{{sectionEntry.section}}</h4>
 						</div>
-
 						<div class="col-sm-1 panel-body text-center">
 							<h5 ng-show="noteEntry.note.starred === true" ng-click="clickStar(true, noteIndex, sectionEntry.section)"><a><i class="fa fa-star"></i></a></h5>
 							<h5 ng-show="noteEntry.note.starred === false" ng-click="clickStar(false, noteIndex, sectionEntry.section)"><a><i class="fa fa-star-o"></i></a></h5>
 						</div>
-
 						<div class="panel col-sm-11">
 							<div class="panel-body">
 								<div class="col-sm-8">
@@ -140,7 +66,6 @@
 									</button>
 								</div>
 								<div class="col-sm-12" >
-
 									<!--Record detail pane.-->
 									<div role="tabpanel" class="collapse" id="details{{sectionEntry.section}}{{noteIndex}}">
 										<div class="sub-entry">
@@ -152,16 +77,11 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
-							
-
-
 						</div>
 					</div>
-
 					<!--<pre>{{notes | json}}</pre>-->
-
 				</div>
 			</div>
 		</div>
+	</div>
