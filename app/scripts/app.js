@@ -160,6 +160,7 @@ angular
       .when('/record/social/review', {
         templateUrl: 'views/record/social/review.html',
         controller: 'RecordSocialReviewCtrl'
+      })
       .when('/notes', {
         templateUrl: 'views/notes.html',
         controller: 'NotesCtrl'
