@@ -140,8 +140,13 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         });
 
         _.each($scope.entryList, function(entry) {
-            _.each(entry.data.date_time, function(dateEntry) {
-                format.formatDate(dateEntry);
+
+            //console.log(entry.data.date_time);
+
+            _.each(entry.data.date_time, function(dateEntry, dateTitle) {
+                if (dateTitle !== 'displayDate' && dateTitle !== 'plotDate') {
+                    format.formatDate(dateEntry);
+                }
             });
 
             //Have to generate date for results.
@@ -152,9 +157,11 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 //Fill out each result's individual date.
                 if (entry.data.results) {
                     _.each(entry.data.results, function(result) {
-                        _.each(result.date_time, function(dateEntry) {
-                            format.formatDate(dateEntry);
-                            dateArray.push(moment(dateEntry.date));
+                        _.each(result.date_time, function(dateEntry, dateTitle) {
+                            if (dateTitle !== 'displayDate' && dateTitle !== 'plotDate') {
+                                format.formatDate(dateEntry);
+                                dateArray.push(moment(dateEntry.date));
+                            }
                         });
                         result.date_time.displayDate = format.outputDate(result.date_time);
                     });
