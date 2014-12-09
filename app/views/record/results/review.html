@@ -1,1 +1,137 @@
-<p>This is the record/results/review view.</p>
+<div class="container-fluid body-content">
+    <!--Profile-->
+    <div class="col-sm-3 body-left">
+        <div profile></div>
+    </div>
+
+
+    <div class="col-sm-9">
+
+        <!--Header-->
+        <div class="panel">
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <div class="row col-sm-12" breadcrumb></div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="pull-left">
+                                <h1>Review <span style="text-transform: capitalize;">Results Updates</span></h1>
+                                <p>Entries to the left are possible updates to a current entry in your record, displayed to the right.</p>
+                                <p>Use the checkboxes to select updates you wish to apply.</p>
+                                <h6>Note:  Only differences between the entries are displayed.</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--Implementation-->
+        <div ng-repeat="(matchIndex, matchEntry) in match">
+            <h4 class="text-center">Update #{{matchIndex + 1}}</h4>
+            <div class="panel col-sm-12">
+                <div class="panel-body">
+
+                    <!--Labels-->
+                    <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <h5 class="text-center">Record Updates</h5>
+                        </div>
+                        <div class="col-sm-6">
+                            <h5 class="text-center">Current Record</h5>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-12">
+
+                        <table class="table col-sm-12 table-hover">
+                            <thead>
+                                <tr>
+                                    <td class="col-sm-6" style="border: 1px solid #ccc;">
+                                        <div class="col-sm-11">
+                                            <h4 class="text-left">{{matchEntry.newMatch.result_set.name}}</h4>
+                                            <h5 class="text-left" ng-repeat="result in matchEntry.newMatch.results">{{result.date_time.displayDate}}</h5>
+                                        </div>
+                                    </td>
+                                    <td class="text-center update-spacer">
+                                        <svg height="40" width="20" style="position: relative; left: -9px; top: 20px;">
+                                            <polygon points="0,0 20,20 0,40 -10,40" style="fill:#fff;stroke:#ddd;stroke-width:1"></polygon>
+                                        </svg>
+                                    </td>
+                                    <td class="col-sm-6" style="border: 1px solid #ccc;">
+                                        <div class="col-sm-11">
+                                            <h4 class="text-left">{{matchEntry.srcMatch.result_set.name}}</h4>
+                                            <h5 class="text-left" ng-repeat="result in matchEntry.srcMatch.results">{{result.date_time.displayDate}}</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <!--Height Value Diff.-->
+                                <tr ng-if="matchEntry.diff.value">
+                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.value}">
+                                        <table class="table table-condensed col-sm-12">
+                                            <thead>
+                                                <tr>
+                                                    <td>
+                                                        <label>
+                                                            <input type="checkbox" ng-model="selected.value" ng-change="selectEntry(matchIndex)">
+                                                        </label>
+                                                    </td>
+                                                    <td class="col-sm-3">
+                                                        Value:
+                                                    </td>
+                                                    <td class="col-sm-9">
+                                                        <div class="pull-right" ng-if="matchEntry.diff.value === 'diff'">
+                                                            <span class="label label-info">Different</span>
+                                                        </div>
+                                                        {{matchEntry.newMatch.displayQuantity}}
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </td>
+                                    <td class="text-center update-spacer"></td>
+                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.value}">
+                                        <table class="table table-condensed col-sm-12">
+                                            <thead>
+                                                <tr>
+                                                    <td class="col-sm-3">
+                                                        Value:
+                                                    </td>
+                                                    <td class="col-sm-9">
+                                                        {{matchEntry.srcMatch.displayQuantity}}
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="col-sm-12">
+                            <div class="col-sm-6">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <button class="btn btn-default btn-block" ng-click="saveUpdate(matchIndex)">Ignore Updates</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <button class="btn btn-primary btn-block" ng-click="saveUpdate(matchIndex)">Save Updates</button>
+                                    <button class="btn btn-link btn-block" ng-click="clearAll(matchIndex)"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<pre>{{match[0].origMatch | json}}</pre>-->
