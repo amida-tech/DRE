@@ -14,12 +14,18 @@ angular.module('phrPrototypeApp')
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
+<<<<<<< HEAD
         $scope.partialEntries = [];
         $scope.alertShow = true;
 
         $scope.closeAlert = function () {
             $scope.alertShow = false;
         }
+=======
+        $scope.newComment = {
+            'starred': false
+        };
+>>>>>>> master
 
         function getUpdateDate() {
             //Should grab from files/update history.  Stubbed for now.
@@ -39,9 +45,9 @@ angular.module('phrPrototypeApp')
             _.each($scope.masterEntries, function (entry) {
 
             	var dateArray = [];
-            	entry.date_time = {};
+            	entry.data.date_time = {};
 
-            	_.each(entry.results, function(result) {
+            	_.each(entry.data.results, function(result) {
             		_.each(result.date_time, function(dateEntry) {
             			format.formatDate(dateEntry);
             			dateArray.push(moment(dateEntry.date));
@@ -56,18 +62,18 @@ angular.module('phrPrototypeApp')
             	var momentMax = moment.max(dateArray);
 
             	if (momentMin.isSame(momentMax, 'day')) {
-            		entry.date_time.point = {};
-            		entry.date_time.point.date = momentMin.toISOString();
-            		entry.date_time.point.precision = 'day';
+            		entry.data.date_time.point = {};
+            		entry.data.date_time.point.date = momentMin.toISOString();
+            		entry.data.date_time.point.precision = 'day';
             	}
 
          
-            	_.each(entry.date_time, function(dateTime) {
+            	_.each(entry.data.date_time, function(dateTime) {
             		dateTime.displayDate = format.formatDate(dateTime);
             	});
 
-            	entry.date_time.displayDate = format.outputDate(entry.date_time);
-                entry.date_time.plotDate = format.plotDate(entry.date_time);
+            	entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
+                entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
 
             });
         }
@@ -75,7 +81,7 @@ angular.module('phrPrototypeApp')
         function formatDisplay() {
             _.each($scope.masterEntries, function (entry) {
 
-            	_.each(entry.results, function (result) {
+            	_.each(entry.data.results, function (result) {
             		format.formatQuantity(result);
             	});
                 

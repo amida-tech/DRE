@@ -1,12 +1,9 @@
-
-<div class="row" style="margin: 20px;">
-	<!--Profile-->
-	<div class="col-sm-3" style="padding-right: 20px; height: 100%;">
+<div class="container-fluid body-content">
+	<div id="profileSidebar" class="col-sm-3 body-left">
 		<div profile></div>
 		<div record-navigation></div>
 	</div>
 
-	<!--Body Header-->
 	<div class="col-sm-9">
 		<div class="panel">
 			<div class="panel-body">
@@ -18,7 +15,7 @@
 						
 						<div class="col-sm-8">
 							<div class="pull-left">
-								<h1 style="text-transform: Capitalize;">Suzie's {{entryType}} History</h1>
+								<h1 class="capitalize">Suzie's {{entryType}} History</h1>
 								<p>Last Updated:  {{updateDate}}</p>
 							</div>
 						</div>
@@ -32,7 +29,6 @@
 			</div>
 		</div>
 
-
 		<!--Timeline View-->
 		<h4 class="text-center">{{entryType}} History</h4>
 		<div class="panel">
@@ -44,6 +40,7 @@
 
 				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
+<<<<<<< HEAD
 					<div class="col-sm-12 row timeline-side" style="padding-top: 20px;">
 
 						<!--Timeline Icon-->
@@ -83,32 +80,20 @@
 								</td>
 							</tr>
 						</table>
+=======
+					<div class="col-sm-12 row timeline-side">
+						<entry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
+>>>>>>> master
 					</div>
+
 				</div>
 
+				<div class="col-sm-2 center-block text-center timeline-footer">
+					<svg width="30" height="30">
+						<circle cx="15" cy="15" r="15"></circle>
+					</svg>
+				</div>
 			</div>
-
-		</div>
-		
+		</div>		
 	</div>
-	<div class="col-sm-2 center-block text-center timeline-footer">
-		<svg width="30" height="30">
-			<circle cx="15" cy="15" r="15"></circle>
-		</svg>
-	</div>
-
-
-
-
-</div>
-</div>
-
-
-
-</div>
-
-
-</div>
-<!--<pre>{{entries | json}}</pre>-->
-
 </div>

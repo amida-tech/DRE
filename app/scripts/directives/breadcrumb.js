@@ -10,7 +10,7 @@ angular.module('phrPrototypeApp')
     .directive('breadcrumb', function ($location) {
         return {
             template: '<span ng-repeat="(index, entry) in pageBreadCrumb">' + 
-            		  '<span ng-if="index !== (pageBreadCrumb.length - 1)"><a href="{{entry.path}}">{{entry.name}}</a><span> <i class="fa fa-angle-double-right"></i> </span></span>' +
+            		  '<span ng-if="index !== (pageBreadCrumb.length - 1)"><a href="{{entry.path}}">{{entry.name}}</a><span> <i class="fa fa-angle-right"></i> </span></span>' +
             		  '<span ng-if="index === (pageBreadCrumb.length - 1)">{{entry.name}}</span>' +
             		  '</span>',
             restrict: 'EA',
@@ -140,6 +140,12 @@ angular.module('phrPrototypeApp')
                         if (parsedPath[i] === "account") {
                             pathString = pathString + parsedPath[i] + "/";
                             tmpObject.name = "My Account";
+                            tmpObject.path = pathString;   
+                        }
+
+                        if (parsedPath[i] === "notes") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "My Notes";
                             tmpObject.path = pathString;   
                         }
 

@@ -93,9 +93,32 @@
 
     this.getPartialRecord = getPartialRecord;
 
+    var tmpMetaData = {
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': [{
+                'comment': 'I should make sure I let my aunt know about this!',
+                'date': '2005-05-01T00:12:00Z',
+                'starred': true
+            }, {
+                'comment': 'Remember Macrolides are a good alternative.',
+                'date': '2009-05-18T00:08:00Z',
+                'starred': false
+            }]
+        };
+
+    var getRecordMeta = function(callback) {
+        callback(null, tmpMetaData);
+    }
+
+    this.getRecordMeta = getRecordMeta;
+
     var getRecord = function (callback) {
 
-        var tmpAllergies = [{
+        var tmpAllergy = {
             "identifiers": [{
                 "identifier": "36e3e930-7b14-11db-9fe1-0800200c9a66"
             }],
@@ -172,6 +195,13 @@
                     }
                 }
             }
+        };
+
+
+
+        var tmpAllergies = [{
+            'metadata': tmpMetaData,
+            'data': tmpAllergy
         }];
 
         callback(null, tmpAllergies);

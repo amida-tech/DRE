@@ -1,3 +1,4 @@
+
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // $fa-font-path: "../fonts" !default;
 
@@ -35,304 +36,24 @@ $grid-gutter-width:         0px !default;
 // endbower
 
 // Bootstrap Postprocessing
+@import "body";
 @import "fonts";
 @import "images";
 @import "profile";
-
-.btn {
-	@include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-small, $line-height-base, $border-radius-base);
-}
-
-// Custom HTML for footer responsiveness.
-* {
-    margin: 0;
-}
-html, body {
-    height: 100%;
-}
-.wrapper {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -40px; /* the bottom margin is the negative value of the footer's height */
-}
-.footer, .push {
-    height: 40px; /* .push must be the same height as .footer */
-}
-// End footer responsiveness.
-
-a:hover {
-	cursor: pointer;
-}
-
-.landing-panel {
-	background: #fff;
-	margin-top: -20px;
-	padding: 20px;
-}
-
-.landing-advertising {
-	margin: 50px;
-}
-
-.icon-circle {
-    @extend .img-circle;
-	background: $brand-blue;
-	width: 100px;
-	height:100px;
-	margin: 0 auto;
-	text-align: center;
-
-	i {
-	  margin-top: 20px;
-	  color: #fff;
-	}
-}
-
-.panel {
-	border-color: #ddd;
-}
+@import "timeline-nav";
+@import "timeline-vertical";
+@import "timeline-entry";
+@import "buttons";
+@import "tables";
+@import "landing";
+@import "links";
+@import "login";
+@import "panels";
+@import "navbar";
+@import "files";
 
 
-
-.alert-row {
-	text-align: right;
-	margin: 15px 0;
-
-	.primary {
-	  color: $brand-primary;
-	}
-
-	.success {
-	  color: $brand-success;
-	}
-
-	.info {
-	  color: $brand-info;
-	}
-
-	.warning {
-	  color: $brand-warning;
-	}
-
-	.danger {
-	  color: $brand-danger;
-	}
-
-}
-
-.timeline {
-	border-left: thick solid $brand-info;
-	height:50px;
-	border-right: thick solid $brand-info;
-	margin: 5px 15px; height: 50px;
-}
-
-.timeline-panel {
-}
-
-.timeline-header {
-	border-bottom: medium solid $brand-info;
-}
-
-.timeline-body {
-	background-image: url('../images/bg-line.png');
-	background-repeat: repeat-y;
-	background-position: center top;
-}
-
-.timeline-entry-header {
-	//border-bottom: 1px solid #ccc;
-}
-
-.timeline-entry-icon {
-	@extend .img-circle;
-	background: #fff;
-	height: 50px;
-	width: 50px;
-	border: thick solid $brand-primary;
-	line-height: 3.5em;
-	position: relative;
-	bottom: -20px;
-	z-index: 100;
-	i {
-	color: $brand-primary;
-	}
-}
-
-.timeline-entry-icon:hover {
-	cursor: default;
-	background: $brand-primary;
-	i {
-		color: #fff;
-	}
-	
-}
-
-.btn {
-  font-weight: $btn-font-weight;
-  font-family: $font-family-impact;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  
-}
-
-.navbar-brand {
-	padding: 12px 0;
-}
-
-.navbar-default {
-	background: #fff;
-	border: 0px;
-	border-radius: 0px;
-}
-
-.landing-panel {
-	background-image: url('../images/hero.png');
-	background-position: left;
-	background-repeat: no-repeat;
-	background-color: $gray-dark;
-	min-height: 400px;
-
-	h1 {
-		color: #fff;
-	}
-}
-
-.landing-login {
-	margin-top: 20px;
-}
-
-.login-alert {
-	color: $brand-danger;
-	margin: 10px;
-}
-
-.panel {
-	border-radius: 0px;
-}
-
-.timeline-side {
-	background-image: url('../images/bg-line.png');
-	background-repeat: repeat-y;
-	background-position: 8.2% 0%;
-
-	@media (max-width: $screen-sm-max) {
-		background: none;
-	}
-
-	@media (min-width: $screen-sm-min) {
-		background-image: url('../images/bg-line.png');
-	background-repeat: repeat-y;
-	background-position: 8.2% 0%;
-	}
-
-}
-
-.timeline-entry {
-	border: 1px solid #ccc;
-}
-
-.timeline-footer circle {
-	fill: #ccc;
-
-	@media (max-width: $screen-sm-max) {
-		display: none;
-	}
-
-	@media (min-width: $screen-sm-min) {
-		display: inherit;
-	}
-
-}
-
-.plotPoint {
-    fill: #fff;
-    stroke: $brand-primary;
-    stroke-width: 3;
-    cursor: pointer;
-}
-
-    .plotPoint:hover {
-    	fill: $brand-primary;
-    }
-
-
-
-.d3-tip {
-  line-height: 1;
-  padding: 10px;
-  background: $brand-primary;
-  color: #fff;
-  border-radius: 0px;
-  pointer-events: none;
-  margin: -10px 0 0 0;
-}
-
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: $brand-primary;
-  position: absolute;
-  pointer-events: none;
-}
-
-/* Northward tooltips */
-.d3-tip.n:after {
-  content: "\25BC";
-  margin: -4px 0 0 0;
-  top: 100%;
-  left: 0;
-  text-align: center;
-}
-
-/* Eastward tooltips */
-.d3-tip.e:after {
-  content: "\25C0";
-  margin: -4px 0 0 0;
-  top: 50%;
-  left: -8px;
-}
-
-/* Southward tooltips */
-.d3-tip.s:after {
-  content: "\25B2";
-  margin: 0 0 1px 0;
-  top: -8px;
-  left: 0;
-  text-align: center;
-}
-
-/* Westward tooltips */
-.d3-tip.w:after {
-  content: "\25B6";
-  margin: -4px 0 0 -1px;
-  top: 50%;
-  left: 100%;
-}
-
-.timeline-graph {
-	border-bottom: 1px solid #ccc;
-	width: 100%;
-}
-
-.table .table {
-	background-color: inherit;
-	margin-bottom: 0px;
-}
-
-.body-content {
-	margin: 20px;
-}
-
-.body-left {
-	padding-right: 20px;
-}
-
+//Not migrating yet, cannot preview section.
 .update-selected {
 	background-color: $brand-blue-light;
 }
@@ -342,32 +63,5 @@ a:hover {
 	:hover {
 		color: #fff;
 	}
-	
-
 }
 
-.table .update-spacer {
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	border-top: 0px;
-
-	:hover {
-		background-color: #fff;
-	}
-}
-
-.table tbody tr:hover td.update-spacer {
-    background-color: transparent;
-}
-
-.record-navigation {
-
-	border-radius: 0px;
-
-	.active {
-		box-shadow: none;
-	}
-
-
-
-}

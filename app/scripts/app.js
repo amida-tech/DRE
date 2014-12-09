@@ -15,7 +15,9 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'mgcrea.ngStrap',
+    'd3'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -127,6 +129,7 @@ angular
         templateUrl: 'views/files/upload.html',
         controller: 'FilesUploadCtrl'
       })
+<<<<<<< HEAD
       .when('/record/encounters/review', {
         templateUrl: 'views/record/encounters/review.html',
         controller: 'RecordEncountersReviewCtrl'
@@ -158,6 +161,11 @@ angular
       .when('/record/social/review', {
         templateUrl: 'views/record/social/review.html',
         controller: 'RecordSocialReviewCtrl'
+=======
+      .when('/notes', {
+        templateUrl: 'views/notes.html',
+        controller: 'NotesCtrl'
+>>>>>>> master
       })
       .otherwise({
         redirectTo: '/'
