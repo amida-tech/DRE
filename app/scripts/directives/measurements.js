@@ -25,13 +25,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                         w = 300 - margin.left - margin.right,
                         h = 200 - margin.top - margin.bottom;
                     //set initial svg values
-                    var svg = d3.select(ele[0])
-                        .append('svg')
-                        .attr('class', 'chart')
-                        .attr('width', w + margin.left + margin.right)
-                        .attr('height', h + margin.top + margin.bottom)
-                        .append('g')
-                        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+                    var svg = d3.select(ele[0]).append('svg').attr('class', 'chart').attr('width', w + margin.left + margin.right).attr('height', h + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
                     //watch window resize to re-render
                     $window.onresize = function() {
                         scope.$apply();
@@ -268,9 +262,9 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                             var xScale, yScale, xAxisGen, yAxisGen, lineFun;
 
                             function setChartParameters() {
-                                xScale = d3.time.scale().domain([d3.min(graphDates), d3.max(graphDates)]).range([margin.left - 2, w - margin.right - 2]);
+                                xScale = d3.time.scale().domain([d3.min(graphDates), d3.max(graphDates)]).nice(d3.time.week).range([margin.left, w - margin.right]);
                                 yScale = d3.scale.linear().domain([d3.min(graphValues) - (d3.min(graphValues) * 0.1), d3.max(graphValues) + (d3.max(graphValues) * 0.1)]).range([h - margin.top, margin.bottom]);
-                                xAxisGen = d3.svg.axis().scale(xScale).orient("bottom").tickFormat(d3.time.format("%m/%d")).outerTickSize([2]).tickValues([d3.min(graphDates), d3.max(graphDates)]);
+                                xAxisGen = d3.svg.axis().scale(xScale).orient("bottom").tickFormat(d3.time.format("%m/%d")).outerTickSize([2]).tickValues(graphDates);
                                 yAxisGen = d3.svg.axis().scale(yScale).orient("left").ticks(4).outerTickSize([2]);
                                 lineFun = d3.svg.line().x(function(d) {
                                     return xScale(d.date);
@@ -282,10 +276,36 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                             function drawLineChart() {
                                 setChartParameters();
                                 svg.append("svg:g").attr("class", "x axis").attr("transform", "translate(0," + (h - (margin.top)) + ")").call(xAxisGen);
-                                svg.append("svg:g").attr("class", "y axis").attr("transform", "translate(" + (margin.right) + ",0)").call(yAxisGen);
+                                svg.append("svg:g").attr("class", "y axis").attr("transform", "translate(" + (margin.right) + ",2)").call(yAxisGen);
                                 
-
-
+                                var lineTooltip = d3.select('body').append("div").attr("id", "cluster_tooltip").style("max-width", "300px").style("padding", "10px").style("background-color", "rgba(255, 255, 255, 0.7)").style("border-radius", "10px").style("box-shadow", "4px 4px 10px rgba(0, 0, 0, 0.4)").style("position", "absolute").style("z-index", "10").style("visibility", "hidden");
+                                
+                                var tooltip_mouseover = function(d) {
+                                    svg.selectAll("#tipline").remove();
+                                    var xPos = parseFloat(d3.select(this).attr('cx'));
+                                    var yPos = parseFloat(d3.select(this).attr('cy'));
+                                    var tipLineValues = [
+                                        [
+                                            [xPos, h],
+                                            [xPos, yPos + 5]
+                                        ],
+                                        [
+                                            [margin.left, yPos],
+                                            [xPos - 5, yPos]
+                                        ]
+                                    ];
+                                    svg.append("g").attr("id", "tipline").selectAll(".line-to-axis").data(tipLineValues).enter().append("path").attr('d', d3.svg.line().interpolate("linear")).attr('stroke', 'black').attr('stroke-width', 2);
+                                    var tooltipText = d.value; //write any html styling you want
+                                    lineTooltip.html(tooltipText);
+                                    return lineTooltip.style("visibility", "visible");
+                                };
+                                var tooltip_positioned_mousemove = function() {
+                                    return lineTooltip.style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
+                                };
+                                var tooltip_hide_tooltip = function() {
+                                    return lineTooltip.style("visibility", "hidden");
+                                };
+                                
                                 if (graphVitals.length > 0) {
                                     svg.append("svg:path").attr({
                                         d: lineFun(graphVitals),
@@ -294,12 +314,13 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                         "fill": "none",
                                         "class": pathClass
                                     });
-                                    svg.selectAll("dot")
-                                        .data(graphVitals)
-                                    .enter().append("circle")
-                                        .attr("r",4.5)
-                                        .attr("cx", function(d) { return xScale(d.date);})
-                                        .attr("cy", function(d) { return yScale(d.value);});
+                                    svg.selectAll("dot").data(graphVitals).enter().append("circle").attr("r", 4.5).attr("cx", function(d) {
+                                        return xScale(d.date);
+                                    }).attr("cy", function(d) {
+                                        return yScale(d.value);
+                                    }).on("mouseover", tooltip_mouseover)
+                                            .on("mousemove", tooltip_positioned_mousemove)
+                                            .on("mouseout", tooltip_hide_tooltip);
                                 }
                                 if (graphVitalsTwo.length > 0) {
                                     svg.append("svg:path").attr({
@@ -309,22 +330,17 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                         "fill": "none",
                                         "class": pathClass
                                     });
-                                    svg.selectAll("dot")
-                                        .data(graphVitalsTwo)
-                                    .enter().append("circle")
-                                        .attr("r",4.5)
-                                        .attr("cx", function(d) { return xScale(d.date);})
-                                        .attr("cy", function(d) { return yScale(d.value);});
+                                    svg.selectAll("dot").data(graphVitalsTwo).enter().append("circle").attr("r", 4.5).attr("cx", function(d) {
+                                        return xScale(d.date);
+                                    }).attr("cy", function(d) {
+                                        return yScale(d.value);
+                                    }).on("mouseover", tooltip_mouseover)
+                                            .on("mousemove", tooltip_positioned_mousemove)
+                                            .on("mouseout", tooltip_hide_tooltip);
                                 }
-                                svg.selectAll("circle")
-                                    .style('fill','#fff')
-                                    .style('stroke','#000');
-
+                                svg.selectAll("circle").style('fill', '#fff').style('stroke', '#000');
                             }
                             drawLineChart();
-
-
-
                         }, 100);
                     };
                 });
