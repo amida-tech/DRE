@@ -10,6 +10,27 @@
 angular.module('phrPrototypeApp')
     .service('social', function social() {
 
+        var tmpPartial = {
+            "date_time": {
+                "low": {
+                    "date": "2005-04-30T00:00:00Z",
+                    "precision": "day"
+                },
+                "high": {
+                    "date": "2012-02-27T13:00:00Z",
+                    "precision": "second"
+                }
+            },
+            "identifiers": [{
+                "identifier": "2.16.840.1.113883.19",
+                "extension": "123456789"
+            }],
+            "code": {
+                "name": "Smoking Status"
+            },
+            "value": "Former smoker"
+        };
+
         var tmpMetaData = {
             'attribution': [{
                 'source': 'blue-button.xml',
@@ -28,33 +49,25 @@ angular.module('phrPrototypeApp')
         };
 
         var tmpSocial = {
-                "date_time": {
-                    "low": {
-                        "date": "2005-05-01T00:00:00Z",
-                        "precision": "day"
-                    },
-                    "high": {
-                        "date": "2009-02-27T13:00:00Z",
-                        "precision": "second"
-                    }
+            "date_time": {
+                "low": {
+                    "date": "2005-05-01T00:00:00Z",
+                    "precision": "day"
                 },
-                "identifiers": [{
-                    "identifier": "2.16.840.1.113883.19",
-                    "extension": "123456789"
-                }],
-                "code": {
-                    "name": "Smoking Status"
-                },
-                "value": "Former smoker"
-            };
-
-
-
-        var getRecordMeta = function (callback) {
-            callback(null, tmpMetaData);
-        }
-
-        this.getRecordMeta = getRecordMeta;
+                "high": {
+                    "date": "2009-02-27T13:00:00Z",
+                    "precision": "second"
+                }
+            },
+            "identifiers": [{
+                "identifier": "2.16.840.1.113883.19",
+                "extension": "123456789"
+            }],
+            "code": {
+                "name": "Smoking Status"
+            },
+            "value": "Former smoker"
+        };
 
         this.getRecord = function (callback) {
             var tmpReturn = [{
@@ -63,6 +76,34 @@ angular.module('phrPrototypeApp')
             }];
 
             callback(null, tmpReturn);
+        }
+
+        this.getPartialRecord = function (callback) {
+
+            var tmpReturn = [{
+                'metadata': '',
+                'data': tmpPartial
+            }];
+
+            callback(null, tmpReturn);
+        }
+
+        this.getPartialMatch = function (callback) {
+                var tmpMatch = [{
+                    "match": "partial",
+                    "percent": 75,
+                    "subelements": {},
+                    "diff": {
+                        "date_time": "diff"
+                    },
+                    "srcMatch": {
+                        'metadata': tmpMetaData,
+                        'data': tmpSocial
+                    },
+                    "newMatch": tmpPartial
+                }];
+
+                callback(null, tmpMatch);
         }
 
     });

@@ -7,106 +7,227 @@
  * # record/encounters
  * Service in the phrPrototypeApp.
  */
- angular.module('phrPrototypeApp')
- .service('encounters', function encounters() {
+angular.module('phrPrototypeApp')
+    .service('encounters', function encounters() {
 
-    var tmpMetaData = {
-        'attribution': [{
-            'source': 'blue-button.xml',
-            'status': 'new',
-            'merged': '2007-05-01T00:00:00Z'
-        }],
-        'comments': [{
-            'comment': 'I should make sure I let my aunt know about this!',
-            'date': '2005-05-01T00:12:00Z',
-            'starred': true
-        }, {
-            'comment': 'Remember Macrolides are a good alternative.',
-            'date': '2009-05-18T00:08:00Z',
-            'starred': false
-        }]
-    };
-
-    var tmpEncounter = {
-        "encounter": {
-            "name": "Office outpatient visit 15 minutes",
-            "code": "99213",
-            "code_system_name": "CPT",
-            "translations": [{
-                "name": "Ambulatory",
-                "code": "AMB",
-                "code_system_name": "HL7ActCode"
-            }]
-        },
-        "identifiers": [{
-            "identifier": "2a620155-9d11-439e-92b3-5d9815ff4de8"
-        }],
-        "date_time": {
-            "point": {
-                "date": "2009-02-27T13:00:00Z",
-                "precision": "second"
-            }
-        },
-        "performers": [{
-            "identifiers": [{
-                "identifier": "PseduoMD-3"
-            }],
-            "code": [{
-                "name": "General Physician",
-                "code": "59058001",
-                "code_system_name": "SNOMED CT"
-            }]
-        }],
-        "locations": [{
-            "name": "Community Urgent Care Center",
-            "location_type": {
-                "name": "Urgent Care Center",
-                "code": "1160-1",
-                "code_system_name": "HealthcareServiceLocation"
+        var tmpPartial = {
+            "encounter": {
+                "name": "Office outpatient visit 15 minutes",
+                "code": "99213",
+                "code_system_name": "CPT",
+                "translations": [{
+                    "name": "Ambulatory",
+                    "code": "AMB",
+                    "code_system_name": "HL7ActCode"
+                }]
             },
-            "address": [{
-                "street_lines": [
-                "17 Daws Rd."
-                ],
-                "city": "Blue Bell",
-                "state": "MA",
-                "zip": "02368",
-                "country": "US"
-            }]
-        }],
-        "findings": [{
             "identifiers": [{
-                "identifier": "db734647-fc99-424c-a864-7e3cda82e703",
-                "extension": "45665"
+                "identifier": "2a620155-9d11-439e-92b3-5d9815ff4de8"
             }],
-            "value": {
-                "name": "Pneumonia",
-                "code": "233604007",
-                "code_system_name": "SNOMED CT"
-            },
             "date_time": {
-                "low": {
-                    "date": "2007-01-03T00:00:00Z",
-                    "precision": "day"
+                "point": {
+                    "date": "2009-02-27T13:00:00Z",
+                    "precision": "second"
                 }
-            }
-        }]
-    };
+            },
+            "performers": [{
+                "identifiers": [{
+                    "identifier": "PseduoMD-3"
+                }],
+                "code": [{
+                    "name": "General Physician",
+                    "code": "59058001",
+                    "code_system_name": "SNOMED CT"
+                }]
+            }],
+            "locations": [{
+                "name": "Community Urgent Care Center",
+                "location_type": {
+                    "name": "Urgent Care Center",
+                    "code": "1160-1",
+                    "code_system_name": "HealthcareServiceLocation"
+                },
+                "address": [{
+                    "street_lines": [
+                        "17 Daws Rd."
+                    ],
+                    "city": "Blue Bell",
+                    "state": "MA",
+                    "zip": "02368",
+                    "country": "US"
+                }]
+            }],
+            "findings": [
+            // {
+            //     "identifiers": [{
+            //         "identifier": "db734647-fc99-424c-a864-7e3cda82e703",
+            //         "extension": "45665"
+            //     }],
+            //     "value": {
+            //         "name": "Pneumonia",
+            //         "code": "233604007",
+            //         "code_system_name": "SNOMED CT"
+            //     },
+            //     "date_time": {
+            //         "low": {
+            //             "date": "2007-01-03T00:00:00Z",
+            //             "precision": "day"
+            //         }
+            //     }
+            // }, 
+            {
+                "identifiers": [{
+                    "identifier": "db734647-fc99-424c-a864-7e3cda82e703",
+                    "extension": "45665"
+                }],
+                "value": {
+                    "name": "Diarrea",
+                    "code": "12345",
+                    "code_system_name": "SNOMED CT"
+                },
+                "date_time": {
+                    "low": {
+                        "date": "2007-01-03T00:00:00Z",
+                        "precision": "day"
+                    }
+                }
+            }]
+        };
 
-    var getRecordMeta = function (callback) {
-        callback(null, tmpMetaData);
-    }
+        var tmpMetaData = {
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': [{
+                'comment': 'I should make sure I let my aunt know about this!',
+                'date': '2005-05-01T00:12:00Z',
+                'starred': true
+            }, {
+                'comment': 'Remember Macrolides are a good alternative.',
+                'date': '2009-05-18T00:08:00Z',
+                'starred': false
+            }]
+        };
 
-    this.getRecordMeta = getRecordMeta;
+        var tmpEncounter = {
+            "encounter": {
+                "name": "Office outpatient visit 15 minutes",
+                "code": "99213",
+                "code_system_name": "CPT",
+                "translations": [{
+                    "name": "Ambulatory",
+                    "code": "AMB",
+                    "code_system_name": "HL7ActCode"
+                }]
+            },
+            "identifiers": [{
+                "identifier": "2a620155-9d11-439e-92b3-5d9815ff4de8"
+            }],
+            "date_time": {
+                "point": {
+                    "date": "2009-02-27T13:00:00Z",
+                    "precision": "second"
+                }
+            },
+            "performers": [{
+                "identifiers": [{
+                    "identifier": "PseduoMD-3"
+                }],
+                "code": [{
+                    "name": "General Physician",
+                    "code": "59058001",
+                    "code_system_name": "SNOMED CT"
+                }]
+            }],
+            "locations": [{
+                "name": "Community Urgent Care Center",
+                "location_type": {
+                    "name": "Urgent Care Center",
+                    "code": "1160-1",
+                    "code_system_name": "HealthcareServiceLocation"
+                },
+                "address": [{
+                    "street_lines": [
+                        "17 Daws Rd."
+                    ],
+                    "city": "Blue Bell",
+                    "state": "MA",
+                    "zip": "02368",
+                    "country": "US"
+                }]
+            }]
+            // "findings": [{
+            //     "identifiers": [{
+            //         "identifier": "db734647-fc99-424c-a864-7e3cda82e703",
+            //         "extension": "45665"
+            //     }],
+            //     "value": {
+            //         "name": "Pneumonia",
+            //         "code": "233604007",
+            //         "code_system_name": "SNOMED CT"
+            //     },
+            //     "date_time": {
+            //         "low": {
+            //             "date": "2007-01-03T00:00:00Z",
+            //             "precision": "day"
+            //         }
+            //     }
+            // }]
+        };
 
-    this.getRecord = function (callback) {
+        this.getRecord = function (callback) {
 
-        var tmpReturn = [{
-            'metadata': tmpMetaData,
-            'data': tmpEncounter
-        }];
+            var tmpReturn = [{
+                'metadata': tmpMetaData,
+                'data': tmpEncounter
+            }];
 
-        callback(null, tmpReturn);
+            callback(null, tmpReturn);
 
-    }
+        }
+
+        this.getPartialRecord = function (callback) {
+
+            var tmpReturn = [{
+                'metadata': '',
+                'data': tmpPartial
+            }];
+
+            callback(null, tmpReturn);
+        }
+
+        this.saveEntry = function (callback) {
+            console.log(entry);
+            callback(null);
+        }
+
+        this.getPartialMatch = function (callback) {
+                var tmpMatch = [{
+                    "match": "partial",
+                    "percent": 75,
+                    "subelements": {
+                        "observation": {
+                            "reactions": [{
+                                "match": "new",
+                                "percent": 0,
+                                "src_id": "0",
+                                "dest_id": "0",
+                                "dest": "dest"
+                            }]
+                        }
+                    },
+                    "diff": {
+                        "findings":  "new"
+                    },
+                    "srcMatch": {
+                        'metadata': tmpMetaData,
+                        'data': tmpEncounter
+                    },
+                    "newMatch": tmpPartial
+                }];
+
+                callback(null, tmpMatch);
+        }
 });

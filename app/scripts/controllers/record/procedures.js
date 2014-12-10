@@ -14,9 +14,17 @@ angular.module('phrPrototypeApp')
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
+        $scope.partialEntries = [];
+        $scope.alertShow = true;
+
+        $scope.closeAlert = function () {
+            $scope.alertShow = false;
+        }
+
         $scope.newComment = {
             'starred': false
         };
+
 
         function getUpdateDate() {
             //Should grab from files/update history.  Stubbed for now.

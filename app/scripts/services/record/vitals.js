@@ -10,6 +10,29 @@
 angular.module('phrPrototypeApp')
     .service('vitals', function vitals() {
 
+        var tmpPartial = {
+                "identifiers": [{
+                    "identifier": "c6f88321-67ad-11db-bd13-0800200c9a66"
+                }],
+            "vital": {
+                "name": "Height",
+                "code": "8302-2",
+                "code_system_name": "LOINC"
+            },
+            "status": "completed",
+            "date_time": {
+                "point": {
+                    "date": "2012-09-07T00:00:00Z",
+                    "precision": "day"
+                }
+            },
+            "interpretations": [
+                "Normal"
+            ],
+            "value": 66,
+            "unit": "[in_i]"
+        };
+
         var tmpMetaData = {
             'attribution': [{
                 'source': 'blue-button.xml',
@@ -239,12 +262,6 @@ angular.module('phrPrototypeApp')
             "unit": "[lb_av]"
         }];
 
-        var getRecordMeta = function (callback) {
-            callback(null, tmpMetaData);
-        }
-
-        this.getRecordMeta = getRecordMeta;
-
         this.getRecord = function (callback) {
 
             var returnArray = [];
@@ -257,10 +274,38 @@ angular.module('phrPrototypeApp')
                 };
 
                 returnArray.push(tmpReturn);
-                
+
             });
 
             callback(null, returnArray);
+        }
+
+        this.getPartialRecord = function (callback) {
+
+            var tmpReturn = [{
+                'metadata': '',
+                'data': tmpPartial
+            }];
+
+            callback(null, tmpReturn);
+        }
+
+        this.getPartialMatch = function (callback) {
+                var tmpMatch = [{
+                    "match": "partial",
+                    "percent": 75,
+                    "subelements": {},
+                    "diff": {
+                        "value": "diff"
+                    },
+                    "srcMatch": {
+                        'metadata': tmpMetaData,
+                        'data': tmpVitals[0]
+                    },
+                    "newMatch": tmpPartial
+                }];
+
+                callback(null, tmpMatch);
         }
 
     });
