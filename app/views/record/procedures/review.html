@@ -74,7 +74,88 @@
 
                                 <!--Performer-->
                                 <tr ng-if="matchEntry.diff.performer">
-                                    <td style="border: 1px solid #ccc;">
+                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.performer}">
+                                        <table class="table table-condensed col-sm-12">
+                                            <thead>
+                                                <tr>
+                                                    <td>
+                                                        <label>
+                                                            <input type="checkbox" ng-model="selected.performer" ng-change="selectEntry(matchIndex)">
+                                                        </label>
+                                                    </td>
+                                                    <td class="col-sm-3">
+                                                        Performer:
+                                                    </td>
+                                                    <td class="col-sm-9">
+                                                        <div ng-repeat="performer in matchEntry.newMatch.performer" class="panel" ng-class="{'update-selected': selected.performer}">
+
+                                                            <table class="table sub-table">
+																<tr>
+																	<td>Address:</td>
+																	<td>
+                                                                        <div ng-repeat="perfAddr in performer.address">
+																		  <div ng-repeat="addrLine in perfAddr.displayAddress">
+																			{{addrLine}}
+																		  </div>
+                                                                        </div>
+																	</td>
+                                                                    <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
+                                                                        <span class="label label-info">Different</span>
+                                                                    </div>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Phone:</td>
+                                                                    <td>
+                                                                        <div ng-repeat="perfPhone in performer.phone">
+                                                                        {{perfPhone.number}}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    
+                                                                    <td>Organization:</td>
+                                                                    <td>
+                                                                        <div ng-repeat="perfOrg in performer.organization" class="panel">
+
+                                                                        <table class="table sub-table">
+                                                                            <tr>
+                                                                                <td>Name:</td>
+                                                                                <td>
+                                                                                    <div ng-repeat="orgName in perfOrg.name">
+                                                                                    {{orgName}}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Address:</td>
+                                                                                <td ng-repeat="orgAddr in perfOrg.address">
+                                                                                    <div ng-repeat="perfOrgAddrLine in orgAddr.displayAddress">
+                                                                                        {{perfOrgAddrLine}}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Phone:</td>
+                                                                                <td>
+                                                                                    <div ng-repeat="orgPhone in perfOrg.phone">
+                                                                                    {{orgPhone.number}}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </td>
+                                    <td class="text-center update-spacer"></td>
+                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.performer}">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
@@ -82,154 +163,71 @@
                                                         Performer:
                                                     </td>
                                                     <td class="col-sm-9">
-                                                        <div ng-repeat="performer in matchEntry.newMatch.performer"class="panel" ng-class="{'update-selected': selected.performer}">
+                                                        <div ng-repeat="performer in matchEntry.srcMatch.data.performer" class="panel" ng-class="{'update-selected': selected.performer}">
 
                                                             <table class="table sub-table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <td colspan="2">
-                                                                            <label>
-                                                                                <h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.performer" ng-change="selectEntry(matchIndex)"></h5>
-                                                                            </label>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="panel">
-                                                                                <table class="table sub-table">
-																					<tr>
-																						<td>Address:</td>
-																						<td ng-repeat="perfAddr in performer.address">
-																							<div ng-repeat="addrLine in perfAddr.displayAddress">
-																								{{addrLine}}
-																							</div>
-																						</td>
-		                                                                            <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
-		                                                                                <span class="label label-info">Different</span>
-		                                                                            </div>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td>Phone:</td>
-                                                                                        <td ng-repeat="perfPhone in performer.phone">
-                                                                                            {{perfPhone.number}}
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr ng-repeat="perfOrg in performer.organization" class="panel">
-                                                                                        <td>Organization:</td>
-                                                                                        <td>
+																<tr>
+																	<td>Address:</td>
+																	<td>
+                                                                        <div ng-repeat="perfAddr in performer.address">
+																		<div ng-repeat="addrLine in perfAddr.displayAddress">
+																			{{addrLine}}
+																		</div>
+                                                                        </div>
+																	</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Phone:</td>
+                                                                    <td>
+                                                                        <div ng-repeat="perfPhone in performer.phone">
+                                                                        {{perfPhone.number}}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Organization:</td>
+                                                                    <td>
+                                                                        <div ng-repeat="perfOrg in performer.organization" class="panel" ng-class="{'update-selected': selected.performer}">
+                                                                        <table class="table sub-table">
+                                                                            <tr>
+                                                                                <td>Name:</td>
+                                                                                <td>
+                                                                                <div ng-repeat="orgName in perfOrg.name">
+                                                                                    {{orgName}}
+                                                                                </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Address:</td>
+                                                                                <td>
+                                                                                    <div ng-repeat="orgAddr in perfOrg.address">
+                                                                                    <div ng-repeat="perfOrgAddrLine in orgAddr.displayAddress">
+                                                                                        {{perfOrgAddrLine}}
+                                                                                    </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Phone:</td>
+                                                                                <td>
+                                                                                    <div ng-repeat="orgPhone in perfOrg.phone">
+                                                                                    {{orgPhone.number}}
+                                                                                    </div>
+                                                                                </td>
 
-                                                                                            <table class="table sub-table">
-                                                                                                <tr>
-                                                                                                    <td>Name:</td>
-                                                                                                    <td ng-repeat="orgName in perfOrg.name">
-                                                                                                        {{orgName}}
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>Address:</td>
-                                                                                                    <td ng-repeat="orgAddr in perfOrg.address">
-                                                                                                        <div ng-repeat="perfOrgAddrLine in orgAddr.displayAddress">
-                                                                                                            {{perfOrgAddrLine}}
-                                                                                                        </div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>Phone:</td>
-                                                                                                    <td ng-repeat="orgPhone in perfOrg.phone">
-                                                                                                        {{orgPhone.number}}
-                                                                                                    </td>
-
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </thead>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
                                                             </table>
 
                                                         </div>
-                                                        </td>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                        </td>
-                                        <td class="text-center update-spacer"></td>
-                                    <td style="border: 1px solid #ccc;">
-                                        <table class="table table-condensed col-sm-12">
-                                            <thead>
-                                                <tr>
-                                                    <td class="col-sm-3">
-                                                        Performer:
                                                     </td>
-                                                    <td class="col-sm-9">
-                                                        <div ng-repeat="performer in matchEntry.srcMatch.data.performer"class="panel" ng-class="{'update-selected': selected.performer}">
-
-                                                            <table class="table sub-table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="panel">
-                                                                                <table class="table sub-table">
-																					<tr>
-																						<td>Address:</td>
-																						<td ng-repeat="perfAddr in performer.address">
-																							<div ng-repeat="addrLine in perfAddr.displayAddress">
-																								{{addrLine}}
-																							</div>
-																						</td>
-		                                                                            <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
-		                                                                                <span class="label label-info">Different</span>
-		                                                                            </div>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td>Phone:</td>
-                                                                                        <td ng-repeat="perfPhone in performer.phone">
-                                                                                            {{perfPhone.number}}
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr ng-repeat="perfOrg in performer.organization" class="panel">
-                                                                                        <td>Organization:</td>
-                                                                                        <td>
-
-                                                                                            <table class="table sub-table">
-                                                                                                <tr>
-                                                                                                    <td>Name:</td>
-                                                                                                    <td ng-repeat="orgName in perfOrg.name">
-                                                                                                        {{orgName}}
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>Address:</td>
-                                                                                                    <td ng-repeat="orgAddr in perfOrg.address">
-                                                                                                        <div ng-repeat="perfOrgAddrLine in orgAddr.displayAddress">
-                                                                                                            {{perfOrgAddrLine}}
-                                                                                                        </div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>Phone:</td>
-                                                                                                    <td ng-repeat="orgPhone in perfOrg.phone">
-                                                                                                        {{orgPhone.number}}
-                                                                                                    </td>
-
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </thead>
-                                                            </table>
-
-                                                        </div>
-                                                        </td>
                                                 </tr>
                                             </thead>
                                         </table>
-                                        </td>
+                                    </td>
                                 </tr>
 
                             </tbody>
@@ -251,15 +249,15 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- col-sm-12 -->
+                    <!-- col-sm-12 -->
                     </div>
-                    <!-- panel body -->
+                <!-- panel body -->
                 </div>
-                <!-- panel col-sm-12 -->
+            <!-- panel col-sm-12 -->
             </div>
-            <!-- ng-repeat in match -->
+        <!-- ng-repeat in match -->
         </div>
-        <!-- col-sm-9 -->
+    <!-- col-sm-9 -->
     </div>
-    <!-- container -->
+<!-- container -->
 </div>

@@ -46,29 +46,31 @@
                     "code_system_name": "SNOMED CT"
                 },
                 "reactions": [{
-                    "date_time": {
-                        "low": {
-                            "date": "2007-05-01T00:00:00Z",
-                            "precision": "day"
+                    "severity": {
+                        "interpretation": {
+                            "code_system_name": "Observation Interpretation",
+                            "code": "S",
+                            "name": "Suceptible"
                         },
-                        "high": {
-                            "date": "2009-02-27T13:00:00Z",
-                            "precision": "second"
+                        "code": {
+                        "code_system_name": "SNOMED CT",
+                        "code": "247472004",
+                            "name": "Mild"
                         }
                     },
                     "reaction": {
-                        "name": "Nausea",
-                        "code": "422587007",
-                        "code_system_name": "SNOMED CT"
+                        "code_system_name": "SNOMED CT",
+                        "code": "247472004",
+                        "name": "Hives"
                     },
-                    "severity": {
-                        "code": {
-                            "name": "Mild"
+                    "date_time": {
+                        "high": {
+                            "precision": "second",
+                            "date": "2009-02-27T13:00:00Z"
                         },
-                        "interpretation": {
-                            "name": "Suceptible",
-                            "code": "S",
-                            "code_system_name": "Observation Interpretation"
+                        "low": {
+                            "precision": "day",
+                            "date": "2007-05-01T00:00:00Z"
                         }
                     }
                 }],
