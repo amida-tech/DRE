@@ -50,7 +50,7 @@ angular.module('phrPrototypeApp')
 
                 //Duplicate originals for restore.
                 _.each($scope.match, function (match) {
-                    match.origMatch = angular.copy(match.srcMatch);
+                    match.origMatch = angular.copy(match.srcMatch.data);
                 })
 
                 callback();
@@ -80,17 +80,17 @@ angular.module('phrPrototypeApp')
                 		}
                 	});
                 }
-            	//srcMatch
-                if (entry.srcMatch.date_time) {
-                    _.each(entry.srcMatch.date_time, function (dateEntry) {
+            	//srcMatch.data
+                if (entry.srcMatch.data.date_time) {
+                    _.each(entry.srcMatch.data.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
                     });
-					entry.srcMatch.date_time.displayDate = format.outputDate(entry.srcMatch.date_time);
-					entry.srcMatch.date_time.plotDate = format.plotDate(entry.srcMatch.date_time);
+					entry.srcMatch.data.date_time.displayDate = format.outputDate(entry.srcMatch.data.date_time);
+					entry.srcMatch.data.date_time.plotDate = format.plotDate(entry.srcMatch.data.date_time);
                 }
 
-                if (entry.srcMatch.findings) {
-                	_.each(entry.srcMatch.findings, function (finding) {
+                if (entry.srcMatch.data.findings) {
+                	_.each(entry.srcMatch.data.findings, function (finding) {
                 		if (finding.date_time) {
                 			_.each(finding.date_time, function(dateEntry) {
                 				format.formatDate(dateEntry);
@@ -107,9 +107,9 @@ angular.module('phrPrototypeApp')
             _.each($scope.selected, function (elem, name, list) {
 
                 if (elem === true) {
-                    $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].newMatch[name];
+                    $scope.match[matchIndex].srcMatch.data[name] = $scope.match[matchIndex].newMatch[name];
                 } else if (elem === false) {
-                    $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].origMatch[name];
+                    $scope.match[matchIndex].srcMatch.data[name] = $scope.match[matchIndex].origMatch[name];
                     formatDates();
                 } else if (_.isObject(elem)) {
                     //Explicitly handle findings.
@@ -118,26 +118,26 @@ angular.module('phrPrototypeApp')
                         if (rElem === true) {
 
                             var newFinding = $scope.match[matchIndex].newMatch[name];
-                            newFinding.srcMatchIndex = rName;
+                            newFinding.dataIndex = rName;
 
-                            if (!$scope.match[matchIndex].srcMatch[name]) {
-                                $scope.match[matchIndex].srcMatch[name] = [];
+                            if (!$scope.match[matchIndex].srcMatch.data[name]) {
+                                $scope.match[matchIndex].srcMatch.data[name] = [];
                             }
-                            $scope.match[matchIndex].srcMatch[name].push(newFinding[rName]);
+                            $scope.match[matchIndex].srcMatch.data[name].push(newFinding[rName]);
                         } else if (rElem === false) {
 
-                        	$scope.match[matchIndex].srcMatch[name].splice(rName);
+                        	$scope.match[matchIndex].srcMatch.data[name].splice(rName);
 
                             //Index to splice.
                             //console.log(rName);
 
-                            // _.each($scope.match[matchIndex].srcMatch[name], function (rxElem, rxName, rxList) {
+                            // _.each($scope.match[matchIndex].srcMatch.data[name], function (rxElem, rxName, rxList) {
 
-                            //     if (rxElem.srcMatchIndex) {
-                            //         if (rxElem.srcMatchIndex === rName) {
+                            //     if (rxElem.srcMatch.dataIndex) {
+                            //         if (rxElem.srcMatch.dataIndex === rName) {
                             //             //Splice ID.
                             //             console.log(rxName);
-                            //             $scope.match[matchIndex].srcMatch[name].splice(rxName);
+                            //             $scope.match[matchIndex].srcMatch.data[name].splice(rxName);
                             //         }
                             //     }
                             // });
@@ -154,16 +154,16 @@ angular.module('phrPrototypeApp')
         $scope.clearAll = function (matchIndex) {
 
             $scope.selected = angular.copy(selectedOriginal);  
-            $scope.match[matchIndex].srcMatch = angular.copy($scope.match[matchIndex].origMatch);
+            $scope.match[matchIndex].srcMatch.data = angular.copy($scope.match[matchIndex].origMatch);
             formatDates();
 
         }
 
         $scope.saveUpdate = function (matchIndex) {
 
-            console.log($scope.match[matchIndex].srcMatch);
+            console.log($scope.match[matchIndex].srcMatch.data);
 
-            encounters.saveEntry($scope.match[matchIndex].srcMatch, function (err) {
+            encounters.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
                 $location.path('/record/encounters');
 
