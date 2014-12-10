@@ -16,17 +16,22 @@ angular.module('phrPrototypeApp')
 
             _.each(input, function (entry) {
 
-                if (flag.starred) {
-                    if (entry.note.starred) {
-                        filteredResults.push(entry);
-                    }
-                }
+                _.each(flag, function (flagEntry) {
 
-                if (flag.unStarred) {
-                    if (!entry.note.starred) {
-                        filteredResults.push(entry);
+                    if (flagEntry.name === 'starred' && flagEntry.value) {
+                        if (entry.note.starred) {
+                            filteredResults.push(entry);
+                        }
                     }
-                }
+
+                    if (flagEntry.name === 'unStarred' && flagEntry.value) {
+                        if (!entry.note.starred) {
+                            filteredResults.push(entry);
+                        }
+                    }
+
+
+                });
 
             });
 
