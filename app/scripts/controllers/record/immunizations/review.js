@@ -51,7 +51,7 @@ angular.module('phrPrototypeApp')
 
                 //Duplicate originals for restore.
                 _.each($scope.match, function (match) {
-                    match.origMatch = angular.copy(match.srcMatch);
+                    match.origMatch = angular.copy(match.srcMatch.data);
                 })
 
                 callback();
@@ -68,11 +68,11 @@ angular.module('phrPrototypeApp')
                 });
                 entry.newMatch.date_time.displayDate = format.outputDate(entry.newMatch.date_time);
 
-                //Format srcMatch Date Display.
-                _.each(entry.srcMatch.date_time, function (dateEntry) {
+                //Format srcMatch.data Date Display.
+                _.each(entry.srcMatch.data.date_time, function (dateEntry) {
                     format.formatDate(dateEntry);
                 });
-                entry.srcMatch.date_time.displayDate = format.outputDate(entry.srcMatch.date_time);
+                entry.srcMatch.data.date_time.displayDate = format.outputDate(entry.srcMatch.data.date_time);
 
             });
         }
@@ -91,7 +91,7 @@ angular.module('phrPrototypeApp')
         		});
         		// format.formatQuantity(entry.newMatch.administration.dose);
 
-        		_.each(entry.srcMatch.performer, function(perf) {
+        		_.each(entry.srcMatch.data.performer, function(perf) {
 
         			_.each(perf.name, function(name) {
         				format.formatName(name);
@@ -100,7 +100,7 @@ angular.module('phrPrototypeApp')
         				format.formatAddress(addr);
         			});
         		});
-        		// format.formatQuantity(entry.srcMatch.administration.dose);
+        		// format.formatQuantity(entry.srcMatch.data.administration.dose);
         	});
         }
 
@@ -108,17 +108,17 @@ angular.module('phrPrototypeApp')
             _.each($scope.selected, function (elem, name, list) {
 
                 if (elem === true) {
-                    $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].newMatch[name];
+                    $scope.match[matchIndex].srcMatch.data[name] = $scope.match[matchIndex].newMatch[name];
                 } else if (elem === false) {
-                    $scope.match[matchIndex].srcMatch[name] = $scope.match[matchIndex].origMatch[name];
+                    $scope.match[matchIndex].srcMatch.data[name] = $scope.match[matchIndex].origMatch[name];
                     formatDates();
                     formatDisplay();
                 } else if (_.isObject(elem)) {
                     // Handle status
                     if (elem.status === true) {
-                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].newMatch[name].status;
+                        $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].newMatch[name].status;
                     } else if (elem.status === false) {
-                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].origMatch[name].status;
+                        $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].origMatch[name].status;
                     }
 
 
@@ -131,7 +131,7 @@ angular.module('phrPrototypeApp')
         $scope.clearAll = function (matchIndex) {
 
             $scope.selected = angular.copy(selectedOriginal);  
-            $scope.match[matchIndex].srcMatch = angular.copy($scope.match[matchIndex].origMatch);
+            $scope.match[matchIndex].srcMatch.data = angular.copy($scope.match[matchIndex].origMatch);
             formatDates();
             formatDisplay();
 
@@ -139,9 +139,9 @@ angular.module('phrPrototypeApp')
 
         $scope.saveUpdate = function (matchIndex) {
 
-            console.log($scope.match[matchIndex].srcMatch);
+            console.log($scope.match[matchIndex].srcMatch.data);
 
-            immunizations.saveEntry($scope.match[matchIndex].srcMatch, function (err) {
+            immunizations.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
                 $location.path('/record/immunizations');
 

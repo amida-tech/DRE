@@ -179,4 +179,38 @@ angular.module('phrPrototypeApp')
             callback(null, tmpReturn);
         }
 
+                this.saveEntry = function (callback) {
+            console.log(entry);
+            callback(null);
+        }
+
+        this.getPartialMatch = function (callback) {
+                var tmpMatch = [{
+                    "match": "partial",
+                    "percent": 75,
+                    "subelements": {
+                        "observation": {
+                            "reactions": [{
+                                "match": "new",
+                                "percent": 0,
+                                "src_id": "0",
+                                "dest_id": "0",
+                                "dest": "dest"
+                            }]
+                        }
+                    },
+                    "diff": {
+                        "product": "diff",
+                        "administration": "diff"
+                    },
+                    "srcMatch": {
+                        'metadata': tmpMetaData,
+                        'data': tmpImmunization
+                    },
+                    "newMatch": tmpPartial
+                }];
+
+                callback(null, tmpMatch);
+        }
+
     });
