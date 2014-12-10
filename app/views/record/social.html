@@ -36,7 +36,7 @@
 				<div>
 					<p>Timeline</p>
 				</div>
-				<div timeline chart-data="entries" class="timeline-graph"></div>
+				<div timeline ng-show="entries" chart-data="entries" class="timeline-graph"></div>
 
 				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 

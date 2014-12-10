@@ -30,7 +30,7 @@
         <h4 class="text-center">{{entryType}}</h4>
         <div class="panel">
             <div class="panel-body">
-                <div timeline chart-data="entries" class="timeline-graph"></div>
+                <div timeline ng-show="entries" chart-data="entries" class="timeline-graph"></div>
 
                 <div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
