@@ -194,4 +194,23 @@ angular.module('phrPrototypeApp')
             callback(null, tmpReturn);
         }
 
+        this.getPartialMatch = function (callback) {
+                var tmpMatch = [{
+                    "match": "partial",
+                    "percent": 75,
+                    "subelements": {},
+                    "diff": {
+                        "performer": "diff"
+                    },
+                    "srcMatch": {
+                        'metadata': tmpMetaData,
+                        'data': tmpProcedure
+                    },
+                    "newMatch": tmpPartial
+                }];
+
+                callback(null, tmpMatch);
+        }
+
+
     });

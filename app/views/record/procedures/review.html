@@ -62,9 +62,9 @@
                                     </td>
                                     <td class="col-sm-6" style="border: 1px solid #ccc;">
                                         <div class="col-sm-11">
-                                            <h4 class="text-left">{{matchEntry.srcMatch.procedure.name}}</h4>
-                                            <h5 class="text-left">{{matchEntry.srcMatch.status}}</h5>
-                                            <h5 class="text-left">{{matchEntry.srcMatch.date_time.displayDate}}</h5>
+                                            <h4 class="text-left">{{matchEntry.srcMatch.data.procedure.name}}</h4>
+                                            <h5 class="text-left">{{matchEntry.srcMatch.data.status}}</h5>
+                                            <h5 class="text-left">{{matchEntry.srcMatch.data.date_time.displayDate}}</h5>
                                         </div>
                                     </td>
                                 </tr>
@@ -163,7 +163,7 @@
                                                         Performer:
                                                     </td>
                                                     <td class="col-sm-9">
-                                                        <div ng-repeat="performer in matchEntry.srcMatch.performer"class="panel" ng-class="{'update-selected': selected.performer}">
+                                                        <div ng-repeat="performer in matchEntry.srcMatch.data.performer"class="panel" ng-class="{'update-selected': selected.performer}">
 
                                                             <table class="table sub-table">
                                                                 <thead>
