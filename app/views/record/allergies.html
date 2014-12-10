@@ -30,12 +30,15 @@
 
 		<!--Timeline View-->
 		<h4 class="text-center">{{entryType}}</h4>
-		<div class="panel">
-			<div class="panel-body">
+		<div class="panel" >
+			<div ng-hide="entries" class="panel-body">
+			<h4>No Entries</h4>
+			</div>
+			<div ng-show="entries" class="panel-body">
 				<div>
 					<p>Timeline</p>
 				</div>
-				<div timeline ng-show="entries" chart-data="entries" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+				<div timeline chart-data="entries" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
 
 				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 

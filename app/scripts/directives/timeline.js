@@ -34,13 +34,14 @@
                 var plotDomain = [];
                 var timeScale;
                 var timeScaleTicks = [];
+                var d3 = $window.d3;
                 var rawSvg = element.find("svg")[0];
                 var svg = d3.select(rawSvg).attr("height", plotHeight);
                 var format = d3.time.format("%m/%d/%Y");
                 var isoFormat = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
                 var isoFormatSubsecond = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ");
 
-                var tip = d3.tip();
+                var tip = d3.tip()
                 tip.attr('class', 'd3-tip').html(function (d) {
                     return 'Entry';
                 });
