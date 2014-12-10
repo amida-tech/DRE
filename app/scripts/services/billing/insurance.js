@@ -10,26 +10,36 @@
 angular.module('phrPrototypeApp')
     .service('insurance', function insurance() {
 
-        var tmpMetaData = {
+        var tmpMetaData = [{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
             'attribution': [{
                 'source': 'blue-button.xml',
                 'status': 'new',
                 'merged': '2007-05-01T00:00:00Z'
             }],
             'comments': [{
-                'comment': 'I should make sure I let my aunt know about this!',
-                'date': '2005-05-01T00:12:00Z',
+                'comment': "This insurance is no longer valid since I don't work for the state anymore.",
+                'date': '2014-05-03T00:12:00Z',
                 'starred': true
-            }, {
-                'comment': 'Remember Macrolides are a good alternative.',
-                'date': '2009-05-18T00:08:00Z',
-                'starred': false
             }]
-        };
+        }];
 
         var tmpInsurance = [{
             "plan_id": "H9999/9999",
-            "name": "HealthCare Payer",
+            "name": "Medicare",
             "type": [
                 "medicare",
                 "A Medicare Plan Plus (HMO)",
@@ -37,11 +47,11 @@ angular.module('phrPrototypeApp')
             ]
         }, {
             "plan_id": "S9999/000",
-            "name": "Another HealthCare Payer",
+            "name": "Blue Cross/Blue Shield",
             "type": [
-                "medicare",
-                "A Medicare Rx Plan (PDP)",
-                "11 - Medicare Prescription Drug Plan"
+                "BCBS",
+                "Blue Cross Blue Shield Silver (PPO)",
+                "9 - Silver Plan"
             ]
         }, {
             "name": "STATE HEALTH BENEFITS PROGRAM",
@@ -70,10 +80,10 @@ angular.module('phrPrototypeApp')
 
             var returnArray = [];
 
-            _.each(tmpInsurance, function (entry) {
+            _.each(tmpInsurance, function (entry, entryIndex) {
 
                 var tmpReturn = {
-                    'metadata': angular.copy(tmpMetaData),
+                    'metadata': angular.copy(tmpMetaData[entryIndex]),
                     'data': entry
                 };
 

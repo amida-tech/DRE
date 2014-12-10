@@ -101,13 +101,13 @@ angular.module('phrPrototypeApp')
                 'merged': '2007-05-01T00:00:00Z'
             }],
             'comments': [{
-                'comment': 'I should make sure I let my aunt know about this!',
-                'date': '2005-05-01T00:12:00Z',
-                'starred': true
-            }, {
-                'comment': 'Remember Macrolides are a good alternative.',
-                'date': '2009-05-18T00:08:00Z',
+                'comment': "It's not in the entry, but this was with Dr. James Henderson",
+                'date': '2009-03-04T00:12:00Z',
                 'starred': false
+            }, {
+                'comment': 'Remember to schedule my follow up appointment.',
+                'date': '2009-03-04T00:08:00Z',
+                'starred': true
             }]
         };
 
