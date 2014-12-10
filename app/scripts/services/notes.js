@@ -551,7 +551,12 @@ angular.module('phrPrototypeApp')
                 }
             }
 
-            getAllergies(function (err, results) {
+            getMedications(function (err, results) {
+                tmpNotes = tmpNotes.concat(results);
+                checkDone();
+            });
+
+            getResults(function (err, results) {
                 tmpNotes = tmpNotes.concat(results);
                 checkDone();
             });
@@ -561,12 +566,17 @@ angular.module('phrPrototypeApp')
                 checkDone();
             });
 
+            getVitals(function (err, results) {
+                tmpNotes = tmpNotes.concat(results);
+                checkDone();
+            });
+
             getImmunizations(function (err, results) {
                 tmpNotes = tmpNotes.concat(results);
                 checkDone();
             });
 
-            getMedications(function (err, results) {
+            getAllergies(function (err, results) {
                 tmpNotes = tmpNotes.concat(results);
                 checkDone();
             });
@@ -577,16 +587,6 @@ angular.module('phrPrototypeApp')
             });
 
             getProcedures(function (err, results) {
-                tmpNotes = tmpNotes.concat(results);
-                checkDone();
-            });
-
-            getVitals(function (err, results) {
-                tmpNotes = tmpNotes.concat(results);
-                checkDone();
-            });
-
-            getResults(function (err, results) {
                 tmpNotes = tmpNotes.concat(results);
                 checkDone();
             });

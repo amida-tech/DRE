@@ -16,9 +16,15 @@ angular.module('phrPrototypeApp')
 
             _.each(input, function (section) {
 
-                if (flag[section.section]) {
-                    filteredResults.push(section);
-                }
+                _.each(flag, function (flagEntry) {
+
+                    if (flagEntry.name === section.section) {
+                        if (flagEntry.value) {
+                          filteredResults.push(section);   
+                        }
+                    }
+
+                });
 
             });
 

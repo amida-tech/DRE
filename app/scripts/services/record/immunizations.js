@@ -13,7 +13,7 @@ angular.module('phrPrototypeApp')
         var tmpPartial = {
                 "date_time": {
                     "point": {
-                        "date": "1999-11-01T00:00:00Z",
+                        "date": "2014-11-01T00:00:00Z",
                         "precision": "month"
                     }
                 },
@@ -75,13 +75,9 @@ angular.module('phrPrototypeApp')
                 'merged': '2007-05-01T00:00:00Z'
             }],
             'comments': [{
-                'comment': 'I should make sure I let my aunt know about this!',
-                'date': '2005-05-01T00:12:00Z',
+                'comment': 'Usually a good idea to mark on my calendar when this is for next year.',
+                'date': '2014-11-04T00:12:00Z',
                 'starred': true
-            }, {
-                'comment': 'Remember Macrolides are a good alternative.',
-                'date': '2009-05-18T00:08:00Z',
-                'starred': false
             }]
         };
 

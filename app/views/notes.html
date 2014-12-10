@@ -3,6 +3,7 @@
 
 
 	<div class="col-sm-3 body-left">
+
 		<div profile></div>
 		<div>
 			<div class="panel-body">
@@ -12,13 +13,16 @@
 					</div>
 					<p>&nbsp</p>
 					<div class="btn-group-vertical col-sm-12" role="group">
-						<button class="btn btn-default btn-block" ng-click="toggle('starred')">Starred <i class="fa fa-check" ng-show="filters.starred"></i></button>
-						<button class="btn btn-default btn-block" ng-click="toggle('unStarred')">Unstarred <i class="fa fa-check" ng-show="filters.unStarred"></i></button>
+						<button class="btn btn-default btn-block" ng-click="toggle(0)">Starred <i class="fa fa-check" ng-show="filters[0].value"></i></button>
+						<button class="btn btn-default btn-block" ng-click="toggle(1)">Unstarred <i class="fa fa-check" ng-show="filters[1].value"></i></button>
 					</div>
 					<p>&nbsp</p>
 					<div class="btn-group-vertical col-sm-12" role="group">
-						<button class="btn btn-default btn-block" ng-repeat="(name,state) in filters" ng-hide="name === 'starred' || name === 'unStarred'" ng-click="toggle(name)">{{name}} <i class="fa fa-check" ng-show="state"></i></button>
+						<button class="btn btn-default btn-block" ng-repeat="(nameIndex , nameEntry) in filters" ng-hide="nameEntry.name === 'starred' || nameEntry.name === 'unStarred'" ng-click="toggle(nameIndex)">{{nameEntry.name}} <i class="fa fa-check" ng-show="nameEntry.value"></i></button>
 					</div>
+
+
+
 				</div>
 			</div>
 		</div>
@@ -42,9 +46,9 @@
 			<div class="panel-body">
 				<!--Each Entry-->
 				<div ng-show="sections.length === 0" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
-				<div ng-hide="filters.starred || filters.unStarred" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
+				<div ng-hide="filters[0].value || filters[1].value" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
 				<div ng-repeat="(sectionIndex, sectionEntry) in sections = (notes | sections:filters)">
-					<div ng-repeat="(noteIndex, noteEntry) in subNotes = (sectionEntry.notes | starred:filters)">
+					<div ng-repeat="(noteIndex, noteEntry) in subNotes = (sectionEntry.notes | starred:filters) | orderBy:'note.starred':true ">
 						<div ng-show="noteIndex === 0">
 							<h4>{{sectionEntry.section}}</h4>
 						</div>
@@ -54,7 +58,7 @@
 						</div>
 						<div class="panel col-sm-11">
 							<div class="panel-body">
-								<div class="col-sm-8">
+								<div class="col-sm-12">
 									<h5>{{noteEntry.note.comment}}</h5>
 								</div>
 								<div class="col-sm-12">

@@ -200,12 +200,8 @@ angular.module('phrPrototypeApp')
                 'merged': '2007-05-01T00:00:00Z'
             }],
             'comments': [{
-                'comment': 'I should make sure I let my aunt know about this!',
-                'date': '2005-05-01T00:12:00Z',
-                'starred': true
-            }, {
-                'comment': 'Remember Macrolides are a good alternative.',
-                'date': '2009-05-18T00:08:00Z',
+                'comment': 'I took this to treat the Pneumonia I had.',
+                'date': '2009-01-30T00:12:00Z',
                 'starred': false
             }]
         };
@@ -213,11 +209,11 @@ angular.module('phrPrototypeApp')
         var tmpMedication = {
             "date_time": {
                 "low": {
-                    "date": "2007-01-03T00:00:00Z",
+                    "date": "2008-01-03T00:00:00Z",
                     "precision": "day"
                 },
                 "high": {
-                    "date": "2012-05-15T00:00:00Z",
+                    "date": "2008-01-21T00:00:00Z",
                     "precision": "day"
                 }
             },

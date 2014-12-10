@@ -33,22 +33,81 @@ angular.module('phrPrototypeApp')
             "unit": "[in_i]"
         };
 
-        var tmpMetaData = {
+        var tmpMetaData = [{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
+            'attribution': [{
+                'source': 'blue-button.xml',
+                'status': 'new',
+                'merged': '2007-05-01T00:00:00Z'
+            }],
+            'comments': []
+        },{
             'attribution': [{
                 'source': 'blue-button.xml',
                 'status': 'new',
                 'merged': '2007-05-01T00:00:00Z'
             }],
             'comments': [{
-                'comment': 'I should make sure I let my aunt know about this!',
+                'comment': "I'm getting kinda heavy, I need to exercise more.",
                 'date': '2005-05-01T00:12:00Z',
                 'starred': true
-            }, {
-                'comment': 'Remember Macrolides are a good alternative.',
-                'date': '2009-05-18T00:08:00Z',
-                'starred': false
             }]
-        };
+        }];
 
         var tmpVitals = [{
             "identifiers": [{
@@ -266,10 +325,10 @@ angular.module('phrPrototypeApp')
 
             var returnArray = [];
 
-            _.each(tmpVitals, function (entry) {
+            _.each(tmpVitals, function (entry, entryIndex) {
 
                 var tmpReturn = {
-                    'metadata': angular.copy(tmpMetaData),
+                    'metadata': angular.copy(tmpMetaData[entryIndex]),
                     'data': entry
                 };
 
