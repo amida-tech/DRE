@@ -62,7 +62,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     	});
     };
 
-    $.lockfixed(".sidebar-control",{offset: {top: 10},forcemargin: true});
+    //$.lockfixed(".sidebar-control",{offset: {top: 10},forcemargin: true});
 
     function getNotes() {
         notes.getNotes(function(err, returnNotes) {
