@@ -44,7 +44,7 @@
 				<div ng-show="sections.length === 0" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
 				<div ng-hide="filters.starred || filters.unStarred" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
 				<div ng-repeat="(sectionIndex, sectionEntry) in sections = (notes | sections:filters)">
-					<div ng-repeat="(noteIndex, noteEntry) in subNotes = (sectionEntry.notes | starred:filters)">
+					<div ng-repeat="(noteIndex, noteEntry) in subNotes = (sectionEntry.notes | starred:filters) | orderBy:'note.starred':true ">
 						<div ng-show="noteIndex === 0">
 							<h4>{{sectionEntry.section}}</h4>
 						</div>
