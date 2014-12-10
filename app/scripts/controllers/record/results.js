@@ -25,7 +25,6 @@ angular.module('phrPrototypeApp')
             'starred': false
         };
 
-
         function getUpdateDate() {
             //Should grab from files/update history.  Stubbed for now.
             $scope.updateDate = '12/1/2014';
@@ -39,39 +38,48 @@ angular.module('phrPrototypeApp')
         }
 
         function formatDates() {
-            
+
             //Have to grab sub dates on labs section.
             _.each($scope.masterEntries, function (entry) {
 
-            	var dateArray = [];
-            	entry.data.date_time = {};
+                var dateArray = [];
+                entry.data.date_time = {};
 
-            	_.each(entry.data.results, function(result) {
-            		_.each(result.date_time, function(dateEntry) {
-            			format.formatDate(dateEntry);
-            			dateArray.push(moment(dateEntry.date));
-            		});
-            		result.date_time.displayDate = format.outputDate(result.date_time);
-            		
-            	});
+                _.each(entry.data.results, function (result) {
 
-            	//Construct low-high based on range.
+                    _.each(result.date_time, function (dateEntry, dateIndex) {
+                        if (dateIndex !== 'displayDate') {
+                            if (!dateEntry.displayDate) {
 
-            	var momentMin = moment.min(dateArray);
-            	var momentMax = moment.max(dateArray);
+                                format.formatDate(dateEntry);
 
-            	if (momentMin.isSame(momentMax, 'day')) {
-            		entry.data.date_time.point = {};
-            		entry.data.date_time.point.date = momentMin.toISOString();
-            		entry.data.date_time.point.precision = 'day';
-            	}
+                            }
+                            dateArray.push(moment(dateEntry.date));
+                        }
+                    });
 
-         
-            	_.each(entry.data.date_time, function(dateTime) {
-            		dateTime.displayDate = format.formatDate(dateTime);
-            	});
+                    if (!result.date_time.displayDate) {
+                        result.date_time.displayDate = format.outputDate(result.date_time);
+                    }
 
-            	entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
+                });
+
+                //Construct low-high based on range.
+
+                var momentMin = moment.min(dateArray);
+                var momentMax = moment.max(dateArray);
+
+                if (momentMin.isSame(momentMax, 'day')) {
+                    entry.data.date_time.point = {};
+                    entry.data.date_time.point.date = momentMin.toISOString();
+                    entry.data.date_time.point.precision = 'day';
+                }
+
+                _.each(entry.data.date_time, function (dateTime) {
+                    dateTime.displayDate = format.formatDate(dateTime);
+                });
+
+                entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
                 entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
 
             });
@@ -80,10 +88,9 @@ angular.module('phrPrototypeApp')
         function formatDisplay() {
             _.each($scope.masterEntries, function (entry) {
 
-            	_.each(entry.data.results, function (result) {
-            		format.formatQuantity(result);
-            	});
-                
+                _.each(entry.data.results, function (result) {
+                    format.formatQuantity(result);
+                });
 
             });
         }
