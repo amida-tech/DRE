@@ -188,17 +188,7 @@ angular.module('phrPrototypeApp')
                 var tmpMatch = [{
                     "match": "partial",
                     "percent": 75,
-                    "subelements": {
-                        "observation": {
-                            "reactions": [{
-                                "match": "new",
-                                "percent": 0,
-                                "src_id": "0",
-                                "dest_id": "0",
-                                "dest": "dest"
-                            }]
-                        }
-                    },
+                    "subelements": {},
                     "diff": {
                         "product": "diff",
                         "administration": "diff"
