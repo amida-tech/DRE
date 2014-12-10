@@ -41,7 +41,7 @@
                 var isoFormat = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
                 var isoFormatSubsecond = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ");
 
-                var tip = d3.tip()
+                var tip = d3.tip();
                 tip.attr('class', 'd3-tip').html(function (d) {
                     return 'Entry';
                 });
