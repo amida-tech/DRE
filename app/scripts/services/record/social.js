@@ -88,4 +88,22 @@ angular.module('phrPrototypeApp')
             callback(null, tmpReturn);
         }
 
+        this.getPartialMatch = function (callback) {
+                var tmpMatch = [{
+                    "match": "partial",
+                    "percent": 75,
+                    "subelements": {},
+                    "diff": {
+                        "date_time": "diff"
+                    },
+                    "srcMatch": {
+                        'metadata': tmpMetaData,
+                        'data': tmpSocial
+                    },
+                    "newMatch": tmpPartial
+                }];
+
+                callback(null, tmpMatch);
+        }
+
     });
