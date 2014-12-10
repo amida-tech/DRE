@@ -15,7 +15,7 @@ angular.module('phrPrototypeApp')
                 '</div>',
             restrict: 'EA',
             link: function postLink(scope, element, attrs) {
-            	$.lockfixed(".sidebar-control",{offset: {top: 10}});
+            	$.lockfixed(".sidebar-control",{offset: {top: 10},forcemargin: true}});
             }
         };
     });
