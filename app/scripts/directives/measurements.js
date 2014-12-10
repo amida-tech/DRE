@@ -294,7 +294,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                             [xPos - 5, yPos]
                                         ]
                                     ];
-                                    svg.append("g").attr("id", "tipline").selectAll(".line-to-axis").data(tipLineValues).enter().append("path").attr('d', d3.svg.line().interpolate("linear")).attr('stroke', 'black').attr('stroke-width', 2);
+                                    svg.append("g").attr("id", "tipline").selectAll(".line-to-axis").data(tipLineValues).enter().append("path").attr('d', d3.svg.line().interpolate("linear")).attr('stroke', '#444').attr('stroke-width', 1).style("stroke-dasharray", "4,2");
                                     var tooltipText = d.value; //write any html styling you want
                                     lineTooltip.html(tooltipText);
                                     return lineTooltip.style("visibility", "visible");
