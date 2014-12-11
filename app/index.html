@@ -1,8 +1,8 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="phrPrototypeApp">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title ng-controller="titleController">{{pageTitle}}</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
 </head>
-<body ng-app="phrPrototypeApp">
+<body>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
@@ -204,6 +204,8 @@
     <script src="scripts/directives/entry.js"></script>
     <script src="scripts/filters/starred.js"></script>
     <script src="scripts/filters/sections.js"></script>
+    <script src="scripts/services/pagetitle.js"></script>
+    <script src="scripts/controllers/pagetitle.js"></script>
     <!-- endbuild -->
   </body>
   </html>
