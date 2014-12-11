@@ -12,12 +12,12 @@ html, body {
     
     height: auto;
     margin: 0 auto -40px;
-    background-image: url(../../images/blur.png);
+    background-image: $blur-background;
     background-repeat: no-repeat;
     background-attachment: fixed; /* the bottom margin is the negative value of the footer's height */
 }
 .marketing-block {
-    background-image: url(../../images/blur.png);
+    background-image: $blur-background;
     background-repeat: no-repeat;
     background-attachment: fixed;
     h2, p {
@@ -25,7 +25,7 @@ html, body {
     }
 }
 .blur-background {
-    background-image: url(../../images/blur.png);
+    background-image: $blur-background;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
