@@ -1,11 +1,47 @@
 <div class="container-fluid body-content">
-	<div id="profileSidebar" class="col-sm-3 body-left">
-		<div profile></div>
-		<div record-navigation></div>
-	</div>
+    <div id="profileSidebar" class="col-sm-3 body-left">
+        
+            <div profile></div>
+            <div record-navigation class="col-sm-12"></div>&nbsp
+        
+    </div>
 
-	
-	<div class="col-sm-9">
+    <div class="col-sm-9 body-right">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <div class="row col-sm-12" breadcrumb></div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-8">
+                            <div class="pull-left">
+                                <h1>Suzie's <span class="capitalize">{{entryType}}</span></h1>
+                                <p>Last Updated:  {{updateDate}}</p>
+                            </div>
+                        </div>
+                        <div class="text-right col-sm-3 ">
+                            <label>
+                                <input type="checkbox" ng-model="inactiveFlag"> Show Inactive
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Timeline View-->
+        <h4 class="text-center">{{entryType}}</h4>
+        <div class="panel" >
+            <div ng-hide="entries" class="panel-body">
+                <h4>No Entries</h4>
+            </div>
+            <div ng-show="entries" class="panel-body">
+                <div>
+                    <p>Timeline</p>
+                </div>
+                <div timeline chart-data="entries" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+                <div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
+                    <div class="col-sm-12 row timeline-side">
+                        <entry entry-type="allergies" entry-index="{{recordIndex}}"></entry>
+                    </div>
 
 		<div class="panel">
 			<div class="panel-body">
@@ -57,4 +93,5 @@
 		</div>
 		<!--<pre>{{masterEntries | json}}</pre>-->
 	</div>
+
 </div>

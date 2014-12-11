@@ -16,15 +16,39 @@ html, body {
 .footer, .push {
     height: 40px; /* .push must be the same height as .footer */
 }
+.footer {
+    background-color: #000;
+    h6 {
+        color: $gray-light;
+    }
+
+}
+
 
 .body-content {
-	margin: 20px;
+	margin: 0px;
+    overflow: hidden;
 }
 
 .body-left {
-	padding-right: 20px;
-}
+	padding: 20px;
+    background-color: $gray;
+    height: 100%;
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+    float: left;
 
+}
+.body-right {
+    padding: 20px;
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+    float: left;
+
+}
 .body-bottom {
 	padding-bottom: 20px;
+}
+.body-footer {
+    
 }
