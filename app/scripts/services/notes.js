@@ -363,11 +363,22 @@ angular.module('phrPrototypeApp')
                             entry.data.date_time = {};
 
                             _.each(entry.data.results, function (result) {
-                                _.each(result.date_time, function (dateEntry) {
-                                    format.formatDate(dateEntry);
-                                    dateArray.push(moment(dateEntry.date));
+
+                                _.each(result.date_time, function (dateEntry, dateIndex) {
+                                    if (dateIndex !== 'displayDate') {
+                                        if (!dateEntry.displayDate) {
+
+                                            format.formatDate(dateEntry);
+
+                                        }
+                                        dateArray.push(moment(dateEntry.date));
+                                    }
                                 });
-                                result.date_time.displayDate = format.outputDate(result.date_time);
+
+                                if (!result.date_time.displayDate) {
+                                    result.date_time.displayDate = format.outputDate(result.date_time);
+                                }
+
                             });
 
                             //Construct low-high based on range.
@@ -386,6 +397,7 @@ angular.module('phrPrototypeApp')
                             });
 
                             commentObject.entrySubTitleOne = format.outputDate(entry.data.date_time);
+
                             returnEntries.push(commentObject);
 
                         });
@@ -611,12 +623,12 @@ angular.module('phrPrototypeApp')
         this.getNotes = getNotes;
 
         var noteCount = function (callback) {
-            getNotes(function(err, results) {
+            getNotes(function (err, results) {
 
                 var noteCount = 0;
 
-                _.each(results, function(entry) {
-                    _.each(entry.notes, function(note) {
+                _.each(results, function (entry) {
+                    _.each(entry.notes, function (note) {
                         if (note.note.starred) {
                             noteCount++;
                         }
