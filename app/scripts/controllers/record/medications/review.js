@@ -20,7 +20,11 @@ angular.module('phrPrototypeApp')
 
         //Instantiate empty clone of object structure.
         var selectedOriginal = {
-            "date_time": null
+            "date_time": null,
+            "status": null,
+            "administration": {
+                "route": null
+            }
         };
 
         $scope.selected = angular.copy(selectedOriginal);
