@@ -55,7 +55,7 @@ angular.module('phrPrototypeApp')
                 }],
                 "race_ethnicity": "White",
                 "languages": [{
-                    "language": "en",
+                    "language": "English",
                     "preferred": true,
                     "mode": "Expressed spoken",
                     "proficiency": "Good"

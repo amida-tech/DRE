@@ -18,7 +18,7 @@
 					</div>
 					<p>&nbsp</p>
 					<div class="btn-group-vertical col-sm-12" role="group">
-						<button class="btn btn-default btn-block" ng-repeat="(nameIndex , nameEntry) in filters" ng-hide="nameEntry.name === 'starred' || nameEntry.name === 'unStarred'" ng-click="toggle(nameIndex)">{{nameEntry.name}} <i class="fa fa-check" ng-show="nameEntry.value"></i></button>
+						<button class="btn btn-default btn-block" ng-repeat="(nameIndex , nameEntry) in filters" ng-hide="nameEntry.name === 'starred' || nameEntry.name === 'unStarred'" ng-click="toggle(nameIndex)">{{nameEntry.displayName}} <i class="fa fa-check" ng-show="nameEntry.value"></i></button>
 					</div>
 
 
@@ -50,7 +50,7 @@
 				<div ng-repeat="(sectionIndex, sectionEntry) in sections = (notes | sections:filters)">
 					<div ng-repeat="(noteIndex, noteEntry) in subNotes = (sectionEntry.notes | starred:filters) | orderBy:'note.starred':true ">
 						<div ng-show="noteIndex === 0">
-							<h4>{{sectionEntry.section}}</h4>
+							<h4>{{sectionEntry.displaySection}}</h4>
 						</div>
 						<div class="col-sm-1 panel-body text-center">
 							<h5 ng-show="noteEntry.note.starred === true" ng-click="clickStar(true, noteIndex, sectionEntry.section)"><a><i class="fa fa-star"></i></a></h5>
