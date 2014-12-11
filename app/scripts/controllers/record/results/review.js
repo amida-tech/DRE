@@ -51,7 +51,7 @@ angular.module('phrPrototypeApp')
 
                 //Duplicate originals for restore.
                 _.each($scope.match, function (match) {
-                    match.origMatch = angular.copy(match.srcMatch);
+                    match.origMatch = angular.copy(match.srcMatch.data);
                 })
 
                 callback();
@@ -168,7 +168,7 @@ angular.module('phrPrototypeApp')
         function formatDisplay() {
         	_.each($scope.match, function(entry) {
         			format.formatQuantity(entry.newMatch);
-        			format.formatQuantity(entry.srcMatch);
+        			format.formatQuantity(entry.srcMatch.data);
         		
         	});
         }
@@ -177,17 +177,17 @@ angular.module('phrPrototypeApp')
             _.each($scope.selected, function (elem, name, list) {
 
                 if (elem === true) {
-                    $scope.match[matchIndex].srcMatch = $scope.match[matchIndex].newMatch;
+                    $scope.match[matchIndex].srcMatch.data = $scope.match[matchIndex].newMatch;
                 } else if (elem === false) {
-                    $scope.match[matchIndex].srcMatch = $scope.match[matchIndex].origMatch;
+                    $scope.match[matchIndex].srcMatch.data = $scope.match[matchIndex].origMatch;
                     formatDates();
                     formatDisplay();
                 } else if (_.isObject(elem)) {
                     // Handle status
                     if (elem.status === true) {
-                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].newMatch[name].status;
+                        $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].newMatch[name].status;
                     } else if (elem.status === false) {
-                        $scope.match[matchIndex].srcMatch[name].status = $scope.match[matchIndex].origMatch[name].status;
+                        $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].origMatch[name].status;
                     }
 
                 }
@@ -199,7 +199,7 @@ angular.module('phrPrototypeApp')
         $scope.clearAll = function (matchIndex) {
 
             $scope.selected = angular.copy(selectedOriginal);  
-            $scope.match[matchIndex].srcMatch = angular.copy($scope.match[matchIndex].origMatch);
+            $scope.match[matchIndex].srcMatch.data = angular.copy($scope.match[matchIndex].origMatch);
             formatDates();
             formatDisplay();
 
@@ -207,9 +207,9 @@ angular.module('phrPrototypeApp')
 
         $scope.saveUpdate = function (matchIndex) {
 
-            console.log($scope.match[matchIndex].srcMatch);
+            console.log($scope.match[matchIndex].srcMatch.data);
 
-            results.saveEntry($scope.match[matchIndex].srcMatch, function (err) {
+            results.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
                 $location.path('/record/results');
 
