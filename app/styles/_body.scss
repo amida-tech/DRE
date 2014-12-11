@@ -17,8 +17,13 @@ html, body {
     height: 40px; /* .push must be the same height as .footer */
 }
 .footer {
-    background-color: #fff;
+    background-color: #000;
+    h6 {
+        color: $gray-light;
+    }
+
 }
+
 
 .body-content {
 	margin: 0px;
