@@ -58,21 +58,109 @@ angular.module('phrPrototypeApp')
             });
         }
 
+        // function formatDates() {
+        //     //Add displayDate to all entries.
+        //     _.each($scope.match, function (entry) {
+
+        //         //Format newMatch Date Display.
+        //         _.each(entry.newMatch.date_time, function (dateEntry) {
+        //             format.formatDate(dateEntry);
+        //         });
+        //         entry.newMatch.date_time.displayDate = format.outputDate(entry.newMatch.date_time);
+
+        //         //Format srcMatch Date Display.
+        //         _.each(entry.srcMatch.date_time, function (dateEntry) {
+        //             format.formatDate(dateEntry);
+        //         });
+        //         entry.srcMatch.date_time.displayDate = format.outputDate(entry.srcMatch.date_time);
+
+        //     });
+        // }
+
         function formatDates() {
-            //Add displayDate to all entries.
+
+            //Have to grab sub dates on labs section.
             _.each($scope.match, function (entry) {
+                //newMatch
+                var dateArray = [];
+                entry.newMatch.date_time = {};
+                entry.srcMatch.data.date_time = {};
 
-                //Format newMatch Date Display.
-                _.each(entry.newMatch.date_time, function (dateEntry) {
-                    format.formatDate(dateEntry);
+                _.each(entry.newMatch.results, function (result) {
+
+                    _.each(result.date_time, function (dateEntry, dateIndex) {
+                        if (dateIndex !== 'displayDate') {
+                            if (!dateEntry.displayDate) {
+
+                                format.formatDate(dateEntry);
+
+                            }
+                            dateArray.push(moment(dateEntry.date));
+                        }
+                    });
+
+                    if (!result.date_time.displayDate) {
+                        result.date_time.displayDate = format.outputDate(result.date_time);
+                    }
+
                 });
+
+                //Construct low-high based on range.
+
+                var momentMin = moment.min(dateArray);
+                var momentMax = moment.max(dateArray);
+
+                if (momentMin.isSame(momentMax, 'day')) {
+                    entry.newMatch.date_time.point = {};
+                    entry.newMatch.date_time.point.date = momentMin.toISOString();
+                    entry.newMatch.date_time.point.precision = 'day';
+                }
+
+                _.each(entry.newMatch.date_time, function (dateTime) {
+                    dateTime.displayDate = format.formatDate(dateTime);
+                });
+
                 entry.newMatch.date_time.displayDate = format.outputDate(entry.newMatch.date_time);
+                entry.newMatch.date_time.plotDate = format.plotDate(entry.newMatch.date_time);
 
-                //Format srcMatch Date Display.
-                _.each(entry.srcMatch.date_time, function (dateEntry) {
-                    format.formatDate(dateEntry);
+    
+
+                _.each(entry.srcMatch.data.results, function (result) {
+
+                    _.each(result.date_time, function (dateEntry, dateIndex) {
+                        if (dateIndex !== 'displayDate') {
+                            if (!dateEntry.displayDate) {
+
+                                format.formatDate(dateEntry);
+
+                            }
+                            dateArray.push(moment(dateEntry.date));
+                        }
+                    });
+
+                    if (!result.date_time.displayDate) {
+                        result.date_time.displayDate = format.outputDate(result.date_time);
+                    }
+
                 });
-                entry.srcMatch.date_time.displayDate = format.outputDate(entry.srcMatch.date_time);
+
+                    //Construct low-high based on range.
+
+                var momentMin = moment.min(dateArray);
+                var momentMax = moment.max(dateArray);
+
+                if (momentMin.isSame(momentMax, 'day')) {
+                    entry.srcMatch.data.date_time.point = {};
+                    entry.srcMatch.data.date_time.point.date = momentMin.toISOString();
+                    entry.srcMatch.data.date_time.point.precision = 'day';
+                }
+
+                _.each(entry.srcMatch.data.date_time, function (dateTime) {
+                    dateTime.displayDate = format.formatDate(dateTime);
+                });
+
+                entry.srcMatch.data.date_time.displayDate = format.outputDate(entry.srcMatch.data.date_time);
+                entry.srcMatch.data.date_time.plotDate = format.plotDate(entry.srcMatch.data.date_time);
 
             });
         }
