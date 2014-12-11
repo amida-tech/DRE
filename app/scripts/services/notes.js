@@ -52,6 +52,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'allergies',
+                    'displaySection': 'allergies',
                     'notes': returnEntries
                 };
 
@@ -100,6 +101,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'encounters',
+                    'displaySection': 'encounters',
                     'notes': returnEntries
                 };
 
@@ -144,6 +146,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'immunizations',
+                    'displaySection': 'immunizations',
                     'notes': returnEntries
                 };
 
@@ -192,6 +195,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'medications',
+                    'displaySection': 'medications',
                     'notes': returnEntries
                 };
 
@@ -236,6 +240,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'conditions',
+                    'displaySection': 'conditions',
                     'notes': returnEntries
                 };
 
@@ -284,6 +289,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'procedures',
+                    'displaySection': 'procedures',
                     'notes': returnEntries
                 };
 
@@ -332,6 +338,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'vitals',
+                    'displaySection': 'vital signs',
                     'notes': returnEntries
                 };
 
@@ -407,6 +414,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'results',
+                    'displaySection': 'test results',
                     'notes': returnEntries
                 };
 
@@ -455,6 +463,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'social',
+                    'displaySection': 'social history',
                     'notes': returnEntries
                 };
 
@@ -499,6 +508,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'claims',
+                    'displaySection': 'claims',
                     'notes': returnEntries
                 };
 
@@ -543,6 +553,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'insurance',
+                    'displaySection': 'insurance',
                     'notes': returnEntries
                 };
 

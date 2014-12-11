@@ -17,13 +17,13 @@ angular.module('phrPrototypeApp')
         notes.noteCount(function (err, results) {
             $scope.noteCount = results;
         });
-    };
+    }
 
     function countUpdates() {
           record.getRecord(function(err, results) {
            $scope.entries = results;
           });
-    };
+    }
 
     countNotes();
     countUpdates();
