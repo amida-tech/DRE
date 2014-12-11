@@ -147,7 +147,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                 if (graphVitals.length > 0) {
                     svg.append("svg:path").attr({
                         d: lineFun(graphVitals),
-                        "stroke": "blue",
+                        "stroke": "#6AA6FF",
                         "stroke-width": 2,
                         "fill": "none",
                         "class": pathClass
@@ -156,7 +156,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                 if (graphVitalsTwo.length > 0) {
                     svg.append("svg:path").attr({
                         d: lineFun(graphVitalsTwo),
-                        "stroke": "blue",
+                        "stroke": "#6AA6FF",
                         "stroke-width": 2,
                         "fill": "none",
                         "class": pathClass
@@ -309,7 +309,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                 if (graphVitals.length > 0) {
                                     svg.append("svg:path").attr({
                                         d: lineFun(graphVitals),
-                                        "stroke": "blue",
+                                        "stroke": "#6AA6FF",
                                         "stroke-width": 2,
                                         "fill": "none",
                                         "class": pathClass
@@ -325,7 +325,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                 if (graphVitalsTwo.length > 0) {
                                     svg.append("svg:path").attr({
                                         d: lineFun(graphVitalsTwo),
-                                        "stroke": "blue",
+                                        "stroke": "#6AA6FF",
                                         "stroke-width": 2,
                                         "fill": "none",
                                         "class": pathClass

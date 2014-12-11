@@ -28,8 +28,6 @@ angular.module('phrPrototypeApp')
   		//Shims for HL7 weirdness.
   		var tmpDOB = moment(accountInfo.dob[0].date).format('YYYY-MM-DD');
 
-  		console.log(tmpDOB);
-
   		$scope.profile.dob = tmpDOB;
   		$scope.profile.primaryEmail = accountInfo.email[0].email;
   	});

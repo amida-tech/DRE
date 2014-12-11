@@ -25,9 +25,10 @@
 			</div>
 		</div>
 
+		<div class="text-center"><h4>Profile</h4></div>
 		<div class="panel">
 			<div class="panel-body" id="profile">
-				<h3>Profile</h3>
+				
 				<h5>* Denotes required fields.</h5>
 				<form novalidate role="form" name="profileForm" ng-submit="nextStep()">
 					<div class="form-group col-sm-3">
@@ -91,7 +92,7 @@
 							<option>Atheist</option>
 						</select>
 					</div>
-					<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="profileForm.$invalid">Update Profile</button>
+					<a href="#/home"><button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="profileForm.$invalid">Update Profile</button></a>
 					<div class="text-center">
 						<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
 					</div>
@@ -99,32 +100,32 @@
 			</div>
 		</div>
 
+		<div class="text-center"><h4>Contact Information</h4></div>
 		<div class="panel">
 			<div class="panel-body" id="contact">
-				<h3>Contact Information</h3>
 
 				<!--Address section-->
 				<div class="col-sm-12 profile-divider">
 					<h4>Address</h4>
 				</div>
 				<div class="panel col-sm-4" ng-repeat="(addrIndex, addr) in profile.addresses" ng-mouseover="this.hoverEdit = true;" ng-mouseleave="this.hoverEdit = false;">
-					<a href="">
+					<!--<a href="">-->
 						<div class="panel-body">
-							<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>
+							<!--<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>-->
 							<div id="address{{addressIndex}}">
 								<p class="capitalize">{{addr.use}}</p>
 								<p ng-repeat="(addrLineIndex, addrLine) in addr.streetLines">{{addrLine}}</p>
 								<p>{{addr.city}}, {{addr.state}} {{addr.zip}}</p>
 							</div>
 						</div>
-					</a>
+					<!--</a>-->
 				</div>
-				<div class="col-sm-12 body-bottom">
+				<!--<div class="col-sm-12 body-bottom">
 					<a href="">
 						<div class="pull-left"><i class="fa fa-plus-circle fa-2x fa-inline"></i></div>
 						<div class="pull-left">Add New Address</div>
 					</a>
-				</div>
+				</div>-->
 
 
 				<!--Phone section-->
@@ -132,53 +133,53 @@
 					<h4>Phone Number</h4>
 				</div>
 				<div class="panel col-sm-4 panel-editable" ng-repeat="(phIndex, ph) in profile.phone" ng-mouseover="this.hoverEdit = true;" ng-mouseleave="this.hoverEdit = false;">
-					<a href="">
+					<!--<a href="">-->
 						<div class="panel-body">
-							<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>
+							<!--<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>-->
 							<div id="ph{{phIndex}}">
 								<p class="Capitalize">{{ph.type}}</p>
 								<p>{{ph.number}}</p>
 							</div>
 						</div>
-					</a>
+					<!--</a>-->
 				</div>
 
-				<div class="col-sm-12">
+				<!--<div class="col-sm-12">
 					<a href="">
 						<div class="pull-left"><i class="fa fa-plus-circle fa-2x fa-inline"></i></div>
 						<div class="pull-left">Add New Phone</div>
 					</a>
-				</div>
+				</div>-->
 
 				<!--Email section-->
 				<div class="col-sm-12 profile-divider">
 					<h4>Additional Email</h4>
 				</div>
 				<div class="panel col-sm-4" ng-repeat="(emIndex, em) in profile.email" ng-show="!$first"  ng-mouseover="this.hoverEdit = true;" ng-mouseleave="this.hoverEdit = false;">
-					<a href="">
+					<!--<a href="">-->
 						<div class="panel-body">
-							<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>
+							<!--<div class="pull-right" ng-show="this.hoverEdit"><i class="fa fa-edit"> Edit</i></div>-->
 							<div id="em{{emIndex}}">
 								<p class="capitalize">{{em.type}}</p>
 								<p>{{em.email}}</p>
 							</div>
 						</div>
-					</a>
+					<!--</a>-->
 				</div>
 
-				<div class="col-sm-12">
+				<!--<div class="col-sm-12">
 					<a href="">
 						<div class="pull-left"><i class="fa fa-plus-circle fa-2x fa-inline"></i></div>
 						<div class="pull-left">Add New Email</div>
 					</a>
-				</div>
+				</div>-->
 				<!--<pre>{{profile | json}}</pre>-->
 			</div>
 		</div>
 
+		<div class="text-center"><h4>Languages</h4></div>
 		<div class="panel">
 			<div class="panel-body" id="languages">
-				<h3>Languages</h3>
 				<a id="languages"></a>
 				<h5>* Denotes required fields.</h5>
 				<form novalidate role="form" name="languageForm" ng-submit="nextStep()">
@@ -223,7 +224,7 @@
 						</a>
 					</div>
 
-					<button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="profileForm.$invalid">Update Languages</button>
+					<a href="#/home"><button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="profileForm.$invalid">Update Languages</button></a>
 					<div class="text-center">
 						<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
 					</div>

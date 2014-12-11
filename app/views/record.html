@@ -122,7 +122,10 @@
                                         <div class="panel-body" id="accordian">
                                             <div class="timeline-entry-header col-sm-12">
                                                 <div class="col-sm-6">
-                                                    <h4 class="text-left">{{recordEntry.category}} Added</h4>
+                                                    <h4 ng-if="recordEntry.category !== 'social' && recordEntry.category !== 'results' && recordEntry.category !== 'vitals'" class="text-left">{{recordEntry.category}} Added</h4>
+                                                    <h4 ng-if="recordEntry.category === 'social'" class="text-left">Social History Added</h4>
+                                                    <h4 ng-if="recordEntry.category === 'results'" class="text-left">Test Results Added</h4>
+                                                    <h4 ng-if="recordEntry.category === 'vitals'" class="text-left">Vital Signs Added</h4>
                                                     <h5 class="text-left">{{recordEntry.data.date_time.displayDate}}</h5>
                                                 </div>
                                             </div>

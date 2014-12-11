@@ -34,7 +34,7 @@
                 var plotDomain = [];
                 var timeScale;
                 var timeScaleTicks = [];
-                var d3 = $window.d3;
+                d3 = $window.d3;
                 var rawSvg = element.find("svg")[0];
                 var svg = d3.select(rawSvg).attr("height", plotHeight);
                 var format = d3.time.format("%m/%d/%Y");

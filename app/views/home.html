@@ -18,37 +18,9 @@
 					</div>
 
 					<div class="col-sm-5">
-
-						<div class="panel">
-							<div class="panel-body">
-								<div class="row alert-row">
-									<div class="col-sm-3 success">
-										<i class="fa fa-check fa-2x"></i>
-									</div>
-									<div class="col-sm-9">
-										<span>60 Total Entries</span>
-									</div>
-								</div>
-
-								<div class="row alert-row">
-									<div class="col-sm-3 warning">
-										<i class="fa fa-flag fa-2x"></i>
-									</div>
-									<div class="col-sm-9">
-										<span>60 Possible Updates</span>
-									</div>
-								</div>
-
-								<div class="row alert-row">
-									<div class="col-sm-3 info">
-										<i class="fa fa-folder fa-2x"></i>
-									</div>
-									<div class="col-sm-9">
-										<span>60 Files Saved</span>
-									</div>
-								</div>
-							</div>
-						</div>
+						<a href="#/record" class="pull-right"><button class="btn btn-link"><i class="fa fa-flag fa-inline"></i>9 pending updates</button></a>
+						<a href="#/notes" class="pull-right" ng-show="noteCount > 1"><button class="btn btn-link"><i class="fa fa-star fa-inline"></i>{{noteCount}} starred note<span ng-show="noteCount > 1">s</span></button></a>
+						
 					</div>
 				</div>
 			</div>
@@ -76,7 +48,8 @@
 							<a class="timeline-entry-icon text-center center-block">
 								
 								<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
-								<i ng-if="recordEntry.type === 'upload'" class="fa fa-upload fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'upload'" class="fa fa-cloud-upload fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'login'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
 
 							</a>
 						</div>
@@ -88,9 +61,8 @@
 									<div class="timeline-entry-header col-sm-12">
 										<div class="col-sm-6">
 											<h4 class="text-left">{{recordEntry.displayType}}</h4>
-											<h5 class="text-left">{{recordEntry.date}} - <span ng-show="recordEntry.file.name"><a>{{recordEntry.file.name}}</a></span>
+											<h5 class="text-left">{{recordEntry.date}} - <span ng-show="recordEntry.file.name"><a href="#/files">{{recordEntry.file.name}}</a></span>
 												<span ng-hide="recordEntry.file.name">Generated medical history</span></h5>
-
 											</div>
 											<div class="col-sm-6">
 											</div>

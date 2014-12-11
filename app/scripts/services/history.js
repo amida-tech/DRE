@@ -14,9 +14,17 @@ angular.module('phrPrototypeApp')
             var err = null;
 
             var history = {
-            	lastLogin: '6/30/2014',
-            	lastUpdate: '12/23/2013',
+            	lastLogin: '9/30/2014',
+            	lastUpdate: '7/31/2014',
             	recordHistory: [
+                    {
+                      type: 'login',
+                      date: '9/30/2014'  
+                    },
+                    {
+                        type: 'download',
+                        date: '6/30/2014'
+                    },
             		{
             			type: 'upload',
             			date: '12/23/2013',
@@ -24,11 +32,7 @@ angular.module('phrPrototypeApp')
             				name: 'CCDA_1.xml'
             			}
 
-            		},
-            		{
-            			type: 'download',
-            			date: '6/30/2014'
-            		}
+            		} 
             	]
             };
 

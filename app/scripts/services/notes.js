@@ -52,6 +52,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'allergies',
+                    'displaySection': 'allergies',
                     'notes': returnEntries
                 };
 
@@ -100,6 +101,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'encounters',
+                    'displaySection': 'encounters',
                     'notes': returnEntries
                 };
 
@@ -144,6 +146,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'immunizations',
+                    'displaySection': 'immunizations',
                     'notes': returnEntries
                 };
 
@@ -192,6 +195,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'medications',
+                    'displaySection': 'medications',
                     'notes': returnEntries
                 };
 
@@ -236,6 +240,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'conditions',
+                    'displaySection': 'conditions',
                     'notes': returnEntries
                 };
 
@@ -284,6 +289,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'procedures',
+                    'displaySection': 'procedures',
                     'notes': returnEntries
                 };
 
@@ -332,6 +338,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'vitals',
+                    'displaySection': 'vital signs',
                     'notes': returnEntries
                 };
 
@@ -363,11 +370,22 @@ angular.module('phrPrototypeApp')
                             entry.data.date_time = {};
 
                             _.each(entry.data.results, function (result) {
-                                _.each(result.date_time, function (dateEntry) {
-                                    format.formatDate(dateEntry);
-                                    dateArray.push(moment(dateEntry.date));
+
+                                _.each(result.date_time, function (dateEntry, dateIndex) {
+                                    if (dateIndex !== 'displayDate') {
+                                        if (!dateEntry.displayDate) {
+
+                                            format.formatDate(dateEntry);
+
+                                        }
+                                        dateArray.push(moment(dateEntry.date));
+                                    }
                                 });
-                                result.date_time.displayDate = format.outputDate(result.date_time);
+
+                                if (!result.date_time.displayDate) {
+                                    result.date_time.displayDate = format.outputDate(result.date_time);
+                                }
+
                             });
 
                             //Construct low-high based on range.
@@ -386,6 +404,7 @@ angular.module('phrPrototypeApp')
                             });
 
                             commentObject.entrySubTitleOne = format.outputDate(entry.data.date_time);
+
                             returnEntries.push(commentObject);
 
                         });
@@ -395,6 +414,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'results',
+                    'displaySection': 'test results',
                     'notes': returnEntries
                 };
 
@@ -443,6 +463,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'social',
+                    'displaySection': 'social history',
                     'notes': returnEntries
                 };
 
@@ -487,6 +508,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'claims',
+                    'displaySection': 'claims',
                     'notes': returnEntries
                 };
 
@@ -531,6 +553,7 @@ angular.module('phrPrototypeApp')
 
                 var returnObject = {
                     'section': 'insurance',
+                    'displaySection': 'insurance',
                     'notes': returnEntries
                 };
 
@@ -609,5 +632,24 @@ angular.module('phrPrototypeApp')
         };
 
         this.getNotes = getNotes;
+
+        var noteCount = function (callback) {
+            getNotes(function (err, results) {
+
+                var noteCount = 0;
+
+                _.each(results, function (entry) {
+                    _.each(entry.notes, function (note) {
+                        if (note.note.starred) {
+                            noteCount++;
+                        }
+                    });
+                });
+
+                callback(null, noteCount);
+            });
+        };
+
+        this.noteCount = noteCount;
 
     });
