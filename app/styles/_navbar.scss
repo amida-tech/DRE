@@ -9,7 +9,7 @@
 	margin-bottom: 0px;
 	
 }
-$bgDefault      : #000;
+$bgDefault      : $gray-dark;
 $bgHighlight    : $gray-light;
 $colDefault     : #fff;
 $colHighlight   : $brand-blue;
@@ -26,6 +26,10 @@ $colHighlight   : $brand-blue;
 		> li {
 			> a {
 				color: $colDefault;
+				font-weight: $btn-font-weight;
+  				font-family: $font-family-impact;
+				letter-spacing: 1px;
+				text-transform: uppercase;
 				&:hover,  &:focus {
 					color: $colHighlight; }}}
 		> .active {

@@ -3,3 +3,7 @@ dist
 .tmp
 .sass-cache
 bower_components
+
+test/spec/directives/billingnavigation.js
+
+test/spec/directives/recordnavigation.js

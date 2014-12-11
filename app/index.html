@@ -22,7 +22,7 @@
       <![endif]-->
 
       <!-- Add your site or application content here -->
-      <div class="wrapper">
+      <div class="wrapper" id="index-wrapper">
 
         <!--Site Header.-->
         <div class="navbar navbar-default" role="navigation" ng-controller="NavbarCtrl">
@@ -65,11 +65,10 @@
           </div>
 
           <!--Logged Out Navbar-->
-          <!--Logged In Navbar-->
           <div ng-if="loginStatus === false" class="container-fluid">
             <div style="margin: 0px 20px;">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#user-menu">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logout-menu">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -77,7 +76,7 @@
               </button>
               <a class="navbar-brand" href="#/home"><img class="img-navbar-logo" src="images/bb-logo-vector.png"></a>
             </div>
-            <div class="collapse navbar-collapse" id="user-menu">
+            <div class="collapse navbar-collapse" id="logout-menu">
               <ul class="nav navbar-nav navbar-right ">
                 <li><a href="#/register">Sign Up</a></li>
                 <li><a href="#/login">Log In</a></li>
@@ -102,12 +101,13 @@
 
         </div>
         <div ng-view=""></div>
-        <div class="push"></div>
-     </div>
-
-     <div class="text-center col-md-12 footer">
+        <div class="text-center col-md-12 footer">
+       <div class="row">
        <h6>Made by Amida Technology Solutions | Licensed under Creative Commons</h6>
+       </div>
      </div>
+     </div>
+     
 
 
      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -154,8 +154,10 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="bower_components/konami-code/src/jquery.konami.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="bower_components/jquery-lockfixed/jquery.lockfixed.js"></script>

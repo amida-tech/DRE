@@ -1,8 +1,8 @@
 
 // Bootstrap Variable Overrides.
 
-$font-family-sans-serif:  "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-serif:       "Roboto", serif !default;
+$font-family-sans-serif:  "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-serif:       "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-impact:     "Montserrat", serif !default;
 
 $gray-darker:            lighten(#000, 13.5%) !default; // #222
@@ -30,3 +30,6 @@ $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
+
+$blur-background:		url(../../images/blur.png);
+$blur-background2:		url(../../images/blur2.png);
