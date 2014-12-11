@@ -18,37 +18,8 @@
 					</div>
 
 					<div class="col-sm-5">
-
-						<div class="panel">
-							<div class="panel-body">
-								<div class="row alert-row">
-									<div class="col-sm-3 success">
-										<i class="fa fa-check fa-2x"></i>
-									</div>
-									<div class="col-sm-9">
-										<span>60 Total Entries</span>
-									</div>
-								</div>
-
-								<div class="row alert-row">
-									<div class="col-sm-3 warning">
-										<i class="fa fa-flag fa-2x"></i>
-									</div>
-									<div class="col-sm-9">
-										<span>60 Possible Updates</span>
-									</div>
-								</div>
-
-								<div class="row alert-row">
-									<div class="col-sm-3 info">
-										<i class="fa fa-folder fa-2x"></i>
-									</div>
-									<div class="col-sm-9">
-										<span>60 Files Saved</span>
-									</div>
-								</div>
-							</div>
-						</div>
+						<a href="#/record" class="pull-right"><button class="btn btn-link"><i class="fa fa-flag fa-inline"></i>9 pending updates</button></a>
+						<a href="#/notes" class="pull-right" ng-show="noteCount > 1"><button class="btn btn-link"><i class="fa fa-star fa-inline"></i>{{noteCount}} starred note<span ng-show="noteCount > 1">s</span></button></a>
 					</div>
 				</div>
 			</div>

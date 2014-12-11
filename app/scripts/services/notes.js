@@ -610,4 +610,23 @@ angular.module('phrPrototypeApp')
 
         this.getNotes = getNotes;
 
+        var noteCount = function (callback) {
+            getNotes(function(err, results) {
+
+                var noteCount = 0;
+
+                _.each(results, function(entry) {
+                    _.each(entry.notes, function(note) {
+                        if (note.note.starred) {
+                            noteCount++;
+                        }
+                    });
+                });
+
+                callback(null, noteCount);
+            });
+        };
+
+        this.noteCount = noteCount;
+
     });

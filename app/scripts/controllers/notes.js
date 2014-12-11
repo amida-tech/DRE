@@ -15,7 +15,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
          'value': true
         },
         {'name': 'unStarred',
-         'value': true
+         'value': false
         },
         {'name': 'medications',
          'value': true

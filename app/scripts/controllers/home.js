@@ -8,9 +8,25 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('HomeCtrl', function ($scope, history) {
+  .controller('HomeCtrl', function ($scope, history, notes, record) {
     
   	$scope.accountHistory = {};
+    $scope.noteCount = 0;
+
+    function countNotes() {
+        notes.noteCount(function (err, results) {
+            $scope.noteCount = results;
+        });
+    };
+
+    function countUpdates() {
+          record.getRecord(function(err, results) {
+           $scope.entries = results;
+          });
+    };
+
+    countNotes();
+    countUpdates();
 
   	function getHistory () {
       history.account(function(err, history) {
