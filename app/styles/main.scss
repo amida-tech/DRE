@@ -23,6 +23,18 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
     font-family: "Roboto";
     src: url(../../fonts/Roboto.ttf);
 }
+@font-face {
+    font-family:    "Nexa";
+    src:            url(../../fonts/Nexa-Light.otf);
+    font-weight:    normal;
+}
+
+@font-face {
+    font-family:    "Nexa";
+    src:            url(../../fonts/Nexa-Bold.otf);
+    font-weight:    bold;
+    
+}
 
 // Bootstrap Preprocessing
 @import "variables";

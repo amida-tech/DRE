@@ -9,16 +9,16 @@
 			<div class="panel-body">
 				<div class="btn-toolbar sidebar-control" role="toolbar">
 					<div class="btn-group-vertical col-sm-12" role="group">
-						<button class="btn btn-default btn-block" ng-click="toggleAll()">All </button>
+						<button class="btn btn-info btn-block" ng-click="toggleAll()">All </button>
 					</div>
 					<p>&nbsp</p>
 					<div class="btn-group-vertical col-sm-12" role="group">
-						<button class="btn btn-default btn-block" ng-click="toggle(0)">Starred <i class="fa fa-check" ng-show="filters[0].value"></i></button>
-						<button class="btn btn-default btn-block" ng-click="toggle(1)">Unstarred <i class="fa fa-check" ng-show="filters[1].value"></i></button>
+						<button class="btn btn-info btn-block" ng-click="toggle(0)">Starred <i class="fa fa-check" ng-show="filters[0].value"></i></button>
+						<button class="btn btn-info btn-block" ng-click="toggle(1)">Unstarred <i class="fa fa-check" ng-show="filters[1].value"></i></button>
 					</div>
 					<p>&nbsp</p>
 					<div class="btn-group-vertical col-sm-12" role="group">
-						<button class="btn btn-default btn-block" ng-repeat="(nameIndex , nameEntry) in filters" ng-hide="nameEntry.name === 'starred' || nameEntry.name === 'unStarred'" ng-click="toggle(nameIndex)">{{nameEntry.name}} <i class="fa fa-check" ng-show="nameEntry.value"></i></button>
+						<button class="btn btn-info btn-block" ng-repeat="(nameIndex , nameEntry) in filters" ng-hide="nameEntry.name === 'starred' || nameEntry.name === 'unStarred'" ng-click="toggle(nameIndex)">{{nameEntry.name}} <i class="fa fa-check" ng-show="nameEntry.value"></i></button>
 					</div>
 
 
@@ -34,7 +34,7 @@
 				<div class="col-sm-12 row">
 					<div class="col-sm-12">
 						<div breadcrumb></div>
-						<h1>My Notes</h1>
+						<h4>My Notes</h4>
 						<p>This is consolidated view of all notes across your record.</p>
 						<p>To add a new note, please annotate an entry in either your medical record or billing history</p>
 					</div>

@@ -4,22 +4,39 @@
 
 html, body {
     height: 100%;
+    background-color: $gray-dark;
 }
 
 .wrapper {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -40px; /* the bottom margin is the negative value of the footer's height */
+    
+    
+    height: auto;
+    margin: 0 auto -40px;
+    background-image: url(../../images/blur.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* the bottom margin is the negative value of the footer's height */
+}
+.marketing-block {
+    background-image: url(../../images/blur.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    h2, p {
+        color: #fff;
+    }
+}
+.blur-background {
+    background-image: url(../../images/blur.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-.footer, .push {
-    height: 40px; /* .push must be the same height as .footer */
-}
 .footer {
-    background-color: #000;
-    h6 {
-        color: $gray-light;
+    background-color: $gray-dark;
+    height: 40px;
+    > .row {
+        > h6 {
+            color: $gray-light;
+        }
     }
 
 }
@@ -27,27 +44,25 @@ html, body {
 
 .body-content {
 	margin: 0px;
+    bottom: 0px;
     overflow: hidden;
 }
 
 .body-left {
 	padding: 20px;
-    background-color: $gray;
     height: 100%;
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
     float: left;
+    /*background-color: rgba(0,0,0,0.5);*/    
 
 }
 .body-right {
     padding: 20px;
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
+    height: 100%;
     float: left;
 
 }
 .body-bottom {
-	padding-bottom: 20px;
+	
 }
 .body-footer {
     
