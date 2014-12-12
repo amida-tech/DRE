@@ -17,7 +17,7 @@ angular.module('phrPrototypeApp').directive('recordNavigation', ['$window',
                     element.find("#navall").addClass("active");
                 } else {
                     element.find("#nav" + scope.entryType).addClass("active");
-                };
+                }
                 
                 
             }
