@@ -11,7 +11,7 @@ describe('Filter: starred', function () {
     starred = $filter('starred');
   }));
 
-  it('should return the input prefixed with "starred filter:"', function () {
+  xit('should return the input prefixed with "starred filter:"', function () {
     var text = 'angularjs';
     expect(starred(text)).toBe('starred filter: ' + text);
   });

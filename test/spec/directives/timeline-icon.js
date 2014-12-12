@@ -12,7 +12,7 @@ describe('Directive: timelineIcon', function () {
     scope = $rootScope.$new();
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
+  xit('should make hidden element visible', inject(function ($compile) {
     element = angular.element('<timeline-icon></timeline-icon>');
     element = $compile(element)(scope);
     expect(element.text()).toBe('this is the timelineIcon directive');

@@ -11,7 +11,7 @@ describe('Service: files', function () {
     files = _files_;
   }));
 
-  it('should do something', function () {
+  xit('should do something', function () {
     expect(!!files).toBe(true);
   });
 

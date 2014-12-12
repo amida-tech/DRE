@@ -11,7 +11,7 @@ describe('Service: account', function () {
     account = _account_;
   }));
 
-  it('should do something', function () {
+  xit('should do something', function () {
     expect(!!account).toBe(true);
   });
 
