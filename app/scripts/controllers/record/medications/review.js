@@ -104,16 +104,29 @@ angular.module('phrPrototypeApp')
                     $scope.match[matchIndex].srcMatch.data[xname] = $scope.match[matchIndex].origMatch[xname];
                     formatDates();
                 } else if (_.isObject(elem)) {
-                    // Handle administration route 
-                    if (elem.route === true) {
-                        $scope.match[matchIndex].srcMatch.data[xname].route = $scope.match[matchIndex].newMatch[xname].route;
-                    } else if (elem.route === false) {
-                        $scope.match[matchIndex].srcMatch.data[xname].route = $scope.match[matchIndex].origMatch[xname].route;
-                    } else if (elem.form === true) {
-                        $scope.match[matchIndex].srcMatch.data[xname].form = $scope.match[matchIndex].newMatch[xname].form;
-                    } else if (elem.form === false) {
-                        $scope.match[matchIndex].srcMatch.data[xname].form = $scope.match[matchIndex].origMatch[xname].form;
-                    }
+                    // Handle administration route
+                    _.each(elem, function (aelem, aname, alist) {
+                        if (aelem === true) {
+
+                            // if (!$scope.match[matchIndex].srcMatch.data.administration[aname]) {
+                            //     $scope.match[matchIndex].srcMatch.data.administration.form = {};
+                            // }
+
+                            $scope.match[matchIndex].srcMatch.data.administration[aname] = $scope.match[matchIndex].newMatch.administration[aname];
+                        }
+                        else if (aelem === false) {
+                            $scope.match[matchIndex].srcMatch.data.administration[aname] = $scope.match[matchIndex].origMatch.administration[aname];
+                        }
+                    });
+                    // if (elem.route === true) {
+                    //     $scope.match[matchIndex].srcMatch.data.administration.route = $scope.match[matchIndex].newMatch.administration.route;
+                    // } else if (elem.route === false) {
+                    //     $scope.match[matchIndex].srcMatch.data[xname].route = $scope.match[matchIndex].origMatch[xname].route;
+                    // } else if (elem.form === true) {
+                    //     $scope.match[matchIndex].srcMatch.data[xname].form = $scope.match[matchIndex].newMatch[xname].form;
+                    // } else if (elem.form === false) {
+                    //     $scope.match[matchIndex].srcMatch.data[xname].form = $scope.match[matchIndex].origMatch[xname].form;
+                    // }
 
                 }
 

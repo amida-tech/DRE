@@ -77,31 +77,30 @@ angular.module('phrPrototypeApp')
             });
         }
 
+
         function formatDisplay() {
-        	_.each($scope.match, function(entry) {
-        		_.each(entry.newMatch.performer, function(perf) {
+            _.each($scope.match, function (entry) {
 
-        			_.each(perf.name, function(name) {
-        				format.formatName(name);
-        			});
+                _.each(entry.srcMatch.data.performer, function (perf) {
+                    _.each(entry.srcMatch.data.performer.name, function (name) {
+                        format.formatName(name);
+                    });
+                    _.each(entry.srcMatch.data.performer.address, function (addr) {
+                        format.formatAddress(addr);
+                    });
+                });
+                format.formatQuantity(entry.srcMatch.data.administration.dose);
 
-        			_.each(perf.address, function(addr) {
-        				format.formatAddress(addr);
-        			});
-        		});
-        		// format.formatQuantity(entry.newMatch.administration.dose);
-
-        		_.each(entry.srcMatch.data.performer, function(perf) {
-
-        			_.each(perf.name, function(name) {
-        				format.formatName(name);
-        			});
-        			_.each(perf.address, function(addr) {
-        				format.formatAddress(addr);
-        			});
-        		});
-        		// format.formatQuantity(entry.srcMatch.data.administration.dose);
-        	});
+                _.each(entry.newMatch.performer, function (perf) {
+                    _.each(entry.newMatch.performer.name, function (name) {
+                        format.formatName(name);
+                    });
+                    _.each(entry.newMatch.performer.address, function (addr) {
+                        format.formatAddress(addr);
+                    });
+                });
+                format.formatQuantity(entry.newMatch.administration.dose);
+            });
         }
 
         $scope.selectEntry = function (matchIndex) {

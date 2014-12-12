@@ -89,16 +89,29 @@ angular.module('phrPrototypeApp')
                     $scope.match[matchIndex].srcMatch.data[name] = $scope.match[matchIndex].origMatch[name];
                     formatDates();
                 } else if (_.isObject(elem)) {
-                    // Handle status
-                    if (elem.status === true) {
-                        $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].newMatch[name].status;
-                    } else if (elem.status === false) {
-                        $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].origMatch[name].status;
-                    } else if (elem.reactions === true) {
-                        $scope.match[matchIndex].srcMatch.data[name].reactions = $scope.match[matchIndex].newMatch[name].reactions;
-                    } else if (elem.reactions === false) {
-                        $scope.match[matchIndex].srcMatch.data[name].reactions = $scope.match[matchIndex].origMatch[name].reactions;
-                    }
+                    // Handle observations
+                    _.each(elem, function (relem, rname, rlist) {
+                        if (relem === true) {
+                            $scope.match[matchIndex].srcMatch.data.observation[rname] = $scope.match[matchIndex].newMatch.observation[rname];
+                        } else if (relem === false) {
+                            $scope.match[matchIndex].srcMatch.data.observation[rname] = $scope.match[matchIndex].origMatch.observation[rname];
+                        }
+
+                    });
+                }
+
+            });
+
+        }
+                    // if (elem.status === true) {
+                    //     $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].newMatch[name].status;
+                    // } else if (elem.status === false) {
+                    //     $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].origMatch[name].status;
+                    // } else if (elem.reactions === true) {
+                    //     $scope.match[matchIndex].srcMatch.data[name].reactions = $scope.match[matchIndex].newMatch[name].reactions;
+                    // } else if (elem.reactions === false) {
+                    //     $scope.match[matchIndex].srcMatch.data[name].reactions = $scope.match[matchIndex].origMatch[name].reactions;
+                    // }
                     // //Explicitly handle reactions.
                     // //Need to redo logic
                     // _.each(elem.reactions, function (rElem, rName, rList) {
@@ -140,11 +153,6 @@ angular.module('phrPrototypeApp')
 
                     // });
 
-                }
-
-            });
-
-        }
 
         $scope.clearAll = function (matchIndex) {
 

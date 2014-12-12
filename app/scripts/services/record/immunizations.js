@@ -29,6 +29,10 @@ angular.module('phrPrototypeApp')
                 "administration": {
                     "route": {
                         "name": "Intramuscular injection"
+                    },
+                    "dose": {
+                        "value": 50,
+                        "unit": "mcg"
                     }
                 },
                 "performer": {

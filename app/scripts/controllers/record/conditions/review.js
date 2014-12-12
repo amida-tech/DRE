@@ -58,24 +58,63 @@ angular.module('phrPrototypeApp')
             });
         }
 
+        // function formatDates() {
+        //     //Add displayDate to all entries.
+        //     _.each($scope.match, function (entry) {
+        //         	//newMatch
+        //             _.each(entry.newMatch.date_time, function (dateEntry) {
+        //                 format.formatDate(dateEntry);
+        //             });
+        //             entry.newMatch.date_time.displayDate = format.outputDate(entry.newMatch.date_time);
+                
+        //         	//srcMatch.data
+        //             _.each(entry.srcMatch.data.date_time, function (dateEntry) {
+        //                 format.formatDate(dateEntry);
+        //             });
+        //             entry.srcMatch.data.date_time.displayDate = format.outputDate(entry.srcMatch.data.date_time);
+                
+        //     });
+
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.match, function (entry) {
-                	//newMatch
+                //newMatch
+                if (entry.newMatch.date_time) {
                     _.each(entry.newMatch.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
                     });
                     entry.newMatch.date_time.displayDate = format.outputDate(entry.newMatch.date_time);
-                
-                	//srcMatch.data
+                    // entry.newMatch.date_time.plotDate = format.plotDate(entry.newMatch.date_time);
+                }
+                //srcMatch
+                if (entry.srcMatch.data.date_time) {
                     _.each(entry.srcMatch.data.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
                     });
                     entry.srcMatch.data.date_time.displayDate = format.outputDate(entry.srcMatch.data.date_time);
-                
+                    // entry.srcMatch.data.date_time.plotDate = format.plotDate(entry.srcMatch.data.date_time);
+                }
+
             });
         }
 
+        function formatDisplay() {
+            _.each($scope.match, function (entry) {
+                if (entry.srcMatch.data.problem.date_time) {
+                    _.each(entry.srcMatch.data.problem.date_time, function (dateEntry) {
+                        format.formatDate(dateEntry);
+                    });
+                    entry.srcMatch.data.problem.date_time.displayDate = format.outputDate(entry.srcMatch.data.problem.date_time);
+                }
+
+                if (entry.newMatch.problem.date_time) {
+                    _.each(entry.newMatch.problem.date_time, function (dateEntry) {
+                        format.formatDate(dateEntry);
+                    });
+                    entry.newMatch.problem.date_time.displayDate = format.outputDate(entry.newMatch.problem.date_time);
+                }
+            });
+        }
 
         $scope.selectEntry = function (matchIndex) {
             _.each($scope.selected, function (elem, name, list) {
@@ -85,6 +124,7 @@ angular.module('phrPrototypeApp')
                 } else if (elem === false) {
                     $scope.match[matchIndex].srcMatch.data[name] = $scope.match[matchIndex].origMatch[name];
                     formatDates();
+                    formatDisplay();
                 } else if (_.isObject(elem)) {
                     // Handle status
                     if (elem.status === true) {
@@ -135,6 +175,7 @@ angular.module('phrPrototypeApp')
             $scope.selected = angular.copy(selectedOriginal);  
             $scope.match[matchIndex].srcMatch.data = angular.copy($scope.match[matchIndex].origMatch);
             formatDates();
+            formatDisplay();
 
         }
 
@@ -154,7 +195,7 @@ angular.module('phrPrototypeApp')
         $scope.refresh = function () {
             getMatch(function (err) {
                 formatDates();
-                // formatDisplay();
+                formatDisplay();
             });
         }
 
