@@ -74,26 +74,29 @@
 
                                 <!--Findings-->
                                 <tr ng-if="matchEntry.diff.findings">
-                                    <td style="border: 1px solid #ccc;">
+                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.findings}">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                        Findings:
+                                                    <label>
+                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.findings" ng-change="selectEntry(matchIndex)">
+                                                    </label>
+                                                    Findings:
+                                                    <div class="pull-right" ng-if="matchEntry.diff.findings === 'new'">
+                                                        <span class="label label-primary">New</span>
+                                                    </div>
                                                     </td>
+                                                </tr>
+                                                <tr>
                                                     <td class="col-sm-9">
-                                                        <div class="panel" ng-repeat="(findingIndex, findingEntry) in matchEntry.newMatch.findings" ng-class="{'update-selected': selected.findings[findingIndex]}">
+                                                        <div class="panel" ng-repeat="(findingIndex, findingEntry) in matchEntry.newMatch.findings" ng-class="{'update-selected': selected.findings}">
 
                                                             <table class="table sub-table">
                                                                 <thead>
                                                                     <tr>
                                                                         <td colspan="2">
-                                                                            <label>
-                                                                                <h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.findings[findingIndex]" ng-change="selectEntry(matchIndex)">{{matchEntry.newMatch.findings[findingIndex].value.name}}</h5>
-                                                                            </label>
-                                                                            <div class="pull-right" ng-if="matchEntry.diff.findings === 'new'">
-                                                                                <span class="label label-primary">New</span>
-                                                                            </div>
+                                                                            {{matchEntry.newMatch.findings[findingIndex].value.name}}
                                                                         </td>
                                                                     </tr>
                                                                 </thead>
@@ -120,15 +123,20 @@
                                         </table>
                                         </td>
                                         <td class="text-center update-spacer"></td>
-                                        <td style="border: 1px solid #ccc;">
+                                        <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.findings}">
                                             <table class="table table-condensed col-sm-12">
                                                 <thead>
                                                     <tr>
                                                         <td class="col-sm-3">
                                                             Findings:
+                                                            <div class="pull-right" ng-show="selected.findings">
+                                                                <span class="label label-warning">New</span>
+                                                            </div>
                                                         </td>
+                                                    </tr>
+                                                    <tr>
                                                         <td class="col-sm-9">
-                                                            <div class="panel" ng-repeat="(findingIndex, findingEntry) in matchEntry.srcMatch.data.findings" ng-class="{'update-selected': selected.findings[findingIndex]}">
+                                                            <div class="panel" ng-repeat="(findingIndex, findingEntry) in matchEntry.srcMatch.data.findings" ng-class="{'update-selected': selected.findings}">
 
                                                                 <table class="table sub-table">
                                                                     <thead>

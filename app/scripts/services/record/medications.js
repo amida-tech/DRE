@@ -73,7 +73,7 @@ angular.module('phrPrototypeApp')
             },
             "administration": {
                 "route": {
-                    "name": "RESPIRATORY (INHALATION)",
+                    "name": "RESPIRATORY",
                     "code": "C38216",
                     "code_system_name": "Medication Route FDA"
                 },
@@ -220,7 +220,6 @@ angular.module('phrPrototypeApp')
             "identifiers": [{
                 "identifier": "cdbd33f0-6cde-11db-9fe1-0800200c9a66"
             }],
-            "status": "Completed",
             "sig": "Proventil HFA",
             "product": {
                 "identifiers": [{
@@ -263,11 +262,6 @@ angular.module('phrPrototypeApp')
                 "route": {
                     "name": "RESPIRATORY (INHALATION)",
                     "code": "C38216",
-                    "code_system_name": "Medication Route FDA"
-                },
-                "form": {
-                    "name": "INHALANT",
-                    "code": "C42944",
                     "code_system_name": "Medication Route FDA"
                 },
                 "dose": {
@@ -386,13 +380,25 @@ angular.module('phrPrototypeApp')
             callback(null, tmpReturn);
         }
 
+        var saveEntry = function(entry, callback) {
+            console.log(entry);
+            callback(null);
+        }
+
+        this.saveEntry = saveEntry;
+
         this.getPartialMatch = function (callback) {
                 var tmpMatch = [{
                     "match": "partial",
                     "percent": 75,
                     "subelements": {},
                     "diff": {
-                        "date_time": "diff"
+                        "date_time": "diff",
+                        "status": "new",
+                        "administration": {
+                            "route": "diff",
+                            "form": "new"
+                        }
                     },
                     "srcMatch": {
                         'metadata': tmpMetaData,

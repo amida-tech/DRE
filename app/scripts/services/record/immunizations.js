@@ -11,12 +11,12 @@ angular.module('phrPrototypeApp')
     .service('immunizations', function immunizations() {
 
         var tmpPartial = {
-                "date_time": {
-                    "point": {
-                        "date": "2014-11-01T00:00:00Z",
-                        "precision": "month"
-                    }
-                },
+            "date_time": {
+                "point": {
+                    "date": "1999-11-01T00:00:00Z",
+                    "precision": "month"
+                }
+            },
                 "identifiers": [{
                     "identifier": "e6f1ba43-c0ed-4b9b-9f12-f435d8ad8f92"
                 }],
@@ -179,6 +179,13 @@ angular.module('phrPrototypeApp')
             console.log(entry);
             callback(null);
         }
+
+        var saveEntry = function(entry, callback) {
+            console.log(entry);
+            callback(null);
+        }
+
+        this.saveEntry = saveEntry;
 
         this.getPartialMatch = function (callback) {
                 var tmpMatch = [{

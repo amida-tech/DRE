@@ -20,7 +20,12 @@ angular.module('phrPrototypeApp')
 
         //Instantiate empty clone of object structure.
         var selectedOriginal = {
-            "date_time": null
+            "date_time": null,
+            "status": null,
+            "administration": {
+                "route": null,
+                "form": null
+            }
         };
 
         $scope.selected = angular.copy(selectedOriginal);
@@ -91,51 +96,24 @@ angular.module('phrPrototypeApp')
     //     }
         
         $scope.selectEntry = function (matchIndex) {
-            _.each($scope.selected, function (elem, name, list) {
+            _.each($scope.selected, function (elem, xname, list) {
 
                 if (elem === true) {
-                    $scope.match[matchIndex].srcMatch.data[name] = $scope.match[matchIndex].newMatch[name];
+                    $scope.match[matchIndex].srcMatch.data[xname] = $scope.match[matchIndex].newMatch[xname];
                 } else if (elem === false) {
-                    $scope.match[matchIndex].srcMatch.data[name] = $scope.match[matchIndex].origMatch[name];
+                    $scope.match[matchIndex].srcMatch.data[xname] = $scope.match[matchIndex].origMatch[xname];
                     formatDates();
                 } else if (_.isObject(elem)) {
-                    // Handle status
-                    if (elem.status === true) {
-                        $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].newMatch[name].status;
-                    } else if (elem.status === false) {
-                        $scope.match[matchIndex].srcMatch.data[name].status = $scope.match[matchIndex].origMatch[name].status;
+                    // Handle administration route 
+                    if (elem.route === true) {
+                        $scope.match[matchIndex].srcMatch.data[xname].route = $scope.match[matchIndex].newMatch[xname].route;
+                    } else if (elem.route === false) {
+                        $scope.match[matchIndex].srcMatch.data[xname].route = $scope.match[matchIndex].origMatch[xname].route;
+                    } else if (elem.form === true) {
+                        $scope.match[matchIndex].srcMatch.data[xname].form = $scope.match[matchIndex].newMatch[xname].form;
+                    } else if (elem.form === false) {
+                        $scope.match[matchIndex].srcMatch.data[xname].form = $scope.match[matchIndex].origMatch[xname].form;
                     }
-                    //Explicitly handle reactions.
-                    _.each(elem.reactions, function (rElem, rName, rList) {
-
-                        if (rElem === true) {
-
-                            var newReaction = $scope.match[matchIndex].newMatch[name].reactions[rName];
-                            newReaction.srcMatch.dataIndex = rName;
-
-                            if (!$scope.match[matchIndex].srcMatch.data[name].reactions) {
-                                $scope.match[matchIndex].srcMatch.data[name].reactions = [];
-                            }
-
-                            $scope.match[matchIndex].srcMatch.data[name].reactions.push(newReaction);
-                        } else if (rElem === false) {
-
-                            //Index to splice.
-                            //console.log(rName);
-
-                            _.each($scope.match[matchIndex].srcMatch.data[name].reactions, function (rxElem, rxName, rxList) {
-
-                                if (rxElem.srcMatch.dataIndex) {
-                                    if (rxElem.srcMatch.dataIndex === rName) {
-                                        //Splice ID.
-                                        console.log(rxName);
-                                        $scope.match[matchIndex].srcMatch.data[name].reactions.splice(rxName);
-                                    }
-                                }
-                            });
-                        }
-
-                    });
 
                 }
 
@@ -161,6 +139,16 @@ angular.module('phrPrototypeApp')
 
 
             });
+
+        }
+
+        $scope.ignoreUpdate = function (matchIndex) {
+
+            $scope.selected = angular.copy(selectedOriginal);  
+            $scope.match[matchIndex].srcMatch.data = angular.copy($scope.match[matchIndex].origMatch);
+            formatDates();
+
+                $location.path('/record/medications');
 
         }
 

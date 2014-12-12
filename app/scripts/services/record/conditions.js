@@ -138,6 +138,13 @@ angular.module('phrPrototypeApp')
             callback(null, tmpReturn);
         }
 
+        var saveEntry = function(entry, callback) {
+            console.log(entry);
+            callback(null);
+        }
+
+        this.saveEntry = saveEntry;
+
         this.getPartialMatch = function (callback) {
                 var tmpMatch = [{
                     "match": "partial",

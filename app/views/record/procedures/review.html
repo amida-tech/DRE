@@ -68,12 +68,16 @@
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
-                                                    <td>
-                                                        
-                                                            <label class="pull-left"><input type="checkbox" ng-model="selected.performer" ng-change="selectEntry(matchIndex)">
-                                                        </label><p class="pull-left">&nbsp;Performer:</p>
-                                                    </td>
 
+                                                    <td class="col-sm-3">
+                                                        <label>
+                                                            <input type="checkbox" ng-model="selected.performer" ng-change="selectEntry(matchIndex)">
+                                                        </label>
+                                                        Performer:
+                                                        <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
+                                                            <span class="label label-info">Different</span>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -87,10 +91,9 @@
                                                                                 {{addrLine}}
                                                                             </div>
                                                                         </div>
-                                                                    </td>
-                                                                    <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
-                                                                        <span class="label label-info">Different</span>
-                                                                    </div>
+
+																	</td>
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Phone:</td>
@@ -147,7 +150,12 @@
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                        <p>Performer:</p>
+
+                                                        Performer:
+                                                        <div class="pull-right" ng-show="selected.performer">
+                                                            <span class="label label-warning">Updated</span>
+                                                        </div>
+
                                                     </td>
                                                 </tr>
                                                 <tr>
