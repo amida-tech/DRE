@@ -52,3 +52,9 @@ From the base project directory, you can use Grunt to build and execute the foll
 ```grunt test``` - Runs all test cases against current build.
 
 ```grunt serve``` - Runs build and serves pages on localhost.
+
+####License
+
+Licensed under [Apache 2.0 License]('http://www.apache.org/licenses/LICENSE-2.0').
+
+All original content licensed under the [Creative Commons 4.0 Attribution License]('http://creativecommons.org/licenses/by/4.0/').
