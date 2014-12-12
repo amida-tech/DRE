@@ -82,11 +82,6 @@ angular.module('phrPrototypeApp')
                     "code": "C42944",
                     "code_system_name": "Medication Route FDA"
                 },
-                "form1": {
-                    "name": "SOLUTION",
-                    "code": "C42986",
-                    "code_system_name": "Medication Route FDA"
-                },
                 "dose": {
                     "value": 1,
                     "unit": "mg/actuat"
@@ -272,6 +267,16 @@ angular.module('phrPrototypeApp')
                 "dose": {
                     "value": 1,
                     "unit": "mg/actuat"
+                },
+                "form1": {
+                    "name": "SOLUTION",
+                    "code": "C42986",
+                    "code_system_name": "Medication Route FDA"
+                },
+                "form": {
+                    "name": "",
+                    "code": "",
+                    "code_system_name": ""
                 },
                 "rate": {
                     "value": 90,
