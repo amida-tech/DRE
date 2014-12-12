@@ -130,7 +130,10 @@ app.use(login);
 var account = require('./lib/account');
 app.use(account);
 
-app.set('port', (process.env.PORT || 3000))
+app.set('port', (process.env.PORT || 3000));
+
+app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
+app.set('mllp_port', (process.env.PORT || 6969));
 
 //Launch Application.
 record.connectDatabase(app.get('db_url'), function(err) {
@@ -147,7 +150,9 @@ record.connectDatabase(app.get('db_url'), function(err) {
 //Launch MLLP server/listener
 var mllp = require('mllp-node');
 
-var server = new mllp.MLLPServer();
+var server = new mllp.MLLPServer('127.0.0.1', 6969);
+console.log("MLLP listening on host "+ app.get('mllp_host')+", port " + app.get('mllp_port'));
+
 
 server.on('hl7', function(data) {
     console.log("just an example", data);
@@ -193,7 +198,7 @@ server.on('hl7', function(data) {
 
         //var configs = require('configs')
 
-        console.log({data:parsed_record.demographics});
+        console.log(JSON.stringify({data:parsed_record.demographics},null,4));
 
         var match = pim.compare_candidates(parsed_record.demographics, docs);
 
