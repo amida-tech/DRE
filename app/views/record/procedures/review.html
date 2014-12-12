@@ -78,14 +78,17 @@
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
-                                                    <td>
+                                                    <td class="col-sm-3">
                                                         <label>
                                                             <input type="checkbox" ng-model="selected.performer" ng-change="selectEntry(matchIndex)">
                                                         </label>
-                                                    </td>
-                                                    <td class="col-sm-3">
                                                         Performer:
+                                                        <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
+                                                            <span class="label label-info">Different</span>
+                                                        </div>
                                                     </td>
+                                                </tr>
+                                                <tr>
                                                     <td class="col-sm-9">
                                                         <div ng-repeat="performer in matchEntry.newMatch.performer" class="panel" ng-class="{'update-selected': selected.performer}">
 
@@ -99,9 +102,6 @@
 																		  </div>
                                                                         </div>
 																	</td>
-                                                                    <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
-                                                                        <span class="label label-info">Different</span>
-                                                                    </div>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Phone:</td>
@@ -161,7 +161,12 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Performer:
+                                                        <div class="pull-right" ng-show="selected.performer">
+                                                            <span class="label label-warning">Updated</span>
+                                                        </div>
                                                     </td>
+                                                </tr>
+                                                <tr>
                                                     <td class="col-sm-9">
                                                         <div ng-repeat="performer in matchEntry.srcMatch.data.performer" class="panel" ng-class="{'update-selected': selected.performer}">
 
