@@ -75,14 +75,11 @@
 
                                 <!--Product-->
                                 <tr ng-if="matchEntry.diff.product">
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.product}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                    <label>
-                                                    <input type="checkbox" style="margin-right: 10px;" ng-model="selected.product" ng-change="selectEntry(matchIndex)">
-                                                    </label>
                                                     Product:
                                                         <div class="pull-right" ng-if="matchEntry.diff.product === 'diff'">
                                                         <span class="label label-info">Different</span>
@@ -97,6 +94,8 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <td colspan="2">
+
+                                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.product" ng-change="selectEntry(matchIndex)">
                                                                         {{matchEntry.newMatch.product.product.name}}
                                                                             
                                                                         </td>
@@ -154,7 +153,7 @@
                                         </table>
                                         </td>
                                         <td class="text-center update-spacer"></td>
-                                        <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.product}">
+                                        <td style="border: 1px solid #ccc;" class="panel table-entry">
                                             <table class="table table-condensed col-sm-12">
                                                 <thead>
                                                     <tr>
@@ -231,14 +230,11 @@
 
                                 <!--Administration-->
                                 <tr ng-if="matchEntry.diff.administration">
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.administration}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                    <label>
-                                                    <input type="checkbox" style="margin-right: 10px;" ng-model="selected.administration" ng-change="selectEntry(matchIndex)">
-                                                    </label>
                                                         Administration:
                                                     <div class="pull-right" ng-if="matchEntry.diff.administration === 'diff'">
                                                         <span class="label label-info">Different</span>
@@ -253,6 +249,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <td colspan="2">
+                                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.administration" ng-change="selectEntry(matchIndex)">
                                                                             {{matchEntry.newMatch.administration.route.name}}
                                                                         </td>
                                                                     </tr>
@@ -276,7 +273,7 @@
                                         </table>
                                         </td>
                                         <td class="text-center update-spacer"></td>
-                                        <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.administration}">
+                                        <td style="border: 1px solid #ccc;" class="panel table-entry">
                                             <table class="table table-condensed col-sm-12">
                                                 <thead>
                                                 <tr>

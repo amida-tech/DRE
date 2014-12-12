@@ -64,15 +64,12 @@
                             <tbody>
                                 <!--Performer-->
                                 <tr ng-if="matchEntry.diff.performer">
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.performer}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
 
                                                     <td class="col-sm-3">
-                                                        <label>
-                                                            <input type="checkbox" ng-model="selected.performer" ng-change="selectEntry(matchIndex)">
-                                                        </label>
                                                         Performer:
                                                         <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
                                                             <span class="label label-info">Different</span>
@@ -84,7 +81,10 @@
                                                         <div ng-repeat="performer in matchEntry.newMatch.performer" class="panel" ng-class="{'update-selected': selected.performer}">
                                                             <table class="table sub-table">
                                                                 <tr>
-                                                                    <td>Address:</td>
+                                                                    <td>
+                                                                    <input type="checkbox" ng-model="selected.performer" ng-change="selectEntry(matchIndex)">
+                                                                    Address:
+                                                                    </td>
                                                                     <td>
                                                                         <div ng-repeat="perfAddr in performer.address">
                                                                             <div ng-repeat="addrLine in perfAddr.displayAddress">
@@ -145,7 +145,7 @@
                                         </table>
                                     </td>
                                     <td class="text-center update-spacer"></td>
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.performer}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>

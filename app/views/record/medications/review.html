@@ -159,14 +159,11 @@
 
                                 <!-- Route Diff -->
                                 <tr ng-if="matchEntry.diff.administration.route">
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.administration.route}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                        <label>
-                                                            <input type="checkbox" ng-model="selected.administration.route" ng-change="selectEntry(matchIndex)">
-                                                        </label>
                                                         Administration Route:
 
                                                         <div class="pull-right" ng-if="matchEntry.diff.administration.route === 'diff'">
@@ -179,7 +176,10 @@
                                                     <div class="panel" ng-class="{'update-selected': selected.administration.route}">
                                                         <table class="table sub-table">
                                                             <tr>
-                                                                <td>Name:</td>
+                                                                <td>
+                                                                <input type="checkbox" ng-model="selected.administration.route" ng-change="selectEntry(matchIndex)">
+                                                                Name:
+                                                                </td>
                                                                 <td>{{matchEntry.newMatch.administration.route.name}}</td>
                                                             </tr>
                                                             <tr>
@@ -198,7 +198,7 @@
                                         </table>
                                     </td>
                                     <td class="text-center update-spacer"></td>
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.administration.route}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
@@ -237,14 +237,11 @@
 
                                 <!-- Administration Form Diff -->
                                 <tr ng-if="matchEntry.diff.administration.form">
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.administration.form}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                        <label>
-                                                            <input type="checkbox" ng-model="selected.administration.form" ng-change="selectEntry(matchIndex)">
-                                                        </label>
                                                         Administration Form:
 
                                                         <div class="pull-right" ng-if="matchEntry.diff.administration.form=== 'new'">
@@ -257,7 +254,10 @@
                                                     <div class="panel" ng-class="{'update-selected': selected.administration.form}">
                                                         <table class="table sub-table">
                                                             <tr>
-                                                                <td>Name:</td>
+                                                                <td>
+                                                                <input type="checkbox" ng-model="selected.administration.form" ng-change="selectEntry(matchIndex)">
+                                                                Name:
+                                                                </td>
                                                                 <td>{{matchEntry.newMatch.administration.form.name}}</td>
                                                             </tr>
                                                             <tr>
@@ -276,7 +276,7 @@
                                         </table>
                                     </td>
                                     <td class="text-center update-spacer"></td>
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.administration.form}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
@@ -290,7 +290,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                    <div class="panel" ng-show="matchEntry.srcMatch.data.administration.form" ng-class="{'update-selected': selected.administration.form}">
+                                                    <div class="panel" ng-class="{'update-selected': selected.administration.form}">
                                                         <table class="table sub-table">
                                                             <tr>
                                                                 <td>Name:</td>
@@ -303,6 +303,22 @@
                                                             <tr>
                                                                 <td>Code System:</td>
                                                                 <td>{{matchEntry.srcMatch.data.administration.form.code_system_name}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="panel">
+                                                        <table class="table sub-table">
+                                                            <tr>
+                                                                <td>Name:</td>
+                                                                <td>{{matchEntry.srcMatch.data.administration.form1.name}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Code:</td>
+                                                                <td>{{matchEntry.srcMatch.data.administration.form1.code}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Code System:</td>
+                                                                <td>{{matchEntry.srcMatch.data.administration.form1.code_system_name}}</td>
                                                             </tr>
                                                         </table>
                                                     </div>

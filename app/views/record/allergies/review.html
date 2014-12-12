@@ -121,15 +121,11 @@
 
                                 <!--Reactions-->
                                 <tr ng-if="matchEntry.diff.observation.reactions">
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.observation.reactions}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                                 <thead>
                                                     <tr>
                                                         <td class="col-sm-3">
-
-                                                        <label>
-                                                            <input type="checkbox" ng-model="selected.observation.reactions" ng-change="selectEntry(matchIndex)">
-                                                        </label>
                                                             Reactions:
                                                         <div class="pull-right" ng-if="matchEntry.diff.observation.reactions === 'diff'">
                                                             <span class="label label-info">Different</span>
@@ -144,6 +140,7 @@
 
                                                                         <tr>
                                                                             <td colspan="2">
+                                                                            <input type="checkbox" ng-model="selected.observation.reactions" ng-change="selectEntry(matchIndex)">
                                                                                 {{matchEntry.newMatch.observation.reactions[reactionIndex].reaction.name}}
                                                                             </td>
                                                                         </tr>
@@ -170,7 +167,7 @@
                                             </table>
                                         </td>
                                         <td class="text-center update-spacer"></td>
-                                        <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.observation.reactions}">
+                                        <td style="border: 1px solid #ccc;" class="panel table-entry">
                                             <table class="table table-condensed col-sm-12">
                                                 <thead>
                                                     <tr>

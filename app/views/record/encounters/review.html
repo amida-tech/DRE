@@ -74,14 +74,11 @@
 
                                 <!--Findings-->
                                 <tr ng-if="matchEntry.diff.findings">
-                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.findings}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                    <label>
-                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.findings" ng-change="selectEntry(matchIndex)">
-                                                    </label>
                                                     Findings:
                                                     <div class="pull-right" ng-if="matchEntry.diff.findings === 'new'">
                                                         <span class="label label-primary">New</span>
@@ -96,6 +93,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <td colspan="2">
+                                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.findings" ng-change="selectEntry(matchIndex)">
                                                                             {{matchEntry.newMatch.findings[findingIndex].value.name}}
                                                                         </td>
                                                                     </tr>
@@ -123,7 +121,7 @@
                                         </table>
                                         </td>
                                         <td class="text-center update-spacer"></td>
-                                        <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.findings}">
+                                        <td style="border: 1px solid #ccc;" class="panel table-entry">
                                             <table class="table table-condensed col-sm-12">
                                                 <thead>
                                                     <tr>
