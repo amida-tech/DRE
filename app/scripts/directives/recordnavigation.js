@@ -13,7 +13,12 @@ angular.module('phrPrototypeApp').directive('recordNavigation', ['$window',
             link: function postLink(scope, element, attrs) {
                 //Active Link Highlighting.
                 //$.lockfixed(".sidebar-control",{offset: {top: 10},forcemargin: true});
-                element.find("#nav" + scope.entryType).addClass("active");
+                if (_.isUndefined(scope.entryType)) {
+                    element.find("#navall").addClass("active");
+                } else {
+                    element.find("#nav" + scope.entryType).addClass("active");
+                };
+                
                 
             }
         };
