@@ -72,28 +72,24 @@
 
                                 <!--Height Value Diff.-->
                                 <tr ng-if="matchEntry.diff.result_set">
-                                    <td style="border: 1px solid #ccc;">
+                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.result_set}">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         <label>
-                                                            <h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.result_set" ng-change="selectEntry(matchIndex)"></h5>
+                                                            <input type="checkbox" style="margin-right: 10px;" ng-model="selected.result_set" ng-change="selectEntry(matchIndex)">
                                                         </label>
+                                                        Result Code Set
+                                                        <div class="pull-right" ng-if="matchEntry.diff.result_set === 'diff'">
+                                                            <span class="label label-info">Different</span>
+                                                        </div>
                                                     </td>
+                                                </tr>
+                                                <tr>
                                                     <td class="col-sm-9">
                                                         <div class="panel" ng-class="{'update-selected': selected.result_set}">
                                                             <table class="table sub-table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <td colspan="2">
-                                                                            Result Set
-                                                                            <div class="pull-right" ng-if="matchEntry.diff.result_set === 'diff'">
-                                                                                <span class="label label-info">Different</span>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </thead>
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>Code:</td>
@@ -113,25 +109,21 @@
                                         </table>
                                     </td>
                                     <td class="text-center update-spacer"></td>
-                                     <td style="border: 1px solid #ccc;">
+                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.result_set}">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
+                                                        Result Code Set
+                                                        <div class="pull-right" ng-show="selected.result_set">
+                                                            <span class="label label-warning">Updated</span>
+                                                        </div>
                                                     </td>
+                                                </tr>
+                                                <tr>
                                                     <td class="col-sm-9">
                                                         <div class="panel" ng-class="{'update-selected': selected.result_set}">
                                                             <table class="table sub-table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <td colspan="2">
-                                                                            Result Set
-                                                                            <div class="pull-right" ng-if="selectEntry(matchbox)">
-                                                                                <span class="label label-info">New</span>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </thead>
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>Code:</td>

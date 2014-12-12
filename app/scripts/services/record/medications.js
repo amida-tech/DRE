@@ -264,11 +264,6 @@ angular.module('phrPrototypeApp')
                     "code": "C38216",
                     "code_system_name": "Medication Route FDA"
                 },
-                "form": {
-                    "name":'',
-                    "code":'',
-                    "code_system_name":''
-                },
                 "dose": {
                     "value": 1,
                     "unit": "mg/actuat"
