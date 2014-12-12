@@ -80,9 +80,6 @@
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                    <label>
-                                                    <input type="checkbox" style="margin-right: 10px;" ng-model="selected.product" ng-change="selectEntry(matchIndex)">
-                                                    </label>
                                                     Product:
                                                         <div class="pull-right" ng-if="matchEntry.diff.product === 'diff'">
                                                         <span class="label label-info">Different</span>
@@ -97,6 +94,8 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <td colspan="2">
+
+                                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.product" ng-change="selectEntry(matchIndex)">
                                                                         {{matchEntry.newMatch.product.product.name}}
                                                                             
                                                                         </td>
@@ -236,9 +235,6 @@
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                    <label>
-                                                    <input type="checkbox" style="margin-right: 10px;" ng-model="selected.administration" ng-change="selectEntry(matchIndex)">
-                                                    </label>
                                                         Administration:
                                                     <div class="pull-right" ng-if="matchEntry.diff.administration === 'diff'">
                                                         <span class="label label-info">Different</span>
@@ -253,6 +249,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <td colspan="2">
+                                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.administration" ng-change="selectEntry(matchIndex)">
                                                                             {{matchEntry.newMatch.administration.route.name}}
                                                                         </td>
                                                                     </tr>

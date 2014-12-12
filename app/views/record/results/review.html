@@ -80,9 +80,6 @@
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                        <label>
-                                                            <input type="checkbox" style="margin-right: 10px;" ng-model="selected.result_set" ng-change="selectEntry(matchIndex)">
-                                                        </label>
                                                         Result Code Set
                                                         <div class="pull-right" ng-if="matchEntry.diff.result_set === 'diff'">
                                                             <span class="label label-info">Different</span>
@@ -95,7 +92,10 @@
                                                             <table class="table sub-table">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td>Code:</td>
+                                                                        <td>
+                                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.result_set" ng-change="selectEntry(matchIndex)">
+                                                                        Code:
+                                                                        </td>
                                                                         <td>{{matchEntry.newMatch.result_set.code}}</td>
                                                                     </tr>
                                                                     <tr>

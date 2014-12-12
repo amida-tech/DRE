@@ -70,9 +70,6 @@
                                                 <tr>
 
                                                     <td class="col-sm-3">
-                                                        <label>
-                                                            <input type="checkbox" ng-model="selected.performer" ng-change="selectEntry(matchIndex)">
-                                                        </label>
                                                         Performer:
                                                         <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
                                                             <span class="label label-info">Different</span>
@@ -84,7 +81,10 @@
                                                         <div ng-repeat="performer in matchEntry.newMatch.performer" class="panel" ng-class="{'update-selected': selected.performer}">
                                                             <table class="table sub-table">
                                                                 <tr>
-                                                                    <td>Address:</td>
+                                                                    <td>
+                                                                    <input type="checkbox" ng-model="selected.performer" ng-change="selectEntry(matchIndex)">
+                                                                    Address:
+                                                                    </td>
                                                                     <td>
                                                                         <div ng-repeat="perfAddr in performer.address">
                                                                             <div ng-repeat="addrLine in perfAddr.displayAddress">

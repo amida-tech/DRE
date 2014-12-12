@@ -77,9 +77,6 @@
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
-                                                        <label>
-                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.problem" ng-change="selectEntry(matchIndex)">
-                                                        </label>
                                                         Problem:
                                                         <div class="pull-right" ng-if="matchEntry.diff.problem === 'diff'">
                                                             <span class="label label-info">Different</span>
@@ -94,6 +91,8 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <td colspan="2">
+                                                                        
+                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.problem" ng-change="selectEntry(matchIndex)">
                                                                             {{matchEntry.newMatch.problem.code.name}}
                                                                         </td>
                                                                     </tr>

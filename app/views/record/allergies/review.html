@@ -126,10 +126,6 @@
                                                 <thead>
                                                     <tr>
                                                         <td class="col-sm-3">
-
-                                                        <label>
-                                                            <input type="checkbox" ng-model="selected.observation.reactions" ng-change="selectEntry(matchIndex)">
-                                                        </label>
                                                             Reactions:
                                                         <div class="pull-right" ng-if="matchEntry.diff.observation.reactions === 'diff'">
                                                             <span class="label label-info">Different</span>
@@ -144,6 +140,7 @@
 
                                                                         <tr>
                                                                             <td colspan="2">
+                                                                            <input type="checkbox" ng-model="selected.observation.reactions" ng-change="selectEntry(matchIndex)">
                                                                                 {{matchEntry.newMatch.observation.reactions[reactionIndex].reaction.name}}
                                                                             </td>
                                                                         </tr>
