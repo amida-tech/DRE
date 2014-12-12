@@ -1,11 +1,12 @@
 <div class="container-fluid body-content">
 	<div id="profileSidebar" class="col-sm-3 body-left">
 		<div profile></div>
-		<div record-navigation></div>
+
 	</div>
 
 	<!--Upload File Dialogue 1.-->
-	<div class="col-sm-7" ng-show="uploadStep === 0">
+	<div class="col-sm-9" ng-show="uploadStep === 0">
+
 		<div class="panel">
 			<div class="panel-body">
 
@@ -34,7 +35,7 @@
 	</div>
 
 	<!--Upload File Dialogue 2.-->
-	<div class="col-sm-7" ng-show="uploadStep === 1">
+	<div class="col-sm-7 body-right" ng-show="uploadStep === 1">
 		<div class="panel">
 			<div class="panel-body">
 
@@ -197,7 +198,7 @@
 	</div>	
 
 		<!--Upload File Dialogue 3.-->
-	<div class="col-sm-7" ng-show="uploadStep === 2">
+	<div class="col-sm-7 body-right" ng-show="uploadStep === 2">
 		<div class="panel">
 			<div class="panel-body">
 
@@ -216,8 +217,8 @@
 					
 					<div class="panel col-sm-8 col-sm-offset-2">
 						<div class="panel-body text-center">
-						<p class="success"><i class="fa fa-check"></i> 12 New Entries will be automatically loaded.</p>
-						<p><i class="fa fa-flag-o"></i> 4 Updates will require your review.</p>
+						<p><i class="fa fa-check success fa-inline"></i> 12 New Entries will be automatically loaded.</p>
+						<p><i class="fa fa-flag-o success fa-inline"></i> 4 Updates will require your review.</p>
 
 						</div>
 

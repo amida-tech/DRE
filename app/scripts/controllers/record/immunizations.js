@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RecordImmunizationsCtrl', function ($scope, immunizations, format) {
+    .controller('RecordImmunizationsCtrl', function ($scope, $location, $anchorScroll, immunizations, format) {
 
         $scope.entryType = 'immunizations';
         $scope.masterEntries = [];
@@ -23,6 +23,14 @@ angular.module('phrPrototypeApp')
 
         $scope.newComment = {
             'starred': false
+        };
+
+        $scope.navClick = function (element) {
+            var old = $location.hash();
+            $location.hash(element);
+            $anchorScroll();
+            //reset to old to keep any additional routing logic from kicking in
+            $location.hash(old);
         };
 
         function getUpdateDate() {
@@ -51,17 +59,17 @@ angular.module('phrPrototypeApp')
         }
 
         function formatDisplay() {
-        	_.each($scope.masterEntries, function(entry) {
-        		_.each(entry.data.performer, function(perf) {
-        			_.each(entry.data.performer.name, function(name) {
-        				format.formatName(name);
-        			});
-        			_.each(entry.data.performer.address, function(addr) {
-        				format.formatAddress(addr);
-        			});
-        		});
-        		format.formatQuantity(entry.data.administration.dose);
-        	});
+            _.each($scope.masterEntries, function (entry) {
+                _.each(entry.data.performer, function (perf) {
+                    _.each(entry.data.performer.name, function (name) {
+                        format.formatName(name);
+                    });
+                    _.each(entry.data.performer.address, function (addr) {
+                        format.formatAddress(addr);
+                    });
+                });
+                format.formatQuantity(entry.data.administration.dose);
+            });
         }
 
         $scope.refresh = function () {

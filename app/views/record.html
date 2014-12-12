@@ -1,11 +1,13 @@
 <div class="container-fluid body-content">
+
     <div id="profileSidebar" class="col-sm-3 body-left">
         <div profile></div>
-        <div record-navigation></div>
+        <div record-navigation class="col-sm-12"></div>&nbsp;
     </div>
 
     <!--Body-->
-    <div class="col-sm-9">
+
+    <div class="col-sm-9 body-right">
         <div class="panel">
             <div class="panel-body">
                 <!--Header Items-->
@@ -13,12 +15,12 @@
                     <div class="row col-sm-12" breadcrumb></div>
                     <div class="col-sm-12">
 
-                        <div class="pull-left">
-                            <h1>Suzie's Record Overview</h1>
+                        <div class="col-sm-8">
+                            <h4>Suzie's Record Overview</h4>
                             <p>This page gives an overview of your health record activity.</p>
                             <p>Last updated:  July 31, 2014</p>
                         </div>
-                        <div class="pull-right">
+                        <div class="col-sm-4">
                             <a href="#/record/download">
                                 <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
@@ -72,7 +74,7 @@
                     <div class="col-sm-6">
 
 
-                        <div bs-active-pane="tabs.activeTab" bs-tabs>
+                        <div bs-active-pane="tabs.activeTab" data-nav-class="nav-pills" bs-tabs>
                             <div title="{{ tabs[0].title }}" bs-pane>
 
 
@@ -102,7 +104,7 @@
             <!--end d3-->
             <!--Timeline View-->
             <div class="col-sm-12">
-                <h4 class="text-center">Record History</h4>
+                <h4 class="text-center text-white">Record History</h4>
                 <div class="panel">
                     <div class="panel-body">
                         <div>
@@ -120,7 +122,10 @@
                                         <div class="panel-body" id="accordian">
                                             <div class="timeline-entry-header col-sm-12">
                                                 <div class="col-sm-6">
-                                                    <h4 class="text-left">{{recordEntry.category}} Added</h4>
+                                                    <h4 ng-if="recordEntry.category !== 'social' && recordEntry.category !== 'results' && recordEntry.category !== 'vitals'" class="text-left">{{recordEntry.category}} Added</h4>
+                                                    <h4 ng-if="recordEntry.category === 'social'" class="text-left">Social History Added</h4>
+                                                    <h4 ng-if="recordEntry.category === 'results'" class="text-left">Test Results Added</h4>
+                                                    <h4 ng-if="recordEntry.category === 'vitals'" class="text-left">Vital Signs Added</h4>
                                                     <h5 class="text-left">{{recordEntry.data.date_time.displayDate}}</h5>
                                                 </div>
                                             </div>
@@ -138,5 +143,6 @@
                 </div><!--end timeline-->
             </div>
         </div>
-        <pre>{{masterRecord | json}}</pre>
+        <!--<pre>{{masterRecord | json}}</pre>-->
+    
     </div>

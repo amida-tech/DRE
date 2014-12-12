@@ -8,8 +8,8 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('RecordVitalsCtrl', function ($scope, vitals, format) {
-    
+    .controller('RecordVitalsCtrl', function ($scope, $location, $anchorScroll, vitals, format) {
+
         $scope.entryType = 'vitals';
         $scope.masterEntries = [];
         $scope.entries = [];
@@ -23,6 +23,14 @@ angular.module('phrPrototypeApp')
 
         $scope.newComment = {
             'starred': false
+        };
+
+        $scope.navClick = function (element) {
+            var old = $location.hash();
+            $location.hash(element);
+            $anchorScroll();
+            //reset to old to keep any additional routing logic from kicking in
+            $location.hash(old);
         };
 
         function getUpdateDate() {
@@ -52,9 +60,9 @@ angular.module('phrPrototypeApp')
         }
 
         function formatDisplay() {
-        	_.each($scope.masterEntries, function(entry) {     		
-        		format.formatQuantity(entry.data);
-        	});
+            _.each($scope.masterEntries, function (entry) {
+                format.formatQuantity(entry.data);
+            });
         }
 
         $scope.refresh = function () {
@@ -68,4 +76,4 @@ angular.module('phrPrototypeApp')
 
         $scope.refresh();
 
-  });
+    });

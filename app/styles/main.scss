@@ -23,6 +23,24 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
     font-family: "Roboto";
     src: url(../../fonts/Roboto.ttf);
 }
+@font-face {
+    font-family:    "Raleway";
+    src:            url("../../fonts/Raleway-Regular.otf");
+    font-weight:    normal;
+}
+
+@font-face {
+    font-family:    "Raleway";
+    src:            url("../../fonts/Raleway-Light.otf");
+    font-weight:    normal;
+    
+}
+
+@font-face {
+    font-family:    "Raleway";
+    src:            url("../../fonts/Raleway-Medium.otf");
+    font-weight:    500;
+}
 
 // Bootstrap Preprocessing
 @import "variables";
@@ -30,6 +48,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 $padding-base-vertical:     10px !default;
 $padding-base-horizontal:   20px !default;
 $grid-gutter-width:         0px !default;
+
+$border-radius-base: 0px;
 
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";

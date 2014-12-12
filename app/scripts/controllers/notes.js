@@ -12,43 +12,56 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     
     $scope.filters = [
         {'name': 'starred',
-         'value': true
+         'value': true,
+         'displayName': 'starred'
         },
         {'name': 'unStarred',
-         'value': true
+         'value': false,
+         'displayName': 'un-starred'
         },
         {'name': 'medications',
-         'value': true
+         'value': true,
+         'displayName': 'medications'
         },
         {'name': 'results',
-         'value': true
+         'value': true,
+         'displayName': 'test results'
         },
         {'name': 'encounters',
-         'value': true
+         'value': true,
+         'displayName': 'encounters'
         },
         {'name': 'vitals',
-         'value': true
+         'value': true,
+         'displayName': 'vital signs'
         },
         {'name': 'immunizations',
-         'value': true
+         'value': true,
+         'displayName': 'immunizations'
         },
         {'name': 'allergies',
-         'value': true
+         'value': true,
+         'displayName': 'allergies'
         },
         {'name': 'conditions',
-         'value': true
+         'value': true,
+         'displayName': 'conditions'
         },
         {'name': 'procedures',
-         'value': true
+         'value': true,
+         'displayName': 'procedures'
         },
         {'name': 'social',
-         'value': true
+         'value': true,
+         'displayName': 'social history'
         },
         {'name': 'claims',
-         'value': true
+         'value': true,
+         'displayName': 'claims'
         },
         {'name': 'insurance',
-         'value': true
+         'value': true,
+         'displayName': 'insurance'
         }
     ];
 

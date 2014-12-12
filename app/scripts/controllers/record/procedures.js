@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RecordProceduresCtrl', function ($scope, procedures, format) {
+    .controller('RecordProceduresCtrl', function ($scope, $location, $anchorScroll, procedures, format) {
 
         $scope.entryType = 'procedures';
         $scope.masterEntries = [];
@@ -25,6 +25,13 @@ angular.module('phrPrototypeApp')
             'starred': false
         };
 
+        $scope.navClick = function (element) {
+            var old = $location.hash();
+            $location.hash(element);
+            $anchorScroll();
+            //reset to old to keep any additional routing logic from kicking in
+            $location.hash(old);
+        };
 
         function getUpdateDate() {
             //Should grab from files/update history.  Stubbed for now.

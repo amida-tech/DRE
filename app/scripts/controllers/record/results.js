@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RecordResultsCtrl', function ($scope, results, format) {
+    .controller('RecordResultsCtrl', function ($scope, $location, $anchorScroll, results, format) {
 
         $scope.entryType = 'results';
         $scope.masterEntries = [];
@@ -23,6 +23,14 @@ angular.module('phrPrototypeApp')
 
         $scope.newComment = {
             'starred': false
+        };
+
+        $scope.navClick = function (element) {
+            var old = $location.hash();
+            $location.hash(element);
+            $anchorScroll();
+            //reset to old to keep any additional routing logic from kicking in
+            $location.hash(old);
         };
 
         function getUpdateDate() {
