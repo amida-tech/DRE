@@ -46,6 +46,13 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;
                         }
 
+                        if (parsedPath[i] === "profile") {
+                            pathString = "#/profile";
+                            tmpObject.name = "My Profile";
+                            tmpObject.path = pathString;
+                        }
+
+
                         if (parsedPath[i] === "allergies") {
                             pathString = pathString + parsedPath[i] + "/";
                             tmpObject.name = "My Allergies";
