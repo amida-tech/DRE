@@ -4167,6 +4167,7 @@ angular.module('services.recordFunctions', [])
                     //find earlies date in test result and use it as attribute for entire battery/cluster
                     for (var j in entries[i].results) {
                         var curr = entries[i].results[j];
+                        this.formatDateTime(curr.date_time);
                         if (curr.date_time.point) {
                             //if min date is empty or more recent then current, update min date
                             if (!minDate || minDate.point.date > curr.date_time.point.date) {
