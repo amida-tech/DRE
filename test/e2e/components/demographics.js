@@ -439,10 +439,10 @@ describe('Demographic API - Test Merged Matches', function() {
 		}],
 		"identifiers": [{
 			"identifier": "2.16.840.1.113883.19.5.99999.2",
-			"identifier_type": "998991"
+			"extension": "998991"
 		}, {
 			"identifier": "2.16.840.1.113883.4.1",
-			"identifier_type": "111-00-2330"
+			"extension": "111-00-2330"
 		}],
 		"languages": [{
 			"language": "fr",

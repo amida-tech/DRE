@@ -89,7 +89,7 @@ app.use(session({
     saveUninitialized: true,
     store: new redisStore({
             host: '127.0.0.1',
-            port: 6379,
+           port: 6379,
             prefix: 'chs-sess'
         }) //uncomment for Redis session support during development
 }));
