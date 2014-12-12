@@ -1,4 +1,4 @@
-/*! DRE-Demo - v1.0.0 - 2014-09-27
+/*! DRE-Demo - v1.0.0 - 2014-12-12
  * Copyright (c) 2014 Dmitry Kachaev, Matthew McCall and Afsin Ustundag;
  * Licensed Apache 2.0
  */

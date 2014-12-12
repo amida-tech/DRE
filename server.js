@@ -151,38 +151,52 @@ record.connectDatabase(app.get('db_url'), function(err) {
 var mllp = require('mllp-node');
 
 var server = new mllp.MLLPServer('127.0.0.1', 6969);
-console.log("MLLP listening on host "+ app.get('mllp_host')+", port " + app.get('mllp_port'));
+console.log("MLLP listening on host " + app.get('mllp_host') + ", port " + app.get('mllp_port'));
 
 
 server.on('hl7', function(data) {
-    console.log("just an example", data);
+    //console.log("just an example", data);
     //mime type: application/edi-hl7
 
     var record_metadata = {
         'type': 'application/edi-hl7',
         'name': 'labs.hl7',
-        'size': data.length,
+        'size': data.length
     };
     var record_data = data;
 
     var hl7 = require('hl7');
 
-    //var parsed_record = hl7.parseString(record_data);
+    var hl7_record = hl7.parseString(record_data);
 
-    var tr=require('blue-button-hl7');
+    //console.log(">>>>>>>>>", hl7_record);
+
+    var tr = require('blue-button-hl7');
 
     var parsed_record = tr.translate(record_data);
 
-    console.log("parsed HL7 data", JSON.stringify(parsed_record, null, 4));
+    //extract name of sending facility to add to file metadata
+    try {
+        record_metadata.source = hl7_record[0][6][0][0];
+    } catch (ex) {
+        console.log("HL7 message doesn't include sending facility name");
+    }
+
+    //console.log("parsed HL7 data", JSON.stringify(parsed_record, null, 4));
 
 
     //call PIM from BB-record to get candidates
     var ptInfo = parsed_record.demographics; //patient ignored for now, return list of all patients in DB
 
-    console.log(JSON.stringify({"data":ptInfo},null,4));
-    record.getCandidates({"data":ptInfo}, function(smth, docs) {
+    //console.log(JSON.stringify({
+    //    "data": ptInfo
+    //}, null, 4));
+
+    record.getCandidates({
+        "data": ptInfo
+    }, function(smth, docs) {
         //PIM call here based on candidates
-        console.log("candidates", JSON.stringify(docs, null, 4));
+        //console.log("candidates", JSON.stringify(docs, null, 4));
 
 
         var username;
@@ -198,21 +212,23 @@ server.on('hl7', function(data) {
 
         //var configs = require('configs')
 
-        console.log(JSON.stringify({data:parsed_record.demographics},null,4));
+        //console.log(JSON.stringify({
+        //    data: parsed_record.demographics
+        //}, null, 4));
 
         var match = pim.compare_candidates(parsed_record.demographics, docs);
 
         console.log(match);
 
         //extract username from list of candidates
-        for (var i=0; i<match.length; i++){
-            if (match[i].match==="automatic") {
-                username=match[i].pat_key;
+        for (var i = 0; i < match.length; i++) {
+            if (match[i].match === "automatic") {
+                username = match[i].pat_key;
                 console.log("patient matched to ", username);
             }
         }
 
-        if (username!==""){
+        if (username !== "") {
             //import HL7 data into patient record based on identified username
             storage.importHL7Record(username, record_metadata, record_data, parsed_record, function() {
                 console.log("hl7 message saved");
