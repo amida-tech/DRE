@@ -3,10 +3,7 @@
     <div class="col-sm-3 body-left">
         <div profile></div>
     </div>
-
-
     <div class="col-sm-9 body-right">
-
         <!--Header-->
         <div class="panel">
             <div class="panel-body">
@@ -15,9 +12,7 @@
                     <div class="col-sm-12">
                         <div class="col-sm-12">
                             <div class="pull-left">
-
                                 <h4>Review Vital Sign Updates</h4>
-
                                 <p>Entries to the left are possible updates to a current entry in your record, displayed to the right.</p>
                                 <p>Use the checkboxes to select updates you wish to apply.</p>
                                 <h6>Note:  Only differences between the entries are displayed.</h6>
@@ -27,14 +22,11 @@
                 </div>
             </div>
         </div>
-
-
         <!--Implementation-->
         <div ng-repeat="(matchIndex, matchEntry) in match">
             <h4 class="text-center text-white">Update #{{matchIndex + 1}}</h4>
             <div class="panel col-sm-12">
                 <div class="panel-body">
-
                     <!--Labels-->
                     <div class="col-sm-12">
                         <div class="col-sm-6">
@@ -44,10 +36,7 @@
                             <h4 class="text-center">Current Record</h4>
                         </div>
                     </div>
-
-
                     <div class="col-sm-12">
-
                         <table class="table col-sm-12">
                             <thead>
                                 <tr>
@@ -59,7 +48,7 @@
                                     </td>
                                     <td class="text-center update-spacer">
                                         <svg height="40" width="20" style="position: relative; left: -9px; top: 20px;">
-                                            <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:1"></polygon>
+                                        <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:1"></polygon>
                                         </svg>
                                     </td>
                                     <td class="col-sm-6 panel" style="border: 1px solid #ccc;">
@@ -71,7 +60,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <!--Height Value Diff.-->
                                 <tr ng-if="matchEntry.diff.value">
                                     <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.value}">
@@ -115,28 +103,24 @@
                                         </table>
                                     </td>
                                 </tr>
-
                             </tbody>
                         </table>
-
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 <div class="col-sm-8 col-sm-offset-2">
-                                    <button class="btn btn-default btn-block" ng-click="saveUpdate(matchIndex)">Ignore Updates</button>
+                                    <button class="btn btn-default btn-block" ng-click="clearAll(matchIndex)"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+
                                 </div>
                             </div>
                             <div class="col-sm-6">
-
-                                <div class="col-sm-8 col-sm-offset-2">
+                                <div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
                                     <button class="btn btn-primary btn-block" ng-click="saveUpdate(matchIndex)">Save Updates</button>
-                                    <button class="btn btn-link btn-block" ng-click="clearAll(matchIndex)"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+                                    <button class="btn btn-default btn-block" ng-click="saveUpdate(matchIndex)">Ignore Updates</button>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
         <!--<pre>{{match[0].origMatch | json}}</pre>-->
