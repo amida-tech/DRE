@@ -168,14 +168,14 @@
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 <div class="col-sm-8 col-sm-offset-2">
-                                    <button class="btn btn-default btn-block" ng-click="saveUpdate(matchIndex)">Ignore Updates</button>
+                                    <button class="btn btn-default btn-block" ng-click="clearAll(matchIndex)"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+
                                 </div>
                             </div>
                             <div class="col-sm-6">
-
-                                <div class="col-sm-8 col-sm-offset-2">
+                                <div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
                                     <button class="btn btn-primary btn-block" ng-click="saveUpdate(matchIndex)">Save Updates</button>
-                                    <button class="btn btn-link btn-block" ng-click="clearAll(matchIndex)"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+                                    <button class="btn btn-default btn-block" ng-click="saveUpdate(matchIndex)">Ignore Updates</button>
                                 </div>
                             </div>
                         </div>
