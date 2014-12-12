@@ -241,7 +241,7 @@
                     "diff": {
                         "observation": {
                             "status": "diff",
-                            "reactions": "new"
+                            "reactions": "diff"
                         }
                     },
                     "srcMatch": recordResults[0],

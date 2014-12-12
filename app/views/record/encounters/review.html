@@ -142,7 +142,7 @@
                                                                     <thead>
                                                                         <tr>
                                                                             <td colspan="2">
-                                                                                <h5>{{matchEntry.srcMatch.data.findings[findingIndex].value.name}}</h5>
+                                                                                {{matchEntry.srcMatch.data.findings[findingIndex].value.name}}
                                                                             </td>
                                                                         </tr>
                                                                     </thead>
@@ -178,7 +178,7 @@
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 <div class="col-sm-8 col-sm-offset-2">
-                                    <button class="btn btn-default btn-block" ng-click="saveUpdate(matchIndex)">Ignore Updates</button>
+                                    <button class="btn btn-default btn-block" ng-click="ignoreUpdate(matchIndex)">Ignore Updates</button>
                                 </div>
                             </div>
                             <div class="col-sm-6">
