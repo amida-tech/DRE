@@ -1,5 +1,5 @@
 .table .table {
-	background-color: inherit;
+	background-color: transparent;
 	margin-bottom: 0px;
 }
 
@@ -8,9 +8,7 @@
 	border-right: 1px solid #ccc;
 	border-top: 0px;
 
-	:hover {
-		background-color: #fff;
-	}
+	
 }
 
 .table tbody tr:hover td.update-spacer {
@@ -24,4 +22,13 @@
 .table i {
     color: $brand-primary;
 }
+.table.panel {
+	padding:0px; 
+}
+.panel.table-entry:hover {
+	background-color: #def;
+}
+
+
+
 

@@ -36,10 +36,10 @@
                     <!--Labels-->
                     <div class="col-sm-12">
                         <div class="col-sm-6">
-                            <h5 class="text-center">Record Updates</h5>
+                            <h4 class="text-center">Record Updates</h4>
                         </div>
                         <div class="col-sm-6">
-                            <h5 class="text-center">Current Record</h5>
+                            <h4 class="text-center">Current Record</h4>
                         </div>
                     </div>
 
@@ -49,7 +49,7 @@
                         <table class="table col-sm-12 table-hover">
                             <thead>
                                 <tr>
-                                    <td class="col-sm-6" style="border: 1px solid #ccc;">
+                                    <td class="col-sm-6 panel" style="border: 1px solid #ccc;">
                                         <div class="col-sm-11">
                                             <h4 class="text-left">{{matchEntry.newMatch.value}}</h4>
                                             <h5 class="text-left">{{matchEntry.newMatch.date_time.displayDate}}</h5>
@@ -57,10 +57,10 @@
                                     </td>
                                     <td class="text-center update-spacer">
                                         <svg height="40" width="20" style="position: relative; left: -9px; top: 20px;">
-                                            <polygon points="0,0 20,20 0,40 -10,40" style="fill:#fff;stroke:#ddd;stroke-width:1"></polygon>
+                                            <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:1"></polygon>
                                         </svg>
                                     </td>
-                                    <td class="col-sm-6" style="border: 1px solid #ccc;">
+                                    <td class="col-sm-6 panel" style="border: 1px solid #ccc;">
                                         <div class="col-sm-11">
                                             <h4 class="text-left">{{matchEntry.srcMatch.data.value}}</h4>
                                             <h5 class="text-left">{{matchEntry.srcMatch.data.date_time.displayDate}}</h5>
@@ -72,7 +72,7 @@
 
                                 <!--Date Diff.-->
                                 <tr ng-if="matchEntry.diff.date_time">
-                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.date_time}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.date_time}">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
@@ -95,7 +95,7 @@
                                         </table>
                                     </td>
                                     <td class="text-center update-spacer"></td>
-                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.date_time}">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry" ng-class="{'update-selected': selected.date_time}">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
