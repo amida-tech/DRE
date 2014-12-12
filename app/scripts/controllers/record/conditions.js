@@ -60,7 +60,7 @@ angular.module('phrPrototypeApp')
 
         function formatDisplay() {
             _.each($scope.masterEntries, function (entry) {
-                if (entry.data.problem) {
+                if (entry.data.problem.date_time) {
                     _.each(entry.data.problem.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
                     });
