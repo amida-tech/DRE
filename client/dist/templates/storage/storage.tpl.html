@@ -38,7 +38,11 @@
 					<a ng-href="/api/v1/storage/record/{{file.file_id}}">
 						<li class="list-group-item" style="cursor:pointer;">
 							<i class="fa fa-file-o fa-lg pull-left" style="margin-right: 10px;"></i>
-							<span style="text-transform:lowercase;">{{file.file_name}}</span>
+							<span style="text-transform:lowercase;">{{file.file_name}} 
+							<i style="text-transform:none;" ng-show="file.source">
+							(from {{file.source}})
+							</i>
+							</span>
 							<span class="pull-right" style="text-transform:lowercase;">{{file.file_upload_date | date: 'short'}}</span>
 						</li>
 					</a>

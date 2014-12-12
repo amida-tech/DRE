@@ -1,5 +1,14 @@
 # DRE Release Notes
 
+# v1.3.0 - December 12, 2014
+
+This release of the DRE includes:
+
+- HL7 Labs ingestion via MLLP
+- Patient Identification and Matching (for HL7 data)
+- Update to use refactored Blue Button libraries
+
+
 # v1.2.0 - September 15, 2014
 
 This release of the DRE includes:

@@ -9,7 +9,7 @@
         },
         "dob": {
             "point": {
-                "date": "1975-05-01T00:00:00Z",
+                "date": "1975-05-01T00:00:00.000Z",
                 "precision": "day"
             }
         },
@@ -109,7 +109,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "2012-10-02T00:00:00Z",
+                    "date": "2012-10-02T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -135,7 +135,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "2012-10-02T00:00:00Z",
+                    "date": "2012-10-02T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -161,7 +161,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "2012-10-02T00:00:00Z",
+                    "date": "2012-10-02T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -187,7 +187,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "2012-10-02T00:00:00Z",
+                    "date": "2012-10-02T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -213,7 +213,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "2012-10-02T00:00:00Z",
+                    "date": "2012-10-02T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -234,7 +234,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "1999-11-14T00:00:00Z",
+                    "date": "1999-11-14T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -258,7 +258,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "1999-11-14T00:00:00Z",
+                    "date": "1999-11-14T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -282,7 +282,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "1999-11-14T00:00:00Z",
+                    "date": "1999-11-14T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -306,7 +306,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "2000-04-07T00:00:00Z",
+                    "date": "2000-04-07T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -330,7 +330,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "2000-04-07T00:00:00Z",
+                    "date": "2000-04-07T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -354,7 +354,7 @@
             "status": "completed",
             "date_time": {
                 "point": {
-                    "date": "2000-04-07T00:00:00Z",
+                    "date": "2000-04-07T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -391,7 +391,7 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2012-11-26T00:00:00Z",
+                            "date": "2012-11-26T00:00:00.000Z",
                             "precision": "day"
                         }
                     },
@@ -433,7 +433,7 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2012-11-26T00:00:00Z",
+                            "date": "2012-11-26T00:00:00.000Z",
                             "precision": "day"
                         }
                     },
@@ -475,7 +475,7 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2012-11-26T00:00:00Z",
+                            "date": "2012-11-26T00:00:00.000Z",
                             "precision": "day"
                         }
                     },
@@ -516,7 +516,7 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2012-11-26T00:00:00Z",
+                            "date": "2012-11-26T00:00:00.000Z",
                             "precision": "day"
                         }
                     },
@@ -558,7 +558,7 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2012-11-26T00:00:00Z",
+                            "date": "2012-11-26T00:00:00.000Z",
                             "precision": "day"
                         }
                     },
@@ -585,7 +585,7 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2012-11-26T00:00:00Z",
+                            "date": "2012-11-26T00:00:00.000Z",
                             "precision": "day"
                         }
                     },
@@ -626,7 +626,7 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2012-11-26T00:00:00Z",
+                            "date": "2012-11-26T00:00:00.000Z",
                             "precision": "day"
                         }
                     },
@@ -659,8 +659,8 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2000-03-23T14:30:00Z",
-                            "precision": "minute"
+                            "date": "2000-03-23T00:00:00.000Z",
+                            "precision": "day"
                         }
                     },
                     "status": "completed",
@@ -686,8 +686,8 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2000-03-23T14:30:00Z",
-                            "precision": "minute"
+                            "date": "2000-03-23T00:00:00.000Z",
+                            "precision": "day"
                         }
                     },
                     "status": "completed",
@@ -715,8 +715,8 @@
                     },
                     "date_time": {
                         "point": {
-                            "date": "2000-03-23T14:30:00Z",
-                            "precision": "minute"
+                            "date": "2000-03-23T00:00:00.000Z",
+                            "precision": "day"
                         }
                     },
                     "status": "completed",
@@ -738,7 +738,7 @@
         {
             "date_time": {
                 "low": {
-                    "date": "2012-10-02T00:00:00Z",
+                    "date": "2012-10-02T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -778,7 +778,7 @@
         {
             "date_time": {
                 "low": {
-                    "date": "2012-09-20T00:00:00Z",
+                    "date": "2012-09-20T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -821,11 +821,11 @@
         {
             "date_time": {
                 "low": {
-                    "date": "2007-01-03T00:00:00Z",
+                    "date": "2007-01-03T00:00:00.000Z",
                     "precision": "day"
                 },
                 "high": {
-                    "date": "2012-05-15T00:00:00Z",
+                    "date": "2012-05-15T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -860,7 +860,7 @@
             "supply": {
                 "date_time": {
                     "low": {
-                        "date": "2007-01-03T00:00:00Z",
+                        "date": "2007-01-03T00:00:00.000Z",
                         "precision": "day"
                     }
                 },
@@ -928,7 +928,7 @@
             "precondition": {
                 "code": {
                     "code": "ASSERTION",
-                    "code_system_name": "HL7ActCode"
+                    "code_system_name": "ActCode"
                 },
                 "value": {
                     "name": "Wheezing",
@@ -950,7 +950,7 @@
                 },
                 "date_time": {
                     "low": {
-                        "date": "2007-01-03T00:00:00Z",
+                        "date": "2007-01-03T00:00:00.000Z",
                         "precision": "day"
                     }
                 },
@@ -1016,11 +1016,11 @@
             ],
             "date_time": {
                 "low": {
-                    "date": "2012-10-02T00:00:00Z",
+                    "date": "2012-10-02T00:00:00.000Z",
                     "precision": "day"
                 },
                 "high": {
-                    "date": "2012-10-05T00:00:00Z",
+                    "date": "2012-10-05T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -1103,7 +1103,7 @@
                     {
                         "name": "Ambulatory",
                         "code": "AMB",
-                        "code_system_name": "HL7ActCode"
+                        "code_system_name": "ActCode"
                     }
                 ]
             },
@@ -1114,7 +1114,7 @@
             ],
             "date_time": {
                 "point": {
-                    "date": "2009-02-27T13:00:00Z",
+                    "date": "2009-02-27T08:00:00.000Z",
                     "precision": "second"
                 }
             },
@@ -1170,7 +1170,7 @@
                     },
                     "date_time": {
                         "low": {
-                            "date": "2007-01-03T00:00:00Z",
+                            "date": "2007-01-03T00:00:00.000Z",
                             "precision": "day"
                         }
                     }
@@ -1187,7 +1187,7 @@
             ],
             "date_time": {
                 "point": {
-                    "date": "2007-05-01T00:00:00Z",
+                    "date": "2007-05-01T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -1209,7 +1209,7 @@
                 },
                 "date_time": {
                     "low": {
-                        "date": "2007-05-01T00:00:00Z",
+                        "date": "2007-05-01T00:00:00.000Z",
                         "precision": "day"
                     }
                 },
@@ -1227,11 +1227,11 @@
                         ],
                         "date_time": {
                             "low": {
-                                "date": "2007-05-01T00:00:00Z",
+                                "date": "2007-05-01T00:00:00.000Z",
                                 "precision": "day"
                             },
                             "high": {
-                                "date": "2009-02-27T13:00:00Z",
+                                "date": "2009-02-27T08:00:00.000Z",
                                 "precision": "second"
                             }
                         },
@@ -1276,7 +1276,7 @@
             ],
             "date_time": {
                 "point": {
-                    "date": "2006-05-01T00:00:00Z",
+                    "date": "2006-05-01T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -1298,7 +1298,7 @@
                 },
                 "date_time": {
                     "low": {
-                        "date": "2006-05-01T00:00:00Z",
+                        "date": "2006-05-01T00:00:00.000Z",
                         "precision": "day"
                     }
                 },
@@ -1316,11 +1316,11 @@
                         ],
                         "date_time": {
                             "low": {
-                                "date": "2006-05-01T00:00:00Z",
+                                "date": "2006-05-01T00:00:00.000Z",
                                 "precision": "day"
                             },
                             "high": {
-                                "date": "2009-02-27T13:00:00Z",
+                                "date": "2009-02-27T08:00:00.000Z",
                                 "precision": "second"
                             }
                         },
@@ -1365,8 +1365,8 @@
             ],
             "date_time": {
                 "low": {
-                    "date": "1984-06-05T10:00:00Z",
-                    "precision": "second"
+                    "date": "1984-06-05T00:00:00.000Z",
+                    "precision": "day"
                 }
             },
             "observation": {
@@ -1383,7 +1383,7 @@
                         {
                             "name": "Allergy to eggs",
                             "code": "V15.03",
-                            "code_system_name": "OID 2.16.840.1.113883.6.2"
+                            "code_system_name": "ICD-9-CM"
                         }
                     ]
                 },
@@ -1406,11 +1406,11 @@
                         ],
                         "date_time": {
                             "low": {
-                                "date": "2007-05-01T00:00:00Z",
+                                "date": "2007-05-01T00:00:00.000Z",
                                 "precision": "day"
                             },
                             "high": {
-                                "date": "2009-02-27T13:00:00Z",
+                                "date": "2009-02-27T08:00:00.000Z",
                                 "precision": "second"
                             }
                         },
@@ -1443,7 +1443,7 @@
             ],
             "date_time": {
                 "point": {
-                    "date": "2008-05-01T00:00:00Z",
+                    "date": "2008-05-01T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -1465,7 +1465,7 @@
                 },
                 "date_time": {
                     "low": {
-                        "date": "2008-05-01T00:00:00Z",
+                        "date": "2008-05-01T00:00:00.000Z",
                         "precision": "day"
                     }
                 },
@@ -1483,11 +1483,11 @@
                         ],
                         "date_time": {
                             "low": {
-                                "date": "2008-05-01T00:00:00Z",
+                                "date": "2008-05-01T00:00:00.000Z",
                                 "precision": "day"
                             },
                             "high": {
-                                "date": "2009-02-27T13:00:00Z",
+                                "date": "2009-02-27T08:00:00.000Z",
                                 "precision": "second"
                             }
                         },
@@ -1532,8 +1532,8 @@
             ],
             "date_time": {
                 "low": {
-                    "date": "2009-08-26T10:00:00Z",
-                    "precision": "second"
+                    "date": "2009-08-26T00:00:00.000Z",
+                    "precision": "day"
                 }
             },
             "observation": {
@@ -1566,11 +1566,11 @@
                         ],
                         "date_time": {
                             "low": {
-                                "date": "2007-05-01T00:00:00Z",
+                                "date": "2007-05-01T00:00:00.000Z",
                                 "precision": "day"
                             },
                             "high": {
-                                "date": "2009-02-27T13:00:00Z",
+                                "date": "2009-02-27T08:00:00.000Z",
                                 "precision": "second"
                             }
                         },
@@ -1600,7 +1600,7 @@
         {
             "date_time": {
                 "point": {
-                    "date": "1999-11-01T00:00:00Z",
+                    "date": "1999-11-01T00:00:00.000Z",
                     "precision": "month"
                 }
             },
@@ -1686,7 +1686,7 @@
         {
             "date_time": {
                 "point": {
-                    "date": "1998-12-15T00:00:00Z",
+                    "date": "1998-12-15T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -1772,7 +1772,7 @@
         {
             "date_time": {
                 "point": {
-                    "date": "1998-12-15T00:00:00Z",
+                    "date": "1998-12-15T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -1850,7 +1850,7 @@
         {
             "date_time": {
                 "point": {
-                    "date": "1998-12-15T00:00:00Z",
+                    "date": "1998-12-15T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -1931,11 +1931,11 @@
         {
             "date_time": {
                 "low": {
-                    "date": "2005-05-01T00:00:00Z",
+                    "date": "2005-05-01T00:00:00.000Z",
                     "precision": "day"
                 },
                 "high": {
-                    "date": "2009-02-27T13:00:00Z",
+                    "date": "2009-02-27T08:00:00.000Z",
                     "precision": "second"
                 }
             },
@@ -1953,11 +1953,11 @@
         {
             "date_time": {
                 "low": {
-                    "date": "2005-05-01T00:00:00Z",
+                    "date": "2005-05-01T00:00:00.000Z",
                     "precision": "day"
                 },
                 "high": {
-                    "date": "2009-02-27T13:00:00Z",
+                    "date": "2009-02-27T08:00:00.000Z",
                     "precision": "second"
                 }
             },
@@ -1976,7 +1976,7 @@
         {
             "date_time": {
                 "low": {
-                    "date": "2009-02-27T13:00:00Z",
+                    "date": "2009-02-27T08:00:00.000Z",
                     "precision": "second"
                 }
             },
@@ -1995,7 +1995,7 @@
         {
             "date_time": {
                 "low": {
-                    "date": "2005-05-01T00:00:00Z",
+                    "date": "2005-05-01T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2032,7 +2032,7 @@
                 },
                 "date_time": {
                     "low": {
-                        "date": "2012-09-20T00:00:00Z",
+                        "date": "2012-09-20T00:00:00.000Z",
                         "precision": "day"
                     }
                 }
@@ -2054,11 +2054,11 @@
         {
             "date_time": {
                 "low": {
-                    "date": "2008-01-03T00:00:00Z",
+                    "date": "2008-01-03T00:00:00.000Z",
                     "precision": "day"
                 },
                 "high": {
-                    "date": "2008-01-03T00:00:00Z",
+                    "date": "2008-01-03T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2075,11 +2075,11 @@
                 },
                 "date_time": {
                     "low": {
-                        "date": "2008-01-03T00:00:00Z",
+                        "date": "2008-01-03T00:00:00.000Z",
                         "precision": "day"
                     },
                     "high": {
-                        "date": "2008-01-03T00:00:00Z",
+                        "date": "2008-01-03T00:00:00.000Z",
                         "precision": "day"
                     }
                 }
@@ -2090,11 +2090,11 @@
                 "name": "Resolved",
                 "date_time": {
                     "low": {
-                        "date": "2008-01-03T00:00:00Z",
+                        "date": "2008-01-03T00:00:00.000Z",
                         "precision": "day"
                     },
                     "high": {
-                        "date": "2009-02-27T13:00:00Z",
+                        "date": "2009-02-27T08:00:00.000Z",
                         "precision": "second"
                     }
                 }
@@ -2109,11 +2109,11 @@
         {
             "date_time": {
                 "low": {
-                    "date": "2007-01-03T00:00:00Z",
+                    "date": "2007-01-03T00:00:00.000Z",
                     "precision": "day"
                 },
                 "high": {
-                    "date": "2007-01-03T00:00:00Z",
+                    "date": "2007-01-03T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2130,11 +2130,11 @@
                 },
                 "date_time": {
                     "low": {
-                        "date": "2007-01-03T00:00:00Z",
+                        "date": "2007-01-03T00:00:00.000Z",
                         "precision": "day"
                     },
                     "high": {
-                        "date": "2008-01-03T00:00:00Z",
+                        "date": "2008-01-03T00:00:00.000Z",
                         "precision": "day"
                     }
                 }
@@ -2145,11 +2145,11 @@
                 "name": "Active",
                 "date_time": {
                     "low": {
-                        "date": "2008-01-03T00:00:00Z",
+                        "date": "2008-01-03T00:00:00.000Z",
                         "precision": "day"
                     },
                     "high": {
-                        "date": "2009-02-27T13:00:00Z",
+                        "date": "2009-02-27T08:00:00.000Z",
                         "precision": "second"
                     }
                 }
@@ -2178,7 +2178,7 @@
             "status": "Active",
             "date_time": {
                 "low": {
-                    "date": "2012-10-02T00:00:00Z",
+                    "date": "2012-10-02T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2238,7 +2238,7 @@
             "status": "Completed",
             "date_time": {
                 "point": {
-                    "date": "2012-05-12T00:00:00Z",
+                    "date": "2012-05-12T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2334,7 +2334,7 @@
             "status": "Aborted",
             "date_time": {
                 "point": {
-                    "date": "2011-02-03T00:00:00Z",
+                    "date": "2011-02-03T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2427,7 +2427,7 @@
             "status": "Completed",
             "date_time": {
                 "point": {
-                    "date": "2011-02-03T00:00:00Z",
+                    "date": "2011-02-03T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2513,7 +2513,7 @@
             ],
             "date_time": {
                 "center": {
-                    "date": "2012-05-12T00:00:00Z",
+                    "date": "2012-05-12T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2532,7 +2532,7 @@
             ],
             "date_time": {
                 "center": {
-                    "date": "2012-05-12T00:00:00Z",
+                    "date": "2012-05-12T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2551,7 +2551,7 @@
             ],
             "date_time": {
                 "center": {
-                    "date": "2012-05-12T00:00:00Z",
+                    "date": "2012-05-12T00:00:00.000Z",
                     "precision": "day"
                 }
             },
@@ -2570,7 +2570,7 @@
             ],
             "date_time": {
                 "center": {
-                    "date": "2012-05-12T00:00:00Z",
+                    "date": "2012-05-12T00:00:00.000Z",
                     "precision": "day"
                 }
             },
