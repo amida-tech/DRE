@@ -1,241 +1,199 @@
 <div class="container-fluid body-content">
-	<div id="profileSidebar" class="col-sm-3 body-left">
-		<div profile></div>
-
-	</div>
-
-	<!--Upload File Dialogue 1.-->
-	<div class="col-sm-9 body-right" ng-show="uploadStep === 0">
-
-		<div class="panel">
-			<div class="panel-body">
-
-				<!--Header Items-->
-				<div class="col-sm-12 row">
-					<div class="col-sm-12">
-						<div breadcrumb></div>
-						<h4>Upload File</h4>
-						<p>Please select the file you intend to upload.</p>
-					</div>
-				</div>
-
-
-				<div class="col-sm-12 row">
-					<form role="form">
-						<div class="form-group col-sm-12 file">
-							<input class="form-control" type="file" id="uploadFile" file-model="myFile"/>
-							<div class="pull-right button-well">
-								<button class="btn btn-primary" ng-click="incrementStep()">Continue</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--Upload File Dialogue 2.-->
-	<div class="col-sm-7 body-right" ng-show="uploadStep === 1">
-		<div class="panel">
-			<div class="panel-body">
-
-				<!--Header Items-->
-				<div class="col-sm-12 row">
-					<div class="col-sm-12">
-						<div breadcrumb></div>
-						<h4>Upload File</h4>
-						<p>It appears as if this file contains importable medical data.</p>
-						<p>Please confirm this record is yours</p>
-						<h6>Note: This will not overwrite your saved values.</h6>
-					</div>
-				</div>
-
-
-				<div class="col-sm-12 row">
-					
-					<div class="panel col-sm-12">
-						<div class="panel-body">
-
-							<!--Labels-->
-							<div class="col-sm-12 diff">
-								<div class="col-sm-6 diff-left">
-									<h4 class="text-center">New Record</h4>
-								</div>
-								<div class="col-sm-6 diff-right">
-									<h4 class="text-center">Current Record</h4>
-								</div>
-							</div>
-
-
-							<div class="col-sm-12">
-
-								<table class="table col-sm-12">
-									<tbody>
-
-										<!--Name Diff-->
-										<tr>
-											<td class="bordered">
-												<table class="table table-condensed col-sm-12">
-													<thead>
-														<tr>
-															<td class="col-sm-6">
-																Name:
-															</td>
-															<td class="col-sm-6">
-																Jane S. Doe
-															</td>
-														</tr>
-													</thead>
-												</table>
-											</td>
-											<td class="text-center update-spacer"></td>
-											<td class="bordered">
-												<table class="table table-condensed col-sm-12">
-													<thead>
-														<tr>
-															<td class="col-sm-6">
-																Name:
-															</td>
-															<td class="col-sm-6">
-																Jane Doe
-															</td>
-														</tr>
-													</thead>
-												</table>
-											</td>
-										</tr>
-
-										<!--DOB Diff-->
-										<tr>
-											<td class="bordered">
-												<table class="table table-condensed col-sm-12">
-													<thead>
-														<tr>
-															<td class="col-sm-6">
-																Date of Birth:
-															</td>
-															<td class="col-sm-6">
-																06/25/1982
-															</td>
-														</tr>
-													</thead>
-												</table>
-											</td>
-											<td class="text-center update-spacer">
-												<i class="fa fa-arrow-circle-o-right fa-2x"></i>
-											</td>
-											<td class="bordered">
-												<table class="table table-condensed col-sm-12">
-													<thead>
-														<tr>
-															<td class="col-sm-6">
-																Date of Birth:
-															</td>
-															<td class="col-sm-6">
-																06/25/1982
-															</td>
-														</tr>
-													</thead>
-												</table>
-											</td>
-										</tr>
-
-										<!--Gender Diff-->
-										<tr>
-											<td class="bordered">
-												<table class="table table-condensed col-sm-12">
-													<thead>
-														<tr>
-															<td class="col-sm-6">
-																Gender:
-															</td>
-															<td class="col-sm-6">
-																Female
-															</td>
-														</tr>
-													</thead>
-												</table>
-											</td>
-											<td class="text-center update-spacer"></td>
-											<td class="bordered">
-												<table class="table table-condensed col-sm-12">
-													<thead>
-														<tr>
-															<td class="col-sm-6">
-																Gender:
-															</td>
-															<td class="col-sm-6">
-																Female
-															</td>
-														</tr>
-													</thead>
-												</table>
-											</td>
-										</tr>
-
-									</tbody>
-
-								</table>
-
-
-							</div>
-
-						</div>
-
-					</div>
-
-					<div class="pull-right button-well">
-						<button class="btn btn-default" ng-click="return()">Cancel</button>
-						<button class="btn btn-primary" ng-click="incrementStep()">Confirm</button>
-					</div>
-
-
-
-
-				</div>
-			</div>
-		</div>
-	</div>	
-
-		<!--Upload File Dialogue 3.-->
-	<div class="col-sm-7 body-right" ng-show="uploadStep === 2">
-		<div class="panel">
-			<div class="panel-body">
-
-				<!--Header Items-->
-				<div class="col-sm-12 row">
-					<div class="col-sm-12">
-						<div breadcrumb></div>
-						<h4>Upload File</h4>
-						<p>Importing this file will make the following changes to your record.</p>
-						<p>If you choose not to import this file, you may opt to do so later.<p>
-					</div>
-				</div>
-
-
-				<div class="col-sm-12 row">
-					
-					<div class="panel col-sm-8 col-sm-offset-2">
-						<div class="panel-body text-center">
-						<p><i class="fa fa-check success fa-inline"></i> 12 New Entries will be automatically loaded.</p>
-						<p><i class="fa fa-flag-o success fa-inline"></i> 4 Updates will require your review.</p>
-
-						</div>
-
-					</div>
-
-					<div class="pull-right button-well">
-						<button class="btn btn-default" ng-click="return()">Cancel</button>
-						<button class="btn btn-info" ng-click="return()">Save Only</button>
-						<button class="btn btn-primary" ng-click="return()">Import & Save</button>
-					</div>
-
-
-
-
-				</div>
-			</div>
-		</div>
-	</div>	
-
+    <div id="profileSidebar" class="col-sm-3 body-left">
+        <div profile></div>
+    </div>
+    <!--Upload File Dialogue 1.-->
+    <div class="col-sm-9 body-right" ng-show="uploadStep === 0">
+        <div class="panel">
+            <div class="panel-body">
+                <!--Header Items-->
+                <div class="col-sm-12 row">
+                    <div class="col-sm-12">
+                        <div breadcrumb></div>
+                        <h4>Upload File</h4>
+                        <p>Please select the file you intend to upload.</p>
+                    </div>
+                </div>
+                <div class="col-sm-12 row">
+                    <form role="form">
+                        <div class="form-group col-sm-12 file">
+                            <input class="form-control" type="file" id="uploadFile" file-model="myFile"/>
+                            <div class="pull-right button-well">
+                                <button class="btn btn-primary" ng-click="incrementStep()">Continue</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Upload File Dialogue 2.-->
+    <div class="col-sm-7 body-right" ng-show="uploadStep === 1">
+        <div class="panel">
+            <div class="panel-body">
+                <!--Header Items-->
+                <div class="col-sm-12 row">
+                    <div class="col-sm-12">
+                        <div breadcrumb></div>
+                        <h4>Upload File</h4>
+                        <p>It appears as if this file contains importable medical data.</p>
+                        <p>Please confirm this record is yours.</p>
+                        <h6>Note: this will not overwrite your saved values.</h6>
+                    </div>
+                </div>
+                <div class="col-sm-12 row">
+                    <div class="panel col-sm-12">
+                        <div class="panel-body">
+                            <!--Labels-->
+                            <div class="col-sm-12 diff">
+                                <div class="col-sm-6 diff-left">
+                                    <h4 class="text-center">New Record</h4>
+                                </div>
+                                <div class="col-sm-6 diff-right">
+                                    <h4 class="text-center">Current Record</h4>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <table class="table col-sm-12">
+                                    <tbody>
+                                        <!--Name Diff-->
+                                        <tr>
+                                            <td class="bordered">
+                                                <table class="table table-condensed col-sm-12">
+                                                    <thead>
+                                                        <tr>
+                                                            <td class="col-sm-6">
+                                                                Name:
+                                                            </td>
+                                                            <td class="col-sm-6">
+                                                                Jane S. Doe
+                                                            </td>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </td>
+                                            <td class="text-center update-spacer"></td>
+                                            <td class="bordered">
+                                                <table class="table table-condensed col-sm-12">
+                                                    <thead>
+                                                        <tr>
+                                                            <td class="col-sm-6">
+                                                                Name:
+                                                            </td>
+                                                            <td class="col-sm-6">
+                                                                Jane Doe
+                                                            </td>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!--DOB Diff-->
+                                        <tr>
+                                            <td class="bordered">
+                                                <table class="table table-condensed col-sm-12">
+                                                    <thead>
+                                                        <tr>
+                                                            <td class="col-sm-6">
+                                                                Date of Birth:
+                                                            </td>
+                                                            <td class="col-sm-6">
+                                                                06/25/1982
+                                                            </td>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </td>
+                                            <td class="text-center update-spacer">
+                                                <i class="fa fa-arrow-circle-o-right fa-2x"></i>
+                                            </td>
+                                            <td class="bordered">
+                                                <table class="table table-condensed col-sm-12">
+                                                    <thead>
+                                                        <tr>
+                                                            <td class="col-sm-6">
+                                                                Date of Birth:
+                                                            </td>
+                                                            <td class="col-sm-6">
+                                                                06/25/1982
+                                                            </td>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!--Gender Diff-->
+                                        <tr>
+                                            <td class="bordered">
+                                                <table class="table table-condensed col-sm-12">
+                                                    <thead>
+                                                        <tr>
+                                                            <td class="col-sm-6">
+                                                                Gender:
+                                                            </td>
+                                                            <td class="col-sm-6">
+                                                                Female
+                                                            </td>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </td>
+                                            <td class="text-center update-spacer"></td>
+                                            <td class="bordered">
+                                                <table class="table table-condensed col-sm-12">
+                                                    <thead>
+                                                        <tr>
+                                                            <td class="col-sm-6">
+                                                                Gender:
+                                                            </td>
+                                                            <td class="col-sm-6">
+                                                                Female
+                                                            </td>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-right button-well">
+                        <button class="btn btn-default" ng-click="return()">Cancel</button>
+                        <button class="btn btn-primary" ng-click="incrementStep()">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Upload File Dialogue 3.-->
+    <div class="col-sm-7 body-right" ng-show="uploadStep === 2">
+        <div class="panel">
+            <div class="panel-body">
+                <!--Header Items-->
+                <div class="col-sm-12 row">
+                    <div class="col-sm-12">
+                        <div breadcrumb></div>
+                        <h4>Upload File</h4>
+                        <p>Importing this file will make the following changes to your record:</p>
+                        <div class="panel col-sm-8 col-sm-offset-2">
+                            <div class="panel-body text-center">
+                                <p><i class="fa fa-check success fa-inline"></i> 12 New Entries will be automatically loaded.</p>
+                                <p><i class="fa fa-flag-o success fa-inline"></i> 4 Updates will require your review.</p>
+                            </div>
+                        </div>
+                        <p class="col-sm-12">If you choose not to import this file, you may opt to do so later.<p>
+                    </div>
+                </div>
+                <div class="col-sm-12 row">
+                    <div class="pull-right button-well">
+                        <button class="btn btn-default" ng-click="return()">Cancel</button>
+                        <button class="btn btn-info" ng-click="return()">Save Only</button>
+                        <button class="btn btn-primary" ng-click="return()">Import & Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
