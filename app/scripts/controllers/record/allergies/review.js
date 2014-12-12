@@ -23,7 +23,7 @@ angular.module('phrPrototypeApp')
         var selectedOriginal = {
             "observation": {
                 "status": null,
-                "reactions": {}
+                "reactions": null
             }
         };
 

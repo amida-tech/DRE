@@ -78,12 +78,10 @@
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
-                                                    <td>
+                                                    <td class="col-sm-3">
                                                         <label>
                                                             <input type="checkbox" ng-model="selected.observation.status" ng-change="selectEntry(matchIndex)">
                                                         </label>
-                                                    </td>
-                                                    <td class="col-sm-3">
                                                         Status:
                                                     </td>
                                                     <td class="col-sm-9">
@@ -107,6 +105,12 @@
                                                     <td class="col-sm-9">
                                                         {{matchEntry.srcMatch.data.observation.status.name}}
                                                     </td>
+                                                    <td>
+
+                                                    <div class="pull-right" ng-show="selected.observation.status">
+                                                        <span class="label label-warning">Updated</span>
+                                                    </div>
+                                                    </td>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -115,28 +119,32 @@
 
                                 <!--Reactions-->
                                 <tr ng-if="matchEntry.diff.observation.reactions">
-                                    <td style="border: 1px solid #ccc;">
+                                    <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.observation.reactions}">
                                         <table class="table table-condensed col-sm-12">
                                             <thead>
                                                 <tr>
                                                     <td class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.observation.reactions" ng-change="selectEntry(matchIndex)">
+                                                    </label>
                                                         Reactions:
+                                                    <div class="pull-right" ng-if="matchEntry.diff.observation.reactions === 'new'">
+                                                        <span class="label label-primary">New</span>
+                                                    </div>
                                                     </td>
+                                                </tr>
+                                                <tr>
                                                     <td class="col-sm-9">
-                                                        <div class="panel" ng-repeat="(reactionIndex, reactionEntry) in matchEntry.subelements.observation.reactions" ng-class="{'update-selected': selected.observation.reactions[reactionIndex]}">
+                                                        <div class="panel" ng-repeat="(reactionIndex, reactionEntry) in matchEntry.subelements.observation.reactions" ng-class="{'update-selected': selected.observation.reactions}">
 
                                                             <table class="table sub-table">
                                                                 <thead>
 
                                                                     <tr>
                                                                         <td colspan="2">
-                                                                            <label>
-                                                                                <h5><input type="checkbox" style="margin-right: 10px;" ng-model="selected.observation.reactions[reactionIndex]" ng-change="selectEntry(matchIndex)">{{matchEntry.newMatch.observation.reactions[reactionIndex].reaction.name}}</h5>
-                                                                            </label>
-                                                                            <div class="pull-right" ng-if="matchEntry.diff.observation.reactions === 'new'">
-                                                                                <span class="label label-primary">New</span>
-                                                                            </div>
-                                                                            </td>
+                                                                        {{matchEntry.newMatch.observation.reactions[reactionIndex].reaction.name}}
+                                                                        
+                                                                        </td>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -162,21 +170,26 @@
                                         </table>
                                         </td>
                                         <td class="text-center update-spacer"></td>
-                                        <td style="border: 1px solid #ccc;">
+                                        <td style="border: 1px solid #ccc;" ng-class="{'update-selected': selected.observation.reactions}">
                                             <table class="table table-condensed col-sm-12">
                                                 <thead>
                                                     <tr>
                                                         <td class="col-sm-3">
                                                             Reactions:
+                                                        <div class="pull-right" ng-show="selected.observation.reactions">
+                                                            <span class="label label-warning">New</span>
+                                                        </div>
                                                         </td>
+                                                    </tr>
+                                                    <tr>
                                                         <td class="col-sm-9">
-                                                            <div class="panel" ng-repeat="(reactionIndex, reactionEntry) in matchEntry.srcMatch.data.observation.reactions" ng-class="{'update-selected': selected.observation.reactions[reactionIndex]}">
+                                                            <div class="panel" ng-repeat="(reactionIndex, reactionEntry) in matchEntry.srcMatch.data.observation.reactions" ng-class="{'update-selected': selected.observation.reactions}">
                                                                 <table class="table sub-table">
                                                                     <thead>
 
                                                                         <tr>
                                                                             <td colspan="2">
-                                                                                <h5>{{matchEntry.srcMatch.data.observation.reactions[reactionIndex].reaction.name}}</h5>
+                                                                                {{matchEntry.srcMatch.data.observation.reactions[reactionIndex].reaction.name}}
                                                                             </td>
                                                                         </tr>
                                                                     </thead>
