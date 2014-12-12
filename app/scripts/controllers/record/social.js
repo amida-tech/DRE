@@ -8,9 +8,9 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('RecordSocialCtrl', function ($scope, social, format) {
-    
-  	    $scope.entryType = 'social';
+    .controller('RecordSocialCtrl', function ($scope, $location, $anchorScroll, social, format) {
+
+        $scope.entryType = 'social';
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
@@ -23,6 +23,14 @@ angular.module('phrPrototypeApp')
 
         $scope.newComment = {
             'starred': false
+        };
+
+        $scope.navClick = function (element) {
+            var old = $location.hash();
+            $location.hash(element);
+            $anchorScroll();
+            //reset to old to keep any additional routing logic from kicking in
+            $location.hash(old);
         };
 
         function getUpdateDate() {
@@ -51,8 +59,7 @@ angular.module('phrPrototypeApp')
             });
         }
 
-        function formatDisplay() {
-        }
+        function formatDisplay() {}
 
         $scope.refresh = function () {
             getRecords(function (err) {
@@ -65,5 +72,4 @@ angular.module('phrPrototypeApp')
 
         $scope.refresh();
 
-
-  });
+    });

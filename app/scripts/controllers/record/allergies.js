@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
  angular.module('phrPrototypeApp')
- .controller('RecordAllergiesCtrl', function ($scope, allergies, format, partial) {
+ .controller('RecordAllergiesCtrl', function ($scope, $location, $anchorScroll, allergies, format, partial) {
 
     $scope.entryType = 'allergies';
     $scope.masterEntries = [];
@@ -20,6 +20,14 @@
 
     $scope.newComment = {
         'starred': false
+    };
+
+    $scope.navClick = function (element) {
+        var old = $location.hash();
+        $location.hash(element);
+        $anchorScroll();
+        //reset to old to keep any additional routing logic from kicking in
+        $location.hash(old);
     };
 
     $scope.closeAlert = function () {
