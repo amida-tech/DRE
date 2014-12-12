@@ -11,7 +11,7 @@ describe('Service: history', function () {
     history = _history_;
   }));
 
-  it('should do something', function () {
+  xit('should do something', function () {
     expect(!!history).toBe(true);
   });
 

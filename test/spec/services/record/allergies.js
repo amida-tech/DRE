@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: record/allergies', function () {
+describe('Service: allergies', function () {
 
   // load the service's module
   beforeEach(module('phrPrototypeApp'));
 
   // instantiate service
-  var record/allergies;
-  beforeEach(inject(function (_record/allergies_) {
-    record/allergies = _record/allergies_;
+  var allergies;
+  beforeEach(inject(function (_allergies_) {
+    allergies = _allergies_;
   }));
 
-  it('should do something', function () {
-    expect(!!record/allergies).toBe(true);
+  xit('should do something', function () {
+    expect(!!allergies).toBe(true);
   });
 
 });

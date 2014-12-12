@@ -13,13 +13,13 @@
 					</div>
 					<p>&nbsp;</p>
 					<div class="btn-group-vertical col-sm-12" role="group">
-						<button class="btn btn-info btn-block" ng-click="toggle(0)">Starred <i class="fa fa-check" ng-show="filters[0].value"></i></button>
-						<button class="btn btn-info btn-block" ng-click="toggle(1)">Unstarred <i class="fa fa-check" ng-show="filters[1].value"></i></button>
+						<button class="btn btn-info btn-block" ng-click="toggle(0)" ng-class="{active: filters[0].value}">Starred<!-- <i class="fa fa-check" ng-show="filters[0].value"></i>--></button>
+						<button class="btn btn-info btn-block" ng-click="toggle(1)" ng-class="{active: filters[1].value}">Unstarred<!-- <i class="fa fa-check" ng-show="filters[1].value"></i>--></button>
 					</div>
 					<p>&nbsp;</p>
 					<div class="btn-group-vertical col-sm-12" role="group">
 
-						<button class="btn btn-info btn-block" ng-repeat="(nameIndex , nameEntry) in filters" ng-hide="nameEntry.name === 'starred' || nameEntry.name === 'unStarred'" ng-click="toggle(nameIndex)">{{nameEntry.displayName}} <i class="fa fa-check" ng-show="nameEntry.value"></i></button>
+						<button class="btn btn-info btn-block" ng-repeat="(nameIndex , nameEntry) in filters" ng-hide="nameEntry.name === 'starred' || nameEntry.name === 'unStarred'" ng-click="toggle(nameIndex)" ng-class="{active: nameEntry.value}">{{nameEntry.displayName}}<!-- <i class="fa fa-check" ng-show="nameEntry.value"></i>--></button>
 
 					</div>
 

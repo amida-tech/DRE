@@ -11,7 +11,7 @@ describe('Service: format', function () {
     format = _format_;
   }));
 
-  it('should do something', function () {
+  xit('should do something', function () {
     expect(!!format).toBe(true);
   });
 

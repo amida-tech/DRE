@@ -11,7 +11,7 @@ describe('Service: notes', function () {
     notes = _notes_;
   }));
 
-  it('should do something', function () {
+  xit('should do something', function () {
     expect(!!notes).toBe(true);
   });
 
