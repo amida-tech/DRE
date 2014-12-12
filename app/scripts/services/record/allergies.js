@@ -54,13 +54,13 @@
                         },
                         "code": {
                         "code_system_name": "SNOMED CT",
-                        "code": "247472004",
+                        "code": "255604002",
                             "name": "Mild"
                         }
                     },
                     "reaction": {
                         "code_system_name": "SNOMED CT",
-                        "code": "247472004",
+                        "code": "255604002",
                         "name": "Hives"
                     },
                     "date_time": {
