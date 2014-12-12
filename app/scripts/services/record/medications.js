@@ -265,9 +265,9 @@ angular.module('phrPrototypeApp')
                     "code_system_name": "Medication Route FDA"
                 },
                 "form": {
-                    "name": "INHALANT",
-                    "code": "C42944",
-                    "code_system_name": "Medication Route FDA"
+                    "name":'',
+                    "code":'',
+                    "code_system_name":''
                 },
                 "dose": {
                     "value": 1,
@@ -401,7 +401,8 @@ angular.module('phrPrototypeApp')
                         "date_time": "diff",
                         "status": "new",
                         "administration": {
-                            "route": "diff"
+                            "route": "diff",
+                            "form": "new"
                         }
                     },
                     "srcMatch": {
