@@ -170,10 +170,4 @@ angular
       });
   });
 
-$( window ).konami({
-        cheat: function() {
-          document.getElementById("index-wrapper").style.backgroundImage = 'url(../../images/va_photo.jpg)';
-          document.getElementById("index-wrapper").style.backgroundRepeat = 'repeat';
-          
-        }
-    });
+
