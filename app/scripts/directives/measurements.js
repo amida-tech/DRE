@@ -225,6 +225,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                             var graphVitalsTwo = [];
                             var graphDates = [];
                             var graphValues = [];
+                            var yAxisValues = [];
                             var format = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
                             _.each(vitals, function(entry) {
                                 var tmpVital = {};
@@ -237,6 +238,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                         graphDates.push(tmpVital.date);
                                         graphValues.push(tmpVital.value);
                                     }
+                                    yAxisValues = [130,140,150,160];
                                 }
                                 if (attrs.graphType === "bloodPressure") {
                                     if (entry.data.vital.name === "Intravascular Diastolic") {
@@ -255,6 +257,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                         graphDates.push(tmpVital.date);
                                         graphValues.push(tmpVital.value);
                                     }
+                                    yAxisValues = [80,100,120,140];
                                 }
                             });
                             var padding = 30;
@@ -275,8 +278,8 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
 
                             function drawLineChart() {
                                 setChartParameters();
-                                svg.append("svg:g").attr("class", "x axis").attr("transform", "translate(0," + (h - (margin.top)) + ")").call(xAxisGen);
-                                svg.append("svg:g").attr("class", "y axis").attr("transform", "translate(" + (margin.right) + ",2)").call(yAxisGen);
+                                svg.append("svg:g").attr("class", "x-axis").attr("transform", "translate(0," + (h - (margin.top)) + ")").call(xAxisGen);
+                                svg.append("svg:g").attr("class", "y-axis").attr("transform", "translate(" + (margin.right) + ",2)").call(yAxisGen);
                                 
                                 var lineTooltip = d3.select('body').append("div").attr("id", "cluster_tooltip").style("max-width", "300px").style("padding", "10px").style("background-color", "rgba(255, 255, 255, 0.7)").style("border-radius", "10px").style("box-shadow", "4px 4px 10px rgba(0, 0, 0, 0.4)").style("position", "absolute").style("z-index", "10").style("visibility", "hidden");
                                 
@@ -321,6 +324,27 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                     }).on("mouseover", tooltip_mouseover)
                                             .on("mousemove", tooltip_positioned_mousemove)
                                             .on("mouseout", tooltip_hide_tooltip);
+
+                                    svg.selectAll("xtick").data(graphVitals)
+                                    .enter()
+                                    .append("rect")
+                                    .attr("width", 2)
+                                    .attr("height",5)
+                                    .attr("x", function(d) {
+                                        return xScale(d.date);
+                                    }).attr("y", h);
+
+                                    svg.selectAll("ytick").data(yAxisValues)
+                                    .enter()
+                                    .append("rect")
+                                    .attr("width", 5)
+                                    .attr("height",2)
+                                    .attr("x", margin.left - 5).attr("y", function(d) {
+                                        return yScale(d);
+                                    });
+                            
+
+
                                 }
                                 if (graphVitalsTwo.length > 0) {
                                     svg.append("svg:path").attr({
