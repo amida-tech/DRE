@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('BillingClaimsCtrl', function ($scope, claims, format) {
+    .controller('BillingClaimsCtrl', function ($scope, $location, $anchorScroll, claims, format) {
 
         $scope.entryType = 'claims';
         $scope.masterEntries = [];
@@ -24,17 +24,25 @@ angular.module('phrPrototypeApp')
         }
 
         function getRecords(callback) {
-            claims.getRecord(function(err, results) {
+            claims.getRecord(function (err, results) {
                 $scope.masterEntries = results;
                 callback();
             });
         }
 
+        $scope.navClick = function (element) {
+            var old = $location.hash();
+            $location.hash(element);
+            $anchorScroll();
+            //reset to old to keep any additional routing logic from kicking in
+            $location.hash(old);
+        };
+
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
                 if (entry.data.date_time) {
-                    _.each(entry.data.date_time, function(dateEntry) {
+                    _.each(entry.data.date_time, function (dateEntry) {
                         format.formatDate(dateEntry);
                     });
                     entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
@@ -44,17 +52,17 @@ angular.module('phrPrototypeApp')
         }
 
         function formatAddress() {
-            _.each($scope.masterEntries, function(entry) {
-                _.each(entry.data.locations, function(loc) {
-                    _.each(loc.address, function(addr) {
+            _.each($scope.masterEntries, function (entry) {
+                _.each(entry.data.locations, function (loc) {
+                    _.each(loc.address, function (addr) {
                         format.formatAddress(addr);
                     });
                 });
             });
         }
 
-        $scope.refresh = function() {
-            getRecords(function(err) {
+        $scope.refresh = function () {
+            getRecords(function (err) {
                 getUpdateDate();
                 formatDates();
                 formatAddress();

@@ -8,9 +8,9 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('RecordMedicationsCtrl', function ($scope, medications, format) {
-	
-	    $scope.entryType = 'medications';
+    .controller('RecordMedicationsCtrl', function ($scope, $location, $anchorScroll, medications, format) {
+
+        $scope.entryType = 'medications';
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
@@ -37,6 +37,14 @@ angular.module('phrPrototypeApp')
             });
         }
 
+        $scope.navClick = function (element) {
+            var old = $location.hash();
+            $location.hash(element);
+            $anchorScroll();
+            //reset to old to keep any additional routing logic from kicking in
+            $location.hash(old);
+        };
+
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
@@ -51,17 +59,17 @@ angular.module('phrPrototypeApp')
         }
 
         function formatDisplay() {
-        	_.each($scope.masterEntries, function(entry) {
-        		
-        		_.each(entry.data.supply.date_time, function(date) {
-        			format.formatDate(date);
-        		});
-				entry.data.supply.date_time.displayDate = format.outputDate(entry.data.supply.date_time);
-				format.formatName(entry.data.supply.author.name);
-        		format.formatInterval(entry.data.administration.interval);
-        		format.formatQuantity(entry.data.administration.dose);
-        		format.formatQuantity(entry.data.administration.rate);
-        	});
+            _.each($scope.masterEntries, function (entry) {
+
+                _.each(entry.data.supply.date_time, function (date) {
+                    format.formatDate(date);
+                });
+                entry.data.supply.date_time.displayDate = format.outputDate(entry.data.supply.date_time);
+                format.formatName(entry.data.supply.author.name);
+                format.formatInterval(entry.data.administration.interval);
+                format.formatQuantity(entry.data.administration.dose);
+                format.formatQuantity(entry.data.administration.rate);
+            });
         }
 
         $scope.refresh = function () {
@@ -75,4 +83,4 @@ angular.module('phrPrototypeApp')
 
         $scope.refresh();
 
-  });
+    });
