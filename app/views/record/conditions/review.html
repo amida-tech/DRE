@@ -78,9 +78,6 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Problem:
-                                                        <div class="pull-right" ng-if="matchEntry.diff.problem === 'diff'">
-                                                            <span class="label label-info">Different</span>
-                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -94,6 +91,10 @@
                                                                         
                                                         <input type="checkbox" style="margin-right: 10px;" ng-model="selected.problem" ng-change="selectEntry(matchIndex)">
                                                                             {{matchEntry.newMatch.problem.code.name}}
+
+                                                        <div class="pull-right" ng-if="matchEntry.diff.problem === 'diff'">
+                                                            <span class="label label-info">Different</span>
+                                                        </div>
                                                                         </td>
                                                                     </tr>
                                                                 </thead>
@@ -122,9 +123,6 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Problem:
-                                                        <div class="pull-right" ng-show="selected.problem">
-                                                            <span class="label label-warning">Updated</span>
-                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -136,6 +134,10 @@
                                                                     <tr>
                                                                         <td colspan="2">
                                                                             {{matchEntry.srcMatch.data.problem.code.name}}
+                                                                            
+                                                        <div class="pull-right" ng-show="selected.problem">
+                                                            <span class="label label-warning">Updated</span>
+                                                        </div>
                                                                         </td>
                                                                     </tr>
                                                                 </thead>

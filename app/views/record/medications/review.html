@@ -166,9 +166,7 @@
                                                     <td class="col-sm-3">
                                                         Administration Route:
 
-                                                        <div class="pull-right" ng-if="matchEntry.diff.administration.route === 'diff'">
-                                                            <span class="label label-info">Different</span>
-                                                        </div>
+                                                        
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -180,7 +178,10 @@
                                                                 <input type="checkbox" ng-model="selected.administration.route" ng-change="selectEntry(matchIndex)">
                                                                 Name:
                                                                 </td>
-                                                                <td>{{matchEntry.newMatch.administration.route.name}}</td>
+                                                                <td>{{matchEntry.newMatch.administration.route.name}}
+                                                                <div class="pull-right" ng-if="matchEntry.diff.administration.route === 'diff'">
+                                                            <span class="label label-info">Different</span>
+                                                        </div></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Code:</td>
@@ -204,10 +205,6 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Administration Route:
-
-                                                        <div class="pull-right" ng-show="selected.administration.route">
-                                                            <span class="label label-warning">Updated</span>
-                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -216,7 +213,10 @@
                                                         <table class="table sub-table">
                                                             <tr>
                                                                 <td>Name:</td>
-                                                                <td>{{matchEntry.srcMatch.data.administration.route.name}}</td>
+                                                                <td>{{matchEntry.srcMatch.data.administration.route.name}}
+                                                                <div class="pull-right" ng-show="selected.administration.route">
+                                                            <span class="label label-warning">Updated</span>
+                                                        </div></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Code:</td>
@@ -243,10 +243,6 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Administration Form:
-
-                                                        <div class="pull-right" ng-if="matchEntry.diff.administration.form=== 'new'">
-                                                            <span class="label label-primary">New</span>
-                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -258,7 +254,12 @@
                                                                 <input type="checkbox" ng-model="selected.administration.form" ng-change="selectEntry(matchIndex)">
                                                                 Name:
                                                                 </td>
-                                                                <td>{{matchEntry.newMatch.administration.form.name}}</td>
+                                                                <td>{{matchEntry.newMatch.administration.form.name}}
+
+                                                                <div class="pull-right" ng-if="matchEntry.diff.administration.form=== 'new'">
+                                                                    <span class="label label-primary">New</span>
+                                                                </div>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Code:</td>
@@ -282,10 +283,6 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Administration Form:
-
-                                                        <div class="pull-right" ng-show="selected.administration.form">
-                                                            <span class="label label-warning">New</span>
-                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -297,7 +294,12 @@
                                                                 <span ng-show="selected.administration.form">Name:</span>
                                                                 <span ng-hide="selected.administration.form">&nbsp;</span>
                                                                 </td>
-                                                                <td>{{matchEntry.srcMatch.data.administration.form.name}}</td>
+                                                                <td>{{matchEntry.srcMatch.data.administration.form.name}}
+
+                                                        <div class="pull-right" ng-show="selected.administration.form">
+                                                            <span class="label label-warning">New</span>
+                                                        </div>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td><span ng-show="selected.administration.form">Code:</span>

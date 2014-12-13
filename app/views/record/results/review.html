@@ -81,9 +81,7 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Result Code Set
-                                                        <div class="pull-right" ng-if="matchEntry.diff.result_set === 'diff'">
-                                                            <span class="label label-info">Different</span>
-                                                        </div>
+                                                        
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -96,7 +94,11 @@
                                                                         <input type="checkbox" style="margin-right: 10px;" ng-model="selected.result_set" ng-change="selectEntry(matchIndex)">
                                                                         Code:
                                                                         </td>
-                                                                        <td>{{matchEntry.newMatch.result_set.code}}</td>
+                                                                        <td>{{matchEntry.newMatch.result_set.code}}
+                                                                        <div class="pull-right" ng-if="matchEntry.diff.result_set === 'diff'">
+                                                                            <span class="label label-info">Different</span>
+                                                                        </div>
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>Code System:</td>
@@ -118,9 +120,6 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Result Code Set
-                                                        <div class="pull-right" ng-show="selected.result_set">
-                                                            <span class="label label-warning">Updated</span>
-                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -130,7 +129,11 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>Code:</td>
-                                                                        <td>{{matchEntry.srcMatch.data.result_set.code}}</td>
+                                                                        <td>{{matchEntry.srcMatch.data.result_set.code}}
+                                                                        <div class="pull-right" ng-show="selected.result_set">
+                                                                            <span class="label label-warning">Updated</span>
+                                                                        </div>
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>Code System:</td>

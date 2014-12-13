@@ -81,9 +81,6 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                     Product:
-                                                        <div class="pull-right" ng-if="matchEntry.diff.product === 'diff'">
-                                                        <span class="label label-info">Different</span>
-                                                    </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -97,7 +94,10 @@
 
                                                                         <input type="checkbox" style="margin-right: 10px;" ng-model="selected.product" ng-change="selectEntry(matchIndex)">
                                                                         {{matchEntry.newMatch.product.product.name}}
-                                                                            
+                                                                           
+                                                        <div class="pull-right" ng-if="matchEntry.diff.product === 'diff'">
+                                                        <span class="label label-info">Different</span>
+                                                    </div> 
                                                                         </td>
                                                                     </tr>
                                                                 </thead>
@@ -159,9 +159,6 @@
                                                     <tr>
                                                         <td class="col-sm-3">
                                                         Product:
-                                                            <div class="pull-right" ng-show="selected.product">
-                                                            <span class="label label-warning">Updated</span>
-                                                            </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -172,6 +169,10 @@
                                                                     <tr>
                                                                         <td colspan="2">
                                                                             {{matchEntry.srcMatch.data.product.product.name}}
+
+                                                            <div class="pull-right" ng-show="selected.product">
+                                                            <span class="label label-warning">Updated</span>
+                                                            </div>
                                                                         </td>
                                                                     </tr>
                                                                 </thead>
@@ -236,9 +237,6 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Administration:
-                                                    <div class="pull-right" ng-if="matchEntry.diff.administration === 'diff'">
-                                                        <span class="label label-info">Different</span>
-                                                    </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -251,6 +249,10 @@
                                                                         <td colspan="2">
                                                                         <input type="checkbox" style="margin-right: 10px;" ng-model="selected.administration" ng-change="selectEntry(matchIndex)">
                                                                             {{matchEntry.newMatch.administration.route.name}}
+
+                                                    <div class="pull-right" ng-if="matchEntry.diff.administration === 'diff'">
+                                                        <span class="label label-info">Different</span>
+                                                    </div>
                                                                         </td>
                                                                     </tr>
                                                                 </thead>
@@ -279,9 +281,6 @@
                                                 <tr>
                                                     <td class="col-sm-3">
                                                         Administration:
-                                                    <div class="pull-right" ng-show="selected.administration">
-                                                        <span class="label label-warning">Updated</span>
-                                                    </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -292,6 +291,10 @@
                                                                     <tr>
                                                                         <td colspan="2">
                                                                             {{matchEntry.srcMatch.data.administration.route.name}}
+                                                                            
+                                                    <div class="pull-right" ng-show="selected.administration">
+                                                        <span class="label label-warning">Updated</span>
+                                                    </div>
                                                                         </td>
                                                                     </tr>
                                                                 </thead>

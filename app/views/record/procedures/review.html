@@ -71,9 +71,6 @@
 
                                                     <td class="col-sm-3">
                                                         Performer:
-                                                        <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
-                                                            <span class="label label-info">Different</span>
-                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -86,10 +83,15 @@
                                                                     Address:
                                                                     </td>
                                                                     <td>
+                                                                    <div class="pull-right" ng-if="matchEntry.diff.performer === 'diff'">
+                                                                                <span class="label label-info">Different</span>
+                                                                            </div>
                                                                         <div ng-repeat="perfAddr in performer.address">
                                                                             <div ng-repeat="addrLine in perfAddr.displayAddress">
                                                                                 {{addrLine}}
                                                                             </div>
+
+                                                                            
                                                                         </div>
 
 																	</td>
@@ -152,9 +154,6 @@
                                                     <td class="col-sm-3">
 
                                                         Performer:
-                                                        <div class="pull-right" ng-show="selected.performer">
-                                                            <span class="label label-warning">Updated</span>
-                                                        </div>
 
                                                     </td>
                                                 </tr>
@@ -165,6 +164,10 @@
                                                                 <tr>
                                                                     <td>Address:</td>
                                                                     <td>
+                                                                    
+                                                        <div class="pull-right" ng-show="selected.performer">
+                                                            <span class="label label-warning">Updated</span>
+                                                        </div>
                                                                         <div ng-repeat="perfAddr in performer.address">
                                                                             <div ng-repeat="addrLine in perfAddr.displayAddress">
                                                                                 {{addrLine}}
