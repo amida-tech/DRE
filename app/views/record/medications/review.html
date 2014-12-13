@@ -293,15 +293,20 @@
                                                     <div class="panel" ng-class="{'update-selected': selected.administration.form}">
                                                         <table class="table sub-table">
                                                             <tr>
-                                                                <td>Name:</td>
+                                                                <td>
+                                                                <span ng-show="selected.administration.form">Name:</span>
+                                                                <span ng-hide="selected.administration.form">&nbsp;</span>
+                                                                </td>
                                                                 <td>{{matchEntry.srcMatch.data.administration.form.name}}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Code:</td>
+                                                                <td><span ng-show="selected.administration.form">Code:</span>
+                                                                <span ng-hide="selected.administration.form">&nbsp;</span></td>
                                                                 <td>{{matchEntry.srcMatch.data.administration.form.code}}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Code System:</td>
+                                                                <td><span ng-show="selected.administration.form">Code System:</span>
+                                                                <span ng-hide="selected.administration.form">&nbsp;</span></td>
                                                                 <td>{{matchEntry.srcMatch.data.administration.form.code_system_name}}</td>
                                                             </tr>
                                                         </table>
