@@ -45,38 +45,6 @@ This provides a API for interaction with and access to the aggregated health rec
 
 Documentation for record.js [API](./docs/recordjs.md)
 
-Project Roadmap (tentative)
-===============
-
-Release 0.5 (end of April, 2014)
-----------------
-
-- Uses existing bluebutton.js lib for parsing (with some fixes/improvements)
-- Matching library detects duplicate, new entries, and partial matches
-- Reconciliation UI supports duplicate and new entry reconciliation
-- Master Health Record library supports persistence to MongoDB
-- Data model for CCDA JSON representation is defined for a few sections (e.g. Allergies)
-
-Release 1.0 (end of May, 2014)
-----------------
-
-- CCDA JSON data model is fully defined as separate library with validation support
-- bluebutton.js parser is rewritten for speed and support of updated CCDA JSON data model
-- Matching library supports % match for entries that may be possible match
-- Reconciliation UI support reconciliation of % matched entries (e.g. partial match)
-- Master Health Record library supports persistence and full validation of CCDA JSON into MongoDB
-
-Release 1.1 (September 2014)
-----------------
-
-- CMS JSON data model is fully defined 
-	- Insurance and claims sections added to support CMS files
-- New many-to-many matching library supports multiple partial matches for one entry
-- Updated reconciliation UI supports many-to-many matching library
-- Master Health Record library supports persistence and full validation of CMS JSON into MongoDB
-- Master Health Record can now be exported as a CCDA file
-
-
 ###Screenshots of demo app
 
 ![Home Screen](./docs/images/dre_01.png)
