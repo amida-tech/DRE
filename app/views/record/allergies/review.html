@@ -127,9 +127,6 @@
                                                     <tr>
                                                         <td class="col-sm-3">
                                                             Reactions:
-                                                        <div class="pull-right" ng-if="matchEntry.diff.observation.reactions === 'diff'">
-                                                            <span class="label label-info">Different</span>
-                                                        </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -142,6 +139,10 @@
                                                                             <td colspan="2">
                                                                             <input type="checkbox" ng-model="selected.observation.reactions" ng-change="selectEntry(matchIndex)">
                                                                                 {{matchEntry.newMatch.observation.reactions[reactionIndex].reaction.name}}
+
+                                                        <div class="pull-right" ng-if="matchEntry.diff.observation.reactions === 'diff'">
+                                                            <span class="label label-info">Different</span>
+                                                        </div>
                                                                             </td>
                                                                         </tr>
                                                                     </thead>
@@ -173,9 +174,6 @@
                                                     <tr>
                                                         <td class="col-sm-3">
                                                             Reactions:
-                                                        <div class="pull-right" ng-show="selected.observation.reactions">
-                                                            <span class="label label-warning">Updated</span>
-                                                        </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -187,6 +185,9 @@
                                                                         <tr>
                                                                             <td colspan="2">
                                                                                 {{matchEntry.srcMatch.data.observation.reactions[reactionIndex].reaction.name}}
+                                                                                <div class="pull-right" ng-show="selected.observation.reactions">
+                                                            <span class="label label-warning">Updated</span>
+                                                        </div>
                                                                             </td>
                                                                         </tr>
                                                                     </thead>
