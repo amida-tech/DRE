@@ -164,7 +164,7 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        exclude: ['bower_components/bootstrap/'],
+        exclude: ['bower_components/bootstrap/', 'bower_components/d3/', 'bower_components/d3-tip/'],
         ignorePath:  /\.\.\//
       },
       sass: {
@@ -358,6 +358,16 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '.',
           src: 'bower_components/font-awesome/fonts/*',
+          dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: '.',
+          src: 'bower_components/d3/*',
+          dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: '.',
+          src: 'bower_components/d3-tip/*',
           dest: '<%= yeoman.dist %>'
         }]
       },
