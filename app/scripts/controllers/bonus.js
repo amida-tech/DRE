@@ -9,11 +9,9 @@
 angular.module('phrPrototypeApp').controller('bonusCtrl', function($scope, $location) {
     $(window).konami({
         cheat: function() {
-            document.getElementById("index-wrapper").style.backgroundImage = 'url(../../images/va_photo.66fe66c9.jpg)';
-            document.getElementById("index-wrapper").style.backgroundRepeat = 'repeat';
+            document.getElementById("index-wrapper").className = 'konami-background';
             setTimeout(function() {
-                document.getElementById("index-wrapper").style.backgroundImage = 'url(../../images/blur.00ed6507.png)';
-                document.getElementById("index-wrapper").style.backgroundRepeat = 'no repeat';
+                document.getElementById("index-wrapper").className = 'default-background';
             }, 2000);
         }
     });
