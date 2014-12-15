@@ -10,7 +10,8 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
         restrict: 'EA',
         template: "<svg style='width:100%;'></svg>",
         link: function postLink(scope, element, attrs) {
-            d3Service.d3tip().then(function(d3) {
+            d3Service.d3().then(function(d3) {
+            d3Service.d3tip().then(function(d3tip) {    
                 var navClick = function(ele) {
                     $location.hash(ele);
                     // call $anchorScroll()
@@ -237,6 +238,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     renderPlot();
                 }, true);
             });
+});
         }
     };
 });
