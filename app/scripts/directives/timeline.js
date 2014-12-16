@@ -10,7 +10,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
         restrict: 'EA',
         template: "<svg style='width:100%;'></svg>",
         link: function postLink(scope, element, attrs) {
-            d3Service.d3tip().then(function(d3) {
+
                 var navClick = function(ele) {
                     $location.hash(ele);
                     // call $anchorScroll()
@@ -26,7 +26,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                 var plotDomain = [];
                 var timeScale;
                 var timeScaleTicks = [];
-                d3 = $window.d3;
+                var d3 = $window.d3;
                 var rawSvg = element.find("svg")[0];
                 var svg = d3.select(rawSvg).attr("height", plotHeight);
                 var format = d3.time.format("%m/%d/%Y");
@@ -86,10 +86,16 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                 }
 
                 function renderPlot() {
-                    var width;
+                    var width = 0;
 
                     function getSVGWidth() {
-                        width = parseInt(svg.style('width'), 10);
+                            width = parseInt(svg.style('width'), 10);
+
+                            //Shim, keeps it from erroring on first pass.
+                            if (width === 0) {
+                                width = $window.innerWidth * 0.67;
+                            }
+                            
                     }
 
                     function buildScale() {
@@ -224,8 +230,11 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     plotData();
                 }
                 //gatherData only on first run.
-                gatherData();
-                renderPlot();
+                $window.onload = function() {
+                    gatherData();
+                    renderPlot();    
+                };
+                
                 //Re-evaluate scope on resize.
                 $window.onresize = function() {
                     scope.$apply();
@@ -236,7 +245,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     gatherData();
                     renderPlot();
                 }, true);
-            });
+
         }
     };
 });
