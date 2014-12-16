@@ -86,10 +86,16 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                 }
 
                 function renderPlot() {
-                    var width;
+                    var width = 0;
 
                     function getSVGWidth() {
-                        width = parseInt(svg.style('width'), 10);
+                            width = parseInt(svg.style('width'), 10);
+
+                            //Shim, keeps it from erroring on first pass.
+                            if (width === 0) {
+                                width = $window.innerWidth / 2;
+                            }
+                            
                     }
 
                     function buildScale() {
@@ -224,8 +230,11 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     plotData();
                 }
                 //gatherData only on first run.
-                gatherData();
-                renderPlot();
+                $window.onload = function() {
+                    gatherData();
+                    renderPlot();    
+                };
+                
                 //Re-evaluate scope on resize.
                 $window.onresize = function() {
                     scope.$apply();
