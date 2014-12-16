@@ -10,8 +10,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
         restrict: 'EA',
         template: "<svg style='width:100%;'></svg>",
         link: function postLink(scope, element, attrs) {
-            d3Service.d3().then(function(d3) {
-            d3Service.d3tip().then(function(d3tip) {    
+
                 var navClick = function(ele) {
                     $location.hash(ele);
                     // call $anchorScroll()
@@ -27,7 +26,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                 var plotDomain = [];
                 var timeScale;
                 var timeScaleTicks = [];
-                d3 = $window.d3;
+                var d3 = $window.d3;
                 var rawSvg = element.find("svg")[0];
                 var svg = d3.select(rawSvg).attr("height", plotHeight);
                 var format = d3.time.format("%m/%d/%Y");
@@ -237,8 +236,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     gatherData();
                     renderPlot();
                 }, true);
-            });
-});
+
         }
     };
 });
