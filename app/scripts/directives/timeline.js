@@ -93,7 +93,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
 
                             //Shim, keeps it from erroring on first pass.
                             if (width === 0) {
-                                width = $window.innerWidth / 2;
+                                width = $window.innerWidth * 0.67;
                             }
                             
                     }
