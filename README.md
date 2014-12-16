@@ -53,6 +53,12 @@ From the base project directory, you can use Grunt to build and execute the foll
 
 ```grunt serve``` - Runs build and serves pages on localhost.
 
+####Release Build
+
+Running ```grunt serve``` will serve a version of the interface which is meant for development; this command skips several build steps for quicker compilation.
+
+For a release or deployment of the interface, running ```grunt build:dist``` will compile a more thoroughly optimized version.  Additionally, running ```grunt serve:dist``` will serve this optimized version.
+
 ####License
 
 Licensed under [Apache 2.0 License]('http://www.apache.org/licenses/LICENSE-2.0').

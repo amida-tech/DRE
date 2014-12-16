@@ -11,12 +11,12 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 //Using local fonts for dev, need to configure grunt for CDN pointers.
 @font-face {
     font-family: "Open Sans";
-    src: url(../../fonts/OpenSans.ttf);
+    src: url(../fonts/OpenSans.ttf);
 }
 
 @font-face {
     font-family: "Montserrat";
-    src: url(../../fonts/Montserrat.ttf);
+    src: url(../fonts/Montserrat.ttf);
 }
 
 @font-face {
@@ -25,20 +25,20 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 }
 @font-face {
     font-family:    "Raleway";
-    src:            url("../../fonts/Raleway-Regular.otf");
+    src:            url("../fonts/Raleway-Regular.otf");
     font-weight:    normal;
 }
 
 @font-face {
     font-family:    "Raleway";
-    src:            url("../../fonts/Raleway-Light.otf");
+    src:            url("../fonts/Raleway-Light.otf");
     font-weight:    normal;
     
 }
 
 @font-face {
     font-family:    "Raleway";
-    src:            url("../../fonts/Raleway-Medium.otf");
+    src:            url("../fonts/Raleway-Medium.otf");
     font-weight:    500;
 }
 
