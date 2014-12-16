@@ -165,6 +165,10 @@ angular
         templateUrl: 'views/notes.html',
         controller: 'NotesCtrl'
       })
+      .when('/newrecord', {
+        templateUrl: 'views/newrecord.html',
+        controller: 'NewRecordCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
