@@ -148,7 +148,7 @@ angular.module('phrPrototypeApp')
 
             medications.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
-                $location.path('/record/medications');
+                $location.path('/record');
 
 
             });

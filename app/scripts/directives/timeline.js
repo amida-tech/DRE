@@ -245,6 +245,10 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     gatherData();
                     renderPlot();
                 }, true);
+                scope.$watch('entryType', function(newValue, oldValue) {
+                    gatherData();
+                    renderPlot();
+                }, true);
 
         }
     };

@@ -10,7 +10,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     record.getRecord(function(err, results) {
         $scope.entries = results;
     });
-
     $scope.dashMetrics = {};
     $scope.tabs = [{
         "title": "Weight",
@@ -29,7 +28,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             });
         }
     });
-    
+    $scope.entryType = "all";
 
     function dashPrep() {
         var weightDateArray = [];
@@ -138,22 +137,17 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 $scope.entryList.push(tmpItem);
             });
         });
-
         _.each($scope.entryList, function(entry) {
-
             //console.log(entry.data.date_time);
-
             _.each(entry.data.date_time, function(dateEntry, dateTitle) {
                 if (dateTitle !== 'displayDate' && dateTitle !== 'plotDate') {
                     format.formatDate(dateEntry);
                 }
             });
-
             //Have to generate date for results.
             if (entry.category === 'results') {
                 var dateArray = [];
                 entry.data.date_time = {};
-
                 //Fill out each result's individual date.
                 if (entry.data.results) {
                     _.each(entry.data.results, function(result) {
@@ -166,10 +160,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                         result.date_time.displayDate = format.outputDate(result.date_time);
                     });
                 }
-
                 var momentMin = moment.min(dateArray);
                 var momentMax = moment.max(dateArray);
-
                 //If date min and max are equal, consolidate.
                 //Only have test data, should expand to other cases in deploy.
                 if (momentMin.isSame(momentMax, 'day')) {
@@ -178,9 +170,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                     entry.data.date_time.point.precision = 'day';
                     entry.data.date_time.point.displayDate = format.formatDate(entry.data.date_time.point);
                 }
-
             }
-
             entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
             entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
         });
@@ -195,4 +185,21 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     dashPrep();
     formatDates();
     sortList();
+    $scope.entryListFiltered = $scope.entryList;
+    $scope.$watch('entryType', function(newVal, oldVal) {
+        if (newVal !== oldVal) {
+            if (newVal === "all") {
+                $scope.entryListFiltered = $scope.entryList;
+            } else {
+                $scope.entryListFiltered = _.where($scope.entryList, {
+                    category: newVal
+                });
+            }
+            if (newVal === "vitals") {
+                $scope.$broadcast('tabchange', {
+                    "val": 0
+                });
+            }
+        }
+    });
 });

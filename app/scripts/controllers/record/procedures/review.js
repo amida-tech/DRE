@@ -147,7 +147,7 @@ angular.module('phrPrototypeApp')
 
             procedures.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
-                $location.path('/record/procedures');
+                $location.path('/record');
 
 
             });
