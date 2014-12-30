@@ -20,7 +20,8 @@
             'comment': "I should check my bank statement, make sure they didn't overcharge me.",
             'date': '2007-06-01T00:12:00Z',
             'starred': true
-        }]
+        }],
+        'type': 'claims'
     };
 
     var tmpClaims = [{

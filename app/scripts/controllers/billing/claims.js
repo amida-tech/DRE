@@ -8,9 +8,9 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('BillingClaimsCtrl', function ($scope, $location, $anchorScroll, claims, format) {
+    .controller('BillingClaimsCtrl', function ($scope, $location, $anchorScroll, claims, insurance, format) {
 
-        $scope.entryType = 'claims';
+        $scope.entryType = 'all';
         $scope.masterEntries = [];
         $scope.entries = [];
         $scope.updateDate = null;
@@ -24,10 +24,18 @@ angular.module('phrPrototypeApp')
         }
 
         function getRecords(callback) {
+
             claims.getRecord(function (err, results) {
-                $scope.masterEntries = results;
-                callback();
+                $scope.claimsEntries = results;
+                
+                
             });
+            insurance.getRecord(function (err, results) {
+                $scope.insuranceEntries = results;
+                
+            });
+            $scope.masterEntries = $scope.claimsEntries.concat($scope.insuranceEntries);
+            callback();
         }
 
         $scope.navClick = function (element) {
@@ -41,8 +49,10 @@ angular.module('phrPrototypeApp')
         function formatDates() {
             //Add displayDate to all entries.
             _.each($scope.masterEntries, function (entry) {
+
                 if (entry.data.date_time) {
                     _.each(entry.data.date_time, function (dateEntry) {
+
                         format.formatDate(dateEntry);
                     });
                     entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
@@ -60,6 +70,16 @@ angular.module('phrPrototypeApp')
                 });
             });
         }
+        $scope.setEntryType = function(type) {
+            $scope.entryType = type;
+            if (type === 'all') {
+                $scope.entries = $scope.masterEntries;
+            } else if (type === 'claims') {
+                $scope.entries = $scope.claimsEntries;
+            } else if (type === 'insurance') {
+                $scope.entries = $scope.insuranceEntries;
+            };
+        };
 
         $scope.refresh = function () {
             getRecords(function (err) {

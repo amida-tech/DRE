@@ -1,7 +1,14 @@
 <div class="container-fluid body-content">
     <div id="profileSidebar" class="col-sm-3 body-left">
         <div profile></div>
-        <div billingnavigation class="col-sm-12"></div>&nbsp;
+        <div class="col-sm-12">
+<div class="btn-group-vertical col-sm-12 sidebar-control" role="group">
+        <a ng-click="setEntryType('all')" id="navall" class="btn btn-block btn-info" ng-class="{active: entryType === 'all'}">All</a>
+        <a ng-click="setEntryType('insurance')" id="navinsurance" class="btn btn-block btn-info" ng-class="{active: entryType === 'insurance'}">Insurance</a>
+        <a ng-click="setEntryType('claims')" id="navclaims" class="btn btn-block btn-info" ng-class="{active: entryType === 'claims'}">Claims</a>
+        
+    </div>
+        </div>&nbsp;
     </div>
 
     <!--Body Header-->
@@ -40,15 +47,16 @@
                 <div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
                     <div class="col-sm-12 row timeline-side">
-                        <billingentry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
+                        <billingentry entry-type="{{recordEntry.metadata.type}}" entry-index="{{recordIndex}}"></entry>
                     </div>
 
-                    <div class="col-sm-2 center-block text-center timeline-footer">
+                    
+                </div>
+                <div class="col-sm-2 center-block text-center timeline-footer">
                         <svg width="30" height="30">
                             <circle cx="15" cy="15" r="15"></circle>
                         </svg>
                     </div>
-                </div>
             </div>
         </div>
     </div>
