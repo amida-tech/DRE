@@ -42,7 +42,7 @@ var Event = mongoose.model('Event', EventSchema)
 
 exports.addEvent = function(req, res) {
 	var newEvent = new Event({
-		//TODO: figure out where to pull all of these from
+		//TODO: figure out where to pull all of these from >> pass in as arguments?
  		id: req.params.id, 
  		event_type: req.params.event_type,
  		note: req.params.note,
