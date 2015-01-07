@@ -9,17 +9,27 @@
 var express = require('express'),
 	events = require('./routes/accountEvents');
 
-app.configure(function () {
-    app.use(express.logger('dev'));     
-    app.use(express.bodyParser());
-});
+var bodyParser = require('body-parser');
+
+
+var app = express();
+
+
+//app.configure(function () {
+    //app.use(express.logger('dev'));     
+//});
+
+app.use(bodyParser());
+
 
 var app = express();
 
 app.get('/accountEvents', events.allInOrder);
 //app.get('/accountEvents/:id', events.getEvent);
-app.post('/accountEvents', events.addEvent);
+
+app.get('/accountEvent', events.addEvent);
+//app.post('/accountEvents', events.addEvent);
 //app.put('accountEvents/:id', events.editEvent);
 
 
-app.listen(27017)
+app.listen(3005)
