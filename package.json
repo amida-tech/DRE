@@ -1,0 +1,16 @@
+{
+  "name": "accountHistory",
+  "version": "1.0.0",
+  "description": "account history functions",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Nadia Wallace",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.10.7",
+    "mongoose": "^3.8.21"
+  }
+}
