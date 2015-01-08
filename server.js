@@ -22,7 +22,7 @@ var app = express();
 app.use(bodyParser());
 
 
-var app = express();
+//var app = express();
 
 app.get('/accountEvents', events.allInOrder);
 //app.get('/accountEvents/:id', events.getEvent);

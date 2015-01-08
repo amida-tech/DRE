@@ -87,9 +87,7 @@ exports.allInOrder = function(req, res) {
             }
         })
     /*    
-
     if (db.Events) {
-
         db.Events.find({}).sort({
             date: -1
         }).exec(function(err, docs) {
