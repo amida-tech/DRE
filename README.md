@@ -1,15 +1,5 @@
 #Basic API for saving account history events: 
-First login 
-
-File uploaded
-
-File downloaded 
-
-Lab results
-
-Password change
-
-Personal info change
+First login, file uploaded, file downloaded, lab results, password change, personal info change
 
 ##Usage
 ```
