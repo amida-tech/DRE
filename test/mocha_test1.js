@@ -33,8 +33,8 @@ describe('Init', function(){
 
 
 	var sampleURL1 = '/accountEvent?userID=1&event_type=initAccount&note=no-note-here&fileRef=AAA',
-		sampleURL2 = '/accountEvent?userID=1&event_type=fileUploaded&note=doctor&fileRef=BBB',
-		sampleURL3 = '/accountEvent?userID=1&event_type=passwordChange&note=hint&fileRef=CCC';
+		sampleURL2 = '/accountEvent?userID=2&event_type=fileUploaded&note=doctor&fileRef=BBB',
+		sampleURL3 = '/accountEvent?userID=3&event_type=passwordChange&note=hint&fileRef=CCC';
 	
 	//TODO: add coverage 
 	describe('Account History', function(){
@@ -44,30 +44,34 @@ describe('Init', function(){
 			.expect('event initAccount added\n')
 			.end(function(err, res){
 				if(err){
-					return done(err);
+					done(err);
 				}else{
 					done();
 				}
 			});
 		});
 		//Prepopulate db for full history
-		before(function(){
-			api.get(sampleURL2, function(callback){
-				api.get(sampleURL3, function(callback){
+		before(function(done){
+			api.get(sampleURL2)
+			.end(function(err, res){
+				if(err){
+					done(err);
+				} else{
 					done();
-				});
+				}
 			});
 		});
 
 		it('Shows Full Event History - desc', function(done){
 			var fullEventURL = '/accountEvents';
 			var ans1 = {userID: 1, event_type: 'initAccount', note: 'no-note-here', fileRef: 'AAA'},
-				ans2 = {userID: 2, event_type: 'fileUploaded', note: 'doctor', fileRef: 'BBB'},
-				ans3 = {userID: 3, event_type: 'passwordChange', note: 'hint', fileRef: 'CCC'};
+				ans2 = {userID: 2, event_type: 'fileUploaded', note: 'doctor', fileRef: 'BBB'};
+				//ans3 = {userID: 3, event_type: 'passwordChange', note: 'hint', fileRef: 'CCC'};
 				
 			console.log('printing expected' + JSON.stringify(ans1));
 
-			var records=[JSON.stringify(ans1), JSON.stringify(ans2), JSON.stringify(ans3)];
+			//var records=[JSON.stringify(ans1), JSON.stringify(ans2), JSON.stringify(ans3)];
+			var records=[JSON.stringify(ans1), JSON.stringify(ans2)];
 
 			console.log('expected:\n'+records);
 			//TODO: prepopulate in before
@@ -80,12 +84,15 @@ describe('Init', function(){
 					done();
 				}else{
 					console.log('>>>>', res.body);
-					expect(res.body).to.have.length(3);
-					res.body.map(function(elt){
-						expect(elt).to.have.property(_id)
-						.and.to.have.property(__v);
-						expect(elt).to.deep.include.members(fullAns[indexOf(elt)]);
-					});
+					console.log('>>stringified', res.body);
+					console.log('>>>body class: ' + typeof(res.body) + ' w/ params: '+Object.keys(res.body));
+					//console.log('elt: ' + res.body.0)
+					//expect(res.body).to.have.length(2);
+					for(var key in Object.keys(res.body)){
+						elt = res.body.key;
+						expect(elt).to.have.property('_id')
+						.and.to.deep.include.members(records[key]);
+					}
 				done();
 				}
 			});
