@@ -54,10 +54,11 @@ exports.allInOrder = function(req, res) {
             date: -1
         }).exec(function(err, docs) {
             if (err) {
-                console.log('Error' + err)
+                console.log('Error' + err);
             } else {
                 //res.send(200)
-                res.send(docs)
+                console.log(docs);
+                res.send(docs);
             }
         })
 };
