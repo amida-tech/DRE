@@ -18,12 +18,7 @@ var EventSchema = new Schema({
         type: Date,
         default: Date.now
     }, 
-    fileRef: {
-        //type: ObjectID (of file)
-        ref: {
-            type: String
-        }
-    }
+    fileRef: {type:String}
 });
 
 var Event = mongoose.model('Event', EventSchema)
@@ -57,7 +52,7 @@ exports.allInOrder = function(req, res) {
                 console.log('Error' + err);
             } else {
                 //res.send(200)
-                console.log(docs);
+                console.log('>>>from DB:\n',docs);
                 res.send(docs);
             }
         })

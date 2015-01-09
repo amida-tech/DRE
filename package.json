@@ -16,6 +16,7 @@
   "dependencies": {
     "body-parser": "^1.10.1",
     "chai": "^1.10.0",
+    "chai-things": "0.2.0",
     "connect": "^3.3.4",
     "express": "^4.10.7",
     "mocha": "^2.1.0",
