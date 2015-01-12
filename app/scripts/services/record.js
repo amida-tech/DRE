@@ -86,6 +86,7 @@ angular.module('phrPrototypeApp')
             return $http({url: dataurl, method: 'GET', cache: true}).then(function (response) {
                 if (typeof response.data === 'object') {
                     return response.data;
+                    
                 } else {
                     // invalid response
                     console.log('didnt get data');

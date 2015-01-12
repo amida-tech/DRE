@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <!--d3.-->
+        <!--d3.
         <div class="col-sm-12" ng-show="entryType === 'vitals'">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="col-sm-12">
-            <!--end d3-->
+            end d3-->
             <!--Timeline View-->
             <div class="col-sm-12">
                 <h4 class="text-center text-white">{{entryType}}</h4>
@@ -97,9 +97,9 @@
                             <p>Timeline</p>
                         </div>
                         <div timeline ng-show="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
-                        <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
+                        <div ng-repeat="(recordIndex, recordEntry) in recordEntries" class="col-sm-12 row" id="record{{recordIndex}}">
                             <div class="col-sm-12 row timeline-side">
-                                <entry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></entry>
+                                <entry type="{{recordEntry.metadata.category}}" entry-index="{{recordIndex}}"></entry>
                             </div>
                         </div>
                         <div class="col-sm-2 center-block text-center timeline-footer">
