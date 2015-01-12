@@ -28,34 +28,32 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             }
         });
         $scope.entryType = "all";
-
         $scope.recordEntries = [];
-
-
         _.each($scope.entries.data, function(entries, type) {
             _.each(entries, function(entry) {
-                if (type !== 'demographics') {
-                    $scope.recordEntries.push(
-                        {
-                            'data': entry,
-                            'metadata': {
-                                'category': type,
-                                'datetime': entry.date_time
-                            }
-                        }
-                    );
+                var tmpDisplayDate = '';
+                var tmpPlotDate = '';
+                if (!_.contains(['demographics','problems','plan_of_care','payers','social_history'],type)) {
+                    $scope.recordEntries.push({
+                        'data': entry,
+                        'category': type
+                    });
+                }
+                if (type === 'social_history') {
+                    $scope.recordEntries.push({
+                        'data': entry,
+                        'category': 'social'
+                    });
                 }
             });
         });
-
-       
-        
+        $scope.entryListFiltered = $scope.recordEntries;
         $scope.$watch('entryType', function(newVal, oldVal) {
             if (newVal !== oldVal) {
                 if (newVal === "all") {
-                    $scope.entryListFiltered = $scope.entryList;
+                    $scope.entryListFiltered = $scope.recordEntries;
                 } else {
-                    $scope.entryListFiltered = _.where($scope.entryList, {
+                    $scope.entryListFiltered = _.where($scope.recordEntries, {
                         category: newVal
                     });
                 }
