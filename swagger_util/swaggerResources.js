@@ -12,7 +12,7 @@ var history = require('./routes/accountEvents');
 exports.addEvent = {
 	'spec': {
 		description: 'Add an event to user history',
-		path: '/accountEvent', //Add query syntax?
+		path: '/accountEvent?userID={:id}&event_type={enum}&note={note}&fileRef={fileRef}', //without query syntax?
 		method: 'GET',
 		summary: '',
 		notes: ,
@@ -27,6 +27,7 @@ exports.addEvent = {
 			throw swe.invalid('event');
 		}
 		//response = history.addEvent(req, res); //need to modularize?
+		//use require('url') parsing?
 		var userID =req.query.userID,
         	type = req.query.event_type,
        		note = req.query.note,

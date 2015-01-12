@@ -30,10 +30,10 @@ swagger.setApiInfo({
 
 swagger.setAuthorizations(...);
 
-swagger.configureSwaggerPaths('', 'api-docs', '')
+swagger.configureSwaggerPaths('', 'api-docs', '');
 swagger.configure('http://localhost:3005', '1.0.0');
 
-/*Serve up Swagger UI for website (EOW)
+/*Serve up Swagger UI for website 
 var docs_handler = express.static(__dirname + '/../swagger-ui/');
 app.get(/^\/docs(\/.*)?$/, function(req, res, next) {
   if (req.url === '/docs') { // express static barfs on root url w/o trailing slash
