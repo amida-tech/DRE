@@ -22,6 +22,7 @@
     "mocha": "^2.1.0",
     "mongodb": "1.4.x",
     "mongoose": "^3.8.21",
-    "supertest": "^0.15.0"
+    "supertest": "^0.15.0",
+    "swagger-node-express": "^2.1.3"
   }
 }
