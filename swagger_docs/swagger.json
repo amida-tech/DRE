@@ -1,0 +1,120 @@
+//https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md
+//http://apievangelist.com/2013/03/21/interactive-api-documentation-with-swagger/
+
+//From Schema in Swagger Spec
+{
+	"swagger": "2.0",
+	"info":{
+			"title": "Account History for PHR/DRE",
+			"description": "Manages events in a user's account history",
+			//"termsOfService"
+			//"contact"
+			//"license"
+			"version": "0.1"
+	},
+	"host": "localhost:3005",
+	//"basepath"
+	"consumes": ["application/json"],
+	"produces": ["application/json"],
+	"schemes": [
+	 "http"
+	 ],
+	"paths":{
+		"/accountEvent": {
+			"get": {
+				"summary": "Add an event to a user's account history",
+				"description": "Save event for register, log in/out, up/download file, lab results, password change, personal information changed",
+				"operationID": "addEvent",
+				"parameters": [
+					{
+						"name": "userID",
+						"in": "query",
+						"description": "user identifier",
+						"required": true
+					},
+					{
+						"name": "event_type",
+						"in": "query",
+						"description": "user identifier",
+						"required": true
+					},
+					{
+						"name": "note",
+						"in": "query",
+						"description": "additional info for event",
+						"required": false
+					},
+					{
+						"name": "fileRef",
+						"in": "query",
+						"description": "file reference string",
+						"required": false
+					}
+				],
+				"responses": {
+					"200": {
+							"description":"OK"
+					},
+					"x-event initAccount added\n":{
+						"description": "Account initialized event added"
+					},
+					"x-event loggedIn added\n": {
+						"description": "User logged in"
+					},
+					"x-event loggedOut added\n": {
+						"description": "User logged out"
+					},
+					"x-event fileUploaded added\n": {
+						"description": "User uploaded a file"
+					},
+					"x-event fileDownloaded added\n": {
+						"description": "User downloaded a file"
+					},
+					"x-event labResults added\n": {
+						"description": "Lab results added to record"
+					},
+					"x-event passwordChange added\n": {
+						"description": "User changed password"
+					},
+					"x-event infoUpdate added\n": {
+						"description": "Personal information updated"
+					},
+				}
+			}
+		},
+		"/accountEvents": {
+			"get": {
+				"summary": "Returns all events in a user's account history",
+				"description": "Shows registered, logged in/out, file up/downloaded, lab results received, password changed, info updated",
+				"operationID":"allEventsInOrder",
+				"responses":
+
+			}
+		}
+	},
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

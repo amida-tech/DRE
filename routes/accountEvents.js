@@ -6,11 +6,13 @@ mongoose.connect('mongodb://localhost:27017');
 var Schema = mongoose.Schema;
 //var ObjectId = Schema.ObjectId;
 
+//enum EventType {}
+
 var EventSchema = new Schema({
     userID: String,
     event_type: {
         type: String,
-        enum: ['initAccount', 'fileUploaded', 'fileDownloaded', 'labResults', 'passwordChange', 'infoUpdate'],
+        enum: ['initAccount', 'loggedIn', 'loggedOut','fileUploaded', 'fileDownloaded', 'labResults', 'passwordChange', 'infoUpdate'],
         required: true
     },
     note: String, 
@@ -23,12 +25,14 @@ var EventSchema = new Schema({
 
 //TODO: define objects/full titles for each event, figure out best display
 var fullEventNames = {}
-fullEventNames['initAccount']='Account created on ' + Date; //Don't need dates bc its timeline?
-fullEventNames['fileUploaded']='File ' + fileName + ' uploaded on ' + Date;
-fullEventNames['fileDownloaded'] = 'File ' + fileName + ' downloaded on ' + Date;
-fullEventNames['labResults'] = 'Lab results received from ' + source +' on '+ Date;
-fullEventNames['passwordChange'] =  'Password changed on '+ Date;
-fullEventNames['infoUpdate'] = 'Personal Information ' + type + ' updated on '+Date;
+fullEventNames['initAccount']='Account created'; //Don't need dates bc its timeline?
+fullEventNames['loggedIn'] = 'Logged in';
+fullEventNames['loggedOut'] = 'Logged out';
+fullEventNames['fileUploaded']='File uploaded';
+fullEventNames['fileDownloaded'] = 'File downloaded';
+fullEventNames['labResults'] = 'Lab results received';
+fullEventNames['passwordChange'] =  'Password changed';
+fullEventNames['infoUpdate'] = 'Personal Information updated';
 /*figure out how exactly these will be used in UI for where to get object info -- 
 maybe make toString() method for Mongoose schema?
 */
@@ -53,7 +57,7 @@ exports.addEvent = function(req, res) {
     res.send("event " + newEvent.event_type + " added\n");
 };
 
-exports.allInOrder = function(req, res) {
+exports.allEventsInOrder = function(req, res) {
     //sort collection and respond with sorted list of Events
     ///ask about caching previous account history and just pushing new event (performance?)
     ///Same with or without Swagger

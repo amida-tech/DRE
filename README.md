@@ -19,5 +19,5 @@ Add new event (example):
 ```
  curl http://localhost:3005/accountEvent\?userID\=1\&event_type\=initAccount\&note\=no-note-here\&fileRef\=123
 
- event_type = ['initAccount', 'fileUploaded', 'fileDownloaded', 'labResults', 'passwordChange', 'infoUpdate']
+ event_type = ['initAccount', 'loggedIn', 'loggedOut', 'fileUploaded', 'fileDownloaded', 'labResults', 'passwordChange', 'infoUpdate']
 ```

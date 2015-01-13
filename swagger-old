@@ -1,0 +1,47 @@
+//Following from APiEvangelist's 1.2 Example
+{
+	"apiVersion": "0.1",
+	"swaggerVersion": "2.0",
+	"basePath":"http://localhost:3005",
+	"resourcePath":"/swaggerResources",
+	"apis":[
+		{
+			"path": "/accountEvent",
+			"description": "Add an Event" ,
+			"operations":[
+				{
+					"httpMethod": "GET",
+					"summary": "Adds an event to a user's Account History",
+					"notes": "Valid event types are initAccount, loggedIn, loggedOut, fileUploaded, fileDownloaded, labResults, passwordChange, infoUpdate",
+					"nickname":"addEvent",
+					"parameters": [
+						{
+							"name": "userID",
+							"description": "your user ID",
+							"paramType": "query",
+							"required": true,
+							"allowMultiple": false,
+							"dataType":"string"
+						},
+						{
+							"name":"event_type",
+							"description": "type of event being added to history",
+							"paramType": "query",
+							"required": true,
+							"allowMultiple": false,
+							"dataType":
+						}
+					]
+				}
+			]
+		},
+		{
+			"path": "/accountEvents",
+			"description":, "Returns the full event history"
+			"operations":[
+
+			],
+		}
+	]
+}
+

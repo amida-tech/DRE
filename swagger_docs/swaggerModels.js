@@ -19,7 +19,7 @@ exports.models = {
 			}
 			'name':{
 				'type': 'string',
-				'enum': ['initAccount', 'fileUploaded', 'fileDownloaded', 'labResults', 'passwordChange', 'infoUpdate'],
+				'enum': ['initAccount', 'loggedIn', 'loggedOut','fileUploaded', 'fileDownloaded', 'labResults', 'passwordChange', 'infoUpdate'],
 				'description': 'full title' //from lookup table
 			},
 			'date': 'Date', //look at Swagger docs

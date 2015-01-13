@@ -59,7 +59,7 @@ exports.fullHistory = {
 		if(/*invalid query*/){
 			throw swe.invalid(param);
 		}
-		response = history.allInOrder(req, res); //need to modularize?
+		response = history.allEventsInOrder(req, res); //need to modularize?
 		if (response){
 			res.send(response);
 		} else {

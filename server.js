@@ -31,7 +31,7 @@ swagger.setApiInfo({
 swagger.setAuthorizations(...);
 
 swagger.configureSwaggerPaths('', 'api-docs', '');
-swagger.configure('http://localhost:3005', '1.0.0');
+swagger.configure('http://localhost:3005', '0.1');
 
 /*Serve up Swagger UI for website 
 var docs_handler = express.static(__dirname + '/../swagger-ui/');
@@ -55,7 +55,7 @@ app.use(bodyParser.urlencoded({
 app.get('/accountEvent', events.addEvent);
 //app.post('/accountEvents', events.addEvent);
 
-app.get('/accountEvents', events.allInOrder);
+app.get('/accountEvents', events.allEventsInOrder);
 //app.get('/accountEvents/:id', events.getEvent);
 
 app.listen(3005)
