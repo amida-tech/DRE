@@ -5,7 +5,7 @@
  * @description
  * # entry
  */
-angular.module('phrPrototypeApp').directive('entry', function() {
+angular.module('phrPrototypeApp').directive('entry', function(format) {
     return {
         templateUrl: 'views/templates/entry.html',
         restrict: 'EA',
@@ -21,34 +21,37 @@ angular.module('phrPrototypeApp').directive('entry', function() {
             scope.entrySubTitleOne = "";
             scope.entrySubTitleTwo = "";
             scope.entryTemplatePath = "views/templates/details/" + scope.type + ".html";
+            
+
+
             switch (scope.type) {
                 case 'allergies':
                     scope.entryTitle = scope.entryData.observation.allergen.name;
                     scope.entrySubTitleOne = scope.entryData.observation.severity.code.name;
-                    scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'encounters':
                     scope.entryTitle = scope.entryData.encounter.name;
                     scope.entrySubTitleOne = scope.entryData.locations[0].name;
-                    scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'immunizations':
                     scope.entryTitle = scope.entryData.product.product.name;
-                    scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'medications':
                     scope.entryTitle = scope.entryData.product.product.name;
                     scope.entrySubTitleOne = scope.entryData.administration.route.name;
-                    scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'conditions':
                     scope.entryTitle = scope.entryData.problem.code.name;
-                    scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'procedures':
                     scope.entryTitle = scope.entryData.procedure.name;
                     scope.entrySubTitleOne = scope.entryData.status;
-                    scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'vitals':
                     var quantityUnit = "";
@@ -63,25 +66,25 @@ angular.module('phrPrototypeApp').directive('entry', function() {
                     }
                     scope.entryTitle = scope.entryData.value + " " + quantityUnit;
                     scope.entrySubTitleOne = scope.entryData.vital.name;
-                    scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'results':
                     scope.entryTitle = scope.entryData.result_set.name;
-                    scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'social':
                     scope.entryTitle = scope.entryData.value;
                     scope.entrySubTitleOne = scope.entryData.code.name;
-                    scope.entrySubTitleTwo = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'claims':
                     scope.entryTitle = scope.entryData.payer[0];
-                    scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
                     break;
                 case 'insurance':
                     scope.entryTitle = scope.entryData.name;
                     if (scope.entryData.date_time) {
-                        scope.entrySubTitleOne = scope.entryData.date_time.displayDate;
+                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
                     }
                     break;
             }
