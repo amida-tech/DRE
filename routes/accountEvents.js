@@ -54,6 +54,7 @@ exports.addEvent = function(req, res) {
         if (err) return console.log('Error:' + err);
     });
     //res.send(200)
+    res.set('Content-Type', 'text/plain');
     res.send("event " + newEvent.event_type + " added\n");
 };
 
@@ -68,6 +69,7 @@ exports.allEventsInOrder = function(req, res) {
                 console.log('Error' + err);
             } else {
                 //res.send(200)
+                res.set('Content-Type', 'application/json');
                 res.send(docs);
             }
         })

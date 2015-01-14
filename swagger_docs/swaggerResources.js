@@ -4,6 +4,7 @@
 *	Each resource contains a swagger spec as well as the action to execute when called
 */
 
+//Deprecated: all done manually in swagger.json file
 var swnx = require('swagger-node-express'); //require swagger?
 var paramTypes = swnx.paramTypes;
 var swe = swnx.errors;

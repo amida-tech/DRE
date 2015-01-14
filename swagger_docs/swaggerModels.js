@@ -1,6 +1,5 @@
 //https://github.com/swagger-api/swagger-node-express/blob/master/sample-application/models.js
 
-//TODO: figure out which datatypes/models are needed + how to organize them
 //Deprecated: Swagger 2.0 keeps it all in one file, see "definitions" field
 exports.eventSchema = {
 	"eventSchema": {
