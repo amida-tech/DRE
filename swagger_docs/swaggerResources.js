@@ -12,10 +12,10 @@ var history = require('./routes/accountEvents');
 exports.addEvent = {
 	'spec': {
 		description: 'Add an event to user history',
-		path: '/accountEvent?userID={:id}&event_type={enum}&note={note}&fileRef={fileRef}', //without query syntax?
+		path: '/accountEvents/add?userID={:id}&event_type={enum}&note={note}&fileRef={fileRef}', //without query syntax?
 		method: 'GET',
-		summary: '',
-		notes: ,
+		summary: 'adds a single event',
+		notes: 'see enum for valid types',
 		type: , //from models.js
 		nickname: , //other equiv calls
 		produces: String, //['application/json']
@@ -45,7 +45,7 @@ exports.addEvent = {
 exports.fullHistory = {
 	'spec':{
 		description: 'Return all events in descending order',
-		path: '/accountEvents', 
+		path: '/accountEvents/all', 
 		method: 'GET',
 		summary: '',
 		notes: ,
