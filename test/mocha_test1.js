@@ -16,35 +16,42 @@ var api = supertest.agent('http://localhost:3005');
 
 ///=======Drop collection manually in Robomongo before running tests===========///
 describe('Init', function(){
-	//TODO: Clear the existing history automatically
-	// before(function(done){
-	// 	mongoose.connect('mongodb://localhost/27017', function(){
-	// 		mongoose.connection.db.dropCollection('events', function(err){
-	// 			if(err){
-	// 				console.log(err);
-	// 				done();
-	// 			}else{
-	// 				done();
-	// 			}
-	// 		});
-	// 	});
-	// });
+
+// 	before(function(done){
+		
+// 			console.log("mongoose connect", db);
+
+// 			db.connections[0].collections['events'].drop( function(err) {
+//     console.log('collection dropped');
+// });
 
 
-	var sampleURL1 = '/accountEvent?userID=1&event_type=initAccount&note=no-note-here&fileRef=AAA',
-		sampleURL2 = '/accountEvent?userID=2&event_type=fileUploaded&note=doctor&fileRef=BBB',
-		sampleURL3 = '/accountEvent?userID=3&event_type=passwordChange&note=hint&fileRef=CCC';
+// 			done();
+
+// 	});
+
+
+	// var sampleURL1 = '/account_history?userID=1&event_type=initAccount&note=no-note-here&fileRef=AAA',
+	// 	sampleURL2 = '/account_history?userID=2&event_type=fileUploaded&note=doctor&fileRef=BBB',
+	// 	sampleURL3 = '/account_history?userID=3&event_type=passwordChange&note=hint&fileRef=CCC';
+
+	var sampleURL1 = '/account_history'
 	
 	//TODO: add coverage for other cases?
 	describe('Account History', function(){
 		it('adds event to empty database', function(done){
 			var eventType = 'initAccount'
-			api.get(sampleURL1)
-			.expect('event initAccount added\n')
+			api.post(sampleURL1)
+			.send({'userID':'1', 'event_type': 'initAccount', 'note':'no-note-here', 'fileRef':'AAA'})
 			.end(function(err, res){
 				if(err){
 					done(err);
 				}else{
+					expect(res.body).to.have.deep.property('userID','1');
+					expect(res.body).to.have.deep.property('event_type','initAccount');
+					expect(res.body).to.have.deep.property('note','no-note-here');
+					expect(res.body).to.have.deep.property('fileRef','AAA');
+					expect(res.body).to.have.property('time');
 					done();
 				}
 			});
@@ -53,7 +60,8 @@ describe('Init', function(){
 		//Prepopulate db for full history
 		before(function(done){
 			//api.get(sampleURL2, function(done{ ...sampleURL3.})
-			api.get(sampleURL2)
+			api.post(sampleURL1)
+			.send({'userID':'2', 'event_type': 'fileUploaded', 'note':'doctor', 'fileRef':'BBB'})
 			.end(function(err, res){
 				if(err){
 					done(err);
@@ -64,7 +72,7 @@ describe('Init', function(){
 		});
 
 		it('Shows Full Event History - desc', function(done){
-			var fullEventURL = '/accountEvents';
+			var fullEventURL = '/account_history/all';
 			var ans1 = {userID: '1', event_type: 'initAccount', note: 'no-note-here', fileRef: 'AAA'},
 				ans2 = {userID: '2', event_type: 'fileUploaded', note: 'doctor', fileRef: 'BBB'};
 				//ans3 = {userID: 3, event_type: 'passwordChange', note: 'hint', fileRef: 'CCC'};
@@ -89,6 +97,21 @@ describe('Init', function(){
 				}
 			});
 		});
+
+/*
+    xafter(function (done) {
+        dbinfo.db.dropDatabase(function (err) {
+            if (err) {
+                done(err);
+            } else {
+                dbinfo.connection.close(function (err) {
+                    done(err);
+                });
+            }
+        });
+    });
+*/
+
 	});
 });
 

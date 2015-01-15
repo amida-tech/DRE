@@ -43,19 +43,19 @@ exports.addEvent = function(req, res) {
     //console.log("addEvent started");
 
     var newEvent = new Event({
-        userID: req.query.userID,
-        event_type: req.query.event_type,
-        note: req.query.note,
-        fileRef: req.query.fileRef
+        userID: req.body.userID,
+        event_type: req.body.event_type,
+        note: req.body.note,
+        fileRef: req.body.fileRef
     });
 
-    //console.log("newEvent obj created", newEvent);
+    console.log("newEvent obj created", newEvent);
     newEvent.save(function(err) {
         if (err) return console.log('Error:' + err);
     });
     //res.send(200)
-    res.set('Content-Type', 'text/plain');
-    res.send("event " + newEvent.event_type + " added\n");
+    res.set('Content-Type', 'application/json');
+    res.status(201).send(newEvent);
 };
 
 exports.allEventsInOrder = function(req, res) {
@@ -75,7 +75,7 @@ exports.allEventsInOrder = function(req, res) {
         })
 };
 
-//For use with swaggerResources.js
+//For use with swaggerResources.js ---> not using anymore
 exports.addEvent2 = function(user, type, note, file){
     var newEvent = new Event({
         userID: user,

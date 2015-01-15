@@ -1,5 +1,5 @@
 #Basic API for saving account history events: 
-First login, file uploaded, file downloaded, lab results, password change, personal info change
+Account creation, login, logout, file uploaded, file downloaded, lab results, password change, personal info change
 
 ##Usage
 ```
@@ -8,16 +8,15 @@ npm install
 node server.js
 ```
 
-List all events:
-
-`
-curl http://localhost:3005/accountEvents/all
-`
-
 Add new event (example):
 
 ```
- curl http://localhost:3005/accountEvents/add\?userID\=1\&event_type\=initAccount\&note\=no-note-here\&fileRef\=123
+ curl -d 'userID=1' -d 'event_type=initAccount' -d 'note=no-note-here' -d 'fileRef=AAA' http://localhost:3005/account_history
 
  event_type = ['initAccount', 'loggedIn', 'loggedOut', 'fileUploaded', 'fileDownloaded', 'labResults', 'passwordChange', 'infoUpdate']
 ```
+List all events:
+
+`
+curl http://localhost:3005/account_history/all
+`
