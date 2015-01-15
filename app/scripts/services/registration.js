@@ -17,8 +17,11 @@ angular.module('phrPrototypeApp')
         	var password=info.password;
         	var email=info.email;
 
+
+        	console.log("signup", info);
+
             //TODO: verify info for all the elements
-            if (username && password) {
+            //if (username && password) {
 
                 $http.post('api/v1/register', {
                         username: username,
@@ -27,9 +30,11 @@ angular.module('phrPrototypeApp')
                     })
                     .success(function(data) {
                         //$location.path('/dashboard');
+			        	console.log("success");
                         callback(null);
                     }).error(function(data) {
                         //callback(data);
+			        	console.log("error", data);
                         callback('Invalid Login and/or Password.');
                     });
 
@@ -39,6 +44,6 @@ angular.module('phrPrototypeApp')
                 } else {
                     callback('Invalid Login and/or Password.');
                 }*/
-            }
+            //}
         };
     });

@@ -33,14 +33,16 @@ angular.module('phrPrototypeApp')
 
         $scope.finish = function() {
             //calling webservice for registration
-
             var info = {
-                'username': $scope.username,
+                'username': $scope.inputLogin,
                 'password': $scope.inputPassword,
                 'email': 'test@amida-demo.com'
             };
 
+            console.log("starting registration");
+
             registration.signup(info, function() {
+                console.log("done");
                 $location.path('/home');
             });
 
