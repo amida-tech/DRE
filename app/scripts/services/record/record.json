@@ -1242,28 +1242,6 @@
                 },
                 "identifiers": [
                     {
-                        "identifier": "2.16.840.1.113883.19",
-                        "extension": "123456789"
-                    }
-                ],
-                "code": {
-                    "name": "Smoking Status"
-                },
-                "value": "Former smoker"
-            },
-            {
-                "date_time": {
-                    "low": {
-                        "date": "2005-05-01T00:00:00.000Z",
-                        "precision": "day"
-                    },
-                    "high": {
-                        "date": "2009-02-27T08:00:00.000Z",
-                        "precision": "second"
-                    }
-                },
-                "identifiers": [
-                    {
                         "identifier": "9b56c25d-9104-45ee-9fa4-e0f3afaa01c1"
                     }
                 ],
