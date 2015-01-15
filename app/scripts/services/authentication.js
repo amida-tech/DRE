@@ -62,8 +62,15 @@ angular.module('phrPrototypeApp')
         this.authStatus = function(callback) {
 
             $http.get('api/v1/account')
-                .success(function() {
-                    callback(null, true);
+                .success(function(data) {
+                    if (data && data.authenticated){
+                        callback(null, true);
+                    }
+                    else
+                    {
+                        callback(null, false);
+                    }
+
                 }).error(function(err) {
                     callback(err, false);
                 });
