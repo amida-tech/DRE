@@ -165,7 +165,7 @@ angular.module('phrPrototypeApp')
 
             encounters.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
-                $location.path('/record/encounters');
+                $location.path('/record');
 
 
             });

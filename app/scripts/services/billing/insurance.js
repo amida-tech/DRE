@@ -16,14 +16,16 @@ angular.module('phrPrototypeApp')
                 'status': 'new',
                 'merged': '2007-05-01T00:00:00Z'
             }],
-            'comments': []
+            'comments': [],
+            'type': 'insurance'
         },{
             'attribution': [{
                 'source': 'blue-button.xml',
                 'status': 'new',
                 'merged': '2007-05-01T00:00:00Z'
             }],
-            'comments': []
+            'comments': [],
+            'type': 'insurance'
         },{
             'attribution': [{
                 'source': 'blue-button.xml',
@@ -34,7 +36,8 @@ angular.module('phrPrototypeApp')
                 'comment': "This insurance is no longer valid since I don't work for the state anymore.",
                 'date': '2014-05-03T00:12:00Z',
                 'starred': true
-            }]
+            }],
+            'type': 'insurance'
         }];
 
         var tmpInsurance = [{

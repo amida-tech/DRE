@@ -122,7 +122,7 @@ angular.module('phrPrototypeApp')
 
             vitals.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
-                $location.path('/record/vitals');
+                $location.path('/record');
 
 
             });

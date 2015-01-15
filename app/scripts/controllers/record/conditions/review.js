@@ -185,7 +185,7 @@ angular.module('phrPrototypeApp')
 
             conditions.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
-                $location.path('/record/conditions');
+                $$location.path('/record');
 
 
             });

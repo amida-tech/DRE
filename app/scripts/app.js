@@ -85,6 +85,10 @@ angular
         templateUrl: 'views/billing/insurance.html',
         controller: 'BillingInsuranceCtrl'
       })
+      .when('/billing', {
+        templateUrl: 'views/billing.html',
+        controller: 'BillingCtrl'
+      })
       .when('/record/medications', {
         templateUrl: 'views/record/medications.html',
         controller: 'RecordMedicationsCtrl'
@@ -164,6 +168,10 @@ angular
       .when('/notes', {
         templateUrl: 'views/notes.html',
         controller: 'NotesCtrl'
+      })
+      .when('/newrecord', {
+        templateUrl: 'views/newrecord.html',
+        controller: 'NewRecordCtrl'
       })
       .otherwise({
         redirectTo: '/'

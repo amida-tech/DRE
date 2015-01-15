@@ -157,7 +157,7 @@ angular.module('phrPrototypeApp')
 
             social.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
-                $location.path('/record/social');
+                $location.path('/record');
 
 
             });

@@ -7,192 +7,97 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format) {
-    record.getRecord(function(err, results) {
-        $scope.entries = results;
-    });
-
-    $scope.dashMetrics = {};
-    $scope.tabs = [{
-        "title": "Weight",
-        "data": {},
-        "chartName": "d3template"
-    }, {
-        "title": "Blood Pressure",
-        "data": {},
-        "chartName": "d3template"
-    }];
-    $scope.tabs.activeTab = 0;
-    $scope.$watch('tabs.activeTab', function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-            $scope.$broadcast('tabchange', {
-                "val": newVal
-            });
-        }
-    });
-    
-
-    function dashPrep() {
-        var weightDateArray = [];
-        var heightDateArray = [];
-        var bpDateArraySystolic = [];
-        var bpDateArrayDiastolic = [];
-        //Build arrays of all dates per section.
-        _.each($scope.entries.vitals, function(vitalEntry) {
-            if (vitalEntry.data.vital.name === "Height") {
-                _.each(vitalEntry.data.date_time, function(dateArr) {
-                    heightDateArray.push(moment(dateArr.date));
-                });
-            }
-            if (vitalEntry.data.vital.name === "Patient Body Weight - Measured") {
-                _.each(vitalEntry.data.date_time, function(dateArr) {
-                    weightDateArray.push(moment(dateArr.date));
-                });
-            }
-            if (vitalEntry.data.vital.name === "Intravascular Systolic") {
-                _.each(vitalEntry.data.date_time, function(dateArr) {
-                    bpDateArraySystolic.push(moment(dateArr.date));
-                });
-            }
-            if (vitalEntry.data.vital.name === "Intravascular Diastolic") {
-                _.each(vitalEntry.data.date_time, function(dateArr) {
-                    bpDateArrayDiastolic.push(moment(dateArr.date));
+    record.getData().then(function(data) {
+        $scope.entries = data;
+        $scope.dashMetrics = {};
+        $scope.tabs = [{
+            "title": "Weight",
+            "data": {},
+            "chartName": "d3template"
+        }, {
+            "title": "Blood Pressure",
+            "data": {},
+            "chartName": "d3template"
+        }];
+        $scope.tabs.activeTab = 0;
+        $scope.$watch('tabs.activeTab', function(newVal, oldVal) {
+            if (newVal !== oldVal) {
+                $scope.$broadcast('tabchange', {
+                    "val": newVal
                 });
             }
         });
-        //Flag maxes.
-        var heightMaxDate = moment.max(heightDateArray);
-        var weightMaxDate = moment.max(weightDateArray);
-        var bpMaxDateDiastolic = moment.max(bpDateArrayDiastolic);
-        var bpMaxDateSystolic = moment.max(bpDateArraySystolic);
-        //Recover associated max value.
-        _.each($scope.entries.vitals, function(vitalEntry) {
-            //Find most current height.
-            if (vitalEntry.data.vital.name === "Height") {
-                _.each(vitalEntry.data.date_time, function(dateArr) {
-                    if (moment(moment(dateArr.date)).isSame(heightMaxDate, 'day')) {
-                        $scope.dashMetrics.height = {
-                            value: vitalEntry.data.value,
-                            unit: vitalEntry.data.unit
-                        };
-                    }
-                });
-            }
-            if (vitalEntry.data.vital.name === "Patient Body Weight - Measured") {
-                _.each(vitalEntry.data.date_time, function(dateArr) {
-                    if (moment(moment(dateArr.date)).isSame(weightMaxDate, 'day')) {
-                        $scope.dashMetrics.weight = {
-                            value: vitalEntry.data.value,
-                            unit: vitalEntry.data.unit
-                        };
-                    }
-                });
-            }
-            if (vitalEntry.data.vital.name === "Intravascular Systolic") {
-                _.each(vitalEntry.data.date_time, function(dateArr) {
-                    if (moment(moment(dateArr.date)).isSame(bpMaxDateSystolic, 'day')) {
-                        $scope.dashMetrics.systolic = {
-                            value: vitalEntry.data.value,
-                            unit: vitalEntry.data.unit
-                        };
-                    }
-                });
-            }
-            if (vitalEntry.data.vital.name === "Intravascular Diastolic") {
-                _.each(vitalEntry.data.date_time, function(dateArr) {
-                    if (moment(moment(dateArr.date)).isSame(bpMaxDateDiastolic, 'day')) {
-                        $scope.dashMetrics.diastolic = {
-                            value: vitalEntry.data.value,
-                            unit: vitalEntry.data.unit
-                        };
-                    }
-                });
-            }
-        });
-        //Format weight output.
-        if ($scope.dashMetrics.height.unit === "[in_i]") {
-            var displayHeight = Math.floor(($scope.dashMetrics.height.value / 12)) + "' " + $scope.dashMetrics.height.value % 12 + '"';
-            $scope.dashMetrics.height.disp = displayHeight;
-        }
-        //Format height output.
-        if ($scope.dashMetrics.weight.unit === "[lb_av]") {
-            var displayWeight = $scope.dashMetrics.weight.value + " lbs";
-            $scope.dashMetrics.weight.disp = displayWeight;
-        }
-        //BMI Calculation
-        //Expects US units.
-        function calculateBMI(weight, height) {
-            var BMI = (weight * 703) / (height * height);
-            BMI = BMI.toFixed(1);
-            return BMI;
-        }
-        $scope.dashMetrics.bmi = calculateBMI($scope.dashMetrics.weight.value, $scope.dashMetrics.height.value);
-    }
-    $scope.entryList = [];
-
-    function formatDates() {
-        //Flatten to timeline.
-        _.each($scope.entries, function(entry, section) {
-            _.each(entry, function(item) {
-                var tmpItem = item;
-                tmpItem.category = section;
-                $scope.entryList.push(tmpItem);
-            });
-        });
-
-        _.each($scope.entryList, function(entry) {
-
-            //console.log(entry.data.date_time);
-
-            _.each(entry.data.date_time, function(dateEntry, dateTitle) {
-                if (dateTitle !== 'displayDate' && dateTitle !== 'plotDate') {
-                    format.formatDate(dateEntry);
+        $scope.entryType = "all";
+        $scope.recordEntries = [];
+        _.each($scope.entries.data, function(entries, type) {
+            _.each(entries, function(entry) {
+                var tmpDates = '';
+            var dispDates = '';
+            
+            if (!_.isUndefined(entry.date_time)) {
+                if (!_.isUndefined(entry.date_time.point)) {
+                    tmpDates = [entry.date_time.point];
+                } else if (!_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
+                    tmpDates = [entry.date_time.low, entry.date_time.high];
+                } else if (!_.isUndefined(entry.date_time.low) && _.isUndefined(entry.date_time.high)) {
+                    tmpDates = [entry.date_time.low];
+                } else if (_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
+                    tmpDates = [entry.date_time.high];
                 }
-            });
-
-            //Have to generate date for results.
-            if (entry.category === 'results') {
-                var dateArray = [];
-                entry.data.date_time = {};
-
-                //Fill out each result's individual date.
-                if (entry.data.results) {
-                    _.each(entry.data.results, function(result) {
-                        _.each(result.date_time, function(dateEntry, dateTitle) {
-                            if (dateTitle !== 'displayDate' && dateTitle !== 'plotDate') {
-                                format.formatDate(dateEntry);
-                                dateArray.push(moment(dateEntry.date));
-                            }
-                        });
-                        result.date_time.displayDate = format.outputDate(result.date_time);
+            }
+            if (tmpDates.length === 1) {
+                dispDates = format.formatDate(tmpDates[0]);
+                
+            } else if (tmpDates.length === 2) {
+                dispDates = format.formatDate(tmpDates[0]) + ' - ' + format.formatDate(tmpDates[1]);
+                
+            }
+                if (!_.contains(['demographics','problems','plan_of_care','payers','social_history'],type)) {
+                    $scope.recordEntries.push({
+                        'data': entry,
+                        'category': type,
+                        'metadata': {
+                            'comments': '',
+                            'displayDate': dispDates,
+                            'datetime': tmpDates
+                        }
                     });
                 }
-
-                var momentMin = moment.min(dateArray);
-                var momentMax = moment.max(dateArray);
-
-                //If date min and max are equal, consolidate.
-                //Only have test data, should expand to other cases in deploy.
-                if (momentMin.isSame(momentMax, 'day')) {
-                    entry.data.date_time.point = {};
-                    entry.data.date_time.point.date = momentMin.toISOString();
-                    entry.data.date_time.point.precision = 'day';
-                    entry.data.date_time.point.displayDate = format.formatDate(entry.data.date_time.point);
+                if (type === 'social_history') {
+                    $scope.recordEntries.push({
+                        'data': entry,
+                        'category': 'social',
+                        'metadata': {
+                            'comments': '',
+                            'displayDate': dispDates,
+                            'datetime': tmpDates
+                        }
+                    });
                 }
-
+            });
+        });
+        $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
+            return entry.metadata.datetime[0];
+        })
+        _.each($scope.recordEntries, function(entry){
+            console.log(entry.metadata.datetime[0]);
+        })
+        $scope.entryListFiltered = $scope.recordEntries;
+        $scope.$watch('entryType', function(newVal, oldVal) {
+            if (newVal !== oldVal) {
+                if (newVal === "all") {
+                    $scope.entryListFiltered = $scope.recordEntries;
+                } else {
+                    $scope.entryListFiltered = _.where($scope.recordEntries, {
+                        category: newVal
+                    });
+                }
+                if (newVal === "vitals") {
+                    $scope.$broadcast('tabchange', {
+                        "val": 0
+                    });
+                }
             }
-
-            entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
-            entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
         });
-    }
-
-    function sortList() {
-        $scope.entryList = _.sortBy($scope.entryList, function(entry) {
-            return entry.data.date_time.plotDate;
-        });
-        $scope.entryList.reverse();
-    }
-    dashPrep();
-    formatDates();
-    sortList();
+    });
 });

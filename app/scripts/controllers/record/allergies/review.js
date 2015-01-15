@@ -168,7 +168,7 @@ angular.module('phrPrototypeApp')
 
             allergies.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
-                $location.path('/record/allergies');
+                $location.path('/record');
 
 
             });

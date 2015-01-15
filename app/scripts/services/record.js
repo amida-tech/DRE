@@ -8,7 +8,7 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-  .service('record', function record(allergies, conditions, encounters, immunizations, medications, procedures, results, social, vitals) {
+  .service('record', function record($http, $q, allergies, conditions, encounters, immunizations, medications, procedures, results, social, vitals) {
    	
   	this.getRecord = function(callback) {
 
@@ -80,5 +80,23 @@ angular.module('phrPrototypeApp')
       });
 
   	};
+    this.getData = function () {
+            var deferred = $q.defer();
+            var dataurl = '/scripts/services/record/record.json';
+            return $http({url: dataurl, method: 'GET', cache: true}).then(function (response) {
+                if (typeof response.data === 'object') {
+                    return response.data;
+                    
+                } else {
+                    // invalid response
+                    console.log('didnt get data');
+                    return deferred.reject(response.data);
+                }
+            }, function (error) {
+                // something went wrong
+                console.log('data errorrrrrrr');
+                return deferred.reject(error);
+            });
+        };
 
   });

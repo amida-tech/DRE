@@ -142,7 +142,7 @@ angular.module('phrPrototypeApp')
 
             immunizations.saveEntry($scope.match[matchIndex].srcMatch.data, function (err) {
 
-                $location.path('/record/immunizations');
+                $location.path('/record');
 
 
             });

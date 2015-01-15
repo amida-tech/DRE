@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('BillingClaimsCtrl', function ($scope, $location, $anchorScroll, claims, insurance, format) {
+    .controller('BillingCtrl', function ($scope, $location, $anchorScroll, claims, insurance, format) {
 
         $scope.entryType = 'all';
         $scope.masterEntries = [];
@@ -78,7 +78,7 @@ angular.module('phrPrototypeApp')
                 $scope.entries = $scope.claimsEntries;
             } else if (type === 'insurance') {
                 $scope.entries = $scope.insuranceEntries;
-            };
+            }
         };
 
         $scope.refresh = function () {
@@ -88,7 +88,7 @@ angular.module('phrPrototypeApp')
                 formatAddress();
                 $scope.entries = $scope.masterEntries;
             });
-        }
+        };
 
         $scope.refresh();
     });
