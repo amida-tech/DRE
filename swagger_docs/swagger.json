@@ -31,31 +31,15 @@
                     "application/json"
                 ],
                 "tags": ["history"],
-                "parameters": [{
-                    "name": "userID",
-                    "in": "query",
-                    "type": "string",
-                    "description": "user identifier",
-                    "required": true
-                }, {
-                    "name": "event_type",
-                    "in": "query",
-                    "type": "string",
-                    "description": "user identifier",
-                    "required": true
-                }, {
-                    "name": "note",
-                    "in": "query",
-                    "type": "string",
-                    "description": "additional info for event",
-                    "required": false
-                }, {
-                    "name": "fileRef",
-                    "in": "query",
-                    "type": "string",
-                    "description": "file reference string",
-                    "required": false
-                }],
+                "parameters":{
+                    "name": "event",
+                    "description": "Event to be added",
+                    "in":"body",
+                    "schema":{
+                        "$ref":"#/definitions/eventSchema"
+                    },
+                    "required":true
+                },
                 "responses": {
                     "201": {
                         "description": "event succesfully created and added",
@@ -115,6 +99,10 @@
                 },
                 "fileRef": {
                     "type": "string"
+                },
+                "time":{
+                    "type":"string",
+                    "format": "date-time"
                 }
             }
         }

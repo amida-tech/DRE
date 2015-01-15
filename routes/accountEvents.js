@@ -51,7 +51,7 @@ exports.addEvent = function(req, res) {
         fileRef: req.body.fileRef
     });
 
-    console.log("newEvent obj created", newEvent);
+    //console.log("newEvent obj created", newEvent);
     newEvent.save(function(err) {
         if (err) return console.log('Error:' + err);
     });
