@@ -78,10 +78,10 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         });
         $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
             return entry.metadata.datetime[0];
-        })
+        });
         _.each($scope.recordEntries, function(entry){
             console.log(entry.metadata.datetime[0]);
-        })
+        });
         $scope.entryListFiltered = $scope.recordEntries;
         $scope.$watch('entryType', function(newVal, oldVal) {
             if (newVal !== oldVal) {
