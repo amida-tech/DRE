@@ -39,6 +39,8 @@ maybe make toString() method for Mongoose schema?
 
 var Event = mongoose.model('Event', EventSchema)
 
+exports.EventModel = Event;
+
 exports.addEvent = function(req, res) {
     //console.log("addEvent started");
 
