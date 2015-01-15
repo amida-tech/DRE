@@ -28,7 +28,7 @@
                 "description": "Save event for register, log in/out, up/download file, lab results, password change, personal information changed",
                 "operationId": "addEvent",
                 "produces": [
-                    "text/plain"
+                    "application/json"
                 ],
                 "tags": ["history"],
                 "parameters": [{
@@ -57,10 +57,10 @@
                     "required": false
                 }],
                 "responses": {
-                    "200": {
-                        "description": "event succesfully added",
+                    "201": {
+                        "description": "event succesfully created and added",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/eventSchema"
                         }
                     }
                 }
