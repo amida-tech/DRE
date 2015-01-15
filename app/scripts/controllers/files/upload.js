@@ -8,16 +8,26 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('FilesUploadCtrl', function ($scope, $location) {
-    
-  	$scope.uploadStep = 0;
+    .controller('FilesUploadCtrl', function($scope, $location, upload) {
 
-  	$scope.incrementStep = function () {
-  		$scope.uploadStep++;
-  	}
+        $scope.uploadStep = 0;
 
-  	$scope.return = function () {
-  		$location.path('/files');
-  	}
+        $scope.incrementStep = function() {
+            $scope.uploadStep++;
+        }
 
-  });
+        $scope.return = function() {
+            $location.path('/files');
+        }
+
+        $scope.importAndSave = function() {
+            var file = $scope.myFile
+            upload.uploadRecord(file, function(err, results) {
+                //do something
+                $location.path('/files');
+            });
+
+        }
+
+
+    });
