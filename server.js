@@ -4,13 +4,6 @@ var express = require('express'),
 
 var app = express();
 
-var swagger = require('swagger-node-express');
-
-swagger.setAppHandler(app);
-
-//Not working with Swagger UI -- DRE API set up 
-swagger.configure('http://localhost:3005/api-docs', '0.0.1');
-
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
