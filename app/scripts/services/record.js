@@ -6,7 +6,7 @@
  * # record
  * Service in the phrPrototypeApp.
  */
-angular.module('phrPrototypeApp').service('record', function record($http, $q, format, allergies, conditions, encounters, immunizations, medications, procedures, results, social, vitals) {
+angular.module('phrPrototypeApp').service('record', function record($http, $q, format) {
     this.masterRecord = {};
     this.processedRecord = {};
     this.recordDirty = false;
