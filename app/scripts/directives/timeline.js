@@ -63,13 +63,14 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     } else {
                         _.each(dataToPlot, function(entry) {
                             var plotDate;
-                            if (entry.data.date_time) {
-                                if (entry.data.date_time.plotDate) {
-                                    plotDate = isoFormat.parse(entry.data.date_time.plotDate);
+                            if (entry.metadata.datetime) {
+                                if (entry.metadata.datetime[0]) {
+                                    plotDate = isoFormat.parse(entry.metadata.datetime[0].date);
+                                    
                                 }
                                 //Redundancy for isoFormat subsecond support.
                                 if (_.isNull(plotDate)) {
-                                    plotDate = isoFormatSubsecond.parse(entry.data.date_time.plotDate);
+                                    plotDate = isoFormatSubsecond.parse(entry.metadata.datetime[0].date);
                                 }
                                 plotCircles.push({
                                     "date": plotDate
