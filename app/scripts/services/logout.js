@@ -13,16 +13,18 @@ angular.module('phrPrototypeApp')
 
 
         this.logout = function(callback) {
-
+        	console.log("logout service");
             var err = null;
 
 
             $http.post('api/v1/logout')
                 .success(function() {
+                	console.log("logout successfull");
                     //$rootScope.isAuthenticated = false;
                     //$location.path('/home');
                     callback(null);
                 }).error(function(err) {
+                	console.log("logout failed");
                     callback(err);
                 });
 
