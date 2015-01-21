@@ -17,6 +17,17 @@ angular.module('dre.register', [])
         $scope.inputEmail = '';
         $scope.regError = '';
 
+        $scope.firstname = '';
+        $scope.middlename = '';
+        $scope.lastname = '';
+        $scope.dob = '';
+        $scope.gender = '';
+
+        // $scope.submitMessage = function(message) {
+        //     flashmessage.setMessage(message);
+        //     $location.path("/register");
+        // };
+
         $scope.submitReg = function() {
             $http.post('/api/v1/register', {
                 "username": $scope.inputUsername,
@@ -35,13 +46,22 @@ angular.module('dre.register', [])
             $http.post('api/v1/login', {
                 "username": $scope.inputUsername,
                 "password": $scope.inputPassword
+            });
+            //update with all registration info and POST to demographics section
+            $http.post('api/v1/record/demographics', {
+                "demographics.name.first": $scope.firstname = '',
+                "demographics.name.middle": $scope.middlename = '',
+                "demographics.name.last": $scope.lastname = '',
+                //will need to do some date formatting here
+                "demographics.dob": $scope.dob = '',
+                "demographics.gender": $scope.gender = ''
             })
                 .success(function(data) {
-                    $rootScope.isAuthenticated = true;
-                    $rootScope.notifications = {};
-                    getNotifications.getUpdate(function(err, notifications) {
-                        $rootScope.notifications = notifications;
-                    });
+                    // $rootScope.isAuthenticated = true;
+                    // $rootScope.notifications = {};
+                    // getNotifications.getUpdate(function(err, notifications) {
+                    //     $rootScope.notifications = notifications;
+                    // });
 
                     $location.path('/dashboard');
                 }).error(function(data) {
@@ -49,5 +69,7 @@ angular.module('dre.register', [])
                     $location.path('/home');
                 });
         };
+
+
     }
 ]);

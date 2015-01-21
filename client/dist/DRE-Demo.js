@@ -1,5 +1,5 @@
-/*! DRE-Demo - v1.0.0 - 2014-12-12
- * Copyright (c) 2014 Dmitry Kachaev, Matthew McCall and Afsin Ustundag;
+/*! DRE-Demo - v1.0.0 - 2015-01-21
+ * Copyright (c) 2015 Dmitry Kachaev, Matthew McCall and Afsin Ustundag;
  * Licensed Apache 2.0
  */
 
@@ -24,6 +24,7 @@ var dre = angular
         'services.fileDownload',
         'services.getNotifications',
         'services.recordFunctions',
+        'services.flashmessage'
     ])
     .filter('bb_date', function($filter) {
         //Format Blue Button date JSON struct into string (with precision)
@@ -2438,13 +2439,26 @@ angular.module('dre.register', [])
     }
 ])
 
-.controller('registerCtrl', ['$rootScope', '$scope', '$http', '$location', 'getNotifications',
-    function($rootScope, $scope, $http, $location, getNotifications) {
+.controller('registerCtrl', ['$rootScope', '$scope', '$http', '$location', 'getNotifications', 'flashmessage',
+    function($rootScope, $scope, $http, $location, getNotifications, flashmessage) {
 
         $scope.inputUsername = '';
         $scope.inputPassword = '';
         $scope.inputEmail = '';
         $scope.regError = '';
+        $scope.flashmessage = flashmessage;
+        $scope.message = "test message";
+
+        $scope.firstname = '';
+        $scope.middlename = '';
+        $scope.lastname = '';
+        $scope.dob = '';
+        $scope.gender = '';
+
+        $scope.submitMessage = function(message) {
+            flashmessage.setMessage(message);
+            $location.path("/register");
+        };
 
         $scope.submitReg = function() {
             $http.post('/api/v1/register', {
@@ -2464,13 +2478,22 @@ angular.module('dre.register', [])
             $http.post('api/v1/login', {
                 "username": $scope.inputUsername,
                 "password": $scope.inputPassword
+            });
+            //update with all registration info and POST to demographics section
+            $http.post('api/v1/record/demographics', {
+                "demographics.name.first": $scope.firstname = '',
+                "demographics.name.middle": $scope.middlename = '',
+                "demographics.name.last": $scope.lastname = '',
+                //will need to do some date formatting here
+                "demographics.dob": $scope.dob = '',
+                "demographics.gender": $scope.gender = ''
             })
                 .success(function(data) {
-                    $rootScope.isAuthenticated = true;
-                    $rootScope.notifications = {};
-                    getNotifications.getUpdate(function(err, notifications) {
-                        $rootScope.notifications = notifications;
-                    });
+                    // $rootScope.isAuthenticated = true;
+                    // $rootScope.notifications = {};
+                    // getNotifications.getUpdate(function(err, notifications) {
+                    //     $rootScope.notifications = notifications;
+                    // });
 
                     $location.path('/dashboard');
                 }).error(function(data) {
@@ -2478,6 +2501,8 @@ angular.module('dre.register', [])
                     $location.path('/home');
                 });
         };
+
+
     }
 ]);
 
@@ -3686,6 +3711,29 @@ angular.module('services.fileUpload', [])
     };
 }]);
 
+angular.module('services.flashmessage', [])
+
+.service('flashmessage, [$rootScope', '$http', 
+  function ($rootScope, $http) {
+  // var queue = [];
+  // var currentMessage = "";
+
+  // $rootScope.$on("$routeChangeSuccess", function() {
+  //   currentMessage = queue.shift() || "";
+  // });
+
+  // return {
+  //   setMessage: function(message) {
+  //     queue.push(message);
+  //   },
+  //   getMessage: function() {
+  //     return currentMessage;
+  //   }
+  // };
+
+
+
+});
 angular.module('services.getNotifications', [])
 
 .service('getNotifications', ['$http', '$filter', 'recordFunctions',
