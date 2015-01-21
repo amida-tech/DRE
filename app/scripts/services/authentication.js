@@ -11,31 +11,6 @@ angular.module('phrPrototypeApp')
     .service('authentication', function authentication($location, $http) {
 
 
-        //TODO:  Hygiene here for max length of inputs.
-        this.login = function(username, password, callback) {
-            if (username && password) {
-
-                $http.post('api/v1/login', {
-                        username: username,
-                        password: password
-                    })
-                    .success(function(data) {
-                        //$location.path('/dashboard');
-                        callback(null);
-                    }).error(function(data) {
-                        //callback(data);
-                        callback('Invalid Login and/or Password.');
-                    });
-
-                //Stubbed login.
-                /*(if ((username === 'test' && password === 'test') || (username === 'test@amida-demo.com' && password === 'test')) {
-                    callback(null);
-                } else {
-                    callback('Invalid Login and/or Password.');
-                }*/
-            }
-        };
-
         this.logout = function(callback) {
 
             var err = null;

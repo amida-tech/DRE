@@ -20,17 +20,23 @@ angular.module('phrPrototypeApp')
 
         	console.log("signup", info);
 
-            //TODO: verify info for all the elements
-            //if (username && password) {
+            // verify info for all the elements in api
 
                 $http.post('api/v1/register', {
                         username: username,
                         password: password,
-                        email:email
-                    })
+                        email: email
+                });
+                $http.post('api/v1/record/demographics', {
+                    "demographics.name.first": info.firstName = '',
+                    "demographics.name.middle": info.middleName = '',
+                    "demographics.name.last": info.lastName = '',
+                    //will need to do some date formatting here
+                    "demographics.dob": info.dob = '',
+                    "demographics.gender": info.gender = ''
+                })
                     .success(function(data) {
-                        //$location.path('/dashboard');
-			        	console.log("success");
+			        	console.log("registration successful");
                         callback(null);
                     }).error(function(data) {
                         //callback(data);

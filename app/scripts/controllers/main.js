@@ -8,10 +8,11 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('MainCtrl', function ($scope, $location, authentication) {
+  .controller('MainCtrl', function ($scope, $location, login) {
 
   	$scope.login = function (isValid) {
-  		authentication.login($scope.inputLogin, $scope.inputPassword, function(err) {
+      console.log("main controller, login()", isValid);
+  		login.login($scope.inputLogin, $scope.inputPassword, function(err) {
   			if (err) {
   				$scope.error = err;
   			} else {

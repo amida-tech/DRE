@@ -8,9 +8,9 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('LoginCtrl', function ($scope, $location, authentication) {
+  .controller('LoginCtrl', function ($scope, $location, login) {
     $scope.login = function () {
-  		authentication.login($scope.inputLogin, $scope.inputPassword, function(err) {
+  		login.login($scope.inputLogin, $scope.inputPassword, function(err) {
   			if (err) {
   				$scope.error = err;
   			} else {
