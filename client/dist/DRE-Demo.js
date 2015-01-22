@@ -1,4 +1,4 @@
-/*! DRE-Demo - v1.0.0 - 2015-01-21
+/*! DRE-Demo - v1.0.0 - 2015-01-22
  * Copyright (c) 2015 Dmitry Kachaev, Matthew McCall and Afsin Ustundag;
  * Licensed Apache 2.0
  */
@@ -24,7 +24,6 @@ var dre = angular
         'services.fileDownload',
         'services.getNotifications',
         'services.recordFunctions',
-        'services.flashmessage'
     ])
     .filter('bb_date', function($filter) {
         //Format Blue Button date JSON struct into string (with precision)
@@ -2439,15 +2438,13 @@ angular.module('dre.register', [])
     }
 ])
 
-.controller('registerCtrl', ['$rootScope', '$scope', '$http', '$location', 'getNotifications', 'flashmessage',
-    function($rootScope, $scope, $http, $location, getNotifications, flashmessage) {
+.controller('registerCtrl', ['$rootScope', '$scope', '$http', '$location', 'getNotifications',
+    function($rootScope, $scope, $http, $location, getNotifications) {
 
         $scope.inputUsername = '';
         $scope.inputPassword = '';
         $scope.inputEmail = '';
         $scope.regError = '';
-        $scope.flashmessage = flashmessage;
-        $scope.message = "test message";
 
         $scope.firstname = '';
         $scope.middlename = '';
@@ -2455,10 +2452,10 @@ angular.module('dre.register', [])
         $scope.dob = '';
         $scope.gender = '';
 
-        $scope.submitMessage = function(message) {
-            flashmessage.setMessage(message);
-            $location.path("/register");
-        };
+        // $scope.submitMessage = function(message) {
+        //     flashmessage.setMessage(message);
+        //     $location.path("/register");
+        // };
 
         $scope.submitReg = function() {
             $http.post('/api/v1/register', {
@@ -3711,29 +3708,6 @@ angular.module('services.fileUpload', [])
     };
 }]);
 
-angular.module('services.flashmessage', [])
-
-.service('flashmessage, [$rootScope', '$http', 
-  function ($rootScope, $http) {
-  // var queue = [];
-  // var currentMessage = "";
-
-  // $rootScope.$on("$routeChangeSuccess", function() {
-  //   currentMessage = queue.shift() || "";
-  // });
-
-  // return {
-  //   setMessage: function(message) {
-  //     queue.push(message);
-  //   },
-  //   getMessage: function() {
-  //     return currentMessage;
-  //   }
-  // };
-
-
-
-});
 angular.module('services.getNotifications', [])
 
 .service('getNotifications', ['$http', '$filter', 'recordFunctions',
