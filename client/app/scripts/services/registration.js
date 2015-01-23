@@ -35,12 +35,13 @@ angular.module('phrPrototypeApp')
                 middleName: middleName,
                 dob: dob,
                 gender: gender
-            }).success(function(data) {
+            })
+            .success(function(data) {
                 console.log("registration successful");
                 callback(null);
             }).error(function(data) {
                 //callback(data);
-                console.log("error", data);
+                // console.log("error", data);
                 callback('Invalid Login and/or Password.');
             });
 
