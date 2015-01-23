@@ -16,7 +16,10 @@ angular.module('phrPrototypeApp')
             var uploadUrl = "/api/v1/storage";
 
             var fd = new FormData();
-            fd.append('file', file);
+            //TODO: replace hardcoded reference to file input id
+            var ff=document.getElementById('uploadFile').files[0];
+            fd.append('file', ff);
+            console.log("fd",fd);
             $http.put(uploadUrl, fd, {
                     transformRequest: angular.identity,
                     headers: {

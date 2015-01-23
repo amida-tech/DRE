@@ -17,7 +17,9 @@
                 <div class="col-sm-12 row">
                     <form role="form">
                         <div class="form-group col-sm-12 file">
-                            <input class="form-control" type="file" id="uploadFile" file-model="myFile"/>
+                            <input class="form-control" type="file"  id="uploadFile" file-model="myFile"
+                            ng-model="myFile" valid-file required
+                            />
                             <div class="pull-right button-well">
                                 <button class="btn btn-primary" ng-click="incrementStep()">Continue</button>
                             </div>

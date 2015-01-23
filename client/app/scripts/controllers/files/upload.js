@@ -11,8 +11,17 @@ angular.module('phrPrototypeApp')
     .controller('FilesUploadCtrl', function($scope, $location, upload) {
 
         $scope.uploadStep = 0;
+        var myFile;
 
         $scope.incrementStep = function() {
+            var uploadFile = $scope.myFile;
+            console.log("uploading file", uploadFile);
+
+            upload.uploadRecord(uploadFile, function(err, results) {
+                //do something
+                $location.path('/files');
+            });
+
             $scope.uploadStep++;
         }
 
@@ -21,8 +30,10 @@ angular.module('phrPrototypeApp')
         }
 
         $scope.importAndSave = function() {
-            var file = $scope.myFile
-            upload.uploadRecord(file, function(err, results) {
+            var uploadFile = $scope.myFile;
+            console.log("uploading file", uploadFile);
+
+            upload.uploadRecord(uploadFile, function(err, results) {
                 //do something
                 $location.path('/files');
             });
@@ -31,3 +42,21 @@ angular.module('phrPrototypeApp')
 
 
     });
+
+angular.module('phrPrototypeApp')
+    .directive('validFile', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, el, attrs, ngModel) {
+            ngModel.$render = function () {
+                ngModel.$setViewValue(el.val());
+            };
+
+            el.bind('change', function () {
+                scope.$apply(function () {
+                    ngModel.$render();
+                });
+            });
+        }
+    };
+});
