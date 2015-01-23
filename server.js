@@ -52,8 +52,15 @@ app.use('/api/v1/storage', multiparty());
 
 var redisStore = require('connect-redis')(session); //uncomment for Redis session support during development
 
+//to run fully built UI use this line (run "grunt build" in /client first)
 //app.set('client_location', path.resolve(__dirname, './client/dist'));
-app.set('client_location', path.resolve(__dirname, '../phr-prototype/dist'));
+
+//to run development version of UI use this line
+app.set('client_location', path.resolve(__dirname, './client/app'));
+
+
+
+//app.set('client_location', path.resolve(__dirname, '../phr-prototype/dist'));
 
 //app.use(express.favicon(config.client.location + '/favicon.ico'));
 app.use(express.static(app.get('client_location')));
