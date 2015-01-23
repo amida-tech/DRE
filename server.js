@@ -15,6 +15,7 @@ limitations under the License.
 ======================================================================*/
 
 var express = require('express');
+var flash = require('connect-flash');
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
@@ -51,7 +52,8 @@ app.use('/api/v1/storage', multiparty());
 
 var redisStore = require('connect-redis')(session); //uncomment for Redis session support during development
 
-app.set('client_location', path.resolve(__dirname, './client/dist'));
+//app.set('client_location', path.resolve(__dirname, './client/dist'));
+app.set('client_location', path.resolve(__dirname, '../phr-prototype/dist'));
 
 //app.use(express.favicon(config.client.location + '/favicon.ico'));
 app.use(express.static(app.get('client_location')));
@@ -96,6 +98,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 //Initialize Database Connection.
 //var databaseServer = process.env.DB || 'mongodb://localhost:27017';

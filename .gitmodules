@@ -1,4 +1,0 @@
-[submodule "client"]
-	path = client
-	url = git@github.com:amida-tech/phr-prototype.git
-	branch = unified-record

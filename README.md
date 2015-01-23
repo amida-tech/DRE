@@ -76,7 +76,6 @@ grunt
 
 #run server side tests
 cd ..
-cd server
 npm install
 grunt
 
