@@ -1,0 +1,351 @@
+<div class="container-fluid body-content">
+    <!--Profile-->
+    <div class="col-sm-3 body-left">
+        <div profile></div>
+    </div>
+
+
+    <div class="col-sm-9 body-right">
+
+        <!--Header-->
+        <div class="panel">
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <div class="row col-sm-12" breadcrumb></div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="pull-left">
+                                <h4>Review Immunization Updates</h4>
+                                <p>Entries to the left are possible updates to a current entry in your record, displayed to the right.</p>
+                                <p>Use the checkboxes to select updates you wish to apply.</p>
+                                <h6>Note:  only differences between the entries are displayed.</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--Implementation-->
+        <div ng-repeat="(matchIndex, matchEntry) in match">
+            <h4 class="text-center text-white">Update #{{matchIndex + 1}}</h4>
+            <div class="panel col-sm-12">
+                <div class="panel-body">
+
+                    <!--Labels-->
+                    <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <h4 class="text-center">Record Updates</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4 class="text-center">Current Record</h4>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+
+                        <table class="table col-sm-12 table-hover">
+                            <thead>
+                                <tr>
+                                    <td class="col-sm-6 panel" style="border: 1px solid #ccc;">
+                                        <div class="col-sm-11">
+                                            <h4 class="text-left">{{matchEntry.newMatch.product.product.name}}</h4>
+                                            <h5 ng-repeat="nameEntry in matchEntry.newMatch.performer.name" class="text-left">
+                                            {{nameEntry.displayName}}</h5>
+                                            <h5 class="text-left">{{matchEntry.newMatch.date_time.displayDate}}</h5>
+                                        </div>
+                                    </td>
+                                    <td class="text-center update-spacer">
+                                        <svg height="40" width="20" style="position: relative; left: -9px; top: 20px;">
+                                            <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:1"></polygon>
+                                        </svg>
+                                    </td>
+                                    <td class="col-sm-6 panel" style="border: 1px solid #ccc;">
+                                        <div class="col-sm-11">
+                                            <h4 class="text-left">{{matchEntry.srcMatch.data.product.product.name}}</h4>
+                                            <h5 ng-repeat="(performerIndex, performerEntry) in matchEntry.srcMatch.data.performer.name" class="text-left">{{performerEntry.displayName}}</h5>
+                                            <h5 class="text-left">{{matchEntry.srcMatch.data.date_time.displayDate}}</h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <!--Product-->
+                                <tr ng-if="matchEntry.diff.product">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
+                                        <table class="table table-condensed col-sm-12">
+                                            <thead>
+                                                <tr>
+                                                    <td class="col-sm-3">
+                                                    Product:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-sm-9">
+                                                        <div class="panel" ng-class="{'update-selected': selected.product}">
+
+                                                            <table class="table sub-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="2">
+
+                                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.product" ng-change="selectEntry(matchIndex)">
+                                                                        {{matchEntry.newMatch.product.product.name}}
+                                                                           
+                                                        <div class="pull-right" ng-if="matchEntry.diff.product === 'diff'">
+                                                        <span class="label label-info">Different</span>
+                                                    </div> 
+                                                                        </td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Lot Number:</td>
+                                                                        <td>{{matchEntry.newMatch.product.lot_number}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Manufacturer:</td>
+                                                                        <td>{{matchEntry.newMatch.product.manufacturer}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code:</td>
+                                                                        <td>{{matchEntry.newMatch.product.product.code}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code System:</td>
+                                                                        <td>{{matchEntry.newMatch.product.product.code_system_name}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Other Descriptions:</td>
+                                                                        <td>
+                                                                            <div class="panel" ng-repeat="(itemIndex, itemEntry) in matchEntry.newMatch.product.product.translations">
+                                                                                <table class="table sub-table">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <td>Name:</td>
+                                                                                            <td>{{itemEntry.name}}</td>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>Code:</td>
+                                                                                            <td>{{itemEntry.code}}</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Code System:</td>
+                                                                                            <td>{{itemEntry.code_system_name}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                        </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        </td>
+                                        <td class="text-center update-spacer"></td>
+                                        <td style="border: 1px solid #ccc;" class="panel table-entry">
+                                            <table class="table table-condensed col-sm-12">
+                                                <thead>
+                                                    <tr>
+                                                        <td class="col-sm-3">
+                                                        Product:
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-sm-9">
+                                                            <div class="panel" ng-class="{'update-selected': selected.product}">
+                                                            <table class="table sub-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            {{matchEntry.srcMatch.data.product.product.name}}
+
+                                                            <div class="pull-right" ng-show="selected.product">
+                                                            <span class="label label-warning">Updated</span>
+                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Lot Number:</td>
+                                                                        <td>{{matchEntry.srcMatch.data.product.lot_number}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Manufacturer:</td>
+                                                                        <td>{{matchEntry.srcMatch.data.product.manufacturer}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code:</td>
+                                                                        <td>{{matchEntry.srcMatch.data.product.product.code}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code System:</td>
+                                                                        <td>{{matchEntry.srcMatch.data.product.product.code_system_name}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Other Descriptions:</td>
+                                                                        <td>
+                                                                            <div class="panel" ng-repeat="(itemIndex, itemEntry) in matchEntry.srcMatch.data.product.product.translations">
+                                                                                <table class="table sub-table">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <td>Name:</td>
+                                                                                            <td>{{itemEntry.name}}</td>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>Code:</td>
+                                                                                            <td>{{itemEntry.code}}</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Code System:</td>
+                                                                                            <td>{{itemEntry.code_system_name}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                            </div>
+                                                            </td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            </td>
+                                </tr>
+
+                                <!--Administration-->
+                                <tr ng-if="matchEntry.diff.administration">
+                                    <td style="border: 1px solid #ccc;" class="panel table-entry">
+                                        <table class="table table-condensed col-sm-12">
+                                            <thead>
+                                                <tr>
+                                                    <td class="col-sm-3">
+                                                        Administration:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-sm-9">
+                                                        <div class="panel" ng-class="{'update-selected': selected.administration}">
+
+                                                            <table class="table sub-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                        <input type="checkbox" style="margin-right: 10px;" ng-model="selected.administration" ng-change="selectEntry(matchIndex)">
+                                                                            {{matchEntry.newMatch.administration.route.name}}
+
+                                                    <div class="pull-right" ng-if="matchEntry.diff.administration === 'diff'">
+                                                        <span class="label label-info">Different</span>
+                                                    </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Code:</td>
+                                                                        <td>{{matchEntry.newMatch.administration.route.code}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code System:</td>
+                                                                        <td>{{matchEntry.newMatch.administration.route.code_system_name}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                        </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        </td>
+                                        <td class="text-center update-spacer"></td>
+                                        <td style="border: 1px solid #ccc;" class="panel table-entry">
+                                            <table class="table table-condensed col-sm-12">
+                                                <thead>
+                                                <tr>
+                                                    <td class="col-sm-3">
+                                                        Administration:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="col-sm-9">
+                                                            <div class="panel" ng-class="{'update-selected': selected.administration}">
+                                                            <table class="table sub-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            {{matchEntry.srcMatch.data.administration.route.name}}
+                                                                            
+                                                    <div class="pull-right" ng-show="selected.administration">
+                                                        <span class="label label-warning">Updated</span>
+                                                    </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Code:</td>
+                                                                        <td>{{matchEntry.srcMatch.data.administration.route.code}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Code System:</td>
+                                                                        <td>{{matchEntry.srcMatch.data.administration.route.code_system_name}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                            </div>
+                                                            </td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+
+                        <div class="col-sm-12">
+                            <div class="col-sm-6">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <button class="btn btn-default btn-block" ng-click="clearAll(matchIndex)"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
+                                    <button class="btn btn-primary btn-block" ng-click="saveUpdate(matchIndex)">Save Updates</button>
+                                    <button class="btn btn-default btn-block" ng-click="saveUpdate(matchIndex)">Ignore Updates</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- col-sm-12 -->
+                    </div>
+                    <!-- panel body -->
+                </div>
+                <!-- panel col-sm-12 -->
+            </div>
+            <!-- ng-repeat in match -->
+        </div>
+        <!-- col-sm-9 -->
+    </div>
+    <!-- container -->
+</div>

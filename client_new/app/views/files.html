@@ -1,0 +1,62 @@
+<div class="container-fluid body-content">
+	<!--Profile-->
+	<div class="col-sm-3 body-left" >
+		<div profile></div>
+	</div>
+
+	<!--Body-->
+	<div class="col-sm-9 body-right">
+		<div class="panel">
+			<div class="panel-body">
+
+				<!--Header Items-->
+				<div class="col-sm-12 row">
+					<div class="col-sm-3">
+						<div breadcrumb></div>
+						<h4>My Files</h4>
+					</div>
+					<div class="col-sm-8  col-sm-offset-1 text-left">
+						<div class="col-sm-12">
+							<a href="#/files/upload" class="pull-right">
+							<button class="btn btn-link"><i class="fa fa-upload"></i> Upload File</button>
+							</a>
+						</div>
+						<!--<div class="col-sm-4">
+							<button class="btn btn-link"><i class="fa fa-folder-open"></i> Make Folder</button>
+						</div>
+						<div class="col-sm-4">
+							<button class="btn btn-link"><i class="fa fa-clock-o"></i> View History</button>
+						</div>-->
+
+					</div>
+				</div>
+
+				<!--File Listing Header-->
+				<div class="col-sm-12 row">
+					<table class="table table-hover table-responsive panel">
+						<thead>
+							<td></td>
+							<td>
+								<a ng-click="nameSort();">Name <i class="fa fa-caret-down" ng-show="predicate === 'name'"></i><i class="fa fa-caret-up" ng-show="predicate === '-name'"></i></a>
+							</td>
+							<td><a ng-click="typeSort();">Type <i class="fa fa-caret-down" ng-show="predicate === 'type'"></i><i class="fa fa-caret-up" ng-show="predicate === '-type'"></i></a></td>
+							<td><a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'modified'"></i><i class="fa fa-caret-up" ng-show="predicate === '-modified'"></i></a></td>
+						</thead>
+					<tr ng-repeat="file in fileList | orderBy:predicate">
+						<td>
+							<a ng-show="file.type === 'Health Summary'"><i class="fa fa-file-text-o"></i></a>
+							<a ng-show="file.type === 'Image'"><i class="fa fa-file-image-o"></i></a>
+						</td>
+						<td><a>{{file.file_name}}</a></td>
+						<td>{{file.file_class}}</td>
+						<td>{{file.file_upload_date}}</td>
+					</tr>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+		<div style="min-height:275px"></div>
+	</div>
+
+</div>

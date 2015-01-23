@@ -1,0 +1,121 @@
+<div class="blur-background col-sm-12 body-left" style="min-height:575px">
+<div ng-show="step === 0" class="col-sm-4 col-sm-offset-4">
+	<h4 class="text-center text-white">Registration: Step One</h4>
+	
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="progress">
+				<div class="progress-bar progress-bar-info" style="width: 35%">
+					<span class="sr-only">Step One</span>
+				</div>
+			</div>
+			<div class="text-center">
+			<h5>Note: All fields are required.</h5>
+			</div>
+
+			<form novalidate role="form" name="regForm1" ng-submit="nextStep()">
+				<div class="form-group">
+					<label for="inputLogin">User ID:</label>
+					<input type="text" class="form-control" name="inputLogin" ng-model="inputLogin" required ng-required="true" ng-minLength="1" ng-maxLength="30">
+					<p ng-show="regForm1.inputLogin.$invalid && !regForm1.inputLogin.$pristine" class="help-block">Username must be between 1 and 30 characters.</p>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail">Email Address:</label>
+					<input type="email" class="form-control" name="inputEmail" ng-model="inputEmail" required ng-required="true" ng-minLength="1">
+					<p ng-show="regForm1.inputEmail.$invalid && !regForm1.inputEmail.$pristine" class="help-block">Must be a valid email address.</p>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword">Password:</label>
+					<input type="password" class="form-control" name="inputPassword" ng-model="inputPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
+					<p ng-show="regForm1.inputPassword.$invalid && !regForm1.inputPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+				</div>
+				<div class="form-group">
+					<label for="inputRepeatPassword"> Repeat Password:</label>
+					<input type="password" class="form-control" name="inputRepeatPassword" ng-model="inputRepeatPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
+					<p ng-show="regForm1.inputRepeatPassword.$invalid && !regForm1.inputRepeatPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+				</div>
+				<button type="submit" class="btn btn-block btn-primary" ng-disabled="regForm1.$invalid">Next</button>
+				<div class="text-center">
+					<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div ng-show="step === 1" class="col-sm-4 col-sm-offset-4">
+	<h4 class="text-center text-white">Registration: Step Two</h4>
+	
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="progress">
+				<div class="progress-bar progress-bar-info" style="width: 67%">
+					<span class="sr-only">Step Two</span>
+				</div>
+			</div>
+
+			<form novalidate role="form" name="regForm2" ng-submit="nextStep()">
+				<div class="form-group">
+					<label for="inputFirst">First Name:</label>
+					<input type="text" class="form-control" name="inputFirst" ng-model="inputFirst" required ng-required="true" ng-minLength="1" ng-maxLength="80">
+					<p ng-show="regForm2.inputFirst.$invalid && !regForm2.inputFirst.$pristine" class="help-block">First name must be between 1 and 80 characters.</p>
+				</div>
+				<div class="form-group">
+					<label for="inputMiddle">Middle Name:</label>
+					<input type="text" class="form-control" name="inputMiddle" ng-model="inputMiddle" ng-maxLength="80">
+					<p ng-show="regForm2.inputMiddle.$invalid && !regForm2.inputMiddle.$pristine" class="help-block">Middle name must be under 80 characters.</p>
+				</div>
+				<div class="form-group">
+					<label for="inputLast">Last Name:</label>
+					<input type="text" class="form-control" name="inputLast" ng-model="inputLast" required ng-required="true" ng-minLength="1" ng-maxLength="80">
+					<p ng-show="regForm2.inputLast.$invalid && !regForm2.inputLast.$pristine" class="help-block">Last name must be between 1 and 80 characters.</p>
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="inputDOB">Date of Birth:</label>
+					<input type="date" class="form-control" name="inputDOB" ng-model="inputDOB" required ng-required="true">
+					<p ng-show="regForm2.inputDOB.$invalid && !regForm2.inputDOB.$pristine" class="help-block">Must be a valid date.</p>
+				</div>
+				<div class="form-group col-sm-4 col-sm-offset-2">
+					<label for="inputGender">Gender:</label>
+					<select class="form-control" name="inputGender" ng-model="inputGender" required ng-required="true">
+						<option>Male</option>
+						<option>Female</option>
+						<option>Undifferentiated</option>
+					</select>
+					<p ng-show="regForm2.inputGender.$invalid && !regForm2.inputGender.$pristine" class="help-block">Gender is required.</p>
+				</div>
+				<button type="submit" class="btn btn-block btn-primary" ng-disabled="regForm2.$invalid">Next</button>
+				<div class="text-center">
+					<div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div ng-show="step === 2" class="col-sm-4 col-sm-offset-4">
+	<h4 class="text-center text-white">Registration: Finished</h4>
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="progress">
+				<div class="progress-bar progress-bar-info" style="width: 100%">
+					<span class="sr-only">Finished</span>
+				</div>
+			</div>
+			<p class="text-center">
+				<i class="fa fa-check fa-2x"></i>
+			</p>
+			<p class="text-center">
+			 You are all set!</p>
+			 <p class="text-center padding-bottom">
+				Click below to continue to your health record.
+			</p>
+			<button type="submit" class="btn btn-block btn-success" ng-click="finish()">Complete</button>
+
+		</div>
+	</div>
+</div>
+</div>

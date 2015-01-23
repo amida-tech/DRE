@@ -1,0 +1,34 @@
+.btn {
+  @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-small, $line-height-base, $border-radius-base);
+  font-weight: $btn-font-weight;
+  font-family: $font-family-impact;
+  letter-spacing: 1px;
+  text-transform: uppercase; 
+}
+
+.btn-group-vertical {
+	
+	.btn {
+	  border-radius: 0px;
+	}
+
+	.btn:first-child:not(:last-child) {
+		border-top-right-radius: 0px;
+	}
+
+	.btn:last-child:not(:first-child) {
+	  border-bottom-left-radius: 0px;
+	}
+
+	.btn.btn-default {
+	  border-color: #ddd;
+	}
+	.btn.btn-info {
+	  background-color: transparent;
+	  border-color: #fff;
+	  border-width: 2px;
+	}
+	.btn.btn-info.active, .btn.btn-info:hover {
+		background-color: rgba(255,255,255,0.4);
+	}
+}

@@ -1,0 +1,79 @@
+
+<div class="col-sm-12 landing-panel">
+  <h1 class="col-sm-offset-1 col-sm-4">Welcome to your Personal Health Record.</h1>
+  <div class="col-sm-4 col-sm-offset-3">
+    <div class="panel panel-default landing-login">
+      <div class="panel-body">
+        <form novalidate role="form" name="loginForm" ng-submit="login()">
+          <div class="form-group">
+            <label for="inputLogin">User ID:</label>
+            <input type="text" class="form-control" name="inputLogin" ng-model="inputLogin" required ng-required="true" ng-minLength="1">
+            <p ng-show="loginForm.inputLogin.$invalid && !loginForm.inputLogin.$pristine" class="help-block">Username or email is required.</p>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword">Password:</label>
+            <input type="password" class="form-control" name="inputPassword" ng-model="inputPassword" required ng-required="true" ng-minLength = "1">
+            <p ng-show="loginForm.inputPassword.$invalid && !loginForm.inputPassword.$pristine" class="help-block">Password is required.</p>
+          </div>
+
+          <button type="submit" class="btn btn-block btn-primary" ng-disabled="loginForm.$invalid">Log In</button>
+          <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+          <div class="text-center col-sm-12">
+            <div class="col-sm-5 text-right">
+            <label for="remember_me">
+               <h5><input type="checkbox" name="remember_me" value="true" checked="checked"></input> Remember Me</h5>
+            </label>
+            </div>
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-5 text-left">
+              <h5><a href="#/reset">Forgot Password</a></h5>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Marketing Content-->
+<div class="col-sm-12 marketing-block">
+<div class="col-sm-11 col-sm-offset-1">
+  <div class="landing-advertising">
+    <div class="col-sm-3">
+      <div>
+        <div class="icon-circle">
+          <i class="fa fa-thumbs-up fa-4x"></i>
+        </div>
+        <div class="text-center">
+          <h2>Easy</h2>
+          <p>Our interface is familiar and intuitive. You can easily browse all of your medical data, and quickly see who created it, what type of information it is and when it was recieved.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3 col-sm-offset-1">
+      <div>
+        <div class="icon-circle">
+          <i class="fa fa-check fa-4x"></i>
+        </div>
+        <div class="text-center">
+          <h2>Complete</h2>
+          <p>All of your medical data is stored in one place, no matter where it comes from. You don't have to worry about data loss, as our cloud solution has support for regular backups.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3 col-sm-offset-1">
+      <div>
+        <div class="icon-circle">
+          <i class="fa fa-lock fa-4x"></i>
+        </div>
+        <div class="text-center">
+          <h2>Safe</h2>
+          <p>Our solution provides strong protection for your medical records, including secure protocols for data transmission, user authentication and secure storage in the cloud.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

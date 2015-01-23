@@ -1,0 +1,81 @@
+<div class="container-fluid body-content">
+	<!--Profile-->
+	<div class="col-sm-3 body-left" >
+		<div profile></div>
+	</div>
+
+
+	<div class="col-sm-9 body-right">
+		<div class="panel">
+			<div class="panel-body">
+				<div class="col-sm-12">
+					<div class="row col-sm-12" breadcrumb></div>
+					<div class="col-sm-7">
+						<h4>Hi Suzie!</h4>
+						<p>Welcome to your Personal Health Record. You can review your record summary and account history from this home page.</p>
+						<p>Last Login: {{accountHistory.lastLogin}}</p>
+						<p>Last Updated: {{accountHistory.lastUpdate}}</p>
+					</div>
+
+					<div class="col-sm-5">
+						<a href="#/record" class="pull-right"><button class="btn btn-link"><i class="fa fa-flag fa-inline"></i>9 pending updates</button></a>
+						<a href="#/notes" class="pull-right" ng-show="noteCount > 1"><button class="btn btn-link"><i class="fa fa-star fa-inline"></i>{{noteCount}} starred note<span ng-show="noteCount > 1">s</span></button></a>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<h4 class="text-center text-white">Account History</h4>
+		<div class="panel">
+			<div class="panel-body">
+				<div>
+					<p>Timeline</p>
+				</div>
+				<div timeline ng-show="accountHistory" chart-data="accountHistory" chart-type="account" class="timeline-graph"></div>
+
+				<div ng-repeat="(recordIndex, recordEntry) in accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
+
+					<div class="col-sm-12 row timeline-side">
+
+						<div class="col-sm-2">
+							<a class="timeline-entry-icon text-center center-block">
+								
+								<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'upload'" class="fa fa-cloud-upload fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'login'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
+
+							</a>
+						</div>
+
+
+						<div class="col-sm-10">
+							<div class="panel timeline-entry">
+								<div class="panel-body">
+									<div class="timeline-entry-header col-sm-12">
+										<div class="col-sm-6">
+											<h4 class="text-left">{{recordEntry.displayType}}</h4>
+											<h5 class="text-left">{{recordEntry.date}} - <span ng-show="recordEntry.file.name"><a href="#/files">{{recordEntry.file.name}}</a></span>
+												<span ng-hide="recordEntry.file.name">Generated medical history</span></h5>
+											</div>
+											<div class="col-sm-6">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-2 center-block text-center timeline-footer">
+						<svg width="30" height="30">
+							<circle cx="15" cy="15" r="15"></circle>
+						</svg>
+					</div>
+
+
+				</div>
+
+
+			</div>
+
+	</div>

@@ -1,0 +1,60 @@
+<div class="container-fluid body-content">
+	<div id="profileSidebar" class="col-sm-3 body-left">
+		<div profile></div>
+		<div record-navigation class="col-sm-12"></div>&nbsp;
+	</div>
+
+	<div class="col-sm-9 body-right">
+	
+		<div class="panel">
+			<div class="panel-body">
+
+				<!--Header Items-->
+				<div class="col-sm-12">
+					<div class="row col-sm-12" breadcrumb></div>
+					<div class="col-sm-12">
+						
+						<div class="col-sm-8">
+							<div class="pull-left">
+								<h4>Suzie's {{entryType}}</h4>
+								<p>Last Updated:  {{updateDate}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-10 col-sm-offset-1 text-center">
+					<span><button ng-click="navClick('record0')" class="btn btn-link" style="margin-right: 20px;"><i class="fa fa-flag-o" style="margin-right: 10px;"></i>There is 1 update to your {{entryType}} requiring review.</button></span>
+				</div>
+							
+			</div>
+		</div>
+
+
+		<!--Timeline View-->
+		<h4 class="text-center text-white">{{entryType}}</h4>
+		<div class="panel">
+			<div class="panel-body">
+				<div>
+					<p>Timeline</p>
+				</div>
+				<div timeline ng-show="entries" chart-data="entries" class="timeline-graph"></div>
+
+				<div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
+
+					<div class="col-sm-12 row timeline-side" >
+						<entry entry-type="{{entryType}}" entry-index="{{recordIndex}}"></entry>
+					</div>
+
+				</div>
+
+				<div class="col-sm-2 center-block text-center timeline-footer">
+					<svg width="30" height="30">
+						<circle cx="15" cy="15" r="15"></circle>
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
