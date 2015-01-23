@@ -16,7 +16,11 @@ angular.module('phrPrototypeApp')
             var username = info.username;
             var password = info.password;
             var email = info.email;
-
+            var firstName = info.firstName;
+            var lastName = info.lastName;
+            var middleName = info.middleName;
+            var dob = info.dob;
+            var gender = info.gender;
 
             console.log("signup", info);
 
@@ -25,7 +29,12 @@ angular.module('phrPrototypeApp')
             $http.post('api/v1/register', {
                 username: username,
                 password: password,
-                email: email
+                email: email,
+                firstName: firstName,
+                lastName: lastName,
+                middleName: middleName,
+                dob: dob,
+                gender: gender
             }).success(function(data) {
                 console.log("registration successful");
                 callback(null);

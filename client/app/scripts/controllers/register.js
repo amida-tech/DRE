@@ -46,18 +46,15 @@ angular.module('phrPrototypeApp')
 
             console.log("starting registration");
 
-            registration.signup(info, function() {
+            registration.signup(info, function(err) {
                 // console.log("done");
                 // $location.path('/home');
-            });
-            login.login($scope.inputLogin, $scope.inputPassword, function(err) {
                 if (err) {
                     $scope.error = err;
                 } else {
                     $location.path('/home');
                 }
             });
-
 
         };
 
