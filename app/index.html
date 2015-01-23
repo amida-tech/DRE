@@ -29,7 +29,8 @@
 
           <!--Logged In Navbar-->
           <!--<div ng-if="true" class="container-fluid">-->
-          <div ng-if="true" class="container-fluid">
+          <div ng-if="loginStatus === true" class="container-fluid">
+          <!--div ng-if="true" class="container-fluid"-->
             <div style="margin: 0px 20px;">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#user-menu">
@@ -57,7 +58,7 @@
                     <li><a href="#/profile">My Profile</a></li>
                     <li><a href="#/account">My Account</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">Log out</a></li>
+                    <li><a ng-click="logout()">Log out</a></li>
                   </ul>
                 </li>
               </ul>
@@ -66,8 +67,8 @@
           </div>
 
           <!--Logged Out Navbar-->
-          <!--<div ng-if="loginStatus === false" class="container-fluid">-->
-          <div ng-if="false" class="container-fluid">
+          <div ng-if="loginStatus === false" class="container-fluid">
+          <!--div ng-if="false" class="container-fluid"-->
             <div style="margin: 0px 20px;">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logout-menu">
@@ -173,10 +174,13 @@
     <script src="scripts/directives/timeline.js"></script>
     <script src="scripts/controllers/navbar.js"></script>
     <script src="scripts/controllers/register.js"></script>
+    <script src="scripts/services/registration.js"></script>
     <script src="scripts/controllers/profile.js"></script>
     <script src="scripts/controllers/account.js"></script>
     <script src="scripts/controllers/reset.js"></script>
     <script src="scripts/services/account.js"></script>
+    <script src="scripts/services/login.js"></script>
+    <script src="scripts/services/logout.js"></script>
     <script src="scripts/directives/profile.js"></script>
     <script src="scripts/controllers/files.js"></script>
     <script src="scripts/services/files.js"></script>
@@ -195,6 +199,7 @@
     <script src="scripts/directives/timeline-icon.js"></script>
     <script src="scripts/services/partial.js"></script>
     <script src="scripts/controllers/files/upload.js"></script>
+    <script src="scripts/services/files/upload.js"></script>
     <script src="scripts/controllers/bonus.js"></script>
     <script src="scripts/services/d3.js"></script>
     <script src="scripts/controllers/notes.js"></script>
