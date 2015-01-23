@@ -7,8 +7,8 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format) {
-    record.getData().then(function(data) {
-        $scope.entries = data;
+    
+    function pageRender(data) {
         $scope.dashMetrics = {};
         $scope.tabs = [{
             "title": "Weight",
@@ -28,60 +28,19 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             }
         });
         $scope.entryType = "all";
-        $scope.recordEntries = [];
-        _.each($scope.entries.data, function(entries, type) {
-            _.each(entries, function(entry) {
-                var tmpDates = '';
-            var dispDates = '';
-            
-            if (!_.isUndefined(entry.date_time)) {
-                if (!_.isUndefined(entry.date_time.point)) {
-                    tmpDates = [entry.date_time.point];
-                } else if (!_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
-                    tmpDates = [entry.date_time.low, entry.date_time.high];
-                } else if (!_.isUndefined(entry.date_time.low) && _.isUndefined(entry.date_time.high)) {
-                    tmpDates = [entry.date_time.low];
-                } else if (_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
-                    tmpDates = [entry.date_time.high];
-                }
-            }
-            if (tmpDates.length === 1) {
-                dispDates = format.formatDate(tmpDates[0]);
-                
-            } else if (tmpDates.length === 2) {
-                dispDates = format.formatDate(tmpDates[0]) + ' - ' + format.formatDate(tmpDates[1]);
-                
-            }
-                if (!_.contains(['demographics','problems','plan_of_care','payers','social_history'],type)) {
-                    $scope.recordEntries.push({
-                        'data': entry,
-                        'category': type,
-                        'metadata': {
-                            'comments': '',
-                            'displayDate': dispDates,
-                            'datetime': tmpDates
-                        }
-                    });
-                }
-                if (type === 'social_history') {
-                    $scope.recordEntries.push({
-                        'data': entry,
-                        'category': 'social',
-                        'metadata': {
-                            'comments': '',
-                            'displayDate': dispDates,
-                            'datetime': tmpDates
-                        }
-                    });
-                }
-            });
-        });
+        if (_.isEmpty(record.processedRecord)) {
+            $scope.recordEntries = record.processRecord(data.data);
+        } else {
+            $scope.recordEntries = record.processedRecord;
+        }
+        
         $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
-            return entry.metadata.datetime[0];
-        });
-        _.each($scope.recordEntries, function(entry){
-            console.log(entry.metadata.datetime[0]);
-        });
+            if (entry.metadata.datetime[0]) {
+                return entry.metadata.datetime[0].date.substring(0, 9);
+            } else {
+                return '1979-12-12';
+            }
+        }).reverse();
         $scope.entryListFiltered = $scope.recordEntries;
         $scope.$watch('entryType', function(newVal, oldVal) {
             if (newVal !== oldVal) {
@@ -99,5 +58,13 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 }
             }
         });
-    });
+    }
+    if (_.isEmpty(record.masterRecord) || record.recordDirty) {
+        record.getData().then(function(data) {
+            record.setMasterRecord(data);
+            pageRender(data);
+        });
+    } else {
+        pageRender(record.masterRecord);
+    }
 });
