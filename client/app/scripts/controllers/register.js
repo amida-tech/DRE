@@ -52,7 +52,13 @@ angular.module('phrPrototypeApp')
                 if (err) {
                     $scope.error = err;
                 } else {
-                    $location.path('/home');
+                    login.login($scope.inputLogin, $scope.inputPassword, function(err) {
+                        if (err) {
+                            $scope.error = err;
+                        } else {
+                            $location.path('/home');
+                        }
+                    });
                 }
             });
 
