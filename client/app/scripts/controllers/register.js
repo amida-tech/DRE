@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RegisterCtrl', function($scope, $location, registration, login) {
+    .controller('RegisterCtrl', function($scope, $location, registration, login, profile) {
 
         $scope.step = 0;
 
