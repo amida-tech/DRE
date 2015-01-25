@@ -1,4 +1,3 @@
 ---
-# file: site.yml
-- include: dbservers.yml
-- include: webservers.yml
+# file: playbook.yml
+- include: servers.yml

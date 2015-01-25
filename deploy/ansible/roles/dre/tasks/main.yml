@@ -1,0 +1,57 @@
+---
+#file: roles/dre/tasks/main.yml
+
+- name: Make node group
+  group: name=node system=yes state=present
+
+- name: Make node user
+  user: name=node group=node system=yes state=present
+
+- name: Make DRE folder
+  command: mkdir -p "/var/www/dre"
+
+- name: Make source folder
+  command: mkdir -p "/var/www/dre/source"
+
+- name: Make shared folder
+  command: mkdir -p "/var/www/dre/shared"
+
+- name: Make current folder
+  command: mkdir -p "/var/www/dre/current"
+
+- name: Clone DRE repository
+  git: repo="git://github.com/amida-tech/DRE.git" dest="/var/www/dre/source" version="v1.3.0"
+
+- name: Copy DRE source to current
+  command: cp -r /var/www/dre/source/. /var/www/dre/current
+
+- name:  Install grunt CLI tools
+  sudo: yes
+  command: npm install -g grunt-cli
+
+- name: install libxml2
+  yum: name=libxml2 state="latest"
+  sudo: yes
+
+- name:  Install node-gyp
+  sudo: yes
+  command: npm install -g node-gyp
+
+- name:  Install DRE client dependencies
+  command: npm install chdir=/var/www/dre/current/client 
+
+- name:  Install DRE server dependencies
+  command: npm install --production chdir=/var/www/dre/current 
+
+- name:  Run client build
+  command: grunt chdir=/var/www/dre/current/client
+
+- name:  Install PM2
+  command: npm install -g pm2 --unsafe-perm
+  
+- name: Launch DRE through PM2
+  command: pm2 start /var/www/dre/current/server.js
+  
+- name:  Configure PM2 for Auto-reload
+  command: pm2 startup centos -u node && pm2 save
+
