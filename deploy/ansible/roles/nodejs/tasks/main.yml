@@ -1,0 +1,10 @@
+---
+#file: roles/nodejs/tasks/main.yml
+
+
+- name: Install node.js and npm
+  yum: name={{item}} enablerepo="epel" state="latest"
+  sudo: yes
+  with_items:
+    - nodejs
+    - npm
