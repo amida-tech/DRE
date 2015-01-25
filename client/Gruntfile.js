@@ -40,10 +40,6 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       },
-      jsTest: {
-        files: ['test/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'karma']
-      },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer']
@@ -78,24 +74,8 @@ module.exports = function (grunt) {
             return [
               connect.static('.tmp'),
               connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app)
-            ];
-          }
-        }
-      },
-      test: {
-        options: {
-          port: 9001,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect.static('test'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
+                '/app/bower_components',
+                connect.static('./app/bower_components')
               ),
               connect.static(appConfig.app)
             ];
@@ -122,12 +102,6 @@ module.exports = function (grunt) {
           '<%= yeoman.app %>/scripts/{,*/}*.js'
         ]
       },
-      test: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
-        src: ['test/spec/{,*/}*.js']
-      }
     },
 
     // Empties folders to start fresh
@@ -164,12 +138,12 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        exclude: ['bower_components/bootstrap/'],
+        exclude: ['app/bower_components/bootstrap/'],
         ignorePath:  /\.\.\//
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        ignorePath: /(\.\.\/){1,2}bower_components\//
+        ignorePath: /(\.\.\/){1,2}app\/bower_components\//
       }
     },
 
@@ -182,7 +156,7 @@ module.exports = function (grunt) {
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
         fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: './bower_components',
+        importPath: './app/bower_components',
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '/styles/fonts',
@@ -354,24 +328,24 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+          src: 'app/bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           flatten: true,
           dest: '<%= yeoman.dist %>/fonts'
         }, {
           expand: true,
           cwd: '.',
-          src: 'bower_components/font-awesome/fonts/*',
+          src: 'app/bower_components/font-awesome/fonts/*',
           flatten: true,
           dest: '<%= yeoman.dist %>/fonts'
         }, {
           expand: true,
           cwd: '.',
-          src: 'bower_components/d3/*',
+          src: 'app/bower_components/d3/*',
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,
           cwd: '.',
-          src: 'bower_components/d3-tip/*',
+          src: 'app/bower_components/d3-tip/*',
           dest: '<%= yeoman.dist %>'
         }]
       },
@@ -388,9 +362,6 @@ module.exports = function (grunt) {
       server: [
         'compass:server'
       ],
-      test: [
-        'compass'
-      ],
       dist: [
         'compass:dist',
         'imagemin',
@@ -398,13 +369,6 @@ module.exports = function (grunt) {
       ]
     },
 
-    // Test settings
-    karma: {
-      unit: {
-        configFile: 'test/karma.conf.js',
-        singleRun: true
-      }
-    }
   });
 
 
@@ -428,14 +392,6 @@ module.exports = function (grunt) {
     grunt.task.run(['serve:' + target]);
   });
 
-  //Run test cases only.
-  grunt.registerTask('test', [
-    'clean:server',
-    'concurrent:test',
-    'autoprefixer',
-    'connect:test',
-    'karma'
-  ]);
 
   //Fully minified/clean build.
   grunt.registerTask('build', [
@@ -457,7 +413,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
-    'test',
     'build'
   ]);
 };
