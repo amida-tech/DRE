@@ -16,8 +16,8 @@ services:
 - mongodb
 - redis-server
 script:
-- grunt --gruntfile client/gruntfile.js
-- grunt --gruntfile ./gruntfile.js
+- grunt --gruntfile client/Gruntfile.js
+- grunt --gruntfile ./Gruntfile.js
 #- git config --global user.email "dmitry.kachaev@gmail.com"
 #- git config --global user.name "Dmitry Kachaev"
 #- git add -A
