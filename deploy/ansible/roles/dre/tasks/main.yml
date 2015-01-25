@@ -20,7 +20,7 @@
   command: mkdir -p "/var/www/dre/current"
 
 - name: Clone DRE repository
-  git: repo="git://github.com/amida-tech/DRE.git" dest="/var/www/dre/source" version="v1.3.0"
+  git: repo="git://github.com/amida-tech/DRE.git" dest="/var/www/dre/source" #version="v1.3.1"
 
 - name: Copy DRE source to current
   command: cp -r /var/www/dre/source/. /var/www/dre/current
