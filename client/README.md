@@ -45,13 +45,11 @@ bower install
 
 From the base project directory, you can use Grunt to build and execute the following commands:
 
-```grunt``` - Will execute build and run all test cases.
+```grunt``` - Does nothing but linting.
 
-```grunt build``` - Executes build without running tests.
+```grunt build``` - Executes build and puts it into /dist.
 
-```grunt test``` - Runs all test cases against current build.
-
-```grunt serve``` - Runs build and serves pages on localhost.
+```grunt dev``` - Build and watch files for development (just linting, compiling styles and watching).
 
 ####Release Build
 

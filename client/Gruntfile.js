@@ -353,6 +353,7 @@ module.exports = function(grunt) {
 
     //Fully minified/clean build.
     grunt.registerTask('build', [
+        'jshint',
         'clean:dist',
         'wiredep',
         'useminPrepare',
@@ -370,8 +371,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('default', [
-        'newer:jshint',
-        'build'
+        'newer:jshint'
     ]);
 
     grunt.registerTask('dev', [
