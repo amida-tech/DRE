@@ -5,8 +5,8 @@ Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. See: vagrantup.com.
 
   # Build against CentOS 6.4, without any config management utilities.
-  config.vm.box = "centos64"
-  config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210-nocm.box"
+  config.vm.box = "chef/centos-7.0"
+  #config.vm.box_url = ""
 
   # Enable host-only access to the machine using a specific IP.
   # config.vm.network :private_network, ip: "192.168.10.100"
@@ -33,8 +33,7 @@ Vagrant.configure("2") do |config|
   # Provisioning configuration for Ansible.
   config.vm.provision "ansible" do |ansible|
     ansible.groups = {
-     "dbservers" => ["default"],
-     "webservers" => ["default"]
+     "servers" => ["default"],
     }
 
     ansible.playbook = "../ansible/playbook.yml"

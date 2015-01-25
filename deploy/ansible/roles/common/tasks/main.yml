@@ -7,3 +7,18 @@
 # - name: Run System Updates
 #   yum: name="*" state="latest"
 #   sudo: yes
+
+- name: install git and wget
+  yum: name={{item}} state="latest"
+  sudo: yes
+  with_items:
+    - git
+    - wget
+
+- name: get epel package
+  command: wget -r --no-parent -A 'epel-release-*.rpm' http://dl.fedoraproject.org/pub/epel/7/x86_64/e/
+  sudo: yes
+
+- name: install epel
+  command: rpm -Uvh dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-*.rpm
+  sudo: yes

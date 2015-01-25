@@ -1,9 +1,12 @@
 ---
-- hosts: dbservers
+- hosts: servers
   sudo: yes
   roles:
     - common
     - mongodb
+    - redis
+    - nodejs
+    - dre
     
 
 
