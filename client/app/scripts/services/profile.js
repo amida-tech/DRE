@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc service
- * @name phrPrototypeApp.registration
+ * @name phrPrototypeApp.profile
  * @description
  * # post registration info to profile
  * Service in the phrPrototypeApp.

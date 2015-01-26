@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RegisterCtrl', function($scope, $location, registration, login, profile) {
+    .controller('RegisterCtrl', function($scope, $location, registration, login, profile, username) {
 
         $scope.step = 0;
 
@@ -16,13 +16,17 @@ angular.module('phrPrototypeApp')
 
 
         $scope.nextStep = function() {
-
             if ($scope.step === 0) {
-                if ($scope.inputPassword === $scope.inputRepeatPassword) {
-                    $scope.step = $scope.step + 1;
+                if (username.checkLogin($scope.inputLogin) === 'true') {
+                    $scope.error = "That username already exists, please choose another";
                 } else {
-                    $scope.error = "Entered Passwords did not match";
-                    return;
+                    username.saveLogin($scope.inputLogin);
+                    if ($scope.inputPassword === $scope.inputRepeatPassword) {
+                        $scope.step = $scope.step + 1;
+                    } else {
+                        $scope.error = "Entered Passwords did not match";
+                        return;
+                    }
                 }
             } else {
                 $scope.step = $scope.step + 1;
