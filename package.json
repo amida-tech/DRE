@@ -27,6 +27,8 @@
     "bluebird": "2.2.x",
     "body-parser": "1.9.0",
     "chai": "1.9.x",
+    "chai-things": "0.2.0",
+    "connect": "3.3.x",
     "connect-flash": "^0.1.1",
     "connect-multiparty": "1.2.4",
     "connect-redis": "2.1.0",

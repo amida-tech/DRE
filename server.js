@@ -149,6 +149,9 @@ app.use(login);
 var account = require('./lib/account');
 app.use(account);
 
+var accountHistory = require('./lib/account-history');
+app.use(accountHistory);
+
 app.set('port', (process.env.PORT || 3000));
 
 app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
