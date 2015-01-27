@@ -35,7 +35,7 @@ angular.module('phrPrototypeApp')
 
   profile.showProfile(function(err, profileInfo) {
     $scope.profile = profileInfo;
-    console.log('profile controller', $scope.profile);
+    // console.log('profile controller', $scope.profile.email);
   });
 
   	//console.log($scope.profile);

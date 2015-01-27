@@ -15,7 +15,7 @@ angular.module('phrPrototypeApp')
         	$http.get('api/v1/record/demographics')
         	.success(function(data) {
         		var profileInfo = data.demographics[0];
-        		console.log('obtained profile info', profileInfo);
+        		console.log('obtained profile info', data.demographics);
         		callback(null, profileInfo);
         	})
         	.error(function(data) {
