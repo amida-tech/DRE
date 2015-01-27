@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('ProfileCtrl', function ($scope, $location, $anchorScroll, account) {
+  .controller('ProfileCtrl', function ($scope, $location, $anchorScroll, account, profile) {
 
   	$scope.profile = {};
 
@@ -20,17 +20,23 @@ angular.module('phrPrototypeApp')
         $location.hash(old);
     };
 
-  	account.account(function(err, accountInfo) {
+  	// account.account(function(err, accountInfo) {
 
   		
-  		$scope.profile = accountInfo;
+  	// 	$scope.profile = accountInfo;
+   //    console.log('account info', accountInfo);
 
-  		//Shims for HL7 weirdness.
-  		var tmpDOB = moment(accountInfo.dob[0].date).format('YYYY-MM-DD');
+  	// 	//Shims for HL7 weirdness.
+  	// 	var tmpDOB = moment(accountInfo.dob[0].date).format('YYYY-MM-DD');
 
-  		$scope.profile.dob = tmpDOB;
-  		$scope.profile.primaryEmail = accountInfo.email[0].email;
-  	});
+  	// 	$scope.profile.dob = tmpDOB;
+  	// 	$scope.profile.primaryEmail = accountInfo.email[0].email;
+  	// });
+
+  profile.showProfile(function(err, profileInfo) {
+    $scope.profile = profileInfo;
+    console.log('profile controller', $scope.profile);
+  });
 
   	//console.log($scope.profile);
 
