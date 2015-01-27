@@ -2,13 +2,15 @@
 var supertest = require('supertest');
 //var api = supertest.agent('http://localhost:3000');
 //Local db used for testing
-var api = supertest.agent('http://localhost:3005');
+var api = supertest.agent('http://localhost:3000');
 var chai = require('chai');
 var assert = chai.assert;
 var expect = chai.expect;
 chai.should();
 chai.use(require('chai-things'));
 var database = require('mongodb').Db;
+
+var path = require('path');
 var common2 = require('./common.js');
 var common = require(path.join(__dirname, '../common/common.js'));
 
@@ -17,6 +19,7 @@ describe('Pre Test Cleanup', function() {
     it('Clean Database', function(done) {
         common.removeAll(function(err, results) {
             if (err) {
+            	console.log('Error in remove all');
                 done(err);
             } else {
                 done();
@@ -36,14 +39,14 @@ describe('Pre Test Cleanup', function() {
 describe('Account History - basic', function(){
 
 	it('Adds event to empty database', function(done){
-		var eventType = 'initAccount',
+		var eventType = 'initAccount';
 		api.post('/account_history')
-		.send({'userID':'1', 'event_type': 'initAccount', 'note':'no-note-here', 'fileRef':'AAA'})
+		.send({'event_type': 'initAccount', 'note':'no-note-here', 'fileRef':'AAA'})
 		.end(function(err, res){
 			if(err){
 				done(err);
 			}else{
-				expect(res.body).to.have.deep.property('userID','1');
+				expect(res.body).to.have.deep.property('userID','test');
 				expect(res.body).to.have.deep.property('event_type','initAccount');
 				expect(res.body).to.have.deep.property('note','no-note-here');
 				expect(res.body).to.have.deep.property('fileRef','AAA');
@@ -57,7 +60,7 @@ describe('Account History - basic', function(){
 	before(function(done){
 		//api.get(sampleURL2, function(done{ ...sampleURL3.})
 		api.post('/account_history')
-		.send({'userID':'2', 'event_type': 'fileUploaded', 'note':'doctor', 'fileRef':'BBB'})
+		.send({'event_type': 'fileUploaded', 'note':'doctor', 'fileRef':'BBB'})
 		.end(function(err, res){
 			if(err){
 				done(err);
@@ -68,8 +71,8 @@ describe('Account History - basic', function(){
 	});
 
 	it('Shows Full Event History', function(done){
-		var ans1 = {userID: '1', event_type: 'initAccount', note: 'no-note-here', fileRef: 'AAA'},
-			ans2 = {userID: '2', event_type: 'fileUploaded', note: 'doctor', fileRef: 'BBB'};
+		var ans1 = {userID: 'test', event_type: 'initAccount', note: 'no-note-here', fileRef: 'AAA'},
+			ans2 = {userID: 'test', event_type: 'fileUploaded', note: 'doctor', fileRef: 'BBB'};
 			//ans3 = {userID: 3, event_type: 'passwordChange', note: 'hint', fileRef: 'CCC'};
 
 		var records = [ans1, ans2];
@@ -79,15 +82,19 @@ describe('Account History - basic', function(){
 				console.log(err);
 				done();
 			}else{
-				expect(res.body).to.have.length(2);
-				for(var i=0; i<res.body.length; i++){
-					elt = res.body[i];
-					expect(elt).to.have.property('_id');
-					delete elt._id;
-					delete elt.__v;
-					delete elt.time;
-					expect(records).to.include.something.that.deep.equals(elt);
-				}
+				expect(res.body).to.have.length(4);
+				// for(var i=0; i<res.body.length; i++){
+				// 	elt = res.body[i];
+				// 	expect(elt).to.have.property('_id');
+				// 	delete elt._id;
+				// 	delete elt.__v;
+				// 	delete elt.time;
+				// 	expect(records).to.include.something.that.deep.equals(elt);
+				// }
+				(res.body).should.all.have.property('userID','test');
+				(res.body).should.include.something.with.property('event_type', 'initAccount');
+				(res.body).should.include.something.with.property('event_type', 'loggedIn');
+				(res.body).should.include.something.with.property('event_type', 'fileUploaded');
 				done();
 			}
 		});
@@ -97,27 +104,30 @@ describe('Account History - basic', function(){
 describe('Account History - recent for UI', function(){
 
 	it('Returns last login', function(done){
-		api.get('/account_history/most_recent')
+		api.get('/account_history/mostRecent')
 		.end(function(err, res){
 			if(err){
 				console.log(err);
 				done();
 			} else {
+				console.log(res.body);
 				expect(res.body).to.have.property('login');
+				expect(res.body.update).to.have.deep.property('userID','test');
 				expect(res.body.login).to.have.deep.property('event_type', 'loggedIn');
 			}
 		});
 	});
 
-	it('Returns last MHR update via file upload', function(){
-		api.get('/account_history/most_recent')
+	it('Returns last MHR update via file upload', function(done){
+		api.get('/account_history/mostRecent')
 		.end(function(err, res){
 			if(err){
 				console.log(err);
 				done();
 			} else {
+				console.log(res.body);
 				expect(res.body).to.have.property('update');
-				expect(res.body.update).to.have.deep.property('userID','2');
+				expect(res.body.update).to.have.deep.property('userID','test');
 				expect(res.body.update).to.have.deep.property('event_type','fileUploaded');
 				expect(res.body.update).to.have.deep.property('note','doctor');
 				expect(res.body.update).to.have.deep.property('fileRef','BBB');

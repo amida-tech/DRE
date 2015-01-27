@@ -90,16 +90,27 @@ function removeAll(callback) {
                         if (err) {
                             callback(err);
                         }
-                        removeAllCollections(function (err) {
-                        	if (err) {
-                        		callback(err);
-                        	} else {
-                        		callback();
-                        	}
-                        })
+                        removeCollection('events', function (err){
+                            if (err) {
+                                callback(err);
+                            }
+                            removeCollection('users', function (err){
+                                if(err){
+                                    callback(err);
+                                }
+                                removeAllCollections(function (err) {
+                                    if (err) {
+                                        callback(err);
+                                    } else {
+                                        console.log('made it ')
+                                        callback();
+                                    }
+                                });
+                            });
+                        });
                     });
                 });
-
 }
 
 module.exports.removeAll = removeAll;
+module.exports.removeCollection = removeCollection;
