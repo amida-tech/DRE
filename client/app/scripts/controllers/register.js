@@ -17,10 +17,11 @@ angular.module('phrPrototypeApp')
 
         $scope.nextStep = function() {
             if ($scope.step === 0) {
-                if (username.checkLogin($scope.inputLogin) === 'true') {
-                    $scope.error = "That username already exists, please choose another";
+                console.log(username.checkLogin($scope.inputLogin));
+                if (username.checkLogin($scope.inputLogin)) {
+                    $scope.error = "That Username already exists, please choose another";
+                    return;
                 } else {
-                    username.saveLogin($scope.inputLogin);
                     if ($scope.inputPassword === $scope.inputRepeatPassword) {
                         $scope.step = $scope.step + 1;
                     } else {
@@ -28,9 +29,11 @@ angular.module('phrPrototypeApp')
                         return;
                     }
                 }
-            } else {
+            }
+            else {
                 $scope.step = $scope.step + 1;
-                console.log($scope.step);
+                $scope.error = '';
+                // console.log($scope.step);
             }
 
         };
