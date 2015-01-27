@@ -14,12 +14,33 @@ angular.module('phrPrototypeApp')
 
         $scope.registration = {};
 
+        $scope.isUser = false;
+        $scope.userList = {};
+
+        function findUsername() {
+            username.checkLogin(function(err, userInfo) {
+                $scope.userList = userInfo;
+                console.log('register controller', $scope.userList);
+                for (var element in $scope.userList) {
+                    // console.log($scope.userList[element].username);
+                    if ($scope.inputLogin === $scope.userList[element].username) {
+                        $scope.isUser = true;
+                        console.log($scope.isUser, $scope.inputLogin);
+                    } 
+                }
+            });
+        }
+
+        findUsername();    
 
         $scope.nextStep = function() {
             if ($scope.step === 0) {
-                console.log(username.checkLogin($scope.inputLogin));
-                if (username.checkLogin($scope.inputLogin)) {
+
+                findUsername();
+                console.log($scope.isUser);
+                if ($scope.isUser) {
                     $scope.error = "That Username already exists, please choose another";
+                    $scope.isUser = false;
                     return;
                 } else {
                     if ($scope.inputPassword === $scope.inputRepeatPassword) {
@@ -28,11 +49,13 @@ angular.module('phrPrototypeApp')
                         $scope.error = "Entered Passwords did not match";
                         return;
                     }
-                }
+                }             
+
             }
             else {
                 $scope.step = $scope.step + 1;
-                $scope.error = '';
+                $scope.error = null;
+                // $scope.isUser = false;
                 // console.log($scope.step);
             }
 
