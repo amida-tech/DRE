@@ -29,7 +29,7 @@ angular.module('phrPrototypeApp')
     		$http.get('api/v1/users')
     		.success(function(data) {
     			var userInfo = data;
-    			console.log('searching for username:', userInfo);
+    			// console.log('searching for username:', userInfo);
     			callback(null, userInfo);
     		})
     		.error(function(data) {

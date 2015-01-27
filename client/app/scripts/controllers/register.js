@@ -16,40 +16,31 @@ angular.module('phrPrototypeApp')
 
         $scope.isUser = false;
         $scope.userList = {};
-
-        function findUsername() {
-            username.checkLogin(function(err, userInfo) {
-                $scope.userList = userInfo;
-                console.log('register controller', $scope.userList);
-                for (var element in $scope.userList) {
-                    // console.log($scope.userList[element].username);
-                    if ($scope.inputLogin === $scope.userList[element].username) {
-                        $scope.isUser = true;
-                        console.log($scope.isUser, $scope.inputLogin);
-                    } 
-                }
-            });
-        }
-
-        findUsername();    
+  
 
         $scope.nextStep = function() {
             if ($scope.step === 0) {
-
-                findUsername();
-                console.log($scope.isUser);
-                if ($scope.isUser) {
-                    $scope.error = "That Username already exists, please choose another";
-                    $scope.isUser = false;
-                    return;
-                } else {
+    
+                username.checkLogin(function(err, userInfo) {
+                    $scope.userList = userInfo;
+                    // console.log('register controller', $scope.userList);
+                    for (var element in $scope.userList) {
+                        // console.log($scope.userList[element].username);
+                        if ($scope.inputLogin === $scope.userList[element].username) {
+                            $scope.isUser = true;
+                            // console.log($scope.isUser, $scope.userList[element].username, $scope.inputLogin);
+                            $scope.error = "That Username already exists, please choose another";
+                            return;
+                        }
+                    }
                     if ($scope.inputPassword === $scope.inputRepeatPassword) {
                         $scope.step = $scope.step + 1;
+                        $scope.error = null;
                     } else {
                         $scope.error = "Entered Passwords did not match";
                         return;
                     }
-                }             
+                });           
 
             }
             else {
