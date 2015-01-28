@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('NavbarCtrl', function($rootScope, $scope, $location, authentication, logout) {
+    .controller('NavbarCtrl', function($rootScope, $scope, $location, authentication, logout, profile) {
 
         $scope.loginStatus = false;
 
@@ -31,6 +31,12 @@ angular.module('phrPrototypeApp')
 
         $rootScope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
             checkAuthStatus();
+        });
+
+        profile.getProfile(function(err, profileInfo) {
+            $scope.user_first = profileInfo.name.first;
+            $scope.user_last = profileInfo.name.last;
+            $scope.email = profileInfo.email[0].email;
         });
 
 
