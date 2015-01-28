@@ -33,11 +33,15 @@ angular.module('phrPrototypeApp')
             checkAuthStatus();
         });
 
-        profile.getProfile(function(err, profileInfo) {
-            $scope.user_first = profileInfo.name.first;
-            $scope.user_last = profileInfo.name.last;
-            $scope.email = profileInfo.email[0].email;
-        });
+        function showUserInfo() {
+            profile.getProfile(function(err, profileInfo) {
+                $scope.user_first = profileInfo.name.first;
+                $scope.user_last = profileInfo.name.last;
+                $scope.email = profileInfo.email[0].email;
+            });
+        }
+
+        showUserInfo();
 
 
         //TODO: isValid is not used??
