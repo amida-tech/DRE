@@ -20,24 +20,46 @@ angular.module('phrPrototypeApp')
         $location.hash(old);
     };
 
-  	// account.account(function(err, accountInfo) {
+    $scope.updateProfile = function () {
+      var info = {
+          'email': $scope.profile.email[0].email,
+          'firstName': $scope.profile.name.first,
+          'middleName': $scope.profile.name.middle,
+          'lastName': $scope.profile.name.last,
+          'dob': $scope.profile.dob,
+          'gender': $scope.profile.gender,
+          'race_ethnicity': $scope.profile.race_ethnicity,
+          'marital_status': $scope.profile.marital_status,
+          'religion': $scope.profile.religion
+      };
 
-  		
-  	// 	$scope.profile = accountInfo;
-   //    console.log('account info', accountInfo);
+      // var info = {
+      //   "name": {
+      //       "middle": [$scope.inputMiddle],
+      //       "last": $scope.inputLast,
+      //       "first": $scope.inputFirst
+      //   },
+      //   "dob": $scope.inputDOB,
+      //   "gender": $scope.inputGender,
+      //   "email": [{
+      //       "email": $scope.inputEmail,
+      //       "type": "primary"
+      //   }]
+      // };
+      profile.saveProfile(info, function(err) {
+        console.log('profile controller', info);
+      });
+    };
 
-  	// 	//Shims for HL7 weirdness.
-  	// 	var tmpDOB = moment(accountInfo.dob[0].date).format('YYYY-MM-DD');
 
-  	// 	$scope.profile.dob = tmpDOB;
-  	// 	$scope.profile.primaryEmail = accountInfo.email[0].email;
-  	// });
+    profile.showProfile(function(err, profileInfo) {
+      $scope.profile = profileInfo;
+      // console.log('profile controller', $scope.profile.email);
+      //Shims for HL7 weirdness.
+      var tmpDOB = moment(profileInfo.dob.date).format('YYYY-MM-DD');
+      $scope.profile.dob = tmpDOB;
+    });
 
-  profile.showProfile(function(err, profileInfo) {
-    $scope.profile = profileInfo;
-    // console.log('profile controller', $scope.profile.email);
-  });
+    	//console.log($scope.profile);
 
-  	//console.log($scope.profile);
-
-  });
+    });
