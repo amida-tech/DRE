@@ -29,7 +29,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         });
         $scope.entryType = "all";
         if (_.isEmpty(record.processedRecord)) {
-            $scope.recordEntries = record.processRecord(data.data);
+            $scope.recordEntries = record.processRecord(data);
         } else {
             $scope.recordEntries = record.processedRecord;
         }

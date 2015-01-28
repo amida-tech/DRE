@@ -16,13 +16,14 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
     this.getData = function() {
         console.log('from server');
         var deferred = $q.defer();
-        var dataurl = '/scripts/services/record/record.json';
+        var dataurl = '/api/v1/get_record/';
         return $http({
             url: dataurl,
             method: 'GET',
             cache: true
         }).then(function(response) {
             if (typeof response.data === 'object') {
+                
                 return response.data;
             } else {
                 // invalid response
