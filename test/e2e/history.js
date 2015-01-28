@@ -110,7 +110,7 @@ describe('Account History - recent for UI', function(){
 				console.log(err);
 				done();
 			} else {
-				console.log(res.body);
+				//console.log(res.body);
 				expect(res.body).to.have.property('login');
 				expect(res.body.update).to.have.deep.property('userID','test');
 				expect(res.body.login).to.have.deep.property('event_type', 'loggedIn');
@@ -126,7 +126,7 @@ describe('Account History - recent for UI', function(){
 				console.log(err);
 				done();
 			} else {
-				console.log(res.body);
+				//console.log(res.body);
 				expect(res.body).to.have.property('update');
 				expect(res.body.update).to.have.deep.property('userID','test');
 				expect(res.body.update).to.have.deep.property('event_type','fileUploaded');
