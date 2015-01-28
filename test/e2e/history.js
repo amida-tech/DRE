@@ -114,6 +114,7 @@ describe('Account History - recent for UI', function(){
 				expect(res.body).to.have.property('login');
 				expect(res.body.update).to.have.deep.property('userID','test');
 				expect(res.body.login).to.have.deep.property('event_type', 'loggedIn');
+				done();
 			}
 		});
 	});
