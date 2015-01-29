@@ -114,8 +114,8 @@ describe('Storage API', function() {
     var sampleFile = '';
 
     before(function(done) {
-        common.register(api, 'test', 'testtest', function() {
-            common.login(api, 'test', 'testtest', function() {
+        common.register(api, 'test', 'test', function() {
+            common.login(api, 'test', 'test', function() {
                 done();
             });
         });
