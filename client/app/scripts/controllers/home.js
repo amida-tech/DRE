@@ -8,10 +8,11 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('HomeCtrl', function ($scope, history, notes, record) {
+  .controller('HomeCtrl', function ($scope, history, notes, record, profile) {
     
   	$scope.accountHistory = {};
     $scope.noteCount = 0;
+    $scope.user_first = '';
 
     function countNotes() {
         notes.noteCount(function (err, results) {
@@ -27,6 +28,15 @@ angular.module('phrPrototypeApp')
 
     countNotes();
     countUpdates();
+
+    function showUser() {
+        profile.getProfile(function(err, profileInfo) {
+            $scope.user_first = profileInfo.name.first;
+        });
+    }
+
+    showUser();
+
 
   	function getHistory () {
       history.account(function(err, history) {
