@@ -27,6 +27,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 });
             }
         });
+        $scope.pageLoaded = false;
         $scope.entryType = "all";
         if (_.isEmpty(record.processedRecord)) {
             $scope.recordEntries = record.processRecord(data);

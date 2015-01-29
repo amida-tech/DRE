@@ -250,6 +250,10 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     gatherData();
                     renderPlot();
                 }, true);
+                scope.$watch('pageLoaded', function(newValue, oldValue) {
+                    gatherData();
+                    renderPlot();
+                }, true);
 
         }
     };
