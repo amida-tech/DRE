@@ -9,7 +9,6 @@
 angular.module('phrPrototypeApp').service('record', function record($http, $q, format) {
     this.masterRecord = {};
     this.processedRecord = {};
-    this.recordDirty = false;
     this.setMasterRecord = function(rawRecord) {
         this.masterRecord = rawRecord;
     };
