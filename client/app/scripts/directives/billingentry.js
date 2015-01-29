@@ -84,7 +84,7 @@
                   scope.entryTemplatePath = "views/templates/details/" + entryType + ".html";
                   break;
                   case 'insurance':
-                  scope.entryTitle = scope.entryData.name;
+                  scope.entryTitle = scope.entryData.policy.insurance.performer.organization[0].name[0];
                   if (scope.entryData.date_time) {
                         scope.entrySubTitleOne = scope.entryData.date_time.displayDate;      
                   }
