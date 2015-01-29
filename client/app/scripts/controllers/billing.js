@@ -14,6 +14,8 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
     $scope.newComment = {
         'starred': false
     };
+    $scope.insuranceEntries = [];
+    $scope.claimsEntries = [];
 
     function showUserInfo() {
         profile.getProfile(function(err, profileInfo) {
@@ -29,25 +31,30 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
         //Should grab from files/update history.  Stubbed for now.
         $scope.updateDate = '12/1/2014';
     }
-
-    function getData() {
-        billing.getClaims().then(function(data) {
-            $scope.masterEntries.push(data.claims);
-        });
-        billing.getInsurance().then(function(data) {
-            $scope.masterEntries.push(data.insurance);
-        });
-    }
-    getData();
-    
     $scope.setEntryType = function(type) {
         $scope.entryType = type;
         if (type === 'all') {
             $scope.entries = $scope.masterEntries;
-        } else if (type === 'claims') {
-            $scope.entries = $scope.claimsEntries;
-        } else if (type === 'insurance') {
-            $scope.entries = $scope.insuranceEntries;
+        } else {
+            $scope.entries = _.where($scope.masterEntries, {'category': type});
         }
     };
+
+    function getData() {
+        billing.getClaims().then(function(data) {
+            _.each(data.claims, function(entry) {
+                $scope.masterEntries.push({'data':entry, 'category':'claims'});
+                
+            });
+        });
+        billing.getInsurance().then(function(data) {
+            _.each(data.insurance, function(entry) {
+                $scope.masterEntries.push({'data':entry, 'category':'insurance'});
+                
+            });
+        });
+        $scope.setEntryType('all');
+    }
+    getData();
+    
 });
