@@ -40,7 +40,7 @@ describe('Account History - basic', function(){
 
 	it('Adds event to empty database', function(done){
 		var eventType = 'initAccount';
-		api.post('/account_history')
+		api.post('/api/v1/account_history')
 		.send({'event_type': 'initAccount', 'note':'no-note-here', 'fileRef':'AAA'})
 		.end(function(err, res){
 			if(err){
@@ -59,7 +59,7 @@ describe('Account History - basic', function(){
 	//Prepopulate db for full history
 	before(function(done){
 		//api.get(sampleURL2, function(done{ ...sampleURL3.})
-		api.post('/account_history')
+		api.post('/api/v1/account_history')
 		.send({'event_type': 'fileUploaded', 'note':'doctor', 'fileRef':'BBB'})
 		.end(function(err, res){
 			if(err){
@@ -76,7 +76,8 @@ describe('Account History - basic', function(){
 			//ans3 = {userID: 3, event_type: 'passwordChange', note: 'hint', fileRef: 'CCC'};
 
 		var records = [ans1, ans2];
-		api.get('/account_history/all')
+		api.get('/api/v1/account_history/all')
+		.expect(200)
 		.end(function(err, res){
 			if(err){
 				console.log(err);
@@ -104,28 +105,36 @@ describe('Account History - basic', function(){
 describe('Account History - recent for UI', function(){
 
 	it('Returns last login', function(done){
-		api.get('/account_history/mostRecent')
+		api.get('/api/v1/account_history/mostRecent')
+		.expect(200)
 		.end(function(err, res){
 			if(err){
 				console.log(err);
 				done();
 			} else {
+<<<<<<< HEAD
 				console.log(res.body);
+				//expect(res.body).to.have.property('login');
+=======
+				//console.log(res.body);
 				expect(res.body).to.have.property('login');
+>>>>>>> FETCH_HEAD
 				expect(res.body.update).to.have.deep.property('userID','test');
 				expect(res.body.login).to.have.deep.property('event_type', 'loggedIn');
+				done();
 			}
 		});
 	});
 
 	it('Returns last MHR update via file upload', function(done){
-		api.get('/account_history/mostRecent')
+		api.get('/api/v1/account_history/mostRecent')
+		.expect(200)
 		.end(function(err, res){
 			if(err){
 				console.log(err);
 				done();
 			} else {
-				console.log(res.body);
+				//console.log(res.body);
 				expect(res.body).to.have.property('update');
 				expect(res.body.update).to.have.deep.property('userID','test');
 				expect(res.body.update).to.have.deep.property('event_type','fileUploaded');

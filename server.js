@@ -21,8 +21,8 @@ var http = require('http');
 var path = require('path');
 var app = express();
 
-var record = require('blue-button-record');
-//var record = require('../blue-button-record/index.js');
+//var record = require('blue-button-record');
+var record = require('../blue-button-record/index.js');
 
 var passport = require('passport');
 
