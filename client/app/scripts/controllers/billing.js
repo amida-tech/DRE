@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * @ngdoc function
  * @name phrPrototypeApp.controller:BillingClaimsCtrl
@@ -7,18 +6,16 @@
  * # BillingClaimsCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('BillingCtrl', function ($scope, $location, $anchorScroll, claims, insurance, format, profile) {
+angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, profile, billing) {
+    $scope.entryType = 'all';
+    $scope.masterEntries = [];
+    $scope.entries = [];
+    $scope.updateDate = null;
+    $scope.newComment = {
+        'starred': false
+    };
 
-        $scope.entryType = 'all';
-        $scope.masterEntries = [];
-        $scope.entries = [];
-        $scope.updateDate = null;
-        $scope.newComment = {
-            'starred': false
-        };
-
-        function showUserInfo() {
+    function showUserInfo() {
         profile.getProfile(function(err, profileInfo) {
             $scope.user_first = profileInfo.name.first;
             $scope.user_last = profileInfo.name.last;
@@ -26,80 +23,31 @@ angular.module('phrPrototypeApp')
             $scope.user_dob = profileInfo.dob;
         });
     }
-
     showUserInfo();
 
-        function getUpdateDate() {
-            //Should grab from files/update history.  Stubbed for now.
-            $scope.updateDate = '12/1/2014';
+    function getUpdateDate() {
+        //Should grab from files/update history.  Stubbed for now.
+        $scope.updateDate = '12/1/2014';
+    }
+
+    function getData() {
+        billing.getClaims().then(function(data) {
+            $scope.masterEntries.push(data.claims);
+        });
+        billing.getInsurance().then(function(data) {
+            $scope.masterEntries.push(data.insurance);
+        });
+    }
+    getData();
+    
+    $scope.setEntryType = function(type) {
+        $scope.entryType = type;
+        if (type === 'all') {
+            $scope.entries = $scope.masterEntries;
+        } else if (type === 'claims') {
+            $scope.entries = $scope.claimsEntries;
+        } else if (type === 'insurance') {
+            $scope.entries = $scope.insuranceEntries;
         }
-
-        function getRecords(callback) {
-
-            claims.getRecord(function (err, results) {
-                $scope.claimsEntries = results;
-                
-                
-            });
-            insurance.getRecord(function (err, results) {
-                $scope.insuranceEntries = results;
-                
-            });
-            $scope.masterEntries = $scope.claimsEntries.concat($scope.insuranceEntries);
-            callback();
-        }
-
-        $scope.navClick = function (element) {
-            var old = $location.hash();
-            $location.hash(element);
-            $anchorScroll();
-            //reset to old to keep any additional routing logic from kicking in
-            $location.hash(old);
-        };
-
-        function formatDates() {
-            //Add displayDate to all entries.
-            _.each($scope.masterEntries, function (entry) {
-
-                if (entry.data.date_time) {
-                    _.each(entry.data.date_time, function (dateEntry) {
-
-                        format.formatDate(dateEntry);
-                    });
-                    entry.data.date_time.displayDate = format.outputDate(entry.data.date_time);
-                    entry.data.date_time.plotDate = format.plotDate(entry.data.date_time);
-                }
-            });
-        }
-
-        function formatAddress() {
-            _.each($scope.masterEntries, function (entry) {
-                _.each(entry.data.locations, function (loc) {
-                    _.each(loc.address, function (addr) {
-                        format.formatAddress(addr);
-                    });
-                });
-            });
-        }
-        $scope.setEntryType = function(type) {
-            $scope.entryType = type;
-            if (type === 'all') {
-                $scope.entries = $scope.masterEntries;
-            } else if (type === 'claims') {
-                $scope.entries = $scope.claimsEntries;
-            } else if (type === 'insurance') {
-                $scope.entries = $scope.insuranceEntries;
-            }
-        };
-
-        $scope.refresh = function () {
-            getRecords(function (err) {
-                getUpdateDate();
-                formatDates();
-                formatAddress();
-                $scope.entries = $scope.masterEntries;
-            });
-        };
-
-        $scope.refresh();
-    });
+    };
+});
