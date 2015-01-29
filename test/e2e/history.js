@@ -112,9 +112,14 @@ describe('Account History - recent for UI', function(){
 				console.log(err);
 				done();
 			} else {
+<<<<<<< HEAD
 				console.log(res.body);
 				//expect(res.body).to.have.property('login');
 				//console.log(res.body);
+=======
+				//console.log(res.body);
+				expect(res.body).to.have.property('login');
+>>>>>>> FETCH_HEAD
 				expect(res.body.update).to.have.deep.property('userID','test');
 				expect(res.body.login).to.have.deep.property('event_type', 'loggedIn');
 				done();
