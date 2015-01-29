@@ -38,7 +38,7 @@ angular.module('phrPrototypeApp').service('billing', function record($http, $q, 
     this.getInsurance = function() {
         console.log('from server');
         var deferred = $q.defer();
-        var dataurl = '/api/v1/record/insurance';
+        var dataurl = '/api/v1/record/payers';
         return $http({
             url: dataurl,
             method: 'GET',

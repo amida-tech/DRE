@@ -14,8 +14,6 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
     $scope.newComment = {
         'starred': false
     };
-    $scope.insuranceEntries = [];
-    $scope.claimsEntries = [];
 
     function showUserInfo() {
         profile.getProfile(function(err, profileInfo) {
@@ -48,7 +46,7 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
             });
         });
         billing.getInsurance().then(function(data) {
-            _.each(data.insurance, function(entry) {
+            _.each(data.payers, function(entry) {
                 $scope.masterEntries.push({'data':entry, 'category':'insurance'});
                 
             });
