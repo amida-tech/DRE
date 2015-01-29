@@ -39,15 +39,11 @@
         <h4 class="text-center text-white">{{entryType}}</h4>
         <div class="panel">
             <div class="panel-body">
-                <div>
-                    <p>Timeline</p>
-                </div>
-                <div timeline ng-show="entries" chart-data="entries" class="timeline-graph"></div>
 
                 <div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
 
                     <div class="col-sm-12 row timeline-side">
-                        <billingentry entry-type="{{recordEntry.metadata.type}}" entry-index="{{recordIndex}}"></entry>
+                        <billingentry entry-type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></entry>
                     </div>
 
                     
