@@ -53,7 +53,7 @@
                   <img class="img-navbar-avatar" src="images/img-demo.png">
                 </li>
                 <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown"> Suzie Demo <span class="caret"></span></a>
+                  <a class="dropdown-toggle" data-toggle="dropdown"> {{user_first}} {{user_last}} <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="#/profile">My Profile</a></li>
                     <li><a href="#/account">My Account</a></li>
@@ -169,6 +169,7 @@
     <script src="scripts/controllers/about.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/services/authentication.js"></script>
+    <script src="scripts/services/username.js"></script>
     <script src="scripts/controllers/home.js"></script>
     <script src="scripts/services/history.js"></script>
     <script src="scripts/directives/timeline.js"></script>
@@ -179,6 +180,7 @@
     <script src="scripts/controllers/account.js"></script>
     <script src="scripts/controllers/reset.js"></script>
     <script src="scripts/services/account.js"></script>
+    <script src="scripts/services/profile.js"></script>
     <script src="scripts/services/login.js"></script>
     <script src="scripts/services/logout.js"></script>
     <script src="scripts/directives/profile.js"></script>
@@ -209,6 +211,7 @@
     <script src="scripts/filters/starred.js"></script>
     <script src="scripts/filters/sections.js"></script>
     <script src="scripts/controllers/pagetitle.js"></script>
+    <script src="scripts/services/billing.js"></script>
     <!-- endbuild -->
   </body>
   </html>

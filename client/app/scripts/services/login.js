@@ -22,7 +22,7 @@ angular.module('phrPrototypeApp')
                         password: password
                     })
                     .success(function(data) {
-                        console.log("login successfull");
+                        console.log("login successful");
                         callback(null);
                     })
                     .error(function(data) {

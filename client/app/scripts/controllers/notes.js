@@ -6,7 +6,7 @@
  * # NotesCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes) {
+angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes, profile) {
     
     $scope.notes = [];
     
@@ -93,5 +93,17 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             tmpSection[0].notes[starIndex].note.starred = true;
         }
     };
+
+    function showUserInfo() {
+        profile.getProfile(function(err, profileInfo) {
+            $scope.user_first = profileInfo.name.first;
+            $scope.user_last = profileInfo.name.last;
+            $scope.user_email = profileInfo.email[0].email;
+            $scope.user_dob = profileInfo.dob;
+        });
+    }
+
+    showUserInfo();
+
     getNotes();
 });

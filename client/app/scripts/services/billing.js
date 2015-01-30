@@ -6,16 +6,39 @@
  * # record
  * Service in the phrPrototypeApp.
  */
-angular.module('phrPrototypeApp').service('record', function record($http, $q, format) {
+angular.module('phrPrototypeApp').service('billing', function record($http, $q, format) {
     this.masterRecord = {};
     this.processedRecord = {};
     this.setMasterRecord = function(rawRecord) {
         this.masterRecord = rawRecord;
     };
-    this.getData = function() {
+    this.getClaims = function() {
         console.log('from server');
         var deferred = $q.defer();
-        var dataurl = '/api/v1/get_record/';
+        var dataurl = '/api/v1/record/claims';
+        return $http({
+            url: dataurl,
+            method: 'GET',
+            cache: true
+        }).then(function(response) {
+            if (typeof response.data === 'object') {
+                
+                return response.data;
+            } else {
+                // invalid response
+                console.log('didnt get data');
+                return deferred.reject(response.data);
+            }
+        }, function(error) {
+            // something went wrong
+            console.log('data errorrrrrrr');
+            return deferred.reject(error);
+        });
+    };
+    this.getInsurance = function() {
+        console.log('from server');
+        var deferred = $q.defer();
+        var dataurl = '/api/v1/record/payers';
         return $http({
             url: dataurl,
             method: 'GET',
@@ -36,7 +59,7 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
         });
     };
     
-    this.processRecord = function(rawRecord) {
+    /*this.processRecord = function(rawRecord) {
         console.log('processing record');
         var tmpEntries = [];
         _.each(rawRecord, function(entries, type) {
@@ -85,5 +108,5 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
         });
         this.processedRecord = tmpEntries;
         return tmpEntries;
-    };
+    };*/
 });

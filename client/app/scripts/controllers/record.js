@@ -6,8 +6,19 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format, profile) {
     
+    function showUserInfo() {
+        profile.getProfile(function(err, profileInfo) {
+            $scope.user_first = profileInfo.name.first;
+            $scope.user_last = profileInfo.name.last;
+            $scope.user_email = profileInfo.email[0].email;
+            $scope.user_dob = profileInfo.dob;
+        });
+    }
+
+    showUserInfo();
+
     function pageRender(data) {
         $scope.dashMetrics = {};
         $scope.tabs = [{
@@ -27,9 +38,10 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 });
             }
         });
+        $scope.pageLoaded = false;
         $scope.entryType = "all";
         if (_.isEmpty(record.processedRecord)) {
-            $scope.recordEntries = record.processRecord(data.data);
+            $scope.recordEntries = record.processRecord(data);
         } else {
             $scope.recordEntries = record.processedRecord;
         }

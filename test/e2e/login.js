@@ -32,7 +32,20 @@ describe('authentication', function(done) {
     it('should register', function(done) {
         api
             .post('/api/v1/register')
-            .send({'username': 'test2', 'password':'test2'})
+            .send({
+                'username': 'test',
+                'password': 'test',
+
+                'middleName': 'Bacon',
+                'firstName': 'Kevin',
+                'lastName': 'Schmidt',
+                //'middleName': 'Isa',
+                //'firstName': 'Isabella',
+                //'lastName': 'Jones',
+                'dob': '10/10/1980',
+                'gender': 'Male',
+                'email': 'kevin@ba.com'
+            })
             .end(function(err, res) {
                 if (err) throw err;
                 done();
@@ -48,7 +61,7 @@ describe('authentication', function(done) {
                 expect(res.body.authenticated).to.equal(false);
                 done();
             });
-    })    
+    })
 
     it('should login', function(done) {
         common.login(api, 'test', 'test', done);
@@ -84,5 +97,5 @@ describe('authentication', function(done) {
                 expect(res.body.authenticated).to.equal(false);
                 done();
             });
-    })                   
+    })
 })
