@@ -48,10 +48,10 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     var tmpDomain = [];
                     var minDate, maxDate, plotFloor, plotCeiling;
                     if (dataType === 'account') {
-                        console.log('in timeline potting');
+                        console.log('in timeline plotting');
                         console.log('plot data exists', dataToPlot);
                         for (var i in dataToPlot.recordHistory) {
-                            var plotDate = format.parse(dataToPlot.recordHistory[i].date);
+                            var plotDate = isoFormatSubsecond.parse(dataToPlot.recordHistory[i].date);
                             console.log('plot date', plotDate);
                             plotCircles.push({
                                 "date": plotDate
@@ -257,6 +257,13 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     gatherData();
                     renderPlot();
                 }, true);
+
+                //Bind to updates in accountHistory var
+                scope.$watch('accountHistory', function(newValue, oldValue) {
+                    gatherData();
+                    renderPlot();
+                }, true);
+
 
         }
     };

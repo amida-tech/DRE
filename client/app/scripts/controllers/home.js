@@ -21,9 +21,7 @@ angular.module('phrPrototypeApp')
 
         showUserInfo();
 
-        $scope.accountHistory = {
-            "lastLogin": "01/01/2980"
-        };
+        
         $scope.noteCount = 0;
         $scope.user_first = '';
 
