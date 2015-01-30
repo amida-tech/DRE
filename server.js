@@ -22,7 +22,6 @@ var path = require('path');
 var app = express();
 
 var record = require('blue-button-record');
-//var record = require('../blue-button-record/index.js');
 
 var passport = require('passport');
 
@@ -44,6 +43,15 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({
     'strict': false
 }));
+
+//Adding CORS for Swagger UI
+app.use(function(req, res, next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT");
+    next();
+});
 
 app.use(logger('dev'));
 app.use(methodOverride());
@@ -139,6 +147,9 @@ app.use(login);
 
 var account = require('./lib/account');
 app.use(account);
+
+var accountHistory = require('./lib/account-history');
+app.use(accountHistory);
 
 app.set('port', (process.env.PORT || 3000));
 

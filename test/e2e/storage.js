@@ -147,7 +147,6 @@ describe('Storage API Get List', function() {
                 if (err) {
                     return done(err);
                 } else {
-                    console.log(res.body.storage);
                     expect(res.body.storage).to.exist;
                     expect(res.body.storage.length).to.equal(1);
                     expect(res.body.storage[0].file_name).to.equal('bluebutton-01-original.xml');

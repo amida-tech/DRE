@@ -55,12 +55,15 @@ describe('Count API - Test New:', function() {
             .end(function(err, res) {
                 if (err) {
                     return done(err);
-                }
-                expect(res.body.notifications.unreviewed_merges).to.equal(0);
-                expect(res.body.notifications.new_merges).to.equal(27);
+                }     
+
+
+                expect(res.body.notifications.unreviewed_merges).to.equal(1);
+                expect(res.body.notifications.new_merges).to.equal(26);
                 expect(res.body.notifications.duplicate_merges).to.equal(0);
                 expect(res.body.notifications.file_count).to.equal(1);
                 //console.log(JSON.stringify(res.body, null, 10));
+
                 done();
             });
     });
@@ -88,9 +91,9 @@ describe('Count API - Test Duplicate:', function() {
                     return done(err);
                 }
                 //console.log(JSON.stringify(res.body, null, 10));
-                expect(res.body.notifications.unreviewed_merges).to.equal(0);
-                expect(res.body.notifications.new_merges).to.equal(27);
-                expect(res.body.notifications.duplicate_merges).to.equal(27);
+                expect(res.body.notifications.unreviewed_merges).to.equal(2);
+                expect(res.body.notifications.new_merges).to.equal(26);
+                expect(res.body.notifications.duplicate_merges).to.equal(26);
                 expect(res.body.notifications.file_count).to.equal(2);
                 done();
             });
@@ -118,9 +121,9 @@ describe('Count API - Test New/Dupe Mix:', function() {
                 if (err) {
                     return done(err);
                 }
-                expect(res.body.notifications.unreviewed_merges).to.equal(0);
-                expect(res.body.notifications.new_merges).to.equal(48);
-                expect(res.body.notifications.duplicate_merges).to.equal(53);
+                expect(res.body.notifications.unreviewed_merges).to.equal(3);
+                expect(res.body.notifications.new_merges).to.equal(47);
+                expect(res.body.notifications.duplicate_merges).to.equal(51);
                 expect(res.body.notifications.file_count).to.equal(3);
                 done();
             });
@@ -148,9 +151,9 @@ describe('Count API - Test Partial Matches:', function() {
                 if (err) {
                     return done(err);
                 }
-                expect(res.body.notifications.unreviewed_merges).to.equal(29);
-                expect(res.body.notifications.new_merges).to.equal(48);
-                expect(res.body.notifications.duplicate_merges).to.equal(69);
+                expect(res.body.notifications.unreviewed_merges).to.equal(32);
+                expect(res.body.notifications.new_merges).to.equal(47);
+                expect(res.body.notifications.duplicate_merges).to.equal(67);
                 expect(res.body.notifications.file_count).to.equal(4);
                 done();
             });
@@ -197,12 +200,13 @@ describe('Count API - Test Added Matches via Allergies', function() {
                 if (err) {
                     return done(err);
                 }
-                expect(res.body.notifications.unreviewed_merges).to.equal(28);
-                expect(res.body.notifications.new_merges).to.equal(49);
-                expect(res.body.notifications.duplicate_merges).to.equal(69);
+                expect(res.body.notifications.unreviewed_merges).to.equal(31);
+                expect(res.body.notifications.new_merges).to.equal(48);
+                expect(res.body.notifications.duplicate_merges).to.equal(67);
                 expect(res.body.notifications.file_count).to.equal(4);
                 done();
             });
     });
 
 });
+
