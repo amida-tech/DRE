@@ -102,7 +102,6 @@ function removeAll(callback) {
                                     if (err) {
                                         callback(err);
                                     } else {
-                                        console.log('made it ')
                                         callback();
                                     }
                                 });
