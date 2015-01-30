@@ -13,8 +13,8 @@
 					<div class="col-sm-7">
 						<h4>Hi {{user_first}} !</h4>
 						<p>Welcome to your Personal Health Record. You can review your record summary and account history from this home page.</p>
-						<p>Last Login: {{accountHistory.lastLogin}}</p>
-						<p>Last Updated: {{accountHistory.lastUpdate}}</p>
+						<p>Last Login: {{accountHistory.lastLogin | date: 'short'}}</p>
+						<p>Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
 					</div>
 
 					<div class="col-sm-5">
@@ -40,9 +40,11 @@
 						<div class="col-sm-2">
 							<a class="timeline-entry-icon text-center center-block">
 								
-								<i ng-if="recordEntry.type === 'download'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
-								<i ng-if="recordEntry.type === 'upload'" class="fa fa-cloud-upload fa-2x" id="entry{{recordIndex}}"></i>
-								<i ng-if="recordEntry.type === 'login'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.event_type === 'fileDownloaded'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.event_type === 'fileUploaded'" class="fa fa-cloud-upload fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.event_type === 'loggedIn'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.event_type === 'loggedOut'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.type === 'initAccount'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
 
 							</a>
 						</div>
@@ -53,9 +55,9 @@
 								<div class="panel-body">
 									<div class="timeline-entry-header col-sm-12">
 										<div class="col-sm-6">
-											<h4 class="text-left">{{recordEntry.displayType}}</h4>
-											<h5 class="text-left">{{recordEntry.date}} - <span ng-show="recordEntry.file.name"><a href="#/files">{{recordEntry.file.name}}</a></span>
-												<span ng-hide="recordEntry.file.name">Generated medical history</span></h5>
+											<h4 class="text-left">{{recordEntry.type}}</h4>
+											<h5 class="text-left">{{recordEntry.time | date: 'short'}} <!-- - <span ng-show="recordEntry.file.name"><a href="#/files">{{recordEntry.file.name}}</a></span> -->
+												<span ng-show="recordEntry.note">Note - {{recordEntry.note}}</span></h5>
 											</div>
 											<div class="col-sm-6">
 											</div>
