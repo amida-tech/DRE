@@ -42,9 +42,9 @@
 								
 								<i ng-if="recordEntry.event_type === 'fileDownloaded'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
 								<i ng-if="recordEntry.event_type === 'fileUploaded'" class="fa fa-cloud-upload fa-2x" id="entry{{recordIndex}}"></i>
-								<i ng-if="recordEntry.event_type === 'loggedIn'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
-								<i ng-if="recordEntry.event_type === 'loggedOut'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
-								<i ng-if="recordEntry.type === 'initAccount'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.event_type === 'loggedIn'" class="fa fa-sign-in fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.event_type === 'loggedOut'" class="fa fa-sign-out fa-2x" id="entry{{recordIndex}}"></i>
+								<i ng-if="recordEntry.event_type === 'initAccount'" class="fa fa-user fa-2x" id="entry{{recordIndex}}"></i>
 
 							</a>
 						</div>
@@ -56,7 +56,7 @@
 									<div class="timeline-entry-header col-sm-12">
 										<div class="col-sm-6">
 											<h4 class="text-left">{{recordEntry.type}}</h4>
-											<h5 class="text-left">{{recordEntry.time | date: 'short'}} <!-- - <span ng-show="recordEntry.file.name"><a href="#/files">{{recordEntry.file.name}}</a></span> -->
+											<h5 class="text-left">{{recordEntry.date | date: 'short'}} <!-- - <span ng-show="recordEntry.file.name"><a href="#/files">{{recordEntry.file.name}}</a></span> -->
 												<span ng-show="recordEntry.note">Note - {{recordEntry.note}}</span></h5>
 											</div>
 											<div class="col-sm-6">

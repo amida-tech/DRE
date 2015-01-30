@@ -43,7 +43,7 @@ angular.module('phrPrototypeApp')
                 _.each(full, function(historyEvent){
                     var newHistEvent = {
                         type: that.getFullEventName(historyEvent.event_type),
-                        time: historyEvent.time,
+                        date: historyEvent.time,
                         event_type: historyEvent.event_type,
                         note: historyEvent.note
                     };
@@ -51,10 +51,17 @@ angular.module('phrPrototypeApp')
                     fullHistoryProcessed.push(newHistEvent);
                 });
 
+                // var chartDates = [];
+
+                // _.each(full, function(historyEvent){
+                //     chartDates.push()
+                // })
+
+
                 var history = {
                     lastLogin: loginTime,
                     lastUpdate: updateTime,
-                    recordHistory: fullHistoryProcessed
+                    recordHistory: fullHistoryProcessed.reverse()
                 };
                 console.log(history);
                 callback(null, history);
