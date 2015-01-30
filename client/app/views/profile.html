@@ -231,11 +231,11 @@
                 <h5>* Denotes required fields.</h5>
                 <form novalidate role="form" name="languageForm">
                     <div ng-repeat="language in profile.languages">
-                        <div class="form-group col-sm-4">
+                        <div class="form-group col-sm-3">
                             <label for="inputLanguage">Language*</label>
                             <select class="form-control" name="inputLanguage" ng-model="user_language">
                                 <option>English</option>
-                                <!--                                 <option>Spanish</option>
+                                <!-- <option>Spanish</option>
                                 <option>French</option> -->
                             </select>
                         </div>
@@ -247,7 +247,7 @@
                                 <option>Other</option>
                             </select>
                         </div>
-                        <div class="form-group col-sm-2 col-sm-offset-1">
+                        <div class="form-group col-sm-4 col-sm-offset-1">
                             <label for="inputLanguageProficiency">Proficiency</label>
                             <select class="form-control" name="inputLanguageProficiency" ng-model="language.proficiency">
                                 <option>Good</option>
