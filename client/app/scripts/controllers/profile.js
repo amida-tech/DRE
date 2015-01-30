@@ -10,7 +10,13 @@
 angular.module('phrPrototypeApp')
   .controller('ProfileCtrl', function ($scope, $location, $anchorScroll, account, profile) {
 
-  	$scope.profile = {};
+  	$scope.editContact = false;
+    $scope.editLangs = false;
+    $scope.editProf = false;
+
+    $scope.editContactSection = function () {
+      $scope.editContact = true;
+    }
 
     $scope.navClick = function (element) {
         var old = $location.hash();
@@ -21,12 +27,15 @@ angular.module('phrPrototypeApp')
     };
 
     $scope.updateProfile = function () {
+
       var info = $scope.profile;
       profile.saveProfile(info, function(err) {
-        console.log('profile controller', info);
+        // console.log('profile controller', info);
       });
-      displayProfile();
-    };
+      $scope.editContact = false;
+      // editContactSection();
+      // displayProfile();
+    }
 
     function displayProfile() {
       profile.getProfile(function(err, profileInfo) {

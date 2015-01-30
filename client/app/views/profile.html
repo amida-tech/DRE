@@ -25,7 +25,62 @@
         <h4 class="text-center text-white">Profile</h4>
         <div class="panel">
             <div class="panel-body" id="profile">
+                <div class-"row" ng-hide="$scope.editProf">
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <h5>First Name*</h5>
+                            <p>{{profile.name.first}}</p>
+                        </div>
+                        <div class="form-group col-sm-3 col-sm-offset-1">
+                            <h5>Middle Name</h5>
+                            <p>{{profile.name.middle[0]}}</p>
+                        </div>
+                        <div class="form-group col-sm-4 col-sm-offset-1">
+                            <h5>Last Name*</h5>
+                            <p>{{profile.name.last}}</p>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <h5>Primary Email Address</h5>
+                            <p>{{profile.email[0].email}}</p>
+                        </div>
+                        <div class="form-group col-sm-3 col-sm-offset-1">
+                            <h5>Date of Birth</h5>
+                            <p>{{profile.dob}}</p>
+                        </div>
+                        <div class="form-group col-sm-4 col-sm-offset-1">
+                            <h5>Gender</h5>
+                            <p>{{profile.gender}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <h5>Race/Ethnicity</h5>
+                            <p>{{profile.race_ethnicity}}</p>
+                        </div>
+                        <div class="form-group col-sm-3 col-sm-offset-1">
+                            <h5>Marital Status</h5>
+                            <p>{{profile.marital_status}}</p>
+                        </div>
+                        <div class="form-group col-sm-4 col-sm-offset-1">
+                            <h5>Religion</h5>
+                            <p>{{profile.religion}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4 btn btn-default" ng-click="editProfSection()">
+                            <i class="fa fa-edit"> Edit</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            <div class="row" ng-show="$scope.editProf">
                 <h5>* Denotes required fields.</h5>
                 <form novalidate role="form" name="profileForm">
 
@@ -82,7 +137,7 @@
                         <div class="form-group col-sm-4 col-sm-offset-1">
                             <label for="inputMaritalStatus">Marital Status</label>
                             <select class="form-control" name="inputMaritalStatus" ng-model="profile.marital_status">
-                                <option>Unmarried</option>
+                                <option>Never Married</option>
                                 <option>Married</option>
                                 <option>Divorced</option>
                                 <option>Widowed</option>
@@ -107,12 +162,63 @@
                     </div>
                 </form>
             </div>
+            </div>
         </div>
+
         <h4 class="text-center text-white">Contact Information</h4>
+
         <div class="panel">
             <div class="panel-body" id="contact">
 
-                <form novalidate role="form" name="contactForm">
+                <div ng-hide="$scope.editContact">
+                    <div class="row">
+                        <!-- Address section -->
+                        <div class="col-sm-4">
+                            <h4>Address</h4>
+                            <div class="col-sm-12" ng-hide="profile.addresses">No address found in your record.</div>
+                            <div class="col-sm-12" ng-repeat="(addrIndex, addr) in profile.addresses">
+                                <div id="address{{addressIndex}}">
+                                    <h5 class="capitalize">{{addr.use}}</h5>
+                                    <p ng-repeat="(addrLineIndex, addrLine) in addr.street_lines">{{addrLine}}</p>
+                                    <p>{{addr.city}}, {{addr.state}} {{addr.zip}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Phone section-->
+                        <div class="col-sm-4">
+                            <h4>Phone Number</h4>
+                            <div class="col-sm-12" ng-hide="profile.phone">No phone numbers found in your record.</div>
+                            <div class="col-sm-12 panel-editable" ng-repeat="(phIndex, ph) in profile.phone">
+                                <div id="ph{{phIndex}}">
+                                    <h5 class="capitalize">{{ph.type}}</h5>
+                                    <p>{{ph.number}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Email section-->
+                        <div class="col-sm-4">
+                            <h4>Additional Email</h4>
+                            <div class="col-sm-12" ng-hide="profile.email[1]">No additional email addresses in your record.</div>
+                            <div ng-show="profile.email[1]">
+                                <div class="col-sm-12" ng-repeat="(emIndex, em) in profile.email" ng-show="!$first">
+                                    <div id="em{{emIndex}}">
+                                        <h5 class="capitalize">{{em.type}}</h5>
+                                        <p>{{em.email}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4 btn btn-default" ng-click="editContactSection()">
+                            <i class="fa fa-edit"> Edit</i>
+                        </div>
+                    </div>
+                </div>
+
+                <form novalidate role="form" name="contactForm" ng-show="$scope.editContact">
                     <div class="row">
                         <!--Address section-->
                         <div class="col-sm-7">
@@ -187,7 +293,7 @@
                         </div>
 
                         <!--Email section-->
-<!--                         <div class="col-sm-3 col-sm-offset-1">
+                        <div class="col-sm-3 col-sm-offset-1" ng-show="profile.email[1]">
                             <h4>Additional Email</h4>
                             <div ng-repeat="(emIndex, em) in profile.email" ng-show="!$first">
                                 <div id="em{{emIndex}}">
@@ -207,7 +313,7 @@
                                 </div>
 
                             </div>
-                        </div> -->
+                        </div>
 
                     </div>
 
@@ -228,38 +334,64 @@
         <div class="panel">
             <div class="panel-body" id="languages">
                 <a id="languages"></a>
+
+                <div class="row" ng-hide="$scope.editLangs">
+
+                <div class="row" ng-hide="profile.languages">No languages found in your record.</div>
+                <div class="row" ng-repeat="language in profile.languages">
+                    <div class="form-group col-sm-3">
+                                <h5 class="capitalize">Language</h5>
+                                <p class="capitalize">{{user_language}}</p>
+                    </div>
+                    <div class="form-group col-sm-3 col-sm-offset-1">
+                        <h5 class="capitalize">Mode</h5>
+                        <p>{{language.mode}}</p>
+                    </div>
+                    <div class="form-group col-sm-3 col-sm-offset-1">
+                        <h5 class="capitalize">Proficiency</h5>
+                        <p>{{language.proficiency}}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4 btn btn-default" ng-click="editLangsSection()">
+                        <i class="fa fa-edit"> Edit</i>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" ng-show="$scope.editLangs">
                 <h5>* Denotes required fields.</h5>
                 <form novalidate role="form" name="languageForm">
-                    <div ng-repeat="language in profile.languages">
-                        <div class="form-group col-sm-3">
-                            <label for="inputLanguage">Language*</label>
-                            <select class="form-control" name="inputLanguage" ng-model="user_language">
-                                <option>English</option>
-                                <!-- <option>Spanish</option>
-                                <option>French</option> -->
-                            </select>
-                        </div>
-                        <div class="form-group col-sm-3 col-sm-offset-1">
-                            <label for="inputLanguageModel">Mode</label>
-                            <select class="form-control" name="inputLanguageMode" ng-model="language.mode">
-                                <option>Expressed spoken</option>
-                                <option>Signed</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-sm-4 col-sm-offset-1">
-                            <label for="inputLanguageProficiency">Proficiency</label>
-                            <select class="form-control" name="inputLanguageProficiency" ng-model="language.proficiency">
-                                <option>Good</option>
-                                <option>Intermediate</option>
-                                <option>Proficient</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-sm-12 profile-divider">
-                            <!--                             <div class="pull-left">
-                                <input type="checkbox" name="inputLanguagePreferred"> <label for="inputLanguagePreferred">Preferred</label>
-                            </div> -->
-                        </div>
+<!--                     <div class="pull-left col-sm-1">
+                    <label for="inputLanguagePreferred">Preferred</label>
+                        <input type="checkbox" name="inputLanguagePreferred">
+                    </div> -->
+                    <div class="form-group col-sm-3">
+                        <label for="inputLanguage">Language*</label>
+                        <select class="form-control" name="inputLanguage" ng-model="user_language">
+                            <option>English</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-3 col-sm-offset-1">
+                        <label for="inputLanguageModel">Mode</label>
+                        <select class="form-control" name="inputLanguageMode" ng-model="language.mode">
+                            <option>Expressed spoken</option>
+                            <option>Signed</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-4 col-sm-offset-1">
+                        <label for="inputLanguageProficiency">Proficiency</label>
+                        <select class="form-control" name="inputLanguageProficiency" ng-model="language.proficiency">
+                            <option>Good</option>
+                            <option>Intermediate</option>
+                            <option>Proficient</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-sm-12 profile-divider">
                     </div>
                     <!--<div class="col-sm-12">
                         <a href="">
@@ -267,7 +399,7 @@
                         <div class="pull-left">Add New Language</div>
                         </a>
                     </div>-->
-                    <a href="#/home">
+                    <a>
                         <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="profileForm.$invalid" ng-click="updateProfile()">Update Languages</button>
                     </a>
                     <div class="text-center">
