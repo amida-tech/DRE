@@ -13,7 +13,7 @@ var path = require('path');
 var common2 = require('./common.js');
 var common = require(path.join(__dirname, '../common/common.js'));
 
-var record = require('../../../blue-button-record');
+var record = require('blue-button-record');
 
 describe('Pre Test Cleanup', function() {
 
