@@ -39,7 +39,7 @@ angular.module('phrPrototypeApp')
 
 
   	function getHistory () {
-      history.account(function(err, history) {
+      history.getHistory(function(err, history) {
         if (err) {
           console.log(err);
         } else {
@@ -55,7 +55,6 @@ angular.module('phrPrototypeApp')
 
             console.log();
           }
-
 
           $scope.accountHistory = history;
         }
