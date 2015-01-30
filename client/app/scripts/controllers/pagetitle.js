@@ -9,6 +9,10 @@
  */
 angular.module('phrPrototypeApp')
   .controller('titleController', function ($rootScope, $scope, $location) {
+
+    $scope.user_first="Kevin";
+    $scope.user_last="Bacon";
+
   	
   	$scope.pageTitle = 'My PHR';
   	var routeMap = {

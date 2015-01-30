@@ -37,7 +37,7 @@ angular.module('phrPrototypeApp')
             profile.getProfile(function(err, profileInfo) {
                 $scope.user_first = profileInfo.name.first;
                 $scope.user_last = profileInfo.name.last;
-                $scope.email = profileInfo.email[0].email;
+                //$scope.email = profileInfo.email[0].email;
             });
         }
 
