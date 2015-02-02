@@ -40,6 +40,7 @@ angular.module('phrPrototypeApp')
                 if (err) {
                     $scope.error = err;
                 } else {
+                    // $scope.loginStatus = false;
                     $location.path('/');
                 }
             });

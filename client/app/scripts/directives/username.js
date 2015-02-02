@@ -17,9 +17,9 @@ angular.module('phrPrototypeApp')
                 //$scope.user_first="blah";
 
                 profile.getProfile(function(err, profileInfo) {
-                    if (profileInfo.name.first) {
-                    scope.user_first = profileInfo.name.first;
-                    scope.user_last = profileInfo.name.last;
+                    if (profileInfo&&!angular.isUndefined(profileInfo.name)) {
+                        scope.user_first = profileInfo.name.first;
+                        scope.user_last = profileInfo.name.last;
                     }
                 });
 
