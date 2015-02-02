@@ -3,9 +3,9 @@
         <div class="profile-image">
         <img class="img-responsive center-block" src="images/img-demo.png"></div>
         <div class="profile-content">
-            <h4>{{user_first}} {{user_last}}</h4>
-            <p>{{user_email}}</p>
-            <p>Born: {{user_dob}}</p>
+            <h4 ng-show="user_first">{{user_first}} {{user_last}}</h4>
+            <p ng-show="user_email">{{user_email}}</p>
+            <p ng-show="user_dob">Born: {{user_dob}}</p>
         </div>
     </div>
 </div>
