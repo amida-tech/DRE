@@ -6,7 +6,7 @@
  * # BillingClaimsCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, profile, billing) {
+angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, billing) {
     $scope.entryType = 'all';
     $scope.masterEntries = [];
     $scope.entries = [];
@@ -14,16 +14,6 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
     $scope.newComment = {
         'starred': false
     };
-
-    function showUserInfo() {
-        profile.getProfile(function(err, profileInfo) {
-            $scope.user_first = profileInfo.name.first;
-            $scope.user_last = profileInfo.name.last;
-            $scope.user_email = profileInfo.email[0].email;
-            $scope.user_dob = profileInfo.dob;
-        });
-    }
-    showUserInfo();
 
     function getUpdateDate() {
         //Should grab from files/update history.  Stubbed for now.
