@@ -16,7 +16,11 @@ angular.module('phrPrototypeApp')
 
     $scope.editContactSection = function () {
       $scope.editContact = true;
-    }
+    };
+
+    $scope.editProfSection = function () {
+      $scope.editProf = true;
+    };
 
     $scope.navClick = function (element) {
         var old = $location.hash();
@@ -35,7 +39,7 @@ angular.module('phrPrototypeApp')
       $scope.editContact = false;
       // editContactSection();
       // displayProfile();
-    }
+    };
 
     function displayProfile() {
       profile.getProfile(function(err, profileInfo) {
