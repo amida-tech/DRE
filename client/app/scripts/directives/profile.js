@@ -17,10 +17,12 @@ angular.module('phrPrototypeApp')
                 //$scope.user_first="blah";
 
                 profile.getProfile(function(err, profileInfo) {
-                    scope.user_first = profileInfo.name.first;
-                    scope.user_last = profileInfo.name.last;
-                    scope.user_email = profileInfo.email[0].email;
-                    scope.user_dob = profileInfo.dob;
+                    if (profileInfo.email[0].email) {
+                        scope.user_email = profileInfo.email[0].email;
+                    }
+                    if (profileInfo.dob) {
+                        scope.user_dob = profileInfo.dob;
+                    }                
                 });
 
             }
