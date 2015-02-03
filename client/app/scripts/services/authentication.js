@@ -40,6 +40,7 @@ angular.module('phrPrototypeApp')
                 .success(function(data) {
                     if (data && data.authenticated){
                         callback(null, true);
+                        // console.log(data, data.authenticated);
                     }
                     else
                     {

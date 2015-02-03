@@ -19,7 +19,7 @@ angular.module('phrPrototypeApp')
 
             $http.post('api/v1/logout')
                 .success(function() {
-                	console.log("logout successfull");
+                	console.log("logout successful");
                     //$rootScope.isAuthenticated = false;
                     //$location.path('/home');
                     callback(null);

@@ -36,12 +36,7 @@ angular.module('phrPrototypeApp')
         if (profileInfo.dob.date) {
           var tmpDOB = moment(profileInfo.dob.date).format('YYYY-MM-DD');
           $scope.profile.dob = tmpDOB;
-        } else {
-        $scope.user_first = profileInfo.name.first;
-        $scope.user_last = profileInfo.name.last;
-        $scope.user_email = profileInfo.email[0].email;
-        $scope.user_dob = profileInfo.dob;
-      }
+        } 
       });
     }
 

@@ -8,11 +8,14 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('titleController', function ($rootScope, $scope, $location) {
+  .controller('titleController', function ($rootScope, $scope, $location, profile) {
 
-    $scope.user_first="Kevin";
-    $scope.user_last="Bacon";
-
+    // profile.getProfile(function(err, profileInfo) {
+    //     if (profileInfo.name.first) {
+    //     $scope.user_first = profileInfo.name.first;
+    //     $scope.user_last = profileInfo.name.last;
+    //     }
+    // });
   	
   	$scope.pageTitle = 'My PHR';
   	var routeMap = {

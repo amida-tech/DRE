@@ -8,24 +8,13 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('HomeCtrl', function($scope, history, record, profile) {
+    .controller('HomeCtrl', function($scope, history, record) {
 
-        function showUserInfo() {
-            profile.getProfile(function(err, profileInfo) {
-                $scope.user_first = profileInfo.name.first;
-                $scope.user_last = profileInfo.name.last;
-                //$scope.user_email = profileInfo.email[0].email;
-                $scope.user_dob = profileInfo.dob;
-            });
-        }
-
-        showUserInfo();
 
         $scope.accountHistory = {
             "lastLogin": "01/01/2980"
         };
         $scope.noteCount = 0;
-        $scope.user_first = '';
 
         function countNotes() {
             //notes.noteCount(function(err, results) {
@@ -41,14 +30,6 @@ angular.module('phrPrototypeApp')
 
         countNotes();
         //countUpdates();
-
-        function showUser() {
-            profile.getProfile(function(err, profileInfo) {
-                $scope.user_first = profileInfo.name.first;
-            });
-        }
-
-        showUser();
 
 
         function getHistory() {
