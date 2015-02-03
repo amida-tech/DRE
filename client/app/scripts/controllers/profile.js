@@ -20,11 +20,12 @@ angular.module('phrPrototypeApp')
 
         $scope.updateProfile = function() {
             var info = $scope.profile;
+            var tmpemail = {
+                "type": "primary",
+                "email": $scope.profile.email[0].email
+            };
 
-            $scope.profile.email = [{
-                'type': 'primary',
-                'email': $scope.profile.email
-            }];
+            $scope.profile.email[0] = tmpemail;
 
             var formatdob = moment($scope.tmpDOB).format('YYYY-MM-DDTHH:mmZ');
             $scope.profile.dob = {
