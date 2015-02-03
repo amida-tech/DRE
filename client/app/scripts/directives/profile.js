@@ -7,7 +7,7 @@
  * # profile
  */
 angular.module('phrPrototypeApp')
-    .directive('profile', function(profile) {
+    .directive('profile', function(profile, format) {
 
 
         return {
@@ -22,7 +22,7 @@ angular.module('phrPrototypeApp')
                             scope.user_email = profileInfo.email[0].email;
                         }
                         if (profileInfo.dob) {
-                            scope.user_dob = profileInfo.dob;
+                            scope.user_dob = format.formatDate(profileInfo.dob);
                         }
                     }                
                 });
