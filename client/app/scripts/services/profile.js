@@ -8,14 +8,15 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-    .service('profile', function profile($location, $http) {
+    .service('profile', function profile($location, $http, format) {
 
 
         this.getProfile = function(callback) {
         	$http.get('api/v1/record/demographics')
         	.success(function(data) {
         		var profileInfo = data.demographics[0];
-        		console.log('obtained profile info', data.demographics[0]);
+                // format.formatDate(profileInfo.dob);
+        		console.log('profile service', profileInfo);
         		callback(null, profileInfo);
         	})
         	.error(function(data) {
@@ -26,7 +27,7 @@ angular.module('phrPrototypeApp')
         this.saveProfile = function (info, callback) {
             $http.post('api/v1/record/demographics', info)
             .success(function(data) {
-                console.log('updated profile information');
+                // console.log('updated profile information');
                 callback(null);
             })
             .error(function(data) {

@@ -53,7 +53,7 @@ angular.module('phrPrototypeApp')
         };
 
         $scope.finish = function() {
-            //calling webservice for registration
+            //calling webservice for registration, format DOB
             var info = {
                 'username': $scope.inputLogin,
                 'password': $scope.inputPassword,
@@ -61,11 +61,11 @@ angular.module('phrPrototypeApp')
                 'firstName': $scope.inputFirst,
                 'middleName': $scope.inputMiddle,
                 'lastName': $scope.inputLast,
-                'dob': $scope.inputDOB,
+                'dob': moment($scope.inputDOB).format('YYYY-MM-DDTHH:mmZ'),
                 'gender': $scope.inputGender
             };
 
-            console.log("starting registration");
+            console.log("starting registration", info.dob);
 
             registration.signup(info, function(err) {
                 // console.log("done");
