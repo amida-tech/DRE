@@ -10,6 +10,8 @@
 angular.module('phrPrototypeApp')
     .service('history', function history($location, $http, $q, format) {
 
+        var that = this;
+
         this.getFullEventName = function(typestring) {
             var fullEventNames = {
                 initAccount: 'Account created',
@@ -33,26 +35,37 @@ angular.module('phrPrototypeApp')
 
                 console.log("recent: ", recent);
 
-                var loginTime = format.formatDate(recent.login.time);
-                var updateTime = format.formatDate(recent.update.time);
+                var loginTime = recent.login.time;
+                var updateTime = recent.update.time;
 
-                var fullHistoryProcessed = {};
-                /*
-                var fullHistoryProcessed = _.each(full, function(historyEvent){
+                var fullHistoryProcessed = [];
+
+                _.each(full, function(historyEvent){
                     var newHistEvent = {
-                        type: this.getFullEventName(historyEvent.event_type),
-                        date: historyEvent.time
+                        type: that.getFullEventName(historyEvent.event_type),
+                        date: historyEvent.time,
+                        event_type: historyEvent.event_type,
+                        note: historyEvent.note
                     };
-                    return newHistEvent;
+                    //return newHistEvent;
+                    fullHistoryProcessed.push(newHistEvent);
                 });
-                */
+
+                // var chartDates = [];
+
+                // _.each(full, function(historyEvent){
+                //     chartDates.push()
+                // })
+
+
                 var history = {
                     lastLogin: loginTime,
                     lastUpdate: updateTime,
-                    recordHistory: fullHistoryProcessed
+                    recordHistory: fullHistoryProcessed.reverse()
                 };
                 console.log(history);
-                callback(history);
+                callback(null, history);
+
             }, function(err) {
                 callback(err);
             });
