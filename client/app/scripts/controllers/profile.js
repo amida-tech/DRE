@@ -17,9 +17,22 @@ angular.module('phrPrototypeApp')
     $scope.editContactSection = function () {
       $scope.editContact = true;
     };
+    $scope.cancelContact = function () {
+      $scope.editContact = false;
+    };
 
     $scope.editProfSection = function () {
       $scope.editProf = true;
+    };
+    $scope.cancelProf = function () {
+      $scope.editProf = false;
+    };
+
+    $scope.editLangsSection = function () {
+      $scope.editLangs = true;
+    };
+    $scope.cancelLangs = function () {
+      $scope.editLangs = false;
     };
 
     $scope.navClick = function (element) {
@@ -36,9 +49,9 @@ angular.module('phrPrototypeApp')
       profile.saveProfile(info, function(err) {
         // console.log('profile controller', info);
       });
-      $scope.editContact = false;
-      // editContactSection();
-      // displayProfile();
+    $scope.editContact = false;
+    $scope.editLangs = false;
+    $scope.editProf = false;
     };
 
     function displayProfile() {
