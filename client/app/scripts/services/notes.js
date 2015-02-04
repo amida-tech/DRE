@@ -144,7 +144,8 @@ angular.module('phrPrototypeApp')
         };
 
         var noteCount = function(callback) {
-            getNotes(function(err, results) {
+            
+            this.getNotes(function(err, results) {
 
                 var noteCount = 0;
 
