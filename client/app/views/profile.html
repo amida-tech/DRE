@@ -289,8 +289,8 @@
                            <div class="col-sm-12">
                                 <div id="new_phone">
                                     <div class="form-group col-sm-12">
-                                        <label for="inputPhoneType">Add a new phone type</label>
-                                        <select class="form-control capitalize" name="inputPhoneType" ng-model="new_phone.type">
+                                        <label for="inputnewPhoneType">Add a new phone type</label>
+                                        <select class="form-control capitalize" name="inputnewPhoneType" ng-model="new_phone.type">
                                             <option>primary home</option>
                                             <option>Other</option>
                                         </select>
@@ -332,8 +332,8 @@
 
                             <div id="new_email">
                                 <div class="form-group col-sm-12 capitalize">
-                                    <label for="inputOtherEmailType">Add a new email type</label>
-                                    <select class="form-control capitalize" name="inputOtherEmailType" ng-model="new_email.type">
+                                    <label for="inputnewOtherEmailType">Add a new email type</label>
+                                    <select class="form-control capitalize" name="inputnewOtherEmailType" ng-model="new_email.type">
                                         <option>work</option>
                                         <option>Other</option>
                                     </select>
@@ -341,8 +341,8 @@
 
 
                                 <div class="form-group row">
-                                    <label for="inputOtherEmail">Add a new email address</label>
-                                    <input type="email" class="form-control" name="inputOtherEmail" ng-model="new_email.email">
+                                    <label for="inputnewOtherEmail">Add a new email address</label>
+                                    <input type="email" class="form-control" name="inputnewOtherEmail" ng-model="new_email.email">
                                 </div>
                             </div>
 
@@ -454,6 +454,7 @@
                         </div>
 
                         <div class = "row" ng-repeat="(langIndex,language) in profile.languages">
+                        <div id="language{langIndex}}">
                         <div class="form-group col-sm-3">
                             <label for="inputLanguage">Language</label>
                             <select class="form-control" name="inputLanguage" ng-model="user_language[langIndex]">
@@ -478,6 +479,7 @@
                         </div>
 
                         <div class="form-group col-sm-12 profile-divider">
+                        </div>
                         </div>
                         </div>
 
