@@ -8,44 +8,82 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-    .service('history', function history() {
+    .service('history', function history($location, $http, $q, format) {
 
-        this.account = function (callback) {
-            var err = null;
+        var that = this;
 
-            var history = {
-            	lastLogin: '9/30/2014',
-            	lastUpdate: '7/31/2014',
-            	recordHistory: [
-                    {
-                      type: 'login',
-                      date: '9/30/2014'  
-                    },
-                    {
-                        type: 'download',
-                        date: '6/30/2014'
-                    },
-            		{
-            			type: 'upload',
-            			date: '12/23/2013',
-            			file: {
-            				name: 'CCDA_1.xml'
-            			}
-
-            		} 
-            	]
+        this.getFullEventName = function(typestring) {
+            var fullEventNames = {
+                initAccount: 'Account created',
+                loggedIn: 'Logged in',
+                loggedOut: 'Logged out',
+                fileUploaded: 'File uploaded',
+                fileDownloaded: 'File downloaded', //could add filename or MHR
+                labResults: 'Lab results received', //same as fileUploaded in API
+                passwordChange: 'Password changed', //not in API yet
+                infoUpdate: 'Personal Information updated' //not in API yet
             };
+            return fullEventNames[typestring];
+        };
+
+        this.getHistory = function(callback) {
+            var recentUrl = $http.get('api/v1/account_history/mostRecent');
+            var historyUrl = $http.get('api/v1/account_history/all');
+            $q.all([recentUrl, historyUrl]).then(function(result) {
+                var recent = result[0].data;
+                var full = result[1].data;
+
+                console.log("recent: ", recent);
+
+                //var loginTime = recent.login.time;
+                //var updateTime = recent.update.time;
+
+                var fullHistoryProcessed = [];
+
+                _.each(full, function(historyEvent) {
+                    var newHistEvent = {
+                        type: that.getFullEventName(historyEvent.event_type),
+                        date: historyEvent.time,
+                        event_type: historyEvent.event_type,
+                        note: historyEvent.note
+                    };
+                    //return newHistEvent;
+                    fullHistoryProcessed.push(newHistEvent);
+                });
+
+                // var chartDates = [];
+
+                // _.each(full, function(historyEvent){
+                //     chartDates.push()
+                // })
 
 
-            if (err) {
-            	callback(err);
-            } else {
-            	callback(null, history);
-            }
+                var history = {
+                    recordHistory: fullHistoryProcessed.reverse()
+                };
+
+                if (recent.login) {
+                    history.lastLogin = recent.login.time;
+                }
+
+                if (recent.update) {
+                    history.lastUpdate = recent.update.time;
+                }
 
 
+                console.log(history);
+                callback(null, history);
 
+            }, function(err) {
+                callback(err);
+            });
+        };
+
+        this.recentUpdates = function(callback) {
 
         };
 
+        this.fullHistory = function(callback) {
+
+        };
     });

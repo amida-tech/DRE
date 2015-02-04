@@ -11,92 +11,95 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
         template: "<svg style='width:100%;'></svg>",
         link: function postLink(scope, element, attrs) {
 
-                var navClick = function(ele) {
-                    $location.hash(ele);
-                    // call $anchorScroll()
-                    $anchorScroll();
-                };
-                var plotHeight = 60;
-                var boundaryOffset = 15;
-                var boundaryWidth = 3;
-                var boundaryLabelOffset = 30;
-                var boundaryLabelPadding = 5;
-                var plotBaseColor = "#6AA6FF";
-                var plotCircles = [];
-                var plotDomain = [];
-                var timeScale;
-                var timeScaleTicks = [];
-                var d3 = $window.d3;
-                var rawSvg = element.find("svg")[0];
-                var svg = d3.select(rawSvg).attr("height", plotHeight);
-                var format = d3.time.format("%m/%d/%Y");
-                var isoFormat = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
-                var isoFormatSubsecond = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ");
-                var tip = d3.tip();
-                tip.attr('class', 'd3-tip').html(function(d) {
-                    return 'Entry';
-                });
-                svg.call(tip);
+            var navClick = function(ele) {
+                $location.hash(ele);
+                // call $anchorScroll()
+                $anchorScroll();
+            };
+            var plotHeight = 60;
+            var boundaryOffset = 15;
+            var boundaryWidth = 3;
+            var boundaryLabelOffset = 30;
+            var boundaryLabelPadding = 5;
+            var plotBaseColor = "#6AA6FF";
+            var plotCircles = [];
+            var plotDomain = [];
+            var timeScale;
+            var timeScaleTicks = [];
+            var d3 = $window.d3;
+            var rawSvg = element.find("svg")[0];
+            var svg = d3.select(rawSvg).attr("height", plotHeight);
+            var format = d3.time.format("%m/%d/%Y");
+            var isoFormat = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
+            var isoFormatSubsecond = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ");
+            var tip = d3.tip();
+            tip.attr('class', 'd3-tip').html(function(d) {
+                return 'Entry';
+            });
+            svg.call(tip);
 
-                function gatherData() {
-                    //Clean variables (needed for refresh).
-                    var dataToPlot = [];
-                    plotCircles = [];
-                    plotDomain = [];
-                    dataToPlot = scope[attrs.chartData];
-                    var dataType = attrs.chartType;
-                    var tmpDomain = [];
-                    var minDate, maxDate, plotFloor, plotCeiling;
-                    if (dataType === 'account') {
-                        for (var i in dataToPlot.recordHistory) {
-                            var plotDate = format.parse(dataToPlot.recordHistory[i].date);
+            function gatherData() {
+                //Clean variables (needed for refresh).
+                var dataToPlot = [];
+                plotCircles = [];
+                plotDomain = [];
+                dataToPlot = scope[attrs.chartData];
+                var dataType = attrs.chartType;
+                var tmpDomain = [];
+                var minDate, maxDate, plotFloor, plotCeiling;
+                if (dataType === 'account' && dataToPlot) { //&& dataToPlot if no data skip this part
+                    console.log('in timeline plotting');
+                    console.log('plot data exists', dataToPlot);
+                    for (var i in dataToPlot.recordHistory) {
+                        var plotDate = isoFormatSubsecond.parse(dataToPlot.recordHistory[i].date);
+                        console.log('plot date', plotDate);
+                        plotCircles.push({
+                            "date": plotDate
+                        });
+                        tmpDomain.push(plotDate);
+                    }
+                    minDate = d3.min(tmpDomain);
+                    maxDate = d3.max(tmpDomain);
+                    plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
+                    plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
+                    plotDomain = [plotFloor, plotCeiling];
+                } else {
+                    _.each(dataToPlot, function(entry) {
+                        var plotDate;
+                        if (entry.metadata.datetime) {
+                            if (entry.metadata.datetime[0]) {
+                                plotDate = isoFormat.parse(entry.metadata.datetime[0].date);
+
+                            }
+                            //Redundancy for isoFormat subsecond support.
+                            if (_.isNull(plotDate)) {
+                                plotDate = isoFormatSubsecond.parse(entry.metadata.datetime[0].date);
+                            }
                             plotCircles.push({
                                 "date": plotDate
                             });
                             tmpDomain.push(plotDate);
                         }
-                        minDate = d3.min(tmpDomain);
-                        maxDate = d3.max(tmpDomain);
-                        plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
-                        plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
-                        plotDomain = [plotFloor, plotCeiling];
-                    } else {
-                        _.each(dataToPlot, function(entry) {
-                            var plotDate;
-                            if (entry.metadata.datetime) {
-                                if (entry.metadata.datetime[0]) {
-                                    plotDate = isoFormat.parse(entry.metadata.datetime[0].date);
-                                    
-                                }
-                                //Redundancy for isoFormat subsecond support.
-                                if (_.isNull(plotDate)) {
-                                    plotDate = isoFormatSubsecond.parse(entry.metadata.datetime[0].date);
-                                }
-                                plotCircles.push({
-                                    "date": plotDate
-                                });
-                                tmpDomain.push(plotDate);
-                            }
-                        });
-                        minDate = d3.min(tmpDomain);
-                        maxDate = d3.max(tmpDomain);
-                        plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
-                        plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
-                        plotDomain = [plotFloor, plotCeiling];
-                    }
+                    });
+                    minDate = d3.min(tmpDomain);
+                    maxDate = d3.max(tmpDomain);
+                    plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
+                    plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
+                    plotDomain = [plotFloor, plotCeiling];
                 }
+            }
 
-                function renderPlot() {
+            function renderPlot() {
                     var width = 0;
 
                     function getSVGWidth() {
-                            width = parseInt(svg.style('width'), 10);
+                        width = parseInt(svg.style('width'), 10);
 
-                            //Shim, keeps it from erroring on first pass.
-                            if (width === 0) {
-                                width = $window.innerWidth * 0.67;
-                            }
-                            
+                        //Shim, keeps it from erroring on first pass.
+                        if (width === 0) {
+                            width = $window.innerWidth * 0.67;
+                        }
+
                     }
 
                     function buildScale() {
@@ -231,29 +234,41 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     plotData();
                 }
                 //gatherData only on first run.
-                $window.onload = function() {
+            $window.onload = function() {
+                gatherData();
+                renderPlot();
+            };
+
+            //Re-evaluate scope on resize.
+            $window.onresize = function() {
+                scope.$apply();
+                renderPlot();
+            };
+            //Expose function on master scope.
+
+            scope.$watch('inactiveFlag', function(newValue, oldValue) {
+                gatherData();
+                renderPlot();
+            }, true);
+            scope.$watch('entryType', function(newValue, oldValue) {
+                gatherData();
+                renderPlot();
+            }, true);
+            scope.$watch('pageLoaded', function(newValue, oldValue) {
+                gatherData();
+                renderPlot();
+            }, true);
+
+            //Bind to updates in accountHistory var
+            scope.$watch('accountHistory', function(newValue, oldValue) {
+                if (newValue) {
+                    console.log("act hist new val ", newValue);
                     gatherData();
-                    renderPlot();    
-                };
-                
-                //Re-evaluate scope on resize.
-                $window.onresize = function() {
-                    scope.$apply();
                     renderPlot();
-                };
-                //Expose function on master scope.
-                scope.$watch('inactiveFlag', function(newValue, oldValue) {
-                    gatherData();
-                    renderPlot();
-                }, true);
-                scope.$watch('entryType', function(newValue, oldValue) {
-                    gatherData();
-                    renderPlot();
-                }, true);
-                scope.$watch('pageLoaded', function(newValue, oldValue) {
-                    gatherData();
-                    renderPlot();
-                }, true);
+                }
+            }, true);
+
+
 
         }
     };

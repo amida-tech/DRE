@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('NavbarCtrl', function($rootScope, $scope, $location, authentication, logout, profile) {
+    .controller('NavbarCtrl', function($rootScope, $scope, $location, authentication, logout) {
 
         $scope.loginStatus = false;
 
@@ -33,17 +33,6 @@ angular.module('phrPrototypeApp')
             checkAuthStatus();
         });
 
-        function showUserInfo() {
-            profile.getProfile(function(err, profileInfo) {
-                $scope.user_first = profileInfo.name.first;
-                $scope.user_last = profileInfo.name.last;
-                $scope.email = profileInfo.email[0].email;
-            });
-        }
-
-        showUserInfo();
-
-
         //TODO: isValid is not used??
         $scope.logout = function(isValid) {
             console.log("navbar controller, logout()", isValid);
@@ -51,6 +40,7 @@ angular.module('phrPrototypeApp')
                 if (err) {
                     $scope.error = err;
                 } else {
+                    // $scope.loginStatus = false;
                     $location.path('/');
                 }
             });

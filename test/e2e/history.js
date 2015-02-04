@@ -54,7 +54,7 @@ describe('Pre Test Cleanup', function() {
         //record.
         record.saveEvent("loggedIn", "test", "note", "file", function() {
 
-            record.getRecentLogin(function(err, data) {
+            record.getRecentLogin("test",function(err, data) {
                 //console.log("recent login: ", data);
 
                 expect(data.time).to.exist;
@@ -73,7 +73,7 @@ describe('Pre Test Cleanup', function() {
         //record.
         record.saveEvent("fileUploaded", "test", "note", "file", function() {
 
-            record.getRecentUpdate(function(err, data) {
+            record.getRecentUpdate("test",function(err, data) {
                 //console.log("recent login: ", data);
 
                 expect(data.time).to.exist;
@@ -128,7 +128,7 @@ describe('Account History - basic', function() {
                     done();
                 } else {
                     expect(res.body).to.have.length(6);
-                    (res.body).should.all.have.property('userID', 'test');
+                    (res.body).should.all.have.property('username', 'test');
                     (res.body).should.include.something.with.property('event_type', 'initAccount');
                     (res.body).should.include.something.with.property('event_type', 'loggedIn');
                     (res.body).should.include.something.with.property('event_type', 'fileUploaded');
@@ -151,7 +151,7 @@ describe('Account History - recent for UI', function() {
                     console.log(res.body);
                     //expect(res.body).to.have.property('login');
                     //console.log(res.body);
-                    expect(res.body.update).to.have.deep.property('userID', 'test');
+                    expect(res.body.update).to.have.deep.property('username', 'test');
                     expect(res.body.login).to.have.deep.property('event_type', 'loggedIn');
                     done();
                 }
@@ -168,7 +168,7 @@ describe('Account History - recent for UI', function() {
                 } else {
                     //console.log(res.body);
                     expect(res.body).to.have.property('update');
-                    expect(res.body.update).to.have.deep.property('userID', 'test');
+                    expect(res.body.update).to.have.deep.property('username', 'test');
                     expect(res.body.update).to.have.deep.property('event_type', 'fileUploaded');
                     expect(res.body.update).to.have.property('time');
                     done();

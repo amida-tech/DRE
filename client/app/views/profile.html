@@ -55,6 +55,13 @@
                             <p>{{profile.gender}}</p>
                         </div>
                     </div>
+<!--<<<<<< HEAD
+                    <div class="form-group col-sm-4 col-sm-offset-1">
+                        <label for="inputDOB">Date of Birth*</label>
+                        <input type="date" class="form-control" name="inputDOB" ng-model="tmpDOB" required ng-required="true">
+                        <p ng-show="profileForm.inputDOB.$invalid && !profileForm.inputDOB.$pristine" class="help-block">Must be a valid date.</p>
+=======
+-->
 
                     <div class="row">
                         <div class="form-group col-sm-3">
@@ -72,6 +79,7 @@
                             <p ng-hide="profile.religion">None entered</p>
                             <p>{{profile.religion}}</p>
                         </div>
+
                     </div>
 
                     <div class="row">

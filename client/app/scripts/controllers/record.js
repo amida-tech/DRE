@@ -6,19 +6,8 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format, profile) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format) {
     
-    function showUserInfo() {
-        profile.getProfile(function(err, profileInfo) {
-            $scope.user_first = profileInfo.name.first;
-            $scope.user_last = profileInfo.name.last;
-            $scope.user_email = profileInfo.email[0].email;
-            $scope.user_dob = profileInfo.dob;
-        });
-    }
-
-    showUserInfo();
-
     function pageRender(data) {
         $scope.dashMetrics = {};
         $scope.tabs = [{
