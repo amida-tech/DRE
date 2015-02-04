@@ -8,8 +8,6 @@
  */
 angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes) {
     
-    $scope.notes = [];
-    
     $scope.filters = [
         {'name': 'starred',
          'value': true,
@@ -79,7 +77,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
 
     function getNotes() {
         notes.getNotes(function(err, returnNotes) {
-            $scope.notes = [];
             $scope.notes = returnNotes;
         });
     }
