@@ -82,10 +82,8 @@ angular.module('phrPrototypeApp')
         for (var index in $scope.profile.languages) {
           if ($scope.profile.languages[index].language === 'en') {
             $scope.user_language[index] = 'English';
-            console.log(index);
           }
         }
-        console.log($scope.user_language);
         }
       }
 
@@ -110,9 +108,11 @@ angular.module('phrPrototypeApp')
             $scope.profile = tmpProf + tmpLanguages;
             console.log(tmpLanguages, $scope.new_language, $scope.profile, tmpProf);
           }
-
       }
 
+      function addContact() {
+
+      }
 
     });
 
