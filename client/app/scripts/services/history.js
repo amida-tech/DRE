@@ -35,12 +35,12 @@ angular.module('phrPrototypeApp')
 
                 console.log("recent: ", recent);
 
-                var loginTime = recent.login.time;
-                var updateTime = recent.update.time;
+                //var loginTime = recent.login.time;
+                //var updateTime = recent.update.time;
 
                 var fullHistoryProcessed = [];
 
-                _.each(full, function(historyEvent){
+                _.each(full, function(historyEvent) {
                     var newHistEvent = {
                         type: that.getFullEventName(historyEvent.event_type),
                         date: historyEvent.time,
@@ -59,10 +59,12 @@ angular.module('phrPrototypeApp')
 
 
                 var history = {
-                    lastLogin: loginTime,
-                    lastUpdate: updateTime,
                     recordHistory: fullHistoryProcessed.reverse()
                 };
+
+                if (recent.login) history.lastLogin = recent.login.time;
+                if (recent.update) history.lastUpdate = recent.update.time;
+
                 console.log(history);
                 callback(null, history);
 
