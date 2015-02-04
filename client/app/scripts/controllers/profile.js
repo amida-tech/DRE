@@ -45,7 +45,11 @@ angular.module('phrPrototypeApp')
     };
 
     $scope.updateProfile = function () {
-      addLang();
+      if (angular.isDefined($scope.new_language)) {
+        addLang();
+      }
+      addContact();
+
 
       var info = $scope.profile;
       var tmpemail = {
@@ -101,16 +105,35 @@ angular.module('phrPrototypeApp')
           {'languages': $scope.new_language};
           if (angular.isDefined($scope.profile.languages)) {
             var lang_count = $scope.profile.languages.length;
-            console.log(lang_count);
+            // console.log(lang_count);
             $scope.profile.languages[lang_count] = $scope.new_language;
           } else {
             var tmpProf = $scope.profile;
             $scope.profile = tmpProf + tmpLanguages;
-            console.log(tmpLanguages, $scope.new_language, $scope.profile, tmpProf);
+            // console.log(tmpLanguages, $scope.new_language, $scope.profile, tmpProf);
           }
       }
 
       function addContact() {
+        if (angular.isDefined($scope.new_phone)) {
+          var tmpPhone =
+            {'phone': $scope.new_phone};
+          if (angular.isDefined($scope.profile.phone)) {
+            var phone_count = $scope.profile.phone.length;
+            $scope.profile.phone[phone_count] = $scope.new_phone;
+          } else {
+            var tmpProf1 = $scope.profile;
+            $scope.profile = tmpProf1 + tmpPhone;
+          }
+        }
+
+        if (angular.isDefined($scope.new_email)) {
+          var tmpNewEmail =
+            {'email': $scope.new_email};
+          var email_count = $scope.profile.email.length;
+          $scope.profile.email[email_count] = $scope.new_email;
+          
+        }
 
       }
 

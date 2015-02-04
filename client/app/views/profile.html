@@ -298,8 +298,9 @@
 
 
                                     <div class="form-group row">
-                                        <label for="inputPhone">Add a new phone number</label>
-                                        <input type="text" class="form-control" name="inputPhone" ng-model="new_phone.number">
+                                        <label for="inputnewPhone">Add a new phone number</label>
+                                        <input type="text" class="form-control" name="inputnewPhone" ng-model="new_phone.number" ng-minLength="13">
+                                        <p ng-show="contactForm.inputnewPhone.$invalid && !contactForm.inputnewPhone.$pristine" class="help-block">Please enter a 10-digit phone number (xxx)xxx-xxxx.</p>
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +319,7 @@
 
                                     <div class="form-group row">
                                         <label for="inputPhone">Number*</label>
-                                        <input type="text" class="form-control" name="inputPhone" ng-model="ph.number" required ng-required="true" ng-minLength="10">
+                                        <input type="text" class="form-control" name="inputPhone" ng-model="ph.number" required ng-required="true" ng-minLength="13">
                                         <p ng-show="contactForm.inputPhone.$invalid && !contactForm.inputPhone.$pristine" class="help-block">Please enter a 10-digit phone number (xxx)xxx-xxxx.</p>
                                     </div>
                                 </div>
@@ -333,7 +334,7 @@
                                 <div class="form-group col-sm-12 capitalize">
                                     <label for="inputOtherEmailType">Add a new email type</label>
                                     <select class="form-control capitalize" name="inputOtherEmailType" ng-model="new_email.type">
-                                        <option>primary home</option>
+                                        <option>work</option>
                                         <option>Other</option>
                                     </select>
                                 </div>
@@ -344,14 +345,14 @@
                                     <input type="email" class="form-control" name="inputOtherEmail" ng-model="new_email.email">
                                 </div>
                             </div>
-                            
+
                             <div ng-repeat="(emIndex, em) in profile.email" ng-show="!$first">
 
                                 <div id="em{{emIndex}}">
                                     <div class="form-group col-sm-12 capitalize">
                                         <label for="inputOtherEmailType">Type*</label>
                                         <select class="form-control capitalize" name="inputOtherEmailType" ng-model="em.type">
-                                            <option>primary home</option>
+                                            <option>work</option>
                                             <option>Other</option>
                                         </select>
                                     </div>
@@ -373,7 +374,7 @@
                             <button type="cancel" class="btn btn-default col-sm-2 col-sm-offset-3" ng-disabled="contactForm.$invalid" ng-click="cancelContact()">Cancel</button>
                         </a>
                         <a>
-                            <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-1" ng-disabled="contactForm.$invalid" ng-click="updateContact()">Update</button>
+                            <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-1" ng-disabled="contactForm.$invalid" ng-click="updateProfile()">Update</button>
                         </a>
                         <div class="text-center">
                             <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
