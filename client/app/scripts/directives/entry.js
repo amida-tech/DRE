@@ -5,7 +5,7 @@
  * @description
  * # entry
  */
-angular.module('phrPrototypeApp').directive('entry', function(format) {
+angular.module('phrPrototypeApp').directive('entry', function(format, $http) {
     return {
         templateUrl: 'views/templates/entry.html',
         restrict: 'EA',
@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp').directive('entry', function(format) {
             scope.entrySubTitleOne = "";
             scope.entrySubTitleTwo = "";
             scope.entryTemplatePath = "views/templates/details/" + scope.type + ".html";
-            
+
 
 
             switch (scope.type) {
@@ -127,13 +127,31 @@ angular.module('phrPrototypeApp').directive('entry', function(format) {
                 }
             };
             scope.addNote = function() {
-                scope.newComment.date = new Date();
-                scope.entryMetaData.comments.push(scope.newComment);
-                scope.newComment = {
-                    "starred": false
-                };
+                console.log("adding note");
+                console.log(scope);
+                //scope.entryMetaData.comments.push(scope.newComment);
+                
+                scope.newComment.starred = false;
+
+                scope.newComment.entry = scope.recordEntry.data._id;
+                scope.newComment.note = scope.newComment.comment;
+                scope.newComment.section = scope.recordEntry.category;
+
                 countStarredComments();
+
+                console.log(scope.newComment);
+
+                $http.post('api/v1/notes/add', scope.newComment)
+                    .success(function(data) {
+                        console.log("note added successfuly");
+                    })
+                    .error(function(data) {
+                        console.log("adding note failed");
+                    });
+
             };
+
+            scope.newComment = {};
         }
     };
 });
