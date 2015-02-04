@@ -62,8 +62,14 @@ angular.module('phrPrototypeApp')
                     recordHistory: fullHistoryProcessed.reverse()
                 };
 
-                if (recent.login) history.lastLogin = recent.login.time;
-                if (recent.update) history.lastUpdate = recent.update.time;
+                if (recent.login) {
+                    history.lastLogin = recent.login.time;
+                }
+
+                if (recent.update) {
+                    history.lastUpdate = recent.update.time;
+                }
+
 
                 console.log(history);
                 callback(null, history);
