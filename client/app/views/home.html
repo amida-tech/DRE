@@ -14,7 +14,8 @@
 						<h4>Hi {{user_first}} !</h4>
 						<p>Welcome to your Personal Health Record. You can review your record summary and account history from this home page.</p>
 						<p>Last Login: {{accountHistory.lastLogin | date: 'short'}}</p>
-						<p>Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
+						<p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
+						<p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
 					</div>
 
 					<div class="col-sm-5">
