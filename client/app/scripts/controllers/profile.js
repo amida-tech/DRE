@@ -13,6 +13,7 @@ angular.module('phrPrototypeApp')
   	$scope.editContact = false;
     $scope.editLangs = false;
     $scope.editProf = false;
+    $scope.user_language = {};
 
     $scope.editContactSection = function () {
       $scope.editContact = true;
@@ -44,14 +45,28 @@ angular.module('phrPrototypeApp')
     };
 
     $scope.updateProfile = function () {
+      addLang();
 
       var info = $scope.profile;
+      var tmpemail = {
+          "type": "primary",
+          "email": $scope.profile.email[0].email
+      };
+
+      $scope.profile.email[0] = tmpemail;
+
+      var formatdob = moment($scope.tmpDOB).format('YYYY-MM-DDTHH:mmZ');
+      $scope.profile.dob = {
+        "date": formatdob,
+        "precision": "day"
+      };
+
       profile.saveProfile(info, function(err) {
         // console.log('profile controller', info);
       });
-    $scope.editContact = false;
-    $scope.editLangs = false;
-    $scope.editProf = false;
+      $scope.editContact = false;
+      $scope.editLangs = false;
+      $scope.editProf = false;
     };
 
     function displayProfile() {
@@ -59,23 +74,44 @@ angular.module('phrPrototypeApp')
         $scope.profile = profileInfo;
         // console.log('profile controller', $scope.profile._id);
         //Shims for HL7 weirdness.
-        
-        var tmpDOB = moment(profileInfo.dob.date).format('YYYY-MM-DD');
-        $scope.profile.dob = tmpDOB;
-        $scope.user_first = profileInfo.name.first;
-        $scope.user_last = profileInfo.name.last;
-        $scope.user_email = profileInfo.email[0].email;
-        $scope.user_dob = profileInfo.dob;
+        if (profileInfo&&profileInfo.dob) {
+        $scope.tmpDOB = moment($scope.profile.dob.date).format('YYYY-MM-DD');
 
         // hard coded language
-        if ($scope.profile.languages[0].language === 'en') {
-          $scope.user_language = 'English';
+        if (angular.isDefined($scope.profile.languages)) {
+        for (var index in $scope.profile.languages) {
+          if ($scope.profile.languages[index].language === 'en') {
+            $scope.user_language[index] = 'English';
+            console.log(index);
+          }
         }
+        console.log($scope.user_language);
+        }
+      }
 
       });
     }
 
     displayProfile();
+
+    function addLang() {
+        // add new language
+        if ($scope.new_language.language === 'English') {
+          $scope.new_language.language = 'en';
+        }
+        var tmpLanguages =
+          {'languages': $scope.new_language};
+          if (angular.isDefined($scope.profile.languages)) {
+            var lang_count = $scope.profile.languages.length;
+            console.log(lang_count);
+            $scope.profile.languages[lang_count] = $scope.new_language;
+          } else {
+            var tmpProf = $scope.profile;
+            $scope.profile = tmpProf + tmpLanguages;
+            console.log(tmpLanguages, $scope.new_language, $scope.profile, tmpProf);
+          }
+
+      }
 
 
     });

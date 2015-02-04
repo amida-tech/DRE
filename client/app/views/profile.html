@@ -48,7 +48,7 @@
                         </div>
                         <div class="form-group col-sm-3 col-sm-offset-1">
                             <h5>Date of Birth</h5>
-                            <p>{{profile.dob}}</p>
+                            <p>{{tmp.dob}}</p>
                         </div>
                         <div class="form-group col-sm-4 col-sm-offset-1">
                             <h5>Gender</h5>
@@ -114,7 +114,7 @@
                         </div>
                         <div class="form-group col-sm-4 col-sm-offset-1">
                             <label for="inputDOB">Date of Birth*</label>
-                            <input type="date" class="form-control" name="inputDOB" ng-model="profile.dob" required ng-required="true">
+                            <input type="date" class="form-control" name="inputDOB" ng-model="tmp.dob" required ng-required="true">
                             <p ng-show="profileForm.inputDOB.$invalid && !profileForm.inputDOB.$pristine" class="help-block">Must be a valid date.</p>
                         </div>
                     </div>
@@ -233,8 +233,8 @@
 
                 <h5>* Denotes required fields.</h5>
                 <form novalidate role="form" name="contactForm">
+                
                     <div class="row">
-
                         <!--Address section-->
                         <div class="col-sm-3">
                             <h4>Address</h4>
@@ -355,18 +355,21 @@
 
                 <div class="row" ng-hide="editLangs">
 
+                    <div class="row" ng-show="profile.languages">
+                        <div class="col-sm-3"><h5>Language</h5></div>
+                        <div class="col-sm-3 col-sm-offset-1"><h5>Mode</h5></div><div class="col-sm-3 col-sm-offset-1"><h5>Proficiency</h5></div>
+                    </div>
+
                     <div class="row text-center" ng-hide="profile.languages"><h5>No languages found in your record.</h5></div>
-                    <div class="row" ng-repeat="language in profile.languages">
+
+                    <div class="row" ng-repeat="(langIndex,language) in profile.languages">
                         <div class="form-group col-sm-3">
-                                    <h5 class="capitalize">Language</h5>
-                                    <p class="capitalize">{{user_language}}</p>
+                            <p class="capitalize">{{user_language[langIndex]}}</p>
                         </div>
                         <div class="form-group col-sm-3 col-sm-offset-1">
-                            <h5 class="capitalize">Mode</h5>
                             <p>{{language.mode}}</p>
                         </div>
                         <div class="form-group col-sm-3 col-sm-offset-1">
-                            <h5 class="capitalize">Proficiency</h5>
                             <p>{{language.proficiency}}</p>
                         </div>
                     </div>
@@ -380,7 +383,6 @@
 
 
                 <div class="row" ng-show="editLangs">
-                    <h5>* Denotes required fields.</h5>
                     <form novalidate role="form" name="languageForm">
     <!--                     <div class="pull-left col-sm-1">
                         <label for="inputLanguagePreferred">Preferred</label>
@@ -388,8 +390,36 @@
                         </div> -->
                         <div class = "row">
                         <div class="form-group col-sm-3">
-                            <label for="inputLanguage">Language*</label>
-                            <select class="form-control" name="inputLanguage" ng-model="user_language">
+                            <label for="inputLanguage">Language</label>
+                            <select class="form-control" name="inputLanguage" ng-model="new_language.language">
+                                <option>English</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-3 col-sm-offset-1">
+                            <label for="inputLanguageModel">Mode</label>
+                            <select class="form-control" name="inputLanguageMode" ng-model="new_language.mode">
+                                <option>Expressed spoken</option>
+                                <option>Signed</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-4 col-sm-offset-1">
+                            <label for="inputLanguageProficiency">Proficiency</label>
+                            <select class="form-control" name="inputLanguageProficiency" ng-model="new_language.proficiency">
+                                <option>Good</option>
+                                <option>Intermediate</option>
+                                <option>Proficient</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-sm-12 profile-divider">
+                        </div>
+                        </div>
+
+                        <div class = "row" ng-repeat="(langIndex,language) in profile.languages">
+                        <div class="form-group col-sm-3">
+                            <label for="inputLanguage">Language</label>
+                            <select class="form-control" name="inputLanguage" ng-model="user_language[langIndex]">
                                 <option>English</option>
                             </select>
                         </div>
@@ -413,6 +443,7 @@
                         <div class="form-group col-sm-12 profile-divider">
                         </div>
                         </div>
+
                         <!--<div class="col-sm-12">
                             <a href="">
                             <div class="pull-left"><i class="fa fa-plus-circle fa-2x fa-inline"></i></div>
@@ -424,7 +455,7 @@
                             <button type="cancel" class="btn btn-default col-sm-2 col-sm-offset-3" ng-disabled="languageForm.$invalid" ng-click="cancelLangs()">Cancel</button>
                         </a>
                         <a>
-                            <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-1" ng-disabled="lanugageForm.$invalid" ng-click="updateProfile()">Update</button>
+                            <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-1" ng-click="updateProfile()">Update</button>
                         </a>
                         <div class="text-center">
                             <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
