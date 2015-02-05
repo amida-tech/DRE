@@ -60,7 +60,7 @@ angular.module('phrPrototypeApp')
 
 =======
 */
-  .controller('ProfileCtrl', function ($scope, $location, $anchorScroll, account, profile) {
+  .controller('ProfileCtrl', function ($scope, $location, $anchorScroll, account, profile, format) {
 
   	$scope.editContact = false;
     $scope.editLangs = false;
@@ -113,10 +113,13 @@ angular.module('phrPrototypeApp')
 
       var formatdob = moment($scope.tmpDOB).format('YYYY-MM-DDTHH:mmZ');
       $scope.profile.dob = {
-        "date": formatdob,
-        "precision": "day"
+        "point": {
+          "date": formatdob,
+          "precision": "day"
+        }
       };
 
+      console.log($scope.tmpDOB, $scope.profile.dob);
       profile.saveProfile(info, function(err) {
         // console.log('profile controller', info);
       });
@@ -131,8 +134,9 @@ angular.module('phrPrototypeApp')
         // console.log('profile controller', $scope.profile._id);
         //Shims for HL7 weirdness.
         if (profileInfo&&profileInfo.dob) {
-        $scope.tmpDOB = moment($scope.profile.dob.date).format('YYYY-MM-DD');
-
+        $scope.editDOB = moment($scope.profile.dob.point.date).format('YYYY-MM-DD');
+        $scope.viewDOB = format.formatDate($scope.profile.dob.point);
+        // console.log($scope.tmpDOB, $scope.tmp1DOB, $scope.profile.dob);
         // hard coded language
         if (angular.isDefined($scope.profile.languages)) {
         for (var index in $scope.profile.languages) {

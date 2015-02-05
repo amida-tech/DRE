@@ -22,7 +22,7 @@ angular.module('phrPrototypeApp')
                             scope.user_email = profileInfo.email[0].email;
                         }
                         if (profileInfo.dob) {
-                            scope.user_dob = format.formatDate(profileInfo.dob);
+                            scope.user_dob = format.formatDate(profileInfo.dob.point);
                         }
                     }                
                 });
