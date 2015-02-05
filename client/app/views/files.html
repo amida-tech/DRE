@@ -47,9 +47,9 @@
 							<a ng-show="file.type === 'Health Summary'"><i class="fa fa-file-text-o"></i></a>
 							<a ng-show="file.type === 'Image'"><i class="fa fa-file-image-o"></i></a>
 						</td>
-						<td><a>{{file.file_name}}</a></td>
+						<td><a ng-href="/api/v1/storage/record/{{file.file_id}}">{{file.file_name}}</a></td>
 						<td>{{file.file_class}}</td>
-						<td>{{file.file_upload_date}}</td>
+						<td>{{file.file_upload_date | date: 'short'}}</td>
 					</tr>
 					</table>
 				</div>
