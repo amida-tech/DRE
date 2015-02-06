@@ -5,8 +5,8 @@
  * @description
  * # recordNavigation
  */
-angular.module('phrPrototypeApp').directive('entryDetails', ['$window',
-    function($window) {
+angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$location',
+    function($window, $location) {
         return {
             templateUrl: 'views/templates/entrydetails.html',
             restrict: 'EA',
@@ -73,10 +73,21 @@ angular.module('phrPrototypeApp').directive('entryDetails', ['$window',
                     });
 
                 };
+                scope.undoAllButton = function () {
+                    _.each(scope.diffList, function (change) {
+                        DeepDiff.revertChange(scope.finalData, true, change);
+                    });
+
+                };
                 scope.areEqual = function(obj1,obj2) {
                 
 
                     return angular.equals(obj1,obj2);
+                };
+                scope.submitButton = function() {
+                    //stub to send scope.finalData to merge service
+                    console.log("sending...",scope.finalData);
+                    $location.path('/record');
                 };
             }
         };
