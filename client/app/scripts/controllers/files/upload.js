@@ -22,7 +22,7 @@ angular.module('phrPrototypeApp')
                 $location.path('/files');
             });
 
-            $scope.uploadStep++;
+            // $scope.uploadStep++;
         }
 
         $scope.return = function() {
