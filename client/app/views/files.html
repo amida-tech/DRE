@@ -33,7 +33,8 @@
 
 				<!--File Listing Header-->
 				<div class="col-sm-12 row">
-					<table class="table table-hover table-responsive panel">
+					<h5 ng-hide="fileList">There are currently no files in the DRE. Upload a file to get started and establish your Master Health Record!</h5>
+					<table class="table table-hover table-responsive panel" ng-show="fileList">
 						<thead>
 							<td></td>
 							<td>
