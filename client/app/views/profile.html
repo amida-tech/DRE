@@ -239,7 +239,6 @@
 
                 <div class = "row" ng-show="editContact">
 
-                <h5>* Denotes required fields.</h5>
                 <form novalidate role="form" name="contactForm">
                 
                     <div class="row">
@@ -307,8 +306,8 @@
 
                                     <div class="form-group row">
                                         <label for="inputnewPhone">Add a new phone number</label>
-                                        <input type="text" class="form-control" name="inputnewPhone" ng-model="new_phone.number" ng-minLength="13">
-                                        <p ng-show="contactForm.inputnewPhone.$invalid && !contactForm.inputnewPhone.$pristine" class="help-block">Please enter a 10-digit phone number (xxx)xxx-xxxx.</p>
+                                        <input type="text" class="form-control" name="inputnewPhone" ng-model="new_phone.number" ng-minLength="10" ng-maxLength="10">
+                                        <p ng-show="contactForm.inputnewPhone.$invalid && !contactForm.inputnewPhone.$pristine" class="help-block">Please enter a 10-digit phone number.</p>
                                     </div>
                                 </div>
                             </div>
@@ -327,8 +326,8 @@
 
                                     <div class="form-group row">
                                         <label for="inputPhone">Number*</label>
-                                        <input type="text" class="form-control" name="inputPhone" ng-model="ph.number" required ng-required="true" ng-minLength="13">
-                                        <p ng-show="contactForm.inputPhone.$invalid && !contactForm.inputPhone.$pristine" class="help-block">Please enter a 10-digit phone number (xxx)xxx-xxxx.</p>
+                                        <input type="text" class="form-control" name="inputPhone" ng-model="ph.number" required ng-required="true" ng-minLength="10" ng-maxLength="10">
+                                        <p ng-show="contactForm.inputPhone.$invalid && !contactForm.inputPhone.$pristine" class="help-block">Please enter a 10-digit phone number.</p>
                                     </div>
                                 </div>
                             </div>

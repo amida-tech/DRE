@@ -119,7 +119,7 @@ angular.module('phrPrototypeApp')
         }
       };
 
-      console.log($scope.tmpDOB, $scope.profile.dob);
+      // console.log($scope.tmpDOB, $scope.profile.dob);
       profile.saveProfile(info, function(err) {
         // console.log('profile controller', info);
       });
@@ -160,7 +160,7 @@ angular.module('phrPrototypeApp')
           $scope.new_language.language = 'en';
         }
         var tmpLanguages =
-          {'languages': $scope.new_language};
+          {"languages": $scope.new_language};
           if (angular.isDefined($scope.profile.languages)) {
             var lang_count = $scope.profile.languages.length;
             // console.log(lang_count);
@@ -175,21 +175,27 @@ angular.module('phrPrototypeApp')
       function addContact() {
         if (angular.isDefined($scope.new_phone)) {
           var tmpPhone =
-            {'phone': $scope.new_phone};
+            {"number": $scope.new_phone.number,
+            "type": $scope.new_phone.type};
           if (angular.isDefined($scope.profile.phone)) {
             var phone_count = $scope.profile.phone.length;
             $scope.profile.phone[phone_count] = $scope.new_phone;
           } else {
-            var tmpProf1 = $scope.profile;
-            $scope.profile = tmpProf1 + tmpPhone;
+            $scope.profile.phone = [];
+            $scope.profile.phone[0]=tmpPhone;
+            $scope.new_phone = {};
+            console.log(tmpPhone, $scope.profile);
           }
         }
 
         if (angular.isDefined($scope.new_email)) {
           var tmpNewEmail =
-            {'email': $scope.new_email};
+            {"email": $scope.new_email.email,
+            "type": $scope.new_email.type};
           var email_count = $scope.profile.email.length;
-          $scope.profile.email[email_count] = $scope.new_email;
+          console.log(email_count, $scope.profile.email[email_count]);
+          // $scope.profile.email[email_count] = $scope.new_email;
+          console.log('new email:', $scope.new_email);
           
         }
 
