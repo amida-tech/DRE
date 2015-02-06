@@ -16,6 +16,7 @@ angular.module('phrPrototypeApp')
 
   	files.getFiles(function (err, results) {
   		$scope.fileList = results;
+      console.log(results);
   	});
 
 
