@@ -1,0 +1,175 @@
+<table class="table table-hover">
+	
+	<tbody>
+		<tr>
+			<td>Lot Number:</td>
+			<td>{{entryData.product.lot_number}}</td>
+		</tr>
+		<tr>
+			<td>Manufacturer:</td>
+			<td>{{entryData.product.manufacturer}}</td>
+		</tr>
+		<tr>
+			<td>Name:</td>
+			<td>{{entryData.product.product.name}}</td>
+		</tr>
+		<tr>
+			<td>Code:</td>
+			<td>{{entryData.product.product.code}}</td>
+		</tr>
+		<tr>
+			<td>Code System:</td>
+			<td>{{entryData.product.product.code_system_name}}</td>
+		</tr>
+		<tr ng-show="entryData.product.product.translations">
+			<td>Other Descriptions:</td>
+			<td>
+				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.product.product.translations">
+					<table class="table sub-table">
+						<thead>
+							<tr>
+								<td>Name:</td>
+								<td>{{itemEntry.name}}</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Code:</td>
+								<td>{{itemEntry.code}}</td>
+							</tr>
+							<tr>
+								<td>Code System:</td>
+								<td>{{itemEntry.code_system_name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.performer">
+			<td>Performer:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Name:</td>
+							<td  ng-repeat="(nameIndex, nameEntry) in entryData.performer.name">{{nameEntry.displayName}}</td>
+						</tr>
+						<tr>
+							<td>Address:</td>
+							<td ng-repeat="(addrIndex, addrEntry) in entryData.performer.address">
+								<div ng-repeat="addrLine in addrEntry.displayAddress">
+									{{addrLine}}
+								</div>
+							</td>
+						</tr>
+						<tr ng-repeat="(orgIndex, orgEntry) in entryData.performer.organization">
+							<td>Organization:</td>
+							<td ng-repeat="orgName in orgEntry.name">{{orgName}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.administration">
+			<td>Administration:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Dose:</td>
+							<td>{{entryData.administration.dose.displayQuantity}}</td>
+						</tr>
+						<tr>
+							<td>Route:</td>
+							<td>
+								{{entryData.administration.route.name}}
+							</td>
+						</tr>
+						<tr>
+							<td>Route Code:</td>
+							<td>
+								{{entryData.administration.route.code}}
+							</td>
+						</tr>
+						<tr>
+							<td>Route Code System:</td>
+							<td>
+								{{entryData.administration.route.code_system_name}}
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.instructions">
+			<td>Instructions:</td>
+			<td>
+				<div class="panel">
+					<table class="table">
+						<tr>
+							<td>Text:</td>
+							<td>{{entryData.instructions.free_text}}</td>
+						</tr>
+						<tr>
+							<td>Name:</td>
+							<td>{{entryData.instructions.code.name}}</td>
+						</tr>
+						<tr>
+							<td>Code:</td>
+							<td>{{entryData.instructions.code.code}}</td>
+						</tr>
+						<tr>
+							<td>Code System:</td>
+							<td>{{entryData.instructions.code.code_system_name}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.locations">
+			
+			<td>Locations:</td>
+			<td>
+				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.locations">
+					<table class="table sub-table">
+						<tr>
+							<td>Name:</td>
+							<td>{{itemEntry.name}}</td>
+						</tr>
+
+						<tr ng-show="itemEntry.address">
+							<td>Address:</td>
+
+							<td ng-repeat="(addrindex, addrEntry) in itemEntry.address">
+								<p ng-repeat="(addrLineIndex, addrLineEntry) in addrEntry.displayAddress">{{addrLineEntry}}</p>
+							</td>
+						</tr>
+						<tr>
+							<td>Type:</td>
+
+							<td>
+								<div class="panel">
+									<table class="table sub-table">
+										<tr>
+											<td>Name:</td>
+											<td>{{itemEntry.location_type.name}}</td>
+										</tr>
+										<tr>
+											<td>Code:</td>
+											<td>{{itemEntry.location_type.code}}</td>
+										</tr>
+										<tr>
+											<td>Code System:</td>
+											<td>{{itemEntry.location_type.code_system_name}}</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>

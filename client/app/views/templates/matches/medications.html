@@ -1,0 +1,201 @@
+<table class="table table-hover">
+	
+	<tbody>
+		<tr ng-show="entryData.status">
+			<td>Status:</td>
+			<td>{{entryData.status}}</td>
+		</tr>
+		<tr>
+			<td>Sig:</td>
+			<td>{{entryData.sig}}</td>
+		</tr>
+		<tr ng-show="entryData.administration.dose">
+			<td>Dose:</td>
+			<td>{{entryData.administration.dose.displayQuantity}}</td>
+		</tr>
+		<tr ng-show="entryData.administration.rate">
+			<td>Rate:</td>
+			<td>{{entryData.administration.rate.displayQuantity}}</td>
+		</tr>
+		<tr ng-show="entryData.administration.interval">
+			<td>Interval:</td>
+			<td>{{entryData.administration.interval.displayInterval}}</td>
+		</tr>
+		<tr>
+			<td>Manufacturer:</td>
+			<td>{{entryData.product.manufacturer}}</td>
+		</tr>
+		<tr>
+			<td>Product Code:</td>
+			<td>{{entryData.product.product.code}}</td>
+		</tr>
+		<tr>
+			<td>Product Code System:</td>
+			<td>{{entryData.product.product.code_system_name}}</td>
+		</tr>
+		<tr>
+			<td>Unencoded Name:</td>
+			<td>{{entryData.product.unencoded_name}}</td>
+		</tr>
+		<tr ng-show="entryData.product.product.translations">
+			<td>Other Descriptions:</td>
+			<td>
+				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.product.product.translations">
+					<table class="table sub-table">
+						<thead>
+							<tr>
+								<td>Name:</td>
+								<td>{{itemEntry.name}}</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Code:</td>
+								<td>{{itemEntry.code}}</td>
+							</tr>
+							<tr>
+								<td>Code System:</td>
+								<td>{{itemEntry.code_system_name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.supply">
+			<td>Supply:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Date:</td>
+							<td>{{entryData.supply.date_time.displayDate}}</td>
+						</tr>
+						<tr>
+							<td>Repeat Number:</td>
+							<td>
+								<div>
+									{{entryData.supply.repeatNumber}}
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Quantity:</td>
+							<td>{{entryData.supply.quantity}}</td>
+						</tr>
+						<tr>
+							<td>Author:</td>
+							<td>{{entryData.supply.author.name.displayName}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.administration.route">
+			<td>Route:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Name:</td>
+							<td>{{entryData.administration.route.name}}</td>
+						</tr>
+						<tr>
+							<td>Code:</td>
+							<td>{{entryData.administration.route.code}}</td>
+						</tr>
+						<tr>
+							<td>Code System:</td>
+							<td>{{entryData.administration.route.code_system_name}}</td>
+						</tr>
+
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.administration.form">
+			<td>Form:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Name:</td>
+							<td>{{entryData.administration.form.name}}</td>
+						</tr>
+						<tr>
+							<td>Code:</td>
+							<td>{{entryData.administration.form.code}}</td>
+						</tr>
+						<tr>
+							<td>Code System:</td>
+							<td>{{entryData.administration.form.code_system_name}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.drug_vehicle">
+			<td>Drug Vehicle:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Name:</td>
+							<td>{{entryData.drug_vehicle.name}}</td>
+						</tr>
+						<tr>
+							<td>Code:</td>
+							<td>{{entryData.drug_vehicle.code}}</td>
+						</tr>
+						<tr>
+							<td>Code System:</td>
+							<td>{{entryData.drug_vehicle.code_system_name}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.precondition">
+			<td>Precondition:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Name:</td>
+							<td>{{entryData.precondition.value.name}}</td>
+						</tr>
+						<tr>
+							<td>Code:</td>
+							<td>{{entryData.precondition.value.code}}</td>
+						</tr>
+						<tr>
+							<td>Code System:</td>
+							<td>{{entryData.precondition.value.code_system_name}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.indication">
+			<td>Indication:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Name:</td>
+							<td>{{entryData.indication.value.name}}</td>
+						</tr>
+						<tr>
+							<td>Code:</td>
+							<td>{{entryData.indication.value.code}}</td>
+						</tr>
+						<tr>
+							<td>Code System:</td>
+							<td>{{entryData.indication.value.code_system_name}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
