@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-7">
                             <h5>Primary Email Address</h5>
                             <p>{{profile.email[0].email}}</p>
                         </div>
@@ -50,34 +50,23 @@
                             <h5>Date of Birth</h5>
                             <p>{{viewDOB}}</p>
                         </div>
-                        <div class="form-group col-sm-4 col-sm-offset-1">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-sm-3">
                             <h5>Gender</h5>
                             <p>{{profile.gender}}</p>
                         </div>
-                    </div>
-<!--<<<<<< HEAD
-                    <div class="form-group col-sm-4 col-sm-offset-1">
-                        <label for="inputDOB">Date of Birth*</label>
-                        <input type="date" class="form-control" name="inputDOB" ng-model="tmpDOB" required ng-required="true">
-                        <p ng-show="profileForm.inputDOB.$invalid && !profileForm.inputDOB.$pristine" class="help-block">Must be a valid date.</p>
-=======
--->
-
-                    <div class="row">
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-3 col-sm-offset-1">
                             <h5>Race/Ethnicity</h5>
                             <p ng-hide="profile.race_ethnicity">None entered</p>
                             <p>{{profile.race_ethnicity}}</p>
                         </div>
-                        <div class="form-group col-sm-3 col-sm-offset-1">
+                        <div class="form-group col-sm-4 col-sm-offset-1">
                             <h5>Marital Status</h5>
                             <p ng-hide="profile.marital_status">None entered</p>
                             <p>{{profile.marital_status}}</p>
-                        </div>
-                        <div class="form-group col-sm-4 col-sm-offset-1">
-                            <h5>Religion</h5>
-                            <p ng-hide="profile.religion">None entered</p>
-                            <p>{{profile.religion}}</p>
                         </div>
 
                     </div>
@@ -155,16 +144,6 @@
                                 <option>Widowed</option>
                             </select>
                         </div>
-                    </div>
-
-                    <div class="form-group col-sm-7">
-                        <label for="inputReligion">Religion</label>
-                        <select class="form-control" name="inputReligion" ng-model="profile.religion">
-                            <option>Christian (non-Catholic, non-specific)</option>
-                            <option>Buddhist</option>
-                            <option>Atheist</option>
-                            <option>Other</option>
-                        </select>
                     </div>
                     </div>
                     <div class = "row">
@@ -440,7 +419,7 @@
         </div>
 
 
-        <h4 class="text-center text-white">Languages</h4>
+<!--         <h4 class="text-center text-white">Languages</h4>
         <div class="panel">
             <div class="panel-body" id="languages">
 
@@ -475,10 +454,7 @@
 
                 <div class="row" ng-show="editLangs">
                     <form novalidate role="form" name="languageForm">
-    <!--                     <div class="pull-left col-sm-1">
-                        <label for="inputLanguagePreferred">Preferred</label>
-                            <input type="checkbox" name="inputLanguagePreferred">
-                        </div> -->
+
                         <div class = "row"><h5>Add a new language:</h5>
                         <div class="form-group col-sm-3">
                             <label for="inputLanguage">Language</label>
@@ -537,12 +513,6 @@
                         </div>
                         </div>
 
-                        <!--<div class="col-sm-12">
-                            <a href="">
-                            <div class="pull-left"><i class="fa fa-plus-circle fa-2x fa-inline"></i></div>
-                            <div class="pull-left">Add New Language</div>
-                            </a>
-                        </div>-->
                         <div class="row">
                         <a>
                             <button type="cancel" class="btn btn-default col-sm-2 col-sm-offset-3" ng-disabled="languageForm.$invalid" ng-click="cancelLangs()">Cancel</button>
@@ -558,5 +528,5 @@
                 </div>
             </div>
         <!--<pre>{{profile | json}}</pre>-->
-    </div>
+    </div> -->
 </div>
