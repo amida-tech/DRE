@@ -213,13 +213,12 @@
 
                 <div class = "row" ng-show="editAddress">
                 <h5>* Denotes required fields.</h5>
-                <form novalidate role="form" name="addressForm">
+                <form novalidate role="form" name="newaddressForm" ng-hide="profile.addresses">
                 
                     <div class="row">
                         <!--Address section-->
-                            <h4>Address</h4>
+                            <h4>Add a New Address</h4>
 
-                            <div class="col-sm-12" ng-hide="profile.addresses">
 
                                 <div id="new_address">
                                 <div class="row">
@@ -229,7 +228,7 @@
                                             <option>primary home</option>
                                             <option>Other</option>
                                         </select>
-                                        <p ng-show="addressForm.inputNewAddressType.$invalid && !addressForm.inputNewAddressType.$pristine" class="help-block">Address Type is required.</p>
+                                        <p ng-show="newaddressForm.inputNewAddressType.$invalid && !newaddressForm.inputNewAddressType.$pristine" class="help-block">Address Type is required.</p>
                                     </div>
                                 </div>
 
@@ -238,35 +237,49 @@
                                         <div class="col-sm-5">
                                             <label for="inputNewAddrLine1">Address Line*</label>
                                             <input type="text" class="form-control" name="inputNewAddressLine1" ng-model="new_address.street_line1" required ng-required="true">
-                                            <p ng-show="addressForm.inputNewAddressLine1.$invalid && !addressForm.inputNewAddressLine1.$pristine" class="help-block">Please enter your street address or P.O. Box.</p>
+                                            <p ng-show="newaddressForm.inputNewAddressLine1.$invalid && !newaddressForm.inputNewAddressLine1.$pristine" class="help-block">Please enter your street address or P.O. Box.</p>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="inputNewCity">City*</label>
                                         <input type="text" class="form-control" name="inputNewCity" ng-model="new_address.city" required ng-required="true">
-                                        <p ng-show="addressForm.inputNewCity.$invalid && !addressForm.inputNewCity.$pristine" class="help-block">Please enter a city.</p>
+                                        <p ng-show="newaddressForm.inputNewCity.$invalid && !newaddressForm.inputNewCity.$pristine" class="help-block">Please enter a city.</p>
                                     </div>
 
                                     <div class="form-group col-sm-6">
                                         <label for="inputNewState">State*</label>
                                         <input type="text" class="form-control" name="inputNewState" ng-model="new_address.state" ng-minLength="2" required ng-required="true">
-                                        <p ng-show="addressForm.inputNewState.$invalid && !addressForm.inputNewState.$pristine" class="help-block">Please enter a state.</p>
+                                        <p ng-show="newaddressForm.inputNewState.$invalid && !newaddressForm.inputNewState.$pristine" class="help-block">Please enter a state.</p>
                                     </div>
 
                                     <div class="form-group col-sm-5 col-sm-offset-1">
                                         <label for="inputNewZip">Zip*</label>
                                         <input type="text" class="form-control" name="inputNewZip" ng-model="new_address.zip" ng-minLength="5" ng-maxLength="11" required ng-required="true">
-                                        <p ng-show="addressForm.inputNewZip.$invalid && !addressForm.inputNewZip.$pristine" class="help-block">Please enter a five-digit zip.</p>
+                                        <p ng-show="newaddressForm.inputNewZip.$invalid && !newaddressForm.inputNewZip.$pristine" class="help-block">Please enter a five-digit zip.</p>
                                     </div>
 
 
                                 </div>
+
+                                <div class="row">
+                                <a>
+                                    <button type="cancel" class="btn btn-default col-sm-2 col-sm-offset-3" ng-click="cancelAddressSection()">Cancel</button>
+                                </a>
+                                <a>
+                                    <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-1" ng-disabled="newaddressForm.$invalid" ng-click="updateProfile()">Update</button>
+                                </a>
+                                <div class="text-center">
+                                    <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+                                </div>
                             </div>
 
+</div>
+</form>
 
-
-                            <div class="col-sm-12" ng-show="profile.addresses">
+                <form novalidate role="form" name="addressForm" ng-show="profile.addresses">
+                <div class="row">
+                <h4>Edit Your Address</h4>
 
                                 <div id="address">
                                     <div class="row">
@@ -311,10 +324,9 @@
 
 
                                 </div>
-                            </div>
                             <div class="row">
                                 <a>
-                                    <button type="cancel" class="btn btn-default col-sm-2 col-sm-offset-3" ng-disabled="addressForm.$invalid" ng-click="cancelAddressSection()">Cancel</button>
+                                    <button type="cancel" class="btn btn-default col-sm-2 col-sm-offset-3" ng-click="cancelAddressSection()">Cancel</button>
                                 </a>
                                 <a>
                                     <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-1" ng-disabled="addressForm.$invalid" ng-click="updateProfile()">Update</button>
@@ -325,55 +337,74 @@
                             </div>
                     </div>
                     </form>
-                    <form novalidate role="form" name="phoneForm">
-                    <div class="row" ng-show="editPhone">
+                    </div>
+
+
+                <div class="row" ng-show="editPhone">
+                    <form novalidate role="form" name="newphoneForm" ng-hide="profile.phone">
 
                         <!--Phone section-->
-                        <div class="col-sm-3 col-sm-offset-1">
-                            <h4>Phone Number</h4>
+                        <div class="row">
+                            <h4 class="text-center">Add a New Phone Number</h4>
 
-                           <div class="col-sm-12">
-                                <div id="new_phone">
+                                <div class="col-sm-4 col-sm-offset-4" id="new_phone">
                                     <div class="form-group col-sm-12">
                                         <label for="inputnewPhoneType">Add a new phone type</label>
-                                        <select class="form-control capitalize" name="inputnewPhoneType" ng-model="new_phone.type">
+                                        <select class="form-control capitalize" name="inputnewPhoneType" ng-model="new_phone.type" required ng-required="true">
                                             <option>primary home</option>
                                             <option>Other</option>
                                         </select>
+                                        <p ng-show="newphoneForm.inputnewPhoneType.$invalid && !newphoneForm.inputNewPhoneType.$pristine" class="help-block">Phone Type is required.</p>
                                     </div>
 
 
                                     <div class="form-group row">
                                         <label for="inputnewPhone">Add a new phone number</label>
-                                        <input type="text" class="form-control" name="inputnewPhone" ng-model="new_phone.number" ng-minLength="10" ng-maxLength="10">
-                                        <p ng-show="contactForm.inputnewPhone.$invalid && !contactForm.inputnewPhone.$pristine" class="help-block">Please enter a 10-digit phone number.</p>
+                                        <input type="text" class="form-control" name="inputnewPhone" ng-model="new_phone.number" ng-minLength="10" ng-maxLength="10" required ng-required="true">
+                                        <p ng-show="newphoneForm.inputnewPhone.$invalid && !newphoneForm.inputnewPhone.$pristine" class="help-block">Please enter a 10-digit phone number without spaces or symbols: xxxxxxxxxx.</p>
                                     </div>
                                 </div>
+                        <div class="row">
+                            <a>
+                                <button type="cancel" class="btn btn-default col-sm-2 col-sm-offset-3" ng-click="cancelPhoneSection()">Cancel</button>
+                            </a>
+                            <a>
+                                <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-1" ng-disabled="newphoneForm.$invalid" ng-click="updateProfile()">Update</button>
+                            </a>
+                            <div class="text-center">
+                                <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
                             </div>
+                        </div>
 
-                            <div class="col-sm-12" ng-repeat="(phIndex, ph) in profile.phone">
-                                <div id="ph{{phIndex}}">
-                                    <div class="form-group col-sm-12 capitalize">
-                                        <label for="inputPhoneType">Type*</label>
-                                        <select class="form-control capitalize" name="inputPhoneType" ng-model="ph.type" required ng-required="true">
-                                            <option>primary home</option>
-                                            <option>Other</option>
-                                        </select>
-                                        <p ng-show="contactprofileForm.inputPhoneType.$invalid && !contactForm.inputPhoneType.$pristine" class="help-block">Phone Type is required.</p>
-                                    </div>
+                        </div>
+                    </form>
+
+                    <form novalidate role="form" name="phoneForm" ng-show="profile.phone">
+
+                        <!--Phone section-->
+                        <div class="row">
+                            <h4>Edit Your Phone Number</h4>
+                            <div class="col-sm-4 col-sm-offset-4" id="profile.phone[0]">
+                                <div class="form-group col-sm-12 capitalize">
+                                    <label for="inputPhoneType">Type*</label>
+                                    <select class="form-control capitalize" name="inputPhoneType" ng-model="profile.phone[0].type" required ng-required="true">
+                                        <option>primary home</option>
+                                        <option>Other</option>
+                                    </select>
+                                    <p ng-show="phoneForm.inputPhoneType.$invalid && !phoneForm.inputPhoneType.$pristine" class="help-block">Phone Type is required.</p>
+                                </div>
 
 
-                                    <div class="form-group row">
-                                        <label for="inputPhone">Number*</label>
-                                        <input type="text" class="form-control" name="inputPhone" ng-model="ph.number" required ng-required="true" ng-minLength="10" ng-maxLength="10">
-                                        <p ng-show="contactForm.inputPhone.$invalid && !contactForm.inputPhone.$pristine" class="help-block">Please enter a 10-digit phone number.</p>
-                                    </div>
+                                <div class="form-group row">
+                                    <label for="inputPhone">Number*</label>
+                                    <input type="text" class="form-control" name="inputPhone" ng-model="profile.phone[0].number" required ng-required="true" ng-minLength="10" ng-maxLength="10">
+                                    <p ng-show="phoneForm.inputPhone.$invalid && !phoneForm.inputPhone.$pristine" class="help-block">Please enter a 10-digit phone number without spaces or symbols: xxxxxxxxxx.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <a>
-                                <button type="cancel" class="btn btn-default col-sm-2 col-sm-offset-3" ng-disabled="phoneForm.$invalid" ng-click="cancelPhoneSection()">Cancel</button>
+                                <button type="cancel" class="btn btn-default col-sm-2 col-sm-offset-3"ng-click="cancelPhoneSection()">Cancel</button>
                             </a>
                             <a>
                                 <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-1" ng-disabled="phoneForm.$invalid" ng-click="updateProfile()">Update</button>
@@ -382,11 +413,9 @@
                                 <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
                             </div>
                         </div>
-                    </div>
-
-
-                </form>
+                    </form>
                 </div>
+
             </div>
         </div>
 

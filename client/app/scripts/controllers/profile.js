@@ -73,6 +73,8 @@ angular.module('phrPrototypeApp')
     };
     $scope.cancelAddressSection = function () {
       $scope.editAddress = false;
+      $scope.new_address = {};
+      displayProfile();
     };
 
     $scope.editPhoneSection = function () {
@@ -80,6 +82,8 @@ angular.module('phrPrototypeApp')
     };
     $scope.cancelPhoneSection = function () {
       $scope.editPhone = false;
+      $scope.new_phone = {};
+      displayProfile();
     };
 
     $scope.editProfSection = function () {
@@ -87,6 +91,7 @@ angular.module('phrPrototypeApp')
     };
     $scope.cancelProf = function () {
       $scope.editProf = false;
+      displayProfile();
     };
 
     // $scope.editLangsSection = function () {
