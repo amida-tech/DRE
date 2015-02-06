@@ -38,10 +38,14 @@
 						<thead>
 							<td></td>
 							<td>
-								<a ng-click="nameSort();">Name <i class="fa fa-caret-down" ng-show="predicate === 'name'"></i><i class="fa fa-caret-up" ng-show="predicate === '-name'"></i></a>
+								<a href="" ng-click="nameSort()">Name <i class="fa fa-caret-down" ng-show="predicate === 'file_name'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_name'"></i></a>
 							</td>
-							<td><a ng-click="typeSort();">Type <i class="fa fa-caret-down" ng-show="predicate === 'type'"></i><i class="fa fa-caret-up" ng-show="predicate === '-type'"></i></a></td>
-							<td><a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'modified'"></i><i class="fa fa-caret-up" ng-show="predicate === '-modified'"></i></a></td>
+							<td>
+								<a ng-click="typeSort()">Type <i class="fa fa-caret-down" ng-show="predicate === 'file_class'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_class'"></i></a>
+							</td>
+							<td>
+								<a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'file_upload_date'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_upload_date'"></i></a>
+							</td>
 						</thead>
 					<tr ng-repeat="file in fileList | orderBy:predicate">
 						<td>
