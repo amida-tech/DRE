@@ -62,16 +62,24 @@ angular.module('phrPrototypeApp')
 */
   .controller('ProfileCtrl', function ($scope, $location, $route, $anchorScroll, account, profile, format) {
 
-  	$scope.editContact = false;
-    $scope.editLangs = false;
+    $scope.editAddress = false;
+    $scope.editPhone = false;
+    // $scope.editLangs = false;
     $scope.editProf = false;
-    $scope.user_language = {};
+    // $scope.user_language = {};
 
-    $scope.editContactSection = function () {
-      $scope.editContact = true;
+    $scope.editAddressSection = function () {
+      $scope.editAddress = true;
     };
-    $scope.cancelContact = function () {
-      $scope.editContact = false;
+    $scope.cancelAddressSection = function () {
+      $scope.editAddress = false;
+    };
+
+    $scope.editPhoneSection = function () {
+      $scope.editPhone = true;
+    };
+    $scope.cancelPhoneSection = function () {
+      $scope.editPhone = false;
     };
 
     $scope.editProfSection = function () {
@@ -81,12 +89,12 @@ angular.module('phrPrototypeApp')
       $scope.editProf = false;
     };
 
-    $scope.editLangsSection = function () {
-      $scope.editLangs = true;
-    };
-    $scope.cancelLangs = function () {
-      $scope.editLangs = false;
-    };
+    // $scope.editLangsSection = function () {
+    //   $scope.editLangs = true;
+    // };
+    // $scope.cancelLangs = function () {
+    //   $scope.editLangs = false;
+    // };
 
     $scope.navClick = function (element) {
         var old = $location.hash();
@@ -97,10 +105,11 @@ angular.module('phrPrototypeApp')
     };
 
     $scope.updateProfile = function () {
-      if (angular.isDefined($scope.new_language)) {
-        addLang();
-      }
-      addContact();
+      // if (angular.isDefined($scope.new_language)) {
+      //   addLang();
+      // }
+      addPhone();
+      addAddress();
 
 
       var info = $scope.profile;
@@ -125,8 +134,9 @@ angular.module('phrPrototypeApp')
         // displayProfile();
         // console.log('profile controller', info);
       });
-      $scope.editContact = false;
-      $scope.editLangs = false;
+      $scope.editPhone= false;
+      $scope.editAddress = false;
+      // $scope.editLangs = false;
       $scope.editProf = false;
 
     };
@@ -142,13 +152,13 @@ angular.module('phrPrototypeApp')
         // console.log($scope.tmpDOB, $scope.tmp1DOB, $scope.profile.dob);
         // hard coded language
 
-        if (angular.isDefined($scope.profile.languages)) {
-        for (var index in $scope.profile.languages) {
-          if ($scope.profile.languages[index].language === 'en') {
-            $scope.user_language[index] = 'English';
-          }
-        }
-        }
+        // if (angular.isDefined($scope.profile.languages)) {
+        // for (var index in $scope.profile.languages) {
+        //   if ($scope.profile.languages[index].language === 'en') {
+        //     $scope.user_language[index] = 'English';
+        //   }
+        // }
+        // }
       }
 
       });
@@ -157,28 +167,28 @@ angular.module('phrPrototypeApp')
     displayProfile();
 
 
-    function addLang() {
-        // add new language
-        if ($scope.new_language.language === 'English') {
-          $scope.new_language.language = 'en';
-        }
-        var tmpLanguages =
-            {"language": $scope.new_language.language,
-            "mode": $scope.new_language.mode,
-            "proficiency": $scope.new_language.proficiency};
-          if (angular.isDefined($scope.profile.languages)) {
-            var lang_count = $scope.profile.languages.length;
-            // console.log(lang_count);
-            $scope.profile.languages[lang_count] = $scope.new_language;
-            $scope.profile.new_language = {};
-          } else {
-            $scope.profile.languages = [];
-            $scope.profile.languages[0] = tmpLanguages;
-            $scope.profile.new_language = {};
-          }
-      }
+    // function addLang() {
+    //     // add new language
+    //     if ($scope.new_language.language === 'English') {
+    //       $scope.new_language.language = 'en';
+    //     }
+    //     var tmpLanguages =
+    //         {"language": $scope.new_language.language,
+    //         "mode": $scope.new_language.mode,
+    //         "proficiency": $scope.new_language.proficiency};
+    //       if (angular.isDefined($scope.profile.languages)) {
+    //         var lang_count = $scope.profile.languages.length;
+    //         // console.log(lang_count);
+    //         $scope.profile.languages[lang_count] = $scope.new_language;
+    //         $scope.profile.new_language = {};
+    //       } else {
+    //         $scope.profile.languages = [];
+    //         $scope.profile.languages[0] = tmpLanguages;
+    //         $scope.profile.new_language = {};
+    //       }
+    //   }
 
-      function addContact() {
+      function addPhone() {
         if (angular.isDefined($scope.new_phone)) {
           var tmpPhone =
             {"number": $scope.new_phone.number,
@@ -193,16 +203,9 @@ angular.module('phrPrototypeApp')
             $scope.new_phone = {};
           }
         }
+      }
 
-        if (angular.isDefined($scope.new_email)) {
-          var tmpNewEmail =
-            {"email": $scope.new_email.email,
-            "type": $scope.new_email.type};
-          var email_count = $scope.profile.email.length;
-          $scope.profile.email[email_count] = tmpNewEmail;
-          $scope.new_email={};
-        }
-
+      function addAddress() {
         if (angular.isDefined($scope.new_address)) {
           var tmpNewAddress = 
             {"street_lines": [],
