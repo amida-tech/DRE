@@ -111,7 +111,7 @@ angular.module('phrPrototypeApp')
 
       $scope.profile.email[0] = tmpemail;
 
-      var formatdob = moment($scope.editDOB).format('YYYY-MM-DDTHH:mmZ');
+      var formatdob = moment($scope.editDOB).format('YYYY-MM-DD');
       $scope.profile.dob = {
         "point": {
           "date": formatdob,
@@ -221,7 +221,8 @@ angular.module('phrPrototypeApp')
 
       }
 
-    });
+});
+
 
 
 // 'email': $scope.profile.email[0].email,
