@@ -12,7 +12,8 @@ angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$locati
             restrict: 'EA',
             scope: {
                 details: '=',
-                category: '@'
+                category: '@',
+                tab: '&'
             },
             link: function postLink(scope, element, attrs) {
                 scope.entryTemplatePath = "views/templates/matches/" + scope.category + ".html";
@@ -53,7 +54,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$locati
                         scope.matchData = scope.details.matches[0].match_entry;
                         scope.finalData = {};
                         angular.copy(scope.details.matches[0].match_entry, scope.finalData);
-                        console.log(scope.finalData);
+                        
                         if (_.isUndefined(scope.diffList)) {
                             scope.diffList = compareMatches(scope.matchData, scope.entryData);
                         }
@@ -86,9 +87,16 @@ angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$locati
                 };
                 scope.submitButton = function() {
                     //stub to send scope.finalData to merge service
-                    console.log("sending...",scope.finalData);
-                    $location.path('/record');
+                    var send = $window.confirm("Are these changes accurate?");
+                    if (send) {
+                        console.log("sending...",scope.finalData);
+                    //switch to detail tab
+                } else {
+                    console.log("didn't send")
+                    scope.undoAllButton();
+                    
                 };
+                }
             }
         };
     }

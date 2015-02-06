@@ -100,16 +100,25 @@ angular.module('phrPrototypeApp').directive('entry', function(format, $http) {
             }
             countStarredComments();
             scope.swapTabs = function(entryClass, entryIndex) {
+                
                 if (entryClass === "details") {
                     $("#comments" + entryIndex).removeClass("in");
                     $("#history" + entryIndex).removeClass("in");
+                    $("#match" + entryIndex).removeClass("in");
                 } else if (entryClass === "comments") {
                     $("#details" + entryIndex).removeClass("in");
                     $("#history" + entryIndex).removeClass("in");
+                    $("#match" + entryIndex).removeClass("in");
                 } else if (entryClass === "history") {
                     $("#details" + entryIndex).removeClass("in");
                     $("#comments" + entryIndex).removeClass("in");
+                    $("#match" + entryIndex).removeClass("in");
+                } else if (entryClass === "match") {
+                    $("#details" + entryIndex).removeClass("in");
+                    $("#comments" + entryIndex).removeClass("in");
+                    $("#history" + entryIndex).removeClass("in");
                 }
+
             };
             scope.clickStar = function(starVal, starIndex, recordIndex) {
                 if (starVal) {
