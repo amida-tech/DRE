@@ -111,7 +111,7 @@ angular.module('phrPrototypeApp')
 
       $scope.profile.email[0] = tmpemail;
 
-      var formatdob = moment($scope.tmpDOB).format('YYYY-MM-DDTHH:mmZ');
+      var formatdob = moment($scope.editDOB).format('YYYY-MM-DDTHH:mmZ');
       $scope.profile.dob = {
         "point": {
           "date": formatdob,
@@ -138,6 +138,7 @@ angular.module('phrPrototypeApp')
         $scope.viewDOB = format.formatDate($scope.profile.dob.point);
         // console.log($scope.tmpDOB, $scope.tmp1DOB, $scope.profile.dob);
         // hard coded language
+
         if (angular.isDefined($scope.profile.languages)) {
         for (var index in $scope.profile.languages) {
           if ($scope.profile.languages[index].language === 'en') {
