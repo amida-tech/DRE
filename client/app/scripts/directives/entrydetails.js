@@ -31,9 +31,13 @@ angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$locati
                     var flagData = {};
                     function assign(base, path, value) {
                         var a = base;
-                    for (var i = 0 in path) {
+                    for (var i in path) {
                         var x = path[i];
-                        a[x] = i == path.length - 1 ? value : {};
+                        a[x] = Number(i) === path.length - 1 ? value : {};
+
+                        //if (i === path.length - 1)
+
+
                         a = a[x];
                     }
 
@@ -92,11 +96,11 @@ angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$locati
                         console.log("sending...",scope.finalData);
                     //switch to detail tab
                 } else {
-                    console.log("didn't send")
+                    console.log("didn't send");
                     scope.undoAllButton();
                     
-                };
                 }
+                };
             }
         };
     }
