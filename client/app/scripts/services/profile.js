@@ -16,7 +16,7 @@ angular.module('phrPrototypeApp')
         	.success(function(data) {
         		var profileInfo = data.demographics[0];
                 // format.formatDate(profileInfo.dob);
-        		console.log('profile service', profileInfo);
+        		// console.log('profile service', profileInfo);
         		callback(null, profileInfo);
         	})
         	.error(function(data) {
