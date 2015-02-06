@@ -60,7 +60,7 @@ angular.module('phrPrototypeApp')
 
 =======
 */
-  .controller('ProfileCtrl', function ($scope, $location, $anchorScroll, account, profile, format) {
+  .controller('ProfileCtrl', function ($scope, $location, $route, $anchorScroll, account, profile, format) {
 
   	$scope.editContact = false;
     $scope.editLangs = false;
@@ -121,11 +121,14 @@ angular.module('phrPrototypeApp')
 
       // console.log($scope.tmpDOB, $scope.profile.dob);
       profile.saveProfile(info, function(err) {
+        $route.reload();
+        // displayProfile();
         // console.log('profile controller', info);
       });
       $scope.editContact = false;
       $scope.editLangs = false;
       $scope.editProf = false;
+
     };
 
     function displayProfile() {
