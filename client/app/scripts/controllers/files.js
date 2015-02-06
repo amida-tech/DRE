@@ -22,41 +22,29 @@ angular.module('phrPrototypeApp')
 
 
 
-  	$scope.predicate = "name";
+  	$scope.predicate = "file_name";
 
     $scope.nameSort = function () {
-      if ($scope.predicate.substring(0,1) === "-") {
-        if ($scope.predicate.substring(1) === "name") {
-          $scope.predicate = "name";
-        } else {
-          $scope.predicate = "-name";
-        }
+      if ($scope.predicate === "file_name") {
+          $scope.predicate = "-file_name";
       } else {
-        $scope.predicate = "-name";
+          $scope.predicate = "file_name";
       }
     };
 
     $scope.typeSort = function () {
-      if ($scope.predicate.substring(0,1) === "-") {
-        if ($scope.predicate.substring(1) === "type") {
-          $scope.predicate = "type";
-        } else {
-          $scope.predicate = "-type";
-        }
+      if ($scope.predicate === "file_class") {
+          $scope.predicate = "-file_class";
       } else {
-        $scope.predicate = "-type";
+          $scope.predicate = "file_class";
       }
     };
 
     $scope.modifiedSort = function () {
-      if ($scope.predicate.substring(0,1) === "-") {
-        if ($scope.predicate.substring(1) === "modified") {
-          $scope.predicate = "modified";
-        } else {
-          $scope.predicate = "-modified";
-        }
+      if ($scope.predicate === "file_upload_date") {
+          $scope.predicate = "-file_upload_date";
       } else {
-        $scope.predicate = "-modified";
+          $scope.predicate = "file_upload_date";
       }
     };
 

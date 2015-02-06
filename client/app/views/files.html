@@ -33,14 +33,19 @@
 
 				<!--File Listing Header-->
 				<div class="col-sm-12 row">
-					<table class="table table-hover table-responsive panel">
+					<h5 ng-hide="fileList">There are currently no files in the DRE. Upload a file to get started and establish your Master Health Record!</h5>
+					<table class="table table-hover table-responsive panel" ng-show="fileList">
 						<thead>
 							<td></td>
 							<td>
-								<a ng-click="nameSort();">Name <i class="fa fa-caret-down" ng-show="predicate === 'name'"></i><i class="fa fa-caret-up" ng-show="predicate === '-name'"></i></a>
+								<a href="" ng-click="nameSort()">Name <i class="fa fa-caret-down" ng-show="predicate === 'file_name'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_name'"></i></a>
 							</td>
-							<td><a ng-click="typeSort();">Type <i class="fa fa-caret-down" ng-show="predicate === 'type'"></i><i class="fa fa-caret-up" ng-show="predicate === '-type'"></i></a></td>
-							<td><a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'modified'"></i><i class="fa fa-caret-up" ng-show="predicate === '-modified'"></i></a></td>
+							<td>
+								<a ng-click="typeSort()">Type <i class="fa fa-caret-down" ng-show="predicate === 'file_class'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_class'"></i></a>
+							</td>
+							<td>
+								<a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'file_upload_date'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_upload_date'"></i></a>
+							</td>
 						</thead>
 					<tr ng-repeat="file in fileList | orderBy:predicate">
 						<td>
@@ -48,7 +53,7 @@
 							<a ng-show="file.type === 'Image'"><i class="fa fa-file-image-o"></i></a>
 						</td>
 						<td><a ng-href="/api/v1/storage/record/{{file.file_id}}">{{file.file_name}}</a></td>
-						<td>{{file.file_class}}</td>
+						<td>{{file.file_class | uppercase}}</td>
 						<td>{{file.file_upload_date | date: 'short'}}</td>
 					</tr>
 					</table>

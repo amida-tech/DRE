@@ -238,7 +238,6 @@
 
 
                 <div class = "row" ng-show="editContact">
-
                 <h5>* Denotes required fields.</h5>
                 <form novalidate role="form" name="contactForm">
                 
@@ -246,6 +245,46 @@
                         <!--Address section-->
                         <div class="col-sm-3">
                             <h4>Address</h4>
+
+                            <div class="col-sm-12" ng-hide="profile.addresses">
+
+                                <div id="new_address">
+                                    <div class="form-group col-sm-12 capitalize">
+                                        <label for="inputNewAddressType">Address Type*</label>
+                                        <select class="form-control capitalize" name="inputNewAddressType" ng-model="new_address.use">
+                                            <option>primary home</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <div class="row">
+                                            <label for="inputNewAddrLine1">Address Line 1*</label>
+                                            <input type="text" class="form-control" name="inputNewAddressLine1" ng-model="new_address.street_line1">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputNewCity">City*</label>
+                                        <input type="text" class="form-control" name="inputNewCity" ng-model="new_address.city">
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label for="inputNewState">State*</label>
+                                        <input type="text" class="form-control" name="inputNewState" ng-model="new_address.state" ng-minLength="2">
+                                    </div>
+
+                                    <div class="form-group col-sm-5 col-sm-offset-1">
+                                        <label for="inputNewZip">Zip*</label>
+                                        <input type="text" class="form-control" name="inputNewZip" ng-model="new_address.zip" ng-minLength="5" ng-maxLength="11">
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
 
                             <div class="col-sm-12" ng-repeat="(addrIndex, addr) in profile.addresses">
 
@@ -260,12 +299,19 @@
                                     </div>
 
 
-                                    <div class="form-group row" ng-repeat="(addrLineIndex, addrLine) in addr.street_lines">
+                                    <div class="form-group row">
+                                        <div class="row">
+                                            <label for="inputAddrLine">Address Line*</label>
+                                            <input type="text" class="form-control" name="inputAddressLine" ng-model="addr.street_lines[0]">
+                                        </div>
+                                    </div>
+
+<!--                                     <div class="form-group row" ng-repeat="(addrLineIndex, addrLine) in addr.street_lines">
                                         <div class="row">
                                             <label for="inputAddrLine{{addrLineIndex}}">Address Line*</label>
                                             <input type="text" class="form-control" name="inputAddressLine{{addrLineIndex}}" ng-model="addrLine">
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="form-group row">
                                         <label for="inputCity">City*</label>
@@ -307,8 +353,8 @@
 
                                     <div class="form-group row">
                                         <label for="inputnewPhone">Add a new phone number</label>
-                                        <input type="text" class="form-control" name="inputnewPhone" ng-model="new_phone.number" ng-minLength="13">
-                                        <p ng-show="contactForm.inputnewPhone.$invalid && !contactForm.inputnewPhone.$pristine" class="help-block">Please enter a 10-digit phone number (xxx)xxx-xxxx.</p>
+                                        <input type="text" class="form-control" name="inputnewPhone" ng-model="new_phone.number" ng-minLength="10" ng-maxLength="10">
+                                        <p ng-show="contactForm.inputnewPhone.$invalid && !contactForm.inputnewPhone.$pristine" class="help-block">Please enter a 10-digit phone number.</p>
                                     </div>
                                 </div>
                             </div>
@@ -327,8 +373,8 @@
 
                                     <div class="form-group row">
                                         <label for="inputPhone">Number*</label>
-                                        <input type="text" class="form-control" name="inputPhone" ng-model="ph.number" required ng-required="true" ng-minLength="13">
-                                        <p ng-show="contactForm.inputPhone.$invalid && !contactForm.inputPhone.$pristine" class="help-block">Please enter a 10-digit phone number (xxx)xxx-xxxx.</p>
+                                        <input type="text" class="form-control" name="inputPhone" ng-model="ph.number" required ng-required="true" ng-minLength="10" ng-maxLength="10">
+                                        <p ng-show="contactForm.inputPhone.$invalid && !contactForm.inputPhone.$pristine" class="help-block">Please enter a 10-digit phone number.</p>
                                     </div>
                                 </div>
                             </div>
