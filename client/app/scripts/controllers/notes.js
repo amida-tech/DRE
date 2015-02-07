@@ -7,6 +7,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes, record) {
+    $scope.any_sections_selected = false;
 
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
         record.getData().then(function(data) {
@@ -20,61 +21,82 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     $scope.notes = [];
 
     $scope.filters = [{
-        'name': 'starred',
-        'value': true,
-        'displayName': 'starred'
-    }, {
-        'name': 'unStarred',
-        'value': false,
-        'displayName': 'un-starred'
-    }, {
-        'name': 'medications',
-        'value': true,
-        'displayName': 'medications'
-    }, {
-        'name': 'results',
-        'value': true,
-        'displayName': 'test results'
-    }, {
-        'name': 'encounters',
-        'value': true,
-        'displayName': 'encounters'
-    }, {
-        'name': 'vitals',
-        'value': true,
-        'displayName': 'vital signs'
-    }, {
-        'name': 'immunizations',
-        'value': true,
-        'displayName': 'immunizations'
-    }, {
-        'name': 'allergies',
-        'value': true,
-        'displayName': 'allergies'
-    }, {
-        'name': 'conditions',
-        'value': true,
-        'displayName': 'conditions'
-    }, {
-        'name': 'procedures',
-        'value': true,
-        'displayName': 'procedures'
-    }, {
-        'name': 'social',
-        'value': true,
-        'displayName': 'social history'
-    }, {
-        'name': 'claims',
-        'value': true,
-        'displayName': 'claims'
-    }, {
-        'name': 'insurance',
-        'value': true,
-        'displayName': 'insurance'
-    }];
+            'name': 'starred',
+            'value': true,
+            'displayName': 'starred'
+        }, {
+            'name': 'unStarred',
+            'value': true,
+            'displayName': 'un-starred'
+        }
+        /*
+        , {
+            'name': 'medications',
+            'value': true,
+            'displayName': 'medications'
+        }, {
+            'name': 'results',
+            'value': true,
+            'displayName': 'test results'
+        }, {
+            'name': 'encounters',
+            'value': true,
+            'displayName': 'encounters'
+        }, {
+            'name': 'vitals',
+            'value': true,
+            'displayName': 'vital signs'
+        }, {
+            'name': 'immunizations',
+            'value': true,
+            'displayName': 'immunizations'
+        }, {
+            'name': 'allergies',
+            'value': true,
+            'displayName': 'allergies'
+        }, {
+            'name': 'conditions',
+            'value': true,
+            'displayName': 'conditions'
+        }, {
+            'name': 'procedures',
+            'value': true,
+            'displayName': 'procedures'
+        }, {
+            'name': 'social',
+            'value': true,
+            'displayName': 'social history'
+        }, {
+            'name': 'claims',
+            'value': true,
+            'displayName': 'claims'
+        }, {
+            'name': 'insurance',
+            'value': true,
+            'displayName': 'insurance'
+        }
+        */
+    ];
+
+    //updated flag that says if any sections are selected to view
+    function updateAnySectionsSelected() {
+        $scope.any_sections_selected = false;
+
+        _.each($scope.filters, function(filter) {
+            if (filter.name !== "starred" && filter.name !== "unStarred" && filter.value) {
+                $scope.any_sections_selected = true;
+            }
+
+        });
+
+        console.log("any_sections_selected ",$scope.any_sections_selected);
+    }
 
     $scope.toggle = function(index) {
         $scope.filters[index].value = !$scope.filters[index].value;
+        //calculate if no sections are selected
+        updateAnySectionsSelected();
+
     };
 
     $scope.toggleAll = function() {
@@ -140,12 +162,15 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     function displaySection(section) {
         var displayName = {
             'vitals': 'vital signs',
-            'allergies': 'allergies',
-            'labs': 'lab results',
-            'problems': 'problems'
+            'results': 'test results',
+            'social': 'social history'
         }
 
-        return displayName[section];
+        if (displayName[section]) {
+            return displayName[section];
+        } else {
+            return section;
+        }
     }
 
 
@@ -219,9 +244,33 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         return stub2;
     }
 
+    //updates list of sections in filters based on what sections are present in notes
+    function updateFilters(notes) {
+        var filters = $scope.filters;
+
+        //generating list of unique sections present in notes
+        var notes_sections = [];
+        notes_sections = _.pluck(notes, "section");
+        notes_sections = _.uniq(notes_sections);
+
+        _.each(notes_sections, function(section) {
+            filters.push({
+                'name': section,
+                'value': true,
+                'displayName': displaySection(section)
+            });
+        });
+
+
+        return filters;
+    }
+
+    //gets notes from backend API
     function getNotes() {
         notes.getNotes(function(err, returnNotes) {
             $scope.notes = mashNotesWithRecord(returnNotes, $scope.masterRecord);
+            $scope.filters = updateFilters(returnNotes);
+            updateAnySectionsSelected();
         });
     }
     $scope.clickStar = function(starVal, starIndex, section) {
