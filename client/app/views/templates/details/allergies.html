@@ -7,11 +7,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<tr ng-show="entryData.observation.allergen.code">
 			<td>Code:</td>
 			<td>{{entryData.observation.allergen.code}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.observation.allergen.code_system_name">
 			<td>Code System:</td>
 			<td>{{entryData.observation.allergen.code_system_name}}</td>
 		</tr>
