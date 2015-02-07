@@ -26,32 +26,64 @@ angular.module('phrPrototypeApp').directive('entry', function(format, $http) {
 
             switch (scope.type) {
                 case 'allergies':
-                    scope.entryTitle = scope.entryData.observation.allergen.name;
-                    scope.entrySubTitleOne = scope.entryData.observation.severity.code.name;
-                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.observation.allergen.name) {
+                        scope.entryTitle = scope.entryData.observation.allergen.name;
+                    } 
+                    if (scope.entryData.observation.severity.code.name) {
+                        scope.entrySubTitleOne = scope.entryData.observation.severity.code.name;
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;                        
+                    }
                     break;
                 case 'encounters':
-                    scope.entryTitle = scope.entryData.encounter.name;
-                    scope.entrySubTitleOne = scope.entryData.locations[0].name;
-                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.encounter.name) {
+                        scope.entryTitle = scope.entryData.encounter.name;
+                    }
+                    if (scope.entryData.locations[0].name) {
+                        scope.entrySubTitleOne = scope.entryData.locations[0].name;
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    }
                     break;
                 case 'immunizations':
-                    scope.entryTitle = scope.entryData.product.product.name;
-                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.product.product.name) {
+                        scope.entryTitle = scope.entryData.product.product.name;
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                    }
                     break;
                 case 'medications':
-                    scope.entryTitle = scope.entryData.product.product.name;
-                    scope.entrySubTitleOne = scope.entryData.administration.route.name;
-                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.product.product.name) {
+                        scope.entryTitle = scope.entryData.product.product.name;
+                    }
+                    if (scope.entryData.administration.route.name) {
+                        scope.entrySubTitleOne = scope.entryData.administration.route.name;
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    }
                     break;
                 case 'conditions':
-                    scope.entryTitle = scope.entryData.problem.code.name;
-                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.problem.code.name) {
+                        scope.entryTitle = scope.entryData.problem.code.name;
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                    }
                     break;
                 case 'procedures':
-                    scope.entryTitle = scope.entryData.procedure.name;
-                    scope.entrySubTitleOne = scope.entryData.status;
-                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.procedure.name) {
+                        scope.entryTitle = scope.entryData.procedure.name;
+                    }
+                    if (scope.entryData.status) {
+                        scope.entrySubTitleOne = scope.entryData.status;
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    }
                     break;
                 case 'vitals':
                     var quantityUnit = "";
@@ -64,25 +96,47 @@ angular.module('phrPrototypeApp').directive('entry', function(format, $http) {
                     } else {
                         quantityUnit = scope.entryData.unit;
                     }
-                    scope.entryTitle = scope.entryData.value + " " + quantityUnit;
-                    scope.entrySubTitleOne = scope.entryData.vital.name;
-                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.value + " " + quantityUnit) {
+                        scope.entryTitle = scope.entryData.value + " " + quantityUnit;
+                    }
+                    if (scope.entryData.vital.name) {
+                        scope.entrySubTitleOne = scope.entryData.vital.name;
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    }
                     break;
                 case 'results':
-                    scope.entryTitle = scope.entryData.result_set.name;
-                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.result_set.name) {
+                        scope.entryTitle = scope.entryData.result_set.name;
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                    }
                     break;
                 case 'social':
-                    scope.entryTitle = scope.entryData.value;
-                    scope.entrySubTitleOne = scope.entryData.code.name;
-                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.value) {
+                        scope.entryTitle = scope.entryData.value;
+                    }
+                    if (scope.entryData.code.name) {
+                        scope.entrySubTitleOne = scope.entryData.code.name;
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    }
                     break;
                 case 'claims':
-                    scope.entryTitle = scope.entryData.payer[0];
-                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                    if (scope.entryData.payer[0]) {
+                        scope.entryTitle = scope.entryData.payer[0];
+                    }
+                    if (scope.recordEntry.metadata.displayDate) {
+                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                    }
                     break;
                 case 'insurance':
-                    scope.entryTitle = scope.entryData.name;
+                    if (scope.entryData.name) {
+                        scope.entryTitle = scope.entryData.name;
+                    }
                     if (scope.entryData.date_time) {
                         scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
                     }
