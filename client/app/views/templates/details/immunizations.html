@@ -7,19 +7,19 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<tr ng-show="entryData.product.lot_number">
 			<td>Lot Number:</td>
 			<td>{{entryData.product.lot_number}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.product.manufacturer">
 			<td>Manufacturer:</td>
 			<td>{{entryData.product.manufacturer}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.product.product.code">
 			<td>Code:</td>
 			<td>{{entryData.product.product.code}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.product.product.code_system_name">
 			<td>Code System:</td>
 			<td>{{entryData.product.product.code_system_name}}</td>
 		</tr>
@@ -28,18 +28,18 @@
 			<td>
 				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.product.product.translations">
 					<table class="table sub-table">
-						<thead>
+						<thead ng-show="itemEntry.name">
 							<tr>
 								<td>Name:</td>
 								<td>{{itemEntry.name}}</td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							<tr ng-show="itemEntry.code">
 								<td>Code:</td>
 								<td>{{itemEntry.code}}</td>
 							</tr>
-							<tr>
+							<tr ng-show="itemEntry.code_system_name">
 								<td>Code System:</td>
 								<td>{{itemEntry.code_system_name}}</td>
 							</tr>
@@ -53,11 +53,11 @@
 			<td>
 				<div class="panel">
 					<table class="table sub-table">
-						<tr>
+						<tr ng-show="entryData.performer.name">
 							<td>Name:</td>
 							<td  ng-repeat="(nameIndex, nameEntry) in entryData.performer.name">{{nameEntry.displayName}}</td>
 						</tr>
-						<tr>
+						<tr ng-show="entryData.performer.address">
 							<td>Address:</td>
 							<td ng-repeat="(addrIndex, addrEntry) in entryData.performer.address">
 								<div ng-repeat="addrLine in addrEntry.displayAddress">
@@ -65,7 +65,7 @@
 								</div>
 							</td>
 						</tr>
-						<tr ng-repeat="(orgIndex, orgEntry) in entryData.performer.organization">
+						<tr ng-show="orgEntry.name" ng-repeat="(orgIndex, orgEntry) in entryData.performer.organization">
 							<td>Organization:</td>
 							<td ng-repeat="orgName in orgEntry.name">{{orgName}}</td>
 						</tr>
@@ -78,23 +78,23 @@
 			<td>
 				<div class="panel">
 					<table class="table sub-table">
-						<tr>
+						<tr ng-show="entryData.administration.dose.displayQuantity">
 							<td>Dose:</td>
 							<td>{{entryData.administration.dose.displayQuantity}}</td>
 						</tr>
-						<tr>
+						<tr ng-show="entryData.administration.route.name">
 							<td>Route:</td>
 							<td>
 								{{entryData.administration.route.name}}
 							</td>
 						</tr>
-						<tr>
+						<tr ng-show="entryData.administration.route.code">
 							<td>Route Code:</td>
 							<td>
 								{{entryData.administration.route.code}}
 							</td>
 						</tr>
-						<tr>
+						<tr ng-show="entryData.administration.route.code_system_name">
 							<td>Route Code System:</td>
 							<td>
 								{{entryData.administration.route.code_system_name}}
@@ -109,19 +109,19 @@
 			<td>
 				<div class="panel">
 					<table class="table">
-						<tr>
+						<tr ng-show="entryData.instructions.free_text">
 							<td>Text:</td>
 							<td>{{entryData.instructions.free_text}}</td>
 						</tr>
-						<tr>
+						<tr ng-show="entryData.instructions.code.name">
 							<td>Name:</td>
 							<td>{{entryData.instructions.code.name}}</td>
 						</tr>
-						<tr>
+						<tr ng-show="entryData.instructions.code.code">
 							<td>Code:</td>
 							<td>{{entryData.instructions.code.code}}</td>
 						</tr>
-						<tr>
+						<tr ng-show="entryData.instructions.code.code_system_name">
 							<td>Code System:</td>
 							<td>{{entryData.instructions.code.code_system_name}}</td>
 						</tr>
@@ -147,21 +147,21 @@
 								<p ng-repeat="(addrLineIndex, addrLineEntry) in addrEntry.displayAddress">{{addrLineEntry}}</p>
 							</td>
 						</tr>
-						<tr>
+						<tr ng-show="itemEntry.location_type">
 							<td>Type:</td>
 
 							<td>
 								<div class="panel">
 									<table class="table sub-table">
-										<tr>
+										<tr ng-show="itemEntry.location_type.name">
 											<td>Name:</td>
 											<td>{{itemEntry.location_type.name}}</td>
 										</tr>
-										<tr>
+										<tr ng-show="itemEntry.location_type.code">
 											<td>Code:</td>
 											<td>{{itemEntry.location_type.code}}</td>
 										</tr>
-										<tr>
+										<tr ng-show="itemEntry.location_type.code_system_name">
 											<td>Code System:</td>
 											<td>{{itemEntry.location_type.code_system_name}}</td>
 										</tr>
