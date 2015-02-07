@@ -49,7 +49,8 @@
 				<!--Each Entry-->
 				<div ng-show="!notes" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
 				<div ng-hide="filters[0].value || filters[1].value" class="col-sm-12 text-center"><h5>No notes are available for display</h5></div>
-				{{notes | json}}
+
+				<!-- http://angular-tips.com/blog/2014/08/tip-accessing-filtered-array-outside-ng-repeat/ -->
 				<div ng-repeat="(sectionIndex, sectionEntry) in sections = (notes | sections:filters)">
 					<div ng-repeat="(noteIndex, noteEntry) in subNotes = (sectionEntry.notes | starred:filters) | orderBy:'note.starred':true ">
 						<div ng-show="noteIndex === 0">
