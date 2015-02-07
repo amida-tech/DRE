@@ -83,7 +83,7 @@ angular.module('phrPrototypeApp')
                     console.log("adding note failed");
                     callback(err);
                 });
-        }
+        };
 
 
         this.addNote = function(comment, callback) {
@@ -97,7 +97,7 @@ angular.module('phrPrototypeApp')
                     console.log("adding note failed");
                     callback(err);
                 });
-        }
+        };
 
         this.getNotes = function(callback) {
 

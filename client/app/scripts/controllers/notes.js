@@ -164,7 +164,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             'vitals': 'vital signs',
             'results': 'test results',
             'social': 'social history'
-        }
+        };
 
         if (displayName[section]) {
             return displayName[section];
@@ -184,7 +184,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         notes_sections = _.uniq(notes_sections);
         console.log(notes_sections);
 
-        var stub2 = []
+        var stub2 = [];
 
         _.each(notes_sections, function(section) {
             var section_notes = [];
@@ -208,7 +208,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                         'starred': note.star,
                         'note_id': note._id
                     }
-                }
+                };
 
                 section_notes_with_entry.push(result);
             });
@@ -226,7 +226,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
 
         console.log("stub2", stub2);
 
-        console.log("DONE!")
+        console.log("DONE!");
 
         var stub = [{
             'displaySection': 'vital signs',
