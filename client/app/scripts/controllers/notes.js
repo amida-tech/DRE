@@ -10,9 +10,13 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     $scope.any_sections_selected = false;
 
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
-        record.getData().then(function(data) {
-            record.setMasterRecord(data);
-            $scope.masterRecord = data;
+        record.getData(function(err, data) {
+            if (err) {
+                console.log("getData error ", err)
+            } else {
+                record.setMasterRecord(data);
+                $scope.masterRecord = data;
+            }
         });
     } else {
         $scope.masterRecord = record.masterRecord;
@@ -89,7 +93,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
 
         });
 
-        console.log("any_sections_selected ",$scope.any_sections_selected);
+        console.log("any_sections_selected ", $scope.any_sections_selected);
     }
 
     $scope.toggle = function(index) {
@@ -201,7 +205,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                 var result = {};
                 result = {
                     'entryTitle': note.entry,
-                    'entry_id':note.entry,
+                    'entry_id': note.entry,
                     'note': {
                         'comment': note.note,
                         'date': note.datetime,
@@ -277,9 +281,9 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     }
 
     $scope.clickStar = function(starVal, starIndex, section, entry) {
-        console.log("click Star ",!starVal, starIndex, section, entry);
+        console.log("click Star ", !starVal, starIndex, section, entry);
 
-        notes.starNote(entry.note.note_id,!starVal, function(err, data){
+        notes.starNote(entry.note.note_id, !starVal, function(err, data) {
             console.log('err ', err);
             console.log('updated note ', data);
         });

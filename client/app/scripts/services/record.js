@@ -91,11 +91,15 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
 
                 });
 
-                if (!_.contains(['demographics', 'problems', 'plan_of_care', 'payers', 'social_history'], type)) {
+                //TODO: remove social, problems from list below (it breaks something)
+                if (!_.contains(['demographics',  'plan_of_care', 'payers'], type)) {
 
                     var display_type=type;
                     if (type==='social_history'){
                         display_type='social';
+                    }
+                    if (type==='problems'){
+                        display_type='conditions';
                     }
 
                     //inject notest into entry
