@@ -178,7 +178,15 @@ angular.module('phrPrototypeApp').directive('entry', function(format, notes) {
                 }
 
             };
-            scope.clickStar = function(starVal, starIndex, recordIndex) {
+            
+            scope.clickStar = function(starVal, starIndex, recordIndex, entry) {
+                console.log("click Star ", !starVal, entry);
+
+                notes.starNote(entry.note_id, !starVal, function(err, data) {
+                    console.log('err ', err);
+                    console.log('updated note ', data);
+                });
+
                 if (starVal) {
                     scope.entryMetaData.comments[starIndex].starred = false;
                 } else {
@@ -196,7 +204,6 @@ angular.module('phrPrototypeApp').directive('entry', function(format, notes) {
             scope.addNote = function() {
                 console.log("adding note");
                 console.log(scope);
-                //scope.entryMetaData.comments.push(scope.newComment);
 
                 scope.newComment.starred = false;
 
@@ -204,13 +211,21 @@ angular.module('phrPrototypeApp').directive('entry', function(format, notes) {
                 scope.newComment.note = scope.newComment.comment;
                 scope.newComment.section = scope.recordEntry.category;
 
-                countStarredComments();
-
-                console.log(scope.newComment);
-
                 notes.addNote(scope.newComment, function(err, data) {
                     console.log('err ', err);
                     console.log('data ', data);
+
+                    scope.newComment.entry_id = data.entry;
+                    scope.newComment.note_id = data._id;
+
+                    scope.entryMetaData.comments.push(scope.newComment);
+
+                    countStarredComments();
+
+                    console.log("scope.newComment", scope.newComment);
+                    scope.newComment = {};
+
+
                 });
 
 

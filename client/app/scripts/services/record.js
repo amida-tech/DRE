@@ -83,25 +83,35 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
                         date: n.date,
                         starred: n.star,
                         comment: n.note,
+                        entry_id: n.entry,
+                        note_id: n._id
                     };
 
                     comments.push(comment);
 
                 });
 
-                //inject notest into entry
-                var tmpEntry = {
-                    'data': entry,
-                    'category': type,
-                    'metadata': {
-                        'comments': comments,
-                        'displayDate': dispDates,
-                        'datetime': tmpDates
+                if (!_.contains(['demographics', 'problems', 'plan_of_care', 'payers', 'social_history'], type)) {
+
+                    var display_type=type;
+                    if (type==='social_history'){
+                        display_type='social';
                     }
-                };
 
-                tmpEntries.push(tmpEntry);
+                    //inject notest into entry
+                    var tmpEntry = {
+                        'data': entry,
+                        'category': display_type,
+                        'metadata': {
+                            'comments': comments,
+                            'displayDate': dispDates,
+                            'datetime': tmpDates
+                        }
+                    };
 
+                    tmpEntries.push(tmpEntry);
+
+                }
                 /*
                 if (!_.contains(['demographics', 'problems', 'plan_of_care', 'payers', 'social_history'], type)) {
                     tmpEntries.push({
