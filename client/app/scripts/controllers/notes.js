@@ -12,7 +12,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
         record.getData(function(err, data) {
             if (err) {
-                console.log("getData error ", err)
+                console.log("getData error ", err);
             } else {
                 record.setMasterRecord(data);
                 $scope.masterRecord = data;
