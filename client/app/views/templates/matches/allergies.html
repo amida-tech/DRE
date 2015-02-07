@@ -8,7 +8,7 @@
                     <h5 class="text-left">{{formatDate(entryData.observation.date_time.low)}}</h5>
 
                 </td>
-                <td>
+                <td style="border:none;">
                     <svg height="40" width="20" style="position: relative; left: -9px; top: 0px;">
                     <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:1"></polygon>
                     </svg>
@@ -41,7 +41,7 @@
                         </table>
                     </div>
                 </td>
-                <td>&nbsp</td>
+                <td style="border:none;">&nbsp</td>
                 <td class="panel">Allergen:</td>
                 <td class="panel">
                     <div class="panel">
@@ -90,7 +90,7 @@
                                                                         flagData.observation.status.code "
                     class="btn btn-default pull-right" ng-click="updateButton(flagData.observation.status)">Update</div>-->
                 </td>
-                <td style="background-color:transparent;">&nbsp</td>
+                <td style="border:none;">&nbsp</td>
                 <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">Status:</td>
                 <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
@@ -145,7 +145,7 @@
                         </table>
                     </div>
                 </td>
-                <td>&nbsp</td>
+                <td style="border:none;">&nbsp</td>
                 <td class="panel">Reactions:</td>
                 <td class="panel">
                     <div class="panel">
