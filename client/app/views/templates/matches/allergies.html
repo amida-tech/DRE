@@ -1,63 +1,68 @@
-
+<style>
+td.panel {
+box-shadow: none;
+}
+</style>
 <div class="col-sm-12">
-    <table class="table" style="bo">
+    <table class="table">
         <tbody>
             <tr>
-                <td class="panel" colspan="2">
+                <td class="panel" colspan="2" style="border:none;">
                     <h4 class="text-left">{{entryData.observation.allergen.name}}</h4>
                     <h5 class="text-left">{{formatDate(entryData.observation.date_time.low)}}</h5>
-
                 </td>
                 <td style="border:none;">
                     <svg height="40" width="20" style="position: relative; left: -9px; top: 0px;">
-                    <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:1"></polygon>
+                    <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:0"></polygon>
                     </svg>
                 </td>
-                <td class="panel" colspan="2">
+                <td class="panel" colspan="2" style="border:none;">
                     <h4 class="text-left">{{matchData.observation.allergen.name}}</h4>
-       
                     <h5 class="text-left">{{formatDate(matchData.observation.date_time.low)}}</h5>
                 </td>
             </tr>
             <tr>
-                <td class="panel">Allergen:</td>
-                <td class="panel">
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.allergen, finalData.observation.allergen) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input type="checkbox" ng-checked="!areEqual(matchData.observation.allergen, finalData.observation.allergen)" ng-click="checkboxToggle(flagData.observation.allergen, matchData.observation.allergen, finalData.observation.allergen)"> Allergen:</span></td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.allergen, finalData.observation.allergen) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
                             <tbody>
                                 <tr>
-                                    <td>Status:</td>
-                                    <td>{{entryData.observation.allergen.name}}</td>
+                                    <td>Name:</td>
+                                    <td>{{entryData.observation.allergen.name}} <span ng-if="isDifferent(flagData.observation.allergen.name.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{entryData.observation.allergen.code}}</td>
+                                    <td>{{entryData.observation.allergen.code}} <span ng-if="isDifferent(flagData.observation.allergen.code.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{entryData.observation.allergen.code_system_name}}</td>
+                                    <td>{{entryData.observation.allergen.code_system_name}} <span ng-if="isDifferent(flagData.observation.allergen.code_system_name.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </td>
                 <td style="border:none;">&nbsp</td>
-                <td class="panel">Allergen:</td>
-                <td class="panel">
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.allergen, finalData.observation.allergen) && {'background-color': '#B0C4DE'}">Allergen:</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.allergen, finalData.observation.allergen) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
                             <tbody>
                                 <tr>
-                                    <td>Status:</td>
-                                    <td>{{matchData.observation.allergen.name}}</td>
+                                    <td>Name:</td>
+                                    <td ng-if="matchData.observation.allergen.name === finalData.observation.allergen.name">{{matchData.observation.allergen.name}}</td>
+                                    <td ng-if="matchData.observation.allergen.name !== finalData.observation.allergen.name">{{finalData.observation.allergen.name}} <span class="label label-warning pull-right">Updated</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{matchData.observation.allergen.code}}</td>
+                                    <td ng-if="matchData.observation.allergen.code === finalData.observation.allergen.code">{{matchData.observation.allergen.code}}</td>
+                                    <td ng-if="matchData.observation.allergen.code !== finalData.observation.allergen.code">{{finalData.observation.allergen.code}} <span class="label label-warning pull-right">Updated</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{matchData.observation.allergen.code_system_name}}</td>
+                                    <td ng-if="matchData.observation.allergen.code_system_name === finalData.observation.allergen.code_system_name">{{matchData.observation.allergen.code_system_name}}</td>
+                                    <td ng-if="matchData.observation.allergen.code_system_name !== finalData.observation.allergen.code_system_name">{{finalData.observation.allergen.code_system_name}} <span class="label label-warning pull-right">Updated</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -65,34 +70,31 @@
                 </td>
             </tr>
             <tr>
-                <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}"><input type="checkbox" ng-checked="!areEqual(matchData.observation.status, finalData.observation.status)" ng-click="checkboxToggle(flagData.observation.status, matchData.observation.status, finalData.observation.status)"> Status:</td>
-                <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">
+                <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input type="checkbox" ng-checked="!areEqual(matchData.observation.status, finalData.observation.status)" ng-click="checkboxToggle(flagData.observation.status, matchData.observation.status, finalData.observation.status)"> Status:</span></td>
+                <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
                             <tbody>
                                 <tr>
                                     <td>Status:</td>
-                                    <td>{{entryData.observation.status.name}} <span ng-if="flagData.observation.status.name.kind === 'E'" class="label label-info pull-right">Different</span></td>
+                                    <td>{{entryData.observation.status.name}} <span ng-if="isDifferent(flagData.observation.status.name.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{entryData.observation.status.code}} <span ng-if="flagData.observation.status.code.kind === 'E'" class="label label-info pull-right">Different</span></td>
+                                    <td>{{entryData.observation.status.code}} <span ng-if="isDifferent(flagData.observation.status.code.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{entryData.observation.status.code_system_name}}</td>
+                                    <td>{{entryData.observation.status.code_system_name}} <span ng-if="isDifferent(flagData.observation.status.code_system_name.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!--<div ng-if="
-                                                                        flagData.observation.status.name ||
-                                                                        flagData.observation.status.code "
-                    class="btn btn-default pull-right" ng-click="updateButton(flagData.observation.status)">Update</div>-->
+
                 </td>
                 <td style="border:none;">&nbsp</td>
-                <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">Status:</td>
-                <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">
+                <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">Status:</td>
+                <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
                             <tbody>
@@ -118,69 +120,84 @@
                 </td>
             </tr>
             <tr ng-repeat="(reactionIndex, reactionEntry) in entryData.observation.reactions">
-                <td class="panel">Reactions:</td>
-                <td class="panel">
+                <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex]) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input type="checkbox" ng-checked="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex])" ng-click="checkboxToggle([flagData.observation.reactions[reactionIndex].reaction, flagData.observation.reactions[reactionIndex].severity], matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex])"> Reactions:</span></td>
+                <td style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex]) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
                             <thead>
                                 <tr>
                                     <td>Reaction:</td>
-                                    <td>{{reactionEntry.reaction.name}}</td>
+                                    <td>{{reactionEntry.reaction.name}} <span ng-if="isDifferent(flagData.observation.reactions[reactionIndex].reaction.name.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>Severity:</td>
-                                    <td>{{reactionEntry.severity.code.name}}</td>
+                                    <td>{{reactionEntry.severity.code.name}} <span ng-if="isDifferent(flagData.observation.reactions[reactionIndex].severity.code.name.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{reactionEntry.reaction.code}}</td>
+                                    <td>{{reactionEntry.reaction.code}} <span ng-if="isDifferent(flagData.observation.reactions[reactionIndex].reaction.code.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{reactionEntry.reaction.code_system_name}}</td>
+                                    <td>{{reactionEntry.reaction.code_system_name}} <span ng-if="isDifferent(flagData.observation.reactions[reactionIndex].reaction.code_system_name.kind)" class="label label-info pull-right">Different</span></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </td>
-                <td style="border:none;">&nbsp</td>
-                <td class="panel">Reactions:</td>
-                <td class="panel">
+                <td style="border:none;" style="border:none;">&nbsp</td>
+                <td style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex]) && {'background-color': '#B0C4DE'}">Reactions:</td>
+                <td style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex]) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
                             <thead>
                                 <tr>
                                     <td>Reaction:</td>
-                                    <td>{{matchData.observation.reactions[reactionIndex].reaction.name}}</td>
+                                    <td ng-if="matchData.observation.reactions[reactionIndex].reaction.name === finalData.observation.reactions[reactionIndex].reaction.name">{{matchData.observation.reactions[reactionIndex].reaction.name}}</td>
+                                    <td ng-if="matchData.observation.reactions[reactionIndex].reaction.name !== finalData.observation.reactions[reactionIndex].reaction.name">{{finalData.observation.reactions[reactionIndex].reaction.name}} <span class="label label-warning pull-right">Updated</span></td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>Severity:</td>
-                                    <td>{{matchData.observation.reactions[reactionIndex].severity.code.name}}</td>
+
+                                    <td ng-if="matchData.observation.reactions[reactionIndex].severity.code.name === finalData.observation.reactions[reactionIndex].severity.code.name">{{matchData.observation.reactions[reactionIndex].severity.code.name}}</td>
+                                    <td ng-if="matchData.observation.reactions[reactionIndex].severity.code.name !== finalData.observation.reactions[reactionIndex].severity.code.name">{{finalData.observation.reactions[reactionIndex].severity.code.name}} <span class="label label-warning pull-right">Updated</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{matchData.observation.reactions[reactionIndex].reaction.code}}</td>
+                                    <td ng-if="matchData.observation.reactions[reactionIndex].reaction.code === finalData.observation.reactions[reactionIndex].reaction.code">{{matchData.observation.reactions[reactionIndex].reaction.code}}</td>
+                                    <td ng-if="matchData.observation.reactions[reactionIndex].reaction.code !== finalData.observation.reactions[reactionIndex].reaction.code">{{finalData.observation.reactions[reactionIndex].reaction.code}} <span class="label label-warning pull-right">Updated</span></td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{matchData.observation.reactions[reactionIndex].reaction.code_system_name}}</td>
+                                    <td ng-if="matchData.observation.reactions[reactionIndex].reaction.code_system_name === finalData.observation.reactions[reactionIndex].reaction.code_system_name">{{matchData.observation.reactions[reactionIndex].reaction.code_system_name}}</td>
+                                    <td ng-if="matchData.observation.reactions[reactionIndex].reaction.code_system_name !== finalData.observation.reactions[reactionIndex].reaction.code_system_name">{{finalData.observation.reactions[reactionIndex].reaction.code_system_name}} <span class="label label-warning pull-right">Updated</span></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </td>
             </tr>
+            <tr>
+            <td colspan="2">
+            	<div class="col-sm-8 col-sm-offset-2">
+            <button class="btn btn-default btn-block" ng-click="undoAllButton()"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+        </div>
+
+            </td>
+            <td style="border:none;">&nbsp</td>
+            <td colspan="2">
+            	<div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
+            <button class="btn btn-primary btn-block" ng-click="submitButton()">Save Updates</button>
+            <button class="btn btn-default btn-block" ng-click="ignoreButton()">Ignore Updates</button>
+        </div>
+
+            </td>
+
+            </tr>
         </tbody>
     </table>
-</div>
-<div class="col-sm-12">
-    <div ng-if="!areEqual(matchData, finalData)"
-    class="btn btn-default pull-right" ng-click="submitButton()">Submit</div>
-    <div ng-if="!areEqual(matchData, finalData)"
-    class="btn btn-default pull-right" ng-click="undoAllButton()">Undo All</div>
-</div>
 </div>
