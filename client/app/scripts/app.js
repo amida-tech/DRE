@@ -93,9 +93,9 @@ angular
         templateUrl: 'views/notes.html',
         controller: 'NotesCtrl'
       })
-      .when('/newrecord', {
-        templateUrl: 'views/newrecord.html',
-        controller: 'NewRecordCtrl'
+      .when('/matches', {
+        templateUrl: 'views/matches.html',
+        controller: 'MatchesCtrl'
       })
       .otherwise({
         redirectTo: '/'

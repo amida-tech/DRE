@@ -1,0 +1,140 @@
+<table class="table table-hover">
+
+	<tbody>
+		<tr>
+			<td>Code:</td>
+			<td>{{entryData.procedure.code}}</td>
+		</tr>
+		<tr>
+			<td>Code System:</td>
+			<td>{{entryData.procedure.code_system_name}}</td>
+		</tr>
+		<tr>
+			<td>Type:</td>
+			<td>{{entryData.procedure_type}}</td>
+		</tr>
+		<tr ng-show="entryData.procedure.translations">
+			<td>Other Descriptions:</td>
+			<td>
+				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.procedure.translations">
+					<table class="table sub-table">
+						<thead>
+							<tr>
+								<td>Name:</td>
+								<td>{{itemEntry.name}}</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Code:</td>
+								<td>{{itemEntry.code}}</td>
+							</tr>
+							<tr>
+								<td>Code System:</td>
+								<td>{{itemEntry.code_system_name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.body_sites">
+			<td>Body Site:</td>
+			<td>
+				<div class="panel" ng-repeat="site in entryData.body_sites">
+					<table class="table sub-table">
+						<tr>
+							<td>Name:</td>
+							<td>{{site.name}}</td>
+						</tr>
+						<tr>
+							<td>Code:</td>
+							<td>{{site.code}}</td>
+						</tr>
+						<tr>
+							<td>Code System:</td>
+							<td>{{site.code_system_name}}</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.specimen">
+			<td>Specimen:</td>
+			<td>
+				<div class="panel">
+					<table class="table sub-table">
+						<tr>
+							<td>Name:</td>
+							<td>{{entryData.specimen.code.name}}</td>
+						</tr>
+						<tr>
+							<td>Code:</td>
+							<td>{{entryData.specimen.code.code}}</td>
+						</tr>
+						<tr>
+							<td>Code System:</td>
+							<td>{{entryData.specimen.code.code_system_name}}</td>
+						</tr>
+
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.performer">
+			<td>Performer:</td>
+			<td>
+				<div class="panel" ng-repeat="performer in entryData.performer">
+					<table class="table sub-table">
+						<tr>
+							<td>Address:</td>
+							<td ng-repeat="perfAddr in performer.address">
+								<div ng-repeat="addrLine in perfAddr.displayAddress">
+									{{addrLine}}
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Phone:</td>
+							<td ng-repeat="perfPhone in performer.phone">
+								{{perfPhone.number}}
+							</td>
+						</tr>
+						<tr ng-show="performer.organization">
+							<td>Organization:</td>
+							<td ng-repeat="perfOrg in performer.organization">
+
+								<table class="table">
+									<tr>
+										<td>Name:</td>
+										<td ng-repeat="orgName in perfOrg.name">
+											{{orgName}}
+										</td>
+									</tr>
+									<tr>
+										<td>Address:</td>
+										<td ng-repeat="orgAddr in perfOrg.address">
+											<div ng-repeat="perfOrgAddrLine in orgAddr.displayAddress">
+												{{perfOrgAddrLine}}
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>Phone:</td>
+										<td ng-repeat="orgPhone in perfOrg.phone">
+											{{orgPhone.number}}
+										</td>
+
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+

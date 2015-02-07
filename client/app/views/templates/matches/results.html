@@ -1,0 +1,52 @@
+<table class="table table-hover">
+	<tbody>
+		<tr>
+			<td>Set Name:</td>
+			<td>{{entryData.result_set.name}}</td>
+		</tr>
+		<tr>
+			<td>Set Code:</td>
+			<td>{{entryData.result_set.code}}</td>
+		</tr>
+		<tr>
+			<td>Set Code System:</td>
+			<td>{{entryData.result_set.code_system_name}}</td>
+		</tr>
+		<tr ng-show="entryData.result_set.translations">
+			<td>Other Descriptions:</td>
+			<td>
+				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.result_set.translations">
+					<table class="table sub-table">
+						<thead>
+							<tr>
+								<td>Name:</td>
+								<td>{{itemEntry.name}}</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Code:</td>
+								<td>{{itemEntry.code}}</td>
+							</tr>
+							<tr>
+								<td>Code System:</td>
+								<td>{{itemEntry.code_system_name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+
+		<tr ng-show="entryData.results" ng-repeat="(resultIndex, resultEntry) in entryData.results">
+			<td>{{resultEntry.result.name}}:</td>
+			<td>
+				{{resultEntry.displayQuantity}}
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+
+
+
