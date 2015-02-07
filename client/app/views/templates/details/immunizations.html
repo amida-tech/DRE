@@ -60,9 +60,12 @@
 						<tr ng-show="entryData.performer.address">
 							<td>Address:</td>
 							<td ng-repeat="(addrIndex, addrEntry) in entryData.performer.address">
-								<div>
-									{{formatAddress(addrEntry)}}
+
+								<div ng-repeat="addrLine in addrEntry.street_lines">
+									{{addrLine}}
 								</div>
+								<div ng-show="addrEntry.city||addrEntry.state">{{addrEntry.city}}, {{addrEntry.state}}</div>
+								<div ng-show="addrEntry.zip">{{addrEntry.zip}}</div>
 							</td>
 						</tr>
 						<tr ng-show="orgEntry.name" ng-repeat="(orgIndex, orgEntry) in entryData.performer.organization">
@@ -113,7 +116,7 @@
 							<td>Text:</td>
 							<td>{{entryData.instructions.free_text}}</td>
 						</tr>
-						<tr ng-show="entryData.instructions.code.name">
+						<tr ng-show="entryData.instructions.code.name" class="capitalize">
 							<td>Name:</td>
 							<td>{{entryData.instructions.code.name}}</td>
 						</tr>

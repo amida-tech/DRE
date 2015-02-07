@@ -17,8 +17,6 @@ angular.module('phrPrototypeApp').directive('entryDetails',
             link: function postLink(scope, element, attrs) {
                 scope.entryTemplatePath = "views/templates/matches/" + scope.category + ".html";
                 scope.formatDate = format.formatDate;
-                scope.formatName = format.formatName;
-                scope.formatAddress = format.formatAddress;
                 
 
                 function compareMatches(masterEntry, updateEntry) {
