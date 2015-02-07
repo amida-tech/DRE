@@ -54,9 +54,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="(attrIndex, attrEntry) in entryMetaData.attribution">
-                                        <td><a href="#/files">{{attrEntry.source}}</a></td>
-                                        <td class="capitalize">{{attrEntry.status}}</td>
+                                    <tr ng-repeat="(attrIndex, attrEntry) in entryData.metadata.attribution">
+                                        <td><a href="#/files">{{attrEntry.record.filename}}</a></td>
+                                        <td class="capitalize">{{attrEntry.merge_reason}}</td>
                                         <td>{{attrEntry.merged | date:'short'}}</td>
                                     </tr>
                                 </tbody>

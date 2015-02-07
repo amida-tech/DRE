@@ -61,7 +61,7 @@ angular.module('phrPrototypeApp')
                 'firstName': $scope.inputFirst,
                 'middleName': $scope.inputMiddle,
                 'lastName': $scope.inputLast,
-                'dob': moment($scope.inputDOB).format('YYYY-MM-DDTHH:mmZ'),
+                'dob': moment($scope.inputDOB).format('YYYY-MM-DD'),
                 'gender': $scope.inputGender
             };
 
