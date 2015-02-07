@@ -7,7 +7,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format, matches) {
-    function pageRender(data) {
+    function pageRender(data, data_notes) {
         $scope.dashMetrics = {};
         $scope.tabs = [{
             "title": "Weight",
@@ -26,10 +26,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 });
             }
         });
+
         $scope.pageLoaded = false;
         $scope.entryType = "all";
+
         if (_.isEmpty(record.processedRecord)) {
-            $scope.recordEntries = record.processRecord(data);
+            $scope.recordEntries = record.processRecord(data, data_notes);
         } else {
             $scope.recordEntries = record.processedRecord;
         }
@@ -62,14 +64,22 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
 
     }
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
-        record.getData().then(function(data) {
-            record.setMasterRecord(data);
-            pageRender(data);
+        record.getData(function(err, data) {
+            //getNotes and associate them with record
+
+            console.log("GOT DATA ", data);
+
+            record.setNotes(data.notes);
+
+            record.setMasterRecord(data.records);
+
+            pageRender(data.records, data.notes);
         });
     } else {
-        pageRender(record.masterRecord);
+        pageRender(record.masterRecord, record.all_notes);
     }
     $scope.masterMatches = {};
+
     function getData() {
             matches.getCategory("allergies").then(function(data) {
                 $scope.masterMatches = {
