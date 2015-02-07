@@ -7,18 +7,48 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, matches) {
-    $scope.masterMatches = {};
-    $scope.categories = ['medications', 'results', 'encounters', 'vitals', 'immunizations', 'allergies', 'procedures'];
-
+    $scope.masterMatches = [];
+    //$scope.categories = ['medications', 'results', 'encounters', 'vitals', 'immunizations', 'allergies', 'procedures'];
+    $scope.categories = ['allergies'];
     function getData() {
-        matches.getCategory("allergies").then(function(data) {
-            $scope.masterMatches = {
-                'category': "allergies",
-                'data': data.matches
-            };
-            //do stuff here
-            $scope.allergyMatch = $scope.masterMatches.data[0];
+        _.each($scope.categories, function (section) {
+            matches.getCategory(section).then(function(data) {
+                _.each(data.matches, function(match) {
+                    $scope.masterMatches.push({
+                        'category':section,
+                        'data':match
+                    });
+
+                });
+
+            });
         });
+        
+            //do stuff here
+            //$scope.allergyMatch = $scope.masterMatches.data[1];
+        
     }
     getData();
 });
+
+
+
+/*
+
+ _.each($scope.categories, function (section) {
+            matches.getCategory(section).then(function(data) {
+                _.each(data.matches, function (match) {
+                    $scope.masterMatches.push({
+                        'category': section,
+                        'data': match
+                    });
+
+                });
+                
+            });
+
+
+
+        })
+
+        */

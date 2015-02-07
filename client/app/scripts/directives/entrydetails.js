@@ -5,15 +5,14 @@
  * @description
  * # recordNavigation
  */
-angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$location',
-    function($window, $location) {
+angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$location', format,
+    function($window, $location, format) {
         return {
             templateUrl: 'views/templates/entrydetails.html',
             restrict: 'EA',
             scope: {
                 details: '=',
-                category: '@',
-                tab: '&'
+                category: '@'
             },
             link: function postLink(scope, element, attrs) {
                 scope.entryTemplatePath = "views/templates/matches/" + scope.category + ".html";
@@ -76,6 +75,14 @@ angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$locati
                     _.each(diffs, function (change) {
                         DeepDiff.revertChange(scope.finalData, true, change);
                     });
+
+                };
+                scope.checkboxToggle = function (diffs,obj1,obj2){
+                    if (scope.areEqual(obj1,obj2)) {
+                        scope.updateButton(diffs);
+                    } else {
+                        scope.undoButton(diffs);
+                    }
 
                 };
                 scope.undoAllButton = function () {
