@@ -201,10 +201,12 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                 var result = {};
                 result = {
                     'entryTitle': note.entry,
+                    'entry_id':note.entry,
                     'note': {
                         'comment': note.note,
                         'date': note.datetime,
-                        'starred': note.star
+                        'starred': note.star,
+                        'note_id': note._id
                     }
                 }
 
@@ -273,7 +275,16 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             updateAnySectionsSelected();
         });
     }
-    $scope.clickStar = function(starVal, starIndex, section) {
+
+    $scope.clickStar = function(starVal, starIndex, section, entry) {
+        console.log("click Star ",!starVal, starIndex, section, entry);
+
+        notes.starNote(entry.note.note_id,!starVal, function(err, data){
+            console.log('err ', err);
+            console.log('updated note ', data);
+        });
+
+
         var tmpSection = _.where($scope.notes, {
             'section': section
         });
@@ -282,6 +293,8 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         } else {
             tmpSection[0].notes[starIndex].note.starred = true;
         }
+
+
     };
 
     getNotes();
