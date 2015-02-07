@@ -91,6 +91,19 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 } 
                 
             };
+            scope.reactionCheckboxToggle = function(diffs, obj1, obj2, obj3, type) {
+
+                if (type !== 'new') {
+                    scope.checkboxToggle(diffs,obj1,obj2);
+                } else {
+                    if (scope.matchData.observation.reactions.length === scope.finalData.observation.reactions.length) {
+                        scope.finalData.observation.reactions.push(obj3);  
+                    } else {
+                        scope.finalData.observation.reactions = scope.finalData.observation.reactions.slice(0,1);
+                    }
+                    
+                }
+            };
             scope.undoAllButton = function() {
                 _.each(scope.diffList, function(change) {
                     DeepDiff.revertChange(scope.finalData, true, change);
