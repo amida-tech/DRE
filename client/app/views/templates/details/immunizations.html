@@ -55,13 +55,13 @@
 					<table class="table sub-table">
 						<tr ng-show="entryData.performer.name">
 							<td>Name:</td>
-							<td  ng-repeat="(nameIndex, nameEntry) in entryData.performer.name">{{nameEntry.displayName}}</td>
+							<td ng-repeat="(nameIndex, nameEntry) in entryData.performer.name">{{nameEntry.first}} {{nameEntry.last}}</td>
 						</tr>
 						<tr ng-show="entryData.performer.address">
 							<td>Address:</td>
 							<td ng-repeat="(addrIndex, addrEntry) in entryData.performer.address">
-								<div ng-repeat="addrLine in addrEntry.displayAddress">
-									{{addrLine}}
+								<div>
+									{{formatAddress(addrEntry)}}
 								</div>
 							</td>
 						</tr>
