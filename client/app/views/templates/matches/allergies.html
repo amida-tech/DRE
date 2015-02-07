@@ -5,7 +5,7 @@
             <tr>
                 <td class="panel" colspan="2">
                     <h4 class="text-left">{{entryData.observation.allergen.name}}</h4>
-                    <h5 class="text-left">{{entryData.observation.date_time.low.date.substring(0,10)}}</h5>
+                    <h5 class="text-left">{{formatDate(entryData.observation.date_time.low)}}</h5>
 
                 </td>
                 <td>
@@ -16,7 +16,7 @@
                 <td class="panel" colspan="2">
                     <h4 class="text-left">{{matchData.observation.allergen.name}}</h4>
        
-                    <h5 class="text-left">{{matchData.observation.date_time.low.date.substring(0,10)}}</h5>
+                    <h5 class="text-left">{{formatDate(matchData.observation.date_time.low)}}</h5>
                 </td>
             </tr>
             <tr>

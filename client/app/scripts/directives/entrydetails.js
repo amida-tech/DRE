@@ -5,7 +5,7 @@
  * @description
  * # recordNavigation
  */
-angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$location', format,
+angular.module('phrPrototypeApp').directive('entryDetails',
     function($window, $location, format) {
         return {
             templateUrl: 'views/templates/entrydetails.html',
@@ -16,7 +16,8 @@ angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$locati
             },
             link: function postLink(scope, element, attrs) {
                 scope.entryTemplatePath = "views/templates/matches/" + scope.category + ".html";
-
+                scope.formatDate = format.formatDate;
+                
 
                 function compareMatches(masterEntry, updateEntry) {
                     var tmpDiff = DeepDiff.diff(masterEntry, updateEntry);
@@ -111,4 +112,4 @@ angular.module('phrPrototypeApp').directive('entryDetails', ['$window', '$locati
             }
         };
     }
-]);
+);
