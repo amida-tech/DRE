@@ -1,0 +1,49 @@
+<table class="table table-hover">
+	<tbody>
+		<tr>
+			<td>Name:</td>
+			<td>{{entryData.vital.name}}</td>
+		</tr>
+		<tr>
+			<td>Code:</td>
+			<td>{{entryData.vital.code}}</td>
+		</tr>
+		<tr>
+			<td>Code System:</td>
+			<td>{{entryData.vital.code_system_name}}</td>
+		</tr>
+		<tr ng-show="entryData.vital.translations">
+			<td>Other Descriptions:</td>
+			<td>
+				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.vital.translations">
+					<table class="table sub-table">
+						<thead>
+							<tr>
+								<td>Name:</td>
+								<td>{{itemEntry.name}}</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Code:</td>
+								<td>{{itemEntry.code}}</td>
+							</tr>
+							<tr>
+								<td>Code System:</td>
+								<td>{{itemEntry.code_system_name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.interpretations">
+			<td>Interpretation:</td>
+			<td ng-repeat="int in entryData.interpretations">
+				{{int}}
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+

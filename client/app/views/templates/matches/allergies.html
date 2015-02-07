@@ -1,0 +1,186 @@
+
+<div class="col-sm-12">
+    <table class="table" style="bo">
+        <tbody>
+            <tr>
+                <td class="panel" colspan="2">
+                    <h4 class="text-left">{{entryData.observation.allergen.name}}</h4>
+                    <h5 class="text-left">{{formatDate(entryData.observation.date_time.low)}}</h5>
+
+                </td>
+                <td style="border:none;">
+                    <svg height="40" width="20" style="position: relative; left: -9px; top: 0px;">
+                    <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:1"></polygon>
+                    </svg>
+                </td>
+                <td class="panel" colspan="2">
+                    <h4 class="text-left">{{matchData.observation.allergen.name}}</h4>
+       
+                    <h5 class="text-left">{{formatDate(matchData.observation.date_time.low)}}</h5>
+                </td>
+            </tr>
+            <tr>
+                <td class="panel">Allergen:</td>
+                <td class="panel">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Status:</td>
+                                    <td>{{entryData.observation.allergen.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td>{{entryData.observation.allergen.code}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{entryData.observation.allergen.code_system_name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td style="border:none;">&nbsp</td>
+                <td class="panel">Allergen:</td>
+                <td class="panel">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Status:</td>
+                                    <td>{{matchData.observation.allergen.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td>{{matchData.observation.allergen.code}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{matchData.observation.allergen.code_system_name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}"><input type="checkbox" ng-checked="!areEqual(matchData.observation.status, finalData.observation.status)" ng-click="checkboxToggle(flagData.observation.status, matchData.observation.status, finalData.observation.status)"> Status:</td>
+                <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Status:</td>
+                                    <td>{{entryData.observation.status.name}} <span ng-if="flagData.observation.status.name.kind === 'E'" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td>{{entryData.observation.status.code}} <span ng-if="flagData.observation.status.code.kind === 'E'" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{entryData.observation.status.code_system_name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<div ng-if="
+                                                                        flagData.observation.status.name ||
+                                                                        flagData.observation.status.code "
+                    class="btn btn-default pull-right" ng-click="updateButton(flagData.observation.status)">Update</div>-->
+                </td>
+                <td style="border:none;">&nbsp</td>
+                <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">Status:</td>
+                <td class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Status:</td>
+                                    <td ng-if="matchData.observation.status.name === finalData.observation.status.name">{{matchData.observation.status.name}}</td>
+                                    <td ng-if="matchData.observation.status.name !== finalData.observation.status.name">{{finalData.observation.status.name}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td ng-if="matchData.observation.status.code === finalData.observation.status.code">{{matchData.observation.status.code}}</td>
+                                    <td ng-if="matchData.observation.status.code !== finalData.observation.status.code">{{finalData.observation.status.code}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{matchData.observation.status.code_system_name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<div ng-if="!areEqual(matchData.observation.status, finalData.observation.status)"
+                    class="btn btn-default pull-right" ng-click="undoButton(flagData.observation.status)">Undo</div>-->
+                </td>
+            </tr>
+            <tr ng-repeat="(reactionIndex, reactionEntry) in entryData.observation.reactions">
+                <td class="panel">Reactions:</td>
+                <td class="panel">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <thead>
+                                <tr>
+                                    <td>Reaction:</td>
+                                    <td>{{reactionEntry.reaction.name}}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Severity:</td>
+                                    <td>{{reactionEntry.severity.code.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td>{{reactionEntry.reaction.code}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{reactionEntry.reaction.code_system_name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td style="border:none;">&nbsp</td>
+                <td class="panel">Reactions:</td>
+                <td class="panel">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <thead>
+                                <tr>
+                                    <td>Reaction:</td>
+                                    <td>{{matchData.observation.reactions[reactionIndex].reaction.name}}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Severity:</td>
+                                    <td>{{matchData.observation.reactions[reactionIndex].severity.code.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td>{{matchData.observation.reactions[reactionIndex].reaction.code}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{matchData.observation.reactions[reactionIndex].reaction.code_system_name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-12">
+    <div ng-if="!areEqual(matchData, finalData)"
+    class="btn btn-default pull-right" ng-click="submitButton()">Submit</div>
+    <div ng-if="!areEqual(matchData, finalData)"
+    class="btn btn-default pull-right" ng-click="undoAllButton()">Undo All</div>
+</div>
+</div>

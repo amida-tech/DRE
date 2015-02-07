@@ -6,8 +6,7 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format) {
-    
+angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format, matches) {
     function pageRender(data) {
         $scope.dashMetrics = {};
         $scope.tabs = [{
@@ -34,7 +33,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         } else {
             $scope.recordEntries = record.processedRecord;
         }
-        
         $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
             if (entry.metadata.datetime[0]) {
                 return entry.metadata.datetime[0].date.substring(0, 9);
@@ -59,6 +57,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 }
             }
         });
+        
+
+
     }
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
         record.getData().then(function(data) {
@@ -68,4 +69,16 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     } else {
         pageRender(record.masterRecord);
     }
+    $scope.masterMatches = {};
+    function getData() {
+            matches.getCategory("allergies").then(function(data) {
+                $scope.masterMatches = {
+                    'category': "allergies",
+                    'data': data.matches
+                };
+                //do stuff here
+                $scope.allergyMatch = $scope.masterMatches.data[0];
+            });
+        }
+        getData();
 });
