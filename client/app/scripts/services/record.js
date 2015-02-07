@@ -6,40 +6,50 @@
  * # record
  * Service in the phrPrototypeApp.
  */
-angular.module('phrPrototypeApp').service('record', function record($http, $q, format) {
+angular.module('phrPrototypeApp').service('record', function record($http, $q, format, notes) {
     this.masterRecord = {};
     this.processedRecord = {};
+
+    this.all_notes = {};
+
     this.setMasterRecord = function(rawRecord) {
         this.masterRecord = rawRecord;
     };
-    this.getData = function() {
-        console.log('from server');
-        var deferred = $q.defer();
-        var dataurl = '/api/v1/get_record/';
-        return $http({
-            url: dataurl,
-            method: 'GET',
-            cache: true
-        }).then(function(response) {
-            if (typeof response.data === 'object') {
-                
-                return response.data;
-            } else {
-                // invalid response
-                console.log('didnt get data');
-                return deferred.reject(response.data);
-            }
-        }, function(error) {
-            // something went wrong
-            console.log('data errorrrrrrr');
-            return deferred.reject(error);
-        });
+
+    this.setNotes = function(rawNotes) {
+        this.all_notes = rawNotes;
     };
-    
-    this.processRecord = function(rawRecord) {
+
+    this.getData = function(callback) {
+        console.log('from server');
+
+        $http.get('/api/v1/get_record/')
+            .success(function(data) {
+                notes.getNotes(function(err, notes_data) {
+                    if (err) {
+                        console.log("notes fetching error", err);
+                        callback(err);
+                    } else {
+                        callback(null, {
+                            "records": data,
+                            "notes": notes_data
+                        });
+                    }
+
+                });
+
+            }).error(function(err) {
+                callback(err);
+            });
+    };
+
+    this.processRecord = function(rawRecord, rawNotes) {
         console.log('processing record');
         var tmpEntries = [];
         _.each(rawRecord, function(entries, type) {
+
+            console.log("process record entries, type", entries, type);
+
             _.each(entries, function(entry) {
                 var tmpDates = '';
                 var dispDates = '';
@@ -59,6 +69,54 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
                 } else if (tmpDates.length === 2) {
                     dispDates = format.formatDate(tmpDates[0]) + ' - ' + format.formatDate(tmpDates[1]);
                 }
+
+
+                console.log("notes ", rawNotes);
+                var note = _.where(rawNotes, {
+                    entry: entry._id
+                });
+                console.log("find note", note, entry);
+
+                var comments = [];
+                _.each(note, function(n) {
+                    var comment = {
+                        date: n.date,
+                        starred: n.star,
+                        comment: n.note,
+                        entry_id: n.entry,
+                        note_id: n._id
+                    };
+
+                    comments.push(comment);
+
+                });
+
+                //TODO: remove social, problems from list below (it breaks something)
+                if (!_.contains(['demographics',  'plan_of_care', 'payers'], type)) {
+
+                    var display_type=type;
+                    if (type==='social_history'){
+                        display_type='social';
+                    }
+                    if (type==='problems'){
+                        display_type='conditions';
+                    }
+
+                    //inject notest into entry
+                    var tmpEntry = {
+                        'data': entry,
+                        'category': display_type,
+                        'metadata': {
+                            'comments': comments,
+                            'displayDate': dispDates,
+                            'datetime': tmpDates
+                        }
+                    };
+
+                    tmpEntries.push(tmpEntry);
+
+                }
+                /*
                 if (!_.contains(['demographics', 'problems', 'plan_of_care', 'payers', 'social_history'], type)) {
                     tmpEntries.push({
                         'data': entry,
@@ -81,6 +139,7 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
                         }
                     });
                 }
+                */
             });
         });
         this.processedRecord = tmpEntries;

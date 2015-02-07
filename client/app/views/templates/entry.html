@@ -76,8 +76,8 @@
                             <div class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
                                 <div class="col-sm-11 col-sm-offset-1"><h5>{{commentEntry.date | date:'short'}}</h5></div>
                                 <div class="col-sm-1 panel-body text-center">
-                                    <h5 ng-show="commentEntry.starred === true" ng-click="clickStar(true, commentIndex, recordIndex)"><a><i class="fa fa-star"></i></a></h5>
-                                    <h5 ng-show="commentEntry.starred === false" ng-click="clickStar(false, commentIndex, recordIndex)"><a><i class="fa fa-star-o"></i></a></h5>
+                                    <h5 ng-show="commentEntry.starred === true" ng-click="clickStar(true, commentIndex, recordIndex, commentEntry)"><a><i class="fa fa-star"></i></a></h5>
+                                    <h5 ng-show="commentEntry.starred === false" ng-click="clickStar(false, commentIndex, recordIndex, commentEntry)"><a><i class="fa fa-star-o"></i></a></h5>
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="panel">
