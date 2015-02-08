@@ -7,19 +7,19 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<tr ng-show="entryData.problem.code.code">
 			<td>Code:</td>
 			<td>{{entryData.problem.code.code}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.problem.code.code_system_name">
 			<td>Code System:</td>
 			<td>{{entryData.problem.code.code_system_name}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.patient_status">
 			<td>Patient Status:</td>
 			<td>{{entryData.patient_status}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.onset_age">
 			<td>Onset Age:</td>
 			<td>{{entryData.onset_age}}</td>
 		</tr>
@@ -28,18 +28,18 @@
 			<td>
 				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.problem.translations">
 					<table class="table sub-table">
-						<thead>
+						<thead ng-show="itemEntry.name">
 							<tr>
 								<td>Name:</td>
 								<td>{{itemEntry.name}}</td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
+						<tbody ng-show="itemEntry.code&&itemEntry.code_system_name">
+							<tr ng-show="itemEntry.code">
 								<td>Code:</td>
 								<td>{{itemEntry.code}}</td>
 							</tr>
-							<tr>
+							<tr ng-show="itemEntry.code_system_name">
 								<td>Code System:</td>
 								<td>{{itemEntry.code_system_name}}</td>
 							</tr>
@@ -48,7 +48,7 @@
 				</div>
 			</td>
 		</tr>
-		<tr ng-show="itemEntry.status">
+		<tr ng-show="itemEntry.status.name">
 			<td>Status:</td>
 			<td>
 				{{itemEntry.status.name}}
