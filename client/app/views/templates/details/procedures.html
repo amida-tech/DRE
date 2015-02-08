@@ -7,15 +7,15 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<tr ng-show="entryData.procedure.code">
 			<td>Code:</td>
 			<td>{{entryData.procedure.code}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.procedure.code_system_name">
 			<td>Code System:</td>
 			<td>{{entryData.procedure.code_system_name}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.procedure_type">
 			<td>Type:</td>
 			<td>{{entryData.procedure_type}}</td>
 		</tr>
@@ -24,18 +24,18 @@
 			<td>
 				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.procedure.translations">
 					<table class="table sub-table">
-						<thead>
+						<thead ng-show="itemEntry.name">
 							<tr>
 								<td>Name:</td>
 								<td>{{itemEntry.name}}</td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
+						<tbody ng-show="itemEntry.code||itemEntry.code_system_name">
+							<tr ng-show="itemEntry.code">
 								<td>Code:</td>
 								<td>{{itemEntry.code}}</td>
 							</tr>
-							<tr>
+							<tr ng-show="itemEntry.code_system_name">
 								<td>Code System:</td>
 								<td>{{itemEntry.code_system_name}}</td>
 							</tr>
@@ -49,15 +49,15 @@
 			<td>
 				<div class="panel" ng-repeat="site in entryData.body_sites">
 					<table class="table sub-table">
-						<tr>
+						<tr ng-show="site.name">
 							<td>Name:</td>
 							<td>{{site.name}}</td>
 						</tr>
-						<tr>
+						<tr ng-show="site.code">
 							<td>Code:</td>
 							<td>{{site.code}}</td>
 						</tr>
-						<tr>
+						<tr ng-show="site.code_system_name">
 							<td>Code System:</td>
 							<td>{{site.code_system_name}}</td>
 						</tr>
@@ -70,15 +70,15 @@
 			<td>
 				<div class="panel">
 					<table class="table sub-table">
-						<tr>
+						<tr ng-show="entryData.specimen.code.name">
 							<td>Name:</td>
 							<td>{{entryData.specimen.code.name}}</td>
 						</tr>
-						<tr>
+						<tr ng-show="entryData.specimen.code.code">
 							<td>Code:</td>
 							<td>{{entryData.specimen.code.code}}</td>
 						</tr>
-						<tr>
+						<tr ng-show="entryData.specimen.code.code_system_name">
 							<td>Code System:</td>
 							<td>{{entryData.specimen.code.code_system_name}}</td>
 						</tr>
@@ -92,15 +92,15 @@
 			<td>
 				<div class="panel" ng-repeat="performer in entryData.performer">
 					<table class="table sub-table">
-						<tr>
+						<tr ng-show="performer.address">
 							<td>Address:</td>
 							<td ng-repeat="perfAddr in performer.address">
-								<div ng-repeat="addrLine in perfAddr.displayAddress">
-									{{addrLine}}
-								</div>
+								<div ng-repeat="addrLine in perfAddr.street_lines">{{addrLine}}</div>
+								<div ng-show="perfAddr.state&&perfAddr.city">{{perfAddr.city}}, {{perfAddr.state}}</div>
+								<div ng-show="perfAddr.zip">{{perfAddr.zip}}</div>
 							</td>
 						</tr>
-						<tr>
+						<tr ng-show = "performer.phone">
 							<td>Phone:</td>
 							<td ng-repeat="perfPhone in performer.phone">
 								{{perfPhone.number}}
@@ -111,21 +111,21 @@
 							<td ng-repeat="perfOrg in performer.organization">
 
 								<table class="table">
-									<tr>
+									<tr ng-show="perfOrg.name">
 										<td>Name:</td>
 										<td ng-repeat="orgName in perfOrg.name">
-											{{orgName}}
+											<div>{{orgName}}</div>
 										</td>
 									</tr>
-									<tr>
+									<tr ng-show="perfOrg.address">
 										<td>Address:</td>
 										<td ng-repeat="orgAddr in perfOrg.address">
-											<div ng-repeat="perfOrgAddrLine in orgAddr.displayAddress">
-												{{perfOrgAddrLine}}
-											</div>
+											<div ng-repeat="perfOrgAddrLine in orgAddr.street_lines">{{perfOrgAddrLine}}</div>
+											<div ng-show="orgAddr.city&&orgAddr.state">{{orgAddr.city}}, {{orgAddr.state}}</div>
+											<div ng-show="orgAddr.zip">{{orgAddr.zip}}</div>
 										</td>
 									</tr>
-									<tr>
+									<tr ng-show="perfOrg.phone">
 										<td>Phone:</td>
 										<td ng-repeat="orgPhone in perfOrg.phone">
 											{{orgPhone.number}}
