@@ -41,13 +41,13 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-sm-7">
-                            <h5>Primary Email Address</h5>
-                            <p>{{profile.email[0].email}}</p>
-                        </div>
-                        <div class="form-group col-sm-3 col-sm-offset-1">
+                        <div class="form-group col-sm-3">
                             <h5>Date of Birth</h5>
                             <p>{{viewDOB}}</p>
+                        </div>
+                        <div class="form-group col-sm-6 col-sm-offset-1">
+                            <h5>Primary Email Address</h5>
+                            <p>{{profile.email[0].email}}</p>
                         </div>
                     </div>
 
@@ -103,15 +103,15 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-sm-7">
-                            <label for="inputEmail">Primary Email Address*</label>
-                            <input type="email" class="form-control" name="inputEmail" ng-model="profile.email[0].email" required ng-required="true" ng-minLength="1">
-                            <p ng-show="profileForm.inputEmail.$invalid && !profileForm.inputEmail.$pristine" class="help-block">Must be a valid email address.</p>
-                        </div>
-                        <div class="form-group col-sm-4 col-sm-offset-1">
+                        <div class="form-group col-sm-3">
                             <label for="inputDOB">Date of Birth*</label>
                             <input type="date" class="form-control" name="inputDOB" ng-model="editDOB" required ng-required="true">
                             <p ng-show="profileForm.inputDOB.$invalid && !profileForm.inputDOB.$pristine" class="help-block">Must be a valid date.</p>
+                        </div>
+                        <div class="form-group col-sm-8 col-sm-offset-1">
+                            <label for="inputEmail">Primary Email Address*</label>
+                            <input type="email" class="form-control" name="inputEmail" ng-model="profile.email[0].email" required ng-required="true" ng-minLength="1">
+                            <p ng-show="profileForm.inputEmail.$invalid && !profileForm.inputEmail.$pristine" class="help-block">Must be a valid email address.</p>
                         </div>
                     </div>
 
@@ -232,21 +232,22 @@
                                 </div>
 
 
-                                    <div class="form-group row">
-                                        <div class="col-sm-5">
+                                    <div class="row">
+                                        <div class="form-group col-sm-5">
                                             <label for="inputNewAddrLine1">Address Line*</label>
                                             <input type="text" class="form-control" name="inputNewAddressLine1" ng-model="new_address.street_line1" required ng-required="true">
                                             <p ng-show="newaddressForm.inputNewAddressLine1.$invalid && !newaddressForm.inputNewAddressLine1.$pristine" class="help-block">Please enter your street address or P.O. Box.</p>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group col-sm-5 col-sm-offset-1">
                                         <label for="inputNewCity">City*</label>
                                         <input type="text" class="form-control" name="inputNewCity" ng-model="new_address.city" required ng-required="true">
                                         <p ng-show="newaddressForm.inputNewCity.$invalid && !newaddressForm.inputNewCity.$pristine" class="help-block">Please enter a city.</p>
                                     </div>
+                                    </div>
 
-                                    <div class="form-group col-sm-6">
+                                    <div class="row">
+                                    <div class="form-group col-sm-5">
                                         <label for="inputNewState">State*</label>
                                         <input type="text" class="form-control" name="inputNewState" ng-model="new_address.state" ng-minLength="2" required ng-required="true">
                                         <p ng-show="newaddressForm.inputNewState.$invalid && !newaddressForm.inputNewState.$pristine" class="help-block">Please enter a state.</p>
@@ -256,6 +257,7 @@
                                         <label for="inputNewZip">Zip*</label>
                                         <input type="text" class="form-control" name="inputNewZip" ng-model="new_address.zip" ng-minLength="5" ng-maxLength="11" required ng-required="true">
                                         <p ng-show="newaddressForm.inputNewZip.$invalid && !newaddressForm.inputNewZip.$pristine" class="help-block">Please enter a five-digit zip.</p>
+                                    </div>
                                     </div>
 
 
