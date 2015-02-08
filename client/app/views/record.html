@@ -88,8 +88,14 @@
         </div>
         <div class="col-sm-12">
             end d3-->
+
+
+            <div ng-show="entryType==='all'">
+            ENTRY TYPE ALL!!!!
+            </div>
+
             <!--Timeline View-->
-            <div class="col-sm-12">
+            <div ng-cloak ng-if="entryType!=='all' && recordEntries" class="col-sm-12">
                 <h4 class="text-center text-white">{{entryType}}</h4>
                 <div class="panel">
                     <div class="panel-body">
