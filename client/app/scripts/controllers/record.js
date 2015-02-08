@@ -47,7 +47,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             default:
                 return section;
         }
-    }
+    };
 
     function pageRender(data, data_notes) {
         $scope.dashMetrics = {};
