@@ -22,6 +22,17 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     }];
 
 
+
+    //gets notes from backend API
+    function getNotes() {
+        notes.getNotes(function(err, returnNotes) {
+            $scope.notes = mashNotesWithRecord(returnNotes, $scope.masterRecord);
+            $scope.filters = updateFilters(returnNotes);
+            updateAnySectionsSelected();
+        });
+    }
+
+
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
         record.getData(function(err, data) {
             if (err) {
@@ -391,14 +402,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         return filters;
     }
 
-    //gets notes from backend API
-    function getNotes() {
-        notes.getNotes(function(err, returnNotes) {
-            $scope.notes = mashNotesWithRecord(returnNotes, $scope.masterRecord);
-            $scope.filters = updateFilters(returnNotes);
-            updateAnySectionsSelected();
-        });
-    }
 
     $scope.clickStar = function(starVal, starIndex, section, entry) {
         console.log("click Star ", !starVal, starIndex, section, entry);
