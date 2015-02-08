@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('MainCtrl', function ($scope, $location, login) {
+  .controller('MainCtrl', function ($scope, $location, login, authentication) {
 
     //TODO: isValid is not used
   	$scope.login = function (isValid) {
@@ -23,6 +23,19 @@ angular.module('phrPrototypeApp')
   	};
 
 
+    function redirectUser () {
+      authentication.authStatus(function(err, res) {
+        if (err) {
+          throw err;
+        } else {
+          if (res) {
+            $location.path('/home');
+          }
+        }
+      });
+    }
+
+    redirectUser();
 
 
 

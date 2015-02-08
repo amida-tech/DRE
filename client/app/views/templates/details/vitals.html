@@ -7,11 +7,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<tr ng-show="entryData.vital.code">
 			<td>Code:</td>
 			<td>{{entryData.vital.code}}</td>
 		</tr>
-		<tr>
+		<tr ng-show="entryData.vital.code_system_name">
 			<td>Code System:</td>
 			<td>{{entryData.vital.code_system_name}}</td>
 		</tr>
@@ -20,18 +20,18 @@
 			<td>
 				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.vital.translations">
 					<table class="table sub-table">
-						<thead>
+						<thead ng-show="itemEntry.name">
 							<tr>
 								<td>Name:</td>
 								<td>{{itemEntry.name}}</td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
+						<tbody ng-show="itemEntry.code&&itemEntry.code_system_name">
+							<tr ng-show="itemEntry.code">
 								<td>Code:</td>
 								<td>{{itemEntry.code}}</td>
 							</tr>
-							<tr>
+							<tr ng-show="itemEntry.code_system_name">
 								<td>Code System:</td>
 								<td>{{itemEntry.code_system_name}}</td>
 							</tr>
