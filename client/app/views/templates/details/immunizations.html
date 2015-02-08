@@ -61,10 +61,8 @@
 							<td>Address:</td>
 							<td ng-repeat="(addrIndex, addrEntry) in entryData.performer.address">
 
-								<div ng-repeat="addrLine in addrEntry.street_lines">
-									{{addrLine}}
-								</div>
-								<div ng-show="addrEntry.city||addrEntry.state">{{addrEntry.city}}, {{addrEntry.state}}</div>
+								<div ng-repeat="addrLine in addrEntry.street_lines">{{addrLine}}</div>
+								<div ng-show="addrEntry.city&&addrEntry.state">{{addrEntry.city}}, {{addrEntry.state}}</div>
 								<div ng-show="addrEntry.zip">{{addrEntry.zip}}</div>
 							</td>
 						</tr>
