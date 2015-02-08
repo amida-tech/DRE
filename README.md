@@ -1,7 +1,7 @@
 Data Reconciliation Engine (DRE)
 =========
 
-DRE is a demo frontend and Node.js server for reconciling health data.
+DRE is a patient frontend (UI) and Node.js server for reconciling health data.
 
 aka. Raccoon - Data Raccoonciliation Engine for Health Data.
 
