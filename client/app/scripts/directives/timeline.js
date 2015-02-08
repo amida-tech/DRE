@@ -63,6 +63,27 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
                     plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
                     plotDomain = [plotFloor, plotCeiling];
+                } else if (dataType === 'merges' && dataToPlot) {
+                    _.each(dataToPlot, function(entry) {
+                        var plotDate;
+                        if (entry.merged) {
+                            plotDate = isoFormat.parse(entry.merged);
+                            //Redundancy for isoFormat subsecond support.
+                            if (_.isNull(plotDate)) {
+                                plotDate = isoFormatSubsecond.parse(entry.merged);
+                            }
+                            plotCircles.push({
+                                "date": plotDate
+                            });
+                            tmpDomain.push(plotDate);
+                        }
+                    });
+                    minDate = d3.min(tmpDomain);
+                    maxDate = d3.max(tmpDomain);
+                    plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
+                    plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
+                    plotDomain = [plotFloor, plotCeiling];
+
                 } else {
                     _.each(dataToPlot, function(entry) {
                         var plotDate;

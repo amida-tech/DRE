@@ -6,7 +6,49 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format, matches) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format, matches, merges) {
+    merges.getMerges(function(err, data){
+        if (err){
+            console.log("error whil getting merges ",err);
+        }
+        else{
+            $scope.mergesList=data.merges;
+
+            console.log("merges data ", $scope.mergesList);
+        }
+
+    });
+
+    // produces singular name for section name - in records merges list
+    $scope.singularName=function (section){
+        switch (section){
+            case 'social_history':
+                return 'social history';
+            case 'vitals':
+                return 'vital sign';
+            case 'allergies':
+                return 'allergy';
+            case 'medications':
+                return 'medication';
+            case 'problems':
+                return 'problem';
+            case 'claims':
+                return 'claim';
+            case 'results':
+                return 'test result';
+            case 'encounters':
+                return 'encounter';
+            case 'immunizations':
+                return 'immunization';
+            case 'insurances':
+                return 'insurance';
+            case 'procedures':
+                return 'procedure';
+            default:
+                return section;
+        }
+    }
+
     function pageRender(data, data_notes) {
         $scope.dashMetrics = {};
         $scope.tabs = [{
