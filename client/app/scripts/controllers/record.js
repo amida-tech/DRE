@@ -31,7 +31,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         $scope.entryType = "all";
 
         if (_.isEmpty(record.processedRecord)) {
-            $scope.recordEntries = record.processRecord(data, data_notes);
+            $scope.recordEntries = record.processRecord(data, data_notes, "record.js controller");
         } else {
             $scope.recordEntries = record.processedRecord;
         }
@@ -67,10 +67,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         record.getData(function(err, data) {
             //getNotes and associate them with record
 
-            console.log("GOT DATA ", data);
-
             record.setNotes(data.notes);
-
             record.setMasterRecord(data.records);
 
             pageRender(data.records, data.notes);
@@ -80,6 +77,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     }
     $scope.masterMatches = {};
 
+    // Get Matches data for partial matches 
     function getData() {
             matches.getCategory("allergies").then(function(data) {
                 $scope.masterMatches = {

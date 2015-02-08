@@ -41,9 +41,9 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                 console.log("MASTER RECORD is Loaded!");
                 record.setMasterRecord(data);
 
-                $scope.masterRecord = data;
+                $scope.masterRecord = data.records;
 
-                record.processRecord(data, $scope.notes);
+                record.processRecord(data.records, $scope.notes, "notes.js controller");
                 console.log("PROCESSED MASTER RECORD ", record.processedRecord);
 
 
@@ -68,8 +68,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             }
 
         });
-
-        console.log("any_sections_selected ", $scope.any_sections_selected);
     }
 
     $scope.toggle = function(index) {
@@ -143,8 +141,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         scope.entryTitle = "";
         scope.entrySubTitleOne = "";
         scope.entrySubTitleTwo = "";
-
-        console.log("SCOPE ",scope);
 
         switch (scope.type) {
             case 'allergies':
@@ -269,7 +265,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                 break;
         }
 
-        console.log("SCOPE>>>>>> ", scope);
         return scope;
     }
 
@@ -290,14 +285,12 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
 
 
     function mashNotesWithRecord(notes, record) {
-        console.log("mashNotesWithRecord");
+        console.log("mashNotesWithRecord ", notes, record);
 
         //generating list of unique sections present in notes
         var notes_sections = [];
         notes_sections = _.pluck(notes, "section");
-        console.log(notes_sections);
         notes_sections = _.uniq(notes_sections);
-        console.log(notes_sections);
 
         var stub2 = [];
 
@@ -307,7 +300,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             section_notes = _.filter(notes, {
                 section: section
             });
-            console.log("section notes ", section, section_notes);
 
             var section_notes_with_entry = [];
 
@@ -326,19 +318,14 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                     }
                 };
 
-                console.log("MASTER RECORD section ", section, record.records[section]);
 
-                var ff = _.where(record.records[section], {
+                var ff = _.where(record[section], {
                     '_id': note.entry
                 })[0];
-
-                console.log("found it ", ff);
 
                 var entry_data={entryData:ff, type:section, recordEntry:{metadata:{}}};
 
                 var tttt= titles(entry_data);
-
-                console.log("titles ", tttt);
 
                 result.entryTitle=tttt.entryTitle;
                 result.entrySubTitleOne=tttt.entrySubTitleOne;
@@ -353,31 +340,9 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                 'notes': section_notes_with_entry
             };
 
-            console.log('result ', result);
             stub2.push(result);
         });
 
-
-        console.log("stub2", stub2);
-
-        console.log("DONE!");
-
-
-        var stub = [{
-            'displaySection': 'vital signs',
-            'section': 'vitals',
-            'notes': [{
-                'entryTitle': 'Blood pressure',
-                'entrySubTitleOne': 'January 1, 2015',
-                'entrySubTitleTwo': '120/80',
-                'note': {
-                    'comment': 'too high!',
-                    'date': '2015-01-01',
-                    'starred': true
-                }
-            }]
-
-        }];
         return stub2;
     }
 
