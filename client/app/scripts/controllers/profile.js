@@ -137,6 +137,11 @@ angular.module('phrPrototypeApp')
         $scope.profile.name.middle = [];
         $scope.profile.name.middle[0]=$scope.tmpMiddleName;
       }
+      else {
+        //remove name if it is empty string
+        $scope.profile.name.middle=[];
+        delete $scope.profile.name.middle;
+      }
 
       // console.log($scope.tmpDOB, $scope.profile.dob);
       profile.saveProfile(info, function(err) {
