@@ -52,7 +52,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     console.log('plot data exists', dataToPlot);
                     for (var i in dataToPlot.recordHistory) {
                         var plotDate = isoFormatSubsecond.parse(dataToPlot.recordHistory[i].date);
-                        console.log('plot date', plotDate);
+                        //console.log('plot date', plotDate);
                         plotCircles.push({
                             "date": plotDate
                         });
@@ -262,7 +262,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
             //Bind to updates in accountHistory var
             scope.$watch('accountHistory', function(newValue, oldValue) {
                 if (newValue) {
-                    console.log("act hist new val ", newValue);
+                    //console.log("act hist new val ", newValue);
                     gatherData();
                     renderPlot();
                 }
