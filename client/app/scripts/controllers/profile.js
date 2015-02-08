@@ -132,6 +132,11 @@ angular.module('phrPrototypeApp')
           "precision": "day"
         }
       };
+      if ($scope.profile.name.middle) {
+        var tmpMiddleName = $scope.profile.name.middle;
+        $scope.profile.name.middle = [];
+        $scope.profile.name.middle[0]=tmpMiddleName;
+      }
 
       // console.log($scope.tmpDOB, $scope.profile.dob);
       profile.saveProfile(info, function(err) {
