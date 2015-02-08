@@ -29,6 +29,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
 
         $scope.pageLoaded = false;
         $scope.entryType = "all";
+        //Flip All as active selected item in DOM
+        angular.element("#navall").addClass("active");
 
         if (_.isEmpty(record.processedRecord)) {
             $scope.recordEntries = record.processRecord(data, data_notes, "record.js controller");

@@ -115,6 +115,9 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
             scope.isDifferent = function(diff) {
                 return diff === 'E' || diff === 'D';
             };
+            scope.exists = function(obj) {
+                return !_.isUndefined(obj);
+            };
             scope.submitButton = function() {
                 //stub to send scope.finalData to merge service
                 var send = $window.confirm("Are these changes accurate?");

@@ -22,7 +22,7 @@ box-shadow: none;
                 </td>
             </tr>
             <tr>
-                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.allergen, finalData.observation.allergen) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input type="checkbox" ng-checked="!areEqual(matchData.observation.allergen, finalData.observation.allergen)" ng-click="checkboxToggle(flagData.observation.allergen, matchData.observation.allergen, finalData.observation.allergen)"> Allergen:</span></td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.allergen, finalData.observation.allergen) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.observation.allergen)" type="checkbox" ng-checked="!areEqual(matchData.observation.allergen, finalData.observation.allergen)" ng-click="checkboxToggle(flagData.observation.allergen, matchData.observation.allergen, finalData.observation.allergen)"> Allergen:</span></td>
                 <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.allergen, finalData.observation.allergen) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
@@ -250,12 +250,12 @@ box-shadow: none;
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{newReaction.reaction.code}} <span class="label label-danger pull-right">Updated</span></td>
+                                    <td>{{newReaction.reaction.code}} <span class="label label-danger pull-right">New</span></td>
                                     
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{newReaction.reaction.code_system_name}} <span class="label label-danger pull-right">Updated</span></td>
+                                    <td>{{newReaction.reaction.code_system_name}} <span class="label label-danger pull-right">New</span></td>
                                 </tr>
                             </tbody>
                         </table>

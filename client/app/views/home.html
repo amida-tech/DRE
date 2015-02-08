@@ -27,12 +27,12 @@
 			</div>
 		</div>
 		<h4 class="text-center text-white">Account History</h4>
-		<div class="panel">
+		<div class="panel"  ng-cloak ng-show="accountHistory && accountHistory.recordHistory">
 			<div class="panel-body">
 				<div>
 					<p>Timeline</p>
 				</div>
-				<div timeline ng-show="accountHistory" chart-data="accountHistory" chart-type="account" class="timeline-graph" ></div>
+				<div timeline ng-if="accountHistory" chart-data="accountHistory" chart-type="account" class="timeline-graph" ></div>
 
 				<div ng-repeat="(recordIndex, recordEntry) in accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
 
