@@ -132,10 +132,10 @@ angular.module('phrPrototypeApp')
           "precision": "day"
         }
       };
-      if ($scope.profile.name.middle) {
-        var tmpMiddleName = $scope.profile.name.middle;
+      if ($scope.tmpMiddleName) {
+        // var tmpMiddleName = $scope.profile.name.middle;
         $scope.profile.name.middle = [];
-        $scope.profile.name.middle[0]=tmpMiddleName;
+        $scope.profile.name.middle[0]=$scope.tmpMiddleName;
       }
 
       // console.log($scope.tmpDOB, $scope.profile.dob);
@@ -169,6 +169,9 @@ angular.module('phrPrototypeApp')
         //   }
         // }
         // }
+      }
+      if (profileInfo&&profileInfo.name.middle) {
+        $scope.tmpMiddleName = profileInfo.name.middle[0];
       }
 
       });
@@ -218,14 +221,18 @@ angular.module('phrPrototypeApp')
       function addAddress() {
         if (angular.isDefined($scope.new_address)) {
           var tmpNewAddress = 
-            {"street_lines": [],
+            {
             "city":$scope.new_address.city,
             "state":$scope.new_address.state,
             "zip":$scope.new_address.zip,
             "country":$scope.new_address.country,
             "use":$scope.new_address.use
           };
-          tmpNewAddress.street_lines[0] = $scope.new_address.street_lines1;
+          if ($scope.new_address.street_line1) {
+            tmpNewAddress.street_lines=[];
+            tmpNewAddress.street_lines[0] = $scope.new_address.street_line1;
+          }
+          
           $scope.profile.addresses = [];
           $scope.profile.addresses[0]=tmpNewAddress;
           console.log($scope.tmpNewAddress, $scope.new_address);
