@@ -55,11 +55,16 @@
 							<div class="panel timeline-entry">
 								<div class="panel-body">
 									<div class="timeline-entry-header col-sm-12">
-										<div class="col-sm-6">
+										<div class="row">
 											<h4 class="text-left">{{recordEntry.type}}</h4>
-											<h5 class="text-left">{{recordEntry.date | date: 'short'}} <!-- - <span ng-show="recordEntry.file.name"><a href="#/files">{{recordEntry.file.name}}</a></span> -->
-												<span ng-show="recordEntry.note">Note - {{recordEntry.note}}</span></h5>
-											</div>
+										</div>
+										<div class="row">
+										<div class="col-sm-3">
+											<h5 class="text-left">{{recordEntry.date | date: 'short'}}</h5>
+										</div>
+										<div clas="col-sm-3">
+												<h5><span ng-show="recordEntry.note">Note - {{recordEntry.note}}</span></h5>
+										</div>
 											<div class="col-sm-6">
 											</div>
 										</div>
