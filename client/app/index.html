@@ -29,7 +29,7 @@
 
           <!--Logged In Navbar-->
           <!--<div ng-if="true" class="container-fluid">-->
-          <div ng-if="loginStatus === true" class="container-fluid">
+          <div  ng-cloak ng-if="loginStatus === true" class="container-fluid">
           <!--div ng-if="true" class="container-fluid"-->
             <div style="margin: 0px 20px;">
             <div class="navbar-header">
@@ -71,7 +71,7 @@
           </div>
 
           <!--Logged Out Navbar-->
-          <div ng-if="loginStatus === false" class="container-fluid">
+          <div  ng-cloak ng-if="loginStatus === false" class="container-fluid">
           <!--div ng-if="false" class="container-fluid"-->
             <div style="margin: 0px 20px;">
             <div class="navbar-header">

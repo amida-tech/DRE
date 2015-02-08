@@ -53,6 +53,9 @@ app.use(function(req, res, next){
     next();
 });
 
+//to prevent caching of API calls
+app.disable('etag');
+
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(cookieParser());
@@ -81,9 +84,8 @@ app.use(function(req, res, next) {
     }
     var viewPath = app.get('client_location') + requestPath + '.html';
     fs.exists(viewPath, function(exists) {
-        console.log(viewPath);
+        //console.log(viewPath);
         if (exists) {
-
             res.header("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
             res.render(viewPath);
         } else {

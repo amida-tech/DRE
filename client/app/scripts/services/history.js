@@ -33,7 +33,7 @@ angular.module('phrPrototypeApp')
                 var recent = result[0].data;
                 var full = result[1].data;
 
-                console.log("recent: ", recent);
+                //console.log("recent: ", recent);
 
                 //var loginTime = recent.login.time;
                 //var updateTime = recent.update.time;
@@ -71,7 +71,7 @@ angular.module('phrPrototypeApp')
                 }
 
 
-                console.log(history);
+                //console.log(history);
                 callback(null, history);
 
             }, function(err) {
