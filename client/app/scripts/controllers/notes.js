@@ -9,78 +9,54 @@
 angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes, record) {
     $scope.any_sections_selected = false;
 
+    $scope.notes = [];
+
+    $scope.filters = [{
+        'name': 'starred',
+        'value': true,
+        'displayName': 'starred'
+    }, {
+        'name': 'unStarred',
+        'value': true,
+        'displayName': 'un-starred'
+    }];
+
+
+
+    //gets notes from backend API
+    function getNotes() {
+        notes.getNotes(function(err, returnNotes) {
+            $scope.notes = mashNotesWithRecord(returnNotes, $scope.masterRecord);
+            $scope.filters = updateFilters(returnNotes);
+            updateAnySectionsSelected();
+        });
+    }
+
+
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
         record.getData(function(err, data) {
             if (err) {
                 console.log("getData error ", err);
             } else {
+                console.log("MASTER RECORD is Loaded!");
                 record.setMasterRecord(data);
+
                 $scope.masterRecord = data;
+
+                record.processRecord(data, $scope.notes);
+                console.log("PROCESSED MASTER RECORD ", record.processedRecord);
+
+
+                getNotes();
             }
         });
     } else {
+        console.log("ELSE - in loading record");
         $scope.masterRecord = record.masterRecord;
+
+        getNotes();
     }
 
-    $scope.notes = [];
-
-    $scope.filters = [{
-            'name': 'starred',
-            'value': true,
-            'displayName': 'starred'
-        }, {
-            'name': 'unStarred',
-            'value': true,
-            'displayName': 'un-starred'
-        }
-        /*
-        , {
-            'name': 'medications',
-            'value': true,
-            'displayName': 'medications'
-        }, {
-            'name': 'results',
-            'value': true,
-            'displayName': 'test results'
-        }, {
-            'name': 'encounters',
-            'value': true,
-            'displayName': 'encounters'
-        }, {
-            'name': 'vitals',
-            'value': true,
-            'displayName': 'vital signs'
-        }, {
-            'name': 'immunizations',
-            'value': true,
-            'displayName': 'immunizations'
-        }, {
-            'name': 'allergies',
-            'value': true,
-            'displayName': 'allergies'
-        }, {
-            'name': 'conditions',
-            'value': true,
-            'displayName': 'conditions'
-        }, {
-            'name': 'procedures',
-            'value': true,
-            'displayName': 'procedures'
-        }, {
-            'name': 'social',
-            'value': true,
-            'displayName': 'social history'
-        }, {
-            'name': 'claims',
-            'value': true,
-            'displayName': 'claims'
-        }, {
-            'name': 'insurance',
-            'value': true,
-            'displayName': 'insurance'
-        }
-        */
-    ];
 
     //updated flag that says if any sections are selected to view
     function updateAnySectionsSelected() {
@@ -162,6 +138,141 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     }]
     */
 
+
+    function titles(scope) {
+        scope.entryTitle = "";
+        scope.entrySubTitleOne = "";
+        scope.entrySubTitleTwo = "";
+
+        console.log("SCOPE ",scope);
+
+        switch (scope.type) {
+            case 'allergies':
+                if (scope.entryData.observation) {
+                    if (scope.entryData.observation.allergen && scope.entryData.observation.allergen.name) {
+                        scope.entryTitle = scope.entryData.observation.allergen.name;
+                    }
+                    if (scope.entryData.observation.severity && scope.entryData.observation.severity.code && scope.entryData.observation.severity.code.name) {
+                        scope.entrySubTitleOne = scope.entryData.observation.severity.code.name;
+                    }
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'encounters':
+                if (scope.entryData.encounter && scope.entryData.encounter.name) {
+                    scope.entryTitle = scope.entryData.encounter.name;
+                }
+                if (scope.entryData.locations && scope.entryData.locations[0].name) {
+                    scope.entrySubTitleOne = scope.entryData.locations[0].name;
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'immunizations':
+                if (scope.entryData.product && scope.entryData.product.product && scope.entryData.product.product.name) {
+                    scope.entryTitle = scope.entryData.product.product.name;
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'medications':
+                if (scope.entryData.product && scope.entryData.product.product && scope.entryData.product.product.name) {
+                    scope.entryTitle = scope.entryData.product.product.name;
+                }
+                if (scope.entryData.administration && scope.entryData.administration.route && scope.entryData.administration.route.name) {
+                    scope.entrySubTitleOne = scope.entryData.administration.route.name;
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'conditions':
+                if (scope.entryData.problem && scope.entryData.problem.code && scope.entryData.problem.code.name) {
+                    scope.entryTitle = scope.entryData.problem.code.name;
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'procedures':
+                if (scope.entryData.procedure && scope.entryData.procedure.name) {
+                    scope.entryTitle = scope.entryData.procedure.name;
+                }
+                if (scope.entryData.status) {
+                    scope.entrySubTitleOne = scope.entryData.status;
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'vitals':
+                var quantityUnit = "";
+                if (scope.entryData.unit) {
+                    if (scope.entryData.unit === "[in_i]") {
+                        quantityUnit = "inches";
+                    } else if (scope.entryData.unit === "[lb_av]") {
+                        quantityUnit = "lbs";
+                    } else if (scope.entryData.unit === "mm[Hg]") {
+                        quantityUnit = "mm";
+                    } else {
+                        quantityUnit = scope.entryData.unit;
+                    }
+                    if (scope.entryData.value && scope.entryData.value + " " + quantityUnit) {
+                        scope.entryTitle = scope.entryData.value + " " + quantityUnit;
+                    }
+                }
+                if (scope.entryData.vital && scope.entryData.vital.name) {
+                    scope.entrySubTitleOne = scope.entryData.vital.name;
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'results':
+                if (scope.entryData.result_set && scope.entryData.result_set.name) {
+                    scope.entryTitle = scope.entryData.result_set.name;
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'social':
+                if (scope.entryData.value) {
+                    scope.entryTitle = scope.entryData.value;
+                }
+                if (scope.entryData.code && scope.entryData.code.name) {
+                    scope.entrySubTitleOne = scope.entryData.code.name;
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'claims':
+                if (scope.entryData.payer[0]) {
+                    scope.entryTitle = scope.entryData.payer[0];
+                }
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+            case 'insurance':
+                if (scope.entryData.name) {
+                    scope.entryTitle = scope.entryData.name;
+                }
+                if (scope.entryData.date_time) {
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                }
+                break;
+        }
+
+        console.log("SCOPE>>>>>> ", scope);
+        return scope;
+    }
+
     //convert internal section name to display friendly spelled out name
     function displaySection(section) {
         var displayName = {
@@ -198,13 +309,14 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             });
             console.log("section notes ", section, section_notes);
 
-
             var section_notes_with_entry = [];
 
             _.each(section_notes, function(note) {
                 var result = {};
                 result = {
                     'entryTitle': note.entry,
+                    'entrySubTitleOne': '',
+                    'entrySubTitleTwo': '',
                     'entry_id': note.entry,
                     'note': {
                         'comment': note.note,
@@ -213,6 +325,24 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                         'note_id': note._id
                     }
                 };
+
+                console.log("MASTER RECORD section ", section, record.records[section]);
+
+                var ff = _.where(record.records[section], {
+                    '_id': note.entry
+                })[0];
+
+                console.log("found it ", ff);
+
+                var entry_data={entryData:ff, type:section, recordEntry:{metadata:{}}};
+
+                var tttt= titles(entry_data);
+
+                console.log("titles ", tttt);
+
+                result.entryTitle=tttt.entryTitle;
+                result.entrySubTitleOne=tttt.entrySubTitleOne;
+                result.entrySubTitleTwo=tttt.entrySubTitleTwo;
 
                 section_notes_with_entry.push(result);
             });
@@ -231,6 +361,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         console.log("stub2", stub2);
 
         console.log("DONE!");
+
 
         var stub = [{
             'displaySection': 'vital signs',
@@ -271,14 +402,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         return filters;
     }
 
-    //gets notes from backend API
-    function getNotes() {
-        notes.getNotes(function(err, returnNotes) {
-            $scope.notes = mashNotesWithRecord(returnNotes, $scope.masterRecord);
-            $scope.filters = updateFilters(returnNotes);
-            updateAnySectionsSelected();
-        });
-    }
 
     $scope.clickStar = function(starVal, starIndex, section, entry) {
         console.log("click Star ", !starVal, starIndex, section, entry);
@@ -301,5 +424,4 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
 
     };
 
-    getNotes();
 });
