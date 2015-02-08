@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
     };
 
     this.getData = function(callback) {
-        console.log('from server');
+        console.log('get record data from API');
 
         $http.get('/api/v1/get_record/')
             .success(function(data) {
@@ -43,8 +43,8 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
             });
     };
 
-    this.processRecord = function(rawRecord, rawNotes) {
-        console.log('processing record');
+    this.processRecord = function(rawRecord, rawNotes, caller) {
+        console.log('processing record', rawRecord, rawNotes, caller);
         var tmpEntries = [];
         _.each(rawRecord, function(entries, type) {
 
@@ -70,12 +70,9 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
                     dispDates = format.formatDate(tmpDates[0]) + ' - ' + format.formatDate(tmpDates[1]);
                 }
 
-
-                console.log("notes ", rawNotes);
                 var note = _.where(rawNotes, {
                     entry: entry._id
                 });
-                console.log("find note", note, entry);
 
                 var comments = [];
                 _.each(note, function(n) {
