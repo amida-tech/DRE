@@ -49,8 +49,9 @@
 						</thead>
 					<tr ng-repeat="file in fileList | orderBy:predicate">
 						<td>
-							<a ng-show="file.type === 'Health Summary'"><i class="fa fa-file-text-o"></i></a>
-							<a ng-show="file.type === 'Image'"><i class="fa fa-file-image-o"></i></a>
+							<a ng-show="file.file_class === 'ccda'"><i class="fa fa-file-code-o"></i></a>
+							<a ng-show="file.file_class === 'cms'"><i class="fa fa-file-text-o"></i></a>
+							<a ng-show="file.file_class === 'hl7'"><i class="fa fa-flask"></i></a>
 						</td>
 						<td><a ng-href="/api/v1/storage/record/{{file.file_id}}">{{file.file_name}}</a></td>
 						<td>{{file.file_class | uppercase}}</td>
