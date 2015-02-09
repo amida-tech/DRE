@@ -9,6 +9,8 @@
 angular.module('phrPrototypeApp').service('matches', function record($http, $q, format) {
     this.masterRecord = {};
     this.processedRecord = {};
+    this.section = "allergies";
+    this.recordId = "";
     this.setMasterRecord = function(rawRecord) {
         this.masterRecord = rawRecord;
     };
@@ -34,6 +36,12 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
             console.log('data errorrrrrrr');
             return deferred.reject(error);
         });
+    };
+    this.getSection = function() {
+        return this.section;
+    };
+    this.setSection = function(section) {
+        this.section = section;
     };
     
 });

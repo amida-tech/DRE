@@ -47,8 +47,8 @@
                             <h6 style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
                         </div>
                     </div>
-                    <div class="col-sm-10 col-sm-offset-1 text-center"  ng-if="entryType!=='all' && masterMatches.count>0">
-                        <span><button ng-click="navClick('record0')" class="btn btn-link" style="margin-right: 20px;"><i class="fa fa-flag-o" style="margin-right: 10px;"></i>There is {{masterMatches.count}} update<span ng-show="masterMatches.count>1">s</span> to your {{entryType}} requiring review.</button></span>
+                    <div class="col-sm-10 col-sm-offset-1 text-center" ng-click="goToMatches(entryType)" ng-if="entryType!=='all' && masterMatches.count>0">
+                        <div class="btn btn-link" style="margin-right: 20px;"><i class="fa fa-flag-o" style="margin-right: 10px;"></i>{{masterMatches.count}} update<span ng-show="masterMatches.count>1">s</span> to your {{entryType}} requiring review.</div>
                     </div>
                 </div>
             </div>

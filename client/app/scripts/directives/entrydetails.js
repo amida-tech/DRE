@@ -11,7 +11,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
         restrict: 'EA',
         scope: {
             details: '=',
-            category: '@'
+            category: '='
         },
         link: function postLink(scope, element, attrs) {
             scope.entryTemplatePath = "views/templates/matches/" + scope.category + ".html";

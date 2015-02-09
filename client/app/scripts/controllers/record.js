@@ -6,7 +6,7 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format, matches, merges, history) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, $location, record, format, matches, merges, history) {
     function getHistory() {
         history.getHistory(function(err, history) {
             if (err) {
@@ -161,4 +161,10 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         });
     }
     getData();
+
+    $scope.goToMatches = function (section) {
+        console.log(section);
+        matches.setSection(section);
+        $location.path('/matches');
+    };
 });

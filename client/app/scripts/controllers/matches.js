@@ -9,10 +9,9 @@
 angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, matches) {
     $scope.masterMatches = [];
     //$scope.categories = ['medications', 'results', 'encounters', 'vitals', 'immunizations', 'allergies', 'procedures'];
-    $scope.categories = ['allergies'];
+    $scope.section = matches.getSection();
     
-    function getData() {
-        _.each($scope.categories, function (section) {
+    function getData(section) {
             matches.getCategory(section).then(function(data) {
                 _.each(data.matches, function(match) {
                     $scope.masterMatches.push({
@@ -23,13 +22,13 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
                 });
 
             });
-        });
+    
         
             //do stuff here
             //$scope.allergyMatch = $scope.masterMatches.data[1];
         
     }
-    getData();
+    getData($scope.section);
 });
 
 
