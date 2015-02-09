@@ -15,6 +15,16 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         this.masterRecord = rawRecord;
     };
     this.getCategory = function(category) {
+        switch (category) {
+            case "conditions":
+                category = "problems";
+                break;
+            case "social":
+                category = "social_history";
+                break;
+        }
+
+
         console.log('from server');
         var deferred = $q.defer();
         var dataurl = '/api/v1/matches/' + category;
@@ -24,7 +34,7 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
             cache: true
         }).then(function(response) {
             if (typeof response.data === 'object') {
-                
+
                 return response.data;
             } else {
                 // invalid response
@@ -43,5 +53,5 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
     this.setSection = function(section) {
         this.section = section;
     };
-    
+
 });
