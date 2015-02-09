@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp')
                 fileDownloaded: 'File downloaded', //could add filename or MHR
                 labResults: 'Lab results received', //same as fileUploaded in API
                 passwordChange: 'Password changed', //not in API yet
-                infoUpdate: 'Personal Information updated' //not in API yet
+                infoUpdate: 'Profile updated' //not in API yet
             };
             return fullEventNames[typestring];
         };

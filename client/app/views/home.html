@@ -41,6 +41,7 @@
 						<div class="col-sm-2">
 							<a class="timeline-entry-icon text-center center-block">
 								
+								<i ng-if="recordEntry.event_type === 'infoUpdate'" class="fa fa-pencil fa-2x" id="entry{{recordIndex}}"></i>
 								<i ng-if="recordEntry.event_type === 'fileDownloaded'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
 								<i ng-if="recordEntry.event_type === 'fileUploaded'" class="fa fa-cloud-upload fa-2x" id="entry{{recordIndex}}"></i>
 								<i ng-if="recordEntry.event_type === 'loggedIn'" class="fa fa-sign-in fa-2x" id="entry{{recordIndex}}"></i>
@@ -74,15 +75,15 @@
 						</div>
 					</div>
 
+
+
+
+				</div>
 					<div class="col-sm-2 center-block text-center timeline-footer">
 						<svg width="30" height="30">
 							<circle cx="15" cy="15" r="15"></circle>
 						</svg>
 					</div>
-
-
-				</div>
-
 
 			</div>
 
