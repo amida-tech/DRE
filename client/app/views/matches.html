@@ -30,9 +30,9 @@
         <div class="col-sm-12">
             <h4 class="text-center text-white">Matches</h4>
             <div class="panel">
-                <div class="panel-body">
+                <div ng-if="masterMatches[0].data" class="panel-body">
 
-                    <div entry-details details="masterMatches[2].data" category="allergies"></div>
+                    <div entry-details details="masterMatches[0].data" category="section"></div>
 
                 </div>
             </div>
