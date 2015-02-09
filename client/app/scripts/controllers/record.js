@@ -26,7 +26,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         if (err) {
             console.log("error whil getting merges ", err);
         } else {
-            $scope.mergesList = data.merges;
+            $scope.mergesList = data;
 
             console.log("merges data ", $scope.mergesList);
         }
