@@ -10,7 +10,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     $scope.any_sections_selected = false;
 
     $scope.notes = [];
-
     $scope.filters = [{
         'name': 'starred',
         'value': true,
@@ -20,9 +19,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         'value': true,
         'displayName': 'un-starred'
     }];
-
-
-
     //gets notes from backend API
     function getNotes() {
         notes.getNotes(function(err, returnNotes) {
@@ -31,8 +27,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             updateAnySectionsSelected();
         });
     }
-
-
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
         record.getData(function(err, data) {
             if (err) {
@@ -40,51 +34,39 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             } else {
                 console.log("MASTER RECORD is Loaded!");
                 record.setMasterRecord(data);
-
                 $scope.masterRecord = data.records;
-
                 record.processRecord(data.records, $scope.notes, "notes.js controller");
                 console.log("PROCESSED MASTER RECORD ", record.processedRecord);
-
-
                 getNotes();
             }
         });
     } else {
         console.log("ELSE - in loading record");
         $scope.masterRecord = record.masterRecord;
-
         getNotes();
     }
-
-
     //updated flag that says if any sections are selected to view
     function updateAnySectionsSelected() {
         $scope.any_sections_selected = false;
-
         _.each($scope.filters, function(filter) {
             if (filter.name !== "starred" && filter.name !== "unStarred" && filter.value) {
                 $scope.any_sections_selected = true;
             }
-
         });
     }
-
     $scope.toggle = function(index) {
         $scope.filters[index].value = !$scope.filters[index].value;
         //calculate if no sections are selected
         updateAnySectionsSelected();
-
+        $scope.checkNotes();
     };
-
     $scope.toggleAll = function() {
         _.each($scope.filters, function(value, key, list) {
             $scope.filters[key].value = true;
         });
+        $scope.checkNotes();
     };
-
     //$.lockfixed(".sidebar-control",{offset: {top: 10},forcemargin: true});
-
     /* EXAMPLE OF NOTES DATA
     [{
         "_id": "54d503e8c053a20a26f2ee47",
@@ -116,7 +98,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     }]
 
     */
-
     /* NOTES OBJECT
 
     [{
@@ -135,8 +116,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
 
     }]
     */
-
-
     function titles(scope) {
         scope.entryTitle = "";
         scope.entrySubTitleOne = "";
@@ -302,10 +281,8 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                 }
                 break;
         }
-
         return scope;
     }
-
     //convert internal section name to display friendly spelled out name
     function displaySection(section) {
         var displayName = {
@@ -313,7 +290,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             'results': 'test results',
             'social': 'social history'
         };
-
         if (displayName[section]) {
             return displayName[section];
         } else {
@@ -321,17 +297,13 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         }
     }
 
-
     function mashNotesWithRecord(notes, record) {
         console.log("mashNotesWithRecord ", notes, record);
-
         //generating list of unique sections present in notes
         var notes_sections = [];
         notes_sections = _.pluck(notes, "section");
         notes_sections = _.uniq(notes_sections);
-
         var stub2 = [];
-
         _.each(notes_sections, function(section) {
             switch (section) {
                 case "conditions":
@@ -343,13 +315,10 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             }
 
             var section_notes = [];
-
             section_notes = _.filter(notes, {
                 section: section
             });
-
             var section_notes_with_entry = [];
-
             _.each(section_notes, function(note) {
                 var result = {};
                 result = {
@@ -364,8 +333,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                         'note_id': note._id
                     }
                 };
-
-
                 var ff = _.where(record[section], {
                     '_id': note.entry
                 })[0];
@@ -385,35 +352,27 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
 
 
                 var tttt = titles(entry_data);
-
                 result.entryTitle = tttt.entryTitle;
                 result.entrySubTitleOne = tttt.entrySubTitleOne;
                 result.entrySubTitleTwo = tttt.entrySubTitleTwo;
-
                 section_notes_with_entry.push(result);
             });
-
             var result = {
                 'displaySection': displaySection(section),
                 'section': section,
                 'notes': section_notes_with_entry
             };
-
             stub2.push(result);
         });
-
         return stub2;
     }
-
     //updates list of sections in filters based on what sections are present in notes
     function updateFilters(notes) {
         var filters = $scope.filters;
-
         //generating list of unique sections present in notes
         var notes_sections = [];
         notes_sections = _.pluck(notes, "section");
         notes_sections = _.uniq(notes_sections);
-
         _.each(notes_sections, function(section) {
             filters.push({
                 'name': section,
@@ -421,21 +380,14 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                 'displayName': displaySection(section)
             });
         });
-
-
         return filters;
     }
-
-
     $scope.clickStar = function(starVal, starIndex, section, entry) {
         console.log("click Star ", !starVal, starIndex, section, entry);
-
         notes.starNote(entry.note.note_id, !starVal, function(err, data) {
             console.log('err ', err);
             console.log('updated note ', data);
         });
-
-
         var tmpSection = _.where($scope.notes, {
             'section': section
         });
@@ -447,5 +399,39 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
 
 
     };
+    $scope.checkNotes = function() {
+        $scope.starredNotes = false;
+        $scope.unstarredNotes = false;
+        _.each($scope.filters, function(filter, index) {
+            if (index > 1) {
+                if (filter.value) {
+                    var tmpnotes = _.findWhere($scope.notes, {'section': filter.name});
+                    _.each(tmpnotes.notes, function(note) {
+                        if (note.note.starred) {
+                            $scope.starredNotes = true;
+                        } else {
+                            $scope.unstarredNotes = true;
+                        }
+                    });
 
+                    
+                }
+            }
+        });
+    };
+    $scope.noMatch = function() {
+        $scope.checkNotes();
+        if (!$scope.unstarredNotes && !$scope.filters[0].value) {
+            return true;
+        }
+        if (!$scope.starredNotes && !$scope.filters[1].value) {
+            return true;
+        }
+        if (!$scope.filters[0].value && !$scope.filters[1].value) {
+            return true;
+        }
+        if (!$scope.any_sections_selected) {
+            return true;
+        }
+    };
 });

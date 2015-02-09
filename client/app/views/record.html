@@ -113,7 +113,12 @@
                 <!--Timeline View-->
                 <div class="col-sm-12">
                     <h4 class="text-center text-white">Record History</h4>
-                    <div class="panel">
+                    <div class="panel" ng-hide="recordEntries">
+                        <div class="panel-body">
+                            <h5 class="col-sm-12 text-center">No Record Entries</h5>
+                        </div>
+                    </div>
+                    <div class="panel" ng-if="recordEntries">
                         <div class="panel-body">
                             <div>
                                 <p>Timeline</p>
@@ -156,9 +161,14 @@
         </div>
 
         <!--Timeline View-->
-        <div ng-cloak ng-if="entryType!=='all' && recordEntries" class="col-sm-12">
+        <div ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
             <h4 class="text-center text-white">{{entryType}}</h4>
-            <div class="panel">
+            <div class="panel" ng-hide="recordEntries">
+                        <div class="panel-body">
+                            <h5 class="col-sm-12 text-center">No Record Entries</h5>
+                        </div>
+                    </div>
+            <div class="panel" ng-if="recordEntries">
                 <div class="panel-body">
                     <div>
                         <p>Timeline</p>
