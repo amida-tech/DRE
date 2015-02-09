@@ -176,7 +176,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                         console.log("attaching match ", recordEntry, match);
 
                         recordEntry.metadata.match = {
-                            'match_id': match._id
+                            'match_id': match._id,
+                            'section':$scope.entryType
                         };
                     }
                 });
@@ -192,5 +193,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         //console.log(section);
         //matches.setSection(section);
         $location.path('/matches');
+    };
+
+
+    $scope.launchMatch=function(el){
+        console.log("Launch MATCH>> ", el);
+        $scope.goToMatches(el.match.section);
+
     };
 });
