@@ -21,6 +21,6 @@ angular.module('phrPrototypeApp').service('merges', function record($http, forma
 
     this.updatesCount=function(){
     	return 0;
-    }
+    };
 
 });
