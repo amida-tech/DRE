@@ -9,7 +9,7 @@
 angular.module('phrPrototypeApp').service('matches', function record($http, $q, format) {
     this.masterRecord = {};
     this.processedRecord = {};
-    this.section = "allergies";
+    this.section = "";
     this.recordId = "";
     this.setMasterRecord = function(rawRecord) {
         this.masterRecord = rawRecord;

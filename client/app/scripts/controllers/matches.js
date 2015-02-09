@@ -9,7 +9,11 @@
 angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, matches) {
     $scope.masterMatches = [];
     //$scope.categories = ['medications', 'results', 'encounters', 'vitals', 'immunizations', 'allergies', 'procedures'];
-    $scope.section = matches.getSection();
+    if (_.isEmpty(matches.getSection())) {
+            $scope.section = "allergies";
+        } else {
+            $scope.section = matches.getSection();
+        }
     
     function getData(section) {
             matches.getCategory(section).then(function(data) {

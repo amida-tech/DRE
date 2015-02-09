@@ -84,9 +84,14 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         });
 
         $scope.pageLoaded = false;
-        $scope.entryType = "all";
+        if (_.isEmpty(matches.getSection())) {
+            $scope.entryType = "all";
+        } else {
+            $scope.entryType = matches.getSection();
+        }
+        
         //Flip All as active selected item in DOM
-        angular.element("#navall").addClass("active");
+        angular.element("#nav" + $scope.entryType).addClass("active");
 
         if (_.isEmpty(record.processedRecord)) {
             $scope.recordEntries = record.processRecord(data, data_notes, "record.js controller");
@@ -111,10 +116,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             if (newVal !== oldVal) {
                 if (newVal === "all") {
                     $scope.entryListFiltered = $scope.recordEntries;
+                    matches.setSection("");
                 } else {
                     $scope.entryListFiltered = _.where($scope.recordEntries, {
                         category: newVal
                     });
+                    matches.setSection(newVal);
                 }
                 if (newVal === "vitals") {
                     $scope.$broadcast('tabchange', {
@@ -163,8 +170,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     getData();
 
     $scope.goToMatches = function (section) {
-        console.log(section);
-        matches.setSection(section);
+        //console.log(section);
+        //matches.setSection(section);
         $location.path('/matches');
     };
 });
