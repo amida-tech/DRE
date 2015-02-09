@@ -177,7 +177,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             dispDates = format.formatDate(tmpDates[0]) + ' - ' + format.formatDate(tmpDates[1]);
         }
 
-        scope.recordEntry.metadata.displayDate = dispDates
+        scope.recordEntry.metadata.displayDate = dispDates;
 
 
         switch (scope.type) {
