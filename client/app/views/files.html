@@ -44,7 +44,7 @@
 								<a ng-click="typeSort()">Format <i class="fa fa-caret-down" ng-show="predicate === 'file_class'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_class'"></i></a>
 							</td>
 							<td>
-								<a ng-click="typeSort()">Type <i class="fa fa-caret-down" ng-show="predicate === 'file_class'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_class'"></i></a>
+								<a>Type</a>
 							</td>
 							<td>
 								<a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'file_upload_date'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_upload_date'"></i></a>
@@ -59,8 +59,8 @@
 						<td><a ng-href="/api/v1/storage/record/{{file.file_id}}">{{file.file_name}}</a></td>
 						<td>{{file.file_class | uppercase}}</td>
 						<td>
-							<span ng-show="file.file_class ==='hl7'"> via labs connector</span>
-							<span ng-show="file.file_class !=='hl7'"> user uploaded record</span>
+							<span ng-show="file.file_class ==='hl7'"> Received via labs connector</span>
+							<span ng-show="file.file_class !=='hl7'"> User uploaded record</span>
 
 						</td>
 						<td>{{file.file_upload_date | date: 'short'}}</td>
