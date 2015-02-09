@@ -48,7 +48,7 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
         var tmpEntries = [];
         _.each(rawRecord, function(entries, type) {
 
-            console.log("process record entries, type", entries, type);
+            //console.log("process record entries, type", entries, type);
 
             _.each(entries, function(entry) {
                 var tmpDates = '';
