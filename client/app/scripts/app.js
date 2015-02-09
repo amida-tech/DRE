@@ -105,24 +105,32 @@ angular
 
         var routesThatDontRequireAuth = ['/login', '/', '/register'];
 
-        check if current location matches route  
+        // if current location matches route  
         var routeClean = function (route) {
-          return _.find(routesThatDontRequireAuth)
+          return _.find(routesThatDontRequireAuth,
+            function (noAuthRoute) {
+              return _.str.startsWith(route, noAuthRoute);
+            });
         };
 
         $rootScope.$on('$routeChangeStart', function(event, next, current) {
             // if route requires auth and user is not logged in
             authentication.authStatus(function(err, res) {
+              var url = $location.url();              
+              console.log('res', res);
                 if (!res) {
-                    var url = $location.url();
-                    console.log('url', url==='/login');
-                    if (url === '/') {
-                        console.log('no login required');
+                    console.log('url', url, (url ==='/login')||(url==='/')||(url==='/register'));
+                    if ((url ==='/login')||(url==='/')||(url==='/register')) {
+                        // console.log('working?');
+                        $location.path(url);
                     } else {
-                        $location.path('/login');
-                        console.log('whyyy');
+                      $location.path('/login');
                     }
-                }
+                  } else {
+                        $location.path(url);
+                        // console.log('no login required?');
+                  }
+                
             });
         });
     });
