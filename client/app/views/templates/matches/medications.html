@@ -26,7 +26,7 @@ box-shadow: none;
                 </td>
             </tr>
             <tr>
-                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.date_time)" type="checkbox" ng-checked="!areEqual(matchData.date_time, finalData.date_time)" ng-click="checkboxToggle([flagData.date_time.low, flagData.date_time.high], matchData.date_time, finalData.date_time)">Date:</span></td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.date_time)" type="checkbox" ng-checked="!areEqual(matchData.date_time, finalData.date_time)" ng-click="checkboxToggle([flagData.date_time.low, flagData.date_time.high], matchData.date_time, finalData.date_time)"> Date:</span></td>
 
                 <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}">
                     <span ng-hide="finalData.date_time.high">{{formatDate(entryData.date_time.low)}}</span>
@@ -43,7 +43,7 @@ box-shadow: none;
 
                 <span ng-hide="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}}</span>
                     <span ng-show="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}} - {{formatDate(finalData.date_time.high)}}</span>
-                     <span ng-show="!areEqual(matchData.date_time.low.date, finalData.date_time.low.date)" class="label label-warning pull-right">Updated</span>
+                     <span ng-show="!areEqual(matchData.date_time, finalData.date_time)" class="label label-warning pull-right">Updated</span>
                      
             </tr>
             
