@@ -6,7 +6,20 @@
  * # BillingClaimsCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, billing) {
+angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, billing, history) {
+    function getHistory() {
+        history.getHistory(function(err, history) {
+            if (err) {
+                console.log('ERRROR', err);
+            } else {
+                //console.log('>>>>accountHistory', history);
+                $scope.accountHistory = history;
+            }
+        });
+    }
+
+    getHistory();
+
     $scope.entryType = 'all';
     $scope.masterEntries = [];
     $scope.entries = [];

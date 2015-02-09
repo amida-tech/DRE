@@ -14,7 +14,9 @@
                         <div class="col-sm-8">
                             <h4>My Record Overview</h4>
                             <p>This page gives an overview of your health record activity.</p>
-                            <p>Last updated: July 31, 2014</p>
+                            <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
+                            <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
+
                         </div>
                         <div class="col-sm-4">
                             <a ng-href="/api/v1/master_health_record/xml">

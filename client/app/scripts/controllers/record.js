@@ -6,13 +6,27 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format, matches, merges) {
-    merges.getMerges(function(err, data){
-        if (err){
-            console.log("error whil getting merges ",err);
-        }
-        else{
-            $scope.mergesList=data.merges;
+angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, record, format, matches, merges, history) {
+    function getHistory() {
+        history.getHistory(function(err, history) {
+            if (err) {
+                console.log('ERRROR', err);
+            } else {
+                //console.log('>>>>accountHistory', history);
+                $scope.accountHistory = history;
+            }
+        });
+    }
+
+    getHistory();
+
+
+
+    merges.getMerges(function(err, data) {
+        if (err) {
+            console.log("error whil getting merges ", err);
+        } else {
+            $scope.mergesList = data.merges;
 
             console.log("merges data ", $scope.mergesList);
         }
@@ -20,8 +34,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     });
 
     // produces singular name for section name - in records merges list
-    $scope.singularName=function (section){
-        switch (section){
+    $scope.singularName = function(section) {
+        switch (section) {
             case 'social_history':
                 return 'social history';
             case 'vitals':
@@ -103,7 +117,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 }
             }
         });
-        
+
 
 
     }
@@ -123,14 +137,14 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
 
     // Get Matches data for partial matches 
     function getData() {
-            matches.getCategory("allergies").then(function(data) {
-                $scope.masterMatches = {
-                    'category': "allergies",
-                    'data': data.matches
-                };
-                //do stuff here
-                $scope.allergyMatch = $scope.masterMatches.data[0];
-            });
-        }
-        getData();
+        matches.getCategory("allergies").then(function(data) {
+            $scope.masterMatches = {
+                'category': "allergies",
+                'data': data.matches
+            };
+            //do stuff here
+            $scope.allergyMatch = $scope.masterMatches.data[1];
+        });
+    }
+    getData();
 });
