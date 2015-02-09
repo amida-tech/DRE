@@ -23,8 +23,9 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="col-sm-8">
-                            <h4>My Record Overview</h4>
-                            <p>This page gives an overview of your health record activity.</p>
+                            <h4 ng-if="entryType==='all'">{{user_first}}'s Record Overview</h4>
+                            <h4 ng-if="entryType!=='all'">{{user_first}}'s {{entryType}}</h4>
+                            <p ng-if="entryType==='all'">This page gives an overview of your health record activity.</p>
                             <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
                             <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
 
