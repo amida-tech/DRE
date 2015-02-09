@@ -48,8 +48,8 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                 var tmpDomain = [];
                 var minDate, maxDate, plotFloor, plotCeiling;
                 if (dataType === 'account' && dataToPlot) { //&& dataToPlot if no data skip this part
-                    console.log('in timeline plotting');
-                    console.log('plot data exists', dataToPlot);
+                    //console.log('in timeline plotting');
+                    //console.log('plot data exists', dataToPlot);
                     for (var i in dataToPlot.recordHistory) {
                         var plotDate = isoFormatSubsecond.parse(dataToPlot.recordHistory[i].date);
                         //console.log('plot date', plotDate);

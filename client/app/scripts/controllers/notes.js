@@ -143,7 +143,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         scope.entrySubTitleTwo = "";
 
         var entry = scope.entryData;
-        console.log("TITLES: ", entry);
+        //console.log("TITLES: ", entry);
         var tmpDates = [];
         var dispDates = "Not Available";
 
@@ -371,7 +371,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                 })[0];
 
                 if (!ff) {
-                    console.log("BAAAD!!!!!", section);
+                    //console.log("BAAAD!!!!!", section);
                     ff = {};
                 }
 

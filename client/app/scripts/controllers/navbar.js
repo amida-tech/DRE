@@ -13,14 +13,14 @@ angular.module('phrPrototypeApp')
         $scope.loginStatus = false;
 
         function checkAuthStatus() {
-            console.log("check aut status");
+            //console.log("check aut status");
             authentication.authStatus(function(err, res) {
                 if (err) {
-                    console.log("status fetch error ", err);
+                    //console.log("status fetch error ", err);
                     $scope.loginStatus = false;
-                    console.log(err);
+                    //console.log(err);
                 } else {
-                    console.log("auth status ", res);
+                    //console.log("auth status ", res);
                     if (!res) {
                         $scope.loginStatus = false;
                     } else {
@@ -38,7 +38,7 @@ angular.module('phrPrototypeApp')
 
         //TODO: isValid is not used??
         $scope.logout = function(isValid) {
-            console.log("navbar controller, logout()", isValid);
+            //console.log("navbar controller, logout()", isValid);
             logout.logout(function(err) {
                 if (err) {
                     $scope.error = err;
