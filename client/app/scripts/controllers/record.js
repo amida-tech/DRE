@@ -146,13 +146,15 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     // Get Matches data for partial matches 
     function getData() {
         console.log("getting merges for section ", $scope.entryType);
-        if (!$scope.entryType || $scope.entryType==='all') return;
+        if (!$scope.entryType || $scope.entryType === 'all') {
+            return;
+        }
 
         matches.getCategory($scope.entryType).then(function(data) {
             $scope.masterMatches = {
                 'category': $scope.entryType,
                 'data': data.matches,
-                'count':data.matches.length
+                'count': data.matches.length
             };
             //do stuff here
             $scope.allergyMatch = $scope.masterMatches.data[1];
