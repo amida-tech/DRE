@@ -43,8 +43,8 @@
         </tr>
 
         <tr ng-show="entryData.results" ng-repeat="(resultIndex, resultEntry) in entryData.results">
-            <td ng-show="resultEntry.result.name&&resultEntry.displayQuantity">{{resultEntry.result.name}}:</td>
-            <td ng-show="resultEntry.displayQuantity">{{resultEntry.displayQuantity}}</td>
+            <td >{{resultEntry.result.name}}</td>
+            <td >{{resultEntry.value}} {{resultEntry.unit}}</td>
         </tr>
 
     </tbody>

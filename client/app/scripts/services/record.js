@@ -53,6 +53,9 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
             _.each(entries, function(entry) {
                 var tmpDates = '';
                 var dispDates = '';
+
+                //console.log("calculating dates for ",type, entry);
+
                 if (!_.isUndefined(entry.date_time)) {
                     if (!_.isUndefined(entry.date_time.point)) {
                         tmpDates = [entry.date_time.point];
@@ -64,6 +67,19 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
                         tmpDates = [entry.date_time.high];
                     }
                 }
+
+                if (type==='results' && !_.isUndefined(entry.results) && entry.results.length>0) {
+                    if (!_.isUndefined(entry.results[0].date_time.point)) {
+                        tmpDates = [entry.results[0].date_time.point];
+                    } else if (!_.isUndefined(entry.results[0].date_time.low) && !_.isUndefined(entry.results[0].date_time.high)) {
+                        tmpDates = [entry.results[0].date_time.low, entry.results[0].date_time.high];
+                    } else if (!_.isUndefined(entry.results[0].date_time.low) && _.isUndefined(entry.results[0].date_time.high)) {
+                        tmpDates = [entry.results[0].date_time.low];
+                    } else if (_.isUndefined(entry.results[0].date_time.low) && !_.isUndefined(entry.results[0].date_time.high)) {
+                        tmpDates = [entry.results[0].date_time.high];
+                    }
+                }
+
                 if (tmpDates.length === 1) {
                     dispDates = format.formatDate(tmpDates[0]);
                 } else if (tmpDates.length === 2) {
