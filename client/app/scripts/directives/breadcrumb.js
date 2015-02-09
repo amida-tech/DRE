@@ -15,9 +15,7 @@ angular.module('phrPrototypeApp')
             		  '</span>',
             restrict: 'EA',
             link: function postLink(scope, element, attrs) {
-
                 var getBreadcrumb = function () {
-
                     var breadCrumb = [];
                     var parsedPath = $location.path().split('/');
                     var pathString = "";
@@ -36,123 +34,57 @@ angular.module('phrPrototypeApp')
 
                         if (parsedPath[i] === "files") {
                         	pathString = "#/files";
-                            tmpObject.name = "My Files";
+                            tmpObject.name = "My files";
                             tmpObject.path = pathString;
                         }
 
                         if (parsedPath[i] === "record") {
                             pathString = "#/record/";
-                            tmpObject.name = "My Record";
+                            tmpObject.name = "My record";
                             tmpObject.path = pathString;
                         }
 
                         if (parsedPath[i] === "profile") {
                             pathString = "#/profile";
-                            tmpObject.name = "My Profile";
+                            tmpObject.name = "My profile";
                             tmpObject.path = pathString;
                         }
 
-
-                        if (parsedPath[i] === "allergies") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Allergies";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "encounters") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Encounters";
-                            tmpObject.path = pathString;
-                        }
 
                         if (parsedPath[i] === "billing") {
-                            pathString = "#/billing/insurance/";
-                            tmpObject.name = "My Billing";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "claims") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Claims";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "insurance") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Insurance";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "immunizations") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Immunizations";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "medications") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Medications";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "conditions") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Conditions";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "procedures") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Procedures";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "vitals") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Vital Signs";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "results") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Test Results";
-                            tmpObject.path = pathString;
-                        }
-
-                        if (parsedPath[i] === "social") {
-                            pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Social History";
+                            pathString = "#/billing";
+                            tmpObject.name = "My billing";
                             tmpObject.path = pathString;
                         }
 
                         if (parsedPath[i] === "review") {
                             pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "Review Updates";
+                            tmpObject.name = "Review updates";
                             tmpObject.path = pathString;
                         }
 
                         if (parsedPath[i] === "download") {
                             pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "Download Record";
+                            tmpObject.name = "Download record";
                             tmpObject.path = pathString;   
                         }
 
                         if (parsedPath[i] === "upload") {
                             pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "Upload Record";
+                            tmpObject.name = "Upload record";
                             tmpObject.path = pathString;   
                         }
 
 
                         if (parsedPath[i] === "account") {
                             pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Account";
+                            tmpObject.name = "My account";
                             tmpObject.path = pathString;   
                         }
 
                         if (parsedPath[i] === "notes") {
                             pathString = pathString + parsedPath[i] + "/";
-                            tmpObject.name = "My Notes";
+                            tmpObject.name = "My notes";
                             tmpObject.path = pathString;   
                         }
 

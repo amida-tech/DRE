@@ -11,10 +11,16 @@ angular.module('phrPrototypeApp').service('merges', function record($http, forma
     this.getMerges = function(callback) {
         $http.get('api/v1/merges')
             .success(function(data) {
-                callback(null, data);
+            	//TODO: API merges wrapped in extra "merges" element???
+                callback(null, data.merges);
             })
             .error(function(err) {            	
                 callback(err);
             });
     };
+
+    this.updatesCount=function(){
+    	return 0;
+    }
+
 });

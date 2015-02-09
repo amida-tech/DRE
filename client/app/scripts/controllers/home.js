@@ -8,15 +8,31 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('HomeCtrl', function($scope, history, record) {
+    .controller('HomeCtrl', function($scope, history, record, notes, merges) {
 
 
-        
+
+        //TODO : fetch notes and updates counts
         $scope.noteCount = 0;
+        $scope.updatesCount = 0;
 
+        notes.noteCount(function(err, count) {
+            $scope.noteCount = count;
+        });
+
+        merges.getMerges(function(err, merges){
+            $scope.updatesCount=merges.length;
+
+        });
+
+        //$scope.updatesCount = merges.updatesCount();
+
+
+
+        /*
         function countNotes() {
             //notes.noteCount(function(err, results) {
-            $scope.noteCount = 0;
+            //$scope.noteCount = 1;
             //});
         }
 
@@ -25,8 +41,9 @@ angular.module('phrPrototypeApp')
                 $scope.entries = results;
             });
         }
+        */
 
-        countNotes();
+        //countNotes();
         //countUpdates();
 
 

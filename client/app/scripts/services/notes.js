@@ -18,7 +18,7 @@ angular.module('phrPrototypeApp')
                 "star": star
             };
 
-            console.log("POSTing star ",comment);
+            console.log("POSTing star ", comment);
 
             $http.post('/api/v1/notes/star', comment)
                 .success(function(data) {
@@ -33,7 +33,7 @@ angular.module('phrPrototypeApp')
 
 
         this.addNote = function(comment, callback) {
-            console.log("POSTing comment ",comment);
+            console.log("POSTing comment ", comment);
             $http.post('/api/v1/notes/add', comment)
                 .success(function(data) {
                     console.log("note added successfuly");
@@ -63,11 +63,10 @@ angular.module('phrPrototypeApp')
                 var noteCount = 0;
 
                 _.each(results, function(entry) {
-                    _.each(entry.notes, function(note) {
-                        if (note.note.starred) {
-                            noteCount++;
-                        }
-                    });
+                    console.log(entry);
+                    if (entry.star) {
+                        noteCount++;
+                    }
                 });
 
                 callback(null, noteCount);

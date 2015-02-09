@@ -9,7 +9,18 @@
             <div class="panel-body">
                 <!--Header Items-->
                 <div class="col-sm-12">
-                    <div class="row col-sm-12" breadcrumb></div>
+                    <!--div class="row col-sm-12" breadcrumb></div-->
+                    <div class="row col-sm-12" ng-if="entryType!=='all'">
+                        <span><span><a href="/#/home">Home</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span><a href="/#/record">My records</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span>My {{entryType}}</span>
+                        </span>
+                    </div>
+                    <div class="row col-sm-12" ng-if="entryType==='all'">
+                        <span><span><a href="/#/home">Home</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span>My records</span>
+                        </span>
+                    </div>
                     <div class="col-sm-12">
                         <div class="col-sm-8">
                             <h4>My Record Overview</h4>
