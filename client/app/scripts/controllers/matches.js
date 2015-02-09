@@ -10,6 +10,7 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
     $scope.masterMatches = [];
     //$scope.categories = ['medications', 'results', 'encounters', 'vitals', 'immunizations', 'allergies', 'procedures'];
     $scope.categories = ['allergies'];
+    
     function getData() {
         _.each($scope.categories, function (section) {
             matches.getCategory(section).then(function(data) {

@@ -102,6 +102,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         }).reverse();
         $scope.entryListFiltered = $scope.recordEntries;
         $scope.$watch('entryType', function(newVal, oldVal) {
+            //keeping current section name in scope
+            $scope.entryType = newVal;
+            console.log("$scope.entryType = ", $scope.entryType);
+            getData();
+
+
             if (newVal !== oldVal) {
                 if (newVal === "all") {
                     $scope.entryListFiltered = $scope.recordEntries;
@@ -133,14 +139,22 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     } else {
         pageRender(record.masterRecord, record.all_notes);
     }
+
+
     $scope.masterMatches = {};
 
     // Get Matches data for partial matches 
     function getData() {
-        matches.getCategory("allergies").then(function(data) {
+        console.log("getting merges for section ", $scope.entryType);
+        if (!$scope.entryType || $scope.entryType === 'all') {
+            return;
+        }
+
+        matches.getCategory($scope.entryType).then(function(data) {
             $scope.masterMatches = {
-                'category': "allergies",
-                'data': data.matches
+                'category': $scope.entryType,
+                'data': data.matches,
+                'count': data.matches.length
             };
             //do stuff here
             $scope.allergyMatch = $scope.masterMatches.data[1];
