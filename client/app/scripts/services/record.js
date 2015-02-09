@@ -54,7 +54,7 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
                 var tmpDates = '';
                 var dispDates = '';
 
-                console.log("calculating dates for ",type, entry);
+                //console.log("calculating dates for ",type, entry);
 
                 if (!_.isUndefined(entry.date_time)) {
                     if (!_.isUndefined(entry.date_time.point)) {

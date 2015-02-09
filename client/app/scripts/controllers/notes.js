@@ -6,7 +6,7 @@
  * # NotesCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes, record) {
+angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes, record, format) {
     $scope.any_sections_selected = false;
 
     $scope.notes = [];
@@ -141,6 +141,44 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         scope.entryTitle = "";
         scope.entrySubTitleOne = "";
         scope.entrySubTitleTwo = "";
+
+        var entry = scope.entryData;
+        console.log("TITLES: ", entry);
+        var tmpDates = [];
+        var dispDates = "Not Available";
+
+        if (!_.isUndefined(entry.date_time)) {
+            if (!_.isUndefined(entry.date_time.point)) {
+                tmpDates = [entry.date_time.point];
+            } else if (!_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
+                tmpDates = [entry.date_time.low, entry.date_time.high];
+            } else if (!_.isUndefined(entry.date_time.low) && _.isUndefined(entry.date_time.high)) {
+                tmpDates = [entry.date_time.low];
+            } else if (_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
+                tmpDates = [entry.date_time.high];
+            }
+        }
+
+        if (!_.isUndefined(entry.results) && entry.results.length > 0) {
+            if (!_.isUndefined(entry.results[0].date_time.point)) {
+                tmpDates = [entry.results[0].date_time.point];
+            } else if (!_.isUndefined(entry.results[0].date_time.low) && !_.isUndefined(entry.results[0].date_time.high)) {
+                tmpDates = [entry.results[0].date_time.low, entry.results[0].date_time.high];
+            } else if (!_.isUndefined(entry.results[0].date_time.low) && _.isUndefined(entry.results[0].date_time.high)) {
+                tmpDates = [entry.results[0].date_time.low];
+            } else if (_.isUndefined(entry.results[0].date_time.low) && !_.isUndefined(entry.results[0].date_time.high)) {
+                tmpDates = [entry.results[0].date_time.high];
+            }
+        }
+
+        if (tmpDates.length === 1) {
+            dispDates = format.formatDate(tmpDates[0]);
+        } else if (tmpDates.length === 2) {
+            dispDates = format.formatDate(tmpDates[0]) + ' - ' + format.formatDate(tmpDates[1]);
+        }
+
+        scope.recordEntry.metadata.displayDate = dispDates
+
 
         switch (scope.type) {
             case 'allergies':
@@ -295,6 +333,15 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         var stub2 = [];
 
         _.each(notes_sections, function(section) {
+            switch (section) {
+                case "conditions":
+                    section = "problems";
+                    break;
+                case "social":
+                    section = "social_history";
+                    break;
+            }
+
             var section_notes = [];
 
             section_notes = _.filter(notes, {
@@ -323,13 +370,25 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                     '_id': note.entry
                 })[0];
 
-                var entry_data={entryData:ff, type:section, recordEntry:{metadata:{}}};
+                if (!ff) {
+                    console.log("BAAAD!!!!!", section);
+                    ff = {};
+                }
 
-                var tttt= titles(entry_data);
+                var entry_data = {
+                    entryData: ff,
+                    type: section,
+                    recordEntry: {
+                        metadata: {}
+                    }
+                };
 
-                result.entryTitle=tttt.entryTitle;
-                result.entrySubTitleOne=tttt.entrySubTitleOne;
-                result.entrySubTitleTwo=tttt.entrySubTitleTwo;
+
+                var tttt = titles(entry_data);
+
+                result.entryTitle = tttt.entryTitle;
+                result.entrySubTitleOne = tttt.entrySubTitleOne;
+                result.entrySubTitleTwo = tttt.entrySubTitleTwo;
 
                 section_notes_with_entry.push(result);
             });
