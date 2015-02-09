@@ -9,12 +9,26 @@
             <div class="panel-body">
                 <!--Header Items-->
                 <div class="col-sm-12">
-                    <div class="row col-sm-12" breadcrumb></div>
+                    <!--div class="row col-sm-12" breadcrumb></div-->
+                    <div class="row col-sm-12" ng-if="entryType!=='all'">
+                        <span><span><a href="/#/home">Home</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span><a href="/#/record">My records</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span>My {{entryType}}</span>
+                        </span>
+                    </div>
+                    <div class="row col-sm-12" ng-if="entryType==='all'">
+                        <span><span><a href="/#/home">Home</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span>My records</span>
+                        </span>
+                    </div>
                     <div class="col-sm-12">
                         <div class="col-sm-8">
-                            <h4>My Record Overview</h4>
-                            <p>This page gives an overview of your health record activity.</p>
-                            <p>Last updated: July 31, 2014</p>
+                            <h4 ng-if="entryType==='all'">{{user_first}}'s Record Overview</h4>
+                            <h4 ng-if="entryType!=='all'">{{user_first}}'s {{entryType}}</h4>
+                            <p ng-if="entryType==='all'">This page gives an overview of your health record activity.</p>
+                            <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
+                            <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
+
                         </div>
                         <div class="col-sm-4">
                             <a ng-href="/api/v1/master_health_record/xml">
