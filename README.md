@@ -86,7 +86,6 @@ node server.js
 # go to localhost:3000 in your browser
 ```
 
-
 ## Contributing
 
 Contributors are welcome. See issues https://github.com/amida-tech/DRE/issues
