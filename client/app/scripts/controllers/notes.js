@@ -305,6 +305,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             notes_sections = _.uniq(notes_sections);
             var stub2 = [];
             _.each(notes_sections, function(section) {
+                /*
                 switch (section) {
                     case "conditions":
                         section = "problems";
@@ -313,6 +314,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                         section = "social_history";
                         break;
                 }
+                */
 
 
 
@@ -396,12 +398,17 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         var tmpSection = _.where($scope.notes, {
             'section': section
         });
-        if (starVal) {
-            tmpSection[0].notes[starIndex].note.starred = false;
-        } else {
-            tmpSection[0].notes[starIndex].note.starred = true;
-        }
 
+        //console.log ("TMP SECTION >> ", tmpSection);
+        //console.log('starVal', starVal);
+        //console.log(tmpSection[0].notes);
+
+        _.each(tmpSection[0].notes, function(note){
+            if (entry.note.note_id===note.note.note_id){
+                note.note.starred=!starVal;
+            }
+
+        });
 
     };
     $scope.checkNotes = function() {
@@ -411,7 +418,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             if (index > 1) {
                 if (filter.value) {
                     var section = filter.name;
-
+                    /*
                     switch (section) {
                         case "conditions":
                             section = "problems";
@@ -420,6 +427,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                             section = "social_history";
                             break;
                     }
+                    */
 
                     var tmpnotes = _.findWhere($scope.notes, {
                         'section': section

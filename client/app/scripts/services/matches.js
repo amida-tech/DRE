@@ -65,4 +65,68 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         this.matchId = matchId;
     };
 
+
+
+
+
+    //API methods for updating and ignoring match
+
+    this.discardMatch = function() {
+        $http({
+            method: 'POST',
+            url: '/api/v1/matches/' + this.section + '/' + this.matchId,
+            data: {
+                determination: 'ignored'
+            }
+        }).
+        success(function(data, status, headers, config) {
+            //TODO something
+            //$location.path("match/reconciliation");
+        }).
+        error(function(data, status, headers, config) {
+            console.log('error');
+        });
+    };
+
+
+    this.saveMatch = function(updated_entry) {
+        var current_match_index=0; //it is always 0, since we are using only first MHR target from match object
+        $http({
+            method: 'POST',
+            url: '/api/v1/matches/' + this.section + '/' + this.matchId + '/' + current_match_index,
+            data: {
+                determination: 'merged',
+                updated_entry: updated_entry
+            }
+        }).
+        success(function(data, status, headers, config) {
+            //TODO something
+            //$location.path("match/reconciliation");
+        }).
+        error(function(data, status, headers, config) {
+            console.log('error');
+        });
+    };
+
+    //this method is not used in this version of UI
+    /*
+    this.createMatch = function() {
+        $http({
+            method: 'POST',
+            url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
+            data: {
+                determination: 'added'
+            }
+        }).
+        success(function(data, status, headers, config) {
+            //Note:  Pill count not refreshing.
+            $location.path("match/reconciliation");
+        }).
+        error(function(data, status, headers, config) {
+            console.log('error');
+        });
+    };
+    */
+
+
 });

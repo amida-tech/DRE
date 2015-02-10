@@ -43,6 +43,7 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
             }
             else {
                 $location.path('/record');
+                
             }
 
         } else {
