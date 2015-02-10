@@ -7,6 +7,15 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, $location, record, format, matches, merges, history) {
+
+    console.log("RECORD CONTROLLER LOAD ");
+
+    angular.element("#nav" + $scope.entryType).removeClass("active");
+    $scope.entryType = "all";
+    angular.element("#nav" + $scope.entryType).addClass("active");
+
+    //Flip All as active selected item in DOM
+
     function getHistory() {
         history.getHistory(function(err, history) {
             if (err) {
@@ -28,7 +37,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         } else {
             $scope.mergesList = data;
 
-            console.log("merges data ", $scope.mergesList);
+            //console.log("merges data ", $scope.mergesList);
         }
 
     });
@@ -152,7 +161,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
 
     // Get Matches data for partial matches 
     function getData() {
-        console.log("getting merges for section ", $scope.entryType);
+        //console.log("getting merges for section ", $scope.entryType);
         if (!$scope.entryType || $scope.entryType === 'all') {
             return;
         }
@@ -167,17 +176,17 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             //Wire matches into the record
             _.each($scope.masterMatches.data, function(match) {
                 //console.log(mat)
-                console.log("match id and master entry id", match._id, match.entry._id, $scope.recordEntries);
+                //console.log("match id and master entry id", match._id, match.entry._id, $scope.recordEntries);
 
                 //find $scope.recordEntries.data._id === match.entry._id
 
                 _.each($scope.recordEntries, function(recordEntry) {
                     if (recordEntry.data._id === match.matches[0].match_entry._id) {
-                        console.log("attaching match ", recordEntry, match);
+                        //console.log("attaching match ", recordEntry, match);
 
                         recordEntry.metadata.match = {
                             'match_id': match._id,
-                            'section':$scope.entryType
+                            'section': $scope.entryType
                         };
                     }
                 });
@@ -197,7 +206,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
 
 
     //launch specific match (by ID and section name)
-    $scope.launchMatch=function(el){
+    $scope.launchMatch = function(el) {
         console.log("Launch MATCH>> ", el);
         //console.log(section);
 
