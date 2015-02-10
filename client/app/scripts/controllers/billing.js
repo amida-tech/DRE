@@ -6,7 +6,7 @@
  * # BillingClaimsCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, billing, history) {
+angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, billing, history, matches) {
     function getHistory() {
         history.getHistory(function(err, history) {
             if (err) {
@@ -107,7 +107,7 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
         pageRender(billing.masterRecord, billing.all_notes);
     }
 
-
+/*
     function getHistory() {
         history.getHistory(function(err, history) {
             if (err) {
@@ -118,7 +118,7 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
             }
         });
     }
-
+*/
     getHistory();
 
     $scope.entryType = 'all';

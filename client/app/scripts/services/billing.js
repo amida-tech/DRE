@@ -71,7 +71,7 @@ angular.module('phrPrototypeApp').service('billing', function record($http, $q, 
             data[type]=result;
             if (sources === 0) {
                 console.log("returning billing data", data);
-                callback(null, data)
+                callback(null, data);
             }
         }
 
