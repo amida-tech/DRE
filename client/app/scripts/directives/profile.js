@@ -24,6 +24,9 @@ angular.module('phrPrototypeApp')
                         if (profileInfo.dob) {
                             scope.user_dob = format.formatDate(profileInfo.dob.point);
                         }
+                        if (profileInfo.gender) {
+                            scope.user_gender = profileInfo.gender;
+                        }
                     }                
                 });
 

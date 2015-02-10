@@ -20,6 +20,9 @@ angular.module('phrPrototypeApp')
                     if (profileInfo&&!angular.isUndefined(profileInfo.name)) {
                         scope.user_first = profileInfo.name.first;
                         scope.user_last = profileInfo.name.last;
+                        if (profileInfo.name.middle && profileInfo.name.middle[0]) {
+                            scope.user_middle = profileInfo.name.middle[0];
+                        }
                     }
                 });
 
