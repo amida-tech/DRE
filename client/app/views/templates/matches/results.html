@@ -1,52 +1,217 @@
-<table class="table table-hover">
-	<tbody>
-		<tr>
-			<td>Set Name:</td>
-			<td>{{entryData.result_set.name}}</td>
-		</tr>
-		<tr>
-			<td>Set Code:</td>
-			<td>{{entryData.result_set.code}}</td>
-		</tr>
-		<tr>
-			<td>Set Code System:</td>
-			<td>{{entryData.result_set.code_system_name}}</td>
-		</tr>
-		<tr ng-show="entryData.result_set.translations">
-			<td>Other Descriptions:</td>
-			<td>
-				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.result_set.translations">
-					<table class="table sub-table">
-						<thead>
-							<tr>
-								<td>Name:</td>
-								<td>{{itemEntry.name}}</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Code:</td>
-								<td>{{itemEntry.code}}</td>
-							</tr>
-							<tr>
-								<td>Code System:</td>
-								<td>{{itemEntry.code_system_name}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</td>
-		</tr>
+<style>
+td.panel {
+box-shadow: none;
+}
+</style>
+<div class="col-sm-12">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td class="panel" colspan="2" style="border:none;">
+                <h4 class="text-left">{{entryData.result_set.name}}</h4>
 
-		<tr ng-show="entryData.results" ng-repeat="(resultIndex, resultEntry) in entryData.results">
-			<td>{{resultEntry.result.name}}:</td>
-			<td>
-				{{resultEntry.displayQuantity}}
-			</td>
-		</tr>
+                	
+                    
+                </td>
+                <td style="border:none;">
+                    <svg height="40" width="20" style="position: relative; left: -9px; top: 0px;">
+                    <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:0"></polygon>
+                    </svg>
+                </td>
+                <td class="panel" colspan="2" style="border:none;">
+                    <h4 class="text-left">{{matchData.result_set.name}}</h4>
+                    
+                    
+                </td>
+            </tr>
+            
 
-	</tbody>
-</table>
+            
+            <tr>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.result_set, finalData.result_set) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.result_set)" type="checkbox" ng-checked="!areEqual(matchData.result_set, finalData.result_set)" ng-click="checkboxToggle(flagData.result_set, matchData.result_set, finalData.result_set)"> Set:</span></td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.result_set, finalData.result_set) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td>{{entryData.result_set.name}} <span ng-if="isDifferent(flagData.result_set.name.kind)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td>{{entryData.result_set.code}} <span ng-if="isDifferent(flagData.result_set.code.kind)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{entryData.result_set.code_system_name}} <span ng-if="isDifferent(flagData.result_set.code_system_name.kind)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td style="border:none;">&nbsp</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.result_set, finalData.result_set) && {'background-color': '#B0C4DE'}">Set:</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.result_set, finalData.result_set) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td ng-if="matchData.result_set.name === finalData.result_set.name">{{matchData.result_set.name}}</td>
+                                    <td ng-if="matchData.result_set.name !== finalData.result_set.name">{{finalData.result_set.name}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td ng-if="matchData.result_set.code === finalData.result_set.code">{{matchData.result_set.code}}</td>
+                                    <td ng-if="matchData.result_set.code !== finalData.result_set.code">{{finalData.result_set.code}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td ng-if="matchData.result_set.code_system_name === finalData.result_set.code_system_name">{{matchData.result_set.code_system_name}}</td>
+                                    <td ng-if="matchData.result_set.code_system_name !== finalData.result_set.code_system_name">{{finalData.result_set.code_system_name}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr ng-if="entryData.results" ng-repeat="(resultIndex, resultEntry) in entryData.results">
 
 
 
+            	<td  style="border:none;" class="panel" ng-style="!areEqual(matchData.results[resultIndex], finalData.results[resultIndex]) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.results[resultIndex])" type="checkbox" ng-checked="!areEqual(matchData.results[resultIndex], finalData.results[resultIndex])" ng-click="resultCheckboxToggle([flagData.results[resultIndex].result,flagData.results[resultIndex]], matchData.results[resultIndex], finalData.results[resultIndex],resultEntry, details.matches[0].match_object.subelements.results, resultIndex)"> Result {{resultIndex + 1}}:</span></td>
+                
+                <td style="border:none;" class="panel" ng-style="!areEqual(matchData.results[resultIndex], finalData.results[resultIndex]) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td>{{resultEntry.result.name}} <span ng-if="resultIndex >= matchData.results.length || !areEqual(resultEntry.result.name, matchData.results[resultIndex].result.name)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td>{{resultEntry.result.code}} <span ng-if="resultIndex >= matchData.results.length || !areEqual(resultEntry.result.code, matchData.results[resultIndex].result.code)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{resultEntry.result.code_system_name}} <span ng-if="resultIndex >= matchData.results.length || !areEqual(resultEntry.result.code_system_name, matchData.results[resultIndex].result.code_system_name)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Value:</td>
+                                    <td>{{resultEntry.value}} <span ng-if="resultIndex >= matchData.results.length || !areEqual(resultEntry.value, matchData.results[resultIndex].value)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Unit:</td>
+                                    <td>{{resultEntry.unit}} <span ng-if="resultIndex >= matchData.results.length || !areEqual(resultEntry.unit, matchData.results[resultIndex].unit)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td style="border:none;">&nbsp</td>
+                
+                <td style="border:none;" class="panel" ng-style="!areEqual(matchData.results[resultIndex], finalData.results[resultIndex]) && {'background-color': '#B0C4DE'}"><span ng-if="finalData.results[resultIndex]">Result {{resultIndex + 1}}:</span></td>
+                <td style="border:none;" class="panel" ng-style="!areEqual(matchData.results[resultIndex], finalData.results[resultIndex]) && {'background-color': '#B0C4DE'}">
+                    <div class="panel" ng-if="finalData.results[resultIndex]">
+                        <table class="table sub-table">
+                            
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+
+                                    <td ng-if="matchData.results[resultIndex].result.name === finalData.results[resultIndex].result.name">{{matchData.results[resultIndex].result.name}}</td>
+                                    <td ng-if="matchData.results[resultIndex].result.name !== finalData.results[resultIndex].result.name">{{finalData.results[resultIndex].result.name}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td ng-if="matchData.results[resultIndex].result.code === finalData.results[resultIndex].result.code">{{matchData.results[resultIndex].result.code}}</td>
+                                    <td ng-if="matchData.results[resultIndex].result.code !== finalData.results[resultIndex].result.code">{{finalData.results[resultIndex].result.code}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td ng-if="matchData.results[resultIndex].result.code_system_name === finalData.results[resultIndex].result.code_system_name">{{matchData.results[resultIndex].result.code_system_name}}</td>
+                                    <td ng-if="matchData.results[resultIndex].result.code_system_name !== finalData.results[resultIndex].result.code_system_name">{{finalData.results[resultIndex].result.code_system_name}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Value:</td>
+                                    <td ng-if="matchData.results[resultIndex].value === finalData.results[resultIndex].value">{{matchData.results[resultIndex].value}}</td>
+                                    <td ng-if="matchData.results[resultIndex].value !== finalData.results[resultIndex].value">{{finalData.results[resultIndex].value}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Unit:</td>
+                                    <td ng-if="matchData.results[resultIndex].unit === finalData.results[resultIndex].unit">{{matchData.results[resultIndex].unit}}</td>
+                                    <td ng-if="matchData.results[resultIndex].unit !== finalData.results[resultIndex].unit">{{finalData.results[resultIndex].unit}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <tr ng-if="entryData.results.length !== finalData.results.length && newIndex + 1 > entryData.results.length" ng-repeat="(newIndex, newresult) in finalData.results">
+            	<td colspan="2" style="border:none;" class="panel">
+            	<td style="border:none;" style="border:none;">&nbsp</td>
+            	<td style="border:none;background-color:#B0C4DE;" class="panel"></td>
+            	<td style="border:none;background-color:#B0C4DE;" class="panel">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+
+                                    <td>{{newresult.name}} <span class="label label-danger pull-right">New</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+
+                                    <td>{{newresult.code}} <span class="label label-danger pull-right">New</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System Name:</td>
+
+                                    <td>{{newresult.code_system_name}} <span class="label label-danger pull-right">New</span></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+
+
+
+
+
+
+
+
+
+
+            <tr>
+            <td colspan="2">
+            	<div class="col-sm-8 col-sm-offset-2">
+            <button class="btn btn-default btn-block" ng-click="undoAllButton()"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+        </div>
+
+            </td>
+            <td style="border:none;">&nbsp</td>
+            <td colspan="2">
+            	<div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
+            <button class="btn btn-primary btn-block" ng-click="submitButton()">Save Updates</button>
+            <button class="btn btn-default btn-block" ng-click="ignoreButton()">Ignore Updates</button>
+        </div>
+
+            </td>
+
+            </tr>
+            
+            
+        </tbody>
+    </table>
+</div>

@@ -2985,7 +2985,7 @@
 								<assignedEntity>
 									<id root="2.16.840.1.113883.19.5.9999.456" extension="2981823"/>
 									<addr>
-										<streetAddressLine>1002 Village Avenue</streetAddressLine>
+										<streetAddressLine>1001 Village Avenue</streetAddressLine>
 										<city>Portland</city>
 										<state>OR</state>
 										<postalCode>99123</postalCode>
