@@ -3,77 +3,34 @@
         <tr>
             <td colspan="2">
                 <h3>Entry Details</h3>
+                <!--pre>{{entryData|json}}</pre-->
             </td>
         </tr>
     </thead>
     <tbody>
-        <tr ng-show="entryData.address">
-            <td>Address:</td>
-            <td>{{entryData.address}}</td>
-        </tr>
-        <tr ng-show="entryData.phone">
-            <td>Phone:</td>
-            <td>{{entryData.phone}}</td>
-        </tr>
-        <tr ng-show="entryData.assigned_person">
-            <td>Assigned Person:</td>
-            <td>{{entryData.assigned_person}}</td>
-        </tr>
-        <tr ng-show="entryData.email">
-            <td>Email:</td>
-            <td>{{entryData.email}}</td>
-        </tr>
-        <tr ng-show="entryData.group_name">
-            <td>Group Name:</td>
-            <td>{{entryData.group_name}}</td>
-        </tr>
-        <tr ng-show="entryData.group_number">
-            <td>Group Number:</td>
-            <td>{{entryData.group_number}}</td>
-        </tr>
-        <tr ng-show="entryData.member_name">
-            <td>Member Name:</td>
-            <td>{{entryData.member_name}}</td>
-        </tr>
-        <tr ng-show="entryData.payer_name">
-            <td>Payer Name:</td>
-            <td>{{entryData.payer_name}}</td>
-        </tr>
-        <tr ng-show="entryData.payer_id">
-            <td>Payer ID:</td>
-            <td>{{entryData.payer_id}}</td>
-        </tr>
-        <tr ng-show="entryData.payer_id_type">
-            <td>Payer ID Type:</td>
-            <td>{{entryData.payer_id_type}}</td>
-        </tr>
-        <tr ng-show="entryData.plan_name">
-            <td>Plan Name:</td>
-            <td>{{entryData.plan_name}}</td>
-        </tr>
-        <tr ng-show="entryData.plan_id">
+
+        <tr ng-show="entryData.policy_holder.performer.identifiers[0].identifier && !entryData.policy_holder.performer.identifiers[0].extension">
             <td>Plan ID:</td>
-            <td>{{entryData.plan_id}}</td>
+            <td>{{entryData.policy_holder.performer.identifiers[0].identifier}}</td>
         </tr>
-        <tr ng-show="entryData.plan_information">
-            <td>Plan Information:</td>
-            <td>{{entryData.plan_information}}</td>
+        <tr ng-show="entryData.policy_holder.performer.identifiers[0].extension">
+            <td>Plan ID:</td>
+            <td>{{entryData.policy_holder.performer.identifiers[0].extension}}</td>
         </tr>
-        <tr ng-show="entryData.type">
-            <td>Plan Type:</td>
+
+
+        <tr ng-show="entryData.policy.insurance.performer.organization[0].name">
+            <td>Plan Name:</td>
             <td>
                 <div class="panel">
                     <table class="table sub-table">
-                        <tr ng-repeat="planType in entryData.type">
-                            <td class="capitalize">{{planType}}</td>
+                        <tr ng-repeat="name in entryData.policy.insurance.performer.organization[0].name">
+                            <td class="capitalize">{{name}}</td>
                         </tr>
                     </table>
                 </div>
             </td>
         </tr>
-        <tr ng-show="entryData.policy_number">
-            <td>Policy Number:</td>
-            <td>{{entryData.policy_number}}</td>
-        </tr>
+
     </tbody>
 </table>

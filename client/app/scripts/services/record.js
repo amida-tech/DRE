@@ -105,7 +105,7 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
                 });
 
                 //TODO: remove social, problems from list below (it breaks something)
-                if (!_.contains(['demographics',  'plan_of_care', 'payers'], type)) {
+                if (!_.contains(['demographics',  'plan_of_care'], type)) {
 
                     var display_type=type;
                     if (type==='social_history'){

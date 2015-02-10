@@ -65,7 +65,19 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
                 return '1979-12-12';
             }
         }).reverse();
+
         $scope.entryListFiltered = $scope.recordEntries;
+        /*
+        if ($scope.entryType === "all") {
+            $scope.entryListFiltered = $scope.recordEntries;
+        } else {
+            $scope.entryListFiltered = _.where($scope.recordEntries, {
+                category: $scope.entryType
+            });
+        }
+        */        
+
+
         $scope.$watch('entryType', function(newVal, oldVal) {
             //keeping current section name in scope
             $scope.entryType = newVal;
