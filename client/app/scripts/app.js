@@ -117,9 +117,9 @@ angular
             // if route requires auth and user is not logged in
             authentication.authStatus(function(err, res) {
               var url = $location.url();              
-              console.log('res', res);
+              //console.log('res', res);
                 if (!res) {
-                    console.log('url', url, (url ==='/login')||(url==='/')||(url==='/register'));
+                    //console.log('url', url, (url ==='/login')||(url==='/')||(url==='/register'));
                     if ((url ==='/login')||(url==='/')||(url==='/register')) {
                         // console.log('working?');
                         $location.path(url);

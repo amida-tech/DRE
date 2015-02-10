@@ -63,7 +63,7 @@ angular.module('phrPrototypeApp')
                 var noteCount = 0;
 
                 _.each(results, function(entry) {
-                    console.log(entry);
+                    //console.log(entry);
                     if (entry.star) {
                         noteCount++;
                     }

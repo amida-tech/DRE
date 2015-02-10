@@ -158,7 +158,7 @@ angular.module('phrPrototypeApp')
         function displayProfile() {
             profile.getProfile(function(err, profileInfo) {
                 $scope.profile = profileInfo;
-                console.log('profile controller', $scope.profile);
+                //console.log('profile controller', $scope.profile);
                 //Shims for HL7 weirdness.
                 if (profileInfo && profileInfo.dob) {
                     $scope.editDOB = moment($scope.profile.dob.point.date).format('YYYY-MM-DD');
@@ -218,7 +218,7 @@ angular.module('phrPrototypeApp')
                 } else {
                     $scope.profile.phone = [];
                     $scope.profile.phone[0] = tmpPhone;
-                    console.log($scope.tmpNewPhone, $scope.new_phone);
+                    //console.log($scope.tmpNewPhone, $scope.new_phone);
                     $scope.new_phone = {};
                 }
             }
@@ -246,7 +246,7 @@ angular.module('phrPrototypeApp')
                 } else {
                     $scope.profile.addresses = [];
                     $scope.profile.addresses[0] = tmpNewAddress;
-                    console.log($scope.tmpNewAddress, $scope.new_address);
+                    //console.log($scope.tmpNewAddress, $scope.new_address);
                     $scope.new_address = {};
                 }
 

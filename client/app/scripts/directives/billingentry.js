@@ -95,12 +95,19 @@
 
       	function countStarredComments (recordIndex) {
       		var commentCount = 0;
+
+                  return;
+
+                  //TODO: fix this, it breaks now
+
+                  /*
       		_.each(scope.entryMetaData.comments, function(comment) {
       			if (comment.starred) {
       				commentCount++;
       			}
       		});
       		scope.entryMetaData.starred_comments = commentCount;
+                  */
       	}
 
       	countStarredComments();

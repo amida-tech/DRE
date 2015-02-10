@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     getHistory();
 
 
-
+    //Loading Merges
     merges.getMerges(function(err, data) {
         if (err) {
             console.log("error whil getting merges ", err);
@@ -89,7 +89,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         } else {
             $scope.entryType = matches.getSection();
         }
-        
+
         //Flip All as active selected item in DOM
         angular.element("#nav" + $scope.entryType).addClass("active");
 
@@ -163,15 +163,42 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 'data': data.matches,
                 'count': data.matches.length
             };
+
+            //Wire matches into the record
+            _.each($scope.masterMatches.data, function(match) {
+                //console.log(mat)
+                console.log("match id and master entry id", match._id, match.entry._id, $scope.recordEntries);
+
+                //find $scope.recordEntries.data._id === match.entry._id
+
+                _.each($scope.recordEntries, function(recordEntry) {
+                    if (recordEntry.data._id === match.matches[0].match_entry._id) {
+                        console.log("attaching match ", recordEntry, match);
+
+                        recordEntry.metadata.match = {
+                            'match_id': match._id,
+                            'section':$scope.entryType
+                        };
+                    }
+                });
+            });
+
             //do stuff here
             $scope.allergyMatch = $scope.masterMatches.data[1];
         });
     }
     getData();
 
-    $scope.goToMatches = function (section) {
+    $scope.goToMatches = function(section) {
         //console.log(section);
         //matches.setSection(section);
         $location.path('/matches');
+    };
+
+
+    $scope.launchMatch=function(el){
+        console.log("Launch MATCH>> ", el);
+        $scope.goToMatches(el.match.section);
+
     };
 });
