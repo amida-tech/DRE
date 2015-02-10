@@ -112,7 +112,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             //keeping current section name in scope
             $scope.entryType = newVal;
             console.log("$scope.entryType = ", $scope.entryType);
-            getData();
+            getMatchesData();
             if (newVal !== oldVal) {
                 if (newVal === "all") {
                     $scope.entryListFiltered = $scope.recordEntries;
@@ -142,8 +142,10 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         pageRender(record.masterRecord, record.all_notes);
     }
     $scope.masterMatches = {};
+
+
     // Get Matches data for partial matches 
-    function getData() {
+    function getMatchesData() {
         //console.log("getting merges for section ", $scope.entryType);
         if (!$scope.entryType || $scope.entryType === 'all') {
             return;
@@ -173,7 +175,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             $scope.allergyMatch = $scope.masterMatches.data[1];
         });
     }
-    getData();
+
+    getMatchesData();
+
     $scope.goToMatches = function(section) {
         //console.log(section);
         //matches.setSection(section);

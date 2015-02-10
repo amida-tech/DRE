@@ -5,7 +5,7 @@
  * @description
  * # recordNavigation
  */
-angular.module('phrPrototypeApp').directive('entryDetails', function($window, $location, format, matches) {
+angular.module('phrPrototypeApp').directive('entryDetails', function($window, $location, format, matches, $route, record) {
     return {
         templateUrl: 'views/templates/entrydetails.html',
         restrict: 'EA',
@@ -127,10 +127,14 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
 
                 console.log("match submitted");
 
-                console.log("MATCH!! >>",scope.finalData);
+                console.log("MATCH!! >>", scope.finalData);
 
                 matches.saveMatch(scope.finalData);
                 $location.path('/record');
+                record.getData(function(err, data) {
+                    return;
+                });
+                $route.reload();
 
                 /*
                 var send = $window.confirm("Are these changes accurate?");
@@ -149,6 +153,11 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 console.log("match ignored");
                 matches.discardMatch();
                 $location.path('/record');
+                record.getData(function(err, data) {
+                    return;
+                });
+                $route.reload();
+
 
                 /*
                 var send = $window.confirm("Ignore changes?");
