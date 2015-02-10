@@ -117,26 +117,25 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     }]
     */
     function titles(scope) {
+            scope.entryTitle = "";
+            scope.entrySubTitleOne = "";
+            scope.entrySubTitleTwo = "";
 
-        scope.entryTitle = "";
-        scope.entrySubTitleOne = "";
-        scope.entrySubTitleTwo = "";
+            var entry = scope.entryData;
+            //console.log("TITLES: ", entry);
+            var tmpDates = [];
+            var dispDates = "Not Available";
 
-        var entry = scope.entryData;
-        //console.log("TITLES: ", entry);
-        var tmpDates = [];
-        var dispDates = "Not Available";
-
-        if (!_.isUndefined(entry.date_time)) {
-            if (!_.isUndefined(entry.date_time.point)) {
-                tmpDates = [entry.date_time.point];
-            } else if (!_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
-                tmpDates = [entry.date_time.low, entry.date_time.high];
-            } else if (!_.isUndefined(entry.date_time.low) && _.isUndefined(entry.date_time.high)) {
-                tmpDates = [entry.date_time.low];
-            } else if (_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
-                tmpDates = [entry.date_time.high];
-
+            if (!_.isUndefined(entry.date_time)) {
+                if (!_.isUndefined(entry.date_time.point)) {
+                    tmpDates = [entry.date_time.point];
+                } else if (!_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
+                    tmpDates = [entry.date_time.low, entry.date_time.high];
+                } else if (!_.isUndefined(entry.date_time.low) && _.isUndefined(entry.date_time.high)) {
+                    tmpDates = [entry.date_time.low];
+                } else if (_.isUndefined(entry.date_time.low) && !_.isUndefined(entry.date_time.high)) {
+                    tmpDates = [entry.date_time.high];
+                }
             }
 
             if (!_.isUndefined(entry.results) && entry.results.length > 0) {
@@ -299,59 +298,26 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     }
 
     function mashNotesWithRecord(notes, record) {
-
-        console.log("mashNotesWithRecord ", notes, record);
-
-        //generating list of unique sections present in notes
-        var notes_sections = [];
-        notes_sections = _.pluck(notes, "section");
-        notes_sections = _.uniq(notes_sections);
-
-        var stub2 = [];
-
-        _.each(notes_sections, function(section) {
-            switch (section) {
-                case "conditions":
-                    section = "problems";
-                    break;
-                case "social":
-                    section = "social_history";
-                    break;
-            }
-
-            var section_notes = [];
-
-            section_notes = _.filter(notes, {
-                section: section
-            });
-
-            var section_notes_with_entry = [];
-
-            _.each(section_notes, function(note) {
-                var result = {};
-                result = {
-                    'entryTitle': note.entry,
-                    'entrySubTitleOne': '',
-                    'entrySubTitleTwo': '',
-                    'entry_id': note.entry,
-                    'note': {
-                        'comment': note.note,
-                        'date': note.datetime,
-                        'starred': note.star,
-                        'note_id': note._id
-                    }
-                };
-
-
-                var ff = _.where(record[section], {
-                    '_id': note.entry
-                })[0];
-
-                if (!ff) {
-                    //console.log("BAAAD!!!!!", section);
-                    ff = {};
-
+            console.log("mashNotesWithRecord ", notes, record);
+            //generating list of unique sections present in notes
+            var notes_sections = [];
+            notes_sections = _.pluck(notes, "section");
+            notes_sections = _.uniq(notes_sections);
+            var stub2 = [];
+            _.each(notes_sections, function(section) {
+                switch (section) {
+                    case "conditions":
+                        section = "problems";
+                        break;
+                    case "social":
+                        section = "social_history";
+                        break;
                 }
+
+
+
+
+
 
                 var section_notes = [];
                 section_notes = _.filter(notes, {
@@ -377,7 +343,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                     })[0];
 
                     if (!ff) {
-                        console.log("BAAAD!!!!!", section);
+                        //console.log("BAAAD!!!!!", section);
                         ff = {};
                     }
 
@@ -458,7 +424,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                     var tmpnotes = _.findWhere($scope.notes, {
                         'section': section
                     });
-                    console.log(tmpnotes, section);
+                    //console.log(tmpnotes, section);
                     _.each(tmpnotes.notes, function(note) {
                         if (note.note.starred) {
                             $scope.starredNotes = true;
@@ -488,4 +454,3 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         }
     };
 });
-
