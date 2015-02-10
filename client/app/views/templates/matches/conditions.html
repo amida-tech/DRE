@@ -1,52 +1,152 @@
-<table class="table table-hover">
-	
-	<tbody>
-		<tr>
-			<td>Code:</td>
-			<td>{{entryData.problem.code.code}}</td>
-		</tr>
-		<tr>
-			<td>Code System:</td>
-			<td>{{entryData.problem.code.code_system_name}}</td>
-		</tr>
-		<tr>
-			<td>Patient Status:</td>
-			<td>{{entryData.patient_status}}</td>
-		</tr>
-		<tr>
-			<td>Onset Age:</td>
-			<td>{{entryData.onset_age}}</td>
-		</tr>
-		<tr ng-show="entryData.problem.translations">
-			<td>Other Descriptions:</td>
-			<td>
-				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.problem.translations">
-					<table class="table sub-table">
-						<thead>
-							<tr>
-								<td>Name:</td>
-								<td>{{itemEntry.name}}</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Code:</td>
-								<td>{{itemEntry.code}}</td>
-							</tr>
-							<tr>
-								<td>Code System:</td>
-								<td>{{itemEntry.code_system_name}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr ng-show="itemEntry.status">
-			<td>Status:</td>
-			<td>
-				{{itemEntry.status.name}}
-			</td>
-		</tr>
-	</tbody>
-</table>
+<style>
+td.panel {
+box-shadow: none;
+}
+</style>
+<div class="col-sm-12">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td class="panel" colspan="2" style="border:none;">
+                <h4 class="text-left">{{entryData.problem.code.name}}</h4>
+                    <h5 ng-if="entryData.date_time" ng-hide="entryData.date_time.high" class="text-left">{{formatDate(entryData.date_time.low)}}</h5>
+                    <h5 ng-if="entryData.date_time.high" class="text-left">{{formatDate(entryData.date_time.low)}} - {{formatDate(entryData.date_time.high)}}</h5>
+                    <span ng-if="!entryData.date_time">
+                    <h5 ng-if="entryData.problem.date_time" ng-hide="entryData.problem.date_time.high" class="text-left">{{formatDate(entryData.problem.date_time.low)}}</h5>
+                    <h5 ng-if="entryData.problem.date_time.high" class="text-left">{{formatDate(entryData.problem.date_time.low)}} - {{formatDate(entryData.problem.date_time.high)}}</h5>
+
+                    </span>
+                    
+                </td>
+                <td style="border:none;">
+                    <svg height="40" width="20" style="position: relative; left: -9px; top: 0px;">
+                    <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:0"></polygon>
+                    </svg>
+                </td>
+                <td class="panel" colspan="2" style="border:none;">
+                    <h4 class="text-left">{{matchData.problem.code.name}}</h4>
+                    <h5 ng-if="finalData.date_time" ng-hide="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}}</h5>
+                    <h5 ng-if="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}} - {{formatDate(finalData.date_time.high)}}</h5>
+                    <span ng-if="!finalData.date_time">
+                    	<h5 ng-if="finalData.problem.date_time" ng-hide="finalData.problem.date_time.high" class="text-left">{{formatDate(finalData.problem.date_time.low)}}</h5>
+                    <h5 ng-if="finalData.problem.date_time.high" class="text-left">{{formatDate(finalData.problem.date_time.low)}} - {{formatDate(finalData.problem.date_time.high)}}</h5>
+
+
+
+                    </span>
+                    
+                </td>
+            </tr>
+            <tr ng-if="entryData.date_time">
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.date_time)" type="checkbox" ng-checked="!areEqual(matchData.date_time, finalData.date_time)" ng-click="checkboxToggle([flagData.date_time.low, flagData.date_time.high], matchData.date_time, finalData.date_time)"> Date:</span></td>
+
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}">
+                    <span ng-if="entryData.date_time" ng-hide="entryData.date_time.high">{{formatDate(entryData.date_time.low)}}</span>
+                    <span ng-if="entryData.date_time.high">{{formatDate(entryData.date_time.low)}} - {{formatDate(entryData.date_time.high)}}</span>
+
+
+
+                    <span ng-if="isDifferent(flagData.date_time.low.date.kind) || isDifferent(flagData.date_time.high.date.kind)" class="label label-info pull-right">Different</span>
+                </td>
+
+                <td style="border:none;">&nbsp</td>
+                <td class="panel" style="border:none;" ng-style="matchData.date_time.low.date !== finalData.date_time.low.date && {'background-color': '#B0C4DE'}">Date:</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time.low.date, finalData.date_time.low.date) && {'background-color': '#B0C4DE'}">
+
+                <span ng-hide="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}}</span>
+                    <span ng-if="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}} - {{formatDate(finalData.date_time.high)}}</span>
+                     <span ng-show="!areEqual(matchData.date_time, finalData.date_time)" class="label label-warning pull-right">Updated</span>
+                     
+            </tr>
+            <tr ng-if="!entryData.date_time">
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.problem.date_time, finalData.problem.date_time) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.problem.date_time)" type="checkbox" ng-checked="!areEqual(matchData.problem.date_time, finalData.problem.date_time)" ng-click="checkboxToggle([flagData.problem.date_time.low, flagData.problem.date_time.high], matchData.problem.date_time, finalData.problem.date_time)"> Date:</span></td>
+
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.problem.date_time, finalData.problem.date_time) && {'background-color': '#B0C4DE'}">
+                    <span ng-if="entryData.problem.date_time" ng-hide="entryData.problem.date_time.high">{{formatDate(entryData.problem.date_time.low)}}</span>
+                    <span ng-if="entryData.problem.date_time.high">{{formatDate(entryData.problem.date_time.low)}} - {{formatDate(entryData.problem.date_time.high)}}</span>
+
+
+
+                    <span ng-if="isDifferent(flagData.problem.date_time.low.date.kind) || isDifferent(flagData.problem.date_time.high.date.kind)" class="label label-info pull-right">Different</span>
+                </td>
+
+                <td style="border:none;">&nbsp</td>
+                <td class="panel" style="border:none;" ng-style="matchData.problem.date_time.low.date !== finalData.problem.date_time.low.date && {'background-color': '#B0C4DE'}">Date:</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.problem.date_time.low.date, finalData.problem.date_time.low.date) && {'background-color': '#B0C4DE'}">
+
+                <span ng-hide="finalData.problem.date_time.high" class="text-left">{{formatDate(finalData.problem.date_time.low)}}</span>
+                    <span ng-if="finalData.problem.date_time.high" class="text-left">{{formatDate(finalData.problem.date_time.low)}} - {{formatDate(finalData.problem.date_time.high)}}</span>
+                     <span ng-show="!areEqual(matchData.problem.date_time, finalData.problem.date_time)" class="label label-warning pull-right">Updated</span>
+                     
+            </tr>
+            
+            <tr>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.problem.code, finalData.problem.code) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.problem.code)" type="checkbox" ng-checked="!areEqual(matchData.problem.code, finalData.problem.code)" ng-click="checkboxToggle(flagData.problem.code, matchData.problem.code, finalData.problem.code)"> Code:</span></td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.problem.observation.allergen, finalData.problem.observation.allergen) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td>{{entryData.problem.code.name}} <span ng-if="isDifferent(flagData.problem.code.name.kind)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td>{{entryData.problem.code.code}} <span ng-if="isDifferent(flagData.problem.code.code.kind)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{entryData.problem.code.code_system_name}} <span ng-if="isDifferent(flagData.problem.code.code_system_name.kind)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td style="border:none;">&nbsp</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.problem.code, finalData.problem.code) && {'background-color': '#B0C4DE'}">Code:</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.problem.code, finalData.problem.code) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td ng-if="matchData.problem.code.name === finalData.problem.code.name">{{matchData.problem.code.name}}</td>
+                                    <td ng-if="matchData.problem.code.name !== finalData.problem.code.name">{{finalData.problem.code.name}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td ng-if="matchData.problem.code.code === finalData.problem.code.code">{{matchData.problem.code.code}}</td>
+                                    <td ng-if="matchData.problem.code.code !== finalData.problem.code.code">{{finalData.problem.code.code}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td ng-if="matchData.problem.code.code_system_name === finalData.problem.code.code_system_name">{{matchData.problem.code.code_system_name}}</td>
+                                    <td ng-if="matchData.problem.code.code_system_name !== finalData.problem.code.code_system_name">{{finalData.problem.code.code_system_name}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+            <td colspan="2">
+            	<div class="col-sm-8 col-sm-offset-2">
+            <button class="btn btn-default btn-block" ng-click="undoAllButton()"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+        </div>
+
+            </td>
+            <td style="border:none;">&nbsp</td>
+            <td colspan="2">
+            	<div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
+            <button class="btn btn-primary btn-block" ng-click="submitButton()">Save Updates</button>
+            <button class="btn btn-default btn-block" ng-click="ignoreButton()">Ignore Updates</button>
+        </div>
+
+            </td>
+
+            </tr>
+            
+            
+        </tbody>
+    </table>
+</div>

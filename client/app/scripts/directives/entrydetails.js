@@ -57,6 +57,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 }
             }, true);
             scope.updateButton = function(diffs) {
+                console.log(diffs);
                 _.each(diffs, function(change) {
                     DeepDiff.applyChange(scope.finalData, true, change);
                 });
@@ -107,6 +108,57 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                     }
 
                 }
+            };
+            scope.resultCheckboxToggle = function(diffs, obj1, obj2, obj3, type, index) {
+                
+                var partial = _.findWhere(type, {src_id: String(index), dest_id: String(index), match: 'partial'});
+                //console.log('diffs',diffs);
+                //console.log('obj1',obj1);
+                //console.log('obj2',obj2);
+
+                
+                if (partial) {
+                    scope.checkboxToggle(diffs,obj1,obj2);
+                } else {
+                    if (scope.matchData.observation.reactions.length === scope.finalData.observation.reactions.length) {
+                        scope.finalData.observation.reactions.push(obj3);  
+                    } else {
+                        scope.finalData.observation.reactions = scope.finalData.observation.reactions.slice(0,1);
+                    }
+                    
+                }
+            };
+            scope.body_siteCheckboxToggle = function(diffs, obj1, obj2, obj3, type) {
+                
+
+                if (type !== 'new') {
+                    scope.checkboxToggle(diffs,obj1,obj2);
+                } else {
+                    if (scope.matchData.body_sites.length === scope.finalData.body_sites.length) {
+                        scope.finalData.body_sites.push(obj3);  
+                    } else {
+                        scope.finalData.body_sites = scope.finalData.body_sites.slice(0,1);
+                    }
+                    
+                }
+            };
+            scope.findingCheckboxOverwrite = [];
+            scope.contains = function(array, item) {
+                return _.contains(array, item);
+            };
+            scope.findingCheckboxToggle = function(index, matchFinding, masterFindings, finalFindings) {
+                console.log(index, matchFinding, masterFindings, finalFindings);
+                //will break if an overwrite happened elsewere - working for demo
+                if (!scope.areEqual(masterFindings, finalFindings)) {
+                    finalFindings.pop();
+                    scope.findingCheckboxOverwrite = _.without(scope.findingCheckboxOverwrite, index);
+                } else {
+                    finalFindings.push(matchFinding);
+                    scope.findingCheckboxOverwrite.push(index);
+                }
+
+
+                
             };
             scope.undoAllButton = function() {
                 _.each(scope.diffList, function(change) {
