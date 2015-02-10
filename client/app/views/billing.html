@@ -45,8 +45,10 @@
         <h4 class="text-center text-white">{{entryType}}</h4>
         <div class="panel">
             <div class="panel-body">
+            <pre>{{entryListFiltered|json}}</pre>
+            <pre>{{entries|json}}</pre>
 
-                <div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
+                <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
 
                     <div class="col-sm-12 row timeline-side">
                         <billingentry entry-type="{{recordEntry.category}}" entry-index="{{recordIndex}}">
@@ -64,6 +66,6 @@
         </div>
     </div>
 
-    <!--<pre>{{entries | json}}</pre>-->
+    <!--<pre>{{masterRecord | json}}</pre>-->
 
 </div>

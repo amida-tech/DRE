@@ -6,7 +6,7 @@
  * # BillingClaimsCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, billing, history, matches, merges) {
+angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll,  format, billing, history, matches, merges) {
     function getHistory() {
         history.getHistory(function(err, history) {
             if (err) {
@@ -18,6 +18,8 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
         });
     }
 
+
+
     getHistory();
     //Loading Merges (only used in record history, don't need in billing)
     merges.getMerges(function(err, data) {
@@ -25,14 +27,13 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
             console.log("error whil getting merges ", err);
         } else {
             $scope.mergesList = data;
-            console.log("merges data ", $scope.mergesList);
+            //console.log("merges data ", $scope.mergesList);
         }
     });
 
-
-    billing.getData();
-
     function pageRender(data, data_notes) {
+        console.log("billing page render", data, data_notes);
+
         $scope.dashMetrics = {};
         $scope.tabs = [{
             "title": "Weight",
@@ -58,13 +59,14 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
         } else {
             $scope.entryType = matches.getSection();
         }
-
         //Flip All as active selected item in DOM
         angular.element("#nav" + $scope.entryType).addClass("active");
 
         if (_.isEmpty(billing.processedRecord)) {
+            console.log("processed record is empty >>>>>", data, data_notes);
             $scope.recordEntries = billing.processRecord(data, data_notes, "billing.js controller");
         } else {
+            console.log("processed record is NOT empty >>>>>");
             $scope.recordEntries = billing.processedRecord;
         }
         $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
@@ -75,8 +77,7 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
             }
         }).reverse();
 
-        $scope.entryListFiltered = $scope.recordEntries;
-        /*
+
         if ($scope.entryType === "all") {
             $scope.entryListFiltered = $scope.recordEntries;
         } else {
@@ -84,14 +85,13 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
                 category: $scope.entryType
             });
         }
-        */        
-
+        
 
         $scope.$watch('entryType', function(newVal, oldVal) {
             //keeping current section name in scope
             $scope.entryType = newVal;
             console.log("$scope.entryType = ", $scope.entryType);
-            getData();
+            //getData(function(err, data) {});
 
 
             if (newVal !== oldVal) {
@@ -115,40 +115,32 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
 
 
     }
+
+    console.log(">>>>>>", billing.masterRecord, billing.recordDirty);
+
     if (_.isEmpty(billing.masterRecord) || billing.recordDirty) {
         billing.getData(function(err, data) {
             //getNotes and associate them with record
-
             billing.setNotes(data.notes);
             billing.setMasterRecord(data.records);
-
             pageRender(data.records, data.notes);
         });
     } else {
         pageRender(billing.masterRecord, billing.all_notes);
     }
 
-/*
-    function getHistory() {
-        history.getHistory(function(err, history) {
-            if (err) {
-                console.log('ERRROR', err);
-            } else {
-                //console.log('>>>>accountHistory', history);
-                $scope.accountHistory = history;
-            }
-        });
-    }
-*/
-    getHistory();
-
-    $scope.entryType = 'all';
-    $scope.masterEntries = [];
-    $scope.entries = [];
-    $scope.updateDate = null;
-    $scope.newComment = {
-        'starred': false
-    };
+    /*
+        function getHistory() {
+            history.getHistory(function(err, history) {
+                if (err) {
+                    console.log('ERRROR', err);
+                } else {
+                    //console.log('>>>>accountHistory', history);
+                    $scope.accountHistory = history;
+                }
+            });
+        }
+    */
 
     function getUpdateDate() {
         //Should grab from files/update history.  Stubbed for now.
@@ -159,25 +151,24 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
         if (type === 'all') {
             $scope.entries = $scope.masterEntries;
         } else {
-            $scope.entries = _.where($scope.masterEntries, {'category': type});
+            $scope.entries = _.where($scope.masterEntries, {
+                'category': type
+            });
         }
     };
 
+    $scope.setEntryType('all');
+
+/*
     function getData() {
-        billing.getClaims().then(function(data) {
-            _.each(data.claims, function(entry) {
-                $scope.masterEntries.push({'data':entry, 'category':'claims'});
-                
-            });
+        billing.getData(function(err, data) {
+
+            $scope.masterEntries = data.records;
+            //$scope.setEntryType('all');
+
+
         });
-        billing.getInsurance().then(function(data) {
-            _.each(data.payers, function(entry) {
-                $scope.masterEntries.push({'data':entry, 'category':'insurance'});
-                
-            });
-        });
-        $scope.setEntryType('all');
     }
-    getData();
-    
+    //getData(function(err, data) {});
+*/
 });

@@ -89,11 +89,13 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         }
         //Flip All as active selected item in DOM
         angular.element("#nav" + $scope.entryType).addClass("active");
+
         if (_.isEmpty(record.processedRecord)) {
             $scope.recordEntries = record.processRecord(data, data_notes, "record.js controller");
         } else {
             $scope.recordEntries = record.processedRecord;
         }
+
         $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
             if (entry.metadata.datetime[0]) {
                 return entry.metadata.datetime[0].date.substring(0, 9);
@@ -131,6 +133,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             }
         });
     }
+
+    console.log(">>>>>>", record.masterRecord, record.recordDirty);
+
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
         record.getData(function(err, data) {
             //getNotes and associate them with record
