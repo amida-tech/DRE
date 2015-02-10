@@ -10,7 +10,7 @@ box-shadow: none;
                 <td class="panel" colspan="2" style="border:none;">
                 <h4 class="text-left">{{entryData.product.product.name}}</h4>
                     <h5 ng-hide="entryData.date_time.high" class="text-left">{{formatDate(entryData.date_time.low)}}</h5>
-                    <h5 ng-show="entryData.date_time.high" class="text-left">{{formatDate(entryData.date_time.low)}} - {{formatDate(entryData.date_time.high)}}</h5>
+                    <h5 ng-if="entryData.date_time.high" class="text-left">{{formatDate(entryData.date_time.low)}} - {{formatDate(entryData.date_time.high)}}</h5>
                     
                 </td>
                 <td style="border:none;">
@@ -21,7 +21,7 @@ box-shadow: none;
                 <td class="panel" colspan="2" style="border:none;">
                     <h4 class="text-left">{{matchData.product.product.name}}</h4>
                     <h5 ng-hide="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}}</h5>
-                    <h5 ng-show="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}} - {{formatDate(finalData.date_time.high)}}</h5>
+                    <h5 ng-if="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}} - {{formatDate(finalData.date_time.high)}}</h5>
                     
                 </td>
             </tr>
@@ -30,7 +30,7 @@ box-shadow: none;
 
                 <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}">
                     <span ng-hide="finalData.date_time.high">{{formatDate(entryData.date_time.low)}}</span>
-                    <span ng-show="finalData.date_time.high">{{formatDate(entryData.date_time.low)}} - {{formatDate(entryData.date_time.high)}}</span>
+                    <span ng-if="finalData.date_time.high">{{formatDate(entryData.date_time.low)}} - {{formatDate(entryData.date_time.high)}}</span>
 
 
 
@@ -42,7 +42,7 @@ box-shadow: none;
                 <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time.low.date, finalData.date_time.low.date) && {'background-color': '#B0C4DE'}">
 
                 <span ng-hide="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}}</span>
-                    <span ng-show="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}} - {{formatDate(finalData.date_time.high)}}</span>
+                    <span ng-if="finalData.date_time.high" class="text-left">{{formatDate(finalData.date_time.low)}} - {{formatDate(finalData.date_time.high)}}</span>
                      <span ng-show="!areEqual(matchData.date_time, finalData.date_time)" class="label label-warning pull-right">Updated</span>
                      
             </tr>
