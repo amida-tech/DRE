@@ -5,7 +5,7 @@
  * @description
  * # recordNavigation
  */
-angular.module('phrPrototypeApp').directive('entryDetails', function($window, $location, format) {
+angular.module('phrPrototypeApp').directive('entryDetails', function($window, $location, format, matches) {
     return {
         templateUrl: 'views/templates/entrydetails.html',
         restrict: 'EA',
@@ -71,13 +71,17 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 if (_.isArray(diffs)) {
 
                     if (scope.areEqual(obj1, obj2)) {
-                        _.each(diffs, function (item) {scope.updateButton(item);});
+                        _.each(diffs, function(item) {
+                            scope.updateButton(item);
+                        });
 
-                        
+
                     } else {
-                        _.each(diffs, function (item) {scope.undoButton(item);});
+                        _.each(diffs, function(item) {
+                            scope.undoButton(item);
+                        });
                     }
-                    
+
 
 
 
@@ -88,20 +92,20 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                     } else {
                         scope.undoButton(diffs);
                     }
-                } 
-                
+                }
+
             };
             scope.reactionCheckboxToggle = function(diffs, obj1, obj2, obj3, type) {
 
                 if (type !== 'new') {
-                    scope.checkboxToggle(diffs,obj1,obj2);
+                    scope.checkboxToggle(diffs, obj1, obj2);
                 } else {
                     if (scope.matchData.observation.reactions.length === scope.finalData.observation.reactions.length) {
-                        scope.finalData.observation.reactions.push(obj3);  
+                        scope.finalData.observation.reactions.push(obj3);
                     } else {
-                        scope.finalData.observation.reactions = scope.finalData.observation.reactions.slice(0,1);
+                        scope.finalData.observation.reactions = scope.finalData.observation.reactions.slice(0, 1);
                     }
-                    
+
                 }
             };
             scope.undoAllButton = function() {
@@ -122,6 +126,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 //stub to send scope.finalData to merge service
 
                 console.log("match submitted");
+                matches.saveMatch(null);
                 $location.path('/record');
 
                 /*
@@ -139,6 +144,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 //stub to send scope.finalData to merge service
 
                 console.log("match ignored");
+                matches.discardMatch();
                 $location.path('/record');
 
                 /*
