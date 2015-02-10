@@ -42,7 +42,8 @@
 			</td>
 		</tr>
 		<tr  ng-repeat="(itemIndex, itemEntry) in entryData.findings">
-			<td ng-show="(itemIndex===0)&&itemEntry.value">Findings:</td>
+			<td><span ng-show="(itemIndex===0)&&itemEntry.value">Findings:</span></td>
+
 			<td ng-show="itemEntry.value">
 				<div class="panel">
 					<table class="table sub-table">
