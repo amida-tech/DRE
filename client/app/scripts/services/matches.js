@@ -10,7 +10,9 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
     this.masterRecord = {};
     this.processedRecord = {};
     this.section = "";
-    this.recordId = "";
+    this.matchId = "";
+
+
     this.setMasterRecord = function(rawRecord) {
         this.masterRecord = rawRecord;
     };
@@ -47,11 +49,20 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
             return deferred.reject(error);
         });
     };
+
+
     this.getSection = function() {
         return this.section;
     };
     this.setSection = function(section) {
         this.section = section;
+    };
+
+    this.getMatchId = function() {
+        return this.matchId;
+    };
+    this.setMatchId = function(matchId) {
+        this.matchId = matchId;
     };
 
 });
