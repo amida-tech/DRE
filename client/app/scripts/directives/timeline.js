@@ -244,9 +244,9 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                         }).on('mouseout', function(d) {
                             tip.attr('class', 'd3-tip').show(d);
                             tip.hide();
-                        }).on("click", function(d) {
+                        });/*.on("click", function(d) {
                             navClick(d.href);
-                        });
+                        });*/
                     }
                     getSVGWidth();
                     buildScale();
