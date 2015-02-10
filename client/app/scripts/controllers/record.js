@@ -196,9 +196,17 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     };
 
 
+    //launch specific match (by ID and section name)
     $scope.launchMatch=function(el){
         console.log("Launch MATCH>> ", el);
-        $scope.goToMatches(el.match.section);
+        //console.log(section);
 
+        //setting section name for matches page
+        matches.setSection(el.match.section);
+
+        //TODO: set match ID for match page
+        //.... HERE!
+        $location.path('/matches');
     };
+
 });

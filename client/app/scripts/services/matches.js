@@ -34,7 +34,7 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
             cache: true
         }).then(function(response) {
             if (typeof response.data === 'object') {
-
+                console.log("GOT MATCHES ", response.data);
                 return response.data;
             } else {
                 // invalid response
