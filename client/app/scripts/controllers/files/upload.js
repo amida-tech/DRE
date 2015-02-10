@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('FilesUploadCtrl', function($scope, $location, $route, upload, $http, format) {
+    .controller('FilesUploadCtrl', function($scope, $location, $route, upload, $http, format, record) {
 
         $scope.uploadStep = 0;
         var myFile;
@@ -52,9 +52,14 @@ angular.module('phrPrototypeApp')
 
                 upload.uploadRecord(uploadFile, false, function(err, results) {
                     //do something
-                    $scope.uploadStep = 0;
+                    
+
+                        $scope.uploadStep = 0;
                     $location.path('/files');
+                    record.getData(function(err, data) { return; });
                     $route.reload();
+                
+                    
                 });
             }
 
