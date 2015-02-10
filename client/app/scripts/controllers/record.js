@@ -186,7 +186,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         //setting section name for matches page
         matches.setSection(el.match.section);
         //TODO: set match ID for match page
-        //.... HERE!
+        matches.setMatchId(el.match.match_id);
+        
         $location.path('/matches');
     };
 });

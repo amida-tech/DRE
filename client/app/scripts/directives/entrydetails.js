@@ -120,6 +120,11 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
             };
             scope.submitButton = function() {
                 //stub to send scope.finalData to merge service
+
+                console.log("match submitted");
+                $location.path('/record');
+
+                /*
                 var send = $window.confirm("Are these changes accurate?");
                 if (send) {
                     console.log("sending...", scope.finalData);
@@ -128,9 +133,15 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                     console.log("didn't send");
                     scope.undoAllButton();
                 }
+                */
             };
             scope.ignoreButton = function() {
                 //stub to send scope.finalData to merge service
+
+                console.log("match ignored");
+                $location.path('/record');
+
+                /*
                 var send = $window.confirm("Ignore changes?");
                 if (send) {
                     console.log("discarding changes");
@@ -139,6 +150,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                     console.log("didn't send");
                     scope.undoAllButton();
                 }
+                */
             };
         }
     };
