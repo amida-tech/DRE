@@ -6,7 +6,7 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, matches) {
+angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, matches, $location) {
     $scope.masterMatches = [];
     $scope.match = {};
 
@@ -16,6 +16,13 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
     function setScopeVars() {
 
         if (_.isEmpty(matches.getSection())) {
+            
+            console.log("ACHTUNG!!!!!!!");
+            /* UNCOMMENT BEFORE FLIGTH! -> blocks refresh on matches page and riderects to records page
+                $location.path('/record');
+            */
+
+            //for development use only, hardcode section to work on matching pages
             $scope.section = "medications";
         } else {
             $scope.section = matches.getSection();
@@ -24,7 +31,20 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
         if (_.isEmpty(matches.getMatchId())) {
             $scope.matchId = "";
             //pick match with index 0 for development purposes?
-            $scope.match = {};
+            
+
+            console.log("ACHTUNG!!!!!!!");
+            /* UNCOMMENT BEFORE FLIGTH! -> blocks refresh on matches page and riderects to records page
+                $location.path('/record');
+            */
+            //for dev use only, reset mach to first one in the list
+            if ($scope.masterMatches && $scope.masterMatches[0]) {
+                $scope.match = $scope.masterMatches[0];
+            }
+            else {
+                $location.path('/record');
+            }
+
         } else {
             $scope.matchId = matches.getMatchId();
             //inject-select proper match to use in view template
