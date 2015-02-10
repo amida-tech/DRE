@@ -158,15 +158,25 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             };
             //Wire matches into the record
             _.each($scope.masterMatches.data, function(match) {
+                var match_count = 0;
                 //console.log(mat)
                 //console.log("match id and master entry id", match._id, match.entry._id, $scope.recordEntries);
                 //find $scope.recordEntries.data._id === match.entry._id
                 _.each($scope.recordEntries, function(recordEntry) {
                     if (recordEntry.data._id === match.matches[0].match_entry._id) {
                         //console.log("attaching match ", recordEntry, match);
+
+                        //calculate number of pending matches per entry
+
+                        if (recordEntry.metadata.match && recordEntry.metadata.match.count) {
+                            match_count = recordEntry.metadata.match.count + 1;
+                        } else {
+                            match_count = 1;
+                        }
                         recordEntry.metadata.match = {
                             'match_id': match._id,
-                            'section': $scope.entryType
+                            'section': $scope.entryType,
+                            'count': match_count
                         };
                     }
                 });
@@ -191,7 +201,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         matches.setSection(el.match.section);
         //TODO: set match ID for match page
         matches.setMatchId(el.match.match_id);
-        
+
         $location.path('/matches');
     };
 });
