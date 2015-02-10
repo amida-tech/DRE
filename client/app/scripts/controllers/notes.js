@@ -396,12 +396,17 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         var tmpSection = _.where($scope.notes, {
             'section': section
         });
-        if (starVal) {
-            tmpSection[0].notes[starIndex].note.starred = false;
-        } else {
-            tmpSection[0].notes[starIndex].note.starred = true;
-        }
 
+        //console.log ("TMP SECTION >> ", tmpSection);
+        //console.log('starVal', starVal);
+        //console.log(tmpSection[0].notes);
+
+        _.each(tmpSection[0].notes, function(note){
+            if (entry.note.note_id===note.note.note_id){
+                note.note.starred=!starVal;
+            }
+
+        });
 
     };
     $scope.checkNotes = function() {
