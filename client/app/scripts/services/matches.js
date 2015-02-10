@@ -93,7 +93,7 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         var current_match_index=0; //it is always 0, since we are using only first MHR target from match object
         $http({
             method: 'POST',
-            url: '/api/v1/matches/' + this.section + '/' + this.match_id + '/' + current_match_index,
+            url: '/api/v1/matches/' + this.section + '/' + this.matchId + '/' + current_match_index,
             data: {
                 determination: 'merged',
                 updated_entry: updated_entry

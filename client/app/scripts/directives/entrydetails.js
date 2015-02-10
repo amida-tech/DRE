@@ -126,7 +126,10 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 //stub to send scope.finalData to merge service
 
                 console.log("match submitted");
-                matches.saveMatch(null);
+
+                console.log("MATCH!! >>",scope.finalData);
+
+                matches.saveMatch(scope.finalData);
                 $location.path('/record');
 
                 /*
