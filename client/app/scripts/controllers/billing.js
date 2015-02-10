@@ -6,7 +6,7 @@
  * # BillingClaimsCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, billing, history, matches) {
+angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll, claims, insurance, format, billing, history, matches, merges) {
     function getHistory() {
         history.getHistory(function(err, history) {
             if (err) {
@@ -19,6 +19,15 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $lo
     }
 
     getHistory();
+    //Loading Merges (only used in record history, don't need in billing)
+    merges.getMerges(function(err, data) {
+        if (err) {
+            console.log("error whil getting merges ", err);
+        } else {
+            $scope.mergesList = data;
+            console.log("merges data ", $scope.mergesList);
+        }
+    });
 
 
     billing.getData();
