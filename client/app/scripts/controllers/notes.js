@@ -305,6 +305,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             notes_sections = _.uniq(notes_sections);
             var stub2 = [];
             _.each(notes_sections, function(section) {
+                /*
                 switch (section) {
                     case "conditions":
                         section = "problems";
@@ -313,6 +314,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                         section = "social_history";
                         break;
                 }
+                */
 
 
 
@@ -416,7 +418,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             if (index > 1) {
                 if (filter.value) {
                     var section = filter.name;
-
+                    /*
                     switch (section) {
                         case "conditions":
                             section = "problems";
@@ -425,6 +427,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                             section = "social_history";
                             break;
                     }
+                    */
 
                     var tmpnotes = _.findWhere($scope.notes, {
                         'section': section
