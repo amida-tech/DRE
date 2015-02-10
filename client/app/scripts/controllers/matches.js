@@ -10,13 +10,14 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
     $scope.masterMatches = [];
     //$scope.categories = ['medications', 'results', 'encounters', 'vitals', 'immunizations', 'allergies', 'procedures'];
     if (_.isEmpty(matches.getSection())) {
-            $scope.section = "allergies";
+            $scope.section = "medications";
         } else {
             $scope.section = matches.getSection();
         }
     
     function getData(section) {
             matches.getCategory(section).then(function(data) {
+                console.log('data',data);
                 _.each(data.matches, function(match) {
                     $scope.masterMatches.push({
                         'category':section,

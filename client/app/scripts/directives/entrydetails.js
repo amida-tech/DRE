@@ -15,7 +15,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
         },
         link: function postLink(scope, element, attrs) {
             scope.entryTemplatePath = "views/templates/matches/" + scope.category + ".html";
-            scope.formatDate = format.formatDate;
+            scope.formatDate = format.returnFormatDate;
 
             function compareMatches(masterEntry, updateEntry) {
                 var tmpDiff = DeepDiff.diff(masterEntry, updateEntry);

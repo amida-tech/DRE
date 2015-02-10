@@ -43,6 +43,33 @@ angular.module('phrPrototypeApp')
             }
             return tmpDateArr;
         };
+        //Takes date object, decorates with displayDate.
+        this.returnFormatDate = function (input_date) {
+            var tmpDateArr;
+            if (input_date.precision === "year") {
+                tmpDateArr = moment.utc(input_date.date).format('YYYY');
+                
+            }
+            if (input_date.precision === "month") {
+                tmpDateArr = moment.utc(input_date.date).format('MMM, YYYY');
+            }
+            if (input_date.precision === "day") {
+                tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY');
+            }
+            if (input_date.precision === "hour") {
+                tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
+            }
+            if (input_date.precision === "minute") {
+                tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
+            }
+            if (input_date.precision === "second") {
+                tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
+            }
+            if (input_date.precision === "subsecond") {
+                tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
+            }
+            return tmpDateArr;
+        };
 
         this.outputDate = function (date_time) {
             if (!date_time) {
