@@ -6,7 +6,7 @@
  * # record
  * Service in the phrPrototypeApp.
  */
-angular.module('phrPrototypeApp').service('billing', function record($http, $q, format) {
+angular.module('phrPrototypeApp').service('billing', function record($http, $q, format, notes) {
     this.masterRecord = {};
     this.processedRecord = {};
     this.setMasterRecord = function(rawRecord) {
@@ -22,7 +22,7 @@ angular.module('phrPrototypeApp').service('billing', function record($http, $q, 
             cache: true
         }).then(function(response) {
             if (typeof response.data === 'object') {
-                
+
                 return response.data;
             } else {
                 // invalid response
@@ -45,7 +45,7 @@ angular.module('phrPrototypeApp').service('billing', function record($http, $q, 
             cache: true
         }).then(function(response) {
             if (typeof response.data === 'object') {
-                
+
                 return response.data;
             } else {
                 // invalid response
@@ -58,9 +58,39 @@ angular.module('phrPrototypeApp').service('billing', function record($http, $q, 
             return deferred.reject(error);
         });
     };
-    
-    /*this.processRecord = function(rawRecord) {
-        console.log('processing record');
+
+
+    this.getData = function(callback) {
+        console.log('get billing data from API');
+
+        var sources = 3;
+        var data = {};
+
+        function done(type, result) {            
+            sources = sources - 1;
+            data[type]=result;
+            if (sources === 0) {
+                console.log("returning billing data", data);
+                callback(null, data)
+            }
+        }
+
+
+        notes.getNotes(function(err, data) {
+            done("notes", data);
+        });
+
+        this.getInsurance(function(err, data) {
+            done("insurance", data);
+        });
+        this.getClaims(function(err, data) {
+            done("claims", data);
+        });
+
+    };
+
+    this.processRecord = function(rawRecord) {
+        console.log('processing billing record');
         var tmpEntries = [];
         _.each(rawRecord, function(entries, type) {
             _.each(entries, function(entry) {
@@ -82,7 +112,7 @@ angular.module('phrPrototypeApp').service('billing', function record($http, $q, 
                 } else if (tmpDates.length === 2) {
                     dispDates = format.formatDate(tmpDates[0]) + ' - ' + format.formatDate(tmpDates[1]);
                 }
-                if (!_.contains(['demographics', 'problems', 'plan_of_care', 'payers', 'social_history'], type)) {
+                if (_.contains(['claims', 'payers'], type)) {
                     tmpEntries.push({
                         'data': entry,
                         'category': type,
@@ -108,5 +138,5 @@ angular.module('phrPrototypeApp').service('billing', function record($http, $q, 
         });
         this.processedRecord = tmpEntries;
         return tmpEntries;
-    };*/
+    };
 });
