@@ -27,8 +27,7 @@ angular.module('phrPrototypeApp')
                         console.log("password change successful");
                         $location.path('/home');
                     }).error(function(data) {
-                        console.log('password change failed');
-                        $location.path('/home');
+                        $scope.error = "Password change failed, wrong old password";
                     });
 
 
