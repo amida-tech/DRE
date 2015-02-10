@@ -11,11 +11,18 @@
             <div class="panel-body">
                 <!--Header Items-->
                 <div class="col-sm-12">
-                    <div class="row col-sm-12" breadcrumb></div>
+                    <!--div class="row col-sm-12" breadcrumb></div-->
+                    <div class="row col-sm-12" ng-if="entryType!=='all'">
+                        <span><span><a href="/#/home">Home</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span><a href="/#/record">My records</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span>Review Updates</span>
+                        </span>
+                    </div>
+
                     <div class="col-sm-12">
                         <div class="col-sm-8">
                             <div class="pull-left">
-                                <h4>Review {{section}} Updates</h4>
+                                <h4>{{user_first}}'s  {{section}} Updates</h4>
                                 <p>Entries to the left are possible updates to a current entry in your record, displayed to the right.</p>
                                 <p>Use the checkboxes to select updates you wish to apply.</p>
                                 <h6>Note:  only differences between the entries are displayed.</h6>
