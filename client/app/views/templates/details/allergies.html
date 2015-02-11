@@ -15,6 +15,31 @@
 			<td>Code System:</td>
 			<td>{{entryData.observation.allergen.code_system_name}}</td>
 		</tr>
+
+		<tr ng-show="entryData.observation.status">
+			<td>Status:</td>
+            <td>
+                <div class="panel">
+                    <table class="table sub-table">
+                        <tbody>
+                            <tr>
+                                <td>Status:</td>
+                                <td>{{entryData.observation.status.name}}</td>
+                            </tr>
+                            <tr>
+                                <td>Code:</td>
+                                <td>{{entryData.observation.status.code}}</td>
+                            </tr>
+                            <tr>
+                                <td>Code System:</td>
+                                <td>{{entryData.observation.status.code_system_name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
 		<tr ng-repeat="(reactionIndex, reactionEntry) in entryData.observation.reactions">
 			<td>Reactions:</td>
 			<td>
