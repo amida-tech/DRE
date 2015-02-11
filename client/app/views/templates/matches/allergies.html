@@ -70,7 +70,7 @@ box-shadow: none;
                 </td>
             </tr>
             <tr ng-if="entryData.observation.severity">
-                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.severity, finalData.observation.severity) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input type="checkbox" ng-checked="!areEqual(matchData.observation.severity, finalData.observation.severity)" ng-click="checkboxToggle(flagData.observation.severity.code, matchData.observation.severity, finalData.observation.severity)"> Severity:</span></td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.severity, finalData.observation.severity) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.observation.severity)"type="checkbox" ng-checked="!areEqual(matchData.observation.severity, finalData.observation.severity)" ng-click="checkboxToggle(flagData.observation.severity.code, matchData.observation.severity, finalData.observation.severity)"> Severity:</span></td>
                 <td class="panel" style="border:none;" ng-style="!areEqual(matchData.observation.severity, finalData.observation.severity) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
@@ -118,7 +118,7 @@ box-shadow: none;
                 </td>
             </tr>
             <tr>
-                <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input type="checkbox" ng-checked="!areEqual(matchData.observation.status, finalData.observation.status)" ng-click="checkboxToggle(flagData.observation.status, matchData.observation.status, finalData.observation.status)"> Status:</span></td>
+                <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.observation.status)" type="checkbox" ng-checked="!areEqual(matchData.observation.status, finalData.observation.status)" ng-click="checkboxToggle(flagData.observation.status, matchData.observation.status, finalData.observation.status)"> Status:</span></td>
                 <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.status, finalData.observation.status) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
@@ -168,7 +168,7 @@ box-shadow: none;
                 </td>
             </tr>
             <tr ng-repeat="(reactionIndex, reactionEntry) in entryData.observation.reactions">
-                <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex]) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input type="checkbox" ng-checked="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex])" ng-click="reactionCheckboxToggle([flagData.observation.reactions[reactionIndex].reaction, flagData.observation.reactions[reactionIndex].severity], matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex],reactionEntry, details.matches[0].match_object.subelements.observation.reactions[reactionIndex].match)"> Reactions:</span></td>
+                <td  style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex]) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.observation.reactions[reactionIndex])" type="checkbox" ng-checked="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex])" ng-click="reactionCheckboxToggle([flagData.observation.reactions[reactionIndex].reaction, flagData.observation.reactions[reactionIndex].severity], matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex],reactionEntry, details.matches[0].match_object.subelements.observation.reactions[reactionIndex].match)"> Reactions:</span></td>
                 <td style="border:none;" class="panel" ng-style="!areEqual(matchData.observation.reactions[reactionIndex], finalData.observation.reactions[reactionIndex]) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">

@@ -72,9 +72,18 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
     //API methods for updating and ignoring match
 
     this.discardMatch = function() {
+        var section = this.section;
+        if (this.section === "conditions") {
+            section = "problems";
+        }
+        if (this.section === "social") {
+            section = "social_history";
+        }
+
+
         $http({
             method: 'POST',
-            url: '/api/v1/matches/' + this.section + '/' + this.matchId,
+            url: '/api/v1/matches/' + section + '/' + this.matchId,
             data: {
                 determination: 'ignored'
             }
@@ -91,9 +100,18 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
 
     this.saveMatch = function(updated_entry) {
         var current_match_index=0; //it is always 0, since we are using only first MHR target from match object
+
+
+        var section = this.section;
+        if (this.section === "conditions") {
+            section = "problems";
+        }
+        if (this.section === "social") {
+            section = "social_history";
+        }
         $http({
             method: 'POST',
-            url: '/api/v1/matches/' + this.section + '/' + this.matchId + '/' + current_match_index,
+            url: '/api/v1/matches/' + section + '/' + this.matchId + '/' + current_match_index,
             data: {
                 determination: 'merged',
                 updated_entry: updated_entry

@@ -1,175 +1,116 @@
-<table class="table table-hover">
-	
-	<tbody>
-		<tr>
-			<td>Lot Number:</td>
-			<td>{{entryData.product.lot_number}}</td>
-		</tr>
-		<tr>
-			<td>Manufacturer:</td>
-			<td>{{entryData.product.manufacturer}}</td>
-		</tr>
-		<tr>
-			<td>Name:</td>
-			<td>{{entryData.product.product.name}}</td>
-		</tr>
-		<tr>
-			<td>Code:</td>
-			<td>{{entryData.product.product.code}}</td>
-		</tr>
-		<tr>
-			<td>Code System:</td>
-			<td>{{entryData.product.product.code_system_name}}</td>
-		</tr>
-		<tr ng-show="entryData.product.product.translations">
-			<td>Other Descriptions:</td>
-			<td>
-				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.product.product.translations">
-					<table class="table sub-table">
-						<thead>
-							<tr>
-								<td>Name:</td>
-								<td>{{itemEntry.name}}</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Code:</td>
-								<td>{{itemEntry.code}}</td>
-							</tr>
-							<tr>
-								<td>Code System:</td>
-								<td>{{itemEntry.code_system_name}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr ng-show="entryData.performer">
-			<td>Performer:</td>
-			<td>
-				<div class="panel">
-					<table class="table sub-table">
-						<tr>
-							<td>Name:</td>
-							<td  ng-repeat="(nameIndex, nameEntry) in entryData.performer.name">{{nameEntry.displayName}}</td>
-						</tr>
-						<tr>
-							<td>Address:</td>
-							<td ng-repeat="(addrIndex, addrEntry) in entryData.performer.address">
-								<div ng-repeat="addrLine in addrEntry.displayAddress">
-									{{addrLine}}
-								</div>
-							</td>
-						</tr>
-						<tr ng-repeat="(orgIndex, orgEntry) in entryData.performer.organization">
-							<td>Organization:</td>
-							<td ng-repeat="orgName in orgEntry.name">{{orgName}}</td>
-						</tr>
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr ng-show="entryData.administration">
-			<td>Administration:</td>
-			<td>
-				<div class="panel">
-					<table class="table sub-table">
-						<tr>
-							<td>Dose:</td>
-							<td>{{entryData.administration.dose.displayQuantity}}</td>
-						</tr>
-						<tr>
-							<td>Route:</td>
-							<td>
-								{{entryData.administration.route.name}}
-							</td>
-						</tr>
-						<tr>
-							<td>Route Code:</td>
-							<td>
-								{{entryData.administration.route.code}}
-							</td>
-						</tr>
-						<tr>
-							<td>Route Code System:</td>
-							<td>
-								{{entryData.administration.route.code_system_name}}
-							</td>
-						</tr>
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr ng-show="entryData.instructions">
-			<td>Instructions:</td>
-			<td>
-				<div class="panel">
-					<table class="table">
-						<tr>
-							<td>Text:</td>
-							<td>{{entryData.instructions.free_text}}</td>
-						</tr>
-						<tr>
-							<td>Name:</td>
-							<td>{{entryData.instructions.code.name}}</td>
-						</tr>
-						<tr>
-							<td>Code:</td>
-							<td>{{entryData.instructions.code.code}}</td>
-						</tr>
-						<tr>
-							<td>Code System:</td>
-							<td>{{entryData.instructions.code.code_system_name}}</td>
-						</tr>
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr ng-show="entryData.locations">
-			
-			<td>Locations:</td>
-			<td>
-				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.locations">
-					<table class="table sub-table">
-						<tr>
-							<td>Name:</td>
-							<td>{{itemEntry.name}}</td>
-						</tr>
+<style>
+td.panel {
+box-shadow: none;
+}
+</style>
+<div class="col-sm-12">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td class="panel" colspan="2" style="border:none;">
+                <h4 class="text-left">{{entryData.product.product.name}}</h4>
+                <h5 class="text-left">{{formatDate(entryData.date_time.point)}}</h5>
+                    
+                </td>
+                <td style="border:none;">
+                    <svg height="40" width="20" style="position: relative; left: -9px; top: 0px;">
+                    <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:0"></polygon>
+                    </svg>
+                </td>
+                <td class="panel" colspan="2" style="border:none;">
+                    <h4 class="text-left">{{matchData.product.product.name}}</h4>
+                   <h5 class="text-left">{{formatDate(finalData.date_time.point)}}</h5>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.date_time)" type="checkbox" ng-checked="!areEqual(matchData.date_time, finalData.date_time)" ng-click="checkboxToggle([flagData.date_time.point], matchData.date_time, finalData.date_time)"> Date:</span></td>
 
-						<tr ng-show="itemEntry.address">
-							<td>Address:</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}">
+                    <span>{{formatDate(entryData.date_time.point)}}</span>
+                   
 
-							<td ng-repeat="(addrindex, addrEntry) in itemEntry.address">
-								<p ng-repeat="(addrLineIndex, addrLineEntry) in addrEntry.displayAddress">{{addrLineEntry}}</p>
-							</td>
-						</tr>
-						<tr>
-							<td>Type:</td>
 
-							<td>
-								<div class="panel">
-									<table class="table sub-table">
-										<tr>
-											<td>Name:</td>
-											<td>{{itemEntry.location_type.name}}</td>
-										</tr>
-										<tr>
-											<td>Code:</td>
-											<td>{{itemEntry.location_type.code}}</td>
-										</tr>
-										<tr>
-											<td>Code System:</td>
-											<td>{{itemEntry.location_type.code_system_name}}</td>
-										</tr>
-									</table>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</td>
-		</tr>
-	</tbody>
-</table>
+
+                    <span ng-if="isDifferent(flagData.date_time.point.date.kind) || isDifferent(flagData.date_time.point.precision.kind)" class="label label-info pull-right">Different</span>
+                </td>
+
+                <td style="border:none;">&nbsp</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}">Date:</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}">
+
+                <span>{{formatDate(finalData.date_time.point)}}</span>
+                     <span ng-show="!areEqual(matchData.date_time, finalData.date_time)" class="label label-warning pull-right">Updated</span>
+                     
+            </tr>
+            
+            <tr>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.product.product, finalData.product.product) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.product.product)" type="checkbox" ng-checked="!areEqual(matchData.product.product, finalData.product.product)" ng-click="checkboxToggle(flagData.product.product, matchData.product.product, finalData.product.product)"> Product:</span></td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.product.product, finalData.product.product) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td>{{entryData.product.product.name}} <span ng-if="isDifferent(flagData.product.product.name.kind)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td>{{entryData.product.product.code}} <span ng-if="isDifferent(flagData.product.product.code.kind)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td>{{entryData.product.product.code_system_name}} <span ng-if="isDifferent(flagData.product.product.code_system_name.kind)" class="label label-info pull-right">Different</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td style="border:none;">&nbsp</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.product.product, finalData.product.product) && {'background-color': '#B0C4DE'}">Product:</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.product.product, finalData.product.product) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td ng-if="matchData.product.product.name === finalData.product.product.name">{{matchData.product.product.name}}</td>
+                                    <td ng-if="matchData.product.product.name !== finalData.product.product.name">{{finalData.product.product.name}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td ng-if="matchData.product.product.code === finalData.product.product.code">{{matchData.product.product.code}}</td>
+                                    <td ng-if="matchData.product.product.code !== finalData.product.product.code">{{finalData.product.product.code}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Code System:</td>
+                                    <td ng-if="matchData.product.product.code_system_name === finalData.product.product.code_system_name">{{matchData.product.product.code_system_name}}</td>
+                                    <td ng-if="matchData.product.product.code_system_name !== finalData.product.product.code_system_name">{{finalData.product.product.code_system_name}} <span class="label label-warning pull-right">Updated</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+            <td colspan="2">
+            	<div class="col-sm-8 col-sm-offset-2">
+            <button class="btn btn-default btn-block" ng-click="undoAllButton()"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+        </div>
+
+            </td>
+            <td style="border:none;">&nbsp</td>
+            <td colspan="2">
+            	<div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
+            <button class="btn btn-primary btn-block" ng-click="submitButton()">Save Updates</button>
+            <button class="btn btn-default btn-block" ng-click="ignoreButton()">Ignore Updates</button>
+        </div>
+
+            </td>
+
+            </tr>
+            
+            
+        </tbody>
+    </table>
+</div>
