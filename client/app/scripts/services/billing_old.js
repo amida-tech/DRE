@@ -75,7 +75,7 @@ angular.module('phrPrototypeApp').service('billing', function record($http, $q, 
                 console.log("returning billing data", data);
 
 
-                var data2 = []
+                var data2 = [];
                 _.each(data.claims, function(entry) {
                     data2.push({
                         'data': entry,
@@ -165,7 +165,7 @@ angular.module('phrPrototypeApp').service('billing', function record($http, $q, 
                     //inject notest into entry
                     var tmpEntry = {
                         'data': entry,
-                        'category': display_type,
+                        'category': "",//display_type,
                         'metadata': {
                             'comments': comments,
                             'displayDate': dispDates,
