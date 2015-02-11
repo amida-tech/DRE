@@ -52,14 +52,17 @@ angular.module('phrPrototypeApp')
 
                 upload.uploadRecord(uploadFile, false, function(err, results) {
                     //do something
-                    
 
-                        $scope.uploadStep = 0;
+
+                    $scope.uploadStep = 0;
                     $location.path('/files');
-                    record.getData(function(err, data) { return; });
+                    record.getData(function(err, data) {
+                        record.recordDirty=true;
+                        return;
+                    });
                     $route.reload();
-                
-                    
+
+
                 });
             }
 

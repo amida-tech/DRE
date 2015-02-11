@@ -152,12 +152,17 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     //console.log(">>>>>>", record.masterRecord, record.recordDirty);
 
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
+<<<<<<< Updated upstream
         console.log("MASTER DATA IS EMPTY OR DIRTY");
+=======
+        console.log("RECORD IS EMPTY OF DIRTY");
+>>>>>>> Stashed changes
         record.getData(function(err, data) {
             //getNotes and associate them with record
             record.setNotes(data.notes);
             record.setMasterRecord(data.records);
             pageRender(data.records, data.notes);
+            record.recordDirty=false;
         });
     } else {
         pageRender(record.masterRecord, record.all_notes);
