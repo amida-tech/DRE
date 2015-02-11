@@ -1,0 +1,52 @@
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<td colspan="2">
+				<h3>Entry Details</h3>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-show="entryData.vital.code">
+			<td>Code:</td>
+			<td>{{entryData.vital.code}}</td>
+		</tr>
+		<tr ng-show="entryData.vital.code_system_name">
+			<td>Code System:</td>
+			<td>{{entryData.vital.code_system_name}}</td>
+		</tr>
+		<tr ng-show="entryData.vital.translations">
+			<td>Other Descriptions:</td>
+			<td>
+				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.vital.translations">
+					<table class="table sub-table">
+						<thead ng-show="itemEntry.name">
+							<tr>
+								<td>Name:</td>
+								<td>{{itemEntry.name}}</td>
+							</tr>
+						</thead>
+						<tbody ng-show="itemEntry.code&&itemEntry.code_system_name">
+							<tr ng-show="itemEntry.code">
+								<td>Code:</td>
+								<td>{{itemEntry.code}}</td>
+							</tr>
+							<tr ng-show="itemEntry.code_system_name">
+								<td>Code System:</td>
+								<td>{{itemEntry.code_system_name}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entryData.interpretations">
+			<td>Interpretation:</td>
+			<td ng-repeat="int in entryData.interpretations">
+				{{int}}
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+

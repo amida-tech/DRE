@@ -1,0 +1,50 @@
+<div class="container-fluid body-content">
+    <div id="profileSidebar" class="col-sm-3 body-left">
+        <div profile></div>
+        <!-- turn off record navigation (not applicable for matches)
+        <div record-navigation class="col-sm-12"></div>&nbsp;
+        -->
+    </div>
+    <!--Body-->
+    <div class="col-sm-9 body-right">
+        <div class="panel">
+            <div class="panel-body">
+                <!--Header Items-->
+                <div class="col-sm-12">
+                    <!--div class="row col-sm-12" breadcrumb></div-->
+                    <div class="row col-sm-12" ng-if="entryType!=='all'">
+                        <span><span><a href="/#/home">Home</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span><a href="/#/record">My records</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span>Review Updates</span>
+                        </span>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="col-sm-8">
+                            <div class="pull-left">
+                                <h4>{{user_first}}'s  {{section}} Updates</h4>
+                                <p>Entries to the left are possible updates to a current entry in your record, displayed to the right.</p>
+                                <p>Use the checkboxes to select updates you wish to apply.</p>
+                                <h6>Note:  only differences between the entries are displayed.</h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <h4 class="text-center text-white">Matches</h4>
+            <div class="panel">
+                <div class="panel-body"> 
+                <!--div ng-repeat="match in masterMatches" ng-if="masterMatches[0].data" class="panel-body"-->
+
+                    <div entry-details details="match.data" category="section"></div>
+
+                <!--/div-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

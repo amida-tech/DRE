@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+    background-color: $gray-dark;
+}
+
+.wrapper {
+    
+    
+    height: auto;
+    margin: 0 auto -40px;
+    background-image: $blur-background;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* the bottom margin is the negative value of the footer's height */
+}
+.marketing-block {
+    background-image: $blur-background;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    h2, p {
+        color: #fff;
+    }
+}
+.blur-background {
+    background-image: $blur-background;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.footer {
+    background-color: $gray-dark;
+    height: 40px;
+    > .row {
+        > h6 {
+            color: $gray-light;
+        }
+    }
+
+}
+
+
+.body-content {
+	margin: 0px;
+    bottom: 0px;
+    overflow: hidden;
+}
+
+.body-left {
+	padding: 20px;
+    height: 100%;
+    float: left;
+    /*background-color: rgba(0,0,0,0.5);*/    
+
+}
+.body-right {
+    padding: 20px;
+    height: 100%;
+    float: left;
+
+}
+.body-bottom {
+	
+}
+.body-footer {
+    
+}
+
+.default-background {
+    background-image: $blur-background;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* the bottom margin is the negative value of the footer's height */
+}
+
+.konami-background {
+    background-image: url('../images/va_photo.jpg');
+    background-repeat: repeat;
+}

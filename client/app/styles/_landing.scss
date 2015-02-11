@@ -1,0 +1,33 @@
+
+.landing-advertising {
+	margin: 50px;
+}
+
+.landing-panel {
+	background: #fff;
+	padding: 20px;
+	background-image: url('../images/hero.png');
+	background-position: left;
+	background-repeat: no-repeat;
+	background-color: $gray-dark;
+	min-height: 400px;
+
+	h1 {
+		color: #fff;
+	}
+}
+
+.icon-circle {
+    @extend .img-circle;
+	background: $brand-blue;
+	width: 100px;
+	height:100px;
+	margin: 0 auto;
+	text-align: center;
+
+	i {
+	  margin-top: 20px;
+	  color: #fff;
+	}
+}
+

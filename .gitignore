@@ -18,3 +18,5 @@ coverage
 npm-debug.log
 
 .anvil
+
+client/app/styles/main.css

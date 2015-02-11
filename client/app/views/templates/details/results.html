@@ -1,0 +1,51 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td colspan="2">
+                <h3>Entry Details</h3>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr ng-show="entryData.result_set.code">
+            <td>Set Code:</td>
+            <td>{{entryData.result_set.code}}</td>
+        </tr>
+        <tr ng-show="entryData.result_set.code_system_name">
+            <td>Set Code System:</td>
+            <td>{{entryData.result_set.code_system_name}}</td>
+        </tr>
+        <tr ng-show="entryData.result_set.translations">
+            <td>Other Descriptions:</td>
+            <td>
+                <div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.result_set.translations">
+                    <table class="table sub-table">
+                        <thead ng-show="itemEntry.name">
+                            <tr>
+                                <td>Name:</td>
+                                <td>{{itemEntry.name}}</td>
+                            </tr>
+                        </thead>
+                        <tbody ng-show="itemEntry.code&&itemEntry.code_system_name">
+                            <tr ng-show="itemEntry.code">
+                                <td>Code:</td>
+                                <td>{{itemEntry.code}}</td>
+                            </tr>
+                            <tr ng-show="itemEntry.code_system_name">
+                                <td>Code System:</td>
+                                <td>{{itemEntry.code_system_name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        <tr ng-show="entryData.results" ng-repeat="(resultIndex, resultEntry) in entryData.results">
+            <td >{{resultEntry.result.name}}</td>
+            <td >{{resultEntry.value}} {{resultEntry.unit}}</td>
+        </tr>
+
+    </tbody>
+</table>

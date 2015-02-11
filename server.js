@@ -15,13 +15,13 @@ limitations under the License.
 ======================================================================*/
 
 var express = require('express');
+var flash = require('connect-flash');
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var app = express();
 
 var record = require('blue-button-record');
-//var record = require('../blue-button-record/index.js');
 
 var passport = require('passport');
 
@@ -44,6 +44,18 @@ app.use(bodyParser.json({
     'strict': false
 }));
 
+//Adding CORS for Swagger UI
+app.use(function(req, res, next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT");
+    next();
+});
+
+//to prevent caching of API calls
+app.disable('etag');
+
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(cookieParser());
@@ -51,7 +63,15 @@ app.use('/api/v1/storage', multiparty());
 
 var redisStore = require('connect-redis')(session); //uncomment for Redis session support during development
 
-app.set('client_location', path.resolve(__dirname, './client/dist'));
+//to run fully built UI use this line (run "grunt build" in /client first)
+//app.set('client_location', path.resolve(__dirname, './client/dist'));
+
+//to run development version of UI use this line
+app.set('client_location', path.resolve(__dirname, './client/app'));
+
+
+
+//app.set('client_location', path.resolve(__dirname, '../phr-prototype/dist'));
 
 //app.use(express.favicon(config.client.location + '/favicon.ico'));
 app.use(express.static(app.get('client_location')));
@@ -64,9 +84,8 @@ app.use(function(req, res, next) {
     }
     var viewPath = app.get('client_location') + requestPath + '.html';
     fs.exists(viewPath, function(exists) {
-        console.log(viewPath);
+        //console.log(viewPath);
         if (exists) {
-
             res.header("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
             res.render(viewPath);
         } else {
@@ -96,6 +115,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 //Initialize Database Connection.
 //var databaseServer = process.env.DB || 'mongodb://localhost:27017';
@@ -129,6 +149,12 @@ app.use(login);
 
 var account = require('./lib/account');
 app.use(account);
+
+var accountHistory = require('./lib/account-history');
+app.use(accountHistory);
+
+var notes = require('./lib/notes');
+app.use(notes);
 
 app.set('port', (process.env.PORT || 3000));
 

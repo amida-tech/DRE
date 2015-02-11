@@ -1,0 +1,97 @@
+<div class="container-fluid body-content">
+    <!--Profile-->
+    <div class="col-sm-3 body-left">
+        <div profile></div>
+    </div>
+
+
+    <div class="col-sm-9 body-right">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <div class="row col-sm-12" breadcrumb></div>
+                    <div class="col-sm-7">
+                        <h4>Hi {{user_first}} !</h4>
+                        <p>Welcome to your Personal Health Record. You can review your record summary and account history from this home page.</p>
+                        <p>Last Login: {{accountHistory.lastLogin | date: 'short'}}</p>
+                        <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
+                        <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <!--a href="#/record" class="pull-right" ng-show="updatesCount>0">
+                            <button class="btn btn-link"><i class="fa fa-flag fa-inline"></i>{{updatesCount}} pending update<span ng-show="updatesCount > 1">s</span>
+                            </button>
+                        </a-->
+                        <a href="#/notes" class="pull-right" ng-show="noteCount > 0">
+                            <button class="btn btn-link"><i class="fa fa-star fa-inline"></i>{{noteCount}} starred note<span ng-show="noteCount > 1">s</span>
+                            </button>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 class="text-center text-white">Account History</h4>
+        <div class="panel" ng-cloak ng-show="accountHistory && accountHistory.recordHistory">
+            <div class="panel-body">
+                <div>
+                    <p>Timeline</p>
+                </div>
+                <div timeline ng-if="accountHistory" chart-data="accountHistory" chart-type="account" class="timeline-graph"></div>
+
+                <div ng-repeat="(recordIndex, recordEntry) in accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
+
+                    <div class="col-sm-12 row timeline-side">
+
+                        <div class="col-sm-2">
+                            <a class="timeline-entry-icon text-center center-block">
+
+                                <i ng-if="recordEntry.event_type === 'infoUpdate'" class="fa fa-pencil fa-2x" id="entry{{recordIndex}}"></i>
+                                <i ng-if="recordEntry.event_type === 'fileDownloaded'" class="fa fa-download fa-2x" id="entry{{recordIndex}}"></i>
+                                <i ng-if="recordEntry.event_type === 'fileUploaded'" class="fa fa-cloud-upload fa-2x" id="entry{{recordIndex}}"></i>
+                                <i ng-if="recordEntry.event_type === 'loggedIn'" class="fa fa-sign-in fa-2x" id="entry{{recordIndex}}"></i>
+                                <i ng-if="recordEntry.event_type === 'loggedOut'" class="fa fa-sign-out fa-2x" id="entry{{recordIndex}}"></i>
+                                <i ng-if="recordEntry.event_type === 'initAccount'" class="fa fa-user fa-2x" id="entry{{recordIndex}}"></i>
+                                <i ng-if="recordEntry.event_type === 'passwordChange'" class="fa fa-key fa-2x" id="entry{{recordIndex}}"></i>
+
+                            </a>
+                        </div>
+
+
+                        <div class="col-sm-10">
+                            <div class="panel timeline-entry">
+                                <div class="panel-body">
+                                    <div class="timeline-entry-header col-sm-12">
+                                        <div class="row">
+                                            <h4 class="text-left">{{recordEntry.type}}</h4>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h5 class="text-left">{{recordEntry.date | date: 'short'}}</h5>
+                                            </div>
+                                            <div clas="col-sm-3">
+                                                <h5><span ng-show="recordEntry.note">{{recordEntry.note}}</span></h5>
+                                            </div>
+                                            <div class="col-sm-6">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-2 center-block text-center timeline-footer">
+                    <svg width="30" height="30">
+                        <circle cx="15" cy="15" r="15"></circle>
+                    </svg>
+                </div>
+
+
+
+
+            </div>
+
+        </div>

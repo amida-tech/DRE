@@ -103,9 +103,9 @@ describe('Base Merge API:', function() {
                     expect(supportedCount.results).to.equal(1);
                     expect(supportedCount.social_history).to.equal(4);
                     expect(supportedCount.immunizations).to.equal(4);
-                    expect(supportedCount.demographics).to.equal(1);
+                    expect(supportedCount.demographics).to.equal(0);
                     expect(supportedCount.problems).to.equal(2);
-                    expect(supportedCount.payers).to.equal(0); //was 1
+                    expect(supportedCount.payers).to.equal(1); //was 1
                     expect(supportedCount.plan_of_care).to.equal(0); //was 4
                     done();
                 }

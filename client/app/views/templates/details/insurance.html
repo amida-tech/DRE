@@ -1,0 +1,36 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td colspan="2">
+                <h3>Entry Details</h3>
+                <!--pre>{{entryData|json}}</pre-->
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr ng-show="entryData.policy_holder.performer.identifiers[0].identifier && !entryData.policy_holder.performer.identifiers[0].extension">
+            <td>Plan ID:</td>
+            <td>{{entryData.policy_holder.performer.identifiers[0].identifier}}</td>
+        </tr>
+        <tr ng-show="entryData.policy_holder.performer.identifiers[0].extension">
+            <td>Plan ID:</td>
+            <td>{{entryData.policy_holder.performer.identifiers[0].extension}}</td>
+        </tr>
+
+
+        <tr ng-show="entryData.policy.insurance.performer.organization[0].name">
+            <td>Plan Name:</td>
+            <td>
+                <div class="panel">
+                    <table class="table sub-table">
+                        <tr ng-repeat="name in entryData.policy.insurance.performer.organization[0].name">
+                            <td class="capitalize">{{name}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

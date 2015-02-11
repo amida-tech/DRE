@@ -1,6 +1,19 @@
 # DRE Release Notes
 
-# v1.3.1 - January 24, 2015
+# v1.3.1 - February 11, 2014
+
+This release of the DRE includes:
+
+- New UI for DRE (integrated UI prototype from https://github.com/amida-tech/phr-prototype). New features include:
+    - Patient notes for all data entries on Master Health Records
+    - Account History
+    - Timelines for events in each section of health record
+    - Patient demographics verification on record upload
+    - Password reset
+    - Improved sign up forms
+    - Profile updates
+    
+# v1.3.0.1 - January 24, 2015
 
 This minor release of the DRE includes:
 
