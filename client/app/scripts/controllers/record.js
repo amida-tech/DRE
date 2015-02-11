@@ -8,9 +8,15 @@
  */
 angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, $location, record, format, matches, merges, history, dataservice) {
     console.log("RECORD CONTROLLER LOAD ");
-    //angular.element("#nav" + $scope.entryType).removeClass("active");
-    $scope.entryType = "all";
-    //angular.element("#nav" + $scope.entryType).addClass("active");
+    angular.element("#nav" + $scope.entryType).removeClass("active");
+    if (!dataservice.curr_section) {
+        $scope.entryType = "all";
+        dataservice.curr_section = $scope.entryType;
+    }
+    else {
+        $scope.entryType = dataservice.curr_section;
+    }
+    angular.element("#nav" + $scope.entryType).addClass("active");
 
 
     console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
@@ -34,7 +40,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             $scope.masterMatches = dataservice.curr_processed_matches;
 
         });
-    };
+    }
 
     refresh();
 
@@ -106,13 +112,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         });
         $scope.pageLoaded = false;
 
-        /*
-        if (_.isEmpty(matches.getSection())) {
+        
+        if (_.isEmpty(dataservice.curr_section)) {
             $scope.entryType = "all";
         } else {
-            $scope.entryType = matches.getSection();
+            $scope.entryType = dataservice.curr_section;
         }
-    */
 
 
         //Flip All as active selected item in DOM
@@ -140,7 +145,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
 
         $scope.$watch('entryType', function(newVal, oldVal) {
             //keeping current section name in scope
+            //alert('entryType new:'+newVal+" old:"+oldVal);
             $scope.entryType = newVal;
+            dataservice.curr_section = $scope.entryType;
             console.log("$scope.entryType = ", $scope.entryType);
 
 
@@ -149,19 +156,19 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             dataservice.curr_section = $scope.entryType;
             dataservice.getMatchesData(function() {
 
-                $scope.masterMatches=dataservice.curr_processed_matches;
-                $scope.recordEntries=dataservice.processed_record;
+                $scope.masterMatches = dataservice.curr_processed_matches;
+                $scope.recordEntries = dataservice.processed_record;
 
                 if (newVal !== oldVal) {
                     if (newVal === "all") {
                         $scope.entryListFiltered = $scope.recordEntries;
-                        
-                        dataservice.curr_section="";
+
+                        dataservice.curr_section = "";
                     } else {
                         $scope.entryListFiltered = _.where($scope.recordEntries, {
                             category: newVal
                         });
-                        dataservice.curr_section=newVal;
+                        dataservice.curr_section = newVal;
                     }
                     if (newVal === "vitals") {
                         $scope.$broadcast('tabchange', {
