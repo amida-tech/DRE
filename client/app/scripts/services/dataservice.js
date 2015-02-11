@@ -373,7 +373,16 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 'count': this.curr_matches.length
             };
 
+
+            //clean up previous matches ??
+            _.each(that.processed_record, function(recordEntry) {
+                delete recordEntry.metadata.match;
+            });
+
             //Wire matches into the record
+            //(for each match)
+
+            console.log("ALL MATCHES ", that.curr_processed_matches.data);
             _.each(that.curr_processed_matches.data, function(match) {
                 var match_count = 0;
 
@@ -386,25 +395,30 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                     //console.log(">>>>> curr_matches",that.curr_matches);
 
                     if (recordEntry.data._id === match.matches[0].match_entry._id) {
-                        //console.log("attaching match ", recordEntry, match);
+                        //console.log("attaching match to record ", recordEntry.data._id, " match object MHR.id ",match.matches[0].match_entry._id);
 
                         //calculate number of pending matches per entry
 
-                        //if (recordEntry.metadata.match && recordEntry.metadata.match.count) {
-                        match_count = match_count + 1;
-                        //} else {
-                        //match_count = 1;
-                        //}
+                        if (recordEntry.metadata.match && recordEntry.metadata.match.count>0) {
+                            //console.log("IF");
+                            match_count = match_count + recordEntry.metadata.match.count + 1;
+                        } else {
+                            //console.log("ELSE");
+                            match_count = match_count + 1;
+                        }
+
                         recordEntry.metadata.match = {
                             'match_id': match._id,
                             'section': that.curr_section,
                             'count': match_count
                         };
 
+                        //console.log(">>>COUNT ", match_count, recordEntry.metadata.match);
+
                     }
-                    if (match_count===0 && recordEntry.metadata.match){
-                        delete recordEntry.metadata.match;
-                    }
+                    //if (match_count === 0 && recordEntry.metadata.match) {
+                    //    delete recordEntry.metadata.match;
+                    //}
                 });
 
 
