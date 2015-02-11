@@ -28,7 +28,20 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
         if (err) {
             console.log("error whil getting merges ", err);
         } else {
-            $scope.mergesList = data;
+            /*
+            var filtered_merges=[];
+            _.each(data, function(merge){
+                //console.log(merge);
+
+                // only claims and payers merges here
+                if (_.contains(['claims',  'payers'], merge.entry_type)) {
+                    filtered_merges.push(merge);
+
+                }
+            });
+            $scope.mergesList = filtered_merges;
+            */
+            $scope.mergesList=data;
             //console.log("merges data ", $scope.mergesList);
         }
     });
@@ -122,6 +135,7 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
     //console.log(">>>>>>", billing.masterRecord, billing.recordDirty);
 
     if (_.isEmpty(billing.masterRecord) || billing.recordDirty) {
+        console.log("MASTER DATA IS EMPTY OR DIRTY");
         billing.getData(function(err, data) {
             //getNotes and associate them with record
             billing.setNotes(data.notes);

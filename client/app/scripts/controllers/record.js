@@ -28,6 +28,21 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         if (err) {
             console.log("error whil getting merges ", err);
         } else {
+            var filtered_merges=[];
+            
+            /*
+            _.each(data, function(merge){
+                //console.log(merge);
+
+                // no claims and payers merges here
+                if (!_.contains(['claims',  'payers'], merge.entry_type)) {
+                    filtered_merges.push(merge);
+
+                }
+            });
+            $scope.mergesList = filtered_merges;
+            */
+
             $scope.mergesList = data;
             //console.log("merges data ", $scope.mergesList);
         }
@@ -137,6 +152,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     //console.log(">>>>>>", record.masterRecord, record.recordDirty);
 
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
+        console.log("MASTER DATA IS EMPTY OR DIRTY");
         record.getData(function(err, data) {
             //getNotes and associate them with record
             record.setNotes(data.notes);

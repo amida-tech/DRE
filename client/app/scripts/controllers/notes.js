@@ -6,7 +6,7 @@
  * # NotesCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes, record, format) {
+angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes, format, record) {
     $scope.any_sections_selected = false;
 
     $scope.notes = [];
@@ -147,6 +147,20 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                     tmpDates = [entry.results[0].date_time.low];
                 } else if (_.isUndefined(entry.results[0].date_time.low) && !_.isUndefined(entry.results[0].date_time.high)) {
                     tmpDates = [entry.results[0].date_time.high];
+                }
+            }
+
+            console.log(">>>>> ", entry, entry.participant);
+
+            if (!_.isUndefined(entry.participant) &&  !_.isUndefined(entry.participant.date_time)) {
+                if (!_.isUndefined(entry.participant.date_time.point)) {
+                    tmpDates = [entry.participant.date_time.point];
+                } else if (!_.isUndefined(entry.participant.date_time.low) && !_.isUndefined(entry.participant.date_time.high)) {
+                    tmpDates = [entry.participant.date_time.low, entry.participant.date_time.high];
+                } else if (!_.isUndefined(entry.participant.date_time.low) && _.isUndefined(entry.participant.date_time.high)) {
+                    tmpDates = [entry.participant.date_time.low];
+                } else if (_.isUndefined(entry.participant.date_time.low) && !_.isUndefined(entry.participant.date_time.high)) {
+                    tmpDates = [entry.participant.date_time.high];
                 }
             }
 
@@ -303,6 +317,9 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             var notes_sections = [];
             notes_sections = _.pluck(notes, "section");
             notes_sections = _.uniq(notes_sections);
+
+            console.log("sections present in notes ", notes_sections);
+            
             var stub2 = [];
             _.each(notes_sections, function(section) {
                 /*
@@ -403,14 +420,15 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         //console.log('starVal', starVal);
         //console.log(tmpSection[0].notes);
 
-        _.each(tmpSection[0].notes, function(note){
-            if (entry.note.note_id===note.note.note_id){
-                note.note.starred=!starVal;
+        _.each(tmpSection[0].notes, function(note) {
+            if (entry.note.note_id === note.note.note_id) {
+                note.note.starred = !starVal;
             }
 
         });
-
     };
+
+
     $scope.checkNotes = function() {
         $scope.starredNotes = false;
         $scope.unstarredNotes = false;
