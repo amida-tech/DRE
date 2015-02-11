@@ -29,19 +29,22 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             console.log("error whil getting merges ", err);
         } else {
             var filtered_merges=[];
+            var filtered_record=[];
+            var filtered_billing=[];
             
-            /*
             _.each(data, function(merge){
                 //console.log(merge);
 
                 // no claims and payers merges here
                 if (!_.contains(['claims',  'payers'], merge.entry_type)) {
-                    filtered_merges.push(merge);
-
+                    filtered_record.push(merge);
+                } else {
+                    filtered_billing.push(merge);
                 }
             });
-            $scope.mergesList = filtered_merges;
-            */
+            
+            $scope.mergesList_record = filtered_record;
+            $scope.mergesList_billing = filtered_billing;
 
             $scope.mergesList = data;
             //console.log("merges data ", $scope.mergesList);
