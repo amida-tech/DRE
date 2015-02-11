@@ -1,69 +1,176 @@
 <div class="container-fluid body-content">
     <div id="profileSidebar" class="col-sm-3 body-left">
         <div profile></div>
-        <div class="col-sm-12">
-            <div class="btn-group-vertical col-sm-12 sidebar-control" role="group">
-                <a ng-click="setEntryType('all')" id="navall" class="btn btn-block btn-info" ng-class="{active: entryType === 'all'}">All</a>
-                <a ng-click="setEntryType('insurance')" id="navinsurance" class="btn btn-block btn-info" ng-class="{active: entryType === 'insurance'}">Insurance</a>
-                <a ng-click="setEntryType('claims')" id="navclaims" class="btn btn-block btn-info" ng-class="{active: entryType === 'claims'}">Claims</a>
-
-            </div>
-        </div>&nbsp;
+        <div billing-navigation class="col-sm-12"></div>&nbsp;
     </div>
-
-    <!--Body Header-->
+    <!--Body-->
     <div class="col-sm-9 body-right">
         <div class="panel">
             <div class="panel-body">
-
                 <!--Header Items-->
                 <div class="col-sm-12">
                     <!--div class="row col-sm-12" breadcrumb></div-->
-                    <div class="row col-sm-12">
+                    <div class="row col-sm-12" ng-if="entryType!=='all'">
                         <span><span><a href="/#/home">Home</a><span> <i class="fa fa-angle-right"></i> </span></span>
                         <span>My billing</span>
                         </span>
-                    </div>                    
+                    </div>
+                    <div class="row col-sm-12" ng-if="entryType==='all'">
+                        <span><span><a href="/#/home">Home</a><span> <i class="fa fa-angle-right"></i> </span></span>
+                        <span>My billing</span>
+                        </span>
+                    </div>
                     <div class="col-sm-12">
-
                         <div class="col-sm-8">
-                            <div class="pull-left">
-                                <h4>My Billing</h4>
-                                <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
-                                <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
+                            <h4 ng-if="entryType==='all'">{{user_first}}'s Billing Overview</h4>
+                            <h4 ng-if="entryType!=='all'">{{user_first}}'s {{entryType}}</h4>
+                            <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
+                            <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
+
+                        </div>
+                        
+                    </div>
+                    <div class="col-sm-10 col-sm-offset-1 text-center" ng-click="goToMatches(entryType)" ng-if="entryType!=='all' && masterMatches.count>0">
+                        <div class="btn btn-link" style="margin-right: 20px;"><i class="fa fa-flag-o" style="margin-right: 10px;"></i>{{masterMatches.count}} update<span ng-show="masterMatches.count>1">s</span> to your {{entryType}} requiring review.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--d3.
+        <div class="col-sm-12" ng-show="entryType === 'vitals'">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-sm-5">
+                        <div class="row">
+                            <h4>Measurements</h4>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td><h4 class="text-muted">Height</h4></td>
+                                        <td><h5>{{dashMetrics.height.disp}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h4 class="text-muted">Weight</h4></td>
+                                        <td><h5>{{dashMetrics.weight.disp}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h4 class="text-muted">BMI</h4></td>
+                                        <td><h5>{{dashMetrics.bmi}}</h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h4 class="text-muted">Blood Pressure</h4></td>
+                                        <td><h5>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h5></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-6">
+                        <div bs-active-pane="tabs.activeTab" data-nav-class="nav-pills" bs-tabs>
+                            <div title="{{ tabs[0].title }}" bs-pane>
+                                <div linechart graph-type="weight" data="entries.vitals"></div>
+                                <div class="col-sm-12 text-center">
+                                    Weight (lbs)
+                                </div>
+                            </div>
+                            <div title="{{ tabs[1].title }}" bs-pane>
+                                <div linechart graph-type="bloodPressure" data="entries.vitals"></div>
+                                <div class="col-sm-12 text-center">
+                                    Blood Pressure
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
+        <div class="col-sm-12">
+            end d3-->
 
+
+        <div ng-show="entryType==='all'">
+            <div class="col-sm-12">
+                <!--end d3-->
+                <!--Timeline View-->
+                <div class="col-sm-12">
+                    <h4 class="text-center text-white">Billing History</h4>
+                    <div class="panel" ng-hide="recordEntries">
+                        <div class="panel-body">
+                            <h5 class="col-sm-12 text-center">No Billing Entries</h5>
+                        </div>
+                    </div>
+                    <div class="panel" ng-if="recordEntries">
+                        <div class="panel-body">
+                            <div>
+                                <p>Timeline</p>
+                            </div>
+                            <div ng-if="mergesList" timeline chart-data="mergesList" chart-type="merges" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+
+
+                            <div ng-repeat="(recordIndex, recordEntry) in mergesList | orderBy:'-merged':reverse" class="col-sm-12 row" id="record{{recordIndex}}">
+                                <div class="col-sm-12 row timeline-side" ng-if="recordEntry.entry_type !== 'demographics' ">
+                                    <!--Timeline Icon-->
+                                    <div class="col-sm-2">
+                                        <a class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{recordEntry.entry_type}}" timeline-index="{{recordIndex}}"></a>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <div class="panel timeline-entry">
+                                            <div class="panel-body" id="accordian">
+                                                <div class="timeline-entry-header col-sm-12">
+                                                    <div class="col-sm-6">
+                                                        <h4 class="text-left">{{recordEntry.merge_reason}}  {{singularName(recordEntry.entry_type)}} </h4>
+                                                        <h5 class="text-left">{{recordEntry.merged | date : 'short'}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 center-block text-center timeline-footer">
+                                <svg width="30" height="30">
+                                    <circle cx="15" cy="15" r="15"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end timeline-->
+                </div>
+            </div>
+            <!--<pre>{{masterRecord | json}}</pre>-->
+        </div>
 
         <!--Timeline View-->
-        <h4 class="text-center text-white">{{entryType}}</h4>
-        <div class="panel">
-            <div class="panel-body">
-
-                <div ng-repeat="(recordIndex, recordEntry) in entries" class="col-sm-12 row" id="record{{recordIndex}}">
-
-                    <div class="col-sm-12 row timeline-side">
-                        <billingentry entry-type="{{recordEntry.category}}" entry-index="{{recordIndex}}">
-                            </entry>
+        <div ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
+            <h4 class="text-center text-white">{{entryType}}</h4>
+            <div class="panel" ng-hide="recordEntries">
+                        <div class="panel-body">
+                            <h5 class="col-sm-12 text-center">No Record Entries</h5>
+                        </div>
                     </div>
-
-
-                </div>
-                <div class="col-sm-2 center-block text-center timeline-footer">
-                    <svg width="30" height="30">
-                        <circle cx="15" cy="15" r="15"></circle>
-                    </svg>
+            <div class="panel" ng-if="recordEntries">
+                <div class="panel-body">
+                    <div>
+                        <p>Timeline</p>
+                    </div>
+                    <div timeline ng-if="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
+                    <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
+                        <div class="col-sm-12 row timeline-side">
+                            <entry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></entry>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 center-block text-center timeline-footer">
+                        <svg width="30" height="30">
+                            <circle cx="15" cy="15" r="15"></circle>
+                        </svg>
+                    </div>
                 </div>
             </div>
+            <!--end timeline-->
         </div>
     </div>
-
-    <!--<pre>{{entries | json}}</pre>-->
+    <!--<pre>{{masterRecord | json}}</pre>-->
 
 </div>

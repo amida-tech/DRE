@@ -1,15 +1,14 @@
 'use strict';
-
 /**
  * @ngdoc directive
  * @name phrPrototypeApp.directive:billingNavigation
  * @description
  * # billingNavigation
  */
-angular.module('phrPrototypeApp')
-    .directive('billingnavigation', function() {
+angular.module('phrPrototypeApp').directive('billingNavigation', ['$window',
+    function($window) {
         return {
-            templateURL: 'views/templates/billingnavigation.html',
+            templateUrl: 'views/templates/billingnavigation.html',
             restrict: 'EA',
             link: function postLink(scope, element, attrs) {
                 //Active Link Highlighting.
@@ -23,4 +22,5 @@ angular.module('phrPrototypeApp')
                 
             }
         };
-    });
+    }
+]);
