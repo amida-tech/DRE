@@ -39,6 +39,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
             svg.call(tip);
 
             function gatherData() {
+                console.log("timeline gather data");
                 //Clean variables (needed for refresh).
                 var dataToPlot = [];
                 plotCircles = [];
@@ -48,6 +49,8 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                 var tmpDomain = [];
                 var minDate, maxDate, plotFloor, plotCeiling;
                 if (dataType === 'account' && dataToPlot) { //&& dataToPlot if no data skip this part
+                    console.log('>>>plotting account history');
+                    console.log("num of points ",dataToPlot.length);
                     //console.log('in timeline plotting');
                     //console.log('plot data exists', dataToPlot);
                     for (var i in dataToPlot.recordHistory) {
@@ -64,6 +67,8 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
                     plotDomain = [plotFloor, plotCeiling];
                 } else if (dataType === 'merges' && dataToPlot) {
+                    console.log('>>>plotting merges');
+                    console.log("num of points ",dataToPlot.length);
                     _.each(dataToPlot, function(entry) {
                         var plotDate;
                         if (entry.merged) {
@@ -85,6 +90,9 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     plotDomain = [plotFloor, plotCeiling];
 
                 } else {
+                    console.log('>>>plotting something else');
+                    console.log("num of points ",dataToPlot.length);
+
                     _.each(dataToPlot, function(entry) {
                         var plotDate;
                         if (entry.metadata.datetime) {
@@ -111,6 +119,8 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
             }
 
             function renderPlot() {
+                    console.log("timeline render plot");
+
                     var width = 0;
 
                     function getSVGWidth() {
@@ -256,6 +266,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                 }
                 //gatherData only on first run.
             $window.onload = function() {
+                console.log('onload');
                 gatherData();
                 renderPlot();
             };
@@ -268,27 +279,32 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
             //Expose function on master scope.
 
             scope.$watch('inactiveFlag', function(newValue, oldValue) {
+                console.log('inactive flag '+newValue+' '+oldValue);
                 gatherData();
                 renderPlot();
             }, true);
             scope.$watch('entryType', function(newValue, oldValue) {
+                console.log('entry type '+newValue+' '+oldValue);
                 gatherData();
                 renderPlot();
             }, true);
             scope.$watch('pageLoaded', function(newValue, oldValue) {
+                console.log('page loaded '+newValue+' '+oldValue);
                 gatherData();
                 renderPlot();
             }, true);
 
+            /*
             //Bind to updates in accountHistory var
             scope.$watch('accountHistory', function(newValue, oldValue) {
+                console.log('acct history '+newValue+' '+oldValue);
                 if (newValue) {
                     //console.log("act hist new val ", newValue);
                     gatherData();
                     renderPlot();
                 }
             }, true);
-
+            */
 
 
         }
