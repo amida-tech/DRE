@@ -6,7 +6,7 @@
  * # NotesCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes, format, record) {
+angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes, format, dataservice) {
     $scope.any_sections_selected = false;
 
     $scope.notes = [];
@@ -21,6 +21,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
     }];
 
 
+    /*
     //gets notes from backend API
     function getNotes() {
         notes.getNotes(function(err, returnNotes) {
@@ -29,28 +30,26 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             updateAnySectionsSelected();
         });
     }
+    */
 
 
-    if (_.isEmpty(record.masterRecord) || record.recordDirty) {
-        record.getData(function(err, data) {
-            if (err) {
-                console.log("getData error ", err);
-            } else {
-                console.log("MASTER RECORD is Loaded!");
-                record.setMasterRecord(data);
-                $scope.masterRecord = data.records;
-                record.processRecord(data.records, $scope.notes, "notes.js controller");
-                console.log("PROCESSED MASTER RECORD ", record.processedRecord);
-                getNotes();
-            }
+    //TODO may need callback
+    function refresh() {
+        dataservice.curr_section_billing = $scope.entryType;
+        dataservice.getData(function() {
+            console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
+            //console.log("MORE: ", dataservice.all_merges, dataservice.merges_record, dataservice.merges_billing);
+
+
+            $scope.masterRecord = dataservice.master_record;
+            $scope.notes = mashNotesWithRecord(dataservice.all_notes, $scope.masterRecord);
+            $scope.filters = updateFilters(dataservice.all_notes);
+            updateAnySectionsSelected();
+
         });
-    } else {
-        console.log("ELSE - in loading record");
-        $scope.masterRecord = record.masterRecord;
-        getNotes();
     }
 
-
+    refresh();
 
 
     //updated flag that says if any sections are selected to view
