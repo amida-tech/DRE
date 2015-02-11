@@ -17,8 +17,11 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     this.merges_record = [];
     this.merges_billing = [];
 
-    //currently active section (for matches)
+    //currently active section (for matches and navigation) -record page
     this.curr_section = "";
+
+    //currently active section (for navigation) -billing page
+    this.curr_section_billing = "";
 
     //current matches
     this.curr_matches = [];
@@ -126,6 +129,34 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 callback("merges", err);
             });
     };
+
+
+    /* TODO: merge history here
+
+    this.getHistory = function(callback) {
+        console.log('getting history from API');
+        $http.get('/api/v1/notes/all')
+            .success(function(data) {
+                console.log("notes fetched successfuly");
+                callback("notes", null, data);
+            })
+            .error(function(err) {
+                console.log("fetching notes failed", err);
+                callback("notes", err);
+            });
+    };
+        function getHistory() {
+            history.getHistory(function(err, history) {
+                if (err) {
+                    console.log('ERRROR', err);
+                } else {
+                    //console.log('>>>>accountHistory', history);
+                    $scope.accountHistory = history;
+                }
+            });
+        } 
+
+    */   
 
     this.getMatches = function(section, callback) {
         //no need to fetch anything if section is all

@@ -19,6 +19,8 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         'value': true,
         'displayName': 'un-starred'
     }];
+
+
     //gets notes from backend API
     function getNotes() {
         notes.getNotes(function(err, returnNotes) {
@@ -27,6 +29,8 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             updateAnySectionsSelected();
         });
     }
+
+
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
         record.getData(function(err, data) {
             if (err) {
@@ -45,6 +49,10 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         $scope.masterRecord = record.masterRecord;
         getNotes();
     }
+
+
+
+
     //updated flag that says if any sections are selected to view
     function updateAnySectionsSelected() {
         $scope.any_sections_selected = false;
@@ -67,6 +75,8 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
         $scope.checkNotes();
     };
     //$.lockfixed(".sidebar-control",{offset: {top: 10},forcemargin: true});
+    
+
     /* EXAMPLE OF NOTES DATA
     [{
         "_id": "54d503e8c053a20a26f2ee47",
@@ -390,6 +400,9 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
             });
             return stub2;
         }
+
+
+
         //updates list of sections in filters based on what sections are present in notes
     function updateFilters(notes) {
         var filters = $scope.filters;

@@ -6,14 +6,13 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, $location, record, format, matches, merges, history, dataservice) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, $location, format, matches, merges, history, dataservice) {
     console.log("RECORD CONTROLLER LOAD ");
     angular.element("#nav" + $scope.entryType).removeClass("active");
     if (!dataservice.curr_section) {
         $scope.entryType = "all";
         dataservice.curr_section = $scope.entryType;
-    }
-    else {
+    } else {
         $scope.entryType = dataservice.curr_section;
     }
     angular.element("#nav" + $scope.entryType).addClass("active");
@@ -82,10 +81,14 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 return 'encounter';
             case 'immunizations':
                 return 'immunization';
-            case 'insurances':
-                return 'insurance';
             case 'procedures':
                 return 'procedure';
+            case 'claims':
+                return 'claim';
+            case 'insurance':
+                return 'insurance';
+            case 'payers':
+                return 'payer';
             default:
                 return section;
         }
@@ -112,7 +115,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         });
         $scope.pageLoaded = false;
 
-        
+
         if (_.isEmpty(dataservice.curr_section)) {
             $scope.entryType = "all";
         } else {
