@@ -1,17 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name phrPrototypeApp.controller:RecordCtrl
+ * @name phrPrototypeApp.controller:BillingClaimsCtrl
  * @description
- * # RecordCtrl
+ * # BillingClaimsCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $window, $location, billing, format, matches, merges, history) {
-    console.log("BILLING CONTROLLER LOAD ");
-    angular.element("#nav" + $scope.entryType).removeClass("active");
-    $scope.entryType = "all";
-    angular.element("#nav" + $scope.entryType).addClass("active");
-    //Flip All as active selected item in DOM
+angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $location, $anchorScroll,  format, billing, history, matches, merges) {
     function getHistory() {
         history.getHistory(function(err, history) {
             if (err) {
@@ -22,8 +17,11 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
             }
         });
     }
+
+
+
     getHistory();
-    //Loading Merges
+    //Loading Merges (only used in record history, don't need in billing)
     merges.getMerges(function(err, data) {
         if (err) {
             console.log("error whil getting merges ", err);
@@ -32,22 +30,10 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
             //console.log("merges data ", $scope.mergesList);
         }
     });
-    // produces singular name for section name - in records merges list
-    $scope.singularName = function(section) {
-        switch (section) {
-            case 'claims':
-                return 'claim';
-            case 'insurance':
-                return 'insurance';
-            case 'payers':
-                return 'payer';
-            
-            default:
-                return section;
-        }
-    };
 
     function pageRender(data, data_notes) {
+        console.log("billing page render", data, data_notes);
+
         $scope.dashMetrics = {};
         $scope.tabs = [{
             "title": "Weight",
@@ -66,6 +52,7 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
                 });
             }
         });
+
         $scope.pageLoaded = false;
         if (_.isEmpty(matches.getSection())) {
             $scope.entryType = "all";
@@ -76,11 +63,12 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
         angular.element("#nav" + $scope.entryType).addClass("active");
 
         if (_.isEmpty(billing.processedRecord)) {
+            console.log("processed record is empty >>>>>", data, data_notes);
             $scope.recordEntries = billing.processRecord(data, data_notes, "billing.js controller");
         } else {
+            console.log("processed record is NOT empty >>>>>");
             $scope.recordEntries = billing.processedRecord;
         }
-
         $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
             if (entry.metadata.datetime[0]) {
                 return entry.metadata.datetime[0].date.substring(0, 9);
@@ -88,6 +76,8 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
                 return '1979-12-12';
             }
         }).reverse();
+
+
         if ($scope.entryType === "all") {
             $scope.entryListFiltered = $scope.recordEntries;
         } else {
@@ -95,11 +85,15 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
                 category: $scope.entryType
             });
         }
+        
+
         $scope.$watch('entryType', function(newVal, oldVal) {
             //keeping current section name in scope
             $scope.entryType = newVal;
             console.log("$scope.entryType = ", $scope.entryType);
-            getMatchesData();
+            //getData(function(err, data) {});
+
+
             if (newVal !== oldVal) {
                 if (newVal === "all") {
                     $scope.entryListFiltered = $scope.recordEntries;
@@ -117,9 +111,12 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
                 }
             }
         });
+
+
+
     }
 
-    //console.log(">>>>>>", billing.masterRecord, billing.recordDirty);
+    console.log(">>>>>>", billing.masterRecord, billing.recordDirty);
 
     if (_.isEmpty(billing.masterRecord) || billing.recordDirty) {
         billing.getData(function(err, data) {
@@ -131,67 +128,47 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function($scope, $wi
     } else {
         pageRender(billing.masterRecord, billing.all_notes);
     }
-    $scope.masterMatches = {};
 
-
-    // Get Matches data for partial matches 
-    function getMatchesData() {
-        //console.log("getting merges for section ", $scope.entryType);
-        if (!$scope.entryType || $scope.entryType === 'all') {
-            return;
-        }
-        matches.getCategory($scope.entryType).then(function(data) {
-            $scope.masterMatches = {
-                'category': $scope.entryType,
-                'data': data.matches,
-                'count': data.matches.length
-            };
-            //Wire matches into the record
-            _.each($scope.masterMatches.data, function(match) {
-                var match_count = 0;
-                //console.log(mat)
-                //console.log("match id and master entry id", match._id, match.entry._id, $scope.recordEntries);
-                //find $scope.recordEntries.data._id === match.entry._id
-                _.each($scope.recordEntries, function(recordEntry) {
-                    if (recordEntry.data._id === match.matches[0].match_entry._id) {
-                        //console.log("attaching match ", recordEntry, match);
-
-                        //calculate number of pending matches per entry
-
-                        if (recordEntry.metadata.match && recordEntry.metadata.match.count) {
-                            match_count = recordEntry.metadata.match.count + 1;
-                        } else {
-                            match_count = 1;
-                        }
-                        recordEntry.metadata.match = {
-                            'match_id': match._id,
-                            'section': $scope.entryType,
-                            'count': match_count
-                        };
-                    }
-                });
+    /*
+        function getHistory() {
+            history.getHistory(function(err, history) {
+                if (err) {
+                    console.log('ERRROR', err);
+                } else {
+                    //console.log('>>>>accountHistory', history);
+                    $scope.accountHistory = history;
+                }
             });
-            //do stuff here
-            $scope.allergyMatch = $scope.masterMatches.data[1];
+        }
+    */
+
+    function getUpdateDate() {
+        //Should grab from files/update history.  Stubbed for now.
+        $scope.updateDate = '12/1/2014';
+    }
+    $scope.setEntryType = function(type) {
+        $scope.entryType = type;
+        if (type === 'all') {
+            $scope.entries = $scope.masterEntries;
+        } else {
+            $scope.entries = _.where($scope.masterEntries, {
+                'category': type
+            });
+        }
+    };
+
+    $scope.setEntryType('all');
+
+/*
+    function getData() {
+        billing.getData(function(err, data) {
+
+            $scope.masterEntries = data.records;
+            //$scope.setEntryType('all');
+
+
         });
     }
-
-    getMatchesData();
-
-    $scope.goToMatches = function(section) {
-        //console.log(section);
-        //matches.setSection(section);
-        $location.path('/matches');
-    };
-    //launch specific match (by ID and section name)
-    $scope.launchMatch = function(el) {
-        console.log("Launch MATCH>> ", el);
-        //console.log(section);
-        //setting section name for matches page
-        matches.setSection(el.match.section);
-        //TODO: set match ID for match page
-        matches.setMatchId(el.match.match_id);
-
-        $location.path('/matches');
-    };
+    //getData(function(err, data) {});
+*/
 });

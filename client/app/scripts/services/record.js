@@ -44,7 +44,7 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
     };
 
     this.processRecord = function(rawRecord, rawNotes, caller) {
-        console.log('processing record', rawRecord, rawNotes, caller);
+        //console.log('processing record', rawRecord, rawNotes, caller);
         var tmpEntries = [];
         _.each(rawRecord, function(entries, type) {
 
@@ -80,6 +80,20 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
                     }
                 }
 
+                if ((type==='payers' || type==='insurance') && !_.isUndefined(entry.participant.date_time)) {
+                    if (!_.isUndefined(entry.participant.date_time.point)) {
+                        tmpDates = [entry.participant.date_time.point];
+                    } else if (!_.isUndefined(entry.participant.date_time.low) && !_.isUndefined(entry.participant.date_time.high)) {
+                        tmpDates = [entry.participant.date_time.low, entry.participant.date_time.high];
+                    } else if (!_.isUndefined(entry.participant.date_time.low) && _.isUndefined(entry.participant.date_time.high)) {
+                        tmpDates = [entry.participant.date_time.low];
+                    } else if (_.isUndefined(entry.participant.date_time.low) && !_.isUndefined(entry.participant.date_time.high)) {
+                        tmpDates = [entry.participant.date_time.high];
+                    }
+                }
+
+
+
                 if (tmpDates.length === 1) {
                     dispDates = format.formatDate(tmpDates[0]);
                 } else if (tmpDates.length === 2) {
@@ -110,6 +124,9 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
                     var display_type=type;
                     if (type==='social_history'){
                         display_type='social';
+                    }
+                    if (type==='payers'){
+                        display_type='insurance';
                     }
                     if (type==='problems'){
                         display_type='conditions';

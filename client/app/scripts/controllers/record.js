@@ -134,7 +134,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         });
     }
 
-    console.log(">>>>>>", record.masterRecord, record.recordDirty);
+    //console.log(">>>>>>", record.masterRecord, record.recordDirty);
 
     if (_.isEmpty(record.masterRecord) || record.recordDirty) {
         record.getData(function(err, data) {

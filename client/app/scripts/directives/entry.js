@@ -25,7 +25,9 @@ angular.module('phrPrototypeApp')
 
 
 
+                //console.log("SCOPE.TYPE ", scope.type);
                 switch (scope.type) {
+
                     case 'allergies':
                         if (scope.entryData.observation) {
                             if (scope.entryData.observation.allergen && scope.entryData.observation.allergen.name) {
@@ -139,10 +141,12 @@ angular.module('phrPrototypeApp')
                         }
                         break;
                     case 'insurance':
-                        if (scope.entryData.name) {
-                            scope.entryTitle = scope.entryData.name;
+                        //console.log("INSURANCE", scope.entryData, scope.recordEntry.metadata);
+                        if (scope.entryData.policy.insurance.performer.organization[0].name[0]) {
+                            //scope.entryTitle = scope.entryData.name;
+                            scope.entryTitle = scope.entryData.policy.insurance.performer.organization[0].name[0];
                         }
-                        if (scope.entryData.date_time) {
+                        if (scope.entryData.participant.date_time) {
                             scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
                         }
                         break;
