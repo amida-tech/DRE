@@ -143,7 +143,7 @@
         </div>
 
         <!--Timeline View-->
-        <div ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
+        <div ng-cloak ng-if="entryType!=='all' && entryListFiltered.length>0" class="col-sm-12">
             <h4 class="text-center text-white">{{entryType}}</h4>
             <div class="panel" ng-hide="recordEntries">
                         <div class="panel-body">
