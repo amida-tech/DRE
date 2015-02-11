@@ -227,6 +227,8 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                     }
                     break;
                 case 'conditions':
+                    console.log("conditions>>>>>", scope.recordEntry, scope.entryData);
+
                     if (scope.entryData.problem && scope.entryData.problem.code && scope.entryData.problem.code.name) {
                         scope.entryTitle = scope.entryData.problem.code.name;
                     }
@@ -277,6 +279,8 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                     }
                     break;
                 case 'social':
+                    console.log("social>>>>>", scope.recordEntry, scope.entryData);
+
                     if (scope.entryData.value) {
                         scope.entryTitle = scope.entryData.value;
                     }
@@ -296,8 +300,9 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                     }
                     break;
                 case 'insurance':
-                    if (scope.entryData.name) {
-                        scope.entryTitle = scope.entryData.name;
+                    console.log("insurance>>>>>", scope.recordEntry, scope.entryData);
+                    if (scope.entryData.policy.insurance.performer.organization[0].name[0]) {
+                        scope.entryTitle = scope.entryData.policy.insurance.performer.organization[0].name[0];
                     }
                     if (scope.entryData.date_time) {
                         scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
@@ -339,6 +344,9 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                     case "social":
                         section = "social_history";
                         break;
+                    case "insurance":
+                        section = "insurance";
+                        break;
                 }
                 */
 
@@ -366,12 +374,27 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function($scope, notes
                             'note_id': note._id
                         }
                     };
-                    var ff = _.where(record[section], {
+
+
+                var section_mod=section;
+                switch (section) {
+                    case "conditions":
+                        section_mod = "problems";
+                        break;
+                    case "social":
+                        section_mod = "social_history";
+                        break;
+                    case "insurance":
+                        section_mod = "payers";
+                        break;
+                }
+                
+                    var ff = _.where(record[section_mod], {
                         '_id': note.entry
                     })[0];
 
                     if (!ff) {
-                        //console.log("BAAAD!!!!!", section);
+                        console.log("BAAAD!!!!!", section, record[section_mod], record);
                         ff = {};
                     }
 

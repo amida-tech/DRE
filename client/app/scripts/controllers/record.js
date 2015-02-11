@@ -1,11 +1,5 @@
 'use strict';
-/**
- * @ngdoc function
- * @name phrPrototypeApp.controller:RecordCtrl
- * @description
- * # RecordCtrl
- * Controller of the phrPrototypeApp
- */
+
 angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, $location, format, matches, merges, history, dataservice) {
     console.log("RECORD CONTROLLER LOAD ");
     angular.element("#nav" + $scope.entryType).removeClass("active");

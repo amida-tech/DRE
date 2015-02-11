@@ -183,9 +183,9 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
 
                 matches.saveMatch(scope.finalData);
                 $location.path('/record');
-                record.getData(function(err, data) {
-                    return;
-                });
+                //record.getData(function(err, data) {
+                //    return;
+                //});
                 $route.reload();
 
                 /*
@@ -205,9 +205,9 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 console.log("match ignored");
                 matches.discardMatch();
                 $location.path('/record');
-                record.getData(function(err, data) {
-                    return;
-                });
+                //record.getData(function(err, data) {
+                //    return;
+                //});
                 $route.reload();
 
 

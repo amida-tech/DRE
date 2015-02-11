@@ -20,7 +20,14 @@ angular.module('phrPrototypeApp')
         function refresh() {
             dataservice.curr_section = $scope.entryType;
             dataservice.getData(function() {
-                $scope.noteCount = dataservice.all_notes.length;
+                $scope.noteCount = 0;
+
+                _.each(dataservice.all_notes, function(entry) {
+                    //console.log(entry);
+                    if (entry.star) {
+                        $scope.noteCount++;
+                    }
+                });                
 
                 merges.getMerges(function(err, merges) {
                     $scope.updatesCount = merges.length;

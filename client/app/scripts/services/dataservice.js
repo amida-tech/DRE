@@ -34,17 +34,17 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     this.curr_processed_matches = {};
 
     //record with 
-    //	injected notes
-    //	matches (for currently selected section)
-    //	counted pending updates (matches)
+    //  injected notes
+    //  matches (for currently selected section)
+    //  counted pending updates (matches)
     this.processed_record = [];
 
 
     //fetch all the data form APIs
     //including:
-    //	master_record
-    //	notes
-    //	merges
+    //  master_record
+    //  notes
+    //  merges
     //  currently selected matches
     //
     //  saves data into local this.* vars (see above)
@@ -156,7 +156,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             });
         } 
 
-    */   
+    */
 
     this.getMatches = function(section, callback) {
         //no need to fetch anything if section is all
@@ -165,8 +165,8 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             callback("matches", null, []);
         } else {
 
-        	//translating section name to backend API terms
-        	var section_backend=section;
+            //translating section name to backend API terms
+            var section_backend = section;
             switch (section) {
                 case "conditions":
                     section_backend = "problems";
@@ -190,7 +190,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     };
 
     //processes data
-    //	calculates displayDates for all entries
+    //  calculates displayDates for all entries
     //  injects notes information in releated entries
 
     this.processData = function() {
@@ -198,7 +198,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
         _.each(this.master_record, function(entries, type) {
             _.each(entries, function(entry) {
-                //gate (ignore) possible sections that are not applicable here             	
+                //gate (ignore) possible sections that are not applicable here              
                 if (_.contains(['demographics', 'plan_of_care'], type)) {
                     //skip to next entry (next iteration)
                     return;
@@ -206,6 +206,14 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
                 //calculate displayDates for entry based on type
                 var dates = that.extractAndFormatDate(type, entry);
+
+                if (dates.temp === "") {
+                    dates.temp = [{
+                        "date": "2015-02-11T00:00:00.000Z",
+                        "precision": "day",
+                        "displayDate": "Feb 12, 2015"
+                    }];
+                }
 
                 //collate all notes into array (with formatting) for current entry
                 var comments = that.collateComments(entry);
@@ -382,18 +390,24 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
                         //calculate number of pending matches per entry
 
-                        if (recordEntry.metadata.match && recordEntry.metadata.match.count) {
-                            match_count = recordEntry.metadata.match.count + 1;
-                        } else {
-                            match_count = 1;
-                        }
+                        //if (recordEntry.metadata.match && recordEntry.metadata.match.count) {
+                        match_count = match_count + 1;
+                        //} else {
+                        //match_count = 1;
+                        //}
                         recordEntry.metadata.match = {
                             'match_id': match._id,
                             'section': that.curr_section,
                             'count': match_count
                         };
+
+                    }
+                    if (match_count===0 && recordEntry.metadata.match){
+                        delete recordEntry.metadata.match;
                     }
                 });
+
+
             });
         }
 
@@ -403,14 +417,14 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     //
     //processes fetched data
     //including:
-    //	master_record
-    //		processes record
-    //	notes
-    //		calculates count of starred notes per element
-    //	merges
-    //		does nothing...???
+    //  master_record
+    //      processes record
+    //  notes
+    //      calculates count of starred notes per element
+    //  merges
+    //      does nothing...???
     //  currently selected matches
-    //		calculates counts of matches per element
+    //      calculates counts of matches per element
     this.getData = function(callback) {
         console.log("in get data");
 
