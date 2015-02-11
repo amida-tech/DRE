@@ -15,6 +15,8 @@ angular.module('phrPrototypeApp').directive('recordNavigation', ['$window',
                 element.find("#nav" + scope.entryType).addClass("active");
                 
                 scope.setEntryType = function (type) {
+                    console.log("recordnavigation set entry type ",type);
+                    
                     element.find("#nav" + scope.entryType).removeClass("active");
                     scope.entryType = type;
                     element.find("#nav" + scope.entryType).addClass("active");

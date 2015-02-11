@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('HomeCtrl', function($scope, history, record, notes, merges) {
+    .controller('HomeCtrl', function($scope, history, merges, dataservice) {
 
 
 
@@ -16,36 +16,21 @@ angular.module('phrPrototypeApp')
         $scope.noteCount = 0;
         $scope.updatesCount = 0;
 
-        notes.noteCount(function(err, count) {
-            $scope.noteCount = count;
-        });
 
-        merges.getMerges(function(err, merges){
-            $scope.updatesCount=merges.length;
+        function refresh() {
+            dataservice.curr_section = $scope.entryType;
+            dataservice.getData(function() {
+                $scope.noteCount = dataservice.all_notes.length;
 
-        });
+                merges.getMerges(function(err, merges) {
+                    $scope.updatesCount = merges.length;
+                });
+                //$scope.updatesCount = dataservice.matches
 
-        //$scope.updatesCount = merges.updatesCount();
-
-
-
-        /*
-        function countNotes() {
-            //notes.noteCount(function(err, results) {
-            //$scope.noteCount = 1;
-            //});
-        }
-
-        function countUpdates() {
-            record.getRecord(function(err, results) {
-                $scope.entries = results;
             });
         }
-        */
 
-        //countNotes();
-        //countUpdates();
-
+        refresh();
 
         function getHistory() {
             history.getHistory(function(err, history) {

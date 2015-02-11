@@ -14,7 +14,6 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
 
 
     function setScopeVars() {
-
         if (_.isEmpty(matches.getSection())) {
             
             console.log("ACHTUNG!!!!!!!");

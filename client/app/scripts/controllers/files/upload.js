@@ -56,7 +56,7 @@ angular.module('phrPrototypeApp')
 
                         $scope.uploadStep = 0;
                     $location.path('/files');
-                    record.getData(function(err, data) { return; });
+                    //record.getData(function(err, data) { return; });
                     $route.reload();
                 
                     
