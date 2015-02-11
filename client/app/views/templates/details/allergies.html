@@ -22,15 +22,15 @@
                 <div class="panel">
                     <table class="table sub-table">
                         <tbody>
-                            <tr>
+                            <tr ng-show="entryData.observation.status.name">
                                 <td>Status:</td>
                                 <td>{{entryData.observation.status.name}}</td>
                             </tr>
-                            <tr>
+                            <tr ng-show="entryData.observation.status.code">
                                 <td>Code:</td>
                                 <td>{{entryData.observation.status.code}}</td>
                             </tr>
-                            <tr>
+                            <tr ng-show="entryData.observation.status.code_system_name">
                                 <td>Code System:</td>
                                 <td>{{entryData.observation.status.code_system_name}}</td>
                             </tr>
@@ -46,22 +46,22 @@
 
 				<div class="panel">
 					<table class="table sub-table">
-						<thead>
+						<thead ng-show="reactionEntry.reaction.name">
 							<tr>
 								<td>Reaction:</td>
 								<td>{{reactionEntry.reaction.name}}</td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							<tr ng-show="reactionEntry.severity.code.name">
 								<td>Severity:</td>
 								<td>{{reactionEntry.severity.code.name}}</td>
 							</tr>
-							<tr>
+							<tr ng-show="reactionEntry.reaction.code">
 								<td>Code:</td>
 								<td>{{reactionEntry.reaction.code}}</td>
 							</tr>
-							<tr>
+							<tr ng-show="reactionEntry.reaction.code_system_name">
 								<td>Code System:</td>
 								<td>{{reactionEntry.reaction.code_system_name}}</td>
 							</tr>
