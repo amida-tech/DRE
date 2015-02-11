@@ -13,6 +13,12 @@ This release of the DRE includes:
     - Improved sign up forms
     - Profile updates
     
+# v1.3.0.1 - January 24, 2015
+
+This minor release of the DRE includes:
+
+- Updated deployment scripts (Ansible/Vagrant) for Centos 7
+- Updated sample files for demo scenarios
 
 # v1.3.0 - December 12, 2014
 
