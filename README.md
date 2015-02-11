@@ -45,17 +45,6 @@ This provides a API for interaction with and access to the aggregated health rec
 
 Documentation for record.js [API](./docs/recordjs.md)
 
-###Screenshots of demo app
-
-![Home Screen](./docs/images/dre_01.png)
-![Master Health Record View](./docs/images/dre_02.png)
-![Files Upload](./docs/images/dre_03.png)
-![Notifications](./docs/images/dre_04.png)
-![Updates](./docs/images/dre_05.png)
-![Updates Review](./docs/images/dre_06.png)
-![Partial Match Review](./docs/images/dre_07.png)
-
-
 ##Quick up and running quide
 
 ###Prerequisites
