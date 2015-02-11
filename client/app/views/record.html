@@ -172,7 +172,7 @@
                     <div>
                         <p>Timeline</p>
                     </div>
-                    <div timeline ng-if="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
+                    <div timeline ng-show="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
                     <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
                         <div class="col-sm-12 row timeline-side">
                             <entry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></entry>

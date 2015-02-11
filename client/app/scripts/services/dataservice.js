@@ -450,7 +450,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
             //at this point this.processed_record is ready to use
 
-            console.log("before callback");
+            console.log("before callback from getMatchesData");
             callback();
 
         });
