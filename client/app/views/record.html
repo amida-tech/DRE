@@ -30,7 +30,7 @@
                             <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
 
                         </div>
-                        <div class="col-sm-4"  ng-if="entryType==='all'">
+                        <div class="col-sm-4" ng-if="entryType==='all'">
                             <a ng-href="/api/v1/master_health_record/xml">
                                 <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
@@ -47,7 +47,7 @@
                             <h6 style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
                         </div>
                     </div>
-                    <div class="col-sm-10 col-sm-offset-1 text-center"  ng-if="entryType!=='all' && masterMatches.count>0">
+                    <div class="col-sm-10 col-sm-offset-1 text-center" ng-if="entryType!=='all' && masterMatches.count>0">
                         <div class="btn btn-link" style="margin-right: 20px;"><i class="fa fa-flag-o" style="margin-right: 10px;"></i>{{masterMatches.count}} update<span ng-show="masterMatches.count>1">s</span> to your {{entryType}} requiring review.</div>
                     </div>
                 </div>
@@ -163,10 +163,10 @@
         <div ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
             <h4 class="text-center text-white">{{entryType}}</h4>
             <div class="panel" ng-hide="recordEntries">
-                        <div class="panel-body">
-                            <h5 class="col-sm-12 text-center">No Record Entries</h5>
-                        </div>
-                    </div>
+                <div class="panel-body">
+                    <h5 class="col-sm-12 text-center">No Record Entries</h5>
+                </div>
+            </div>
             <div class="panel" ng-if="recordEntries">
                 <div class="panel-body">
                     <div>

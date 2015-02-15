@@ -1,35 +1,34 @@
 <style>
-td.panel {
-box-shadow: none;
-}
+    td.panel {
+        box-shadow: none;
+    }
 </style>
 <div class="col-sm-12">
     <table class="table">
         <tbody>
             <tr>
                 <td class="panel" colspan="2" style="border:none;">
-                <h4 class="text-left">{{entryData.product.product.name}}</h4>
-                <h5 class="text-left">{{formatDate(entryData.date_time.point)}}</h5>
-                    
+                    <h4 class="text-left">{{entryData.product.product.name}}</h4>
+                    <h5 class="text-left">{{formatDate(entryData.date_time.point)}}</h5>
+
                 </td>
                 <td style="border:none;">
                     <svg height="40" width="20" style="position: relative; left: -9px; top: 0px;">
-                    <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:0"></polygon>
+                        <polygon points="0,0 20,20 0,40 -10,40" style="fill:rgba(255,255,255,0.75);stroke:#ddd;stroke-width:0"></polygon>
                     </svg>
                 </td>
                 <td class="panel" colspan="2" style="border:none;">
                     <h4 class="text-left">{{matchData.product.product.name}}</h4>
-                   <h5 class="text-left">{{formatDate(finalData.date_time.point)}}</h5>
-                    
+                    <h5 class="text-left">{{formatDate(finalData.date_time.point)}}</h5>
+
                 </td>
             </tr>
             <tr>
-                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.date_time)" type="checkbox" ng-checked="!areEqual(matchData.date_time, finalData.date_time)" ng-click="checkboxToggle([flagData.date_time.point], matchData.date_time, finalData.date_time)"> Date:</span></td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.date_time)" type="checkbox" ng-checked="!areEqual(matchData.date_time, finalData.date_time)" ng-click="checkboxToggle([flagData.date_time.point], matchData.date_time, finalData.date_time)"> Date:</span>
+                </td>
 
                 <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}">
                     <span>{{formatDate(entryData.date_time.point)}}</span>
-                   
-
 
 
                     <span ng-if="isDifferent(flagData.date_time.point.date.kind) || isDifferent(flagData.date_time.point.precision.kind)" class="label label-info pull-right">Different</span>
@@ -39,28 +38,32 @@ box-shadow: none;
                 <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}">Date:</td>
                 <td class="panel" style="border:none;" ng-style="!areEqual(matchData.date_time, finalData.date_time) && {'background-color': '#B0C4DE'}">
 
-                <span>{{formatDate(finalData.date_time.point)}}</span>
-                     <span ng-show="!areEqual(matchData.date_time, finalData.date_time)" class="label label-warning pull-right">Updated</span>
-                     
+                    <span>{{formatDate(finalData.date_time.point)}}</span>
+                    <span ng-show="!areEqual(matchData.date_time, finalData.date_time)" class="label label-warning pull-right">Updated</span>
+
             </tr>
-            
+
             <tr>
-                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.product.product, finalData.product.product) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.product.product)" type="checkbox" ng-checked="!areEqual(matchData.product.product, finalData.product.product)" ng-click="checkboxToggle(flagData.product.product, matchData.product.product, finalData.product.product)"> Product:</span></td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.product.product, finalData.product.product) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.product.product)" type="checkbox" ng-checked="!areEqual(matchData.product.product, finalData.product.product)" ng-click="checkboxToggle(flagData.product.product, matchData.product.product, finalData.product.product)"> Product:</span>
+                </td>
                 <td class="panel" style="border:none;" ng-style="!areEqual(matchData.product.product, finalData.product.product) && {'background-color': '#B0C4DE'}">
                     <div class="panel">
                         <table class="table sub-table">
                             <tbody>
                                 <tr>
                                     <td>Name:</td>
-                                    <td>{{entryData.product.product.name}} <span ng-if="isDifferent(flagData.product.product.name.kind)" class="label label-info pull-right">Different</span></td>
+                                    <td>{{entryData.product.product.name}} <span ng-if="isDifferent(flagData.product.product.name.kind)" class="label label-info pull-right">Different</span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{entryData.product.product.code}} <span ng-if="isDifferent(flagData.product.product.code.kind)" class="label label-info pull-right">Different</span></td>
+                                    <td>{{entryData.product.product.code}} <span ng-if="isDifferent(flagData.product.product.code.kind)" class="label label-info pull-right">Different</span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{entryData.product.product.code_system_name}} <span ng-if="isDifferent(flagData.product.product.code_system_name.kind)" class="label label-info pull-right">Different</span></td>
+                                    <td>{{entryData.product.product.code_system_name}} <span ng-if="isDifferent(flagData.product.product.code_system_name.kind)" class="label label-info pull-right">Different</span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -75,17 +78,20 @@ box-shadow: none;
                                 <tr>
                                     <td>Name:</td>
                                     <td ng-if="matchData.product.product.name === finalData.product.product.name">{{matchData.product.product.name}}</td>
-                                    <td ng-if="matchData.product.product.name !== finalData.product.product.name">{{finalData.product.product.name}} <span class="label label-warning pull-right">Updated</span></td>
+                                    <td ng-if="matchData.product.product.name !== finalData.product.product.name">{{finalData.product.product.name}} <span class="label label-warning pull-right">Updated</span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
                                     <td ng-if="matchData.product.product.code === finalData.product.product.code">{{matchData.product.product.code}}</td>
-                                    <td ng-if="matchData.product.product.code !== finalData.product.product.code">{{finalData.product.product.code}} <span class="label label-warning pull-right">Updated</span></td>
+                                    <td ng-if="matchData.product.product.code !== finalData.product.product.code">{{finalData.product.product.code}} <span class="label label-warning pull-right">Updated</span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
                                     <td ng-if="matchData.product.product.code_system_name === finalData.product.product.code_system_name">{{matchData.product.product.code_system_name}}</td>
-                                    <td ng-if="matchData.product.product.code_system_name !== finalData.product.product.code_system_name">{{finalData.product.product.code_system_name}} <span class="label label-warning pull-right">Updated</span></td>
+                                    <td ng-if="matchData.product.product.code_system_name !== finalData.product.product.code_system_name">{{finalData.product.product.code_system_name}} <span class="label label-warning pull-right">Updated</span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -93,24 +99,24 @@ box-shadow: none;
                 </td>
             </tr>
             <tr>
-            <td colspan="2">
-            	<div class="col-sm-8 col-sm-offset-2">
-            <button class="btn btn-default btn-block" ng-click="undoAllButton()"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
-        </div>
+                <td colspan="2">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <button class="btn btn-default btn-block" ng-click="undoAllButton()"><i class="fa fa-undo" style="margin-right: 10px;"></i>Undo All</button>
+                    </div>
 
-            </td>
-            <td style="border:none;">&nbsp</td>
-            <td colspan="2">
-            	<div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
-            <button class="btn btn-primary btn-block" ng-click="submitButton()">Save Updates</button>
-            <button class="btn btn-default btn-block" ng-click="ignoreButton()">Ignore Updates</button>
-        </div>
+                </td>
+                <td style="border:none;">&nbsp</td>
+                <td colspan="2">
+                    <div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
+                        <button class="btn btn-primary btn-block" ng-click="submitButton()">Save Updates</button>
+                        <button class="btn btn-default btn-block" ng-click="ignoreButton()">Ignore Updates</button>
+                    </div>
 
-            </td>
+                </td>
 
             </tr>
-            
-            
+
+
         </tbody>
     </table>
 </div>

@@ -22,32 +22,32 @@
             <div class="panel-body">
                 <h5>* Denotes required fields.</h5>
                 <form novalidate role="form" name="resetForm" ng-submit="nextStep()" class="col-sm-12">
-                <div class="row">
-                    <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group col-sm-5">
+                                <label for="inputOldPassword">Old Password*</label>
+                                <input type="password" class="form-control" name="inputOldPassword" ng-model="inputOldPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
+                                <p ng-show="resetForm.inputOldPassword.$invalid && !resetForm.inputOldPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+                            </div>
+                        </div>
                         <div class="form-group col-sm-5">
-                            <label for="inputOldPassword">Old Password*</label>
-                            <input type="password" class="form-control" name="inputOldPassword" ng-model="inputOldPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
-                            <p ng-show="resetForm.inputOldPassword.$invalid && !resetForm.inputOldPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+                            <label for="inputNewPassword">New Password*</label>
+                            <input type="password" class="form-control" name="inputNewPassword" ng-model="inputNewPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
+                            <p ng-show="resetForm.inputNewPassword.$invalid && !resetForm.inputNewPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+                        </div>
+                        <div class="form-group col-sm-5 col-sm-offset-1">
+                            <label for="inputRepeatPassword"> Repeat New Password*</label>
+                            <input type="password" class="form-control" name="inputRepeatPassword" ng-model="inputRepeatPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
+                            <p ng-show="resetForm.inputRepeatPassword.$invalid && !resetForm.inputRepeatPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
                         </div>
                     </div>
-                    <div class="form-group col-sm-5">
-                        <label for="inputNewPassword">New Password*</label>
-                        <input type="password" class="form-control" name="inputNewPassword" ng-model="inputNewPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
-                        <p ng-show="resetForm.inputNewPassword.$invalid && !resetForm.inputNewPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
+                    <div class="row">
+                        <a ng-click="resetPassword()">
+                            <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="resetForm.$invalid">Reset Password</button>
+                        </a>
                     </div>
-                    <div class="form-group col-sm-5 col-sm-offset-1">
-                        <label for="inputRepeatPassword"> Repeat New Password*</label>
-                        <input type="password" class="form-control" name="inputRepeatPassword" ng-model="inputRepeatPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
-                        <p ng-show="resetForm.inputRepeatPassword.$invalid && !resetForm.inputRepeatPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
-                    </div>
-</div>
-                    <div class = "row">
-                    <a ng-click="resetPassword()">
-                        <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4" ng-disabled="resetForm.$invalid">Reset Password</button>
-                    </a>
-</div>
-<div class="row">
-                    <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+                    <div class="row">
+                        <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
                     </div>
                 </form>
                 <!-- 				<div class="text-center col-sm-12">

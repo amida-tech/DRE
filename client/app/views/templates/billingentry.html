@@ -11,10 +11,11 @@
                     <h5 class="text-left">{{entrySubTitleTwo}}</h5>
                 </div>
                 <div class="col-sm-6 text-right">
-                <!-- only one match example per entry for now -->
-                    
+                    <!-- only one match example per entry for now -->
+
                     <div ng-show="recordEntry.metadata.starred_comments > 0">
-                        <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star fa-inline"></i>{{recordEntry.metadata.starred_comments}} starred note<span ng-show="recordEntry.metadata.starred_comments > 1">s</span></button>
+                        <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star fa-inline"></i>{{recordEntry.metadata.starred_comments}} starred note<span ng-show="recordEntry.metadata.starred_comments > 1">s</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -22,17 +23,17 @@
                 <!--Tab nav-->
                 <div class="col-sm-12">
                     <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#history{{recordIndex}}" aria-expanded="false" aria-controls="history{{recordIndex}}" ng-click="swapTabs('history', recordIndex)">
-                    <span><i class="fa fa-clock-o"></i> History</span>
+                        <span><i class="fa fa-clock-o"></i> History</span>
                     </button>
                     <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)">
-                    <span><i class="fa fa-comment"></i> Notes</span>
+                        <span><i class="fa fa-comment"></i> Notes</span>
                     </button>
                     <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#details{{recordIndex}}" aria-expanded="false" aria-controls="details{{recordIndex}}" ng-click="swapTabs('details', recordIndex)">
-                    <span><i class="fa fa-ellipsis-h"></i> Details</span>
+                        <span><i class="fa fa-ellipsis-h"></i> Details</span>
                     </button>
                 </div>
                 <!--Tab panes-->
-                <div class="col-sm-12" >
+                <div class="col-sm-12">
                     <!--Record detail pane.-->
                     <div role="tabpanel" class="collapse" id="details{{recordIndex}}">
                         <div class="sub-entry">
@@ -53,7 +54,8 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="(attrIndex, attrEntry) in entryData.metadata.attribution">
-                                        <td><a href="#/files">{{attrEntry.record.filename}}</a></td>
+                                        <td><a href="#/files">{{attrEntry.record.filename}}</a>
+                                        </td>
                                         <td class="capitalize">{{attrEntry.merge_reason}}</td>
                                         <td>{{attrEntry.merged | date:'short'}}</td>
                                     </tr>
@@ -67,7 +69,9 @@
                         <div class="sub-entry">
                             <h3>Entry Notes</h3>
                             <div class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
-                                <div class="col-sm-11 col-sm-offset-1"><h5>{{commentEntry.date | date:'short'}}</h5></div>
+                                <div class="col-sm-11 col-sm-offset-1">
+                                    <h5>{{commentEntry.date | date:'short'}}</h5>
+                                </div>
                                 <div class="col-sm-1 panel-body text-center">
                                     <h5 ng-show="commentEntry.starred === true" ng-click="clickStar(true, commentIndex, recordIndex)"><a><i class="fa fa-star"></i></a></h5>
                                     <h5 ng-show="commentEntry.starred === false" ng-click="clickStar(false, commentIndex, recordIndex)"><a><i class="fa fa-star-o"></i></a></h5>

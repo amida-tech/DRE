@@ -1,37 +1,37 @@
 <div class="blur-background col-sm-12 body-left" style="min-height:575px">
-<div ng-show="step === 0" class="col-sm-4 col-sm-offset-4">
-	<h4 class="text-center text-white">Reset Password</h4>
+    <div ng-show="step === 0" class="col-sm-4 col-sm-offset-4">
+        <h4 class="text-center text-white">Reset Password</h4>
 
-	<div class="panel panel-default">
-		<div class="panel-body">
+        <div class="panel panel-default">
+            <div class="panel-body">
 
-			<form novalidate role="form" name="resetForm" ng-submit="nextStep()">
-				<div class="form-group">
-					<label for="inputEmail">Email Address:</label>
-					<input type="email" class="form-control" name="inputEmail" ng-model="inputEmail" required ng-required="true" ng-minLength="1">
-				</div>
-				<button type="submit" class="btn btn-block btn-primary" ng-disabled="resetForm.$invalid">Submit</button>
-			</form>
-		</div>
-	</div>
-</div>
+                <form novalidate role="form" name="resetForm" ng-submit="nextStep()">
+                    <div class="form-group">
+                        <label for="inputEmail">Email Address:</label>
+                        <input type="email" class="form-control" name="inputEmail" ng-model="inputEmail" required ng-required="true" ng-minLength="1">
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary" ng-disabled="resetForm.$invalid">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-<div ng-show="step === 1" class="col-sm-4 col-sm-offset-4">
-	<h4 class="text-center text-white">Reset Password</h4>
+    <div ng-show="step === 1" class="col-sm-4 col-sm-offset-4">
+        <h4 class="text-center text-white">Reset Password</h4>
 
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<p class="text-center">
-				<i class="fa fa-envelope-o fa-2x"></i>
-			</p>
-			<p class="text-center padding-bottom">
-				Password Reset Instructions have been sent to your personal inbox.
-			</p>
-			<button type="submit" class="btn btn-block btn-success" ng-click="finish()">Done</button>
-	          <div class="text-center">
-	            <h5><a ng-click="resend()">Re-Send Email</a></h5>
-	          </div>
-		</div>
-	</div>
-</div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p class="text-center">
+                    <i class="fa fa-envelope-o fa-2x"></i>
+                </p>
+                <p class="text-center padding-bottom">
+                    Password Reset Instructions have been sent to your personal inbox.
+                </p>
+                <button type="submit" class="btn btn-block btn-success" ng-click="finish()">Done</button>
+                <div class="text-center">
+                    <h5><a ng-click="resend()">Re-Send Email</a></h5>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
