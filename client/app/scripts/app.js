@@ -65,14 +65,6 @@ angular
                 templateUrl: 'views/record.html',
                 controller: 'RecordCtrl'
             })
-            .when('/billing/claims', {
-                templateUrl: 'views/billing/claims.html',
-                controller: 'BillingClaimsCtrl'
-            })
-            .when('/billing/insurance', {
-                templateUrl: 'views/billing/insurance.html',
-                controller: 'BillingInsuranceCtrl'
-            })
             .when('/billing', {
                 templateUrl: 'views/billing.html',
                 controller: 'BillingCtrl'
