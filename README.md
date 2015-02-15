@@ -64,6 +64,7 @@ Documentation for record.js [API](./docs/recordjs.md)
 - Grunt.js
 - MongoDB
 - Redis
+- Ruby/Compass/Bower
 
 ```
 # you need Node.js and Grunt.js installed
@@ -77,7 +78,8 @@ grunt
 #run server side tests
 cd ..
 npm install
-grunt
+bower install
+grunt build # you can run "grunt dev" for dev purposes 
 
 #run server
 node server.js
