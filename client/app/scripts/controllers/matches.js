@@ -6,16 +6,15 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, matches, $location) {
+angular.module('phrPrototypeApp').controller('MatchesCtrl', function ($scope, matches, $location) {
     $scope.masterMatches = [];
     $scope.match = {};
 
     //$scope.categories = ['medications', 'results', 'encounters', 'vitals', 'immunizations', 'allergies', 'procedures'];
 
-
     function setScopeVars() {
         if (_.isEmpty(matches.getSection())) {
-            
+
             console.log("ACHTUNG!!!!!!!");
             /* UNCOMMENT BEFORE FLIGTH! -> blocks refresh on matches page and riderects to records page
                 $location.path('/record');
@@ -30,7 +29,6 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
         if (_.isEmpty(matches.getMatchId())) {
             $scope.matchId = "";
             //pick match with index 0 for development purposes?
-            
 
             console.log("ACHTUNG!!!!!!!");
             /* UNCOMMENT BEFORE FLIGTH! -> blocks refresh on matches page and riderects to records page
@@ -39,16 +37,15 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
             //for dev use only, reset mach to first one in the list
             if ($scope.masterMatches && $scope.masterMatches[0]) {
                 $scope.match = $scope.masterMatches[0];
-            }
-            else {
+            } else {
                 $location.path('/record');
-                
+
             }
 
         } else {
             $scope.matchId = matches.getMatchId();
             //inject-select proper match to use in view template
-            _.each($scope.masterMatches, function(match) {
+            _.each($scope.masterMatches, function (match) {
                 //console.log("match", match.data._id, $scope.matchId);
                 if (match.data._id === $scope.matchId) {
                     $scope.match = match;
@@ -62,9 +59,9 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
     setScopeVars();
 
     function getData(section) {
-        matches.getCategory(section).then(function(data) {
+        matches.getCategory(section).then(function (data) {
             //console.log('data', data);
-            _.each(data.matches, function(match) {
+            _.each(data.matches, function (match) {
                 $scope.masterMatches.push({
                     'category': section,
                     'data': match
@@ -72,15 +69,9 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
 
             });
 
-
-
-
             setScopeVars();
 
-
-
         });
-
 
         //do stuff here
         //$scope.allergyMatch = $scope.masterMatches.data[1];
@@ -88,8 +79,6 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function($scope, mat
     }
     getData($scope.section);
 });
-
-
 
 /*
 

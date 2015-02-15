@@ -1,4 +1,3 @@
-
 var database = require('mongodb').Db;
 var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var path = require('path');
@@ -43,9 +42,9 @@ function removeCollection(inputCollection, callback) {
     });
 }
 
-function removeAllCollections (callback) {
+function removeAllCollections(callback) {
 
-	var sections = bbMeta.supported_sections;
+    var sections = bbMeta.supported_sections;
 
     sections.push('plan_of_cares', 'social_histories');
 
@@ -68,47 +67,45 @@ function removeAllCollections (callback) {
             });
         });
 
-    }, function(err) {
-    	if (err) {
-    		callback(err);
-    	}
+    }, function (err) {
+        if (err) {
+            callback(err);
+        }
     });
 
     callback();
 
 }
 
-
 function removeAll(callback) {
 
-
-                removeCollection('storage.files', function (err) {
+    removeCollection('storage.files', function (err) {
+        if (err) {
+            callback(err);
+        }
+        removeCollection('storage.chunks', function (err) {
+            if (err) {
+                callback(err);
+            }
+            removeCollection('events', function (err) {
+                if (err) {
+                    callback(err);
+                }
+                removeCollection('users', function (err) {
                     if (err) {
                         callback(err);
                     }
-                    removeCollection('storage.chunks', function (err) {
+                    removeAllCollections(function (err) {
                         if (err) {
                             callback(err);
+                        } else {
+                            callback();
                         }
-                        removeCollection('events', function (err){
-                            if (err) {
-                                callback(err);
-                            }
-                            removeCollection('users', function (err){
-                                if(err){
-                                    callback(err);
-                                }
-                                removeAllCollections(function (err) {
-                                    if (err) {
-                                        callback(err);
-                                    } else {
-                                        callback();
-                                    }
-                                });
-                            });
-                        });
                     });
                 });
+            });
+        });
+    });
 }
 
 module.exports.removeAll = removeAll;

@@ -1,76 +1,77 @@
 <div class="container-fluid body-content">
-	<!--Profile-->
-	<div class="col-sm-3 body-left" >
-		<div profile></div>
-	</div>
+    <!--Profile-->
+    <div class="col-sm-3 body-left">
+        <div profile></div>
+    </div>
 
-	<!--Body-->
-	<div class="col-sm-9 body-right">
-		<div class="panel">
-			<div class="panel-body">
+    <!--Body-->
+    <div class="col-sm-9 body-right">
+        <div class="panel">
+            <div class="panel-body">
 
-				<!--Header Items-->
-				<div class="col-sm-12 row">
-					<div class="col-sm-3">
-						<div breadcrumb></div>
-						<h4>My Files</h4>
-					</div>
-					<div class="col-sm-8  col-sm-offset-1 text-left">
-						<div class="col-sm-12">
-							<a href="#/files/upload" class="pull-right">
-							<button class="btn btn-link"><i class="fa fa-upload"></i> Upload File</button>
-							</a>
-						</div>
-						<!--<div class="col-sm-4">
+                <!--Header Items-->
+                <div class="col-sm-12 row">
+                    <div class="col-sm-3">
+                        <div breadcrumb></div>
+                        <h4>My Files</h4>
+                    </div>
+                    <div class="col-sm-8  col-sm-offset-1 text-left">
+                        <div class="col-sm-12">
+                            <a href="#/files/upload" class="pull-right">
+                                <button class="btn btn-link"><i class="fa fa-upload"></i> Upload File</button>
+                            </a>
+                        </div>
+                        <!--<div class="col-sm-4">
 							<button class="btn btn-link"><i class="fa fa-folder-open"></i> Make Folder</button>
 						</div>
 						<div class="col-sm-4">
 							<button class="btn btn-link"><i class="fa fa-clock-o"></i> View History</button>
 						</div>-->
 
-					</div>
-				</div>
+                    </div>
+                </div>
 
-				<!--File Listing Header-->
-				<div class="col-sm-12 row">
-					<h5 ng-hide="fileList">There are currently no files in the DRE. Upload a file to get started and establish your Master Health Record!</h5>
-					<table class="table table-hover table-responsive panel" ng-show="fileList">
-						<thead>
-							<td></td>
-							<td>
-								<a href="" ng-click="nameSort()">Name <i class="fa fa-caret-down" ng-show="predicate === 'file_name'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_name'"></i></a>
-							</td>
-							<td>
-								<a ng-click="typeSort()">Format <i class="fa fa-caret-down" ng-show="predicate === 'file_class'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_class'"></i></a>
-							</td>
-							<td>
-								<a>Type</a>
-							</td>
-							<td>
-								<a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'file_upload_date'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_upload_date'"></i></a>
-							</td>
-						</thead>
-					<tr ng-repeat="file in fileList | orderBy:predicate">
-						<td>
-							<a ng-show="file.file_class === 'ccda'"><i class="fa fa-file-code-o"></i></a>
-							<a ng-show="file.file_class === 'cms'"><i class="fa fa-file-text-o"></i></a>
-							<a ng-show="file.file_class === 'hl7'"><i class="fa fa-flask"></i></a>
-						</td>
-						<td><a ng-href="/api/v1/storage/record/{{file.file_id}}">{{file.file_name}}</a></td>
-						<td>{{file.file_class | uppercase}}</td>
-						<td>
-							<span ng-show="file.file_class ==='hl7'"> Received via labs connector</span>
-							<span ng-show="file.file_class !=='hl7'"> User uploaded record</span>
+                <!--File Listing Header-->
+                <div class="col-sm-12 row">
+                    <h5 ng-hide="fileList">There are currently no files in the DRE. Upload a file to get started and establish your Master Health Record!</h5>
+                    <table class="table table-hover table-responsive panel" ng-show="fileList">
+                        <thead>
+                            <td></td>
+                            <td>
+                                <a href="" ng-click="nameSort()">Name <i class="fa fa-caret-down" ng-show="predicate === 'file_name'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_name'"></i></a>
+                            </td>
+                            <td>
+                                <a ng-click="typeSort()">Format <i class="fa fa-caret-down" ng-show="predicate === 'file_class'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_class'"></i></a>
+                            </td>
+                            <td>
+                                <a>Type</a>
+                            </td>
+                            <td>
+                                <a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'file_upload_date'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_upload_date'"></i></a>
+                            </td>
+                        </thead>
+                        <tr ng-repeat="file in fileList | orderBy:predicate">
+                            <td>
+                                <a ng-show="file.file_class === 'ccda'"><i class="fa fa-file-code-o"></i></a>
+                                <a ng-show="file.file_class === 'cms'"><i class="fa fa-file-text-o"></i></a>
+                                <a ng-show="file.file_class === 'hl7'"><i class="fa fa-flask"></i></a>
+                            </td>
+                            <td><a ng-href="/api/v1/storage/record/{{file.file_id}}">{{file.file_name}}</a>
+                            </td>
+                            <td>{{file.file_class | uppercase}}</td>
+                            <td>
+                                <span ng-show="file.file_class ==='hl7'"> Received via labs connector</span>
+                                <span ng-show="file.file_class !=='hl7'"> User uploaded record</span>
 
-						</td>
-						<td>{{file.file_upload_date | date: 'short'}}</td>
-					</tr>
-					</table>
-				</div>
-				
-			</div>
-		</div>
-		<div style="min-height:275px"></div>
-	</div>
+                            </td>
+                            <td>{{file.file_upload_date | date: 'short'}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div style="min-height:275px"></div>
+    </div>
 
 </div>

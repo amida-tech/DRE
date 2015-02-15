@@ -49,7 +49,7 @@ angular.module('phrPrototypeApp')
                 "email": [{
                     "email": "test@fake.com",
                     "type": "primary home"
-                },{
+                }, {
                     "email": "test@fakework.com",
                     "type": "primary work"
                 }],

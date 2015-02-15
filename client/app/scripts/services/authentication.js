@@ -10,18 +10,16 @@
 angular.module('phrPrototypeApp')
     .service('authentication', function authentication($location, $http) {
 
-
-        this.logout = function(callback) {
+        this.logout = function (callback) {
 
             var err = null;
 
-
             $http.post('api/v1/logout')
-                .success(function() {
+                .success(function () {
                     //$rootScope.isAuthenticated = false;
                     //$location.path('/home');
                     callback(null);
-                }).error(function(err) {
+                }).error(function (err) {
                     callback(err);
                 });
 
@@ -34,20 +32,18 @@ angular.module('phrPrototypeApp')
         };
 
         //This would be a server call, but now just stubbed with $location.
-        this.authStatus = function(callback) {
+        this.authStatus = function (callback) {
 
             $http.get('api/v1/account')
-                .success(function(data) {
-                    if (data && data.authenticated){
+                .success(function (data) {
+                    if (data && data.authenticated) {
                         callback(null, true);
                         // console.log(data, data.authenticated);
-                    }
-                    else
-                    {
+                    } else {
                         callback(null, false);
                     }
 
-                }).error(function(err) {
+                }).error(function (err) {
                     callback(err, false);
                 });
 

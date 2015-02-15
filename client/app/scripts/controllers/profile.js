@@ -60,7 +60,7 @@ angular.module('phrPrototypeApp')
 
     =======
     */
-    .controller('ProfileCtrl', function($scope, $location, $route, $anchorScroll, account, profile, format) {
+    .controller('ProfileCtrl', function ($scope, $location, $route, $anchorScroll, account, profile, format) {
 
         $scope.editAddress = false;
         $scope.editPhone = false;
@@ -68,28 +68,28 @@ angular.module('phrPrototypeApp')
         $scope.editProf = false;
         // $scope.user_language = {};
 
-        $scope.editAddressSection = function() {
+        $scope.editAddressSection = function () {
             $scope.editAddress = true;
         };
-        $scope.cancelAddressSection = function() {
+        $scope.cancelAddressSection = function () {
             $scope.editAddress = false;
             $scope.new_address = {};
             displayProfile();
         };
 
-        $scope.editPhoneSection = function() {
+        $scope.editPhoneSection = function () {
             $scope.editPhone = true;
         };
-        $scope.cancelPhoneSection = function() {
+        $scope.cancelPhoneSection = function () {
             $scope.editPhone = false;
             $scope.new_phone = {};
             displayProfile();
         };
 
-        $scope.editProfSection = function() {
+        $scope.editProfSection = function () {
             $scope.editProf = true;
         };
-        $scope.cancelProf = function() {
+        $scope.cancelProf = function () {
             $scope.editProf = false;
             displayProfile();
         };
@@ -101,7 +101,7 @@ angular.module('phrPrototypeApp')
         //   $scope.editLangs = false;
         // };
 
-        $scope.navClick = function(element) {
+        $scope.navClick = function (element) {
             var old = $location.hash();
             $location.hash(element);
             $anchorScroll();
@@ -109,13 +109,12 @@ angular.module('phrPrototypeApp')
             $location.hash(old);
         };
 
-        $scope.updateProfile = function() {
+        $scope.updateProfile = function () {
             // if (angular.isDefined($scope.new_language)) {
             //   addLang();
             // }
             addAddress();
             addPhone();
-
 
             var info = $scope.profile;
             var tmpemail = {
@@ -143,7 +142,7 @@ angular.module('phrPrototypeApp')
             }
 
             // console.log($scope.tmpDOB, $scope.profile.dob);
-            profile.saveProfile(info, function(err) {
+            profile.saveProfile(info, function (err) {
                 $route.reload();
                 // displayProfile();
                 // console.log('profile controller', info);
@@ -156,7 +155,7 @@ angular.module('phrPrototypeApp')
         };
 
         function displayProfile() {
-            profile.getProfile(function(err, profileInfo) {
+            profile.getProfile(function (err, profileInfo) {
                 $scope.profile = profileInfo;
                 //console.log('profile controller', $scope.profile);
                 //Shims for HL7 weirdness.
@@ -182,7 +181,6 @@ angular.module('phrPrototypeApp')
         }
 
         displayProfile();
-
 
         // function addLang() {
         //     // add new language
@@ -256,8 +254,6 @@ angular.module('phrPrototypeApp')
 
     });
 
-
-
 // 'email': $scope.profile.email[0].email,
 // 'firstName': $scope.profile.name.first,
 // 'middleName': $scope.profile.name.middle[0],
@@ -269,7 +265,6 @@ angular.module('phrPrototypeApp')
 // 'religion': $scope.profile.religion,
 // 'db_id': $scope.profile._id,
 // 'record_id': $scope.profile.metadata.attribution[0].record._id
-
 
 // var info = {
 //   "name": {

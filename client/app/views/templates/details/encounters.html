@@ -1,141 +1,142 @@
 <table class="table table-hover">
-	<thead>
-		<tr>
-			<td colspan="2">
-				<h3>Entry Details</h3>
-			</td>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-show="entryData.encounter.code">
-			<td>Code:</td>
-			<td>{{entryData.encounter.code}}</td>
-		</tr>
-		<tr ng-show="entryData.encounter.code_system_name">
-			<td>Code System:</td>
-			<td>{{entryData.encounter.code_system_name}}</td>
-		</tr>
-		<tr ng-show="entryData.encounter.translations">
-			<td>Other Descriptions:
-			</td>
-			<td>
-				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.encounter.translations">
-					<table class="table sub-table">
-						<thead ng-show="itemEntry.name">
-							<tr>
-								<td>Name:</td>
-								<td>{{itemEntry.name}}</td>
-							</tr>
-						</thead>
-						<tbody ng-show="itemEntry.code&&itemEntry.code_system_name">
-							<tr ng-show="itemEntry.code">
-								<td>Code:</td>
-								<td>{{itemEntry.code}}</td>
-							</tr>
-							<tr ng-show="itemEntry.code_system_name">
-								<td>Code System:</td>
-								<td>{{itemEntry.code_system_name}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr  ng-repeat="(itemIndex, itemEntry) in entryData.findings">
-			<td><span ng-show="(itemIndex===0)&&itemEntry.value">Findings:</span></td>
+    <thead>
+        <tr>
+            <td colspan="2">
+                <h3>Entry Details</h3>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-show="entryData.encounter.code">
+            <td>Code:</td>
+            <td>{{entryData.encounter.code}}</td>
+        </tr>
+        <tr ng-show="entryData.encounter.code_system_name">
+            <td>Code System:</td>
+            <td>{{entryData.encounter.code_system_name}}</td>
+        </tr>
+        <tr ng-show="entryData.encounter.translations">
+            <td>Other Descriptions:
+            </td>
+            <td>
+                <div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.encounter.translations">
+                    <table class="table sub-table">
+                        <thead ng-show="itemEntry.name">
+                            <tr>
+                                <td>Name:</td>
+                                <td>{{itemEntry.name}}</td>
+                            </tr>
+                        </thead>
+                        <tbody ng-show="itemEntry.code&&itemEntry.code_system_name">
+                            <tr ng-show="itemEntry.code">
+                                <td>Code:</td>
+                                <td>{{itemEntry.code}}</td>
+                            </tr>
+                            <tr ng-show="itemEntry.code_system_name">
+                                <td>Code System:</td>
+                                <td>{{itemEntry.code_system_name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat="(itemIndex, itemEntry) in entryData.findings">
+            <td><span ng-show="(itemIndex===0)&&itemEntry.value">Findings:</span>
+            </td>
 
-			<td ng-show="itemEntry.value">
-				<div class="panel">
-					<table class="table sub-table">
-						<tr ng-show= "itemEntry.value.name">
-							<td>Name:</td>
-							<td>{{itemEntry.value.name}}</td>
-						</tr>
-						<tr ng-show="itemEntry.value.code">
-							<td>Code:</td>
-							<td>{{itemEntry.value.code}}</td>
-						</tr>
-						<tr ng-show="itemEntry.value.code_system_name">
-							<td>Code System:</td>
-							<td>{{itemEntry.value.code_system_name}}</td>
-						</tr>
-<!-- 						<tr ng-show="itemEntry.date_time">
+            <td ng-show="itemEntry.value">
+                <div class="panel">
+                    <table class="table sub-table">
+                        <tr ng-show="itemEntry.value.name">
+                            <td>Name:</td>
+                            <td>{{itemEntry.value.name}}</td>
+                        </tr>
+                        <tr ng-show="itemEntry.value.code">
+                            <td>Code:</td>
+                            <td>{{itemEntry.value.code}}</td>
+                        </tr>
+                        <tr ng-show="itemEntry.value.code_system_name">
+                            <td>Code System:</td>
+                            <td>{{itemEntry.value.code_system_name}}</td>
+                        </tr>
+                        <!-- 						<tr ng-show="itemEntry.date_time">
 							<td>Date:</td>
 							<td>{{formatDate(itemEntry.date_time)}}</td>
 						</tr> -->
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr ng-repeat="(itemIndex, itemEntry) in entryData.performers">
-			<td ng-show="(itemIndex===0)&&itemEntry.code">Performers:</td>
-			<td ng-show="itemEntry.code">
-				<div class="panel">
-					<table ng-show="itemEntry.code" class="table sub-table" ng-repeat="(codeIndex, codeEntry) in itemEntry.code">
-						<thead ng-show="codeEntry.name">
-							<tr>
-								<td>Name:</td>
-								<td>{{codeEntry.name}}</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-show="codeEntry.code">
-								<td>Code:</td>
-								<td>{{codeEntry.code}}</td>
-							</tr>
-							<tr ng-show="codeEntry.code_system_name">
-								<td>Code System:</td>
-								<td>{{codeEntry.code_system_name}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr ng-show="entryData.locations">
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat="(itemIndex, itemEntry) in entryData.performers">
+            <td ng-show="(itemIndex===0)&&itemEntry.code">Performers:</td>
+            <td ng-show="itemEntry.code">
+                <div class="panel">
+                    <table ng-show="itemEntry.code" class="table sub-table" ng-repeat="(codeIndex, codeEntry) in itemEntry.code">
+                        <thead ng-show="codeEntry.name">
+                            <tr>
+                                <td>Name:</td>
+                                <td>{{codeEntry.name}}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="codeEntry.code">
+                                <td>Code:</td>
+                                <td>{{codeEntry.code}}</td>
+                            </tr>
+                            <tr ng-show="codeEntry.code_system_name">
+                                <td>Code System:</td>
+                                <td>{{codeEntry.code_system_name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr ng-show="entryData.locations">
 
-			<td>Locations:</td>
-			<td>
-				<div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.locations">
-					<table class="table sub-table">
-						<tr ng-show="itemEntry.name">
-							<td>Name:</td>
-							<td>{{itemEntry.name}}</td>
-						</tr>
+            <td>Locations:</td>
+            <td>
+                <div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.locations">
+                    <table class="table sub-table">
+                        <tr ng-show="itemEntry.name">
+                            <td>Name:</td>
+                            <td>{{itemEntry.name}}</td>
+                        </tr>
 
-						<tr ng-show="itemEntry.address">
-							<td>Address:</td>
+                        <tr ng-show="itemEntry.address">
+                            <td>Address:</td>
 
-							<td ng-repeat="(addrindex, addrEntry) in itemEntry.address">
-								<div ng-repeat="(addrLineIndex, addrLineEntry) in addrEntry.street_lines">{{addrLineEntry}}</div>
-								<div ng-show="addrEntry.city&&addrEntry.state">{{addrEntry.city}}, {{addrEntry.state}}</div>
-								<div ng-show="addrEntry.zip">{{addrEntry.zip}}</div>
-							</td>
-						</tr>
-						<tr ng-show="itemEntry.location_type">
-							<td>Type:</td>
-							<td>
-								<div class="panel">
-									<table class="table sub-table">
-										<tr ng-show="itemEntry.location_type.name">
-											<td>Name:</td>
-											<td>{{itemEntry.location_type.name}}</td>
-										</tr>
-										<tr ng-show="itemEntry.location_type.code">
-											<td>Code:</td>
-											<td>{{itemEntry.location_type.code}}</td>
-										</tr>
-										<tr ng-show="itemEntry.location_type.code_system_name">
-											<td>Code System:</td>
-											<td>{{itemEntry.location_type.code_system_name}}</td>
-										</tr>
-									</table>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</td>
-		</tr>
-	</tbody>
-</table>	
+                            <td ng-repeat="(addrindex, addrEntry) in itemEntry.address">
+                                <div ng-repeat="(addrLineIndex, addrLineEntry) in addrEntry.street_lines">{{addrLineEntry}}</div>
+                                <div ng-show="addrEntry.city&&addrEntry.state">{{addrEntry.city}}, {{addrEntry.state}}</div>
+                                <div ng-show="addrEntry.zip">{{addrEntry.zip}}</div>
+                            </td>
+                        </tr>
+                        <tr ng-show="itemEntry.location_type">
+                            <td>Type:</td>
+                            <td>
+                                <div class="panel">
+                                    <table class="table sub-table">
+                                        <tr ng-show="itemEntry.location_type.name">
+                                            <td>Name:</td>
+                                            <td>{{itemEntry.location_type.name}}</td>
+                                        </tr>
+                                        <tr ng-show="itemEntry.location_type.code">
+                                            <td>Code:</td>
+                                            <td>{{itemEntry.location_type.code}}</td>
+                                        </tr>
+                                        <tr ng-show="itemEntry.location_type.code_system_name">
+                                            <td>Code System:</td>
+                                            <td>{{itemEntry.location_type.code_system_name}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

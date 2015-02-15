@@ -30,8 +30,7 @@ var lookup = [
     'social_history',
 ];
 
-
-before(function(done) {
+before(function (done) {
     /*
         01 - original record (with all sections populated)
         02 - duplicate
@@ -60,11 +59,9 @@ before(function(done) {
     done();
 });
 
+xdescribe('Verifying demo R1.0 sample xml files', function () {
 
-xdescribe('Verifying demo R1.0 sample xml files', function() {
-
-
-    it('checking for all sections present in each demo file', function() {
+    it('checking for all sections present in each demo file', function () {
 
         for (var section in lookup) {
             //console.log(lookup[section]);
@@ -106,8 +103,7 @@ xdescribe('Verifying demo R1.0 sample xml files', function() {
 
     });
 
-
-    it('checking that JSON #1 agains empty master record', function() {
+    it('checking that JSON #1 agains empty master record', function () {
         //console.log(js);
         var m0 = match.match(js, {});
 
@@ -121,8 +117,7 @@ xdescribe('Verifying demo R1.0 sample xml files', function() {
 
     });
 
-
-    it('checking that JSON #1 and #2 are duplicates', function() {
+    it('checking that JSON #1 and #2 are duplicates', function () {
         //console.log(js);
         var m = match.match(js, js2);
 
@@ -138,8 +133,7 @@ xdescribe('Verifying demo R1.0 sample xml files', function() {
 
     });
 
-
-    it('checking that matches between JSON #3 and #1 are just new or duplicates entries', function() {
+    it('checking that matches between JSON #3 and #1 are just new or duplicates entries', function () {
         var m2 = match.match(js3, js);
 
         fs.writeFileSync('test/artifacts/demo-r1.0/matches/03-in-01.json', JSON.stringify(m2, null, 4));
@@ -156,7 +150,7 @@ xdescribe('Verifying demo R1.0 sample xml files', function() {
 
     });
 
-    it('checking that matches between JSON #4 and #3 has partial or diff entries', function() {
+    it('checking that matches between JSON #4 and #3 has partial or diff entries', function () {
         var m3 = match.match(js4, js3);
 
         fs.writeFileSync('test/artifacts/demo-r1.0/matches/04-in-03.json', JSON.stringify(m3, null, 4));
@@ -178,6 +172,5 @@ xdescribe('Verifying demo R1.0 sample xml files', function() {
         }
 
     });
-
 
 });

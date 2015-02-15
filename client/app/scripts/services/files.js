@@ -28,7 +28,7 @@ angular.module('phrPrototypeApp')
 
             */
             $http.get('/api/v1/storage')
-                .success(function(data) {
+                .success(function (data) {
                     callback(null, data.storage);
                     /*
                         {
@@ -45,7 +45,7 @@ angular.module('phrPrototypeApp')
                         ]
                         }                    
                     */
-                }).error(function(err) {
+                }).error(function (err) {
                     callback(err);
                 });
 

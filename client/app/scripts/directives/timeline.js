@@ -5,13 +5,13 @@
  * @Takes two inputs, chartData and chartType.
  * # timeline
  */
-angular.module('phrPrototypeApp').directive('timeline', function($window, $location, $anchorScroll, d3Service) {
+angular.module('phrPrototypeApp').directive('timeline', function ($window, $location, $anchorScroll, d3Service) {
     return {
         restrict: 'EA',
         template: "<svg style='width:100%;'></svg>",
         link: function postLink(scope, element, attrs) {
 
-            var navClick = function(ele) {
+            var navClick = function (ele) {
                 $location.hash(ele);
                 // call $anchorScroll()
                 $anchorScroll();
@@ -33,7 +33,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
             var isoFormat = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
             var isoFormatSubsecond = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ");
             var tip = d3.tip();
-            tip.attr('class', 'd3-tip').html(function(d) {
+            tip.attr('class', 'd3-tip').html(function (d) {
                 return 'Entry';
             });
             svg.call(tip);
@@ -50,7 +50,7 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                 var minDate, maxDate, plotFloor, plotCeiling;
                 if (dataType === 'account' && dataToPlot) { //&& dataToPlot if no data skip this part
                     console.log('>>>plotting account history');
-                    console.log("num of points ",dataToPlot.length);
+                    console.log("num of points ", dataToPlot.length);
                     //console.log('in timeline plotting');
                     //console.log('plot data exists', dataToPlot);
                     for (var i in dataToPlot.recordHistory) {
@@ -68,8 +68,8 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     plotDomain = [plotFloor, plotCeiling];
                 } else if (dataType === 'merges' && dataToPlot) {
                     console.log('>>>plotting merges');
-                    console.log("num of points ",dataToPlot.length);
-                    _.each(dataToPlot, function(entry) {
+                    console.log("num of points ", dataToPlot.length);
+                    _.each(dataToPlot, function (entry) {
                         var plotDate;
                         if (entry.merged) {
                             plotDate = isoFormat.parse(entry.merged);
@@ -91,9 +91,9 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
 
                 } else {
                     console.log('>>>plotting something else');
-                    console.log("num of points ",dataToPlot.length);
+                    console.log("num of points ", dataToPlot.length);
 
-                    _.each(dataToPlot, function(entry) {
+                    _.each(dataToPlot, function (entry) {
                         var plotDate;
                         if (entry.metadata.datetime) {
                             if (entry.metadata.datetime[0]) {
@@ -194,37 +194,37 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                             "text": boundaryDisplayFormat(plotDomain[1])
                         }];
                         var boundaryLabels = svg.selectAll("text").data(boundaryLabel).enter().append("text");
-                        var boundaryLabelAttributes = boundaryLabels.attr("x", function(d) {
+                        var boundaryLabelAttributes = boundaryLabels.attr("x", function (d) {
                             return d.x;
-                        }).attr("y", function(d) {
+                        }).attr("y", function (d) {
                             return d.y;
-                        }).text(function(d) {
+                        }).text(function (d) {
                             return d.text;
-                        }).style("text-anchor", function(d) {
+                        }).style("text-anchor", function (d) {
                             return d.anchor;
                         });
                         var boundaries = svg.selectAll("plotBoundary").data(boundaryData).enter().append("rect");
-                        var boundaryAttributes = boundaries.attr("x", function(d) {
+                        var boundaryAttributes = boundaries.attr("x", function (d) {
                             return d.x;
-                        }).attr("y", function(d) {
+                        }).attr("y", function (d) {
                             return d.y;
-                        }).attr("width", function(d) {
+                        }).attr("width", function (d) {
                             return d.width;
-                        }).attr("height", function(d) {
+                        }).attr("height", function (d) {
                             return d.height;
-                        }).style("fill", function(d) {
+                        }).style("fill", function (d) {
                             return d.color;
                         });
                         var plotLine = svg.selectAll("plotLine").data(plotLineData).enter().append("rect");
-                        var plotLineAttributes = plotLine.attr("x", function(d) {
+                        var plotLineAttributes = plotLine.attr("x", function (d) {
                             return d.x;
-                        }).attr("y", function(d) {
+                        }).attr("y", function (d) {
                             return d.y;
-                        }).attr("width", function(d) {
+                        }).attr("width", function (d) {
                             return d.width;
-                        }).attr("height", function(d) {
+                        }).attr("height", function (d) {
                             return d.height;
-                        }).style("fill", function(d) {
+                        }).style("fill", function (d) {
                             return d.color;
                         });
                         /*var plotLines = svg.selectAll("plotLines").data(timeScaleTicks).enter().append("circle");
@@ -240,23 +240,24 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                             .style("fill", "#5bc0de")
                             .attr("class", "plotLines");*/
                         var circles = svg.selectAll("plotPoint").data(plotCircles).enter().append("circle");
-                        var circleAttributes = circles.attr("cx", function(d) {
+                        var circleAttributes = circles.attr("cx", function (d) {
                             return d.x_axis;
-                        }).attr("cy", function(d) {
+                        }).attr("cy", function (d) {
                             return d.y_axis;
-                        }).attr("r", function(d) {
+                        }).attr("r", function (d) {
                             return d.radius;
-                        }).attr("class", "plotPoint").on('mouseover', function(d) {
+                        }).attr("class", "plotPoint").on('mouseover', function (d) {
                             var tipFormat = d3.time.format("%m/%d/%Y");
-                            tip.attr('class', 'd3-tip animate').html(function(d) {
+                            tip.attr('class', 'd3-tip animate').html(function (d) {
                                 return '<span>' + tipFormat(d.date) + '</span>';
                             }).show(d);
-                        }).on('mouseout', function(d) {
+                        }).on('mouseout', function (d) {
                             tip.attr('class', 'd3-tip').show(d);
                             tip.hide();
-                        });/*.on("click", function(d) {
-                            navClick(d.href);
-                        });*/
+                        });
+                        /*.on("click", function(d) {
+                                                    navClick(d.href);
+                                                });*/
                     }
                     getSVGWidth();
                     buildScale();
@@ -265,31 +266,31 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                     plotData();
                 }
                 //gatherData only on first run.
-            $window.onload = function() {
+            $window.onload = function () {
                 console.log('onload');
                 gatherData();
                 renderPlot();
             };
 
             //Re-evaluate scope on resize.
-            $window.onresize = function() {
+            $window.onresize = function () {
                 scope.$apply();
                 renderPlot();
             };
             //Expose function on master scope.
 
-            scope.$watch('inactiveFlag', function(newValue, oldValue) {
-                console.log('inactive flag '+newValue+' '+oldValue);
+            scope.$watch('inactiveFlag', function (newValue, oldValue) {
+                console.log('inactive flag ' + newValue + ' ' + oldValue);
                 gatherData();
                 renderPlot();
             }, true);
-            scope.$watch('entryType', function(newValue, oldValue) {
-                console.log('entry type '+newValue+' '+oldValue);
+            scope.$watch('entryType', function (newValue, oldValue) {
+                console.log('entry type ' + newValue + ' ' + oldValue);
                 gatherData();
                 renderPlot();
             }, true);
-            scope.$watch('pageLoaded', function(newValue, oldValue) {
-                console.log('page loaded '+newValue+' '+oldValue);
+            scope.$watch('pageLoaded', function (newValue, oldValue) {
+                console.log('page loaded ' + newValue + ' ' + oldValue);
                 gatherData();
                 renderPlot();
             }, true);
@@ -305,7 +306,6 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                 }
             }, true);
             */
-
 
         }
     };

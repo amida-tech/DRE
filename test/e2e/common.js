@@ -5,14 +5,14 @@ function login(api, username, password, done) {
             'username': username,
             'password': password,
 
-            'middleName':'Bacon',
-            'firstName':'Kevin',
-            'lastName':'Schmidt',
-            'dob':'10/10/1980',
-            'gender':'Male',
-            'email':'kevin@ba.com'
+            'middleName': 'Bacon',
+            'firstName': 'Kevin',
+            'lastName': 'Schmidt',
+            'dob': '10/10/1980',
+            'gender': 'Male',
+            'email': 'kevin@ba.com'
         })
-        .end(function(err, res) {
+        .end(function (err, res) {
             if (err) throw err;
             done();
         });
@@ -25,14 +25,14 @@ function register(api, username, password, done) {
             'username': username,
             'password': password,
 
-            'middleName':'Bacon',
-            'firstName':'Kevin',
-            'lastName':'Schmidt',
-            'dob':'10/10/1980',
-            'gender':'Male',
-            'email':'kevin@ba.com'
+            'middleName': 'Bacon',
+            'firstName': 'Kevin',
+            'lastName': 'Schmidt',
+            'dob': '10/10/1980',
+            'gender': 'Male',
+            'email': 'kevin@ba.com'
         })
-        .end(function(err, res) {
+        .end(function (err, res) {
             if (err) {
                 throw err;
             }

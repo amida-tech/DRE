@@ -10,16 +10,16 @@ var common2 = require('../common.js');
 
 function removeCollection(inputCollection, callback) {
     var db;
-    database.connect(databaseLocation, function(err, dbase) {
+    database.connect(databaseLocation, function (err, dbase) {
         if (err) {
             throw err;
         }
         db = dbase;
-        db.collection(inputCollection, function(err, coll) {
+        db.collection(inputCollection, function (err, coll) {
             if (err) {
                 throw err;
             }
-            coll.remove({}, function(err, results) {
+            coll.remove({}, function (err, results) {
                 if (err) {
                     throw err;
                 }
@@ -35,7 +35,7 @@ function loadTestRecord(fileName, callback) {
     api.put('/api/v1/storage')
         .attach('file', filepath)
         .expect(200)
-        .end(function(err, res) {
+        .end(function (err, res) {
             if (err) {
                 callback(err);
             }
@@ -43,27 +43,26 @@ function loadTestRecord(fileName, callback) {
         });
 }
 
+describe('Pre Test Cleanup', function () {
 
-describe('Pre Test Cleanup', function() {
-
-    it('Remove Result Collections', function(done) {
-        removeCollection('results', function(err) {
+    it('Remove Result Collections', function (done) {
+        removeCollection('results', function (err) {
             if (err) {
                 done(err);
             }
-            removeCollection('resultsmerges', function(err) {
+            removeCollection('resultsmerges', function (err) {
                 if (err) {
                     done(err);
                 }
-                removeCollection('resultsmatches', function(err) {
+                removeCollection('resultsmatches', function (err) {
                     if (err) {
                         done(err);
                     }
-                    removeCollection('storage.files', function(err) {
+                    removeCollection('storage.files', function (err) {
                         if (err) {
                             done(err);
                         }
-                        removeCollection('storage.chunks', function(err) {
+                        removeCollection('storage.chunks', function (err) {
                             if (err) {
                                 done(err);
                             }
@@ -74,19 +73,19 @@ describe('Pre Test Cleanup', function() {
             });
         });
     });
-    it('Login', function(done) {
-        common2.register(api, 'test', 'test', function() {
-            common2.login(api, 'test', 'test', function() {
+    it('Login', function (done) {
+        common2.register(api, 'test', 'test', function () {
+            common2.login(api, 'test', 'test', function () {
                 done();
             });
         });
     });
 });
 
-describe('Results API - Test New:', function() {
+describe('Results API - Test New:', function () {
 
-    before(function(done) {
-        loadTestRecord('bluebutton-01-original.xml', function(err) {
+    before(function (done) {
+        loadTestRecord('bluebutton-01-original.xml', function (err) {
             if (err) {
                 done(err);
             } else {
@@ -95,10 +94,10 @@ describe('Results API - Test New:', function() {
         });
     });
 
-    it('Get Result Records', function(done) {
+    it('Get Result Records', function (done) {
         api.get('/api/v1/record/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -108,19 +107,19 @@ describe('Results API - Test New:', function() {
             });
     });
 
-    it('Get Result Match Records', function(done) {
+    it('Get Result Match Records', function (done) {
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 expect(res.body.matches.length).to.equal(0);
                 done();
             });
     });
 
-    it('Get Result Merge Records', function(done) {
+    it('Get Result Merge Records', function (done) {
         api.get('/api/v1/merges/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -139,10 +138,10 @@ describe('Results API - Test New:', function() {
 
 });
 
-describe('Results API - Test Duplicate:', function() {
+describe('Results API - Test Duplicate:', function () {
 
-    before(function(done) {
-        loadTestRecord('bluebutton-02-duplicate.xml', function(err) {
+    before(function (done) {
+        loadTestRecord('bluebutton-02-duplicate.xml', function (err) {
             if (err) {
                 done(err);
             } else {
@@ -151,10 +150,10 @@ describe('Results API - Test Duplicate:', function() {
         });
     });
 
-    it('Get Result Records', function(done) {
+    it('Get Result Records', function (done) {
         api.get('/api/v1/record/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -164,20 +163,19 @@ describe('Results API - Test Duplicate:', function() {
             });
     });
 
-
-    it('Get Result Match Records', function(done) {
+    it('Get Result Match Records', function (done) {
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 expect(res.body.matches.length).to.equal(0);
                 done();
             });
     });
 
-    it('Get Result Merge Records', function(done) {
+    it('Get Result Merge Records', function (done) {
         api.get('/api/v1/merges/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -202,13 +200,12 @@ describe('Results API - Test Duplicate:', function() {
             });
     });
 
-
 });
 
-describe('Results API - Test New/Dupe Mix:', function() {
+describe('Results API - Test New/Dupe Mix:', function () {
 
-    before(function(done) {
-        loadTestRecord('bluebutton-03-updated.xml', function(err) {
+    before(function (done) {
+        loadTestRecord('bluebutton-03-updated.xml', function (err) {
             if (err) {
                 done(err);
             } else {
@@ -217,10 +214,10 @@ describe('Results API - Test New/Dupe Mix:', function() {
         });
     });
 
-    it('Get Results Records', function(done) {
+    it('Get Results Records', function (done) {
         api.get('/api/v1/record/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -229,20 +226,19 @@ describe('Results API - Test New/Dupe Mix:', function() {
             });
     });
 
-
-    it('Get Result Match Records', function(done) {
+    it('Get Result Match Records', function (done) {
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 expect(res.body.matches.length).to.equal(0);
                 done();
             });
     });
 
-    it('Get Result Merge Records', function(done) {
+    it('Get Result Merge Records', function (done) {
         api.get('/api/v1/merges/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -271,10 +267,10 @@ describe('Results API - Test New/Dupe Mix:', function() {
 });
 
 //Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
-describe('Results API - Test Partial Matches:', function() {
+describe('Results API - Test Partial Matches:', function () {
 
-    before(function(done) {
-        loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function(err) {
+    before(function (done) {
+        loadTestRecord('bluebutton-04-diff-source-partial-matches.xml', function (err) {
             if (err) {
                 done(err);
             } else {
@@ -283,10 +279,10 @@ describe('Results API - Test Partial Matches:', function() {
         });
     });
 
-    it('Get Result Records', function(done) {
+    it('Get Result Records', function (done) {
         api.get('/api/v1/record/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -296,10 +292,10 @@ describe('Results API - Test Partial Matches:', function() {
             });
     });
 
-    it('Get Result Merge Records', function(done) {
+    it('Get Result Merge Records', function (done) {
         api.get('/api/v1/merges/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -325,10 +321,10 @@ describe('Results API - Test Partial Matches:', function() {
             });
     });
 
-    it('Get Result Match Records', function(done) {
+    it('Get Result Match Records', function (done) {
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 //console.log(JSON.stringify(res.body.matches, null, 10));
                 expect(res.body.matches.length).to.equal(3);
                 for (var i in res.body.matches) {
@@ -341,16 +337,16 @@ describe('Results API - Test Partial Matches:', function() {
 
 });
 
-describe('Results API - Test Added Matches', function() {
+describe('Results API - Test Added Matches', function () {
 
     var update_id = '';
     var match_id = '';
 
-    it('Update Result Match Records', function(done) {
+    it('Update Result Match Records', function (done) {
 
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     done(err);
                 } else {
@@ -361,7 +357,7 @@ describe('Results API - Test Added Matches', function() {
                             determination: "added"
                         })
                         .expect(200)
-                        .end(function(err, res) {
+                        .end(function (err, res) {
                             if (err) {
                                 done(err);
                             } else {
@@ -373,10 +369,10 @@ describe('Results API - Test Added Matches', function() {
             });
     });
 
-    it('Get Result Records', function(done) {
+    it('Get Result Records', function (done) {
         api.get('/api/v1/record/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 //console.log(JSON.stringify(res.body, null, 10));
                 expect(res.body.results.length).to.equal(8);
                 var total_results = 0;
@@ -391,10 +387,10 @@ describe('Results API - Test Added Matches', function() {
             });
     });
 
-    it('Get Result Merge Records Post Added', function(done) {
+    it('Get Result Merge Records Post Added', function (done) {
         api.get('/api/v1/merges/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -420,10 +416,10 @@ describe('Results API - Test Added Matches', function() {
             });
     });
 
-    it('Get Result Match Records Post Added', function(done) {
+    it('Get Result Match Records Post Added', function (done) {
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     done(err);
                 }
@@ -435,18 +431,15 @@ describe('Results API - Test Added Matches', function() {
 
 });
 
-
-
-
-describe('Results API - Test Ignored Matches', function() {
+describe('Results API - Test Ignored Matches', function () {
 
     var update_id = '';
     var match_id = '';
 
-    it('Update Result Match Records Ignored', function(done) {
+    it('Update Result Match Records Ignored', function (done) {
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     done(err);
                 } else {
@@ -457,7 +450,7 @@ describe('Results API - Test Ignored Matches', function() {
                             determination: "ignored"
                         })
                         .expect(200)
-                        .end(function(err, res) {
+                        .end(function (err, res) {
                             if (err) {
                                 done(err);
                             } else {
@@ -468,10 +461,10 @@ describe('Results API - Test Ignored Matches', function() {
             });
     });
 
-    it('Get Result Records', function(done) {
+    it('Get Result Records', function (done) {
         api.get('/api/v1/record/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 //console.log(JSON.stringify(res.body, null, 10));
                 expect(res.body.results.length).to.equal(8);
                 var total_results = 0;
@@ -486,10 +479,10 @@ describe('Results API - Test Ignored Matches', function() {
             });
     });
 
-    it('Get Result Merge Records Post Added', function(done) {
+    it('Get Result Merge Records Post Added', function (done) {
         api.get('/api/v1/merges/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -515,10 +508,10 @@ describe('Results API - Test Ignored Matches', function() {
             });
     });
 
-    it('Get Result Match Records Post Added', function(done) {
+    it('Get Result Match Records Post Added', function (done) {
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     done(err);
                 }
@@ -530,8 +523,7 @@ describe('Results API - Test Ignored Matches', function() {
 
 });
 
-
-describe('Results API - Test Merged Matches', function() {
+describe('Results API - Test Merged Matches', function () {
 
     var update_id = '';
     var base_id = '';
@@ -561,7 +553,7 @@ describe('Results API - Test Merged Matches', function() {
             "interpretations": [
                 "abnormal"
             ],
-            "date_time": { 
+            "date_time": {
                 "point": {
                     "date": "2012-11-16T00:00:00.000Z",
                     "precision": "year"
@@ -573,11 +565,11 @@ describe('Results API - Test Merged Matches', function() {
         }]
     };
 
-    it('Update Result Match Records Merged', function(done) {
+    it('Update Result Match Records Merged', function (done) {
 
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     done(err);
                 } else {
@@ -588,7 +580,7 @@ describe('Results API - Test Merged Matches', function() {
                     //Still need this object to check metadata.
                     api.get('/api/v1/record/results')
                         .expect(200)
-                        .end(function(err, res) {
+                        .end(function (err, res) {
                             if (err) {
                                 done(err);
                             } else {
@@ -603,7 +595,7 @@ describe('Results API - Test Merged Matches', function() {
                                         updated_entry: tmp_updated_entry
                                     })
                                     .expect(200)
-                                    .end(function(err, res) {
+                                    .end(function (err, res) {
                                         if (err) {
                                             done(err);
                                         } else {
@@ -616,10 +608,10 @@ describe('Results API - Test Merged Matches', function() {
             });
     });
 
-    it('Get Result Records', function(done) {
+    it('Get Result Records', function (done) {
         api.get('/api/v1/record/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 //console.log(JSON.stringify(res.body, null, 10));
                 expect(res.body.results.length).to.equal(8);
                 var total_results = 0;
@@ -639,7 +631,6 @@ describe('Results API - Test Merged Matches', function() {
                                 res.body.results[iEntry].results[iFind].result.translations = [];
                             }
                         }
-
 
                         if (res.body.results[iEntry].result_set.translations === undefined) {
                             res.body.results[iEntry].result_set.translations = [];
@@ -662,10 +653,10 @@ describe('Results API - Test Merged Matches', function() {
             });
     });
 
-    it('Get Result Merge Records Post Merged', function(done) {
+    it('Get Result Merge Records Post Merged', function (done) {
         api.get('/api/v1/merges/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -698,10 +689,10 @@ describe('Results API - Test Merged Matches', function() {
             });
     });
 
-    it('Get Result Match Records Post Added', function(done) {
+    it('Get Result Match Records Post Added', function (done) {
         api.get('/api/v1/matches/results')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     done(err);
                 }
@@ -710,6 +701,5 @@ describe('Results API - Test Merged Matches', function() {
                 done();
             });
     });
-
 
 });

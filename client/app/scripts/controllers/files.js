@@ -8,45 +8,39 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('FilesCtrl', function ($scope, files) {
+    .controller('FilesCtrl', function ($scope, files) {
 
+        $scope.fileList = [];
 
+        files.getFiles(function (err, results) {
+            $scope.fileList = results;
+            console.log(results);
+        });
 
-  	$scope.fileList = [];
+        $scope.predicate = "file_name";
 
-  	files.getFiles(function (err, results) {
-  		$scope.fileList = results;
-      console.log(results);
-  	});
+        $scope.nameSort = function () {
+            if ($scope.predicate === "file_name") {
+                $scope.predicate = "-file_name";
+            } else {
+                $scope.predicate = "file_name";
+            }
+        };
 
+        $scope.typeSort = function () {
+            if ($scope.predicate === "file_class") {
+                $scope.predicate = "-file_class";
+            } else {
+                $scope.predicate = "file_class";
+            }
+        };
 
+        $scope.modifiedSort = function () {
+            if ($scope.predicate === "file_upload_date") {
+                $scope.predicate = "-file_upload_date";
+            } else {
+                $scope.predicate = "file_upload_date";
+            }
+        };
 
-
-  	$scope.predicate = "file_name";
-
-    $scope.nameSort = function () {
-      if ($scope.predicate === "file_name") {
-          $scope.predicate = "-file_name";
-      } else {
-          $scope.predicate = "file_name";
-      }
-    };
-
-    $scope.typeSort = function () {
-      if ($scope.predicate === "file_class") {
-          $scope.predicate = "-file_class";
-      } else {
-          $scope.predicate = "file_class";
-      }
-    };
-
-    $scope.modifiedSort = function () {
-      if ($scope.predicate === "file_upload_date") {
-          $scope.predicate = "-file_upload_date";
-      } else {
-          $scope.predicate = "file_upload_date";
-      }
-    };
-
-
-  });
+    });

@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RegisterCtrl', function($scope, $location, registration, login, username) {
+    .controller('RegisterCtrl', function ($scope, $location, registration, login, username) {
 
         $scope.step = 0;
 
@@ -16,12 +16,11 @@ angular.module('phrPrototypeApp')
 
         $scope.isUser = false;
         $scope.userList = {};
-  
 
-        $scope.nextStep = function() {
+        $scope.nextStep = function () {
             if ($scope.step === 0) {
-    
-                username.checkLogin(function(err, userInfo) {
+
+                username.checkLogin(function (err, userInfo) {
                     $scope.userList = userInfo;
                     // console.log('register controller', $scope.userList);
                     for (var element in $scope.userList) {
@@ -40,10 +39,9 @@ angular.module('phrPrototypeApp')
                         $scope.error = "Entered Passwords did not match";
                         return;
                     }
-                });           
+                });
 
-            }
-            else {
+            } else {
                 $scope.step = $scope.step + 1;
                 $scope.error = null;
                 // $scope.isUser = false;
@@ -52,7 +50,7 @@ angular.module('phrPrototypeApp')
 
         };
 
-        $scope.finish = function() {
+        $scope.finish = function () {
             //calling webservice for registration, format DOB
             var info = {
                 'username': $scope.inputLogin,
@@ -67,13 +65,13 @@ angular.module('phrPrototypeApp')
 
             console.log("starting registration", info.dob);
 
-            registration.signup(info, function(err) {
+            registration.signup(info, function (err) {
                 // console.log("done");
                 // $location.path('/home');
                 if (err) {
                     $scope.error = err;
                 } else {
-                    login.login($scope.inputLogin, $scope.inputPassword, function(err) {
+                    login.login($scope.inputLogin, $scope.inputPassword, function (err) {
                         if (err) {
                             $scope.error = err;
                         } else {

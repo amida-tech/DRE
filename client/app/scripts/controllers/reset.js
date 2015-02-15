@@ -8,21 +8,21 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('ResetCtrl', function ($scope, $location) {
-    
-  	$scope.step = 0;
+    .controller('ResetCtrl', function ($scope, $location) {
 
-    $scope.nextStep = function () {
-    	$scope.step = $scope.step + 1;
-    };
+        $scope.step = 0;
 
-    $scope.finish = function () {
-    	$location.path('/');
-    };
+        $scope.nextStep = function () {
+            $scope.step = $scope.step + 1;
+        };
 
-    $scope.resend = function () {
-    	$scope.inputEmail = "";
-    	$scope.step = 0;
-    };
+        $scope.finish = function () {
+            $location.path('/');
+        };
 
-  });
+        $scope.resend = function () {
+            $scope.inputEmail = "";
+            $scope.step = 0;
+        };
+
+    });

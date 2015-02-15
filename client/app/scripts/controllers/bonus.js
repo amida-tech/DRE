@@ -6,11 +6,11 @@
  * # ResetCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('bonusCtrl', function($scope, $location) {
+angular.module('phrPrototypeApp').controller('bonusCtrl', function ($scope, $location) {
     $(window).konami({
-        cheat: function() {
+        cheat: function () {
             document.getElementById("index-wrapper").className = 'konami-background';
-            setTimeout(function() {
+            setTimeout(function () {
                 document.getElementById("index-wrapper").className = 'default-background';
             }, 2000);
         }

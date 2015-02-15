@@ -39,7 +39,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     //  counted pending updates (matches)
     this.processed_record = [];
 
-
     //fetch all the data form APIs
     //including:
     //  master_record
@@ -48,7 +47,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     //  currently selected matches
     //
     //  saves data into local this.* vars (see above)
-    this.fetchData = function(callback) {
+    this.fetchData = function (callback) {
 
         //4 data sources, counted in done() for syncronization
         var sources = 4;
@@ -60,18 +59,18 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             count = count + 1;
 
             switch (type) {
-                case "master_record":
-                    that.master_record = data;
-                    break;
-                case "notes":
-                    that.all_notes = data;
-                    break;
-                case "merges":
-                    that.all_merges = data;
-                    break;
-                case "matches":
-                    that.curr_matches = data;
-                    break;
+            case "master_record":
+                that.master_record = data;
+                break;
+            case "notes":
+                that.all_notes = data;
+                break;
+            case "merges":
+                that.all_merges = data;
+                break;
+            case "matches":
+                that.curr_matches = data;
+                break;
             }
 
             //callback when all sources are returned
@@ -87,49 +86,44 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
     };
 
-
-
-
-    this.getMasterRecord = function(callback) {
+    this.getMasterRecord = function (callback) {
         console.log('getting master record from API');
         $http.get('/api/v1/get_record')
-            .success(function(data) {
+            .success(function (data) {
                 console.log("master record fetched successfuly");
                 callback("master_record", null, data);
             })
-            .error(function(err) {
+            .error(function (err) {
                 console.log("fetching master record failed", err);
                 callback("master_record", err);
             });
     };
 
-
-    this.getNotes = function(callback) {
+    this.getNotes = function (callback) {
         console.log('getting notes from API');
         $http.get('/api/v1/notes/all')
-            .success(function(data) {
+            .success(function (data) {
                 console.log("notes fetched successfuly");
                 callback("notes", null, data);
             })
-            .error(function(err) {
+            .error(function (err) {
                 console.log("fetching notes failed", err);
                 callback("notes", err);
             });
     };
 
-    this.getMerges = function(callback) {
+    this.getMerges = function (callback) {
         console.log('getting merges from API');
         $http.get('/api/v1/merges')
-            .success(function(data) {
+            .success(function (data) {
                 console.log("merges fetched successfuly");
                 callback("merges", null, data.merges);
             })
-            .error(function(err) {
+            .error(function (err) {
                 console.log("fetching merges failed", err);
                 callback("merges", err);
             });
     };
-
 
     /* TODO: merge history here
 
@@ -158,7 +152,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
     */
 
-    this.getMatches = function(section, callback) {
+    this.getMatches = function (section, callback) {
         //no need to fetch anything if section is all
         if (!section || section === "all") {
             console.log('no need to fetch matches for all');
@@ -168,21 +162,21 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             //translating section name to backend API terms
             var section_backend = section;
             switch (section) {
-                case "conditions":
-                    section_backend = "problems";
-                    break;
-                case "social":
-                    section_backend = "social_history";
-                    break;
+            case "conditions":
+                section_backend = "problems";
+                break;
+            case "social":
+                section_backend = "social_history";
+                break;
             }
 
             console.log('getting matches from API for section ' + section_backend);
             $http.get('/api/v1/matches/' + section_backend)
-                .success(function(data) {
+                .success(function (data) {
                     console.log("matches fetched successfuly");
                     callback("matches", null, data.matches);
                 })
-                .error(function(err) {
+                .error(function (err) {
                     console.log("fetching matches failed", err);
                     callback("matches", err);
                 });
@@ -193,11 +187,11 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     //  calculates displayDates for all entries
     //  injects notes information in releated entries
 
-    this.processData = function() {
+    this.processData = function () {
         this.processed_record = []; //next step will fully rebuild processed record
 
-        _.each(this.master_record, function(entries, type) {
-            _.each(entries, function(entry) {
+        _.each(this.master_record, function (entries, type) {
+            _.each(entries, function (entry) {
                 //gate (ignore) possible sections that are not applicable here              
                 if (_.contains(['demographics', 'plan_of_care'], type)) {
                     //skip to next entry (next iteration)
@@ -217,7 +211,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
                 //collate all notes into array (with formatting) for current entry
                 var comments = that.collateComments(entry);
-
 
                 var display_type = that.displayType(type);
 
@@ -239,7 +232,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     };
 
     //rename internal DRE section names into UI human readable names
-    this.displayType = function(type) {
+    this.displayType = function (type) {
         var display_type = type;
         if (type === 'social_history') {
             display_type = 'social';
@@ -256,7 +249,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
     //collate all notes in formatted array for provided entry
     //notes data is coming from local service var (all_notes)
-    this.collateComments = function(entry) {
+    this.collateComments = function (entry) {
         var comments = [];
 
         //find all notes for current entry
@@ -265,7 +258,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         });
 
         //format each note, and collate into array
-        _.each(note, function(n) {
+        _.each(note, function (n) {
             var comment = {
                 date: n.date,
                 starred: n.star,
@@ -282,7 +275,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     };
 
     //takes type of entry (section) and entry data, and returns formatted date (or time interval)
-    this.extractAndFormatDate = function(type, entry) {
+    this.extractAndFormatDate = function (type, entry) {
 
         var tmpDates = '';
         var displayDates = '';
@@ -326,7 +319,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             }
         }
 
-
         if (tmpDates.length === 1) {
             displayDates = format.formatDate(tmpDates[0]);
         } else if (tmpDates.length === 2) {
@@ -339,13 +331,12 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         };
     };
 
-
     //split merges for display in records view and billing view
-    this.processMerges = function() {
+    this.processMerges = function () {
         var filtered_record = [];
         var filtered_billing = [];
 
-        _.each(this.all_merges, function(merge) {
+        _.each(this.all_merges, function (merge) {
             //console.log(merge);
 
             // no claims and payers merges here
@@ -360,10 +351,9 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         this.merges_billing = filtered_billing;
     };
 
-
     //process matches for current section
     //calculate counts
-    this.processMatches = function() {
+    this.processMatches = function () {
         if (!this.curr_section || this.curr_section === 'all') {
             return;
         } else {
@@ -373,9 +363,8 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 'count': this.curr_matches.length
             };
 
-
             //clean up previous matches ??
-            _.each(that.processed_record, function(recordEntry) {
+            _.each(that.processed_record, function (recordEntry) {
                 delete recordEntry.metadata.match;
             });
 
@@ -383,14 +372,14 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             //(for each match)
 
             console.log("ALL MATCHES ", that.curr_processed_matches.data);
-            _.each(that.curr_processed_matches.data, function(match) {
+            _.each(that.curr_processed_matches.data, function (match) {
                 var match_count = 0;
 
                 //console.log(mat)
                 //console.log("match id and master entry id", match._id, match.entry._id, $scope.recordEntries);
                 //find $scope.recordEntries.data._id === match.entry._id
 
-                _.each(that.processed_record, function(recordEntry) {
+                _.each(that.processed_record, function (recordEntry) {
                     //console.log(">>>>> recordEntry ",recordEntry);
                     //console.log(">>>>> curr_matches",that.curr_matches);
 
@@ -399,7 +388,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
                         //calculate number of pending matches per entry
 
-                        if (recordEntry.metadata.match && recordEntry.metadata.match.count>0) {
+                        if (recordEntry.metadata.match && recordEntry.metadata.match.count > 0) {
                             //console.log("IF");
                             match_count = match_count + recordEntry.metadata.match.count + 1;
                         } else {
@@ -421,7 +410,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                     //}
                 });
 
-
             });
         }
 
@@ -439,10 +427,10 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     //      does nothing...???
     //  currently selected matches
     //      calculates counts of matches per element
-    this.getData = function(callback) {
+    this.getData = function (callback) {
         console.log("in get data");
 
-        this.fetchData(function() {
+        this.fetchData(function () {
             //once all the data is fetched
             //process it
 
@@ -463,10 +451,10 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         });
     };
 
-    this.getMatchesData = function(callback) {
+    this.getMatchesData = function (callback) {
         console.log("in get matches data");
 
-        this.getMatches(this.curr_section, function(type, err, data) {
+        this.getMatches(this.curr_section, function (type, err, data) {
             //once all the data is fetched
 
             that.curr_matches = data;

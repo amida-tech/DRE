@@ -1,23 +1,23 @@
 <table class="table table-hover">
-	<thead>
-		<tr>
-			<td colspan="2">
-				<h3>Entry Details</h3>
-			</td>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-show="entryData.observation.allergen.code">
-			<td>Code:</td>
-			<td>{{entryData.observation.allergen.code}}</td>
-		</tr>
-		<tr ng-show="entryData.observation.allergen.code_system_name">
-			<td>Code System:</td>
-			<td>{{entryData.observation.allergen.code_system_name}}</td>
-		</tr>
+    <thead>
+        <tr>
+            <td colspan="2">
+                <h3>Entry Details</h3>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-show="entryData.observation.allergen.code">
+            <td>Code:</td>
+            <td>{{entryData.observation.allergen.code}}</td>
+        </tr>
+        <tr ng-show="entryData.observation.allergen.code_system_name">
+            <td>Code System:</td>
+            <td>{{entryData.observation.allergen.code_system_name}}</td>
+        </tr>
 
-		<tr ng-show="entryData.observation.status">
-			<td>Status:</td>
+        <tr ng-show="entryData.observation.status">
+            <td>Status:</td>
             <td>
                 <div class="panel">
                     <table class="table sub-table">
@@ -40,35 +40,35 @@
             </td>
         </tr>
 
-		<tr ng-repeat="(reactionIndex, reactionEntry) in entryData.observation.reactions">
-			<td>Reactions:</td>
-			<td>
+        <tr ng-repeat="(reactionIndex, reactionEntry) in entryData.observation.reactions">
+            <td>Reactions:</td>
+            <td>
 
-				<div class="panel">
-					<table class="table sub-table">
-						<thead ng-show="reactionEntry.reaction.name">
-							<tr>
-								<td>Reaction:</td>
-								<td>{{reactionEntry.reaction.name}}</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-show="reactionEntry.severity.code.name">
-								<td>Severity:</td>
-								<td>{{reactionEntry.severity.code.name}}</td>
-							</tr>
-							<tr ng-show="reactionEntry.reaction.code">
-								<td>Code:</td>
-								<td>{{reactionEntry.reaction.code}}</td>
-							</tr>
-							<tr ng-show="reactionEntry.reaction.code_system_name">
-								<td>Code System:</td>
-								<td>{{reactionEntry.reaction.code_system_name}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</td>
-		</tr>
-	</tbody>
+                <div class="panel">
+                    <table class="table sub-table">
+                        <thead ng-show="reactionEntry.reaction.name">
+                            <tr>
+                                <td>Reaction:</td>
+                                <td>{{reactionEntry.reaction.name}}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="reactionEntry.severity.code.name">
+                                <td>Severity:</td>
+                                <td>{{reactionEntry.severity.code.name}}</td>
+                            </tr>
+                            <tr ng-show="reactionEntry.reaction.code">
+                                <td>Code:</td>
+                                <td>{{reactionEntry.reaction.code}}</td>
+                            </tr>
+                            <tr ng-show="reactionEntry.reaction.code_system_name">
+                                <td>Code System:</td>
+                                <td>{{reactionEntry.reaction.code_system_name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </tbody>
 </table>

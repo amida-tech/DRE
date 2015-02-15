@@ -48,7 +48,7 @@ angular.module('phrPrototypeApp')
             var tmpDateArr;
             if (input_date.precision === "year") {
                 tmpDateArr = moment.utc(input_date.date).format('YYYY');
-                
+
             }
             if (input_date.precision === "month") {
                 tmpDateArr = moment.utc(input_date.date).format('MMM, YYYY');
@@ -174,9 +174,6 @@ angular.module('phrPrototypeApp')
                 }
 
             }
-
-
-
 
             if (inputQuantity.value) {
                 returnQuantity = inputQuantity.value;

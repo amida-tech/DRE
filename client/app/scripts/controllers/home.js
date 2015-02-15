@@ -8,28 +8,25 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('HomeCtrl', function($scope, history, merges, dataservice) {
-
-
+    .controller('HomeCtrl', function ($scope, history, merges, dataservice) {
 
         //TODO : fetch notes and updates counts
         $scope.noteCount = 0;
         $scope.updatesCount = 0;
 
-
         function refresh() {
             dataservice.curr_section = $scope.entryType;
-            dataservice.getData(function() {
+            dataservice.getData(function () {
                 $scope.noteCount = 0;
 
-                _.each(dataservice.all_notes, function(entry) {
+                _.each(dataservice.all_notes, function (entry) {
                     //console.log(entry);
                     if (entry.star) {
                         $scope.noteCount++;
                     }
-                });                
+                });
 
-                merges.getMerges(function(err, merges) {
+                merges.getMerges(function (err, merges) {
                     $scope.updatesCount = merges.length;
                 });
                 //$scope.updatesCount = dataservice.matches
@@ -40,7 +37,7 @@ angular.module('phrPrototypeApp')
         refresh();
 
         function getHistory() {
-            history.getHistory(function(err, history) {
+            history.getHistory(function (err, history) {
                 if (err) {
                     console.log('ERRROR', err);
                 } else {
@@ -51,6 +48,5 @@ angular.module('phrPrototypeApp')
         }
 
         getHistory();
-
 
     });

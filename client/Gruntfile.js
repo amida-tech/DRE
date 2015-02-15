@@ -366,8 +366,7 @@ module.exports = function(grunt) {
         'cssmin',
         'uglify',
         'filerev',
-        'usemin',
-        'htmlmin'
+        'usemin'
     ]);
 
     grunt.registerTask('default', [
