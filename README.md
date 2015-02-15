@@ -73,13 +73,13 @@ Documentation for record.js [API](./docs/recordjs.md)
 #build client app
 cd client
 npm install
-grunt
+bower install
+grunt build # you can run "grunt dev" for dev purposes 
 
 #run server side tests
 cd ..
 npm install
-bower install
-grunt build # you can run "grunt dev" for dev purposes 
+grunt
 
 #run server
 node server.js
