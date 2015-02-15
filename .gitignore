@@ -19,4 +19,4 @@ npm-debug.log
 
 .anvil
 
-client/app/styles/main.css
+#client/app/styles/main.css
