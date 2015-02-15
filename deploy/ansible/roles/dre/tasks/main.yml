@@ -29,9 +29,9 @@
   sudo: yes
   command: npm install -g grunt-cli
 
-#- name:  Install bower CLI tools
-#  sudo: yes
-#  command: npm install -g bower
+- name:  Install bower CLI tools
+  sudo: yes
+  command: npm install -g bower
 
 - name: install libxml2
   yum: name=libxml2 state="latest"
@@ -44,8 +44,8 @@
 #- name:  Install DRE client dependencies
 #  command: npm install chdir=/var/www/dre/current/client 
 
-#- name:  Install DRE client bower dependencies
-#  command: bower install --allow-root chdir=/var/www/dre/current/client 
+- name:  Install DRE client bower dependencies
+  command: bower install --allow-root chdir=/var/www/dre/current/client 
 
 
 #- name: Install ruby
