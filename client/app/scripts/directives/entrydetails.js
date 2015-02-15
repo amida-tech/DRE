@@ -5,7 +5,7 @@
  * @description
  * # recordNavigation
  */
-angular.module('phrPrototypeApp').directive('entryDetails', function($window, $location, format, matches, $route, record) {
+angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $location, format, matches, $route, record) {
     return {
         templateUrl: 'views/templates/entrydetails.html',
         restrict: 'EA',
@@ -19,7 +19,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
 
             function compareMatches(masterEntry, updateEntry) {
                 var tmpDiff = DeepDiff.diff(masterEntry, updateEntry);
-                var filteredDiff = _.filter(tmpDiff, function(diff) {
+                var filteredDiff = _.filter(tmpDiff, function (diff) {
                     return !_.contains(diff.path, "_id"); //&& diff.kind !== "D";
                 });
                 return filteredDiff;
@@ -37,14 +37,14 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                         a = a[x];
                     }
                 }
-                _.each(list, function(item) {
+                _.each(list, function (item) {
                     var tmpObj = {};
                     assign(tmpObj, item.path, item);
                     $.extend(true, flagData, tmpObj);
                 });
                 return flagData;
             }
-            scope.$watch('details', function(newVals, oldVals) {
+            scope.$watch('details', function (newVals, oldVals) {
                 if (!_.isUndefined(scope.details)) {
                     scope.entryData = scope.details.entry;
                     scope.matchData = scope.details.matches[0].match_entry;
@@ -56,35 +56,31 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                     scope.flagData = constructDiffFlags(scope.diffList);
                 }
             }, true);
-            scope.updateButton = function(diffs) {
+            scope.updateButton = function (diffs) {
                 console.log(diffs);
-                _.each(diffs, function(change) {
+                _.each(diffs, function (change) {
                     DeepDiff.applyChange(scope.finalData, true, change);
                 });
                 scope.showUndo = true;
             };
-            scope.undoButton = function(diffs) {
-                _.each(diffs, function(change) {
+            scope.undoButton = function (diffs) {
+                _.each(diffs, function (change) {
                     DeepDiff.revertChange(scope.finalData, true, change);
                 });
             };
-            scope.checkboxToggle = function(diffs, obj1, obj2) {
+            scope.checkboxToggle = function (diffs, obj1, obj2) {
                 if (_.isArray(diffs)) {
 
                     if (scope.areEqual(obj1, obj2)) {
-                        _.each(diffs, function(item) {
+                        _.each(diffs, function (item) {
                             scope.updateButton(item);
                         });
 
-
                     } else {
-                        _.each(diffs, function(item) {
+                        _.each(diffs, function (item) {
                             scope.undoButton(item);
                         });
                     }
-
-
-
 
                 } else {
 
@@ -96,7 +92,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 }
 
             };
-            scope.reactionCheckboxToggle = function(diffs, obj1, obj2, obj3, type) {
+            scope.reactionCheckboxToggle = function (diffs, obj1, obj2, obj3, type) {
 
                 if (type !== 'new') {
                     scope.checkboxToggle(diffs, obj1, obj2);
@@ -109,44 +105,46 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
 
                 }
             };
-            scope.resultCheckboxToggle = function(diffs, obj1, obj2, obj3, type, index) {
-                
-                var partial = _.findWhere(type, {src_id: String(index), dest_id: String(index), match: 'partial'});
+            scope.resultCheckboxToggle = function (diffs, obj1, obj2, obj3, type, index) {
+
+                var partial = _.findWhere(type, {
+                    src_id: String(index),
+                    dest_id: String(index),
+                    match: 'partial'
+                });
                 //console.log('diffs',diffs);
                 //console.log('obj1',obj1);
                 //console.log('obj2',obj2);
 
-                
                 if (partial) {
-                    scope.checkboxToggle(diffs,obj1,obj2);
+                    scope.checkboxToggle(diffs, obj1, obj2);
                 } else {
                     if (scope.matchData.observation.reactions.length === scope.finalData.observation.reactions.length) {
-                        scope.finalData.observation.reactions.push(obj3);  
+                        scope.finalData.observation.reactions.push(obj3);
                     } else {
-                        scope.finalData.observation.reactions = scope.finalData.observation.reactions.slice(0,1);
+                        scope.finalData.observation.reactions = scope.finalData.observation.reactions.slice(0, 1);
                     }
-                    
+
                 }
             };
-            scope.body_siteCheckboxToggle = function(diffs, obj1, obj2, obj3, type) {
-                
+            scope.body_siteCheckboxToggle = function (diffs, obj1, obj2, obj3, type) {
 
                 if (type !== 'new') {
-                    scope.checkboxToggle(diffs,obj1,obj2);
+                    scope.checkboxToggle(diffs, obj1, obj2);
                 } else {
                     if (scope.matchData.body_sites.length === scope.finalData.body_sites.length) {
-                        scope.finalData.body_sites.push(obj3);  
+                        scope.finalData.body_sites.push(obj3);
                     } else {
-                        scope.finalData.body_sites = scope.finalData.body_sites.slice(0,1);
+                        scope.finalData.body_sites = scope.finalData.body_sites.slice(0, 1);
                     }
-                    
+
                 }
             };
             scope.findingCheckboxOverwrite = [];
-            scope.contains = function(array, item) {
+            scope.contains = function (array, item) {
                 return _.contains(array, item);
             };
-            scope.findingCheckboxToggle = function(index, matchFinding, masterFindings, finalFindings) {
+            scope.findingCheckboxToggle = function (index, matchFinding, masterFindings, finalFindings) {
                 console.log(index, matchFinding, masterFindings, finalFindings);
                 //will break if an overwrite happened elsewere - working for demo
                 if (!scope.areEqual(masterFindings, finalFindings)) {
@@ -157,24 +155,22 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                     scope.findingCheckboxOverwrite.push(index);
                 }
 
-
-                
             };
-            scope.undoAllButton = function() {
-                _.each(scope.diffList, function(change) {
+            scope.undoAllButton = function () {
+                _.each(scope.diffList, function (change) {
                     DeepDiff.revertChange(scope.finalData, true, change);
                 });
             };
-            scope.areEqual = function(obj1, obj2) {
+            scope.areEqual = function (obj1, obj2) {
                 return angular.equals(obj1, obj2);
             };
-            scope.isDifferent = function(diff) {
+            scope.isDifferent = function (diff) {
                 return diff === 'E' || diff === 'D';
             };
-            scope.exists = function(obj) {
+            scope.exists = function (obj) {
                 return !_.isUndefined(obj);
             };
-            scope.submitButton = function() {
+            scope.submitButton = function () {
                 //stub to send scope.finalData to merge service
 
                 console.log("match submitted");
@@ -199,7 +195,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 }
                 */
             };
-            scope.ignoreButton = function() {
+            scope.ignoreButton = function () {
                 //stub to send scope.finalData to merge service
 
                 console.log("match ignored");
@@ -209,7 +205,6 @@ angular.module('phrPrototypeApp').directive('entryDetails', function($window, $l
                 //    return;
                 //});
                 $route.reload();
-
 
                 /*
                 var send = $window.confirm("Ignore changes?");

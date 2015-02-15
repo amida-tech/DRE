@@ -8,9 +8,9 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('AccountCtrl', function($scope, $location, $http) {
+    .controller('AccountCtrl', function ($scope, $location, $http) {
 
-        $scope.resetPassword = function() {
+        $scope.resetPassword = function () {
             if ($scope.inputNewPassword === $scope.inputRepeatPassword) {
                 $scope.resetForm.$setPristine();
                 $scope.error = null;
@@ -23,19 +23,17 @@ angular.module('phrPrototypeApp')
                 };
 
                 $http.post('api/v1/changepassword', info)
-                    .success(function(data) {
+                    .success(function (data) {
                         console.log("password change successful");
                         $location.path('/home');
-                    }).error(function(data) {
+                    }).error(function (data) {
                         $scope.error = "Password change failed, wrong old password";
                     });
-
 
             } else {
                 $scope.error = "New passwords did not match";
             }
 
         };
-
 
     });

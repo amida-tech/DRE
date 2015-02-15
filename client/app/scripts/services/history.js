@@ -12,7 +12,7 @@ angular.module('phrPrototypeApp')
 
         var that = this;
 
-        this.getFullEventName = function(typestring) {
+        this.getFullEventName = function (typestring) {
             var fullEventNames = {
                 initAccount: 'Account created',
                 loggedIn: 'Logged in',
@@ -26,10 +26,10 @@ angular.module('phrPrototypeApp')
             return fullEventNames[typestring];
         };
 
-        this.getHistory = function(callback) {
+        this.getHistory = function (callback) {
             var recentUrl = $http.get('api/v1/account_history/mostRecent');
             var historyUrl = $http.get('api/v1/account_history/all');
-            $q.all([recentUrl, historyUrl]).then(function(result) {
+            $q.all([recentUrl, historyUrl]).then(function (result) {
                 var recent = result[0].data;
                 var full = result[1].data;
 
@@ -40,7 +40,7 @@ angular.module('phrPrototypeApp')
 
                 var fullHistoryProcessed = [];
 
-                _.each(full, function(historyEvent) {
+                _.each(full, function (historyEvent) {
                     var newHistEvent = {
                         type: that.getFullEventName(historyEvent.event_type),
                         date: historyEvent.time,
@@ -57,7 +57,6 @@ angular.module('phrPrototypeApp')
                 //     chartDates.push()
                 // })
 
-
                 var history = {
                     recordHistory: fullHistoryProcessed.reverse()
                 };
@@ -70,20 +69,19 @@ angular.module('phrPrototypeApp')
                     history.lastUpdate = recent.update.time;
                 }
 
-
                 //console.log(history);
                 callback(null, history);
 
-            }, function(err) {
+            }, function (err) {
                 callback(err);
             });
         };
 
-        this.recentUpdates = function(callback) {
+        this.recentUpdates = function (callback) {
 
         };
 
-        this.fullHistory = function(callback) {
+        this.fullHistory = function (callback) {
 
         };
     });

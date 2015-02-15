@@ -20,7 +20,7 @@ angular.module('phrPrototypeApp')
 
                     if (flagEntry.name === section.section) {
                         if (flagEntry.value) {
-                          filteredResults.push(section);   
+                            filteredResults.push(section);
                         }
                     }
 

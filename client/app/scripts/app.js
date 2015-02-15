@@ -19,7 +19,7 @@ angular
         'mgcrea.ngStrap',
         'd3'
     ])
-    .config(function($routeProvider) {
+    .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
@@ -93,36 +93,36 @@ angular
                 redirectTo: '/'
             });
     })
-    .run(function($rootScope, $location, authentication) {
+    .run(function ($rootScope, $location, authentication) {
 
         var routesThatDontRequireAuth = ['/login', '/', '/register'];
 
         // if current location matches route  
         var routeClean = function (route) {
-          return _.find(routesThatDontRequireAuth,
-            function (noAuthRoute) {
-              return _.str.startsWith(route, noAuthRoute);
-            });
+            return _.find(routesThatDontRequireAuth,
+                function (noAuthRoute) {
+                    return _.str.startsWith(route, noAuthRoute);
+                });
         };
 
-        $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        $rootScope.$on('$routeChangeStart', function (event, next, current) {
             // if route requires auth and user is not logged in
-            authentication.authStatus(function(err, res) {
-              var url = $location.url();              
-              //console.log('res', res);
+            authentication.authStatus(function (err, res) {
+                var url = $location.url();
+                //console.log('res', res);
                 if (!res) {
                     //console.log('url', url, (url ==='/login')||(url==='/')||(url==='/register'));
-                    if ((url ==='/login')||(url==='/')||(url==='/register')) {
+                    if ((url === '/login') || (url === '/') || (url === '/register')) {
                         // console.log('working?');
                         $location.path(url);
                     } else {
-                      $location.path('/login');
+                        $location.path('/login');
                     }
-                  } else {
-                        $location.path(url);
-                        // console.log('no login required?');
-                  }
-                
+                } else {
+                    $location.path(url);
+                    // console.log('no login required?');
+                }
+
             });
         });
     });

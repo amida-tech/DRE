@@ -8,8 +8,6 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-  .controller('RecordDownloadCtrl', function () {
+    .controller('RecordDownloadCtrl', function () {
 
-
-
-  });
+    });

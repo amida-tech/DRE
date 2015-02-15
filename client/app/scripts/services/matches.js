@@ -12,20 +12,18 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
     this.section = "";
     this.matchId = "";
 
-
-    this.setMasterRecord = function(rawRecord) {
+    this.setMasterRecord = function (rawRecord) {
         this.masterRecord = rawRecord;
     };
-    this.getCategory = function(category) {
+    this.getCategory = function (category) {
         switch (category) {
-            case "conditions":
-                category = "problems";
-                break;
-            case "social":
-                category = "social_history";
-                break;
+        case "conditions":
+            category = "problems";
+            break;
+        case "social":
+            category = "social_history";
+            break;
         }
-
 
         console.log('from server');
         var deferred = $q.defer();
@@ -34,7 +32,7 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
             url: dataurl,
             method: 'GET',
             cache: true
-        }).then(function(response) {
+        }).then(function (response) {
             if (typeof response.data === 'object') {
                 console.log("GOT MATCHES ", response.data);
                 return response.data;
@@ -43,35 +41,30 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
                 console.log('didnt get data');
                 return deferred.reject(response.data);
             }
-        }, function(error) {
+        }, function (error) {
             // something went wrong
             console.log('data errorrrrrrr');
             return deferred.reject(error);
         });
     };
 
-
-    this.getSection = function() {
+    this.getSection = function () {
         return this.section;
     };
-    this.setSection = function(section) {
+    this.setSection = function (section) {
         this.section = section;
     };
 
-    this.getMatchId = function() {
+    this.getMatchId = function () {
         return this.matchId;
     };
-    this.setMatchId = function(matchId) {
+    this.setMatchId = function (matchId) {
         this.matchId = matchId;
     };
 
-
-
-
-
     //API methods for updating and ignoring match
 
-    this.discardMatch = function() {
+    this.discardMatch = function () {
         var section = this.section;
         if (this.section === "conditions") {
             section = "problems";
@@ -80,7 +73,6 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
             section = "social_history";
         }
 
-
         $http({
             method: 'POST',
             url: '/api/v1/matches/' + section + '/' + this.matchId,
@@ -88,19 +80,17 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
                 determination: 'ignored'
             }
         }).
-        success(function(data, status, headers, config) {
+        success(function (data, status, headers, config) {
             //TODO something
             //$location.path("match/reconciliation");
         }).
-        error(function(data, status, headers, config) {
+        error(function (data, status, headers, config) {
             console.log('error');
         });
     };
 
-
-    this.saveMatch = function(updated_entry) {
-        var current_match_index=0; //it is always 0, since we are using only first MHR target from match object
-
+    this.saveMatch = function (updated_entry) {
+        var current_match_index = 0; //it is always 0, since we are using only first MHR target from match object
 
         var section = this.section;
         if (this.section === "conditions") {
@@ -117,11 +107,11 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
                 updated_entry: updated_entry
             }
         }).
-        success(function(data, status, headers, config) {
+        success(function (data, status, headers, config) {
             //TODO something
             //$location.path("match/reconciliation");
         }).
-        error(function(data, status, headers, config) {
+        error(function (data, status, headers, config) {
             console.log('error');
         });
     };
@@ -145,6 +135,5 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         });
     };
     */
-
 
 });

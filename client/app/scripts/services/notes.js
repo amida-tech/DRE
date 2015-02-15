@@ -12,7 +12,7 @@ angular.module('phrPrototypeApp')
 
         var tmpNotes = [];
 
-        this.starNote = function(note_id, star, callback) {
+        this.starNote = function (note_id, star, callback) {
             var comment = {
                 "id": note_id,
                 "star": star
@@ -21,48 +21,47 @@ angular.module('phrPrototypeApp')
             console.log("POSTing star ", comment);
 
             $http.post('/api/v1/notes/star', comment)
-                .success(function(data) {
+                .success(function (data) {
                     console.log("note added successfuly");
                     callback(null, data);
                 })
-                .error(function(err) {
+                .error(function (err) {
                     console.log("adding note failed");
                     callback(err);
                 });
         };
 
-
-        this.addNote = function(comment, callback) {
+        this.addNote = function (comment, callback) {
             console.log("POSTing comment ", comment);
             $http.post('/api/v1/notes/add', comment)
-                .success(function(data) {
+                .success(function (data) {
                     console.log("note added successfuly");
                     callback(null, data);
                 })
-                .error(function(err) {
+                .error(function (err) {
                     console.log("adding note failed");
                     callback(err);
                 });
         };
 
-        this.getNotes = function(callback) {
+        this.getNotes = function (callback) {
             console.log('get notes data from API');
 
             $http.get('/api/v1/notes/all')
-                .success(function(data) {
+                .success(function (data) {
                     callback(null, data);
-                }).error(function(err) {
+                }).error(function (err) {
                     callback(err);
                 });
         };
 
-        var noteCount = function(callback) {
+        var noteCount = function (callback) {
 
-            this.getNotes(function(err, results) {
+            this.getNotes(function (err, results) {
 
                 var noteCount = 0;
 
-                _.each(results, function(entry) {
+                _.each(results, function (entry) {
                     //console.log(entry);
                     if (entry.star) {
                         noteCount++;

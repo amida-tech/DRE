@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, $location, format, matches, merges, history, dataservice) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, format, matches, merges, history, dataservice) {
     console.log("RECORD CONTROLLER LOAD ");
     angular.element("#nav" + $scope.entryType).removeClass("active");
     if (!dataservice.curr_section) {
@@ -11,14 +11,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     }
     angular.element("#nav" + $scope.entryType).addClass("active");
 
-
     console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
-
 
     //TODO may need callback
     function refresh() {
         dataservice.curr_section = $scope.entryType;
-        dataservice.getData(function() {
+        dataservice.getData(function () {
             console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
             //console.log("MORE: ", dataservice.all_merges, dataservice.merges_record, dataservice.merges_billing);
 
@@ -35,11 +33,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
 
     refresh();
 
-
-
     //Flip All as active selected item in DOM
     function getHistory() {
-        history.getHistory(function(err, history) {
+        history.getHistory(function (err, history) {
             if (err) {
                 console.log('ERRROR', err);
             } else {
@@ -50,39 +46,37 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     }
     getHistory();
 
-
-
     // produces singular name for section name - in records merges list
-    $scope.singularName = function(section) {
+    $scope.singularName = function (section) {
         switch (section) {
-            case 'social_history':
-                return 'social history';
-            case 'vitals':
-                return 'vital sign';
-            case 'allergies':
-                return 'allergy';
-            case 'medications':
-                return 'medication';
-            case 'problems':
-                return 'problem';
-            case 'claims':
-                return 'claim';
-            case 'results':
-                return 'test result';
-            case 'encounters':
-                return 'encounter';
-            case 'immunizations':
-                return 'immunization';
-            case 'procedures':
-                return 'procedure';
-            case 'claims':
-                return 'claim';
-            case 'insurance':
-                return 'insurance';
-            case 'payers':
-                return 'payer';
-            default:
-                return section;
+        case 'social_history':
+            return 'social history';
+        case 'vitals':
+            return 'vital sign';
+        case 'allergies':
+            return 'allergy';
+        case 'medications':
+            return 'medication';
+        case 'problems':
+            return 'problem';
+        case 'claims':
+            return 'claim';
+        case 'results':
+            return 'test result';
+        case 'encounters':
+            return 'encounter';
+        case 'immunizations':
+            return 'immunization';
+        case 'procedures':
+            return 'procedure';
+        case 'claims':
+            return 'claim';
+        case 'insurance':
+            return 'insurance';
+        case 'payers':
+            return 'payer';
+        default:
+            return section;
         }
     };
 
@@ -98,7 +92,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             "chartName": "d3template"
         }];
         $scope.tabs.activeTab = 0;
-        $scope.$watch('tabs.activeTab', function(newVal, oldVal) {
+        $scope.$watch('tabs.activeTab', function (newVal, oldVal) {
             if (newVal !== oldVal) {
                 $scope.$broadcast('tabchange', {
                     "val": newVal
@@ -106,14 +100,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             }
         });
 
-
-
-
-
         $scope.recordEntries = dataservice.processed_record;
 
-
-        $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
+        $scope.recordEntries = _.sortBy($scope.recordEntries, function (entry) {
             if (entry.metadata.datetime[0]) {
                 return entry.metadata.datetime[0].date.substring(0, 9);
             } else {
@@ -134,10 +123,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             console.log("FILTERED ", $scope.entryListFiltered);
         }
 
-
-
         //$scope.pageLoaded = false;
-
 
         if (_.isEmpty(dataservice.curr_section)) {
             $scope.entryType = "all";
@@ -145,19 +131,15 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             $scope.entryType = dataservice.curr_section;
         }
 
-
         //Flip All as active selected item in DOM
         angular.element("#nav" + $scope.entryType).addClass("active");
 
-
-
-        $scope.$watch('entryType', function(newVal, oldVal) {
+        $scope.$watch('entryType', function (newVal, oldVal) {
             //keeping current section name in scope
             //alert('entryType new:'+newVal+" old:"+oldVal);
             $scope.entryType = newVal;
             dataservice.curr_section = $scope.entryType;
             console.log("$scope.entryType = ", $scope.entryType);
-
 
             if (newVal !== oldVal) {
                 if (newVal === "all") {
@@ -167,17 +149,13 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                     $scope.entryType = dataservice.curr_section;
                 } else {
 
-
                     console.log("UNFILTERED ", $scope.recordEntries);
-
 
                     $scope.entryListFiltered = _.where($scope.recordEntries, {
                         category: newVal
                     });
                     console.log("category ", newVal);
                     console.log("FILTERED ", $scope.entryListFiltered);
-
-
 
                     dataservice.curr_section = newVal;
                     $scope.entryType = dataservice.curr_section;
@@ -190,16 +168,15 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 }
             }
 
-
             //TODO get matches data again, here
 
             dataservice.curr_section = $scope.entryType;
-            dataservice.getMatchesData(function() {
+            dataservice.getMatchesData(function () {
 
                 $scope.masterMatches = dataservice.curr_processed_matches;
                 $scope.recordEntries = dataservice.processed_record;
 
-                $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
+                $scope.recordEntries = _.sortBy($scope.recordEntries, function (entry) {
                     if (entry.metadata.datetime[0]) {
                         return entry.metadata.datetime[0].date.substring(0, 9);
                     } else {
@@ -207,11 +184,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                     }
                 }).reverse();
 
-
             });
 
             $scope.pageLoaded = !$scope.pageLoaded;
-
 
         });
 
@@ -229,14 +204,13 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
 
     //console.log(">>>>>>", record.masterRecord, record.recordDirty);
 
-
-    $scope.goToMatches = function(section) {
+    $scope.goToMatches = function (section) {
         //console.log(section);
         //matches.setSection(section);
         $location.path('/matches');
     };
     //launch specific match (by ID and section name)
-    $scope.launchMatch = function(el) {
+    $scope.launchMatch = function (el) {
         console.log("Launch MATCH>> ", el);
         //console.log(section);
         //setting section name for matches page

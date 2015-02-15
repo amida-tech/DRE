@@ -11,9 +11,8 @@
 angular.module('phrPrototypeApp')
     .service('login', function login($location, $http) {
 
-
         //TODO:  Hygiene here for max length of inputs.
-        this.login = function(username, password, callback) {
+        this.login = function (username, password, callback) {
             console.log("login service:", username, password);
             if (username && password) {
 
@@ -21,11 +20,11 @@ angular.module('phrPrototypeApp')
                         username: username,
                         password: password
                     })
-                    .success(function(data) {
+                    .success(function (data) {
                         console.log("login successful");
                         callback(null);
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log("login failed");
                         //callback(data);
                         callback('Invalid Login and/or Password.');
