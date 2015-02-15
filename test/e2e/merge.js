@@ -12,11 +12,10 @@ var database = require('mongodb').Db;
 var common2 = require('./common.js');
 var common = require(path.join(__dirname, '../common/common.js'));
 
+describe('Pre Test Cleanup', function () {
 
-describe('Pre Test Cleanup', function() {
-
-    it('Clean Database', function(done) {
-        common.removeAll(function(err, results) {
+    it('Clean Database', function (done) {
+        common.removeAll(function (err, results) {
             if (err) {
                 done(err);
             } else {
@@ -25,16 +24,16 @@ describe('Pre Test Cleanup', function() {
         });
     });
 
-    it('Login', function(done) {
-        common2.register(api, 'test', 'test', function() {
-            common2.login(api, 'test', 'test', function() {
+    it('Login', function (done) {
+        common2.register(api, 'test', 'test', function () {
+            common2.login(api, 'test', 'test', function () {
                 done();
             });
         });
     });
 });
 
-describe('Base Merge API:', function() {
+describe('Base Merge API:', function () {
 
     var supportedCount = {
         'allergies': 0,
@@ -51,12 +50,12 @@ describe('Base Merge API:', function() {
         'plan_of_care': 0
     };
 
-    it('File Endpoint PUT', function(done) {
+    it('File Endpoint PUT', function (done) {
         var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
         api.put('/api/v1/storage')
             .attach('file', filepath)
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
@@ -66,10 +65,10 @@ describe('Base Merge API:', function() {
             });
     });
 
-    it('Get Merges', function(done) {
+    it('Get Merges', function (done) {
         api.get('/api/v1/merges')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
@@ -78,13 +77,12 @@ describe('Base Merge API:', function() {
                     expect(res.body.merges.length).to.equal(26); //was 31 with disabled sections
 
                     for (var i in res.body.merges) {
-                        supportedCount[res.body.merges[i].entry_type]++;
+                        supportedCount[res.body.merges[i].entry_type] ++;
 
                         expect(res.body.merges[i].entry).to.exist;
                         expect(res.body.merges[i].entry._id).to.exist;
                         expect(res.body.merges[i].record).to.exist;
                         expect(res.body.merges[i].record._id).to.exist;
-
 
                         if (res.body.merges[i].merge_reason === 'duplicate') {
                             console.log(res.body.merges[i]);

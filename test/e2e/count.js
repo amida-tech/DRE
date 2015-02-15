@@ -9,11 +9,10 @@ var database = require('mongodb').Db;
 var common2 = require('./common.js');
 var common = require(path.join(__dirname, '../common/common.js'));
 
+describe('Pre Test Cleanup', function () {
 
-describe('Pre Test Cleanup', function() {
-
-    it('Clean Database', function(done) {
-        common.removeAll(function(err, results) {
+    it('Clean Database', function (done) {
+        common.removeAll(function (err, results) {
             if (err) {
                 done(err);
             } else {
@@ -22,24 +21,23 @@ describe('Pre Test Cleanup', function() {
         });
     });
 
-    it('Login', function(done) {
-        common2.register(api, 'test', 'test', function() {
-            common2.login(api, 'test', 'test', function() {
+    it('Login', function (done) {
+        common2.register(api, 'test', 'test', function () {
+            common2.login(api, 'test', 'test', function () {
                 done();
             });
         });
     });
 });
 
+describe('Count API - Test New:', function () {
 
-describe('Count API - Test New:', function() {
-
-    it('File Endpoint PUT', function(done) {
+    it('File Endpoint PUT', function (done) {
         var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
         api.put('/api/v1/storage')
             .attach('file', filepath)
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
@@ -49,14 +47,13 @@ describe('Count API - Test New:', function() {
             });
     });
 
-    it('Get Count Records', function(done) {
+    it('Get Count Records', function (done) {
         api.get('/api/v1/notification')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
-                }     
-
+                }
 
                 expect(res.body.notifications.unreviewed_merges).to.equal(1);
                 expect(res.body.notifications.new_merges).to.equal(26);
@@ -68,13 +65,12 @@ describe('Count API - Test New:', function() {
             });
     });
 
-
 });
 
-describe('Count API - Test Duplicate:', function() {
+describe('Count API - Test Duplicate:', function () {
 
-    before(function(done) {
-        common.loadTestRecord(api, 'bluebutton-02-duplicate.xml', function(err) {
+    before(function (done) {
+        common.loadTestRecord(api, 'bluebutton-02-duplicate.xml', function (err) {
             if (err) {
                 done(err);
             } else {
@@ -83,10 +79,10 @@ describe('Count API - Test Duplicate:', function() {
         });
     });
 
-    it('Get Count Records', function(done) {
+    it('Get Count Records', function (done) {
         api.get('/api/v1/notification')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -99,13 +95,12 @@ describe('Count API - Test Duplicate:', function() {
             });
     });
 
-
 });
 
-describe('Count API - Test New/Dupe Mix:', function() {
+describe('Count API - Test New/Dupe Mix:', function () {
 
-    before(function(done) {
-        common.loadTestRecord(api, 'bluebutton-03-updated.xml', function(err) {
+    before(function (done) {
+        common.loadTestRecord(api, 'bluebutton-03-updated.xml', function (err) {
             if (err) {
                 done(err);
             } else {
@@ -114,10 +109,10 @@ describe('Count API - Test New/Dupe Mix:', function() {
         });
     });
 
-    it('Get Count Records', function(done) {
+    it('Get Count Records', function (done) {
         api.get('/api/v1/notification')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -132,10 +127,10 @@ describe('Count API - Test New/Dupe Mix:', function() {
 });
 
 //Modified severity on 2nd and 3rd allergy.  Changed Nausea to Hives on first allergy.
-describe('Count API - Test Partial Matches:', function() {
+describe('Count API - Test Partial Matches:', function () {
 
-    before(function(done) {
-        common.loadTestRecord(api, 'bluebutton-04-diff-source-partial-matches.xml', function(err) {
+    before(function (done) {
+        common.loadTestRecord(api, 'bluebutton-04-diff-source-partial-matches.xml', function (err) {
             if (err) {
                 done(err);
             } else {
@@ -144,10 +139,10 @@ describe('Count API - Test Partial Matches:', function() {
         });
     });
 
-    it('Get Count Records', function(done) {
+    it('Get Count Records', function (done) {
         api.get('/api/v1/notification')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -161,16 +156,16 @@ describe('Count API - Test Partial Matches:', function() {
 
 });
 
-describe('Count API - Test Added Matches via Allergies', function() {
+describe('Count API - Test Added Matches via Allergies', function () {
 
     var update_id = '';
     var match_id = '';
 
-    it('Update Allergy Match Records', function(done) {
+    it('Update Allergy Match Records', function (done) {
 
         api.get('/api/v1/matches/allergies')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     done(err);
                 } else {
@@ -181,7 +176,7 @@ describe('Count API - Test Added Matches via Allergies', function() {
                             determination: "added"
                         })
                         .expect(200)
-                        .end(function(err, res) {
+                        .end(function (err, res) {
                             if (err) {
                                 done(err);
                             } else {
@@ -193,10 +188,10 @@ describe('Count API - Test Added Matches via Allergies', function() {
             });
     });
 
-    it('Get Count Records', function(done) {
+    it('Get Count Records', function (done) {
         api.get('/api/v1/notification')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 }
@@ -209,4 +204,3 @@ describe('Count API - Test Added Matches via Allergies', function() {
     });
 
 });
-

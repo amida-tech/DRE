@@ -15,31 +15,30 @@ var common = require(path.join(__dirname, '../common/common.js'));
 
 var record = require('blue-button-record');
 
-describe('Pre Test Cleanup', function() {
+describe('Pre Test Cleanup', function () {
 
-    before(function(done) {
+    before(function (done) {
         var options = {
             dbName: 'dre',
             supported_sections: ['allergies', 'procedures']
         };
 
-        dbinfo = record.connectDatabase('localhost', options, function(err) {
+        dbinfo = record.connectDatabase('localhost', options, function (err) {
             //assert.ifError(err);
             if (err) {
                 console.log(">>>> ", err)
             };
 
-            record.clearDatabase(function(err) {
+            record.clearDatabase(function (err) {
                 done(err);
             });
-
 
         });
 
     });
 
-    it('Clean Database', function(done) {
-        common.removeAll(function(err, results) {
+    it('Clean Database', function (done) {
+        common.removeAll(function (err, results) {
             if (err) {
                 console.log('Error in remove all');
                 done(err);
@@ -49,12 +48,11 @@ describe('Pre Test Cleanup', function() {
         });
     });
 
-
-    it('add account history - loggedIn', function(done) {
+    it('add account history - loggedIn', function (done) {
         //record.
-        record.saveEvent("loggedIn", "test", "note", "file", function() {
+        record.saveEvent("loggedIn", "test", "note", "file", function () {
 
-            record.getRecentLogin("test",function(err, data) {
+            record.getRecentLogin("test", function (err, data) {
                 //console.log("recent login: ", data);
 
                 expect(data.time).to.exist;
@@ -69,11 +67,11 @@ describe('Pre Test Cleanup', function() {
 
     });
 
-    it('add account history - fileUploaded', function(done) {
+    it('add account history - fileUploaded', function (done) {
         //record.
-        record.saveEvent("fileUploaded", "test", "note", "file", function() {
+        record.saveEvent("fileUploaded", "test", "note", "file", function () {
 
-            record.getRecentUpdate("test",function(err, data) {
+            record.getRecentUpdate("test", function (err, data) {
                 //console.log("recent login: ", data);
 
                 expect(data.time).to.exist;
@@ -88,19 +86,19 @@ describe('Pre Test Cleanup', function() {
 
     });
 
-    it('Login', function(done) {
-        common2.register(api, 'test', 'test', function() {
-            common2.login(api, 'test', 'test', function() {
+    it('Login', function (done) {
+        common2.register(api, 'test', 'test', function () {
+            common2.login(api, 'test', 'test', function () {
                 done();
             });
         });
     });
 });
 
-describe('Account History - basic', function() {
+describe('Account History - basic', function () {
 
-    it('Clean Database', function(done) {
-        common.removeAll(function(err, results) {
+    it('Clean Database', function (done) {
+        common.removeAll(function (err, results) {
             if (err) {
                 console.log('Error in remove all');
                 done(err);
@@ -110,19 +108,18 @@ describe('Account History - basic', function() {
         });
     });
 
-    it('Login', function(done) {
-        common2.register(api, 'test', 'test', function() {
-            common2.login(api, 'test', 'test', function() {
+    it('Login', function (done) {
+        common2.register(api, 'test', 'test', function () {
+            common2.login(api, 'test', 'test', function () {
                 done();
             });
         });
     });
 
-
-    it('Shows Full Event History', function(done) {
+    it('Shows Full Event History', function (done) {
         api.get('/api/v1/account_history/all')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     console.log(err);
                     done();
@@ -138,12 +135,12 @@ describe('Account History - basic', function() {
     });
 });
 
-describe('Account History - recent for UI', function() {
+describe('Account History - recent for UI', function () {
 
-    it('Returns last login', function(done) {
+    it('Returns last login', function (done) {
         api.get('/api/v1/account_history/mostRecent')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     console.log(err);
                     done();
@@ -158,10 +155,10 @@ describe('Account History - recent for UI', function() {
             });
     });
 
-    it('Returns last MHR update via file upload', function(done) {
+    it('Returns last MHR update via file upload', function (done) {
         api.get('/api/v1/account_history/mostRecent')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     console.log(err);
                     done();
@@ -177,15 +174,15 @@ describe('Account History - recent for UI', function() {
     });
 });
 
-describe('clear entire database', function() {
-    it('clearDatabase', function(done) {
-        record.clearDatabase(function(err) {
+describe('clear entire database', function () {
+    it('clearDatabase', function (done) {
+        record.clearDatabase(function (err) {
             done(err);
         });
     });
 
-    after(function(done) {
-        record.disconnect(function(err) {
+    after(function (done) {
+        record.disconnect(function (err) {
             done(err);
         });
     });

@@ -10,16 +10,16 @@ var common = require('./common.js');
 
 function removeCollection(inputCollection, callback) {
     var db;
-    database.connect(databaseLocation, function(err, dbase) {
+    database.connect(databaseLocation, function (err, dbase) {
         if (err) {
             throw err;
         }
         db = dbase;
-        db.collection(inputCollection, function(err, coll) {
+        db.collection(inputCollection, function (err, coll) {
             if (err) {
                 throw err;
             }
-            coll.remove({}, function(err, results) {
+            coll.remove({}, function (err, results) {
                 if (err) {
                     throw err;
                 }
@@ -30,14 +30,14 @@ function removeCollection(inputCollection, callback) {
     });
 }
 
-describe('Pre Test Cleanup 1', function() {
+describe('Pre Test Cleanup 1', function () {
 
-    it('Remove File Collections', function(done) {
-        removeCollection('storage.files', function(err) {
+    it('Remove File Collections', function (done) {
+        removeCollection('storage.files', function (err) {
             if (err) {
                 done(err);
             }
-            removeCollection('storage.chunks', function(err) {
+            removeCollection('storage.chunks', function (err) {
                 if (err) {
                     done(err);
                 }
@@ -47,7 +47,7 @@ describe('Pre Test Cleanup 1', function() {
     });
 });
 
-describe('Pre Test Cleanup 2', function() {
+describe('Pre Test Cleanup 2', function () {
 
     var supportedComponents = {
         allergies: 'allergies',
@@ -62,7 +62,7 @@ describe('Pre Test Cleanup 2', function() {
         problems: 'problems'
     };
 
-    it('Remove All Collections', function(done) {
+    it('Remove All Collections', function (done) {
 
         var secIteration = 0;
         var secTotal = 0;
@@ -79,16 +79,16 @@ describe('Pre Test Cleanup 2', function() {
         }
 
         function removeSections(componentSingular, componentPlural, callback) {
-            removeCollection(componentPlural, function(err) {
+            removeCollection(componentPlural, function (err) {
                 if (err) {
                     done(err);
                 }
-                removeCollection(componentSingular + 'merges', function(err) {
+                removeCollection(componentSingular + 'merges', function (err) {
                     if (err) {
                         console.log(err);
                         done(err);
                     }
-                    removeCollection(componentSingular + 'matches', function(err) {
+                    removeCollection(componentSingular + 'matches', function (err) {
                         if (err) {
                             done(err);
                         }
@@ -98,7 +98,7 @@ describe('Pre Test Cleanup 2', function() {
             });
         }
 
-        var e = function(err) {
+        var e = function (err) {
             checkLoopComplete();
         };
         for (iComponent in supportedComponents) {
@@ -109,24 +109,23 @@ describe('Pre Test Cleanup 2', function() {
 
 });
 
-
-describe('Storage API', function() {
+describe('Storage API', function () {
     var sampleFile = '';
 
-    before(function(done) {
-        common.register(api, 'test', 'test', function() {
-            common.login(api, 'test', 'test', function() {
+    before(function (done) {
+        common.register(api, 'test', 'test', function () {
+            common.login(api, 'test', 'test', function () {
                 done();
             });
         });
     });
 
-    it('File Endpoint PUT', function(done) {
+    it('File Endpoint PUT', function (done) {
         var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
         api.put('/api/v1/storage')
             .attach('file', filepath)
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
@@ -138,12 +137,12 @@ describe('Storage API', function() {
 
 });
 
-describe('Storage API Get List', function() {
+describe('Storage API Get List', function () {
 
-    it('File Endpoint GET', function(done) {
+    it('File Endpoint GET', function (done) {
         api.get('/api/v1/storage')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
@@ -157,16 +156,16 @@ describe('Storage API Get List', function() {
             });
     });
 
-    it('Download File GET', function(done) {
+    it('Download File GET', function (done) {
         api.get('/api/v1/storage')
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
                     api.get('/api/v1/storage/record/' + res.body.storage[0].file_id)
                         .expect(200)
-                        .end(function(err, res) {
+                        .end(function (err, res) {
                             if (err) {
                                 return done(err);
                             } else {

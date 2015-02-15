@@ -65,5 +65,8 @@
   },
   "scripts": {
     "start": "node server.js"
+  },
+  "devDependencies": {
+    "grunt-jsbeautifier": "^0.2.8"
   }
 }
