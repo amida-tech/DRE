@@ -21,8 +21,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             });
         }
     });
-        $scope.tabs.activeTab = 0;
-
+    $scope.tabs.activeTab = 0;
 
     angular.element("#nav" + $scope.entryType).removeClass("active");
     if (!dataservice.curr_section) {
@@ -71,39 +70,38 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     // produces singular name for section name - in records merges list
     $scope.singularName = function (section) {
         switch (section) {
-            case 'social_history':
-                return 'social history';
-            case 'vitals':
-                return 'vital sign';
-            case 'allergies':
-                return 'allergy';
-            case 'medications':
-                return 'medication';
-            case 'problems':
-                return 'problem';
-            case 'claims':
-                return 'claim';
-            case 'results':
-                return 'test result';
-            case 'encounters':
-                return 'encounter';
-            case 'immunizations':
-                return 'immunization';
-            case 'procedures':
-                return 'procedure';
-            case 'claims':
-                return 'claim';
-            case 'insurance':
-                return 'insurance';
-            case 'payers':
-                return 'payer';
-            default:
-                return section;
+        case 'social_history':
+            return 'social history';
+        case 'vitals':
+            return 'vital sign';
+        case 'allergies':
+            return 'allergy';
+        case 'medications':
+            return 'medication';
+        case 'problems':
+            return 'problem';
+        case 'claims':
+            return 'claim';
+        case 'results':
+            return 'test result';
+        case 'encounters':
+            return 'encounter';
+        case 'immunizations':
+            return 'immunization';
+        case 'procedures':
+            return 'procedure';
+        case 'claims':
+            return 'claim';
+        case 'insurance':
+            return 'insurance';
+        case 'payers':
+            return 'payer';
+        default:
+            return section;
         }
     };
 
     function pageRender(data, data_notes) {
-
 
         //calculate current height/weight/bmi/blood pressure
         //based on processed record from $scope.recordEntries
@@ -232,8 +230,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $scope.dashMetrics.bmi = calculateBMI($scope.dashMetrics.weight.value, $scope.dashMetrics.height.value);
         }
 
-
-
         //$scope.entryList = [];
 
         /*
@@ -317,7 +313,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         //formatDates();
         //sortList();
         $scope.tabs.activeTab = 0;
-
 
         $scope.recordEntries = _.sortBy($scope.recordEntries, function (entry) {
             if (entry.metadata.datetime[0]) {
