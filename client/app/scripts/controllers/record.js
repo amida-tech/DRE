@@ -2,6 +2,28 @@
 
 angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, format, matches, merges, history, dataservice) {
     console.log("RECORD CONTROLLER LOAD ");
+
+    $scope.dashMetrics = {};
+    $scope.tabs = [{
+        "title": "Weight",
+        "data": {},
+        "chartName": "d3template"
+    }, {
+        "title": "Blood Pressure",
+        "data": {},
+        "chartName": "d3template"
+    }];
+    $scope.$watch('tabs.activeTab', function (newVal, oldVal) {
+        console.log('TAB CHANGE');
+        if (newVal !== oldVal) {
+            $scope.$broadcast('tabchange', {
+                "val": newVal
+            });
+        }
+    });
+        $scope.tabs.activeTab = 0;
+
+
     angular.element("#nav" + $scope.entryType).removeClass("active");
     if (!dataservice.curr_section) {
         $scope.entryType = "all";
@@ -81,24 +103,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     };
 
     function pageRender(data, data_notes) {
-        $scope.dashMetrics = {};
-        $scope.tabs = [{
-            "title": "Weight",
-            "data": {},
-            "chartName": "d3template"
-        }, {
-            "title": "Blood Pressure",
-            "data": {},
-            "chartName": "d3template"
-        }];
-        $scope.tabs.activeTab = 0;
-        $scope.$watch('tabs.activeTab', function (newVal, oldVal) {
-            if (newVal !== oldVal) {
-                $scope.$broadcast('tabchange', {
-                    "val": newVal
-                });
-            }
-        });
 
 
         //calculate current height/weight/bmi/blood pressure
@@ -312,6 +316,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         dashPrep();
         //formatDates();
         //sortList();
+        $scope.tabs.activeTab = 0;
+
 
         $scope.recordEntries = _.sortBy($scope.recordEntries, function (entry) {
             if (entry.metadata.datetime[0]) {
