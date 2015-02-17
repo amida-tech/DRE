@@ -53,8 +53,8 @@
                 </div>
             </div>
         </div>
-        <!--d3.
-        <div class="col-sm-12" ng-show="entryType === 'vitals'">
+        <!--d3. -->
+        <div class="col-sm-12" ng-show="entryType==='all'">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-sm-5">
@@ -63,20 +63,36 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <td><h4 class="text-muted">Height</h4></td>
-                                        <td><h5>{{dashMetrics.height.disp}}</h5></td>
+                                        <td>
+                                            <h4 class="text-muted">Height</h4>
+                                        </td>
+                                        <td>
+                                            <h5>{{dashMetrics.height.disp}}</h5>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><h4 class="text-muted">Weight</h4></td>
-                                        <td><h5>{{dashMetrics.weight.disp}}</h5></td>
+                                        <td>
+                                            <h4 class="text-muted">Weight</h4>
+                                        </td>
+                                        <td>
+                                            <h5>{{dashMetrics.weight.disp}}</h5>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><h4 class="text-muted">BMI</h4></td>
-                                        <td><h5>{{dashMetrics.bmi}}</h5></td>
+                                        <td>
+                                            <h4 class="text-muted">BMI</h4>
+                                        </td>
+                                        <td>
+                                            <h5>{{dashMetrics.bmi}}</h5>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><h4 class="text-muted">Blood Pressure</h4></td>
-                                        <td><h5>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h5></td>
+                                        <td>
+                                            <h4 class="text-muted">Blood Pressure</h4>
+                                        </td>
+                                        <td>
+                                            <h5>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h5>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -85,109 +101,120 @@
                     <div class="col-sm-1">
                     </div>
                     <div class="col-sm-6">
+                        <!-- DISABLE CHARTS -->
+
+
                         <div bs-active-pane="tabs.activeTab" data-nav-class="nav-pills" bs-tabs>
                             <div title="{{ tabs[0].title }}" bs-pane>
-                                <div linechart graph-type="weight" data="entries.vitals"></div>
+
+
+                                <div linechart graph-type="weight" data="recordEntries"></div>
                                 <div class="col-sm-12 text-center">
                                     Weight (lbs)
                                 </div>
+
                             </div>
                             <div title="{{ tabs[1].title }}" bs-pane>
-                                <div linechart graph-type="bloodPressure" data="entries.vitals"></div>
+
+
+                                <div linechart graph-type="bloodPressure" data="recordEntries"></div>
                                 <div class="col-sm-12 text-center">
                                     Blood Pressure
                                 </div>
+
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
         <div class="col-sm-12">
-            end d3-->
+            <!--end d3-->
 
 
-        <div ng-show="entryType==='all'">
-            <div class="col-sm-12">
-                <!--end d3-->
-                <!--Timeline View-->
+            <div ng-show="entryType==='all'">
                 <div class="col-sm-12">
-                    <h4 class="text-center text-white">Record History</h4>
-                    <div class="panel" ng-hide="recordEntries">
-                        <div class="panel-body">
-                            <h5 class="col-sm-12 text-center">No Record Entries</h5>
-                        </div>
-                    </div>
-                    <div class="panel" ng-if="recordEntries">
-                        <div class="panel-body">
-                            <div>
-                                <p>Timeline</p>
+                    <!--end d3-->
+                    <!--Timeline View-->
+                    <div class="col-sm-12">
+                        <h4 class="text-center text-white">Record History</h4>
+                        <div class="panel" ng-hide="recordEntries">
+                            <div class="panel-body">
+                                <h5 class="col-sm-12 text-center">No Record Entries</h5>
                             </div>
-                            <div ng-if="mergesList_record" timeline chart-data="mergesList_record" chart-type="merges" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+                        </div>
+                        <div class="panel" ng-if="recordEntries">
+                            <div class="panel-body">
+                                <div>
+                                    <p>Timeline</p>
+                                </div>
+                                <div ng-if="mergesList_record" timeline chart-data="mergesList_record" chart-type="merges" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
 
 
-                            <div ng-repeat="(recordIndex, recordEntry) in mergesList_record | orderBy:'-merged':reverse" class="col-sm-12 row" id="record{{recordIndex}}">
-                                <div class="col-sm-12 row timeline-side" ng-if="recordEntry.entry_type !== 'demographics' ">
-                                    <!--Timeline Icon-->
-                                    <div class="col-sm-2">
-                                        <a class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{recordEntry.entry_type}}" timeline-index="{{recordIndex}}"></a>
-                                    </div>
-                                    <div class="col-sm-10">
-                                        <div class="panel timeline-entry">
-                                            <div class="panel-body" id="accordian">
-                                                <div class="timeline-entry-header col-sm-12">
-                                                    <div class="col-sm-6">
-                                                        <h4 class="text-left">{{recordEntry.merge_reason}}  {{singularName(recordEntry.entry_type)}} </h4>
-                                                        <h5 class="text-left">{{recordEntry.merged | date : 'short'}}</h5>
+                                <div ng-repeat="(recordIndex, recordEntry) in mergesList_record | orderBy:'-merged':reverse" class="col-sm-12 row" id="record{{recordIndex}}">
+                                    <div class="col-sm-12 row timeline-side" ng-if="recordEntry.entry_type !== 'demographics' ">
+                                        <!--Timeline Icon-->
+                                        <div class="col-sm-2">
+                                            <a class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{recordEntry.entry_type}}" timeline-index="{{recordIndex}}"></a>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <div class="panel timeline-entry">
+                                                <div class="panel-body" id="accordian">
+                                                    <div class="timeline-entry-header col-sm-12">
+                                                        <div class="col-sm-6">
+                                                            <h4 class="text-left">{{recordEntry.merge_reason}}  {{singularName(recordEntry.entry_type)}} </h4>
+                                                            <h5 class="text-left">{{recordEntry.merged | date : 'short'}}</h5>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-2 center-block text-center timeline-footer">
-                                <svg width="30" height="30">
-                                    <circle cx="15" cy="15" r="15"></circle>
-                                </svg>
+                                <div class="col-sm-2 center-block text-center timeline-footer">
+                                    <svg width="30" height="30">
+                                        <circle cx="15" cy="15" r="15"></circle>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
+                        <!--end timeline-->
                     </div>
-                    <!--end timeline-->
                 </div>
+                <!--<pre>{{masterRecord | json}}</pre>-->
             </div>
-            <!--<pre>{{masterRecord | json}}</pre>-->
-        </div>
 
-        <!--Timeline View-->
-        <div ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
-            <h4 class="text-center text-white">{{entryType}}</h4>
-            <div class="panel" ng-hide="recordEntries">
-                <div class="panel-body">
-                    <h5 class="col-sm-12 text-center">No Record Entries</h5>
-                </div>
-            </div>
-            <div class="panel" ng-if="recordEntries">
-                <div class="panel-body">
-                    <div>
-                        <p>Timeline</p>
+            <!--Timeline View-->
+            <div ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
+                <h4 class="text-center text-white">{{entryType}}</h4>
+                <div class="panel" ng-hide="recordEntries">
+                    <div class="panel-body">
+                        <h5 class="col-sm-12 text-center">No Record Entries</h5>
                     </div>
-                    <div timeline ng-show="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
-                    <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
-                        <div class="col-sm-12 row timeline-side">
-                            <entry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></entry>
+                </div>
+                <div class="panel" ng-if="recordEntries">
+                    <div class="panel-body">
+                        <div>
+                            <p>Timeline</p>
+                        </div>
+                        <div timeline ng-show="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
+                        <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
+                            <div class="col-sm-12 row timeline-side">
+                                <entry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></entry>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 center-block text-center timeline-footer">
+                            <svg width="30" height="30">
+                                <circle cx="15" cy="15" r="15"></circle>
+                            </svg>
                         </div>
                     </div>
-                    <div class="col-sm-2 center-block text-center timeline-footer">
-                        <svg width="30" height="30">
-                            <circle cx="15" cy="15" r="15"></circle>
-                        </svg>
-                    </div>
                 </div>
+                <!--end timeline-->
             </div>
-            <!--end timeline-->
         </div>
+        <!--<pre>{{masterRecord | json}}</pre>-->
+
     </div>
-    <!--<pre>{{masterRecord | json}}</pre>-->
-
-</div>
