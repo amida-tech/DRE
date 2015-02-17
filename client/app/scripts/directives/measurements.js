@@ -204,7 +204,13 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                         scope.render(newVals);
                     }, true);
                     //called to render chart
-                    scope.render = function (vitals) {
+                    scope.render = function (vitals2) {
+                        var vitals= [];
+                        _.each(vitals2, function(vital){
+                            vitals.push({"data":vital});
+                        });
+                        console.log("VITALS ", vitals);
+
                         //clean svg
                         svg.selectAll('*').remove();
                         //check to see if there is any data before drawing the chart (enable when using data attribute)
@@ -228,6 +234,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                             var yAxisValues = [];
                             var format = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
                             _.each(vitals, function (entry) {
+                                console.log("ENTRY ", entry);
                                 var tmpVital = {};
                                 if (attrs.graphType === "weight") {
                                     if (entry.data.vital.name === "Patient Body Weight - Measured") {
@@ -259,6 +266,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                     }
                                     yAxisValues = [80, 100, 120, 140];
                                 }
+                                console.log("<<<<");
                             });
                             var padding = 30;
                             var pathClass = "path";

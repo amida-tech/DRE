@@ -53,9 +53,9 @@
                 </div>
             </div>
         </div>
-        <!--d3.
-        <div class="col-sm-12" ng-show="entryType === 'vitals'">
-            <div class="panel panel-default">
+        <!--d3. -->
+        <div class="col-sm-12">
+            <div class="panel panel-default" >
                 <div class="panel-body">
                     <div class="col-sm-5">
                         <div class="row">
@@ -84,27 +84,37 @@
                     </div>
                     <div class="col-sm-1">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" ng-if="false"> <!-- DISABLE CHARTS -->
+
+
                         <div bs-active-pane="tabs.activeTab" data-nav-class="nav-pills" bs-tabs>
                             <div title="{{ tabs[0].title }}" bs-pane>
+
+
                                 <div linechart graph-type="weight" data="entries.vitals"></div>
                                 <div class="col-sm-12 text-center">
                                     Weight (lbs)
                                 </div>
+
                             </div>
                             <div title="{{ tabs[1].title }}" bs-pane>
+
+
                                 <div linechart graph-type="bloodPressure" data="entries.vitals"></div>
                                 <div class="col-sm-12 text-center">
                                     Blood Pressure
                                 </div>
+
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
         <div class="col-sm-12">
-            end d3-->
+            <!--end d3-->
 
 
         <div ng-show="entryType==='all'">
