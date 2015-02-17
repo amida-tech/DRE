@@ -30,17 +30,20 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                     $window.onresize = function () {
                         scope.$apply();
                     };
+
                     scope.$watch(function () {
                         return angular.element($window)[0].innerWidth;
                     }, function () {
                         scope.render(scope.data);
                     });
+
                     //watch your attributes for changes to re-render
                     scope.$watch('data', function (newVals, oldVals) {
                         scope.render(newVals);
                     }, true);
                     //called to render chart
                     scope.render = function (data) {
+                        console.log("d3template DIRECTIVE RENDER");
                         //clean svg
                         svg.selectAll('*').remove();
                         //check to see if there is any data before drawing the chart (enable when using data attribute)
@@ -64,7 +67,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
             }
         };
     }
-]).directive('measurements', function ($window) {
+]) /*.directive('measurements', function ($window) {
     return {
         template: '<svg width="1000"></svg>',
         restrict: 'EA',
@@ -89,9 +92,14 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                 width = attrs.svgHeight;
             }
             //ISO 8601 Format.
+            console.log("measurement.js vitals PRE");
             var format = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
             svg.attr("height", height);
             svg.attr("width", width);
+
+
+            console.log("measurement.js vitals", vitals);
+
             //Restructure for graph.
             _.each(vitals, function (entry) {
                 var tmpVital = {};
@@ -163,10 +171,13 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                     });
                 }
             }
+            console.log("measurements DIRECTIVE");
+
             drawLineChart();
         }
     };
-}).directive('linechart', ['$window', '$timeout', 'd3Service',
+}) */
+.directive('linechart', ['$window', '$timeout', 'd3Service',
     function ($window, $timeout, d3Service) {
         return {
             restrict: 'A',
@@ -189,27 +200,48 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                     var svg = d3.select(ele[0]).append('svg').attr('class', 'chart').attr('width', w + margin.left + margin.right).attr('height', h + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
                     //watch window resize to re-render
                     $window.onresize = function () {
+                        console.log("RESIZE");
+
                         scope.$apply();
                     };
                     scope.$watch(function () {
                         return angular.element($window)[0].innerWidth;
                     }, function () {
+                        console.log("WIDTH CHANGES");
+
                         scope.render(scope.data);
                     });
+
+
                     scope.$on('tabchange', function (event, args) {
+                        console.log("TAB CHANGES");
                         scope.render(scope.data);
                     });
+
+
                     //watch your attributes for changes to re-render
                     scope.$watch('data', function (newVals, oldVals) {
+                        console.log("DATA CHANGES");
                         scope.render(newVals);
                     }, true);
+
+
                     //called to render chart
-                    scope.render = function (vitals2) {
-                        var vitals= [];
-                        _.each(vitals2, function(vital){
-                            vitals.push({"data":vital});
+                    scope.render = function (entries) {
+                        var vitals=[];
+                        _.each(entries, function(entry){
+                            if (entry.category==="vitals"){
+                                console.log("entry >>>>> ", entry.metadata.datetime[0].date);
+                                vitals.push(entry);
+                            }
                         });
+                        console.log("linechart DIRECTIVE RENDER");
+
                         console.log("VITALS ", vitals);
+
+                        if (vitals.length===0){
+                            return;
+                        }
 
                         //clean svg
                         svg.selectAll('*').remove();
@@ -232,7 +264,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                             var graphDates = [];
                             var graphValues = [];
                             var yAxisValues = [];
-                            var format = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
+                            var format = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ");
                             _.each(vitals, function (entry) {
                                 console.log("ENTRY ", entry);
                                 var tmpVital = {};
@@ -273,6 +305,8 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                             var xScale, yScale, xAxisGen, yAxisGen, lineFun;
 
                             function setChartParameters() {
+                                console.log(">>GRAPH DATES ", graphDates);
+
                                 xScale = d3.time.scale().domain([d3.min(graphDates), d3.max(graphDates)]).nice(d3.time.week).range([margin.left, w - margin.right]);
                                 yScale = d3.scale.linear().domain([d3.min(graphValues) - (d3.min(graphValues) * 0.1), d3.max(graphValues) + (d3.max(graphValues) * 0.1)]).range([h - margin.top, margin.bottom]);
                                 xAxisGen = d3.svg.axis().scale(xScale).orient("bottom").tickFormat(d3.time.format("%m/%d")).outerTickSize([2]).tickValues(graphDates);

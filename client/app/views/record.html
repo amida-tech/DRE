@@ -84,14 +84,14 @@
                     </div>
                     <div class="col-sm-1">
                     </div>
-                    <div class="col-sm-6" ng-if="false"> <!-- DISABLE CHARTS -->
+                    <div class="col-sm-6" > <!-- DISABLE CHARTS -->
 
 
                         <div bs-active-pane="tabs.activeTab" data-nav-class="nav-pills" bs-tabs>
                             <div title="{{ tabs[0].title }}" bs-pane>
 
 
-                                <div linechart graph-type="weight" data="entries.vitals"></div>
+                                <div linechart graph-type="weight" data="recordEntries"></div>
                                 <div class="col-sm-12 text-center">
                                     Weight (lbs)
                                 </div>
@@ -100,7 +100,7 @@
                             <div title="{{ tabs[1].title }}" bs-pane>
 
 
-                                <div linechart graph-type="bloodPressure" data="entries.vitals"></div>
+                                <div linechart graph-type="bloodPressure" data="recordEntries"></div>
                                 <div class="col-sm-12 text-center">
                                     Blood Pressure
                                 </div>
