@@ -7,6 +7,8 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     var that = this;
 
     //master record (full copy of /api/get_record)
+    //STRUCTURE:
+    //   original record from backend API, looks like BB JSON
     this.master_record = {};
 
     //list of all notes (full copy of /api/notes)
@@ -37,6 +39,9 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     //  injected notes
     //  matches (for currently selected section)
     //  counted pending updates (matches)
+    //  STRUCTURE:
+    //      all entries are extracted and flat in one array
+    //      has {category, data, metadata} structure for entries
     this.processed_record = [];
 
     //fetch all the data form APIs

@@ -101,16 +101,24 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         });
 
 
+    //calculate current height/weight/bmi/blood pressure
+    //based on processed record from $scope.recordEntries
     function dashPrep() {
         var weightDateArray = [];
         var heightDateArray = [];
         var bpDateArraySystolic = [];
         var bpDateArrayDiastolic = [];
         //Build arrays of all dates per section.
-        _.each($scope.entries.vitals, function(vitalEntry2) {
-            console.log("vital entry ", vitalEntry2);
-
-            var vitalEntry= {"data":vitalEntry2};
+        _.each($scope.recordEntries, function(entry) {
+            var vitalEntry={};
+            //skip non vitals entries
+            if (entry.category!=="vitals") {
+                return;
+            }          
+            else {
+                vitalEntry=entry;
+            }
+            console.log("vital entry ", vitalEntry);
 
             if (vitalEntry.data.vital.name === "Height") {
                 _.each(vitalEntry.data.date_time, function(dateArr) {
@@ -143,7 +151,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             var vitalEntry= {"data":vitalEntry2};
 
             //Find most current height.
-            if (vitalEntry.data.vital.name === "Height") {
+            if (vitalEntry.data.vital.name.indexOf("Height")>-1) {
                 _.each(vitalEntry.data.date_time, function(dateArr) {
                     if (moment(moment(dateArr.date)).isSame(heightMaxDate, 'day')) {
                         $scope.dashMetrics.height = {
@@ -153,7 +161,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     }
                 });
             }
-            if (vitalEntry.data.vital.name === "Patient Body Weight - Measured") {
+            if (vitalEntry.data.vital.name.indexOf("Weight")>-1) {
                 _.each(vitalEntry.data.date_time, function(dateArr) {
                     if (moment(moment(dateArr.date)).isSame(weightMaxDate, 'day')) {
                         $scope.dashMetrics.weight = {
@@ -163,7 +171,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     }
                 });
             }
-            if (vitalEntry.data.vital.name === "Intravascular Systolic") {
+            if (vitalEntry.data.vital.name.indexOf("Systolic")>-1) {
                 _.each(vitalEntry.data.date_time, function(dateArr) {
                     if (moment(moment(dateArr.date)).isSame(bpMaxDateSystolic, 'day')) {
                         $scope.dashMetrics.systolic = {
@@ -173,7 +181,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     }
                 });
             }
-            if (vitalEntry.data.vital.name === "Intravascular Diastolic") {
+            if (vitalEntry.data.vital.name.indexOf("Diastolic")>-1) {
                 _.each(vitalEntry.data.date_time, function(dateArr) {
                     if (moment(moment(dateArr.date)).isSame(bpMaxDateDiastolic, 'day')) {
                         $scope.dashMetrics.diastolic = {
@@ -185,17 +193,28 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             }
         });
 
-        console.log("dash metrics >>>>", $scope.entries);
         console.log("dash metrics >>>>", $scope.dashMetrics);
 
-        //Format weight output.
-        if ($scope.dashMetrics.height.unit === "[in_i]") {
+        //convert height to inches if needed
+        if($scope.dashMetrics.height.unit==="cm") {
+            $scope.dashMetrics.height.unit="[in_us]";
+            $scope.dashMetrics.height.value=0.393701*$scope.dashMetrics.height.value;
+        }
+
+        //Format height output.
+        if ($scope.dashMetrics.height.unit === "[in_us]") {
             var displayHeight = Math.floor(($scope.dashMetrics.height.value / 12)) + "' " + $scope.dashMetrics.height.value % 12 + '"';
             $scope.dashMetrics.height.disp = displayHeight;
         }
-        //Format height output.
+
+        //convert weight to lbs
+        if($scope.dashMetrics.weight.unit==="kg") {
+            $scope.dashMetrics.weight.unit="[lb_av]";
+            $scope.dashMetrics.weight.value=2.20462*$scope.dashMetrics.weight.value;
+        }        
+        //Format weight output.
         if ($scope.dashMetrics.weight.unit === "[lb_av]") {
-            var displayWeight = $scope.dashMetrics.weight.value + " lbs";
+            var displayWeight = Math.floor($scope.dashMetrics.weight.value) + " lbs";
             $scope.dashMetrics.weight.disp = displayWeight;
         }
         //BMI Calculation
@@ -207,6 +226,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
         $scope.dashMetrics.bmi = calculateBMI($scope.dashMetrics.weight.value, $scope.dashMetrics.height.value);
     }
+
+
+
     $scope.entryList = [];
 
     function formatDates() {
@@ -277,6 +299,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     }
 
         $scope.recordEntries = dataservice.processed_record;
+        console.log("processed record ", dataservice.processed_record);
+        console.log("master record ", dataservice.master_record);
+
         $scope.entries = dataservice.master_record;
 
         console.log(">>> master record ", $scope.entries);
