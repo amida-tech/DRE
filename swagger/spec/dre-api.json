@@ -77,7 +77,7 @@
         },
         "/storage": {
             "get": {
-                "summary": "Get list of files in patient record",
+                "summary": "Get list of files in user's storage",
                 "description": "Files and metadata from My Files",
                 "operationId": "allFiles",
                 "tags": [
@@ -89,9 +89,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "schema": {
-                                    "type": "file"
-                                }
+                                "$ref": "#/definitions/fileSchema" 
                             }
                         }
                     }
@@ -104,6 +102,13 @@
                 "tags": [
                     "storage"
                 ],
+                "parameters": [{
+                    "name": "file",
+                    "description": "File to be uploaded",
+                    "in": "body",
+                    "type": "file",
+                    "required": true
+                }],
                 "responses": {
                     "200": {
                         "description": "file uploaded"
@@ -124,14 +129,20 @@
                 ],
                 "parameters": [{
                     "name": "identifier",
-                    "description": "Event to be added",
+                    "description": "File to be downloaded",
                     "in": "path",
                     "type": "string",
                     "required": true
                 }],
                 "responses": {
                     "200": {
-                        "description": "file"
+                        "description": "file",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Event error"
                     }
                 }
             }
@@ -400,7 +411,10 @@
                 }],
                 "responses": {
                     "200": {
-                        "description": "Master health record downloaded in format {format}"
+                        "description": "Master health record downloaded in format {format}",
+                        "schema": {
+                            "type": "file"
+                        }
                     },
                     "400": {
                         "description": "Event error while saving event"
@@ -750,6 +764,41 @@
                 "time": {
                     "type": "string",
                     "format": "date-time"
+                }
+            }
+        },
+        "fileSchema": {
+            "required": [
+                "file_id",
+                "file_name",
+                "file_size",
+                "file_mime_type",
+                "file_upload_date",
+                "file_class",
+                "patient_key"
+            ],
+            "properties": {
+                "file_id": {
+                    "type": "string"
+                },
+                "file_name": {
+                    "type": "string"
+                },
+                "file_size": {
+                    "type": "integer"
+                },
+                "file_mime_type": {
+                    "type": "string"
+                },
+                "file_upload_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "file_class": {
+                    "type": "string"
+                },
+                "patient_key": {
+                    "type": "string"
                 }
             }
         },
