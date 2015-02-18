@@ -211,8 +211,8 @@
                     "account"
                 ],
                 "parameters": [{
-                    "name": "username",
-                    "description": "Registration info",
+                    "name": "Registration information",
+                    "description": "Registration input for account and profile",
                     "in": "body",
                     "schema": {
                         "$ref": "#/definitions/regSchema"
@@ -232,12 +232,28 @@
         },
         "/login": {
             "post": {
+                "summary": "Log in",
+                "description": "Registered user logs into account",
+                "operationId": "login",
                 "tags": [
                     "account"
                 ],
+                "parameters": [{
+                    "name": "username",
+                    "description": "username",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/loginSchema"
+                        },
+                    "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "login successful"
+                        "description": "Login successful"
+                    },
+                    "400": {
+                        "description": "Event error"
                     }
                 }
             }
@@ -679,6 +695,20 @@
                 "dob": {
                     "type": "string",
                     "format": "date"
+                }
+            }
+        },
+        "loginSchema": {
+            "required": [
+                "username",
+                "password"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
                 }
             }
         }
