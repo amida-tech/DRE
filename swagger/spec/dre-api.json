@@ -239,8 +239,8 @@
                     "account"
                 ],
                 "parameters": [{
-                    "name": "username",
-                    "description": "username",
+                    "name": "loginInfo",
+                    "description": "Login form input",
                     "in": "body",
                     "schema": {
                         "$ref": "#/definitions/loginSchema"
@@ -260,22 +260,50 @@
         },
         "/logout": {
             "post": {
+                "summary": "Log out",
+                "description": "Registered user logs out of account",
+                "operationId": "logout",
                 "tags": [
                     "account"
                 ],
+                "parameters": [{
+                    "name": "username",
+                    "description": "username",
+                    "in": "body",
+                    "type": "string",
+                    "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "logout successful"
+                        "description": "Log out successful"
+                    },
+                    "400": {
+                        "description": "Event error"
                     }
                 }
             },
             "get": {
+                "summary": "Get log out",
+                "description": "Log out with GET",
+                "operationId": "getLogout",
                 "tags": [
                     "account"
                 ],
+                "parameters": [{
+                    "name": "username",
+                    "description": "username",
+                    "in": "body",
+                    "type": "string",
+                    "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "logout successful"
+                        "description": "User logged out"
+                    },
+                    "400": {
+                        "description": "Event error"
                     }
                 }
             }
