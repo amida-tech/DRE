@@ -396,26 +396,47 @@
         "/master_health_record/{format}": {
             "get": {
                 "summary": "Download Master Health Record",
-                "description": "Retrieve all components and download as ",
-                "operationId": "getComponent",
+                "description": "Retrieve all components and download",
+                "operationId": "getMHR",
                 "tags": [
                     "record"
                 ],
+                "parameters": [{
+                    "name": "format",
+                    "description": "Defaults to CCDA format",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/definitions/formatSchema"
+                    },
+                    "required": true
+                }],
                 "responses": {
                     "200": {
-                        "description": "Master health record saved in format {format}"
+                        "description": "Master health record downloaded in format {format}"
+                    },
+                    "400": {
+                        "description": "Event error while saving event"
+                    },
+                    "500": {
+                        "description": "Error getting Master Health Record"
                     }
                 }
             }
         },
         "/get_record": {
             "get": {
+                "summary": "Retrieve entire record",
+                "description": "Retrieve all components and download",
+                "operationId": "getRecord",
                 "tags": [
                     "record"
                 ],
                 "responses": {
                     "200": {
-                        "description": "Retrieve entire Master Health Record"
+                        "description": "Retrieve all components in Master Health Record"
+                    },                   
+                    "500": {
+                        "description": "Error retrieving record"
                     }
                 }
             }
@@ -811,6 +832,16 @@
                         "procedures",
                         "social"
                     ]
+                }
+            }
+        },
+        "formatSchema": {
+            "required": [
+                "format"
+            ],
+            "properties": {
+                "format": {
+                    "type": "string"
                 }
             }
         }
