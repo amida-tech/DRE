@@ -182,6 +182,9 @@
         },
         "/account": {
             "get": {
+                "summary": "Authentication check",
+                "description": "Check if user is authenticated",
+                "operationId": "authenticated",
                 "tags": [
                     "account"
                 ],
