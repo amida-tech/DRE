@@ -585,12 +585,17 @@
         },
         "/merges": {
             "get": {
+                "summary": "Get all merges",
+                "description": "Retrieve merges for all components",
                 "tags": [
                     "merges"
                 ],
                 "responses": {
                     "200": {
                         "description": "Get all merges"
+                    },
+                    "400": {
+                        "description": "Error retrieving all merges"
                     }
                 }
             }
@@ -603,12 +608,20 @@
                     "name": "component",
                     "description": "area of health",
                     "in": "path",
-                    "type": "string",
+                    "schema": {
+                        "$ref": "#/definitions/recordSchema"
+                    },
                     "required": true
                 }],
                 "responses": {
                     "200": {
                         "description": "Merges successful"
+                    },
+                    "404": {
+                        "description": "Component not supported"
+                    },
+                    "400": {
+                        "description": "Error retrieving merges"
                     }
                 },
                 "tags": [
