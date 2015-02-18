@@ -176,7 +176,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Account is authenticated"
+                        "description": "Account is authenticated",
+                        "schema": {
+                            "$ref": "#/definitions/accountSchema"
+                        }
                     }
                 }
             }
@@ -635,8 +638,13 @@
                 "description": "includes new record count from merge",
                 "responses": {
                     "200": {
-                        "description": "Notifications counted"
-                    },
+                        "description": "Notifications counted",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/notificationSchema"
+                            }
+                        }                    },
                     "400": {
                         "description": "Error retrieving notifications"
                     }
@@ -754,6 +762,16 @@
                 "time": {
                     "type": "string",
                     "format": "date-time"
+                }
+            }
+        },
+        "accountSchema": {
+            "required": [
+                "authenticated"
+            ],
+            "properties": {
+                "authenticated": {
+                    "type": "boolean"
                 }
             }
         },
@@ -963,6 +981,28 @@
                 },
                 "star": {
                     "type": "boolean"
+                }
+            }
+        },
+        "notificationSchema": {
+            "required": [
+                "unreviewed_merges",
+                "new_merges",
+                "duplicate_merges",
+                "file_count"
+            ],
+            "properties": {
+                "unreviewed_merges": {
+                    "type": "integer"
+                },
+                "new_merges": {
+                    "type": "integer"
+                },
+                "duplicate_merges": {
+                    "type": "integer"
+                },
+                "file_count": {
+                    "type": "integer"
                 }
             }
         }
