@@ -393,20 +393,11 @@
                 }
             }
         },
-        "/record/master": {
-            "get": {
-                "tags": [
-                    "record"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Master record retrieved"
-                    }
-                }
-            }
-        },
         "/master_health_record/{format}": {
             "get": {
+                "summary": "Download Master Health Record",
+                "description": "Retrieve all components and download as ",
+                "operationId": "getComponent",
                 "tags": [
                     "record"
                 ],
