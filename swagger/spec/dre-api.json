@@ -167,24 +167,15 @@
         },
         "/storage_check": {
             "put": {
-                "summary": "Upload a file and get demographics",
-                "description": "Retrieves a specific file for download",
-                "operationId": "getSource",
+                "summary": "Upload a file and obtain demographics",
+                "description": "Get demographics after upload to check against Master Health Record",
+                "operationId": "getSourceDemographics",
                 "tags": [
                     "storage"
                 ],
-                "parameters": [
-                    {
-                        "name": "identifier",
-                        "description": "Event to be added",
-                        "in": "path",
-                        "type": "string",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "file"
+                        "description": "file uploaded"
                     }
                 }
             }
