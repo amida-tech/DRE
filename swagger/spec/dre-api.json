@@ -336,42 +336,59 @@
                 }
             }
         },
-        "/record/{component}": {
-            "get": {
+        "/record/demographics": {
+            "post": {
+                "summary": "Save profile information",
+                "description": "Save profile information to demographics section",
+                "operationId": "saveProfile",
                 "tags": [
                     "record"
                 ],
-                "summary": "View entries for component",
                 "parameters": [{
-                    "name": "component",
-                    "description": "area of health",
-                    "in": "path",
+                    "name": "record ID",
+                    "description": "Profile section information and database ID",
+                    "in": "body",
                     "type": "string",
                     "required": true
-                }],
+                    }
+                ],
+                "summary": "Update profile information",
                 "responses": {
                     "200": {
-                        "description": "component retrieved"
+                        "description": "OK. Profile information updated"
+                    },
+                    "400": {
+                        "description": "Event error"
                     }
                 }
             }
         },
-        "/record/demographics": {
+        "/record/{component}": {
             "get": {
+                "summary": "View entries for component",
+                "description": "Retrieve specific component from Master Health Record",
+                "operationId": "getComponent",
                 "tags": [
                     "record"
                 ],
-                "summary": "View profile information",
                 "parameters": [{
                     "name": "component",
                     "description": "area of health",
                     "in": "path",
-                    "type": "string",
+                    "schema": {
+                        "$ref": "#/definitions/recordSchema"
+                    },
                     "required": true
                 }],
                 "responses": {
                     "200": {
-                        "description": "Profile information retrieved"
+                        "description": "Component retrieved"
+                    },
+                    "404": {
+                        "description": "Component not supported"
+                    },
+                    "500": {
+                        "description": "Error retrieving component"
                     }
                 }
             }
@@ -767,6 +784,42 @@
                 },
                 "new": {
                     "type": "string"
+                }
+            }
+        },
+        "profileSchema": {
+            "required": [
+                "username",
+                "_id"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },        
+        "recordSchema": {
+            "required": [
+                "component"
+            ],
+            "properties": {
+                "component": {
+                    "type": "string",
+                    "enum": [
+                        "demographics",
+                        "medications",
+                        "results",
+                        "encounters",
+                        "vitals",
+                        "immunizations",
+                        "allergies",
+                        "conditions",
+                        "procedures",
+                        "social"
+                    ]
                 }
             }
         }
