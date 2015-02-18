@@ -41,26 +41,11 @@
                 "summary": "Returns most recent events in a user's account history",
                 "description": "Return event for register, log in/out, up/download file, lab results, password change, personal information changed",
                 "operationId": "addEvent",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
                 "tags": [
                     "history"
                 ],
-                "parameters": [{
-                    "name": "event",
-                    "description": "Event to be added",
-                    "in": "body",
-                    "schema": {
-                        "$ref": "#/definitions/eventSchema"
-                    },
-                    "required": true
-                }],
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "event succesfully created and added",
                         "schema": {
                             "$ref": "#/definitions/eventSchema"
@@ -737,6 +722,9 @@
                 "event_type"
             ],
             "properties": {
+                "dbID": {
+                    "type": "string"
+                },
                 "userID": {
                     "type": "string"
                 },
