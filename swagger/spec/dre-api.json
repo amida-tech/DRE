@@ -635,13 +635,10 @@
                 "description": "includes new record count from merge",
                 "responses": {
                     "200": {
-                        "description": "Notifications counted",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
+                        "description": "Notifications counted"
+                    },
+                    "400": {
+                        "description": "Error retrieving notifications"
                     }
                 },
                 "tags": [
