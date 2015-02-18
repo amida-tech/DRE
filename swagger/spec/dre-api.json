@@ -441,48 +441,44 @@
                 }
             }
         },
-        "/match": {
-            "get": {
-                "tags": [
-                    "matches"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get single match"
-                    }
-                }
-            }
-        },
-        "/match/{component}": {
-            "get": {
-                "tags": [
-                    "matches"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get single match for a component"
-                    }
-                }
-            }
-        },
         "/matches/{component}": {
             "get": {
+                "summary": "Retrieve matches",
+                "description": "Retrieve all matches for one components",
+                "operationId": "getMatches",
                 "tags": [
                     "matches"
                 ],
+                "parameters": [{
+                    "name": "component",
+                    "description": "area of health",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/definitions/recordSchema"
+                    },
+                    "required": true
+                }],
                 "responses": {
                     "200": {
                         "description": "Get all matches for a component"
+                    },
+                    "400": {
+                        "description": "Error retrieving matches"
+                    },
+                    "404": {
+                        "description": "Not a supported component"
                     }
                 }
             }
         },
-        "/matches/{component}/{record_id}": {
+        "/match/{component}/{record_id}": {
             "parameters": [{
                 "name": "component",
                 "in": "path",
                 "description": "area of health",
-                "type": "string",
+                "schema": {
+                    "$ref": "#/definitions/recordSchema"
+                },
                 "required": true
             }, {
                 "name": "record_id",
@@ -492,22 +488,57 @@
                 "required": true
             }],
             "get": {
+                "summary": "Retrieve a single match",
+                "description": "Retrieve a single match from a component",
+                "operationId": "getMatch",
                 "tags": [
                     "matches"
                 ],
                 "responses": {
                     "200": {
                         "description": "Get single match API"
+                    },
+                    "400": {
+                        "description": "Error retrieving match"
+                    },
+                    "404": {
+                        "description": "Component not supported"
                     }
                 }
-            },
+            }
+        },
+        "/matches/{component}/{record_id}": {
+            "parameters": [{
+                "name": "component",
+                "in": "path",
+                "description": "area of health",
+                "schema": {
+                    "$ref": "#/definitions/recordSchema"
+                },
+                "required": true
+            }, {
+                "name": "record_id",
+                "in": "path",
+                "description": "ID for component",
+                "type": "string",
+                "required": true
+            }],
             "post": {
+                "summary": "Post update",
+                "description": "Post partial record updates",
+                "operationId": "saveMatches",
                 "tags": [
                     "matches"
                 ],
                 "responses": {
                     "200": {
                         "description": "Partial record updates"
+                    },
+                    "404": {
+                        "description": "Component not supported"
+                    },
+                    "400": {
+                        "description": "Error updating record"
                     }
                 }
             }
@@ -517,7 +548,9 @@
                 "name": "component",
                 "in": "path",
                 "description": "area of health",
-                "type": "string",
+                "schema": {
+                    "$ref": "#/definitions/recordSchema"
+                },
                 "required": true
             }, {
                 "name": "record_id",
@@ -531,12 +564,21 @@
                 "type": "string"
             }],
             "post": {
+                "summary": "Post update",
+                "description": "Post partial record update",
+                "operationId": "saveMatch",
                 "tags": [
                     "matches"
                 ],
                 "responses": {
                     "200": {
                         "description": "Partial record updates"
+                    },
+                    "404": {
+                        "description": "Component not supported"
+                    },
+                    "400": {
+                        "description": "Error updating record"
                     }
                 }
             }
@@ -841,7 +883,11 @@
             ],
             "properties": {
                 "format": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "json",
+                        "ccda"
+                    ]
                 }
             }
         }
