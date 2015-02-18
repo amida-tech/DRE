@@ -204,12 +204,28 @@
         },
         "/register": {
             "post": {
+                "summary": "Register a new user",
+                "description": "Create a new account and save registration information",
+                "operationId": "register",
                 "tags": [
                     "account"
                 ],
+                "parameters": [{
+                    "name": "username",
+                    "description": "Registration info",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/regSchema"
+                        },
+                    "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "account created"
+                        "description": "Account created"
+                    },
+                    "400": {
+                        "description": "Error"
                     }
                 }
             }
@@ -624,7 +640,45 @@
                     "type": "string"
                 },
                 "_v": {
-                    "type": "number"
+                    "type": "integer"
+                }
+            }
+        },
+        "regSchema": {
+            "required": [
+                "username",
+                "password",
+                "firstName",
+                "lastName",
+                "dob",
+                "gender",
+                "email"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "middleName": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "dob": {
+                    "type": "string",
+                    "format": "date"
                 }
             }
         }
