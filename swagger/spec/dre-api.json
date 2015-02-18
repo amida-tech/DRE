@@ -5,35 +5,25 @@
         "title": "Data Reconciliation Engine API",
         "description": "Handles data services for DRE UI"
     },
-    "tags": [
-        {
-            "name": "account"
-        },
-        {
-            "name": "history"
-        },
-        {
-            "name": "matches"
-        },
-        {
-            "name": "match"
-        },
-        {
-            "name": "merges"
-        },
-        {
-            "name": "notes"
-        },
-        {
-            "name": "notifications"
-        },
-        {
-            "name": "record"
-        },
-        {
-            "name": "storage"
-        }
-    ],
+    "tags": [{
+        "name": "account"
+    }, {
+        "name": "history"
+    }, {
+        "name": "matches"
+    }, {
+        "name": "match"
+    }, {
+        "name": "merges"
+    }, {
+        "name": "notes"
+    }, {
+        "name": "notifications"
+    }, {
+        "name": "record"
+    }, {
+        "name": "storage"
+    }],
     "host": "localhost:3000",
     "basePath": "/api/v1",
     "schemes": [
@@ -60,17 +50,15 @@
                 "tags": [
                     "history"
                 ],
-                "parameters": [
-                    {
-                        "name": "event",
-                        "description": "Event to be added",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/eventSchema"
-                        },
-                        "required": true
-                    }
-                ],
+                "parameters": [{
+                    "name": "event",
+                    "description": "Event to be added",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/eventSchema"
+                    },
+                    "required": true
+                }],
                 "responses": {
                     "201": {
                         "description": "event succesfully created and added",
@@ -149,15 +137,13 @@
                 "tags": [
                     "storage"
                 ],
-                "parameters": [
-                    {
-                        "name": "identifier",
-                        "description": "Event to be added",
-                        "in": "path",
-                        "type": "string",
-                        "required": true
-                    }
-                ],
+                "parameters": [{
+                    "name": "identifier",
+                    "description": "Event to be added",
+                    "in": "path",
+                    "type": "string",
+                    "required": true
+                }],
                 "responses": {
                     "200": {
                         "description": "file"
@@ -197,12 +183,21 @@
         },
         "/users": {
             "get": {
+                "summary": "Retrieve list of users",
+                "description": "Retrieve list of all users",
+                "operationId": "getUsers",
                 "tags": [
                     "account"
                 ],
                 "responses": {
                     "200": {
-                        "description": "get list of users"
+                        "description": "get list of users",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/userSchema"
+                            }
+                        }
                     }
                 }
             }
@@ -271,15 +266,13 @@
                     "record"
                 ],
                 "summary": "View entries for component",
-                "parameters": [
-                    {
-                        "name": "component",
-                        "description": "area of health",
-                        "in": "path",
-                        "type": "string",
-                        "required": true
-                    }
-                ],
+                "parameters": [{
+                    "name": "component",
+                    "description": "area of health",
+                    "in": "path",
+                    "type": "string",
+                    "required": true
+                }],
                 "responses": {
                     "200": {
                         "description": "component retrieved"
@@ -293,15 +286,13 @@
                     "record"
                 ],
                 "summary": "View profile information",
-                "parameters": [
-                    {
-                        "name": "component",
-                        "description": "area of health",
-                        "in": "path",
-                        "type": "string",
-                        "required": true
-                    }
-                ],
+                "parameters": [{
+                    "name": "component",
+                    "description": "area of health",
+                    "in": "path",
+                    "type": "string",
+                    "required": true
+                }],
                 "responses": {
                     "200": {
                         "description": "Profile information retrieved"
@@ -382,22 +373,19 @@
             }
         },
         "/matches/{component}/{record_id}": {
-            "parameters": [
-                {
-                    "name": "component",
-                    "in": "path",
-                    "description": "area of health",
-                    "type": "string",
-                    "required": true
-                },
-                {
-                    "name": "record_id",
-                    "in": "path",
-                    "description": "ID for component",
-                    "type": "string",
-                    "required": true
-                }
-            ],
+            "parameters": [{
+                "name": "component",
+                "in": "path",
+                "description": "area of health",
+                "type": "string",
+                "required": true
+            }, {
+                "name": "record_id",
+                "in": "path",
+                "description": "ID for component",
+                "type": "string",
+                "required": true
+            }],
             "get": {
                 "tags": [
                     "matches"
@@ -420,27 +408,23 @@
             }
         },
         "/matches/{component}/{record_id}/{record_index}": {
-            "parameters": [
-                {
-                    "name": "component",
-                    "in": "path",
-                    "description": "area of health",
-                    "type": "string",
-                    "required": true
-                },
-                {
-                    "name": "record_id",
-                    "in": "path",
-                    "description": "ID for component",
-                    "type": "string"
-                },
-                {
-                    "name": "record_index",
-                    "in": "path",
-                    "description": "specific ID entry",
-                    "type": "string"
-                }
-            ],
+            "parameters": [{
+                "name": "component",
+                "in": "path",
+                "description": "area of health",
+                "type": "string",
+                "required": true
+            }, {
+                "name": "record_id",
+                "in": "path",
+                "description": "ID for component",
+                "type": "string"
+            }, {
+                "name": "record_index",
+                "in": "path",
+                "description": "specific ID entry",
+                "type": "string"
+            }],
             "post": {
                 "tags": [
                     "matches"
@@ -468,15 +452,13 @@
             "get": {
                 "summary": "Get merges by component",
                 "description": "Get merges by component",
-                "parameters": [
-                    {
-                        "name": "component",
-                        "description": "area of health",
-                        "in": "path",
-                        "type": "string",
-                        "required": true
-                    }
-                ],
+                "parameters": [{
+                    "name": "component",
+                    "description": "area of health",
+                    "in": "path",
+                    "type": "string",
+                    "required": true
+                }],
                 "responses": {
                     "200": {
                         "description": "Merges successful"
@@ -570,15 +552,13 @@
                 "tags": [
                     "notes"
                 ],
-                "parameters": [
-                    {
-                        "name": "component",
-                        "description": "area of health",
-                        "in": "path",
-                        "type": "string",
-                        "required": true
-                    }
-                ],
+                "parameters": [{
+                    "name": "component",
+                    "description": "area of health",
+                    "in": "path",
+                    "type": "string",
+                    "required": true
+                }],
                 "responses": {
                     "200": {
                         "description": "Note added to component"
@@ -621,7 +601,32 @@
                     "format": "date-time"
                 }
             }
+        },
+        "userSchema": {
+            "required": [
+                "_id",
+                "salt",
+                "hash",
+                "username",
+                "_v"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "salt": {
+                    "type": "string"
+                },
+                "hash": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "_v": {
+                    "type": "number"
+                }
+            }
         }
     }
 }
-
