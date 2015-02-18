@@ -214,7 +214,7 @@
                     "account"
                 ],
                 "parameters": [{
-                    "name": "Registration information",
+                    "name": "registration info",
                     "description": "Registration input for account and profile",
                     "in": "body",
                     "schema": {
@@ -242,7 +242,7 @@
                     "account"
                 ],
                 "parameters": [{
-                    "name": "loginInfo",
+                    "name": "login info",
                     "description": "Login form input",
                     "in": "body",
                     "schema": {
@@ -320,7 +320,7 @@
                     "account"
                 ],
                 "parameters": [{
-                    "name": "Passwords",
+                    "name": "passwords",
                     "description": "Old and new passwords",
                     "in": "body",
                     "schema": {
