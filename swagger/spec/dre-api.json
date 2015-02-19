@@ -273,14 +273,6 @@
                 "tags": [
                     "account"
                 ],
-                "parameters": [{
-                    "name": "username",
-                    "description": "username",
-                    "in": "body",
-                    "type": "string",
-                    "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Log out successful"
@@ -296,14 +288,6 @@
                 "operationId": "getLogout",
                 "tags": [
                     "account"
-                ],
-                "parameters": [{
-                    "name": "username",
-                    "description": "username",
-                    "in": "body",
-                    "type": "string",
-                    "required": true
-                    }
                 ],
                 "responses": {
                     "200": {
