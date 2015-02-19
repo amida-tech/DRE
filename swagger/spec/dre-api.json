@@ -107,6 +107,9 @@
                     "description": "File to be uploaded",
                     "in": "body",
                     "type": "file",
+                    "schema": {
+                        "type": "file"
+                    },
                     "required": true
                 }],
                 "responses": {
@@ -238,12 +241,17 @@
                     "account"
                 ],
                 "parameters": [{
-                    "name": "login info",
+                    "name": "username",
                     "description": "Login form input",
-                    "in": "body",
-                    "schema": {
-                        "$ref": "#/definitions/loginSchema"
-                        },
+                    "in": "query",
+                    "type": "string",
+                    "required": true
+                    },
+                    {
+                    "name": "password",
+                    "description": "Login form input",
+                    "in": "query",
+                    "type": "string",
                     "required": true
                     }
                 ],
@@ -873,20 +881,6 @@
                 "dob": {
                     "type": "string",
                     "format": "date"
-                }
-            }
-        },
-        "loginSchema": {
-            "required": [
-                "username",
-                "password"
-            ],
-            "properties": {
-                "username": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
                 }
             }
         },
