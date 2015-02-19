@@ -102,13 +102,14 @@
                 "tags": [
                     "storage"
                 ],
+                "consumes": "multipart/form-data",
                 "parameters": [{
                     "name": "file",
                     "description": "File to be uploaded",
-                    "in": "body",
+                    "in": "formData",
                     "type": "file",
                     "schema": {
-                        "type": "file"
+                        "type": "formData"
                     },
                     "required": true
                 }],
