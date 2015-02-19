@@ -35,7 +35,7 @@
                         <input type="password" class="form-control" name="inputRepeatPassword" ng-model="inputRepeatPassword" required ng-required="true" ng-minLength="8" ng-maxLength="20">
                         <p ng-show="regForm1.inputRepeatPassword.$invalid && !regForm1.inputRepeatPassword.$pristine" class="help-block">Password must be between 8 and 20 characters.</p>
                     </div>
-                    <button type="submit" class="btn btn-block btn-primary" ng-disabled="regForm1.$invalid">Next</button>
+                    <button id="next1" type="submit" class="btn btn-block btn-primary" ng-disabled="regForm1.$invalid">Next</button>
                     <div class="text-center">
                         <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
                     </div>
@@ -86,7 +86,7 @@
                         </select>
                         <p ng-show="regForm2.inputGender.$invalid && !regForm2.inputGender.$pristine" class="help-block">Gender is required.</p>
                     </div>
-                    <button type="submit" class="btn btn-block btn-primary" ng-disabled="regForm2.$invalid">Next</button>
+                    <button id="next2" type="submit" class="btn btn-block btn-primary" ng-disabled="regForm2.$invalid">Next</button>
                     <div class="text-center">
                         <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
                     </div>
@@ -113,7 +113,7 @@
                 <p class="text-center padding-bottom">
                     Click below to continue to your health record.
                 </p>
-                <button type="submit" class="btn btn-block btn-success" ng-click="finish()">Complete</button>
+                <button id="next3" type="submit" class="btn btn-block btn-success" ng-click="finish()">Complete</button>
 
             </div>
         </div>

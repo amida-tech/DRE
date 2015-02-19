@@ -14,12 +14,29 @@ describe('register user', function() {
         email.sendKeys('isabella@gmail.com');
         password.sendKeys('Protractor');
         repeatPassword.sendKeys('Protractor');
+        element(by.id('next1')).click();
+
+        var firstname = element(by.model('inputFirst'));
+        var middlename = element(by.model('inputMiddle'));
+        var lastname = element(by.model('inputLast'));
+        var dob = element(by.model('inputDOB'));
+        var gender = element(by.model('inputGender'));
+
+        firstname.sendKeys('Isabella');
+        middlename.sendKeys('M');
+        lastname.sendKeys('Jones');
+        dob.sendKeys('05011975');
+        gender.sendKeys('f');
+
+        element(by.id('next2')).click();
+        element(by.id('next3')).click();
 
 
     }
 
     beforeEach(function() {
         browser.get('http://localhost:3000/');
+        browser.driver.manage().window().setSize(1280, 1024);
     });
 
     it('register test', function() {
@@ -30,9 +47,9 @@ describe('register user', function() {
         //expect(element(by.css('.login-alert')).getText()).toContain('Invalid');
 
         registerTest();
-        browser.pause();
+        //browser.pause();
 
-        //expect(browser.getLocationAbsUrl()).toContain('home');
+        expect(browser.getLocationAbsUrl()).toContain('home');
 
     });
 });
