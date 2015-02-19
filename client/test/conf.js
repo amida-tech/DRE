@@ -1,5 +1,8 @@
 // conf.js
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  specs: ['register.js']
+  suites: {
+    register: ['register.js','logout.js'],
+    login: ['login.js','logout.js']
+  },
 }

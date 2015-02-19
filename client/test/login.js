@@ -13,16 +13,14 @@ describe('angularjs homepage', function() {
 
     beforeEach(function() {
         browser.get('http://localhost:3000/');
+        browser.driver.manage().window().setSize(1280, 1024);
     });
 
     it('should have a title', function() {
         
-    	loginTest('test','test');
+    	
 
-        //expect(browser.getTitle()).toEqual('My PHR');
-        expect(element(by.css('.login-alert')).getText()).toContain('Invalid');
-
-        loginTest('test','asdfasdf');
+        loginTest('protractor_test','Protractor');
 
         expect(browser.getLocationAbsUrl()).toContain('home');
 
