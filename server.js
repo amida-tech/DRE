@@ -56,6 +56,9 @@ app.use(function (req, res, next) {
 //to prevent caching of API calls
 app.disable('etag');
 
+app.use('/docs', express.static('./swagger'));
+
+
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(cookieParser());
