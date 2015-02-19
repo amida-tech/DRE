@@ -1,7 +1,8 @@
-describe('angularjs homepage', function() {
-    var logoutDropdown = element(by.css('.navbar-right a'));
+describe('logout', function() {
+    
 
-    function logoutTest(un, pw) {
+    function logoutTest() {
+        var logoutDropdown = element.all(by.css('.navbar-right a')).first();
     	logoutDropdown.click();
         var logout = element(by.css('[ng-click="logout()"]'));
         logout.click();
@@ -12,7 +13,7 @@ describe('angularjs homepage', function() {
         browser.driver.manage().window().setSize(1280, 1024);
     });
 
-    it('logout', function() {
+    it('should logout', function() {
         
     	
 

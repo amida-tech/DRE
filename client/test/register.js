@@ -1,5 +1,5 @@
 describe('register user', function() {
-    var registerLink = element(by.css('.navbar-right a'));
+    var registerLink = element.all(by.css('.navbar-right a')).first();
     
 
     function registerTest() {

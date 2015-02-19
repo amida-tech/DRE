@@ -10,7 +10,7 @@ describe('angularjs homepage', function() {
         var upload = element(by.css('[href="#/files/upload"]'));
         upload.click();
 
-        var fileToUpload = pathToFiles + "bluebutton-01-original.xml";
+        var fileToUpload = pathToFiles + "bluebutton-02-updated.xml";
         var absolutePath = path.resolve(__dirname, fileToUpload);
         $('input[type="file"]').sendKeys(absolutePath);
 
@@ -38,7 +38,7 @@ describe('angularjs homepage', function() {
     	
 
         uploadTest();
-        browser.pause();
+        //browser.pause();
 
 
     });

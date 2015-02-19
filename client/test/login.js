@@ -1,4 +1,4 @@
-describe('angularjs homepage', function() {
+describe('login', function() {
     var username = element(by.model('inputLogin'));
     var password = element(by.model('inputPassword'));
     var submit = element(by.id('main-login-btn'));
@@ -16,7 +16,7 @@ describe('angularjs homepage', function() {
         browser.driver.manage().window().setSize(1280, 1024);
     });
 
-    it('should have a title', function() {
+    it('should login', function() {
         
     	
 
