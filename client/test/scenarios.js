@@ -55,7 +55,13 @@ describe('record scenario', function() {
 
     afterEach(function() {
     browser.manage().logs().get('browser').then(function(browserLog) {
-      //expect(browserLog.length).toEqual(0);
+        var errors = 0
+        browserLog.forEach(function (log) {
+            if (log.level.value >= 1000) {
+                errors++;
+            };
+        })
+      expect(errors).toEqual(0);
       // Uncomment to actually see the log.
       console.log('log: ' + require('util').inspect(browserLog));
     });
