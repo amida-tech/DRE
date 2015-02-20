@@ -42,6 +42,10 @@ describe('record scenario', function() {
         var notePage = element(by.css('[href="#/notes"]'));
 
         notePage.click();
+
+
+
+
     }
 
     beforeEach(function() {
@@ -54,7 +58,6 @@ describe('record scenario', function() {
     	
 
         scenarioOne();
-        //browser.pause();
 
 
     });
