@@ -89,7 +89,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/fileSchema" 
+                                "$ref": "#/definitions/fileSchema"
                             }
                         }
                     }
@@ -97,12 +97,12 @@
             },
             "put": {
                 "summary": "Uploads a file",
-                "description": "Upload, match, merge",
+                "description": "Upload, match, merge or save to my files without importing using check flag",
                 "operationId": "processUpload",
                 "tags": [
                     "storage"
                 ],
-                "consumes": "multipart/form-data",
+                "consumes": ["multipart/form-data"],
                 "parameters": [{
                     "name": "file",
                     "description": "File to be uploaded",
@@ -112,10 +112,26 @@
                         "type": "formData"
                     },
                     "required": true
+                }, {
+                    "name": "check",
+                    "description": "Save file without importing entries or update Master Health Record",
+                    "in": "body",
+                    "type": "boolean",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean",
+                        "required": true
+                    }
                 }],
                 "responses": {
                     "200": {
-                        "description": "file uploaded"
+                        "description": "file uploaded",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     },
                     "400": {
                         "description": "error"
@@ -147,21 +163,6 @@
                     },
                     "400": {
                         "description": "Event error"
-                    }
-                }
-            }
-        },
-        "/storage_check": {
-            "put": {
-                "summary": "Upload a file and obtain demographics",
-                "description": "Get demographics after upload to check against Master Health Record",
-                "operationId": "getSourceDemographics",
-                "tags": [
-                    "storage"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "file uploaded"
                     }
                 }
             }
@@ -219,10 +220,9 @@
                     "in": "body",
                     "schema": {
                         "$ref": "#/definitions/regSchema"
-                        },
+                    },
                     "required": true
-                    }
-                ],
+                }],
                 "responses": {
                     "200": {
                         "description": "Account created"
@@ -247,15 +247,13 @@
                     "in": "query",
                     "type": "string",
                     "required": true
-                    },
-                    {
+                }, {
                     "name": "password",
                     "description": "Login form input",
                     "in": "query",
                     "type": "string",
                     "required": true
-                    }
-                ],
+                }],
                 "responses": {
                     "200": {
                         "description": "Login successful"
@@ -314,10 +312,9 @@
                     "in": "body",
                     "schema": {
                         "$ref": "#/definitions/passwordSchema"
-                        },
+                    },
                     "required": true
-                    }
-                ],
+                }],
                 "responses": {
                     "200": {
                         "description": "Password change success"
@@ -342,8 +339,7 @@
                     "in": "body",
                     "type": "string",
                     "required": true
-                    }
-                ],
+                }],
                 "summary": "Update profile information",
                 "responses": {
                     "200": {
@@ -429,7 +425,7 @@
                 "responses": {
                     "200": {
                         "description": "Retrieve all components in Master Health Record"
-                    },                   
+                    },
                     "500": {
                         "description": "Error retrieving record"
                     }
@@ -636,7 +632,8 @@
                             "items": {
                                 "$ref": "#/definitions/notificationSchema"
                             }
-                        }                    },
+                        }
+                    },
                     "400": {
                         "description": "Error retrieving notifications"
                     }
@@ -795,6 +792,16 @@
                 }
             }
         },
+        "checkSchema": {
+            "required": [
+                "check"
+            ],
+            "properties": {
+                "check": {
+                    "type": "boolean"
+                }
+            }
+        },
         "accountSchema": {
             "required": [
                 "authenticated"
@@ -896,7 +903,7 @@
                     "type": "string"
                 }
             }
-        },        
+        },
         "recordSchema": {
             "required": [
                 "component"
