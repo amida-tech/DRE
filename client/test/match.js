@@ -20,6 +20,8 @@ describe('record scenario', function() {
 
         submit.click();
 
+        allergies.click();
+
 
 
     }
