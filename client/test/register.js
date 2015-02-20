@@ -1,3 +1,8 @@
+
+var path = require('path');
+var common = require(path.join(__dirname, '../../test/common/common.js'));
+
+
 describe('register user', function() {
     var registerLink = element.all(by.css('.navbar-right a')).first();
     
@@ -41,12 +46,11 @@ describe('register user', function() {
 
     it('register test', function() {
         
-    	//loginTest('test','test');
-
-        //expect(browser.getTitle()).toEqual('My PHR');
-        //expect(element(by.css('.login-alert')).getText()).toContain('Invalid');
-
+    	common.removeAll(function () {
+            return;
+        });
         registerTest();
+        
         //browser.pause();
 
         expect(browser.getLocationAbsUrl()).toContain('home');
