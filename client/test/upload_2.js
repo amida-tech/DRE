@@ -33,6 +33,14 @@ describe('angularjs homepage', function() {
         browser.driver.manage().window().setSize(1280, 1024);
     });
 
+    afterEach(function() {
+    browser.manage().logs().get('browser').then(function(browserLog) {
+      //expect(browserLog.length).toEqual(0);
+      // Uncomment to actually see the log.
+      console.log('log: ' + require('util').inspect(browserLog));
+    });
+  });
+
     it('upload test', function() {
         
     	

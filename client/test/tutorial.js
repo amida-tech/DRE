@@ -15,6 +15,14 @@ describe('angularjs homepage', function() {
         browser.get('http://localhost:3000/');
     });
 
+    afterEach(function() {
+    browser.manage().logs().get('browser').then(function(browserLog) {
+      //expect(browserLog.length).toEqual(0);
+      // Uncomment to actually see the log.
+      console.log('log: ' + require('util').inspect(browserLog));
+    });
+  });
+
     it('should have a title', function() {
         
     	loginTest('test','test');
