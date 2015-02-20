@@ -117,10 +117,8 @@
                     "description": "Save file without importing entries or update Master Health Record",
                     "in": "body",
                     "type": "boolean",
-                    "required": true,
                     "schema": {
-                        "type": "boolean",
-                        "required": true
+                        "type": "boolean"
                     }
                 }],
                 "responses": {
