@@ -101,8 +101,7 @@
                             <div class="col-sm-12">
                                 <form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
                                     <div class="col-sm-1 panel-body text-center">
-                                        <h5 ng-show="newComment.starred === true" ng-click="newStar(true, recordIndex)"><a><i class="fa fa-star"></i></a></h5>
-                                        <h5 ng-show="newComment.starred === false" ng-click="newStar(false, recordIndex)"><a><i class="fa fa-star-o"></i></a></h5>
+                                        <h5 ng-click="newStar(false, recordIndex)"><a><i class="fa fa-star-o"></i></a></h5>
                                     </div>
                                     <div class="form-group col-sm-10">
                                         <label for="commentEntry">New Note:</label>
