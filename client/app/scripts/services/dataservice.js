@@ -265,7 +265,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         //format each note, and collate into array
         _.each(note, function (n) {
             var comment = {
-                date: n.date,
+                date: n.datetime,
                 starred: n.star,
                 comment: n.note,
                 entry_id: n.entry,
