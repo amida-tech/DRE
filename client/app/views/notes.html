@@ -57,9 +57,11 @@
                     <h5>No notes matching your selection</h5>
                 </div>
 
+                    <p ng-show="notes" class="row pull-right">Sort by: <a href="" ng-click="dateSort()">Date</a> | <a href="" ng-click="predicate = 'displaySection'; reverse=!reverse"> Section Name</a></p>
 
                 <!-- http://angular-tips.com/blog/2014/08/tip-accessing-filtered-array-outside-ng-repeat/ -->
-                <div ng-show="any_sections_selected" ng-repeat="(sectionIndex, sectionEntry) in sections = (notes | sections:filters)">
+                <div ng-show="any_sections_selected" ng-repeat="(sectionIndex, sectionEntry) in sections = (notes | sections:filters) | orderBy:predicate:reverse">
+
                     <div ng-repeat="(noteIndex, noteEntry) in subNotes = (sectionEntry.notes | starred:filters) | orderBy:'note.starred':true ">
                         <div ng-show="noteIndex === 0">
                             <h4>{{sectionEntry.displaySection}}</h4>

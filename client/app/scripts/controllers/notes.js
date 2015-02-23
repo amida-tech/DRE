@@ -31,6 +31,16 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, note
     }
     */
 
+    $scope.dateSort = function () {
+        console.log('old predicate '+$scope.predicate);
+        if ($scope.predicate === '') {
+            $scope.predicate = 'date';
+        } else {
+            $scope.predicate = '';
+        }
+        console.log('new predicate '+$scope.predicate);
+    };
+
     //TODO may need callback
     function refresh() {
         dataservice.curr_section_billing = $scope.entryType;
