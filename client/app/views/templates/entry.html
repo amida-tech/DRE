@@ -104,7 +104,7 @@
                                         <h5 ng-click="newStar(false, recordIndex)"><a><i class="fa fa-star-o"></i></a></h5>
                                     </div>
                                     <div class="form-group col-sm-10">
-                                        <label for="commentEntry">New Note:</label>
+                                        <label for="commentEntry">New:</label>
                                         <textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="newComment.comment" name="commentEntry"></textarea>
                                     </div>
                                     <div class="col-sm-10 col-sm-offset-1">
@@ -121,7 +121,7 @@
                                         <h5 ng-show="entryMetaData.comments[0].starred === false" ng-click="newStar(false, 0)"><a><i class="fa fa-star-o"></i></a></h5>
                                     </div>
                                     <div class="form-group col-sm-10">
-                                        <label for="commentEntry">Edit Note:</label>
+                                        <label for="commentEntry">Edit:</label>
                                         <textarea class="form-control" rows="2" required ng-required="true" ng-minLength="1" ng-model="entryMetaData.comments[0].comment" name="commentEntry"></textarea>
                                     </div>
                                     <div class="col-sm-10 col-sm-offset-1">
