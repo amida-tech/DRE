@@ -246,23 +246,29 @@ angular.module('phrPrototypeApp')
 
                 scope.newComment = {};
 
+                scope.cancelEdit = function() {
+                    console.log("cancel edit");
+                    scope.editflag = false;
+                };
+
 
                 scope.editNote = function() {
                     console.log("edit note");
                     scope.editflag = true;
+                    scope.editComment = scope.entryMetaData.comments[0].comment;
                 };
 
                 scope.deleteNote = function() {
                     console.log("delete note");
-                    scope.entryMetaData.comments[0] = [];
+                    scope.entryMetaData.comments[0] = {};
                     scope.editflag = false;
                 };
 
                 scope.saveNote = function () {
                     console.log("save note");
+                    scope.entryMetaData.comments[0].comment = scope.editComment;
                     var noteID = scope.entryMetaData.comments[0].note_id;
-                    var note = scope.entryMetaData.comments[0].comment;
-                    notes.editNote(noteID, note, function (err, data) {
+                    notes.editNote(noteID, scope.editComment, function (err, data) {
 
                         notes.starNote(noteID, scope.entryMetaData.comments[0].starred, function (err, data) {
                             console.log('add note star error ', err);
