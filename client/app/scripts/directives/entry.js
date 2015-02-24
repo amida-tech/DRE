@@ -208,7 +208,7 @@ angular.module('phrPrototypeApp')
                     console.log("adding note");
                     console.log(scope);
 
-                    scope.newComment.starred = false;
+                    console.log(scope.newComment.starred);
 
                     scope.newComment.entry = scope.recordEntry.data._id;
                     scope.newComment.note = scope.newComment.comment;
@@ -221,18 +221,48 @@ angular.module('phrPrototypeApp')
                         scope.newComment.entry_id = data.entry;
                         scope.newComment.note_id = data._id;
 
-                        scope.entryMetaData.comments.push(scope.newComment);
+                        scope.entryMetaData.comments[0] = scope.newComment;
+
+
+                        console.log(scope.newComment.starred);
+                        if (angular.isUndefined(scope.newComment.starred)) {
+                            scope.newComment.starred = false;
+                        }
+                        notes.starNote(scope.newComment.note_id, scope.newComment.starred, function (err, data) {
+                            console.log('add note star error ', err);
+                            console.log('add note with star ', data);
+                        });
 
                         countStarredComments();
 
                         console.log("scope.newComment", scope.newComment);
                         scope.newComment = {};
 
+
+
                     });
 
                 };
 
                 scope.newComment = {};
+
+
+                scope.editNote = function() {
+                    console.log("edit note");
+                    scope.editflag = true;
+                };
+
+                scope.deleteNote = function() {
+                    console.log("delete note");
+                    scope.entryMetaData = [];
+                    scope.editflag = false;
+                };
+
+                scope.saveNote = function () {
+                    console.log("save note");
+                    scope.entryMetaData.comments.push();
+                };
+
             }
         };
     });
