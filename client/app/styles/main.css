@@ -8549,6 +8549,30 @@ a:hover {
   background-color: transparent;
 }
 
+/* line 10, _panels.scss */
+.print-record {
+  margin: 0px;
+  border-style: none;
+  font-size: 10px;
+}
+/* line 11, _panels.scss */
+.print-record td {
+  padding: 5px;
+  vertical-align: top;
+}
+/* line 15, _panels.scss */
+.print-record table {
+  margin: 0px;
+}
+/* line 21, _panels.scss */
+.print-record h5, .print-record h4 {
+  font-size: 12px !important;
+}
+/* line 24, _panels.scss */
+.print-record .panel {
+  margin: 0px;
+}
+
 /* line 1, _navbar.scss */
 .navbar-brand {
   padding: 12px 0;

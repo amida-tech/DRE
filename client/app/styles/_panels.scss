@@ -6,3 +6,23 @@
 .panel.panel-transparent {
 	background-color: transparent;
 }
+
+.print-record {
+	td {
+		padding: 5px;
+		vertical-align: top;
+	}
+	table {
+		margin: 0px;
+	}
+	margin: 0px;
+	border-style: none;
+	font-size: 10px;
+	h5, h4 {
+		font-size: 12px !important;
+	}
+	.panel {
+		margin: 0px;
+	}
+	
+}
