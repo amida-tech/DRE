@@ -197,13 +197,13 @@ angular.module('phrPrototypeApp')
                     }
                     countStarredComments();
                 };
-                scope.newStar = function (starVal, recordIndex) {
-                    if (starVal) {
-                        scope.newComment.starred = false;
-                    } else {
-                        scope.newComment.starred = true;
-                    }
+                scope.toggleNewStar = function () {
+                    scope.newComment.starred = !scope.newComment.starred;
                 };
+                scope.toggleStar = function () {
+                    scope.entryMetaData.comments[0].starred = !scope.entryMetaData.comments[0].starred;
+                };
+
                 scope.addNote = function () {
                     console.log("adding note");
                     console.log(scope);
@@ -254,13 +254,25 @@ angular.module('phrPrototypeApp')
 
                 scope.deleteNote = function() {
                     console.log("delete note");
-                    scope.entryMetaData = [];
+                    scope.entryMetaData.comments[0] = [];
                     scope.editflag = false;
                 };
 
                 scope.saveNote = function () {
                     console.log("save note");
-                    scope.entryMetaData.comments.push();
+                    var noteID = scope.entryMetaData.comments[0].note_id;
+                    var note = scope.entryMetaData.comments[0].comment;
+                    notes.editNote(noteID, note, function (err, data) {
+
+                        notes.starNote(noteID, scope.entryMetaData.comments[0].starred, function (err, data) {
+                            console.log('add note star error ', err);
+                            console.log('add note with star ', data);
+                        });
+
+                        countStarredComments();
+                    });
+                    scope.editflag = false;
+                    console.log("edited note saved");
                 };
 
             }

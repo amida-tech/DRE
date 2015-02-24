@@ -100,8 +100,8 @@
                             <div class="col-sm-12" ng-show="!entryMetaData.comments[0]">
                                 <form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
                                     <div class="col-sm-1 panel-body text-center">
-                                        <h5 ng-show="newComment.starred === true" ng-click="newStar(true,0)"><a><i class="fa fa-star"></i></a></h5>
-                                        <h5 ng-hide="newComment.starred === true" ng-click="newStar(false,0)"><a><i class="fa fa-star-o"></i></a></h5>
+                                        <h5 ng-show="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star"></i></a></h5>
+                                        <h5 ng-hide="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star-o"></i></a></h5>
                                     </div>
                                     <div class="form-group col-sm-10">
                                         <label for="commentEntry">New:</label>
@@ -117,8 +117,8 @@
                             <div class="col-sm-12" ng-show="editflag">
                                 <form novalidate role="form" name="editForm" ng-submit="saveNote()">
                                     <div class="col-sm-1 panel-body text-center">
-                                        <h5 ng-show="entryMetaData.comments[0].starred === true" ng-click="clickStar(true, 0, recordIndex, entryMetaData.comments[0])"><a><i class="fa fa-star"></i></a></h5>
-                                        <h5 ng-show="entryMetaData.comments[0].starred === false" ng-click="clickStar(false, 0, recordIndex, entryMetaData.comments[0]"><a><i class="fa fa-star-o"></i></a></h5>
+                                        <h5 ng-show="entryMetaData.comments[0].starred === true" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
+                                        <h5 ng-show="entryMetaData.comments[0].starred === false" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
                                     </div>
                                     <div class="form-group col-sm-10">
                                         <label for="commentEntry">Edit:</label>
