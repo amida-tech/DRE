@@ -682,7 +682,10 @@
                 }],
                 "responses": {
                     "200": {
-                        "description": "Note added to account"
+                        "description": "Note added to account",
+                        "schema": {
+                            "$ref": "#/definitions/noteSchema"
+                        }
                     },
                     "400": {
                         "description": "Error"
@@ -708,7 +711,10 @@
                 }],
                 "responses": {
                     "200": {
-                        "description": "Star a note"
+                        "description": "Star a note",
+                        "schema": {
+                            "$ref": "#/definitions/noteSchema"
+                        }
                     },
                     "400": {
                         "description": "Error"
@@ -734,7 +740,36 @@
                 }],
                 "responses": {
                     "200": {
-                        "description": "Star a note"
+                        "description": "Edited note",
+                        "schema": {
+                            "$ref": "#/definitions/noteSchema"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/notes/delete": {
+            "post": {
+                "summary": "Delete a note",
+                "description": "Locate a note using ID and delete",
+                "tags": [
+                    "notes"
+                ],
+                "parameters": [{
+                    "name": "note ID",
+                    "description": "Note locator",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/deleteNoteSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Note successfully deleted"
                     },
                     "400": {
                         "description": "Error"
@@ -1045,6 +1080,20 @@
                     "type": "string"
                 },
                 "note": {
+                    "type": "string"
+                }
+            }
+        },
+        "deleteNoteSchema": {
+            "required": [
+                "username",
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }
