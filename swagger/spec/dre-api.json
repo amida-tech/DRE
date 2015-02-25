@@ -715,6 +715,32 @@
                     }
                 }
             }
+        },
+        "/notes/edit": {
+            "post": {
+                "summary": "Edit a note",
+                "description": "Edit a note that already exists",
+                "tags": [
+                    "notes"
+                ],
+                "parameters": [{
+                    "name": "note",
+                    "description": "Updated note to be saved",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/editNoteSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Star a note"
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1002,6 +1028,24 @@
                 },
                 "star": {
                     "type": "boolean"
+                }
+            }
+        },
+        "editNoteSchema": {
+            "required": [
+                "username",
+                "id",
+                "note"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "note": {
+                    "type": "string"
                 }
             }
         },
