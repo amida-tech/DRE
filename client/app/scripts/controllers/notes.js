@@ -6,7 +6,7 @@
  * # NotesCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, notes, format, dataservice) {
+angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $location, notes, format, dataservice) {
     $scope.any_sections_selected = false;
 
     $scope.notes = [];
@@ -30,6 +30,12 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, note
         });
     }
     */
+
+    $scope.setEntry = function (section) {
+        console.log("set entry type for my record view ", section.section);
+        dataservice.curr_section = section;
+        $location.path('/record');
+    };
 
     $scope.dateSort = function () {
         console.log('old predicate '+$scope.predicate);
