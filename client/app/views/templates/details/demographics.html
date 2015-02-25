@@ -1,0 +1,43 @@
+<div class="col-xs-12">
+    <div class="panel">
+        <div class="panel-body">
+            <div >
+                <div class="col-xs-3">
+                    <!--<h4 class="text-left">{{entryTitle}}</h4>
+                    <h5 class="text-left">{{entrySubTitleOne}}</h5>
+                    <h5 class="text-left">{{entrySubTitleTwo}}</h5>-->
+                    <div profile class="print-profile"></div>
+                </div>
+                <div class="col-xs-9">
+                    <!--Record detail pane.-->
+                    <div id="details{{recordIndex}}">
+                        <table class="table">
+                            <tr ng-show="demographics.addresses">
+                                <td>Address:</td>
+                                <td ng-repeat="demoAddr in demographics.addresses">
+                                    <div ng-show="demoAddr.use" class="text-capitalize">{{demoAddr.use}}:</div>
+                                    <div ng-repeat="addrLine in demoAddr.street_lines">{{addrLine}}</div>
+                                    <div ng-show="demoAddr.state && demoAddr.city">{{demoAddr.city}}, {{demoAddr.state}}</div>
+                                    <div ng-show="demoAddr.zip">{{demoAddr.zip}}</div>
+                                </td>
+                            </tr>
+                            <tr ng-show="demographics.phone">
+                                <td>Phone:</td>
+
+                                <td ng-repeat="demoPhone in demographics.phone">
+                                    <div ng-show="demoPhone.type" class="text-capitalize">{{demoPhone.type}}:</div>
+                                    <div ng-show="demoPhone.number">
+                                        ({{demoPhone.number.substring(0,3)}})-{{demoPhone.number.substring(3,6)}}-{{demoPhone.number.substring(6,10)}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+                <!--Tab panes-->
+            </div>
+        </div>
+    </div>
+</div>

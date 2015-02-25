@@ -26,6 +26,8 @@ angular.module('phrPrototypeApp')
                 //console.log("SCOPE.TYPE ", scope.type);
                 switch (scope.type) {
 
+                
+                
                 case 'allergies':
                     if (scope.entryData.observation) {
                         if (scope.entryData.observation.allergen && scope.entryData.observation.allergen.name) {

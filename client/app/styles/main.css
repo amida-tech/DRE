@@ -8572,6 +8572,10 @@ a:hover {
 .print-record .panel {
   margin: 0px;
 }
+/* line 28, _panels.scss */
+.print-record .profile-content > h4, .print-record .profile-content p {
+  color: #000 !important;
+}
 
 /* line 1, _navbar.scss */
 .navbar-brand {

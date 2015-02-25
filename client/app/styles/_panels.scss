@@ -24,5 +24,11 @@
 	.panel {
 		margin: 0px;
 	}
+	.profile-content {
+		> h4, p {
+			color: #000 !important;
+		}
+		
+	}
 	
 }
