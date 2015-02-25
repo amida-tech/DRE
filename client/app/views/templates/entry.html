@@ -115,7 +115,7 @@
                                 </form>
                             </div>
                             <div class="col-sm-12" ng-show="editflag">
-                                <form novalidate role="form" name="editForm" ng-submit="saveNote()">
+                                <form novalidate role="form" name="editForm">
                                     <div class="col-sm-1 panel-body text-center">
                                         <h5 ng-show="entryMetaData.comments[0].starred === true" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
                                         <h5 ng-show="entryMetaData.comments[0].starred === false" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
@@ -128,7 +128,7 @@
                                             <button ng-click="deleteNote()" class="btn btn-danger pull-left">Delete Note</button>
                                             <div class="pull-right">
                                             <button type="cancel" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
-                                            <button type="submit" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>      
+                                            <button type="submit" ng-click="saveNote()" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>      
                                             </div>                              
                                     </div>
                                 </form>

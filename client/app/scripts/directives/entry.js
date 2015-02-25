@@ -260,7 +260,11 @@ angular.module('phrPrototypeApp')
 
                 scope.deleteNote = function() {
                     console.log("delete note");
-                    scope.entryMetaData.comments[0] = {};
+                    notes.deleteNote(scope.entryMetaData.comments[0].note_id, function (err, data) {
+                        console.log('deleting note ', err);
+                        console.log('deleting note ', data);
+                    });
+                    scope.entryMetaData.comments = [];
                     scope.editflag = false;
                 };
 

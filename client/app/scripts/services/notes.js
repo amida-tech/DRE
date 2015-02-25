@@ -73,6 +73,24 @@ angular.module('phrPrototypeApp')
                 });
         };
 
+        this.deleteNote = function (id, callback) {
+            var note_id = {
+                "id": id
+            };
+
+            console.log("removing note ", note_id);
+            
+            $http.post('/api/v1/notes/delete', note_id)
+                .success(function (data) {
+                    console.log("note removed successfull");
+                    callback(null, data);
+                })
+                .error(function (err) {
+                    console.log("removing note failed");
+                    callback(err);
+                });
+        };
+
         var noteCount = function (callback) {
 
             this.getNotes(function (err, results) {
