@@ -265,6 +265,7 @@ angular.module('phrPrototypeApp')
                         console.log('deleting note ', data);
                     });
                     scope.entryMetaData.comments = [];
+                    countStarredComments();
                     scope.editflag = false;
                 };
 

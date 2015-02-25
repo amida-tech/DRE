@@ -125,7 +125,7 @@
                                         <textarea class="form-control" rows="2" required ng-required="true" ng-minLength="1" ng-model="editComment" name="commentEntry"></textarea>
                                     </div>
                                     <div class="col-sm-10 col-sm-offset-1">
-                                            <button ng-click="deleteNote()" class="btn btn-danger pull-left">Delete Note</button>
+                                            <button type="submit" ng-click="deleteNote()" class="btn btn-danger pull-left">Delete Note</button>
                                             <div class="pull-right">
                                             <button type="cancel" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
                                             <button type="submit" ng-click="saveNote()" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>      
