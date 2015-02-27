@@ -116,24 +116,30 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         });
     };
 
-    //this method is not used in this version of UI
-    /*
+    
     this.createMatch = function() {
+
+        var section = this.section;
+        if (this.section === "conditions") {
+            section = "problems";
+        }
+        if (this.section === "social") {
+            section = "social_history";
+        }
+
         $http({
             method: 'POST',
-            url: '/api/v1/matches/' + $scope.section + '/' + $scope.match_id,
+            url: '/api/v1/matches/' + section + '/' + this.matchId,
             data: {
                 determination: 'added'
             }
         }).
-        success(function(data, status, headers, config) {
-            //Note:  Pill count not refreshing.
-            $location.path("match/reconciliation");
+        success(function (data, status, headers, config) {
         }).
-        error(function(data, status, headers, config) {
-            console.log('error');
+        error(function (data, status, headers, config) {
+            console.log('create match error');
         });
     };
-    */
+    
 
 });
