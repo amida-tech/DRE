@@ -1,0 +1,42 @@
+<div class="container-fluid body-content" style="background-color:#ddd;">
+
+    <!--Body-->
+    <div class="col-sm-12 print-record">
+
+
+
+
+        <div class="col-sm-12" ng-if="sectionOrder">
+            <h4 class="text-center">Demographics</h4>
+                <div profiledetail demographics="demographics"></div>
+
+            </div>
+
+
+
+
+
+
+        <div ng-repeat="section in sectionOrder">
+            <!--Timeline View-->
+            <div class="col-sm-12" ng-show="section !== 'print'">
+                <h4 class="text-center">{{section}}</h4>
+                <div class="panel" ng-hide="recordEntries">
+                    <div class="panel-body">
+                        <h5 class="col-sm-12 text-center">No Record Entries</h5>
+                    </div>
+                </div>
+                
+
+
+                        <div ng-repeat="(recordIndex, recordEntry) in filterBySection(recordEntries,section)" class="col-sm-12 row" id="record{{recordIndex}}" >
+
+                            <printentry type="{{recordEntry.category}}" entry-index="{{recordIndex}}" on-finish-render="ngRepeatFinished"></printentry>
+
+                        </div>
+                <!--end timeline-->
+            </div>
+        </div>
+    </div>
+    <!--<pre>{{masterRecord | json}}</pre>-->
+</div>
