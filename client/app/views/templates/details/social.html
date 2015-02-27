@@ -1,7 +1,13 @@
 <table class="table table-hover">
-    <tr>
-        <td>No additional data.</td>
-        <td></td>
-    </tr>
-
+    
+    <tbody>
+        <tr ng-show="entryData.code.code">
+            <td>Code:</td>
+            <td>{{entryData.code.code}}</td>
+        </tr>
+        <tr ng-show="entryData.code.code_system_name">
+            <td>Code System:</td>
+            <td>{{entryData.code.code_system_name}}</td>
+        </tr>
+    </tbody>
 </table>
