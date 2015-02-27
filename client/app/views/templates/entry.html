@@ -77,13 +77,12 @@
                     <div role="tabpanel" class="collapse" id="comments{{recordIndex}}" data-parent="#selector">
                         <div class="sub-entry">
                             <h3>Entry Notes</h3>
-                            <div class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
+                            <div ng-hide="editflag" class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
                                 <div class="col-sm-11 col-sm-offset-1">
                                     <h5>{{commentEntry.date | date:'short'}}</h5>
                                 </div>
                                 <div class="col-sm-1 panel-body text-center">
-                                    <h5 ng-show="commentEntry.starred === true" ng-click="clickStar(true, commentIndex, recordIndex, commentEntry)"><a><i class="fa fa-star"></i></a></h5>
-                                    <h5 ng-show="commentEntry.starred === false" ng-click="clickStar(false, commentIndex, recordIndex, commentEntry)"><a><i class="fa fa-star-o"></i></a></h5>
+                                    <h5 ng-show="commentEntry.starred === true"><a><i class="fa fa-star"></i></a></h5>
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="panel">
@@ -92,24 +91,49 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-sm-10 col-sm-offset-1">
+                                    <div class="pull-right">
+                                    <button ng-click="editNote()" class="btn btn-primary">Edit</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" ng-show="!entryMetaData.comments[0]">
                                 <form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
                                     <div class="col-sm-1 panel-body text-center">
-                                        <h5 ng-show="newComment.starred === true" ng-click="newStar(true, recordIndex)"><a><i class="fa fa-star"></i></a></h5>
-                                        <h5 ng-show="newComment.starred === false" ng-click="newStar(false, recordIndex)"><a><i class="fa fa-star-o"></i></a></h5>
+                                        <h5 ng-show="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star"></i></a></h5>
+                                        <h5 ng-hide="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star-o"></i></a></h5>
                                     </div>
                                     <div class="form-group col-sm-10">
-                                        <label for="commentEntry">New Note:</label>
+                                        <label for="commentEntry">New:</label>
                                         <textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="newComment.comment" name="commentEntry"></textarea>
                                     </div>
-                                    <div class="form-group col-sm-10">
-                                        <div class="col-sm-2 pull-right">
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                        <div class="pull-right">
                                             <button type="submit" class="btn btn-primary" ng-disabled="commentForm.$invalid">Add Note</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
+                            <div class="col-sm-12" ng-show="editflag">
+                                <form novalidate role="form" name="editForm">
+                                    <div class="col-sm-1 panel-body text-center">
+                                        <h5 ng-show="entryMetaData.comments[0].starred === true" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
+                                        <h5 ng-show="entryMetaData.comments[0].starred === false" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
+                                    </div>
+                                    <div class="form-group col-sm-10">
+                                        <label for="commentEntry">Edit:</label>
+                                        <textarea class="form-control" rows="2" required ng-required="true" ng-minLength="1" ng-model="editComment" name="commentEntry"></textarea>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-1">
+                                            <button type="submit" ng-click="deleteNote()" class="btn btn-danger pull-left">Delete Note</button>
+                                            <div class="pull-right">
+                                            <button type="cancel" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
+                                            <button type="submit" ng-click="saveNote()" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>      
+                                            </div>                              
+                                    </div>
+                                </form>
+                            </div>
+
                         </div>
                     </div>
                 </div>

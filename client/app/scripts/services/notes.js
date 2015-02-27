@@ -55,6 +55,42 @@ angular.module('phrPrototypeApp')
                 });
         };
 
+        this.editNote = function (note_id, edit, callback) {
+            var comment = {
+                "id": note_id,
+                "note": edit
+            };
+            console.log("editing note API ", comment);
+
+            $http.post('/api/v1/notes/edit', comment)
+                .success(function (data) {
+                    console.log("note edited successfully");
+                    callback(null, data);
+                })
+                .error(function (err) {
+                    console.log("editing note failed");
+                    callback(err);
+                });
+        };
+
+        this.deleteNote = function (id, callback) {
+            var note_id = {
+                "id": id
+            };
+
+            console.log("removing note ", note_id);
+            
+            $http.post('/api/v1/notes/delete', note_id)
+                .success(function (data) {
+                    console.log("note removed successfull");
+                    callback(null, data);
+                })
+                .error(function (err) {
+                    console.log("removing note failed");
+                    callback(err);
+                });
+        };
+
         var noteCount = function (callback) {
 
             this.getNotes(function (err, results) {
