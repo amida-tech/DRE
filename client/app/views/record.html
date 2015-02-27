@@ -186,12 +186,18 @@
                 <!--<pre>{{masterRecord | json}}</pre>-->
             </div>
 
-            <!--Timeline View-->
-            <div ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
-                <h4 class="text-center text-white">{{entryType}}</h4>
-                <div class="panel" ng-hide="recordEntries">
-                    <div class="panel-body">
-                        <h5 class="col-sm-12 text-center">No Record Entries</h5>
+        <!--Timeline View-->
+        <div id="category-view" ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
+            <h4 class="text-center text-white">{{entryType}}</h4>
+            <div class="panel" ng-hide="recordEntries">
+                <div class="panel-body">
+                    <h5 class="col-sm-12 text-center">No Record Entries</h5>
+                </div>
+            </div>
+            <div class="panel" ng-if="recordEntries">
+                <div class="panel-body">
+                    <div>
+                        <p>Timeline</p>
                     </div>
                 </div>
                 <div class="panel" ng-if="recordEntries">
