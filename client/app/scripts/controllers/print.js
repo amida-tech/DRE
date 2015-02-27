@@ -114,6 +114,7 @@ angular.module('phrPrototypeApp').controller('PrintCtrl', function($scope, $wind
         console.log($scope.section_count);
         if ($scope.section_count === 11) {
             $window.print();
+            $window.close();
         }
     });
 
