@@ -235,6 +235,11 @@ angular.module('phrPrototypeApp')
                 };
 
                 scope.newComment = {};
+
+                
+
+
+
             }
         };
     });

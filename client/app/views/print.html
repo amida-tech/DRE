@@ -9,12 +9,6 @@
         <div class="col-sm-12" ng-if="sectionOrder">
             <h4 class="text-center">Demographics</h4>
                 <div profiledetail demographics="demographics"></div>
-                    
-
-
-
-
-
 
             </div>
 
@@ -25,7 +19,7 @@
 
         <div ng-repeat="section in sectionOrder">
             <!--Timeline View-->
-            <div class="col-sm-12">
+            <div class="col-sm-12" ng-show="section !== 'print'">
                 <h4 class="text-center">{{section}}</h4>
                 <div class="panel" ng-hide="recordEntries">
                     <div class="panel-body">
@@ -35,9 +29,9 @@
                 
 
 
-                        <div ng-repeat="(recordIndex, recordEntry) in filterBySection(recordEntries,section)" class="col-sm-12 row" id="record{{recordIndex}}">
+                        <div ng-repeat="(recordIndex, recordEntry) in filterBySection(recordEntries,section)" class="col-sm-12 row" id="record{{recordIndex}}" >
 
-                            <printentry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></printentry>
+                            <printentry type="{{recordEntry.category}}" entry-index="{{recordIndex}}" on-finish-render="ngRepeatFinished"></printentry>
 
                         </div>
                 <!--end timeline-->

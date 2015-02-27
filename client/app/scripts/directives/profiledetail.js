@@ -14,8 +14,7 @@ angular.module('phrPrototypeApp').directive('profiledetail', function(profile, f
         },
         link: function postLink(scope, element, attrs) {
 
-            scope.entryTitle = scope.demographics.name.first + " " + scope.demographics.name.middle.join(" ") + " " + scope.demographics.name.last;
-            console.log('entryTitle',scope.entryTitle);
+            
         }
     };
 });
