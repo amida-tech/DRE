@@ -87,3 +87,55 @@ describe('Notes API Get All', function () {
 
 });
 
+describe('Notes API Edit', function () {
+    
+    var tmp_edit = {
+        id: "",
+        note: "Active allergy as a result of most recent appointment"
+    };
+
+    before(function (done) {
+
+        api.get('/api/v1/notes/all')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    tmp_edit.id = res.body[0]._id;
+                    done();
+                }
+            });
+    });
+
+    it('Notes Endpoint: POST Edit', function (done) {
+        api.post('/api/v1/notes/edit')
+            .send(tmp_edit)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    done();
+                }
+            });
+    });
+
+    it('Notes Endpoint: GET', function (done) {
+        api.get('/api/v1/notes/all')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    expect(res.body.length).to.equal(1);
+                    expect(res.body[0]._id).to.exist;
+                    expect(res.body[0].star).to.equal(false);
+                    expect(res.body[0].note).to.equal('Active allergy as a result of most recent appointment');                    
+                    done();
+                }
+            });
+    });
+
+});
+
