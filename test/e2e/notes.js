@@ -139,3 +139,104 @@ describe('Notes API Edit', function () {
 
 });
 
+describe('Notes API Star', function () {
+    
+    var tmp_star = {
+        id: "",
+        star: true
+    };
+
+    before(function (done) {
+
+        api.get('/api/v1/notes/all')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    tmp_star.id = res.body[0]._id;
+                    done();
+                }
+            });
+    });
+
+    it('Notes Endpoint: POST Star', function (done) {
+        api.post('/api/v1/notes/star')
+            .send(tmp_star)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    done();
+                }
+            });
+    });
+
+    it('Notes Endpoint: GET', function (done) {
+        api.get('/api/v1/notes/all')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    expect(res.body.length).to.equal(1);
+                    expect(res.body[0]._id).to.exist;
+                    expect(res.body[0].star).to.equal(true);
+                    expect(res.body[0].note).to.equal('Active allergy as a result of most recent appointment');                    
+                    done();
+                }
+            });
+    });
+
+});
+
+describe('Notes API Delete', function () {
+    
+    var tmp_delete = {
+        id: ""
+    };
+
+    before(function (done) {
+
+        api.get('/api/v1/notes/all')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    tmp_delete.id = res.body[0]._id;
+                    done();
+                }
+            });
+    });
+
+    it('Notes Endpoint: POST Delete', function (done) {
+        api.post('/api/v1/notes/delete')
+            .send(tmp_delete)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    done();
+                }
+            });
+    });
+
+    it('Notes Endpoint: GET', function (done) {
+        api.get('/api/v1/notes/all')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                } else {
+                    expect(res.body.length).to.equal(0);
+                    expect(res.body[0]).to.not.exist;
+                    done();
+                }
+            });
+    });
+
+});
+
