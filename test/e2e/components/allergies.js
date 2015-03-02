@@ -304,6 +304,8 @@ describe('Allergies API - Test Partial Matches:', function () {
     });
 });
 
+
+// Add new Codeine Entry
 describe('Allergies API - Test Added Matches', function () {
 
     var update_id = '';
@@ -328,7 +330,6 @@ describe('Allergies API - Test Added Matches', function () {
                             if (err) {
                                 done(err);
                             } else {
-                                expect(res.body).to.be.empty;
                                 done();
                             }
                         });

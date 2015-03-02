@@ -217,6 +217,14 @@ angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $
                 }
                 */
             };
+            scope.createNewButton = function () {
+                // create a new entry during reconciliation
+
+                console.log("match: create new entry");
+                matches.createMatch();
+                $location.path('/record');
+                $route.reload();
+            };
         }
     };
 });
