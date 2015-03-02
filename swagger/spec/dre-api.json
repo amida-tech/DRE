@@ -673,10 +673,10 @@
                 ],
                 "parameters": [{
                     "name": "Note",
-                    "description": "Entry, section, note, date, star",
+                    "description": "Entry, section, note",
                     "in": "body",
                     "schema": {
-                        "$ref": "#/definitions/noteSchema"
+                        "$ref": "#/definitions/addNoteSchema"
                     },
                     "required": true
                 }],
@@ -1077,6 +1077,28 @@
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                },
+                "note": {
+                    "type": "string"
+                }
+            }
+        },
+        "addNoteSchema": {
+            "required": [
+                "username",
+                "section",
+                "entry",
+                "note"
+            ],
+            "properties": {
+                "section": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "entry": {
                     "type": "string"
                 },
                 "note": {
