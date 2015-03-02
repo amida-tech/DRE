@@ -33,6 +33,10 @@ describe('Pre Test Cleanup', function () {
     });
 });
 
+
+// For a note on Penicillin Allergy in Allergies section
+
+
 describe('Notes API', function () {
     
     var tmp_note = {
