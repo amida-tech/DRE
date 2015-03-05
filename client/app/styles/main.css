@@ -8501,18 +8501,19 @@ h6, .h6 {
 .landing-panel {
   background: #fff;
   padding: 20px;
-  background-image: url("../images/hero.png");
-  background-position: left;
+  background-image: url("../images/hero3.jpg");
   background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 1600px;
   background-color: #333333;
   min-height: 400px;
 }
-/* line 15, _landing.scss */
+/* line 17, _landing.scss */
 .landing-panel h1 {
   color: #fff;
 }
 
-/* line 20, _landing.scss */
+/* line 22, _landing.scss */
 .icon-circle {
   background: #6AA6FF;
   width: 100px;
@@ -8520,7 +8521,7 @@ h6, .h6 {
   margin: 0 auto;
   text-align: center;
 }
-/* line 28, _landing.scss */
+/* line 30, _landing.scss */
 .icon-circle i {
   margin-top: 20px;
   color: #fff;
