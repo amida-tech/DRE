@@ -91,6 +91,25 @@ node server.js
 
 Contributors are welcome. See issues https://github.com/amida-tech/DRE/issues
 
+## Contributors
+
+###### Amida team
+
+- Dmitry Kachaev
+- Matt McCall
+- Ekavali Mishra
+- Jamie Johnson
+- Byung Joo Shin (summer '14 intern, UVA)
+- Kevin Young (summer '14 intern, UMD)
+- Nadia Wallace (winter '15 intern, MIT)
+
+###### PWC team
+
+_We want to acknowledge PWC support in developing FHIR components for
+DRE, among other contributions to codebase of this open source project._
+
+- Afsin Ustundag
+
 ## Release Notes
 
 See release notes [here] (./RELEASENOTES.md)
