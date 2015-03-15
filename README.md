@@ -96,7 +96,6 @@ Contributors are welcome. See issues https://github.com/amida-tech/DRE/issues
 - Matt McCall
 - Ekavali Mishra
 - Jamie Johnson
-
 - Byung Joo Shin (summer '14 intern, UVA)
 - Kevin Young (summer '14 intern, UMD)
 - Nadia Wallace (winter '15 intern, MIT)
