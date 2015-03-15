@@ -22,7 +22,7 @@
                         </span>
                     </div>
                     <div class="col-sm-12">
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <h4 ng-if="entryType==='all'">{{user_first}}'s Record Overview</h4>
                             <h4 ng-if="entryType!=='all'">{{user_first}}'s {{entryType}}</h4>
                             <p ng-if="entryType==='all'">This page gives an overview of your health record activity.</p>
@@ -30,8 +30,27 @@
                             <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
 
                         </div>
-                        <div class="col-sm-4" ng-if="entryType==='all'">
+                        <div class="col-sm-3" ng-if="entryType==='all'">
                             <a href="#/print" target="_blank">
+                                <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
+                                    <div class="col-sm-12 text-left" style="text-transform: none;">
+                                        <div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
+                                            <i class="fa fa-print fa-2x"></i> 
+                                        </div>
+                                        <div class="pull-right">
+                                            <h6 style="text-transform: none; margin: 0px;">&nbsp;</h6>
+                                            <h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Print <br/> my record</h5>
+                                        </div>
+                                    </div>
+                                </button>
+                            </a>
+
+                            <!--br/>
+                            <h6 style="max-width: 175px; text-align: center;"><i class="fa fa-print"></i> <a href="/#/print" target="_blank">Print</a> my health record.</h6-->
+                        </div>
+
+                        <div class="col-sm-3" ng-if="entryType==='all'">
+                            <a href="/api/v1/master_health_record/xml">
                                 <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
                                         <div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
@@ -45,6 +64,7 @@
                                 </button>
                             </a>
                             <h6 style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
+
                         </div>
                     </div>
                     <div class="col-sm-10 col-sm-offset-1 text-center" ng-if="entryType!=='all' && masterMatches.count>0">
