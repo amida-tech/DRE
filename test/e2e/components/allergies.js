@@ -304,7 +304,6 @@ describe('Allergies API - Test Partial Matches:', function () {
     });
 });
 
-
 // Add new Codeine Entry
 describe('Allergies API - Test Added Matches', function () {
 

@@ -6,15 +6,15 @@
  * # measurements
  */
 angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout', 'd3Service',
-        function ($window, $timeout, d3Service) {
+        function($window, $timeout, d3Service) {
             return {
                 restrict: 'A',
                 scope: {
                     data: '='
                 },
-                link: function (scope, ele, attrs) {
+                link: function(scope, ele, attrs) {
                     //bring in d3 code as a service
-                    d3Service.d3().then(function (d3) {
+                    d3Service.d3().then(function(d3) {
                         var renderTimeout;
                         var margin = {
                                 top: 0,
@@ -27,22 +27,22 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                         //set initial svg values
                         var svg = d3.select(ele[0]).append('svg').attr('class', 'chart').attr('width', w + margin.left + margin.right).attr('height', h + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
                         //watch window resize to re-render
-                        $window.onresize = function () {
+                        $window.onresize = function() {
                             scope.$apply();
                         };
 
-                        scope.$watch(function () {
+                        scope.$watch(function() {
                             return angular.element($window)[0].innerWidth;
-                        }, function () {
+                        }, function() {
                             scope.render(scope.data);
                         });
 
                         //watch your attributes for changes to re-render
-                        scope.$watch('data', function (newVals, oldVals) {
+                        scope.$watch('data', function(newVals, oldVals) {
                             scope.render(newVals);
                         }, true);
                         //called to render chart
-                        scope.render = function (data) {
+                        scope.render = function(data) {
                             console.log("d3template DIRECTIVE RENDER");
                             //clean svg
                             svg.selectAll('*').remove();
@@ -52,7 +52,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                             if (renderTimeout) {
                                 clearTimeout(renderTimeout);
                             }
-                            renderTimeout = $timeout(function () {
+                            renderTimeout = $timeout(function() {
                                 //updates chart size on page resize
                                 if (d3.select(ele[0]).node().offsetWidth > 0) {
                                     w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right;
@@ -179,15 +179,15 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
         };
     }) */
     .directive('linechart', ['$window', '$timeout', 'd3Service',
-        function ($window, $timeout, d3Service) {
+        function($window, $timeout, d3Service) {
             return {
                 restrict: 'A',
                 scope: {
                     data: '='
                 },
-                link: function (scope, ele, attrs) {
+                link: function(scope, ele, attrs) {
                     //bring in d3 code as a service
-                    d3Service.d3().then(function (d3) {
+                    d3Service.d3().then(function(d3) {
                         var renderTimeout;
                         var margin = {
                                 top: 0,
@@ -200,34 +200,34 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                         //set initial svg values
                         var svg = d3.select(ele[0]).append('svg').attr('class', 'chart').attr('width', w + margin.left + margin.right).attr('height', h + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
                         //watch window resize to re-render
-                        $window.onresize = function () {
+                        $window.onresize = function() {
                             console.log("RESIZE");
 
                             scope.$apply();
                         };
-                        scope.$watch(function () {
+                        scope.$watch(function() {
                             return angular.element($window)[0].innerWidth;
-                        }, function () {
+                        }, function() {
                             console.log("WIDTH CHANGES");
 
                             scope.render(scope.data);
                         });
 
-                        scope.$on('tabchange', function (event, args) {
+                        scope.$on('tabchange', function(event, args) {
                             console.log("TAB CHANGES");
                             scope.render(scope.data);
                         });
 
                         //watch your attributes for changes to re-render
-                        scope.$watch('data', function (newVals, oldVals) {
+                        scope.$watch('data', function(newVals, oldVals) {
                             console.log("DATA CHANGES");
                             scope.render(newVals);
                         }, true);
 
                         //called to render chart
-                        scope.render = function (entries) {
+                        scope.render = function(entries) {
                             var vitals = [];
-                            _.each(entries, function (entry) {
+                            _.each(entries, function(entry) {
                                 if (entry.category === "vitals") {
                                     console.log("entry >>>>> ", entry.metadata.datetime[0].date);
                                     vitals.push(entry);
@@ -249,7 +249,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                             if (renderTimeout) {
                                 clearTimeout(renderTimeout);
                             }
-                            renderTimeout = $timeout(function () {
+                            renderTimeout = $timeout(function() {
                                 //updates chart size on page resize
                                 if (d3.select(ele[0]).node().offsetWidth > 0) {
                                     w = d3.select(ele[0]).node().offsetWidth - margin.left - margin.right;
@@ -263,12 +263,18 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                 var graphValues = [];
                                 var yAxisValues = [];
                                 var format = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ");
-                                _.each(vitals, function (entry) {
+                                _.each(vitals, function(entry) {
                                     var tmpVital = {};
                                     if (attrs.graphType === "weight") {
                                         if (entry.data.vital.name === "Patient Body Weight - Measured") {
-                                            tmpVital.value = entry.data.value;
-                                            tmpVital.unit = entry.data.unit;
+                                            if (entry.data.unit === "kg") {
+                                                tmpVital.value = Math.floor(2.20462*entry.data.value);
+                                                tmpVital.unit = entry.data.unit;
+                                            } else {
+                                                tmpVital.value = entry.data.value;
+                                                tmpVital.unit = entry.data.unit;
+                                            }
+
                                             tmpVital.date = format.parse(entry.data.date_time.point.date);
                                             graphVitals.push(tmpVital);
                                             graphDates.push(tmpVital.date);
@@ -307,9 +313,9 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                     yScale = d3.scale.linear().domain([d3.min(graphValues) - (d3.min(graphValues) * 0.1), d3.max(graphValues) + (d3.max(graphValues) * 0.1)]).range([h - margin.top, margin.bottom]);
                                     xAxisGen = d3.svg.axis().scale(xScale).orient("bottom").tickFormat(d3.time.format("%m/%d")).outerTickSize([2]).tickValues(graphDates);
                                     yAxisGen = d3.svg.axis().scale(yScale).orient("left").ticks(4).outerTickSize([2]);
-                                    lineFun = d3.svg.line().x(function (d) {
+                                    lineFun = d3.svg.line().x(function(d) {
                                         return xScale(d.date);
-                                    }).y(function (d) {
+                                    }).y(function(d) {
                                         return yScale(d.value);
                                     }).interpolate("cardinal").tension(0.5);
                                 }
@@ -321,7 +327,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
 
                                     var lineTooltip = d3.select('body').append("div").attr("id", "cluster_tooltip").style("max-width", "300px").style("padding", "10px").style("background-color", "rgba(255, 255, 255, 0.7)").style("border-radius", "10px").style("box-shadow", "4px 4px 10px rgba(0, 0, 0, 0.4)").style("position", "absolute").style("z-index", "10").style("visibility", "hidden");
 
-                                    var tooltip_mouseover = function (d) {
+                                    var tooltip_mouseover = function(d) {
                                         svg.selectAll("#tipline").remove();
                                         var xPos = parseFloat(d3.select(this).attr('cx'));
                                         var yPos = parseFloat(d3.select(this).attr('cy'));
@@ -340,10 +346,10 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                         lineTooltip.html(tooltipText);
                                         return lineTooltip.style("visibility", "visible");
                                     };
-                                    var tooltip_positioned_mousemove = function () {
+                                    var tooltip_positioned_mousemove = function() {
                                         return lineTooltip.style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
                                     };
-                                    var tooltip_hide_tooltip = function () {
+                                    var tooltip_hide_tooltip = function() {
                                         return lineTooltip.style("visibility", "hidden");
                                     };
 
@@ -355,9 +361,9 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                             "fill": "none",
                                             "class": pathClass
                                         });
-                                        svg.selectAll("dot").data(graphVitals).enter().append("circle").attr("r", 4.5).attr("cx", function (d) {
+                                        svg.selectAll("dot").data(graphVitals).enter().append("circle").attr("r", 4.5).attr("cx", function(d) {
                                                 return xScale(d.date);
-                                            }).attr("cy", function (d) {
+                                            }).attr("cy", function(d) {
                                                 return yScale(d.value);
                                             }).on("mouseover", tooltip_mouseover)
                                             .on("mousemove", tooltip_positioned_mousemove)
@@ -368,7 +374,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                             .append("rect")
                                             .attr("width", 2)
                                             .attr("height", 5)
-                                            .attr("x", function (d) {
+                                            .attr("x", function(d) {
                                                 return xScale(d.date);
                                             }).attr("y", h);
 
@@ -377,7 +383,7 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                             .append("rect")
                                             .attr("width", 5)
                                             .attr("height", 2)
-                                            .attr("x", margin.left - 5).attr("y", function (d) {
+                                            .attr("x", margin.left - 5).attr("y", function(d) {
                                                 return yScale(d);
                                             });
 
@@ -390,9 +396,9 @@ angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout'
                                             "fill": "none",
                                             "class": pathClass
                                         });
-                                        svg.selectAll("dot").data(graphVitalsTwo).enter().append("circle").attr("r", 4.5).attr("cx", function (d) {
+                                        svg.selectAll("dot").data(graphVitalsTwo).enter().append("circle").attr("r", 4.5).attr("cx", function(d) {
                                                 return xScale(d.date);
-                                            }).attr("cy", function (d) {
+                                            }).attr("cy", function(d) {
                                                 return yScale(d.value);
                                             }).on("mouseover", tooltip_mouseover)
                                             .on("mousemove", tooltip_positioned_mousemove)

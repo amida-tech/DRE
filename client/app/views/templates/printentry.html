@@ -1,7 +1,7 @@
 <div class="col-xs-12">
     <div class="panel">
         <div class="panel-body">
-            <div >
+            <div>
                 <div class="col-xs-3">
                     <h4 class="text-left">{{entryTitle}}</h4>
                     <h5 class="text-left">{{entrySubTitleOne}}</h5>
@@ -14,7 +14,7 @@
                     </div>
                     <!--Record comments pane.-->
                     <div id="comments{{recordIndex}}" data-parent="#selector" ng-if="entryMetaData.comments">
-                        
+
                         <table class="table">
                             <tr>
                                 <td class="col-xs-1">Notes: </td>
@@ -24,7 +24,7 @@
                                             <tbody>
                                                 <tr ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
                                                     <td class="col-xs-1"><span ng-show="commentEntry.starred === true"><a><i class="fa fa-star"></i></a></span>
-                                    <span ng-show="commentEntry.starred === false"><a><i class="fa fa-star-o"></i></a></span>
+                                                        <span ng-show="commentEntry.starred === false"><a><i class="fa fa-star-o"></i></a></span>
                                                     </td>
                                                     <td class="col-xs-11">{{commentEntry.comment}}</td>
                                                 </tr>
@@ -44,7 +44,7 @@
                                         <table class="table table-condensed">
                                             <tbody>
                                                 <tr ng-repeat="(attrIndex, attrEntry) in entryData.metadata.attribution">
-                                                    <td ><a href="#/files">{{attrEntry.record.filename}}</a>
+                                                    <td><a href="#/files">{{attrEntry.record.filename}}</a>
                                                     </td>
                                                     <td class="capitalize">{{attrEntry.merge_reason}}</td>
                                                     <td>{{attrEntry.merged | date:'short'}}</td>

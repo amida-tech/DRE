@@ -58,7 +58,6 @@ app.disable('etag');
 
 app.use('/docs', express.static('./swagger'));
 
-
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(cookieParser());
