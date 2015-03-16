@@ -19,6 +19,7 @@
   "dependencies": {
     "async": "0.9.x",
     "blue-button": "~1.3.0",
+    "blue-button-generate": "^1.4.0-beta.14",
     "blue-button-hl7": "~1.0.0",
     "blue-button-match": "^1.2.0",
     "blue-button-meta": "^1.3.0",

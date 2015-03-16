@@ -4073,7 +4073,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 									</text>
 									<statusCode code="completed"/>
 									<effectiveTime value="20121002"/>
-									<value xsi:type="PQ" value="64" unit="[in_us]"/>
+									<value xsi:type="PQ" value="70" unit="[in_us]"/>
 									<author>
 										<time value="20121002103000-0400"/>
 										<assignedAuthor>
@@ -4278,7 +4278,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 									</text>
 									<statusCode code="completed"/>
 									<effectiveTime value="20000407"/>
-									<value xsi:type="PQ" value="88" unit="kg"/>
+									<value xsi:type="PQ" value="90" unit="kg"/>
 									<interpretationCode code="N" codeSystem="2.16.840.1.113883.5.83"
 									/>
 								</observation>
