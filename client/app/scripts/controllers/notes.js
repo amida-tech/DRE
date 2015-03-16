@@ -38,13 +38,13 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
     };
 
     $scope.dateSort = function () {
-        console.log('old predicate '+$scope.predicate);
+        console.log('old predicate ' + $scope.predicate);
         if ($scope.predicate === '') {
             $scope.predicate = 'date';
         } else {
             $scope.predicate = '';
         }
-        console.log('new predicate '+$scope.predicate);
+        console.log('new predicate ' + $scope.predicate);
     };
 
     //TODO may need callback

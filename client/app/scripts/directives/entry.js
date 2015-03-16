@@ -223,7 +223,6 @@ angular.module('phrPrototypeApp')
 
                         scope.entryMetaData.comments[0] = scope.newComment;
 
-
                         console.log(scope.newComment.starred);
                         if (angular.isUndefined(scope.newComment.starred)) {
                             scope.newComment.starred = false;
@@ -238,27 +237,24 @@ angular.module('phrPrototypeApp')
                         console.log("scope.newComment", scope.newComment);
                         scope.newComment = {};
 
-
-
                     });
 
                 };
 
                 scope.newComment = {};
 
-                scope.cancelEdit = function() {
+                scope.cancelEdit = function () {
                     console.log("cancel edit");
                     scope.editflag = false;
                 };
 
-
-                scope.editNote = function() {
+                scope.editNote = function () {
                     console.log("edit note");
                     scope.editflag = true;
                     scope.editComment = scope.entryMetaData.comments[0].comment;
                 };
 
-                scope.deleteNote = function() {
+                scope.deleteNote = function () {
                     console.log("delete note");
                     notes.deleteNote(scope.entryMetaData.comments[0].note_id, function (err, data) {
                         console.log('deleting note ', err);

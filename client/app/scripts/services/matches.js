@@ -116,8 +116,7 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         });
     };
 
-    
-    this.createMatch = function() {
+    this.createMatch = function () {
 
         var section = this.section;
         if (this.section === "conditions") {
@@ -134,12 +133,10 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
                 determination: 'added'
             }
         }).
-        success(function (data, status, headers, config) {
-        }).
+        success(function (data, status, headers, config) {}).
         error(function (data, status, headers, config) {
             console.log('create match error');
         });
     };
-    
 
 });

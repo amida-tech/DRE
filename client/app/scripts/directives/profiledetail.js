@@ -5,7 +5,7 @@
  * @description
  * # profile
  */
-angular.module('phrPrototypeApp').directive('profiledetail', function(profile, format) {
+angular.module('phrPrototypeApp').directive('profiledetail', function (profile, format) {
     return {
         templateUrl: 'views/templates/details/demographics.html',
         restrict: 'EA',
@@ -14,7 +14,6 @@ angular.module('phrPrototypeApp').directive('profiledetail', function(profile, f
         },
         link: function postLink(scope, element, attrs) {
 
-            
         }
     };
 });

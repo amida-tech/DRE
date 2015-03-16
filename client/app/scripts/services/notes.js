@@ -79,7 +79,7 @@ angular.module('phrPrototypeApp')
             };
 
             console.log("removing note ", note_id);
-            
+
             $http.post('/api/v1/notes/delete', note_id)
                 .success(function (data) {
                     console.log("note removed successfull");

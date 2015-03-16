@@ -3,24 +3,21 @@ Data Reconciliation Engine (DRE)
 
 DRE is a patient frontend (UI) and Node.js server for reconciling health data.
 
-aka. Raccoon - Data Raccoonciliation Engine for Health Data.
-
-![Raccoon](http://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Yawning_Raccoon.jpg/976px-Yawning_Raccoon.jpg)
 
 [![Build Status](https://travis-ci.org/amida-tech/DRE.svg)](https://travis-ci.org/amida-tech/DRE)
 
 High Level Overview
 ===================
-![Raccoon High Level Diagram](docs/images/dre_overview_new.png)
+![DRE High Level Diagram](docs/images/dre_overview_new.png)
 
-The purpose of the Data Raccoonciliation Engine is to take personal health data in a variety of formats (starting with BlueButton/CCDA) from multiple sources and parse/normalize/de-duplicate/merge it into a single Patient's Master Health Record with patient assistance (although most of hard work will be done automagically).
+The purpose of the Data Reconciliation Engine is to take personal health data in a variety of formats (starting with BlueButton/CCDA) from multiple sources and parse/normalize/de-duplicate/merge it into a single Patient's Master Health Record with patient assistance (although most of hard work will be done automagically).
 
 
-Raccoon's components
+DRE's components
 =================
-![Raccoon Components Diagram](docs/images/dre_four_components.png)
+![DRE Components Diagram](docs/images/dre_four_components.png)
 
-Raccoon has 4 primary elements
+DRE has 4 primary elements
 
 #### 1 - Parsing and Normalization Library.
 
@@ -90,6 +87,24 @@ node server.js
 ## Contributing
 
 Contributors are welcome. See issues https://github.com/amida-tech/DRE/issues
+
+## Contributors
+
+###### Amida team
+
+- Dmitry Kachaev
+- Matt McCall
+- Ekavali Mishra
+- Jamie Johnson
+- Byung Joo Shin (summer '14 intern, UVA)
+- Kevin Young (summer '14 intern, UMD)
+- Nadia Wallace (winter '15 intern, MIT)
+
+###### PWC team
+
+_We gratefully acknowledge PWC's essential support in the development of the FHIR components of DRE, among other important contributions to codebase of this open source project._
+
+- Afsin Ustundag
 
 ## Release Notes
 

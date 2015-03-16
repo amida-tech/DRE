@@ -33,18 +33,15 @@ describe('Pre Test Cleanup', function () {
     });
 });
 
-
 // For a note on Penicillin Allergy in Allergies section
 
-
 describe('Notes API', function () {
-    
+
     var tmp_note = {
         section: "allergies",
         entry: "54f2421f6dd0f66b43862e82",
         note: "Inconsistent reaction"
     };
-
 
     before(function (done) {
         common.loadTestRecord(api, 'bluebutton-01-original.xml', function (err) {
@@ -83,7 +80,7 @@ describe('Notes API Get All', function () {
                     expect(res.body.length).to.equal(1);
                     expect(res.body[0]._id).to.exist;
                     expect(res.body[0].star).to.equal(false);
-                    expect(res.body[0].note).to.equal('Inconsistent reaction');                    
+                    expect(res.body[0].note).to.equal('Inconsistent reaction');
                     done();
                 }
             });
@@ -92,7 +89,7 @@ describe('Notes API Get All', function () {
 });
 
 describe('Notes API Edit', function () {
-    
+
     var tmp_edit = {
         id: "",
         note: "Active allergy as a result of most recent appointment"
@@ -135,7 +132,7 @@ describe('Notes API Edit', function () {
                     expect(res.body.length).to.equal(1);
                     expect(res.body[0]._id).to.exist;
                     expect(res.body[0].star).to.equal(false);
-                    expect(res.body[0].note).to.equal('Active allergy as a result of most recent appointment');                    
+                    expect(res.body[0].note).to.equal('Active allergy as a result of most recent appointment');
                     done();
                 }
             });
@@ -144,7 +141,7 @@ describe('Notes API Edit', function () {
 });
 
 describe('Notes API Star', function () {
-    
+
     var tmp_star = {
         id: "",
         star: true
@@ -187,7 +184,7 @@ describe('Notes API Star', function () {
                     expect(res.body.length).to.equal(1);
                     expect(res.body[0]._id).to.exist;
                     expect(res.body[0].star).to.equal(true);
-                    expect(res.body[0].note).to.equal('Active allergy as a result of most recent appointment');                    
+                    expect(res.body[0].note).to.equal('Active allergy as a result of most recent appointment');
                     done();
                 }
             });
@@ -196,7 +193,7 @@ describe('Notes API Star', function () {
 });
 
 describe('Notes API Delete', function () {
-    
+
     var tmp_delete = {
         id: ""
     };
@@ -243,4 +240,3 @@ describe('Notes API Delete', function () {
     });
 
 });
-
