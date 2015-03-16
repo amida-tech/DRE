@@ -1,6 +1,21 @@
 # DRE Release Notes
 
-# v1.3.1 - February 11, 2014
+# v1.4.0 - March 16, 2015
+
+This release of the DRE includes:
+
+- New DIRECT/Abelian DRE integration, see https://github.com/amida-tech/abelian-connector
+- FHIR data model support in DRE (for five resources), see https://github.com/amida-tech/blue-button-fhir
+- Export notes to CCDA
+- Updated UI 
+    - New images
+    - Measurements Chart
+    - Notes editing/deleting
+    - Printing Master record
+    - Manual match improvements
+- Swagger API documentation
+
+# v1.3.1 - February 11, 2015
 
 This release of the DRE includes:
 
