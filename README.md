@@ -46,7 +46,7 @@ This provides a API for interaction with and access to the aggregated health rec
 Documentation for record.js [API](./docs/recordjs.md)
 
 ### Screenshots of the Demo
--![Landing Page](./docs/images/1-Landing.png)		
+-![Landing Page](./docs/images/1-LandingBars.png)		
 -![Master Health Record View](./docs/images/2-MyRecord.png)		
 -![My Files](./docs/images/3-MyFiles.png)	
 
