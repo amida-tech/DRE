@@ -101,7 +101,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    function pageRender(data, data_notes) {
+    function pageRender(data, data_notes) { //MARTZ: data and data_notes aren't used?
 
         //calculate current height/weight/bmi/blood pressure
         //based on processed record from $scope.recordEntries
@@ -356,6 +356,10 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
             if (newVal !== oldVal) {
                 if (newVal === "all") {
+                    console.log("Martz: new value was all");
+                    $scope.$broadcast('tabchange', {
+                        "val": $scope.tabs.activeTab
+                    });
                     $scope.entryListFiltered = $scope.recordEntries;
 
                     dataservice.curr_section = "all";
