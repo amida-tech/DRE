@@ -356,6 +356,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
             if (newVal !== oldVal) {
                 if (newVal === "all") {
+                    $scope.$broadcast('tabchange', {
+                        "val": $scope.tabs.activeTab
+                    });
                     $scope.entryListFiltered = $scope.recordEntries;
 
                     dataservice.curr_section = "all";
