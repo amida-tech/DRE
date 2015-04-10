@@ -19,7 +19,7 @@ describe('Pre Test Cleanup', function () {
 
     before(function (done) {
         var options = {
-            dbName: 'dre',
+            dbName: process.env.DBname || 'tests',
             supported_sections: ['allergies', 'procedures']
         };
 

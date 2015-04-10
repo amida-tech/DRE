@@ -149,7 +149,7 @@ module.exports = function (grunt) {
                 }
             },
             test: {
-                DBname: 'test'
+                DBname: 'devtests'
             }
         },
         mochaTest: {
