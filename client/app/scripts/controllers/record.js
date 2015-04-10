@@ -202,7 +202,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             if ($scope.dashMetrics.height.unit === "cm") {
                 $scope.dashMetrics.height.unit = "[in_us]";
                 $scope.dashMetrics.height.value = 0.393701 * $scope.dashMetrics.height.value;
-                $scope.dashMetrics.height.value=Math.round($scope.dashMetrics.height.value);
+                $scope.dashMetrics.height.value = Math.round($scope.dashMetrics.height.value);
             }
 
             //Format height output.
