@@ -41,6 +41,7 @@
     "grunt": "0.4.x",
     "grunt-contrib-jshint": "0.8.x",
     "grunt-contrib-watch": "0.6.x",
+    "grunt-execute": "0.2.2",
     "grunt-express-server": "0.4.x",
     "grunt-mocha-test": "0.10.x",
     "hl7": "~1.0.0",
@@ -68,6 +69,10 @@
     "start": "node server.js"
   },
   "devDependencies": {
-    "grunt-jsbeautifier": "^0.2.8"
+    "blue-button-cms": "^1.3.1",
+    "blue-button-xml": "^1.3.1",
+    "grunt-jsbeautifier": "^0.2.8",
+    "libxmljs": "^0.9.0",
+    "xmldom": "*"
   }
 }

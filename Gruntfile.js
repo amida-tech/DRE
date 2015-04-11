@@ -5,9 +5,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-jsbeautifier');
+    grunt.loadNpmTasks('grunt-execute');
 
     grunt.registerTask('default', ['jshint', 'express:dev', 'mochaTest']);
     grunt.registerTask('dev', ['jshint', 'jsbeautifier']);
+
+    grunt.registerTask('benchmark', ['execute']);
 
     // Print a timestamp (useful for when watching)
     grunt.registerTask('timestamp', function () {
@@ -77,6 +80,11 @@ module.exports = function (grunt) {
                     timeout: '10000'
                 },
                 src: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
+            }
+        },
+        execute: {
+            target: {
+                src: ['./lib/benchmark/index.js']
             }
         }
     });
