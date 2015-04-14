@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "dependencies": {
     "d3": "~3.4.0",
-    "d3-tip": "~0.6.6",
     "underscore": "~1.7.0",
     "angular": "~1.2.0",
     "moment": "~2.8.3",

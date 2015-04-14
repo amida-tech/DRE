@@ -1,0 +1,34 @@
+<div class="col-sm-2">
+    <a class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{entryType}}" timeline-index="{{recordIndex}}" data-toggle="collapse" data-target="#details{{recordIndex}}" aria-expanded="false" aria-controls="details{{recordIndex}}" ng-click="swapTabs('details', recordIndex)"></a>
+</div>
+<div class="col-sm-10">
+    <div class="panel timeline-entry">
+        <div class="panel-body" id="accordian">
+            <div class="timeline-entry-header col-sm-12">
+                <div class="col-sm-6">
+                    <h4 class="text-left">{{entryTitle}}{{entryDose}}</h4>
+                    <h5 class="text-left">{{entrySubTitleOne}}</h5>
+                    <h5 class="text-left">{{entrySubTitleTwo}}</h5>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <!-- only one match example per entry for now -->
+                    <div>
+                        <button class="pull-right btn btn-link" ng-click="launchModal(entryData)">
+                            <i class="fa fa-info-circle fa-2x fa-inline"></i>
+                        </button>
+                    </div>
+
+                    <div ng-if="recordEntry.metadata.match.count>0">
+                        <button class="pull-right btn btn-link" ng-click="launchMatch(entryMetaData)"><i class="fa fa-flag fa-inline"></i>{{recordEntry.metadata.match.count}} pending update<span ng-show="recordEntry.metadata.match.count > 1">s</span>
+                        </button>
+                    </div>
+
+                    <div ng-if="recordEntry.metadata.starred_comments > 0">
+                        <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star fa-inline"></i>{{recordEntry.metadata.starred_comments}} starred note<span ng-show="recordEntry.metadata.starred_comments > 1">s</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
