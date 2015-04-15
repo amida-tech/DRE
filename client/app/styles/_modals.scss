@@ -6,3 +6,8 @@
 .modal-open {
     overflow: scroll;
 }
+
+.bs-sidebar .nav > .active > ul {
+    display: block;
+    margin-bottom: 8px;
+}
