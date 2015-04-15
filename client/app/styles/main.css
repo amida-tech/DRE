@@ -8686,13 +8686,23 @@ form .button-well {
   padding-left: 20px;
 }
 
-/* line 77, main.scss */
+/* line 2, _modals.scss */
+.modal-content {
+  text-align: left;
+}
+
+/* line 6, _modals.scss */
+.modal-open {
+  overflow: scroll;
+}
+
+/* line 78, main.scss */
 .update-selected {
   background-color: #def;
   color: black;
 }
 
-/* line 84, main.scss */
+/* line 85, main.scss */
 .update-pill :hover {
   color: #fff;
 }

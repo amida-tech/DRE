@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, format, matches, merges, history, dataservice) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, format, matches, merges, history, dataservice) {
     console.log("RECORD CONTROLLER LOAD ");
 
     $scope.dashMetrics = {};
@@ -237,7 +237,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         function formatDates() {
             //Flatten to timeline.
             console.log($scope.entries);
-            
+
             _.each($scope.entries, function(entry, section) {
                 _.each(entry, function(item) {
                     var tmpItem = item;
@@ -435,5 +435,11 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         matches.setMatchId(el.match.match_id);
 
         $location.path('/matches');
+    };
+
+    // Meds modal
+    $scope.modal = {
+        title: 'Title',
+        content: 'Hello Modal<br />This is a multiline message!'
     };
 });

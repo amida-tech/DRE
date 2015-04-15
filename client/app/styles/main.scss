@@ -33,7 +33,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
     font-family:    "Raleway";
     src:            url("../fonts/Raleway-Light.otf");
     font-weight:    normal;
-    
+
 }
 
 @font-face {
@@ -71,6 +71,7 @@ $border-radius-base: 0px;
 @import "panels";
 @import "navbar";
 @import "files";
+@import "modals";
 
 
 //Not migrating yet, cannot preview section.
@@ -85,4 +86,3 @@ $border-radius-base: 0px;
 		color: #fff;
 	}
 }
-
