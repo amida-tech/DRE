@@ -23,7 +23,9 @@
   background: #fff;
   height: 90px;
   width: 90px;
-  border: thick solid $brand-primary;
+  box-shadow: 0 0 0 4px $brand-primary,
+    inset 0 2px 0 rgba(0, 0, 0, 0.08),
+    0 3px 0 4px rgba(0, 0, 0, 0.05);
   line-height: 3.5em;
   position: relative;
   bottom: -20px;
@@ -35,6 +37,12 @@
 
 .timeline-entry-icon i {
   vertical-align: bottom;
+}
+
+.timeline-entry-icon img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 45px;
 }
 
 .timeline-entry-icon:hover {

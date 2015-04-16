@@ -8371,44 +8371,51 @@ h6, .h6 {
   background: #fff;
   height: 90px;
   width: 90px;
-  border: thick solid #6AA6FF;
+  box-shadow: 0 0 0 4px #6AA6FF, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
   line-height: 3.5em;
   position: relative;
   bottom: -20px;
   z-index: 100;
 }
-/* line 31, _timeline-vertical.scss */
+/* line 33, _timeline-vertical.scss */
 .timeline-entry-icon i {
   color: #6AA6FF;
 }
 
-/* line 36, _timeline-vertical.scss */
+/* line 38, _timeline-vertical.scss */
 .timeline-entry-icon i {
   vertical-align: bottom;
 }
 
-/* line 40, _timeline-vertical.scss */
+/* line 42, _timeline-vertical.scss */
+.timeline-entry-icon img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 45px;
+}
+
+/* line 48, _timeline-vertical.scss */
 .timeline-entry-icon:hover {
   cursor: default;
   background: #6AA6FF;
 }
-/* line 43, _timeline-vertical.scss */
+/* line 51, _timeline-vertical.scss */
 .timeline-entry-icon:hover i {
   color: #fff;
 }
 
-/* line 49, _timeline-vertical.scss */
+/* line 57, _timeline-vertical.scss */
 .timeline-footer circle {
   fill: #ccc;
 }
 @media (max-width: 991px) {
-  /* line 49, _timeline-vertical.scss */
+  /* line 57, _timeline-vertical.scss */
   .timeline-footer circle {
     display: none;
   }
 }
 @media (min-width: 768px) {
-  /* line 49, _timeline-vertical.scss */
+  /* line 57, _timeline-vertical.scss */
   .timeline-footer circle {
     display: inherit;
   }
