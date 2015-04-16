@@ -7,7 +7,7 @@
  * # timelineIcon
  */
 angular.module('phrPrototypeApp')
-    .directive('timelineIcon', function () {
+    .directive('timelineIcon', function ($compile) {
         return {
             template: '<i class="fa fa-2x"></i>',
             restrict: 'EA',
@@ -46,10 +46,18 @@ angular.module('phrPrototypeApp')
                     type: attrs.timelineIconType
                 });
 
-                if (iconEntry) {
-                    element.children().addClass(iconEntry.icon);
+                // TODO control flow is not right
+                // TODO resize only the medications circles
+                if (iconEntry.type === 'medications') {
+                    var html = '<img ng-src=images/benadryl_test.jpeg>';
+                    var i = $compile(html)(scope);
+                    element.children().replaceWith(i);
                 } else {
-                    element.children().addClass('fa-pencil');
+                    if (iconEntry) {
+                        element.children().addClass(iconEntry.icon);
+                    } else {
+                        element.children().addClass('fa-pencil');
+                    }
                 }
 
                 element.children().attr("id", "entry" + attrs.timelineIndex);

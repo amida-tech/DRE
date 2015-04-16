@@ -12,8 +12,8 @@
 
   @media (min-width: $screen-sm-min) {
     background-image: url('../images/bg-line.png');
-  background-repeat: repeat-y;
-  background-position: 8.2% 0%;
+    background-repeat: repeat-y;
+    background-position: 8.2% 0%;
   }
 
 }
@@ -21,8 +21,8 @@
 .timeline-entry-icon {
   @extend .img-circle;
   background: #fff;
-  height: 50px;
-  width: 50px;
+  height: 90px;
+  width: 90px;
   border: thick solid $brand-primary;
   line-height: 3.5em;
   position: relative;
@@ -33,13 +33,17 @@
   }
 }
 
+.timeline-entry-icon i {
+  vertical-align: bottom;
+}
+
 .timeline-entry-icon:hover {
   cursor: default;
   background: $brand-primary;
   i {
     color: #fff;
   }
-  
+
 }
 
 .timeline-footer circle {

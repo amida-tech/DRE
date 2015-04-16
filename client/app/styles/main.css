@@ -8369,8 +8369,8 @@ h6, .h6 {
 /* line 21, _timeline-vertical.scss */
 .timeline-entry-icon {
   background: #fff;
-  height: 50px;
-  width: 50px;
+  height: 90px;
+  width: 90px;
   border: thick solid #6AA6FF;
   line-height: 3.5em;
   position: relative;
@@ -8383,27 +8383,32 @@ h6, .h6 {
 }
 
 /* line 36, _timeline-vertical.scss */
+.timeline-entry-icon i {
+  vertical-align: bottom;
+}
+
+/* line 40, _timeline-vertical.scss */
 .timeline-entry-icon:hover {
   cursor: default;
   background: #6AA6FF;
 }
-/* line 39, _timeline-vertical.scss */
+/* line 43, _timeline-vertical.scss */
 .timeline-entry-icon:hover i {
   color: #fff;
 }
 
-/* line 45, _timeline-vertical.scss */
+/* line 49, _timeline-vertical.scss */
 .timeline-footer circle {
   fill: #ccc;
 }
 @media (max-width: 991px) {
-  /* line 45, _timeline-vertical.scss */
+  /* line 49, _timeline-vertical.scss */
   .timeline-footer circle {
     display: none;
   }
 }
 @media (min-width: 768px) {
-  /* line 45, _timeline-vertical.scss */
+  /* line 49, _timeline-vertical.scss */
   .timeline-footer circle {
     display: inherit;
   }
