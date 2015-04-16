@@ -8696,6 +8696,12 @@ form .button-well {
   overflow: scroll;
 }
 
+/* line 10, _modals.scss */
+.bs-sidebar .nav > .active > ul {
+  display: block;
+  margin-bottom: 8px;
+}
+
 /* line 78, main.scss */
 .update-selected {
   background-color: #def;
