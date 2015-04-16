@@ -1507,7 +1507,7 @@ img {
 }
 
 /* line 106, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
-.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .icon-circle {
+.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .timeline-entry-icon-medications, .icon-circle {
   border-radius: 50%;
 }
 
@@ -8367,10 +8367,10 @@ h6, .h6 {
 }
 
 /* line 21, _timeline-vertical.scss */
-.timeline-entry-icon {
+.timeline-entry-icon, .timeline-entry-icon-medications {
   background: #fff;
-  height: 90px;
-  width: 90px;
+  height: 50px;
+  width: 50px;
   box-shadow: 0 0 0 4px #6AA6FF, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
   line-height: 3.5em;
   position: relative;
@@ -8378,44 +8378,50 @@ h6, .h6 {
   z-index: 100;
 }
 /* line 33, _timeline-vertical.scss */
-.timeline-entry-icon i {
+.timeline-entry-icon i, .timeline-entry-icon-medications i {
   color: #6AA6FF;
 }
 
 /* line 38, _timeline-vertical.scss */
-.timeline-entry-icon i {
-  vertical-align: bottom;
+.timeline-entry-icon-medications {
+  height: 90px;
+  width: 90px;
 }
 
-/* line 42, _timeline-vertical.scss */
-.timeline-entry-icon img {
+/* line 45, _timeline-vertical.scss */
+.timeline-entry-icon-medications img {
   width: 90px;
   height: 90px;
   -webkit-border-radius: 45px;
 }
 
-/* line 48, _timeline-vertical.scss */
-.timeline-entry-icon:hover {
+/* line 51, _timeline-vertical.scss */
+.timeline-entry-icon i, .timeline-entry-icon-medications i {
+  vertical-align: middle;
+}
+
+/* line 55, _timeline-vertical.scss */
+.timeline-entry-icon:hover, .timeline-entry-icon-medications:hover {
   cursor: default;
   background: #6AA6FF;
 }
-/* line 51, _timeline-vertical.scss */
-.timeline-entry-icon:hover i {
+/* line 58, _timeline-vertical.scss */
+.timeline-entry-icon:hover i, .timeline-entry-icon-medications:hover i {
   color: #fff;
 }
 
-/* line 57, _timeline-vertical.scss */
+/* line 64, _timeline-vertical.scss */
 .timeline-footer circle {
   fill: #ccc;
 }
 @media (max-width: 991px) {
-  /* line 57, _timeline-vertical.scss */
+  /* line 64, _timeline-vertical.scss */
   .timeline-footer circle {
     display: none;
   }
 }
 @media (min-width: 768px) {
-  /* line 57, _timeline-vertical.scss */
+  /* line 64, _timeline-vertical.scss */
   .timeline-footer circle {
     display: inherit;
   }

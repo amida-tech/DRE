@@ -46,18 +46,16 @@ angular.module('phrPrototypeApp')
                     type: attrs.timelineIconType
                 });
 
-                // TODO control flow is not right
-                // TODO resize only the medications circles
-                if (iconEntry.type === 'medications') {
-                    var html = '<img ng-src=images/benadryl_test.jpeg>';
-                    var i = $compile(html)(scope);
-                    element.children().replaceWith(i);
-                } else {
-                    if (iconEntry) {
-                        element.children().addClass(iconEntry.icon);
+                if (iconEntry) {
+                    if (iconEntry.type === 'medications') {
+                        var html = '<img ng-src=images/benadryl_test.jpeg>';
+                        var i = $compile(html)(scope);
+                        element.children().replaceWith(i);
                     } else {
-                        element.children().addClass('fa-pencil');
+                        element.children().addClass(iconEntry.icon);
                     }
+                } else {
+                    element.children().addClass('fa-pencil');
                 }
 
                 element.children().attr("id", "entry" + attrs.timelineIndex);

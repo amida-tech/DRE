@@ -21,8 +21,8 @@
 .timeline-entry-icon {
   @extend .img-circle;
   background: #fff;
-  height: 90px;
-  width: 90px;
+  height: 50px;
+  width: 50px;
   box-shadow: 0 0 0 4px $brand-primary,
     inset 0 2px 0 rgba(0, 0, 0, 0.08),
     0 3px 0 4px rgba(0, 0, 0, 0.05);
@@ -35,14 +35,21 @@
   }
 }
 
-.timeline-entry-icon i {
-  vertical-align: bottom;
+.timeline-entry-icon-medications {
+  @extend .timeline-entry-icon;
+  height: 90px;
+  width: 90px;
+
 }
 
-.timeline-entry-icon img {
+.timeline-entry-icon-medications img {
   width: 90px;
   height: 90px;
   -webkit-border-radius: 45px;
+}
+
+.timeline-entry-icon i {
+  vertical-align: middle;
 }
 
 .timeline-entry-icon:hover {
