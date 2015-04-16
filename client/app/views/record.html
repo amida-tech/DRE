@@ -220,6 +220,12 @@
                             <p>Timeline</p>
                         </div>
                         <div timeline ng-show="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
+                        <div ng-if="entryType=='medications'" class="col-sm-12 row timeline-side">
+                          <div class="btn-group" ng-model="button.checkbox"  bs-checkbox-group>
+                              <label class="btn btn-default"><input type="checkbox" value="active"> Active</label>
+                              <label class="btn btn-default"><input type="checkbox" value="inactive"> Inactive</label>
+                          </div>
+                        </div>
                         <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
                             <div class="col-sm-12 row timeline-side">
                                 <entry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></entry>

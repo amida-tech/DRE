@@ -1507,7 +1507,7 @@ img {
 }
 
 /* line 106, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
-.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .timeline-entry-icon-medications, .icon-circle {
+.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .timeline-entry-icon-medication, .icon-circle {
   border-radius: 50%;
 }
 
@@ -8367,7 +8367,7 @@ h6, .h6 {
 }
 
 /* line 21, _timeline-vertical.scss */
-.timeline-entry-icon, .timeline-entry-icon-medications {
+.timeline-entry-icon, .timeline-entry-icon-medication {
   background: #fff;
   height: 50px;
   width: 50px;
@@ -8378,35 +8378,35 @@ h6, .h6 {
   z-index: 100;
 }
 /* line 33, _timeline-vertical.scss */
-.timeline-entry-icon i, .timeline-entry-icon-medications i {
+.timeline-entry-icon i, .timeline-entry-icon-medication i {
   color: #6AA6FF;
 }
 
 /* line 38, _timeline-vertical.scss */
-.timeline-entry-icon-medications {
+.timeline-entry-icon-medication {
   height: 90px;
   width: 90px;
 }
 
 /* line 45, _timeline-vertical.scss */
-.timeline-entry-icon-medications img {
+.timeline-entry-icon-medication img {
   width: 90px;
   height: 90px;
   -webkit-border-radius: 45px;
 }
 
 /* line 51, _timeline-vertical.scss */
-.timeline-entry-icon i, .timeline-entry-icon-medications i {
+.timeline-entry-icon i, .timeline-entry-icon-medication i {
   vertical-align: middle;
 }
 
 /* line 55, _timeline-vertical.scss */
-.timeline-entry-icon:hover, .timeline-entry-icon-medications:hover {
+.timeline-entry-icon:hover, .timeline-entry-icon-medication:hover {
   cursor: default;
   background: #6AA6FF;
 }
 /* line 58, _timeline-vertical.scss */
-.timeline-entry-icon:hover i, .timeline-entry-icon-medications:hover i {
+.timeline-entry-icon:hover i, .timeline-entry-icon-medication:hover i {
   color: #fff;
 }
 
@@ -8475,6 +8475,11 @@ h6, .h6 {
 /* line 31, _buttons.scss */
 .btn-group-vertical .btn.btn-info.active, .btn-group-vertical .btn.btn-info:hover {
   background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* line 36, _buttons.scss */
+.btn-group {
+  float: right;
 }
 
 /* line 1, _tables.scss */

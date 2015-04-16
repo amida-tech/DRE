@@ -442,4 +442,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         title: 'Title',
         content: 'Hello Modal<br />This is a multiline message!'
     };
+
+    // Meds active/inactive selector
+    $scope.button = {
+        checkbox: {
+            active: true,
+            inactive: false,
+        }
+    };
 });

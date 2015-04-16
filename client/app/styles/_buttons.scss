@@ -3,11 +3,11 @@
   font-weight: $btn-font-weight;
   font-family: $font-family-impact;
   letter-spacing: 1px;
-  text-transform: uppercase; 
+  text-transform: uppercase;
 }
 
 .btn-group-vertical {
-	
+
 	.btn {
 	  border-radius: 0px;
 	}
@@ -31,4 +31,8 @@
 	.btn.btn-info.active, .btn.btn-info:hover {
 		background-color: rgba(255,255,255,0.4);
 	}
+}
+
+.btn-group {
+    float: right;
 }
