@@ -24,7 +24,6 @@
   height: 50px;
   width: 50px;
   box-shadow: 0 0 0 4px $brand-primary,
-    inset 0 2px 0 rgba(0, 0, 0, 0.08),
     0 3px 0 4px rgba(0, 0, 0, 0.05);
   line-height: 3.5em;
   position: relative;
@@ -39,7 +38,7 @@
   @extend .timeline-entry-icon;
   height: 90px;
   width: 90px;
-
+  background: $brand-primary;
 }
 
 .timeline-entry-icon-medication img {
