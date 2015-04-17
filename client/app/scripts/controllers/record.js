@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, format, matches, merges, history, dataservice) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $anchorScroll, format, matches, merges, history, dataservice) {
     console.log("RECORD CONTROLLER LOAD ");
 
     $scope.dashMetrics = {};
@@ -34,8 +34,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
 
-    //TODO may need callback
-    function refresh() {
+    function refresh(cb) {
         dataservice.curr_section = $scope.entryType;
         dataservice.getData(function () {
             console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
@@ -48,11 +47,22 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $scope.mergesList_record = dataservice.merges_record;
             $scope.mergesList_billing = dataservice.merges_billing;
             $scope.mergesList = dataservice.all_merges;
-
         });
+
+        cb();
     }
 
-    refresh();
+    refresh(function() {
+        setTimeout(function() {
+          if (dataservice.curr_location) {
+            $location.hash(dataservice.curr_location);
+            $anchorScroll();
+            dataservice.curr_location = null;
+            $location.hash("");
+          }
+        }, 1000);
+    });
+
 
     //Flip All as active selected item in DOM
     function getHistory() {
@@ -237,7 +247,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         function formatDates() {
             //Flatten to timeline.
             console.log($scope.entries);
-            
+
             _.each($scope.entries, function(entry, section) {
                 _.each(entry, function(item) {
                     var tmpItem = item;

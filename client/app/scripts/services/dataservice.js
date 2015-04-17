@@ -25,6 +25,9 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     //currently active section (for navigation) -billing page
     this.curr_section_billing = "";
 
+    //current location to scroll to with anchorScroll
+    this.curr_location = null;
+
     //current matches
     this.curr_matches = [];
 
@@ -35,7 +38,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     // {category, data, count}
     this.curr_processed_matches = {};
 
-    //record with 
+    //record with
     //  injected notes
     //  matches (for currently selected section)
     //  counted pending updates (matches)
@@ -153,7 +156,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                     $scope.accountHistory = history;
                 }
             });
-        } 
+        }
 
     */
 
@@ -197,7 +200,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
         _.each(this.master_record, function (entries, type) {
             _.each(entries, function (entry) {
-                //gate (ignore) possible sections that are not applicable here              
+                //gate (ignore) possible sections that are not applicable here
                 if (_.contains(['demographics', 'plan_of_care'], type)) {
                     //skip to next entry (next iteration)
                     return;
