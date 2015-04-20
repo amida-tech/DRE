@@ -39,10 +39,7 @@
     "express": "4.9.x",
     "express-session": "1.8.2",
     "grunt": "0.4.x",
-<<<<<<< HEAD
     "grunt-express-server": "0.4.x",
-=======
->>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
     "hl7": "~1.0.0",
     "jsdom": "0.10.5",
     "method-override": "2.2.0",
@@ -71,7 +68,6 @@
   "devDependencies": {
     "grunt-jsbeautifier": "^0.2.10",
     "grunt-env": "~0.4.1",
-<<<<<<< HEAD
     "grunt-node-inspector": "~0.1.6",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-contrib-jshint": "~0.10.0",
@@ -82,8 +78,7 @@
     "grunt-nodemon": "~0.4.0",
     "grunt-concurrent": "~1.0.0",
     "grunt-karma": "~0.10.1",
-    "load-grunt-tasks": "~3.1.0"
-=======
+    "load-grunt-tasks": "~3.1.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-cssmin": "~0.12.2",
@@ -91,6 +86,5 @@
     "grunt-concurrent": "~1.0.0",
     "load-grunt-tasks": "~3.1.0",
     "grunt-express-server": "~0.5.1"
->>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
   }
 }
