@@ -1,6 +1,10 @@
 'use strict';
 
+<<<<<<< HEAD
 module.exports = function(grunt) {
+=======
+module.exports = function (grunt) {
+>>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
 
     grunt.loadNpmTasks('grunt-mocha-test');
     //grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -8,6 +12,7 @@ module.exports = function(grunt) {
     //grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-env');
+<<<<<<< HEAD
     //grunt.loadNpmTasks('grunt-node-inspector');
     grunt.loadNpmTasks('grunt-jshint');
     //grunt.loadNpmTasks('grunt-csslint');
@@ -26,6 +31,24 @@ module.exports = function(grunt) {
         mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
     };
 
+=======
+    grunt.loadNpmTasks('grunt-nodemon');
+    grunt.loadNpmTasks('grunt-concurrent');
+    
+    grunt.registerTask('timestamp', function () {
+        grunt.log.subhead(Date());
+    });
+
+    // Unified Watch Object
+    var watchFiles = {
+        serverJS: ['Gruntfile.js', 'server.js', 'lib/**/*.js'],
+        clientViews: ['client/app/views/**/*.html', 'client/app/index.html'],
+        clientJS: ['client/app/scripts/**/*.js'],
+        clientCSS: ['client/app/styles/*.css'],
+        mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
+    };
+
+>>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
     // Project Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -45,7 +68,11 @@ module.exports = function(grunt) {
             },
             clientJS: {
                 files: watchFiles.clientJS,
+<<<<<<< HEAD
                 tasks: ['jshint','jsbeautifier'],
+=======
+                tasks: ['jshint', 'jsbeautifier'],
+>>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
                 options: {
                     livereload: true
                 }
@@ -100,6 +127,7 @@ module.exports = function(grunt) {
                 }
             }
         },
+<<<<<<< HEAD
 /*                csslint: {
                     options: {
                         csslintrc: '.csslintrc',
@@ -108,6 +136,16 @@ module.exports = function(grunt) {
                         src: watchFiles.clientCSS
                     }
                 }, */
+=======
+        /*                csslint: {
+                            options: {
+                                csslintrc: '.csslintrc',
+                            },
+                            all: {
+                                src: watchFiles.clientCSS
+                            }
+                        }, */
+>>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
         nodemon: {
             dev: {
                 script: 'server.js',
@@ -134,7 +172,11 @@ module.exports = function(grunt) {
         concurrent: {
             default: ['nodemon', 'watch'],
             //test: ['nodemon', 'watch', 'node-inspector', 'mochaTest'], //'karma:unit'
+<<<<<<< HEAD
             test: ['env:test', 'nodemon', 'watch', 'mochaTest'], //'karma:unit'
+=======
+            //test: ['nodemon', 'mochaTest'], //'karma:unit'
+>>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
             options: {
                 logConcurrentOutput: true,
                 limit: 10
@@ -151,7 +193,11 @@ module.exports = function(grunt) {
                 }
             },
             test: {
+<<<<<<< HEAD
                 DBname: 'test'
+=======
+                DBname: 'devtests'
+>>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
             }
         },
         mochaTest: {
@@ -161,8 +207,20 @@ module.exports = function(grunt) {
                     timeout: '10000'
                 },
                 src: watchFiles.mochaTests
+<<<<<<< HEAD
             }
         },
+=======
+            }
+        },
+        express: {
+            dev: {
+                options: {
+                    script: './server.js'
+                }
+            }
+        }
+>>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
         /*        karma: {
                     unit: {
                         configFile: 'karma.conf.js'
@@ -174,11 +232,19 @@ module.exports = function(grunt) {
     grunt.option('force', true);
 
     // Default task(s).
+<<<<<<< HEAD
     grunt.registerTask('default', ['concurrent:default']);
 
     // Test task.
     //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
     grunt.registerTask('test', ['concurrent:test']);
+=======
+    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest']);
+
+    // Test task.
+    //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
+    grunt.registerTask('live', ['concurrent:default']);
+>>>>>>> 4b602f40c10625f82156688e51d0da1a63b4c0f1
 
     // Lint task(s).
     //grunt.registerTask('lint', ['jshint', 'csslint']);
