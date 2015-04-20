@@ -7,6 +7,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsbeautifier');
 
     grunt.registerTask('default', ['jshint', 'express:dev', 'mochaTest']);
+    grunt.registerTask('live', ['jshint', 'jsbeautifier', 'express:dev', 'watch']);
     grunt.registerTask('dev', ['jshint', 'jsbeautifier']);
 
     // Print a timestamp (useful for when watching)
@@ -67,7 +68,7 @@ module.exports = function (grunt) {
         watch: {
             all: {
                 files: ['./lib/**/index.js', 'config.js', 'gruntFile.js', './models/*.js'],
-                tasks: ['default']
+                tasks: ['dev']
             }
         },
         mochaTest: {
