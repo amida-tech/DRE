@@ -122,9 +122,9 @@ app.use(flash());
 //var databaseServer = process.env.DB || 'localhost:27017';
 
 app.set('db_url', process.env.DB || 'localhost:27017');
-app.set('db_name', 'dre');
+app.set('db_name', process.env.DBname || 'dre');
 
-console.log("DB URL: ", app.get('db_url'));
+console.log("DB URL: ", app.get('db_url') + "/" + app.get('db_name'));
 
 var storage = require('./lib/storage');
 app.use(storage);
@@ -162,16 +162,19 @@ app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
 app.set('mllp_port', (process.env.PORT || 6969));
 
 //Launch Application.
-record.connectDatabase(app.get('db_url'), function (err) {
-    console.log(app.get('db_url'));
-    if (err) {
-        console.log("DB error");
-        console.log(err);
-    } else {
-        app.listen(app.get('port'), '0.0.0.0');
-        console.log("Server listening on port " + app.get('port'));
-    }
-});
+var dboptions =
+    record.connectDatabase(app.get('db_url'), {
+        dbName: app.get('dbnameurl')
+    }, function (err) {
+        console.log(app.get('db_url'));
+        if (err) {
+            console.log("DB error");
+            console.log(err);
+        } else {
+            app.listen(app.get('port'), '0.0.0.0');
+            console.log("Server listening on port " + app.get('port'));
+        }
+    });
 
 //Launch MLLP server/listener
 var mllp = require('mllp-node');

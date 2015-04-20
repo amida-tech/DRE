@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + process.env.DBname || 'tests';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
@@ -10,6 +10,7 @@ var common2 = require('../common.js');
 
 function removeCollection(inputCollection, callback) {
     var db;
+    console.log("database location in test: "+databaseLocation);
     database.connect(databaseLocation, function (err, dbase) {
         if (err) {
             throw err;

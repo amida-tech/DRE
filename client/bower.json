@@ -26,8 +26,5 @@
     "angular-scenario": "~1.2.0",
     "lodash-deep": "~1.5.3"
   },
-  "appPath": "app",
-  "resolutions": {
-    "d3": "~3.5.3"
-  }
+  "appPath": "app"
 }
