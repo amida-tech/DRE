@@ -8711,19 +8711,28 @@ form .button-well {
 }
 
 /* line 2, _modals.scss */
+.modal-dialog {
+  width: 80%;
+}
+
+/* line 6, _modals.scss */
 .modal-content {
   text-align: left;
 }
 
-/* line 6, _modals.scss */
+/* line 10, _modals.scss */
 .modal-open {
   overflow: scroll;
 }
 
-/* line 10, _modals.scss */
-.bs-sidebar .nav > .active > ul {
-  display: block;
-  margin-bottom: 8px;
+/* line 14, _modals.scss */
+.modal-body .navbar {
+  background-color: white;
+}
+
+/* line 18, _modals.scss */
+.modal-body li {
+  width: 100%;
 }
 
 /* line 78, main.scss */

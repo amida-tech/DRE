@@ -5,28 +5,121 @@
       <div class="col-sm-3">
         <div class="sidebar-nav">
           <div class="navbar navbar-default" role="navigation">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-            <div class="navbar-collapse collapse sidebar-navbar-collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Menu Item 1</a></li>
-                <li><a href="#">Menu Item 2</a></li>
-                <li><a href="#">Menu Item 3</a></li>
-                <li><a href="#">Menu Item 4</a></li>
-
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#details{{recordIndex}}" aria-expanded="false" aria-controls="details{{recordIndex}}" ng-click="swapTabs('details', recordIndex)">
+                        <span><i class="fa fa-ellipsis-h"></i> Details</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)">
+                        <span><i class="fa fa-comment"></i> Notes</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#history{{recordIndex}}" aria-expanded="false" aria-controls="history{{recordIndex}}" ng-click="swapTabs('history', recordIndex)">
+                        <span><i class="fa fa-clock-o"></i> History</span>
+                    </button>
+                </li>
               </ul>
-            </div><!--/.nav-collapse -->
           </div>
         </div>
       </div>
       <div class="col-sm-9">
         <h4>Main content</h4>
+        <!--Record detail pane.-->
+        <div role="tabpanel" class="collapse" id="details{{recordIndex}}">
+
+            <div class="sub-entry">
+                <h3>Entry Details</h3>
+                <div ng-include="entryTemplatePath"></div>
+            </div>
+        </div>
+        <!--Record history pane.-->
+        <div role="tabpanel" class="collapse" id="history{{recordIndex}}">
+            <div class="sub-entry">
+                <h3>Entry History</h3>
+                <table class="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <td>Source</td>
+                            <td>Status</td>
+                            <td>Merged</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(attrIndex, attrEntry) in entryData.metadata.attribution">
+                            <td><a href="#/files">{{attrEntry.record.filename}}</a>
+                            </td>
+                            <td class="capitalize">{{attrEntry.merge_reason}}</td>
+                            <td>{{attrEntry.merged | date:'short'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Record comments pane.-->
+        <div role="tabpanel" class="collapse" id="comments{{recordIndex}}" data-parent="#selector">
+            <div class="sub-entry">
+                <h3>Entry Notes</h3>
+                <div ng-hide="editflag" class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
+                    <div class="col-sm-11 col-sm-offset-1">
+                        <h5>{{commentEntry.date | date:'short'}}</h5>
+                    </div>
+                    <div class="col-sm-1 panel-body text-center">
+                        <h5 ng-show="commentEntry.starred === true"><a><i class="fa fa-star"></i></a></h5>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <p>{{commentEntry.comment}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <div class="pull-right">
+                            <button ng-click="editNote()" class="btn btn-primary">Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12" ng-show="!entryMetaData.comments[0]">
+                    <form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
+                        <div class="col-sm-1 panel-body text-center">
+                            <h5 ng-show="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star"></i></a></h5>
+                            <h5 ng-hide="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star-o"></i></a></h5>
+                        </div>
+                        <div class="form-group col-sm-10">
+                            <label for="commentEntry">New:</label>
+                            <textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="newComment.comment" name="commentEntry"></textarea>
+                        </div>
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary" ng-disabled="commentForm.$invalid">Add Note</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-12" ng-show="editflag">
+                    <form novalidate role="form" name="editForm">
+                        <div class="col-sm-1 panel-body text-center">
+                            <h5 ng-show="entryMetaData.comments[0].starred === true" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
+                            <h5 ng-show="entryMetaData.comments[0].starred === false" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
+                        </div>
+                        <div class="form-group col-sm-10">
+                            <label for="commentEntry">Edit:</label>
+                            <textarea class="form-control" rows="2" required ng-required="true" ng-minLength="1" ng-model="editComment" name="commentEntry"></textarea>
+                        </div>
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <button type="submit" ng-click="deleteNote()" class="btn btn-danger pull-left">Delete Note</button>
+                            <div class="pull-right">
+                                <button type="cancel" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
+                                <button type="submit" ng-click="saveNote()" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>
