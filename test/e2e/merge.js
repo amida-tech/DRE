@@ -77,7 +77,7 @@ describe('Base Merge API:', function () {
                     expect(res.body.merges.length).to.equal(26); //was 31 with disabled sections
 
                     for (var i in res.body.merges) {
-                        supportedCount[res.body.merges[i].entry_type] ++;
+                        supportedCount[res.body.merges[i].entry_type]++;
 
                         expect(res.body.merges[i].entry).to.exist;
                         expect(res.body.merges[i].entry._id).to.exist;
