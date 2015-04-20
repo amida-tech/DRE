@@ -25,6 +25,12 @@ module.exports = function (grunt) {
         clientCSS: ['client/app/styles/*.css'],
         mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
     };
+    grunt.loadNpmTasks('grunt-execute');
+
+    // Print a timestamp (useful for when watching)
+    grunt.registerTask('timestamp', function () {
+        grunt.log.subhead(Date());
+    });
 
     // Project Configuration
     grunt.initConfig({
@@ -162,6 +168,11 @@ module.exports = function (grunt) {
                     script: './server.js'
                 }
             }
+        },
+        execute: {
+            target: {
+                src: ['./lib/benchmark/index.js']
+            }
         }
         /*        karma: {
                     unit: {
@@ -175,6 +186,8 @@ module.exports = function (grunt) {
 
     // Default task(s).
     grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest']);
+
+    grunt.registerTask('benchmark', ['execute']);
 
     // Test task.
     //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
