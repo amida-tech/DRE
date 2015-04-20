@@ -34,7 +34,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
 
-    function refresh(cb) {
+
+    function refresh() {
         dataservice.curr_section = $scope.entryType;
         dataservice.getData(function () {
             console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
@@ -48,19 +49,19 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $scope.mergesList_billing = dataservice.merges_billing;
             $scope.mergesList = dataservice.all_merges;
         });
-
-        cb();
     }
 
-    refresh(function() {
-        setTimeout(function() {
-          if (dataservice.curr_location) {
+    refresh();
+
+
+    $scope.$on('ngRepeatFinished', function (element) {
+        console.log("THEY SEE ME SCROLLIN");
+        if (dataservice.curr_location) {
             $location.hash(dataservice.curr_location);
             $anchorScroll();
             dataservice.curr_location = null;
             $location.hash("");
-          }
-        }, 1000);
+        }
     });
 
 
