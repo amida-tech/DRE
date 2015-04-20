@@ -179,11 +179,11 @@ module.exports = function (grunt) {
     grunt.option('force', true);
 
     // Default task(s).
-    grunt.registerTask('default', ['concurrent:default']);
+    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest']);
 
     // Test task.
     //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
-    grunt.registerTask('test', ['env:test', 'express:dev', 'mochaTest']);
+    grunt.registerTask('live', ['concurrent:default']);
 
     // Lint task(s).
     //grunt.registerTask('lint', ['jshint', 'csslint']);
