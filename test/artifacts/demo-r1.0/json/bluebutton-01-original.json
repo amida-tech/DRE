@@ -1551,7 +1551,7 @@
                     "code_system_name": "SNOMED CT"
                 }
             },
-            "performers": [
+            "performer": [
                 {
                     "identifiers": [
                         {
@@ -1640,7 +1640,7 @@
                 "code": "CR",
                 "code_system_name": "ActPriority"
             },
-            "performers": [
+            "performer": [
                 {
                     "identifiers": [
                         {
@@ -1726,7 +1726,7 @@
                 "code": "CR",
                 "code_system_name": "ActPriority"
             },
-            "performers": [
+            "performer": [
                 {
                     "identifiers": [
                         {
