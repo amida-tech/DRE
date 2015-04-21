@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + process.env.DBname || 'tests';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');

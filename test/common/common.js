@@ -1,5 +1,5 @@
 var database = require('mongodb').Db;
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + process.env.DBname || 'tests';
 var path = require('path');
 var async = require('async');
 var _ = require('underscore');
