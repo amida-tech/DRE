@@ -55,7 +55,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
 
     $scope.$on('ngRepeatFinished', function (element) {
-        console.log("THEY SEE ME SCROLLIN");
         if (dataservice.curr_location) {
             $location.hash(dataservice.curr_location);
             $anchorScroll();
