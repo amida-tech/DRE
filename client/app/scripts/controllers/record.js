@@ -60,6 +60,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $anchorScroll();
             dataservice.curr_location = null;
             $location.hash("");
+        } else {
+            $window.scrollTo(0, 0);
         }
     });
 
