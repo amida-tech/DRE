@@ -18,6 +18,8 @@ services:
 script:
 - grunt --gruntfile client/Gruntfile.js
 - grunt --gruntfile ./Gruntfile.js
+notifications:
+  slack: amida:GclZqFLfLqmjWZ4bwUbRIw5M
 #- git config --global user.email "dmitry.kachaev@gmail.com"
 #- git config --global user.name "Dmitry Kachaev"
 #- git add -A
