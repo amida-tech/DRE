@@ -3,18 +3,18 @@
 module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-mocha-test');
-    //grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    //grunt.loadNpmTasks('grunt-express-server');
+    grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-execute');
+    grunt.loadNpmTasks('grunt-nodemon');
+    grunt.loadNpmTasks('grunt-concurrent');
     //grunt.loadNpmTasks('grunt-node-inspector');
-    grunt.loadNpmTasks('grunt-jshint');
     //grunt.loadNpmTasks('grunt-csslint');
     //grunt.loadNpmTasks('grunt-ng-annotate');
     //grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-nodemon');
-    grunt.loadNpmTasks('grunt-concurrent');
     //grunt.loadNpmTasks('grunt-karma');
 
     // Unified Watch Object
@@ -25,12 +25,6 @@ module.exports = function (grunt) {
         clientCSS: ['client/app/styles/*.css'],
         mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
     };
-    grunt.loadNpmTasks('grunt-execute');
-
-    // Print a timestamp (useful for when watching)
-    grunt.registerTask('timestamp', function () {
-        grunt.log.subhead(Date());
-    });
 
     // Project Configuration
     grunt.initConfig({
@@ -65,7 +59,7 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            files: ['./test/unit/*.js'], //['gruntFile.js', 'package.json', '*.js', './lib/*.js','./lib/**/*.js','./test/*.js', './test/**/*.js'],
+            files: ['gruntFile.js', 'package.json', '*.js', './lib/*.js','./lib/**/*.js','./test/*.js', './test/**/*.js'], //['./test/unit/*.js'], 
             options: {
                 browser: true,
                 curly: true,
@@ -192,6 +186,11 @@ module.exports = function (grunt) {
     // Test task.
     //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
     grunt.registerTask('live', ['concurrent:default']);
+
+    // Print a timestamp (useful for when watching)
+    grunt.registerTask('timestamp', function () {
+        grunt.log.subhead(Date());
+    });
 
     // Lint task(s).
     //grunt.registerTask('lint', ['jshint', 'csslint']);
