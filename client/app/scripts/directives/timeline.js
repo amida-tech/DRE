@@ -11,11 +11,6 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
         template: "<svg style='width:100%;'></svg>",
         link: function postLink(scope, element, attrs) {
 
-            var navClick = function (ele) {
-                $location.hash(ele);
-                // call $anchorScroll()
-                $anchorScroll();
-            };
             var plotHeight = 60;
             var boundaryOffset = 15;
             var boundaryWidth = 3;
@@ -255,9 +250,6 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             tip.attr('class', 'd3-tip').show(d);
                             tip.hide();
                         });
-                        /*.on("click", function(d) {
-                                                    navClick(d.href);
-                                                });*/
                     }
                     getSVGWidth();
                     buildScale();

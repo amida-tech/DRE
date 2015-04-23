@@ -31,9 +31,10 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
     }
     */
 
-    $scope.setEntry = function (section) {
+    $scope.setEntry = function (section, entryId) {
         console.log("set entry type for my record view ", section.section);
         dataservice.curr_section = section;
+        dataservice.curr_location = entryId;
         $location.path('/record');
     };
 
