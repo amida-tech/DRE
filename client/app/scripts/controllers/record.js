@@ -365,6 +365,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             console.log("$scope.entryType = ", $scope.entryType);
 
             if (newVal !== oldVal) {
+                $window.scrollTo(0, 0);
                 if (newVal === "all") {
                     $scope.$broadcast('tabchange', {
                         "val": $scope.tabs.activeTab
@@ -385,7 +386,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
                     dataservice.curr_section = newVal;
                     $scope.entryType = dataservice.curr_section;
-                $window.scrollTo(0, 0);
 
                 }
                 if (newVal === "vitals") {
