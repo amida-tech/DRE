@@ -56,7 +56,7 @@
     "redis": "0.10.3",
     "request": "2.33.x",
     "serve-favicon": "2.1.5",
-    "serve-static": "1.6.3",
+    "serve-static": "~1.9.0",
     "supertest": "0.10.0",
     "lodash": "^3.7.0"
   },
