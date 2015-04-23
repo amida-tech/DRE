@@ -5,6 +5,7 @@ DRE is a patient frontend (UI) and Node.js server for reconciling health data.
 
 
 [![Build Status](https://travis-ci.org/amida-tech/DRE.svg)](https://travis-ci.org/amida-tech/DRE)
+[![Dependency Status](https://david-dm.org/amida-tech/DRE.svg)](https://david-dm.org/amida-tech/DRE)
 
 High Level Overview
 ===================
@@ -21,7 +22,7 @@ DRE has 4 primary elements
 
 #### 1 - Parsing and Normalization Library.
 
-This parses incoming data into a homogenous, simplified and normalized data model in JSON format. 
+This parses incoming data into a homogenous, simplified and normalized data model in JSON format.
 
 Parsing library code: [amida-tech/blue-button](https://github.com/amida-tech/blue-button)
 
@@ -43,13 +44,13 @@ This provides a API for interaction with and access to the aggregated health rec
 Documentation for record.js [API](./docs/recordjs.md)
 
 ### Screenshots of the Demo
--![Landing Page](./docs/images/1-LandingBars.png)		
--![Master Health Record View](./docs/images/2-MyRecord.png)		
--![My Files](./docs/images/3-MyFiles.png)	
+-![Landing Page](./docs/images/1-LandingBars.png)
+-![Master Health Record View](./docs/images/2-MyRecord.png)
+-![My Files](./docs/images/3-MyFiles.png)
 
--![Reconciliation Interface](./docs/images/4-Match.png)		
--![Billing Section](./docs/images/5-Billing.png)		
--![Notes](./docs/images/6-NotesDetails.png)		
+-![Reconciliation Interface](./docs/images/4-Match.png)
+-![Billing Section](./docs/images/5-Billing.png)
+-![Notes](./docs/images/6-NotesDetails.png)
 -![Account History](./docs/images/7-History.png)
 
 
@@ -71,7 +72,7 @@ Documentation for record.js [API](./docs/recordjs.md)
 cd client
 npm install
 bower install
-grunt build # you can run "grunt dev" for dev purposes 
+grunt build # you can run "grunt dev" for dev purposes
 
 #run server side tests
 cd ..
