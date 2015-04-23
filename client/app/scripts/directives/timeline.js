@@ -189,12 +189,19 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             "text": boundaryDisplayFormat(plotDomain[1])
                         }];
                         var boundaryLabels = svg.selectAll("text").data(boundaryLabel).enter().append("text");
+                        var checkDateLabel = function(dateText) {
+                            if (dateText === " 0NaN") {
+                                return " ";
+                            } else {
+                                return dateText;
+                            }
+                        };
                         var boundaryLabelAttributes = boundaryLabels.attr("x", function (d) {
                             return d.x;
                         }).attr("y", function (d) {
                             return d.y;
                         }).text(function (d) {
-                            return d.text;
+                            return checkDateLabel(d.text);
                         }).style("text-anchor", function (d) {
                             return d.anchor;
                         });
@@ -283,6 +290,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
             }, true);
             scope.$watch('pageLoaded', function (newValue, oldValue) {
                 console.log('page loaded ' + newValue + ' ' + oldValue);
+                gatherData();
+                renderPlot();
+            }, true);
+            scope.$watch('entryListFiltered', function (newValue, oldValue) {
+                console.log('filter updated');
                 gatherData();
                 renderPlot();
             }, true);
