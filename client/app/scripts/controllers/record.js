@@ -60,8 +60,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $anchorScroll();
             dataservice.curr_location = null;
             $location.hash("");
-        } else {
-            $window.scrollTo(0, 0);
         }
     });
 
@@ -387,6 +385,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
                     dataservice.curr_section = newVal;
                     $scope.entryType = dataservice.curr_section;
+                $window.scrollTo(0, 0);
 
                 }
                 if (newVal === "vitals") {
