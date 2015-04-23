@@ -28,8 +28,8 @@
     "jshint-stylish": "^0.2.0",
     "load-grunt-tasks": "^0.4.0",
     "time-grunt": "^0.3.1",
-    "underscore": "^1.7.0",
-    "underscore.deep": "^0.5.1"
+    "lodash": "^3.7.0",
+    "lodash-deep": "^1.6.0"
   },
   "engines": {
     "node": ">=0.10.0"
