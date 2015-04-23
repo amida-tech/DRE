@@ -8,8 +8,17 @@
 angular.module('phrPrototypeApp')
     .directive('entry', function (format, notes) {
         return {
-            templateUrl: 'views/templates/entry.html',
+            template: '<ng-include src="getTemplateUrl()"/>',
             restrict: 'EA',
+            controller: function($scope) {
+                $scope.getTemplateUrl = function() {
+                    if ($scope.type === 'medications') {
+                        return 'views/templates/entries/medications.html';
+                    } else {
+                        return 'views/templates/entry.html';
+                    }
+                };
+            },
             link: function postLink(scope, element, attrs) {
                 //Attribute Variables.
                 scope.type = attrs.type;
@@ -67,6 +76,9 @@ angular.module('phrPrototypeApp')
                     }
                     if (scope.recordEntry.metadata.displayDate) {
                         scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    }
+                    if (scope.entryData.administration.dose.value && scope.entryData.administration.dose.unit) {
+                        scope.entryDose = " - " + scope.entryData.administration.dose.value + " " + scope.entryData.administration.dose.unit;
                     }
                     break;
                 case 'conditions':

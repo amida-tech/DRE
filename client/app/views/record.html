@@ -220,6 +220,14 @@
                             <p>Timeline</p>
                         </div>
                         <div timeline ng-show="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
+                        <div ng-if="entryType=='medications'" class="col-sm-12 row timeline-side">
+                          <div class="btn-group">
+                              <label class="btn btn-default">
+                                <input type="checkbox" value="active" ng-checked="activeSelection.indexOf('active') > -1" ng-click="toggleSelection('active')"> Active</label>
+                              <label class="btn btn-default">
+                                <input type="checkbox" value="inactive" ng-checked="activeSelection.indexOf('inactive') > -1" ng-click="toggleSelection('inactive')"> Inactive</label>
+                          </div>
+                        </div>
                         <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
                             <div class="col-sm-12 row timeline-side">
                                 <entry id="{{recordEntry.data._id}}" type="{{recordEntry.category}}" entry-index="{{recordIndex}}" on-finish-render="ngRepeatFinished"></entry>

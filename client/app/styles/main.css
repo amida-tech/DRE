@@ -1507,7 +1507,7 @@ img {
 }
 
 /* line 106, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
-.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .icon-circle {
+.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .timeline-entry-icon-medication, .icon-circle {
   border-radius: 50%;
 }
 
@@ -8367,43 +8367,62 @@ h6, .h6 {
 }
 
 /* line 21, _timeline-vertical.scss */
-.timeline-entry-icon {
+.timeline-entry-icon, .timeline-entry-icon-medication {
   background: #fff;
   height: 50px;
   width: 50px;
-  border: thick solid #6AA6FF;
+  box-shadow: 0 0 0 4px #6AA6FF, 0 3px 0 4px rgba(0, 0, 0, 0.05);
   line-height: 3.5em;
   position: relative;
   bottom: -20px;
   z-index: 100;
 }
-/* line 31, _timeline-vertical.scss */
-.timeline-entry-icon i {
+/* line 32, _timeline-vertical.scss */
+.timeline-entry-icon i, .timeline-entry-icon-medication i {
   color: #6AA6FF;
 }
 
-/* line 36, _timeline-vertical.scss */
-.timeline-entry-icon:hover {
+/* line 37, _timeline-vertical.scss */
+.timeline-entry-icon-medication {
+  height: 90px;
+  width: 90px;
+  background: #6AA6FF;
+}
+
+/* line 44, _timeline-vertical.scss */
+.timeline-entry-icon-medication img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 45px;
+}
+
+/* line 50, _timeline-vertical.scss */
+.timeline-entry-icon i, .timeline-entry-icon-medication i {
+  vertical-align: middle;
+}
+
+/* line 54, _timeline-vertical.scss */
+.timeline-entry-icon:hover, .timeline-entry-icon-medication:hover {
   cursor: default;
   background: #6AA6FF;
 }
-/* line 39, _timeline-vertical.scss */
-.timeline-entry-icon:hover i {
+/* line 57, _timeline-vertical.scss */
+.timeline-entry-icon:hover i, .timeline-entry-icon-medication:hover i {
   color: #fff;
 }
 
-/* line 45, _timeline-vertical.scss */
+/* line 63, _timeline-vertical.scss */
 .timeline-footer circle {
   fill: #ccc;
 }
 @media (max-width: 991px) {
-  /* line 45, _timeline-vertical.scss */
+  /* line 63, _timeline-vertical.scss */
   .timeline-footer circle {
     display: none;
   }
 }
 @media (min-width: 768px) {
-  /* line 45, _timeline-vertical.scss */
+  /* line 63, _timeline-vertical.scss */
   .timeline-footer circle {
     display: inherit;
   }
@@ -8457,6 +8476,11 @@ h6, .h6 {
 /* line 31, _buttons.scss */
 .btn-group-vertical .btn.btn-info.active, .btn-group-vertical .btn.btn-info:hover {
   background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* line 36, _buttons.scss */
+.btn-group {
+  float: right;
 }
 
 /* line 1, _tables.scss */
@@ -8686,6 +8710,36 @@ form .button-well {
   padding-left: 20px;
 }
 
+/* line 2, _modals.scss */
+.modal-dialog {
+  width: 80%;
+}
+
+/* line 6, _modals.scss */
+.modal-content {
+  text-align: left;
+}
+
+/* line 10, _modals.scss */
+.modal-open {
+  overflow: scroll;
+}
+
+/* line 14, _modals.scss */
+.modal-body .navbar {
+  background-color: white;
+}
+
+/* line 18, _modals.scss */
+.modal-body li {
+  width: 100%;
+}
+
+/* line 22, _modals.scss */
+.modal-body span {
+  font-size: 14px;
+}
+
 /*
   Icon Font: fontcustom
 */
@@ -8747,13 +8801,13 @@ form .button-well {
   content: "\f107";
 }
 
-/* line 78, main.scss */
+/* line 79, main.scss */
 .update-selected {
   background-color: #def;
   color: black;
 }
 
-/* line 85, main.scss */
+/* line 86, main.scss */
 .update-pill :hover {
   color: #fff;
 }
