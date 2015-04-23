@@ -72,7 +72,7 @@ Documentation for record.js [API](./docs/recordjs.md)
 cd client
 npm install
 bower install
-grunt build # you can run "grunt dev" for dev purposes
+grunt build # you can run "grunt live" for dev purposes
 
 #run server side tests
 cd ..
