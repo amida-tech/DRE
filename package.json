@@ -27,7 +27,7 @@
     "blue-button-pim": "~1.0.0",
     "blue-button-record": "1.5.0-beta.1",
     "blue-button-util": "^1.5.0-beta.2",
-    "bluebird": "2.2.x",
+    "bluebird": "~2.9.0",
     "body-parser": "1.9.0",
     "chai": "1.9.x",
     "chai-things": "0.2.0",
