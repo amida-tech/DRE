@@ -189,7 +189,7 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             "text": boundaryDisplayFormat(plotDomain[1])
                         }];
                         var boundaryLabels = svg.selectAll("text").data(boundaryLabel).enter().append("text");
-                        var checkDateLabel = function(dateText) {
+                        var checkDateLabel = function (dateText) {
                             if (dateText === " 0NaN") {
                                 return " ";
                             } else {

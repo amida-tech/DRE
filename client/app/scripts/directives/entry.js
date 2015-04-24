@@ -10,8 +10,8 @@ angular.module('phrPrototypeApp')
         return {
             template: '<ng-include src="getTemplateUrl()"/>',
             restrict: 'EA',
-            controller: function($scope) {
-                $scope.getTemplateUrl = function() {
+            controller: function ($scope) {
+                $scope.getTemplateUrl = function () {
                     if ($scope.type === 'medications') {
                         return 'views/templates/entries/medications.html';
                     } else {

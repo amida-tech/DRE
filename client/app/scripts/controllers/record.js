@@ -1,6 +1,5 @@
 'use strict';
 
-
 angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice) {
     console.log("RECORD CONTROLLER LOAD ");
 
@@ -44,21 +43,20 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     $scope.activeSelection = ['active', 'inactive'];
 
     $scope.toggleSelection = function toggleSelection(buttonName) {
-      var idx = $scope.activeSelection.indexOf(buttonName);
+        var idx = $scope.activeSelection.indexOf(buttonName);
 
-      // is currently selected
-      if (idx > -1) {
-        $scope.activeSelection.splice(idx, 1);
-      }
+        // is currently selected
+        if (idx > -1) {
+            $scope.activeSelection.splice(idx, 1);
+        }
 
-      // is newly selected
-      else {
-        $scope.activeSelection.push(buttonName);
-      }
+        // is newly selected
+        else {
+            $scope.activeSelection.push(buttonName);
+        }
     };
 
     console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
-
 
     function refresh() {
         dataservice.curr_section = $scope.entryType;
@@ -78,7 +76,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     refresh();
 
-
     $scope.$on('ngRepeatFinished', function (element) {
         if (dataservice.curr_location) {
             $location.hash(dataservice.curr_location);
@@ -87,7 +84,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $location.hash("");
         }
     });
-
 
     //Flip All as active selected item in DOM
     function getHistory() {
@@ -345,24 +341,24 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             });
             // Filter on active/inactive
             if (val === 'medications') {
-              if ($scope.activeSelection.indexOf('active') > -1 && $scope.activeSelection.indexOf('inactive') > -1) { // All entries
+                if ($scope.activeSelection.indexOf('active') > -1 && $scope.activeSelection.indexOf('inactive') > -1) { // All entries
 
-              } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
-                  $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
-                      var curDate = new Date();
-                      var entryDate = new Date(entry.data.date_time.high.date);
-                      return (entry.category === val) && (entryDate >= curDate);
-                  });
-              } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
-                  $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
-                      console.log(entry);
-                      var curDate = new Date();
-                      var entryDate = new Date(entry.data.date_time.high.date);
-                      return (entry.category === val) && (entryDate < curDate);
-                  });
-              } else { // None
-                  $scope.entryListFiltered = [];
-              }
+                } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
+                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
+                        var curDate = new Date();
+                        var entryDate = new Date(entry.data.date_time.high.date);
+                        return (entry.category === val) && (entryDate >= curDate);
+                    });
+                } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
+                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
+                        console.log(entry);
+                        var curDate = new Date();
+                        var entryDate = new Date(entry.data.date_time.high.date);
+                        return (entry.category === val) && (entryDate < curDate);
+                    });
+                } else { // None
+                    $scope.entryListFiltered = [];
+                }
             }
 
             console.log("category ", val);
@@ -409,7 +405,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         //Flip All as active selected item in DOM
         angular.element("#nav" + $scope.entryType).addClass("active");
 
-        $scope.$watch('activeSelection', function(newVal, oldVal) {
+        $scope.$watch('activeSelection', function (newVal, oldVal) {
             filterEntries($scope.entryType);
         }, true);
 

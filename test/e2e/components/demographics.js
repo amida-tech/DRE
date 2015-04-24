@@ -10,7 +10,7 @@ var common2 = require('../common.js');
 
 function removeCollection(inputCollection, callback) {
     var db;
-    console.log("database location in test: "+databaseLocation);
+    console.log("database location in test: " + databaseLocation);
     database.connect(databaseLocation, function (err, dbase) {
         if (err) {
             throw err;
