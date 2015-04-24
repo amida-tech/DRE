@@ -2,6 +2,7 @@ language: node_js
 node_js:
 - '0.10'
 before_script:
+- npm install -g npm@>=2.1
 - npm install -g grunt-cli@0.1.x
 - npm install -g mocha
 - npm install -g istanbul
