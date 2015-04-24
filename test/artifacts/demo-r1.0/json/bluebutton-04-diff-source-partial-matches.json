@@ -43,7 +43,8 @@
                 "type": "primary home"
             }
         ],
-        "race_ethnicity": "White",
+        "race": "White",
+        "ethnicity": "Not Hispanic or Latino",
         "languages": [
             {
                 "language": "en",
@@ -630,7 +631,8 @@
                             "precision": "day"
                         }
                     },
-                    "status": "completed"
+                    "status": "completed",
+                    "text": "EKG rate 60s, A fib, LBBB"
                 }
             ]
         },
@@ -2227,7 +2229,7 @@
                     "code_system_name": "SNOMED CT"
                 }
             ],
-            "performer": [
+            "performers": [
                 {
                     "identifiers": [
                         {
@@ -2299,7 +2301,7 @@
                     "code_system_name": "SNOMED CT"
                 }
             },
-            "performer": [
+            "performers": [
                 {
                     "identifiers": [
                         {
@@ -2388,7 +2390,7 @@
                 "code": "CR",
                 "code_system_name": "ActPriority"
             },
-            "performer": [
+            "performers": [
                 {
                     "identifiers": [
                         {
@@ -2474,7 +2476,7 @@
                 "code": "CR",
                 "code_system_name": "ActPriority"
             },
-            "performer": [
+            "performers": [
                 {
                     "identifiers": [
                         {
