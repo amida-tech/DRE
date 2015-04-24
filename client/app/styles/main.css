@@ -8451,34 +8451,47 @@ h6, .h6 {
   text-transform: uppercase;
 }
 
-/* line 11, _buttons.scss */
+@media (max-width: 1051px) {
+  /* line 10, _buttons.scss */
+  .btn-responsive {
+    padding: 4px 4px;
+    font-size: 65%;
+    line-height: 1;
+  }
+
+  /* line 15, _buttons.scss */
+  .h6-responsive {
+    visibility: hidden;
+  }
+}
+/* line 22, _buttons.scss */
 .btn-group-vertical .btn {
   border-radius: 0px;
 }
-/* line 15, _buttons.scss */
+/* line 26, _buttons.scss */
 .btn-group-vertical .btn:first-child:not(:last-child) {
   border-top-right-radius: 0px;
 }
-/* line 19, _buttons.scss */
+/* line 30, _buttons.scss */
 .btn-group-vertical .btn:last-child:not(:first-child) {
   border-bottom-left-radius: 0px;
 }
-/* line 23, _buttons.scss */
+/* line 34, _buttons.scss */
 .btn-group-vertical .btn.btn-default {
   border-color: #ddd;
 }
-/* line 26, _buttons.scss */
+/* line 37, _buttons.scss */
 .btn-group-vertical .btn.btn-info {
   background-color: transparent;
   border-color: #fff;
   border-width: 2px;
 }
-/* line 31, _buttons.scss */
+/* line 42, _buttons.scss */
 .btn-group-vertical .btn.btn-info.active, .btn-group-vertical .btn.btn-info:hover {
   background-color: rgba(255, 255, 255, 0.4);
 }
 
-/* line 36, _buttons.scss */
+/* line 47, _buttons.scss */
 .btn-group {
   float: right;
 }

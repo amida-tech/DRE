@@ -6,6 +6,17 @@
   text-transform: uppercase;
 }
 
+@media (max-width: 1051px) {
+    .btn-responsive {
+        padding:4px 4px;
+        font-size:65%;
+        line-height: 1;
+    }
+    .h6-responsive {
+        visibility: hidden;
+    }
+}
+
 .btn-group-vertical {
 
 	.btn {
