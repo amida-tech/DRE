@@ -1,34 +1,11 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + process.env.DBname || 'tests';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
-var database = require('mongodb').Db;
+var common = require('../../common/common.js');
 var common2 = require('../common.js');
-
-function removeCollection(inputCollection, callback) {
-    var db;
-    database.connect(databaseLocation, function (err, dbase) {
-        if (err) {
-            throw err;
-        }
-        db = dbase;
-        db.collection(inputCollection, function (err, coll) {
-            if (err) {
-                throw err;
-            }
-            coll.remove({}, function (err, results) {
-                if (err) {
-                    throw err;
-                }
-                db.close();
-                callback();
-            });
-        });
-    });
-}
 
 function loadTestRecord(fileName, callback) {
     var filepath = path.join(__dirname, '../../artifacts/test-r1.0/' + fileName);
@@ -46,23 +23,23 @@ function loadTestRecord(fileName, callback) {
 describe('Pre Test Cleanup', function () {
 
     it('Remove Vital Collections', function (done) {
-        removeCollection('vitals', function (err) {
+        common.removeCollection('vitals', function (err) {
             if (err) {
                 done(err);
             }
-            removeCollection('vitalsmerges', function (err) {
+            common.removeCollection('vitalsmerges', function (err) {
                 if (err) {
                     done(err);
                 }
-                removeCollection('vitalsmatches', function (err) {
+                common.removeCollection('vitalsmatches', function (err) {
                     if (err) {
                         done(err);
                     }
-                    removeCollection('storage.files', function (err) {
+                    common.removeCollection('storage.files', function (err) {
                         if (err) {
                             done(err);
                         }
-                        removeCollection('storage.chunks', function (err) {
+                        common.removeCollection('storage.chunks', function (err) {
                             if (err) {
                                 done(err);
                             }
