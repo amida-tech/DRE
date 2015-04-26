@@ -566,7 +566,7 @@ describe('Demographic API - Test Merged Matches', function () {
                         dupCnt++;
                     }
                     if (res.body.merges[i].merge_reason === 'update') {
-                        //Get record id off loaded rec, 
+                        //Get record id off loaded rec,
                         expect(res.body.merges[i].entry._id).to.equal(base_id);
                         expect(res.body.merges[i].record.filename).to.equal('bluebutton-04-diff-source-partial-matches.xml');
                         mrgCnt++;

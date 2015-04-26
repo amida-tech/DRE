@@ -32,12 +32,12 @@
                         </div>
                         <div class="col-sm-3" ng-if="entryType==='all'">
                             <a href="#/print" target="_blank">
-                                <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
+                                <button class="btn btn-default btn-responsive" style="color: #6AA6FF">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
-                                        <div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
+                                        <div class="pull-left" style="margin-top: 15px;">
                                             <i class="fa fa-print fa-2x"></i>
                                         </div>
-                                        <div class="pull-right">
+                                        <div class="pull-right" style="margin-left: 9px">
                                             <h6 style="text-transform: none; margin: 0px;">&nbsp;</h6>
                                             <h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Print <br/> my record</h5>
                                         </div>
@@ -51,19 +51,19 @@
 
                         <div class="col-sm-3" ng-if="entryType==='all'">
                             <a href="/api/v1/master_health_record/xml">
-                                <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
+                                <button class="btn btn-default btn-responsive" style="color: #6AA6FF">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
-                                        <div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
+                                        <div class="pull-left" style="margin-top: 12px;">
                                             <img class="img-navbar-logo img-responsive" src="images/bb-logo-vector.png" style="margin: 0px;">
                                         </div>
-                                        <div class="pull-right">
+                                        <div class="pull-right" style="margin-left: 9px">
                                             <h6 style="text-transform: none; margin: 0px;">BlueButton</h6>
                                             <h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Download</br>my data<span style="font-size: 8px; vertical-align: top;">&reg;</span></h5>
                                         </div>
                                     </div>
                                 </button>
                             </a>
-                            <h6 style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
+                            <h6 class="h6-responsive" style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
 
                         </div>
                     </div>
@@ -219,10 +219,22 @@
                         <div>
                             <p>Timeline</p>
                         </div>
-                        <div timeline ng-show="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
+                        <div timeline chart-data="entryListFiltered" class="timeline-graph"></div>
+                        <div ng-if="entryType=='medications'" class="col-sm-12 row timeline-side">
+                            <div class="btn-group">
+                                <label class="btn btn-default">
+                                    <input type="checkbox" value="active" ng-checked="activeSelection.indexOf('active') > -1" ng-click="toggleSelection('active')"> Active</label>
+                                <label class="btn btn-default">
+                                    <input type="checkbox" value="inactive" ng-checked="activeSelection.indexOf('inactive') > -1" ng-click="toggleSelection('inactive')"> Inactive</label>
+                            </div>
+                        </div>
                         <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
                             <div class="col-sm-12 row timeline-side">
-                                <entry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></entry>
+                                <entry id="{{recordEntry.data._id}}" type="{{recordEntry.category}}" entry-index="{{recordIndex}}" on-finish-render="ngRepeatFinished"></entry>
+                            </div>
+                        </div>
+                        <div ng-hide="entryListFiltered" class="timeline-side row col-sm-12"> 
+                            <div class="col-sm-offset-2">Please make a selection using the Active and Inactive buttons to view your medication entries.
                             </div>
                         </div>
                         <div class="col-sm-2 center-block text-center timeline-footer">

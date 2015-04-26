@@ -101,7 +101,7 @@ angular
 
         var routesThatDontRequireAuth = ['/login', '/', '/register'];
 
-        // if current location matches route  
+        // if current location matches route
         var routeClean = function (route) {
             return _.find(routesThatDontRequireAuth,
                 function (noAuthRoute) {
