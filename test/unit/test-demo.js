@@ -13,7 +13,6 @@ var match = require("blue-button-match");
 //var match = require('../lib/match.js');
 //var compare = require('../lib/compare-partial.js').compare;
 //var lookups = require('../lib/lookups.js');
-//var equal = require('deep-equal');
 
 var js, js2, js3, js4;
 

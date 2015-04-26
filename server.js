@@ -121,10 +121,10 @@ app.use(flash());
 //var databaseServer = process.env.DB || 'mongodb://localhost:27017';
 //var databaseServer = process.env.DB || 'localhost:27017';
 
-app.set('db_url', process.env.DB || 'localhost:27017');
+app.set('db_url', process.env.DB || 'localhost');
 app.set('db_name', process.env.DBname || 'dre');
 
-console.log("DB URL: ", app.get('db_url') + "/" + app.get('db_name'));
+console.log("DB URL: ", app.get('db_url') + ":27017/" + app.get('db_name'));
 
 var storage = require('./lib/storage');
 app.use(storage);
