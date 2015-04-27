@@ -108,18 +108,13 @@
                     "description": "File to be uploaded",
                     "in": "formData",
                     "type": "file",
-                    "schema": {
-                        "type": "formData"
-                    },
                     "required": true
                 }, {
                     "name": "check",
                     "description": "Save file without importing entries or update Master Health Record",
-                    "in": "body",
+                    "in": "formData",
                     "type": "boolean",
-                    "schema": {
-                        "type": "boolean"
-                    }
+                    "required": true
                 }],
                 "responses": {
                     "200": {
@@ -154,10 +149,7 @@
                 }],
                 "responses": {
                     "200": {
-                        "description": "file",
-                        "schema": {
-                            "type": "file"
-                        }
+                        "description": "file"
                     },
                     "400": {
                         "description": "Event error"
@@ -332,11 +324,13 @@
                     "record"
                 ],
                 "parameters": [{
-                    "name": "record ID",
+                    "name": "profileInfo",
                     "description": "Profile section information and database ID",
                     "in": "body",
-                    "type": "string",
-                    "required": true
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/bodySchema"
+                    }
                 }],
                 "summary": "Update profile information",
                 "responses": {
@@ -361,9 +355,19 @@
                     "name": "component",
                     "description": "area of health",
                     "in": "path",
-                    "schema": {
-                        "$ref": "#/definitions/recordSchema"
-                    },
+                    "type": "string",
+                    "enum": [
+                        "demographics",
+                        "medications",
+                        "results",
+                        "encounters",
+                        "vitals",
+                        "immunizations",
+                        "allergies",
+                        "conditions",
+                        "procedures",
+                        "social"
+                    ],
                     "required": true
                 }],
                 "responses": {
@@ -391,17 +395,16 @@
                     "name": "format",
                     "description": "Defaults to CCDA format",
                     "in": "path",
-                    "schema": {
-                        "$ref": "#/definitions/formatSchema"
-                    },
+                    "type": "string",
+                    "enum": [
+                        "json",
+                        "string"
+                    ],
                     "required": true
                 }],
                 "responses": {
                     "200": {
-                        "description": "Master health record downloaded in format {format}",
-                        "schema": {
-                            "type": "file"
-                        }
+                        "description": "Master health record downloaded in Blue Button or CCDA format"
                     },
                     "400": {
                         "description": "Event error while saving event"
@@ -442,9 +445,19 @@
                     "name": "component",
                     "description": "area of health",
                     "in": "path",
-                    "schema": {
-                        "$ref": "#/definitions/recordSchema"
-                    },
+                    "type": "string",
+                    "enum": [
+                        "demographics",
+                        "medications",
+                        "results",
+                        "encounters",
+                        "vitals",
+                        "immunizations",
+                        "allergies",
+                        "conditions",
+                        "procedures",
+                        "social"
+                    ],
                     "required": true
                 }],
                 "responses": {
@@ -465,9 +478,19 @@
                 "name": "component",
                 "in": "path",
                 "description": "area of health",
-                "schema": {
-                    "$ref": "#/definitions/recordSchema"
-                },
+                "type": "string",
+                "enum": [
+                    "demographics",
+                    "medications",
+                    "results",
+                    "encounters",
+                    "vitals",
+                    "immunizations",
+                    "allergies",
+                    "conditions",
+                    "procedures",
+                    "social"
+                ],
                 "required": true
             }, {
                 "name": "record_id",
@@ -501,9 +524,19 @@
                 "name": "component",
                 "in": "path",
                 "description": "area of health",
-                "schema": {
-                    "$ref": "#/definitions/recordSchema"
-                },
+                "type": "string",
+                "enum": [
+                    "demographics",
+                    "medications",
+                    "results",
+                    "encounters",
+                    "vitals",
+                    "immunizations",
+                    "allergies",
+                    "conditions",
+                    "procedures",
+                    "social"
+                ],
                 "required": true
             }, {
                 "name": "record_id",
@@ -537,9 +570,19 @@
                 "name": "component",
                 "in": "path",
                 "description": "area of health",
-                "schema": {
-                    "$ref": "#/definitions/recordSchema"
-                },
+                "type": "string",
+                "enum": [
+                    "demographics",
+                    "medications",
+                    "results",
+                    "encounters",
+                    "vitals",
+                    "immunizations",
+                    "allergies",
+                    "conditions",
+                    "procedures",
+                    "social"
+                ],
                 "required": true
             }, {
                 "name": "record_id",
@@ -597,9 +640,19 @@
                     "name": "component",
                     "description": "area of health",
                     "in": "path",
-                    "schema": {
-                        "$ref": "#/definitions/recordSchema"
-                    },
+                    "type": "string",
+                    "enum": [
+                        "demographics",
+                        "medications",
+                        "results",
+                        "encounters",
+                        "vitals",
+                        "immunizations",
+                        "allergies",
+                        "conditions",
+                        "procedures",
+                        "social"
+                    ],
                     "required": true
                 }],
                 "responses": {
@@ -792,17 +845,7 @@
                     "type": "string"
                 },
                 "event_type": {
-                    "type": "string",
-                    "enum": [
-                        "initAccount",
-                        "loggedIn",
-                        "loggedOut",
-                        "fileUploaded",
-                        "fileDownloaded",
-                        "labResults",
-                        "passwordChange",
-                        "infoUpdate"
-                    ]
+                    "type": "string"
                 },
                 "note": {
                     "type": "string"
@@ -963,39 +1006,13 @@
                 }
             }
         },
-        "recordSchema": {
+        "bodySchema": {
             "required": [
-                "component"
+                "data"
             ],
             "properties": {
-                "component": {
-                    "type": "string",
-                    "enum": [
-                        "demographics",
-                        "medications",
-                        "results",
-                        "encounters",
-                        "vitals",
-                        "immunizations",
-                        "allergies",
-                        "conditions",
-                        "procedures",
-                        "social"
-                    ]
-                }
-            }
-        },
-        "formatSchema": {
-            "required": [
-                "format"
-            ],
-            "properties": {
-                "format": {
-                    "type": "string",
-                    "enum": [
-                        "json",
-                        "ccda"
-                    ]
+                "data": {
+                    "type": "string"
                 }
             }
         },
@@ -1010,19 +1027,7 @@
             ],
             "properties": {
                 "section": {
-                    "type": "string",
-                    "enum": [
-                        "demographics",
-                        "medications",
-                        "results",
-                        "encounters",
-                        "vitals",
-                        "immunizations",
-                        "allergies",
-                        "conditions",
-                        "procedures",
-                        "social"
-                    ]
+                    "type": "string"
                 },
                 "_id": {
                     "type": "string"
