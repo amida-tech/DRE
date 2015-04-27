@@ -37,7 +37,7 @@ describe('Pre Test Cleanup', function () {
 
 describe('Medications API', function () {
 
-    var tmp_med = {
+    var data = {
         "date_range": {
             "start": "2011-03-01T05:00:00Z",
             "end": "2012-03-01T05:00:00Z"
@@ -52,48 +52,9 @@ describe('Medications API', function () {
                 "code_system": null,
                 "code_system_name": null
             }
-        },
-        "dose_quantity": {
-            "value": "1",
-            "unit": null
-        },
-        "rate_quantity": {
-            "value": "90",
-            "unit": "ml/min"
-        },
-        "route": {
-            "name": null,
-            "code": "C38216",
-            "code_system": null,
-            "code_system_name": null
-        },
-        "vehicle": {
-            "name": null,
-            "code": "412307009",
-            "code_system": null,
-            "code_system_name": null
-        },
-        "administration": {
-            "name": null,
-            "code": "C42944",
-            "code_system": null,
-            "code_system_name": null
-        },
-        "prescriber": {
-            "organization": "Good Health Clinic",
-            "person": null
         }
     };
-
-    before(function (done) {
-        common.loadTestRecord(api, 'bluebutton-01-original.xml', function (err) {
-            if (err) {
-                done(err);
-            } else {
-                done();
-            }
-        });
-    });
+    var tmp_med = {'data': data}
 
     it('Medications Endpoint: POST', function (done) {
         api.post('/api/v1/medications/add')
@@ -121,7 +82,7 @@ describe('Medications API Get All', function () {
                 } else {
                     expect(res.body.length).to.equal(1);
                     expect(res.body[0]._id).to.exist;
-                    expect(res.body[0].note).to.equal('Inconsistent reaction');
+                    expect(res.body[0].data.product.name).to.equal('Test med');
                     done();
                 }
             });
@@ -131,10 +92,24 @@ describe('Medications API Get All', function () {
 
 describe('Medications API Edit', function () {
 
-    var tmp_edit = {
-        id: "",
-        note: "Active allergy as a result of most recent appointment"
+    var data = {
+        "date_range": {
+            "start": "2011-03-01T05:00:00Z",
+            "end": "2012-03-01T05:00:00Z"
+        },
+        "product": {
+            "name": "Test med edited",
+            "code": "329498",
+            "code_system": null,
+            "translation": {
+                "name": null,
+                "code": "573621",
+                "code_system": null,
+                "code_system_name": null
+            }
+        }
     };
+    var tmp_edit = {'data': data}
 
     before(function (done) {
 
@@ -172,8 +147,7 @@ describe('Medications API Edit', function () {
                 } else {
                     expect(res.body.length).to.equal(1);
                     expect(res.body[0]._id).to.exist;
-                    expect(res.body[0].star).to.equal(false);
-                    expect(res.body[0].note).to.equal('Active allergy as a result of most recent appointment');
+                    expect(res.body[0].data.product.name).to.equal('Test med edited');
                     done();
                 }
             });

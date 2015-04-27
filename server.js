@@ -156,6 +156,9 @@ app.use(accountHistory);
 var notes = require('./lib/notes');
 app.use(notes);
 
+var medications = require('./lib/medications');
+app.use(medications);
+
 app.set('port', (process.env.PORT || 3000));
 
 app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
