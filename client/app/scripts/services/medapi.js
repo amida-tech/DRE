@@ -19,4 +19,4 @@ angular.module('phrPrototypeApp').service('openfda', function openfda($http) {
 
 	};
 
-)};
+});
