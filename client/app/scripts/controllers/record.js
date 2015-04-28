@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, format, matches, merges, history, dataservice) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice) {
     console.log("RECORD CONTROLLER LOAD ");
 
     $scope.dashMetrics = {};
@@ -32,9 +32,32 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     }
     angular.element("#nav" + $scope.entryType).addClass("active");
 
+    // TODO make these more descriptive
+    // Meds modal
+    $scope.modal = {
+        title: 'Title',
+        content: 'Hello Modal<br />This is a multiline message!'
+    };
+
+    // Meds active/inactive selector
+    $scope.activeSelection = ['active', 'inactive'];
+
+    $scope.toggleSelection = function toggleSelection(buttonName) {
+        var idx = $scope.activeSelection.indexOf(buttonName);
+
+        // is currently selected
+        if (idx > -1) {
+            $scope.activeSelection.splice(idx, 1);
+        }
+
+        // is newly selected
+        else {
+            $scope.activeSelection.push(buttonName);
+        }
+    };
+
     console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
 
-    //TODO may need callback
     function refresh() {
         dataservice.curr_section = $scope.entryType;
         dataservice.getData(function () {
@@ -48,11 +71,19 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $scope.mergesList_record = dataservice.merges_record;
             $scope.mergesList_billing = dataservice.merges_billing;
             $scope.mergesList = dataservice.all_merges;
-
         });
     }
 
     refresh();
+
+    $scope.$on('ngRepeatFinished', function (element) {
+        if (dataservice.curr_location) {
+            $location.hash(dataservice.curr_location);
+            $anchorScroll();
+            dataservice.curr_location = null;
+            $location.hash("");
+        }
+    });
 
     //Flip All as active selected item in DOM
     function getHistory() {
@@ -237,7 +268,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         function formatDates() {
             //Flatten to timeline.
             console.log($scope.entries);
-            
+
             _.each($scope.entries, function(entry, section) {
                 _.each(entry, function(item) {
                     var tmpItem = item;
@@ -302,6 +333,38 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $scope.entryList.reverse();
         }
 
+        function filterEntries(val) {
+            console.log("UNFILTERED ", $scope.recordEntries);
+
+            $scope.entryListFiltered = _.where($scope.recordEntries, {
+                category: val
+            });
+            // Filter on active/inactive
+            if (val === 'medications') {
+                if ($scope.activeSelection.indexOf('active') > -1 && $scope.activeSelection.indexOf('inactive') > -1) { // All entries
+
+                } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
+                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
+                        var curDate = new Date();
+                        var entryDate = new Date(entry.data.date_time.high.date);
+                        return (entry.category === val) && (entryDate >= curDate);
+                    });
+                } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
+                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
+                        console.log(entry);
+                        var curDate = new Date();
+                        var entryDate = new Date(entry.data.date_time.high.date);
+                        return (entry.category === val) && (entryDate < curDate);
+                    });
+                } else { // None
+                    $scope.entryListFiltered = [];
+                }
+            }
+
+            console.log("category ", val);
+            console.log("FILTERED ", $scope.entryListFiltered);
+        }
+
         $scope.recordEntries = dataservice.processed_record;
         console.log("processed record ", dataservice.processed_record);
         console.log("master record ", dataservice.master_record);
@@ -328,12 +391,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         } else {
             $scope.entryType = dataservice.curr_section;
 
-            console.log("UNFILTERED ", $scope.recordEntries);
-            $scope.entryListFiltered = _.where($scope.recordEntries, {
-                category: $scope.entryType
-            });
-            console.log("category ", $scope.entryType);
-            console.log("FILTERED ", $scope.entryListFiltered);
+            filterEntries($scope.entryType);
         }
 
         //$scope.pageLoaded = false;
@@ -347,6 +405,10 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         //Flip All as active selected item in DOM
         angular.element("#nav" + $scope.entryType).addClass("active");
 
+        $scope.$watch('activeSelection', function (newVal, oldVal) {
+            filterEntries($scope.entryType);
+        }, true);
+
         $scope.$watch('entryType', function (newVal, oldVal) {
             //keeping current section name in scope
             //alert('entryType new:'+newVal+" old:"+oldVal);
@@ -355,6 +417,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             console.log("$scope.entryType = ", $scope.entryType);
 
             if (newVal !== oldVal) {
+                $window.scrollTo(0, 0);
                 if (newVal === "all") {
                     $scope.$broadcast('tabchange', {
                         "val": $scope.tabs.activeTab
@@ -364,18 +427,10 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     dataservice.curr_section = "all";
                     $scope.entryType = dataservice.curr_section;
                 } else {
-
-                    console.log("UNFILTERED ", $scope.recordEntries);
-
-                    $scope.entryListFiltered = _.where($scope.recordEntries, {
-                        category: newVal
-                    });
-                    console.log("category ", newVal);
-                    console.log("FILTERED ", $scope.entryListFiltered);
+                    filterEntries(newVal);
 
                     dataservice.curr_section = newVal;
                     $scope.entryType = dataservice.curr_section;
-
                 }
                 if (newVal === "vitals") {
                     $scope.$broadcast('tabchange', {
@@ -436,4 +491,5 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
         $location.path('/matches');
     };
+
 });

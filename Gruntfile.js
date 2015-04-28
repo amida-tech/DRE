@@ -59,7 +59,7 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            files: ['gruntFile.js', 'package.json', '*.js', './lib/*.js','./lib/**/*.js','./test/*.js', './test/**/*.js'], //['./test/unit/*.js'], 
+            files: ['gruntFile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js'], //['./test/unit/*.js'], 
             options: {
                 browser: true,
                 curly: true,
