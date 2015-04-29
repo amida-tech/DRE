@@ -20,4 +20,14 @@ angular.module('phrPrototypeApp')
                     callback(err);
                 });
         };
+
+        this.findRxNorm = function(name, callback) {
+            $http.get('api/v1/rxnorm/'+name)
+                .success(function (data) {
+                	callback(data);
+                }).error(function (err) {
+                    callback(err);
+                });
+        };
+
     });
