@@ -131,7 +131,10 @@
                         <div class="sub-entry">
                             <h3> Images</h3>
                             <div ng-repeat="(imageIndex, image) in medImages.nlmRxImages">
-                            <div class="col-xs-6"><a style="padding-left:15px" target="_blank" ng-href="{{image.imageUrl}}"><img class="img-thumbnail" ng-src="{{image.imageUrl}}"></img></a></div>
+                                <div class="col-xs-6">
+                                    <a style="padding-left:15px" target="_blank" ng-href="{{image.imageUrl}}"><img class="img-thumbnail" ng-src="{{image.imageUrl}}"></img>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

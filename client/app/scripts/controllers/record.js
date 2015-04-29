@@ -46,7 +46,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         });
     };
 
-
     // Meds active/inactive selector
     $scope.activeSelection = ['active', 'inactive'];
 
@@ -62,6 +61,15 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         else {
             $scope.activeSelection.push(buttonName);
         }
+    };
+
+    $scope.drugSearch = function drugSearch(drugName) {
+        medapi.findRxNorm(drugName, function (err, data) {
+            if (err) {
+                console.log("Err: " + err);
+            }
+            $scope.drugResults = data;
+        });
     };
 
     $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {

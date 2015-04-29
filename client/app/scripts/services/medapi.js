@@ -7,23 +7,23 @@
  * # medapi
  * Service in the phrPrototypeApp.
  */
- 
+
 angular.module('phrPrototypeApp')
     .service('medapi', function medapi($http) {
 
-        this.getImages = function(rxcui, callback) {
-            $http.get('api/v1/openfda/'+rxcui)
+        this.getImages = function (rxcui, callback) {
+            $http.get('api/v1/openfda/' + rxcui)
                 .success(function (data) {
-                	callback(data);
+                    callback(data);
                 }).error(function (err) {
                     callback(err);
                 });
         };
 
-        this.findRxNorm = function(name, callback) {
-            $http.get('api/v1/rxnorm/'+name)
+        this.findRxNorm = function (name, callback) {
+            $http.get('api/v1/rxnorm/' + name)
                 .success(function (data) {
-                	callback(data);
+                    callback(null, data);
                 }).error(function (err) {
                     callback(err);
                 });

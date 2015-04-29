@@ -31,6 +31,18 @@
                     <div role="tabpanel" class="tab-pane active" id="drug">
                         <div class="sub-entry">
                             <h3>Drug Information</h3>
+                            <div class="col-sm-12">
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button class="btn btn-default" ng-click="drugSearch(pDrugName)">Search</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" ng-show="drugResults">
+                                <h4>Retrieved Information</h4>
+                                <pre>{{drugResults}}</pre>
+                            </div>
                         </div>
                     </div>
                     <!--Medication prescriber pane.-->
@@ -51,7 +63,7 @@
                                     <button class="btn btn-default" ng-click="prescriberSearch(pFirstName,pLastName,pZip)">Search</button>
                                 </div>
                             </div>
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" ng-show="prescriberResults">
                                 <h4>Prescriber Information</h4>
                                 <pre>{{prescriberResults}}</pre>
                             </div>
