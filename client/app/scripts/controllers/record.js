@@ -64,6 +64,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     };
 
     $scope.drugSearch = function drugSearch(drugName) {
+        console.log("drugname: " + drugName);
         medapi.findRxNorm(drugName, function (err, data) {
             if (err) {
                 console.log("Err: " + err);
