@@ -340,7 +340,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 category: val
             });
             // Filter on active/inactive
-            if (val === 'medications') {
+            if (val === 'medications' || val === 'social') {
                 if ($scope.activeSelection.indexOf('active') > -1 && $scope.activeSelection.indexOf('inactive') > -1) { // All entries
 
                 } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
