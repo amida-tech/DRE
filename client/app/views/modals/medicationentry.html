@@ -1,0 +1,58 @@
+<div class="modal-inner-content">
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="sidebar-nav">
+                    <div class="navbar navbar-default" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <button class="btn btn-link" data-toggle="tab" data-target="#drug" aria-controls="drug" ng-click="swapEntryTabs('drug')">
+                                    <span><i class="fa fa-ellipsis-h"></i> Drug</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-link" data-toggle="tab" data-target="#prescriber" aria-controls="prescriber" ng-click="swapEntryTabs('prescriber')">
+                                    <span><i class="fa fa-comment"></i> Prescriber</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-link" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="swapEntryTabs('summary')">
+                                    <span><i class="fa fa-clock-o"></i>Summary</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <h4>Main content</h4>
+                <!--Drug information pane.-->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="drug">
+
+                        <div class="sub-entry">
+                            <h3>Drug Information</h3>
+                            <div ng-include="entryTemplatePath"></div>
+                        </div>
+                    </div>
+                    <!--Medication prescriber pane.-->
+                    <div role="tabpanel" class="tab-pane" id="prescriber">
+                        <div class="sub-entry">
+                            <h3>Prescriber Information</h3>
+                            <div ng-include="entryTemplatePath"></div>
+                        </div>
+                    </div>
+                    <!--Medication summary pane.-->
+                    <div role="tabpanel" class="tab-pane" id="summary">
+                        <div class="sub-entry">
+                            <h3>Entry Summary</h3>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
