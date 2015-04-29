@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice, medapi) {
     console.log("RECORD CONTROLLER LOAD ");
 
     $scope.dashMetrics = {};
@@ -38,6 +38,14 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         title: 'Title',
         content: 'Hello Modal<br />This is a multiline message!'
     };
+
+    // Medication images
+    $scope.imgservice = function imgservice(rxcui) {
+        medapi.getImages(rxcui, function (data, err) {
+            $scope.medImages = data;
+        });
+    };
+
 
     // Meds active/inactive selector
     $scope.activeSelection = ['active', 'inactive'];
