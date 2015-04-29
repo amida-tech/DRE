@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice, npiapi) {
     console.log("RECORD CONTROLLER LOAD ");
 
     $scope.dashMetrics = {};
@@ -56,6 +56,62 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
+    $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {
+        var searchTest = false;
+        var searchObj = {
+            name: [],
+            address: []
+        };
+        if (firstName !== "" && lastName !== "") {
+            searchObj.name.push({
+                first: firstName,
+                last: lastName
+            });
+            searchTest = true;
+        } else {
+            if (lastName !== "") {
+                searchObj.name.push({
+                    last: lastName
+                });
+                searchTest = true;
+            }
+        }
+        if (zipCode !== "") {
+            searchObj.address.push({
+                zip: zipCode
+            });
+            searchTest = true;
+        }
+        if (searchTest) {
+            npiapi.getNPI(searchObj, function (err, data) {
+                if (err) {
+                    console.log("Martz err: " + err);
+                } else {
+                    console.log("Martz success: " + JSON.stringify(data));
+                    $scope.prescriberResults = data;
+                }
+            });
+        }
+    };
+
+    //this doesn't really do anything at the moment
+    /*
+        $scope.swapMedTabs = function swapMedTabs(entryClass) {
+            if (entryClass === "drug") {
+                $("#drug").addClass("in");
+                $("#prescriber").removeClass("in");
+                $("#summary").removeClass("in");
+            } else if (entryClass === "prescriber") {
+                $("#drug").removeClass("in");
+                $("#prescriber").addClass("in");
+                $("#summary").removeClass("in");
+            } else if (entryClass === "summary") {
+                $("#drug").removeClass("in");
+                $("#prescriber").removeClass("in");
+                $("#summary").addClass("in");
+            }
+        };
+    */
     console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
 
     function refresh() {
