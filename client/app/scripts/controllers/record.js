@@ -346,14 +346,19 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                         var curDate = new Date();
-                        var entryDate = new Date(entry.data.date_time.high.date);
+                        var entryDate = new Date();
+                        if (_.has(entry, 'data.date_time.high')) {
+                            entryDate = new Date(entry.data.date_time.high.date);
+                        }
                         return (entry.category === val) && (entryDate >= curDate);
                     });
                 } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
-                        console.log(entry);
                         var curDate = new Date();
-                        var entryDate = new Date(entry.data.date_time.high.date);
+                        var entryDate = new Date();
+                        if (_.has(entry, 'data.date_time.high')) {
+                            entryDate = new Date(entry.data.date_time.high.date);
+                        }
                         return (entry.category === val) && (entryDate < curDate);
                     });
                 } else { // None
