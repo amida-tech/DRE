@@ -68,8 +68,16 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         medapi.findRxNorm(drugName, function (err, data) {
             if (err) {
                 console.log("Err: " + err);
+            } else {
+                $scope.drugResults = data;
+                medapi.getImages(data.idGroup.rxnormId[0], function (err, imageData) {
+                    if (err) {
+                        console.log("Err: " + err);
+                    }
+                    data.image = imageData;
+                    $scope.data = data;
+                });
             }
-            $scope.drugResults = data;
         });
     };
 
