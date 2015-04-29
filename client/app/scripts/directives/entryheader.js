@@ -88,9 +88,12 @@ angular.module('phrPrototypeApp')
                 }
                 break;
                 case 'vitals':
+                if (scope.entryData.vital && scope.entryData.vital.name) {
+                    scope.entryTitle = scope.entryData.vital.name;
+                }
                 var quantityUnit = "";
                 if (scope.entryData.unit) {
-                    if (scope.entryData.unit === "[in_i]") {
+                    if (scope.entryData.unit === "[in_i]" || scope.entryData.unit === "[in_us]") {
                         quantityUnit = "inches";
                     } else if (scope.entryData.unit === "[lb_av]") {
                         quantityUnit = "lbs";
@@ -100,11 +103,8 @@ angular.module('phrPrototypeApp')
                         quantityUnit = scope.entryData.unit;
                     }
                     if (scope.entryData.value && scope.entryData.value + " " + quantityUnit) {
-                        scope.entryTitle = scope.entryData.value + " " + quantityUnit;
+                        scope.entrySubTitleOne = scope.entryData.value + " " + quantityUnit;
                     }
-                }
-                if (scope.entryData.vital && scope.entryData.vital.name) {
-                    scope.entrySubTitleOne = scope.entryData.vital.name;
                 }
                 if (scope.recordEntry.metadata.displayDate) {
                     scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
