@@ -2,21 +2,31 @@
 
 /**
  * @ngdoc service
- * @name phrPrototypeApp.openfda
+ * @name phrPrototypeApp.medapi
  * @description
- * # openfda
+ * # medapi
  * Service in the phrPrototypeApp.
  */
-angular.module('phrPrototypeApp').service('openfda', function openfda($http) {
+ 
+angular.module('phrPrototypeApp')
+    .service('medapi', function medapi($http) {
 
-    this.getFDAdata = function (rxNormCode, callback) {
-        $http.get('api/v1/openfda')
-            .success(function (data) {
-                callback(null, data);
-            }).error(function (err) {
-                callback(err);
-            });
+        this.getImages = function(rxcui, callback) {
+            $http.get('api/v1/openfda/'+rxcui)
+                .success(function (data) {
+                	callback(data);
+                }).error(function (err) {
+                    callback(err);
+                });
+        };
 
-    };
+        this.findRxNorm = function(name, callback) {
+            $http.get('api/v1/rxnorm/'+name)
+                .success(function (data) {
+                	callback(data);
+                }).error(function (err) {
+                    callback(err);
+                });
+        };
 
-});
+    });
