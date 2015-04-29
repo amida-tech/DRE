@@ -120,10 +120,10 @@ angular.module('phrPrototypeApp')
                 break;
                 case 'social':
                 if (scope.entryData.value) {
-                    scope.entryTitle = scope.entryData.value;
+                    scope.entryTitle = scope.entryData.code.name;
                 }
                 if (scope.entryData.code && scope.entryData.code.name) {
-                    scope.entrySubTitleOne = scope.entryData.code.name;
+                    scope.entrySubTitleOne = scope.entryData.value;
                 }
                 if (scope.recordEntry.metadata.displayDate) {
                     scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
