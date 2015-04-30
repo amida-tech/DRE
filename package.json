@@ -63,7 +63,7 @@
     "node": "0.10.x"
   },
   "scripts": {
-    "start": "grunt",
+    "start": "node server.js",
     "bench": "grunt benchmark && node lib/benchmark/show.js",
     "test": "grunt"
   },
@@ -94,6 +94,7 @@
     "grunt-nodemon": "~0.4.0",
     "grunt-concurrent": "~1.0.0",
     "load-grunt-tasks": "~3.1.0",
-    "grunt-express-server": "~0.5.1"
+    "grunt-express-server": "~0.5.1",
+    "grunt-shell": "^1.1.2"
   }
 }
