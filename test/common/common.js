@@ -7,7 +7,7 @@ var _ = require('lodash');
 var bbMeta = require('blue-button-meta');
 
 function loadTestRecord(api, fileName, callback) {
-    var filepath = path.join(__dirname, '../artifacts/test-r1.0/' + fileName);
+    var filepath = path.join(__dirname, '../artifacts/test-r1.5/' + fileName);
     api.put('/api/v1/storage')
         .attach('file', filepath)
         .expect(200)
