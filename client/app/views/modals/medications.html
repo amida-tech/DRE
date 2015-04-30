@@ -31,6 +31,11 @@
                                     <span><i class="fa fa-exclamation-triangle"></i> Adverse Events</span>
                                 </button>
                             </li>
+                            <li>
+                                <button class="btn btn-link" data-toggle="tab" data-target="#medline{{recordIndex}}" aria-controls="medline{{recordIndex}}" ng-click="swapTabs('medline', recordIndex); medlineservice(entryData.product.product.code, entryData.product.product.name)">
+                                    <span><i class="fa fa-question-circle"></i> Learn More</span>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -161,6 +166,14 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+
+                    <!-- MedlinePlus Connect Pane -->
+                    <div role="tabpanel" class="tab-pane" id="medline{{recordIndex}}">
+                        <div class="sub-entry">
+                            <h3> Learn More</h3>
+                            {{medline.feed.entry.link.href}}
                         </div>
                     </div>
                 </div>

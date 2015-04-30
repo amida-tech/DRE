@@ -63,6 +63,14 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
+    // Medline Plus Connect link
+    $scope.medlineservice = function medlineservice(rxcui, medname) {
+        medapi.getmedline(rxcui, medname, function (err, data) {
+            $scope.medline = data;
+            console.log(data);
+        });
+    };
+
     // Meds active/inactive selector
     $scope.activeSelection = ['active', 'inactive'];
 

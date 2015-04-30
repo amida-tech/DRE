@@ -77,4 +77,19 @@ angular.module('phrPrototypeApp')
             });
         };
 
+
+        this.getmedline = function (rxcui, medname, callback) {
+
+            $http.post('api/v1/medlineplus', {
+                rxcui: rxcui,
+                medname: medname
+            }).
+            success(function (data, status, headers, config) {
+                callback(null, data);
+            }).
+            error(function (data, status, headers, config) {
+                callback(status);
+            });
+        };
+
     });

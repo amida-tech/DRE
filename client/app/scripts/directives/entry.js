@@ -180,36 +180,49 @@ angular.module('phrPrototypeApp')
                         $("#match" + entryIndex).removeClass("in");
                         $("#images" + entryIndex).removeClass("in");
                         $("#fda" + entryIndex).removeClass("in");
+                        $("#medline" + entryIndex).removeClass("in");
                     } else if (entryClass === "comments") {
                         $("#details" + entryIndex).removeClass("in");
                         $("#history" + entryIndex).removeClass("in");
                         $("#match" + entryIndex).removeClass("in");
                         $("#images" + entryIndex).removeClass("in");
                         $("#fda" + entryIndex).removeClass("in");
+                        $("#medline" + entryIndex).removeClass("in");
                     } else if (entryClass === "history") {
                         $("#details" + entryIndex).removeClass("in");
                         $("#comments" + entryIndex).removeClass("in");
                         $("#match" + entryIndex).removeClass("in");
                         $("#images" + entryIndex).removeClass("in");
                         $("#fda" + entryIndex).removeClass("in");
+                        $("#medline" + entryIndex).removeClass("in");
                     } else if (entryClass === "match") {
                         $("#details" + entryIndex).removeClass("in");
                         $("#comments" + entryIndex).removeClass("in");
                         $("#history" + entryIndex).removeClass("in");
                         $("#images" + entryIndex).removeClass("in");
                         $("#fda" + entryIndex).removeClass("in");
+                        $("#medline" + entryIndex).removeClass("in");
                     } else if (entryClass === "images") {
                         $("#details" + entryIndex).removeClass("in");
                         $("#comments" + entryIndex).removeClass("in");
                         $("#history" + entryIndex).removeClass("in");
                         $("#match" + entryIndex).removeClass("in");
                         $("#fda" + entryIndex).removeClass("in");
+                        $("#medline" + entryIndex).removeClass("in");
                     } else if (entryClass === "fda") {
                         $("#details" + entryIndex).removeClass("in");
                         $("#comments" + entryIndex).removeClass("in");
                         $("#history" + entryIndex).removeClass("in");
                         $("#match" + entryIndex).removeClass("in");
                         $("#images" + entryIndex).removeClass("in");
+                        $("#medline" + entryIndex).removeClass("in");
+                    } else if (entryClass === "medline") {
+                        $("#details" + entryIndex).removeClass("in");
+                        $("#comments" + entryIndex).removeClass("in");
+                        $("#history" + entryIndex).removeClass("in");
+                        $("#match" + entryIndex).removeClass("in");
+                        $("#images" + entryIndex).removeClass("in");
+                        $("#fda" + entryIndex).removeClass("in");
                     }
 
                 };
