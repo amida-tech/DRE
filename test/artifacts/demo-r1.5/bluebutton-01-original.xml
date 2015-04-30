@@ -3147,6 +3147,7 @@
 								codeSystem="2.16.840.1.113883.6.96"/>
 						</observation>
 					</entry>
+
 					<entry typeCode="DRIV">
 						<observation classCode="OBS" moodCode="EVN">
 							<!-- ** Social history observation ** -->
@@ -3315,6 +3316,23 @@
 									/>
 								</observation>
 							</component>
+							<component>
+								<observation classCode="OBS" moodCode="EVN">
+									<!-- ** Vital sign observation ** -->
+									<templateId root="2.16.840.1.113883.10.20.22.4.27"/>
+									<id root="c6f88321-67ad-11db-bd13-0800200c9a66"/>
+									<code code="8462-4" codeSystem="2.16.840.1.113883.6.1"
+										codeSystemName="LOINC" displayName="Intravascular Diastolic"/>
+									<text>
+										<reference value="#vit4"/>
+									</text>
+									<statusCode code="completed"/>
+									<effectiveTime value="19991114"/>
+									<value xsi:type="PQ" value="80" unit="mm[Hg]"/>
+									<interpretationCode code="N" codeSystem="2.16.840.1.113883.5.83"
+									/>
+								</observation>
+							</component>
 						</organizer>
 					</entry>
 					<entry typeCode="DRIV">
@@ -3356,7 +3374,7 @@
 									</text>
 									<statusCode code="completed"/>
 									<effectiveTime value="20000407"/>
-									<value xsi:type="PQ" value="88" unit="kg"/>
+									<value xsi:type="PQ" value="90" unit="kg"/>
 									<interpretationCode code="N" codeSystem="2.16.840.1.113883.5.83"
 									/>
 								</observation>
@@ -3378,6 +3396,23 @@
 									/>
 								</observation>
 							</component>
+							<component>
+								<observation classCode="OBS" moodCode="EVN">
+									<!-- ** Vital sign observation ** -->
+									<templateId root="2.16.840.1.113883.10.20.22.4.27"/>
+									<id root="c6f88321-67ad-11db-bd13-0800200c9a66"/>
+									<code code="8462-4" codeSystem="2.16.840.1.113883.6.1"
+										codeSystemName="LOINC" displayName="Intravascular Diastolic"/>
+									<text>
+										<reference value="#vit7"/>
+									</text>
+									<statusCode code="completed"/>
+									<effectiveTime value="20000407"/>
+									<value xsi:type="PQ" value="88" unit="mm[Hg]"/>
+									<interpretationCode code="N" codeSystem="2.16.840.1.113883.5.83"
+									/>
+								</observation>
+							</component>						
 						</organizer>
 					</entry>
 				</section>
