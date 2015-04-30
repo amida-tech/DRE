@@ -13,14 +13,14 @@ angular.module('phrPrototypeApp')
 
         this.getImages = function (rxcui, callback) {
             /*
-            $http.get('api/v1/openfda/' + rxcui)
+            $http.get('api/v1/rximage/' + rxcui)
                 .success(function(data) {
                     callback(data);
                 }).error(function(err) {
                     callback(err);
                 });
 */
-            $http.post('api/v1/openfda', {
+            $http.post('api/v1/rximage', {
                 rxcui: rxcui
             }).
             success(function (data, status, headers, config) {
@@ -32,16 +32,42 @@ angular.module('phrPrototypeApp')
         };
 
         this.findRxNorm = function (medname, callback) {
-            /*
+            
             $http.get('api/v1/rxnorm/' + name)
                 .success(function(data) {
                     callback(null, data);
                 }).error(function(err) {
                     callback(err);
                 });
-*/
-            $http.post('api/v1/rxnorm', {
+
+            // $http.post('api/v1/rxnorm', {
+            //     medname: medname
+            // }).
+            // success(function (data, status, headers, config) {
+            //     callback(null, data);
+            // }).
+            // error(function (data, status, headers, config) {
+            //     callback(status);
+            // });
+        };
+
+        this.fdaName = function (medname, callback) {
+
+            $http.post('api/v1/openfdaname', {
                 medname: medname
+            }).
+            success(function (data, status, headers, config) {
+                callback(null, data);
+            }).
+            error(function (data, status, headers, config) {
+                callback(status);
+            });
+        };
+
+        this.fdaCode = function (rxcui, callback) {
+
+            $http.post('api/v1/openfdacode', {
+                rxcui: rxcui
             }).
             success(function (data, status, headers, config) {
                 callback(null, data);

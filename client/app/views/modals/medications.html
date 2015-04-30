@@ -26,6 +26,11 @@
                                     <span><i class="fa fa-picture-o"></i> Images</span>
                                 </button>
                             </li>
+                            <li>
+                                <button class="btn btn-link" data-toggle="tab" data-target="#fda{{recordIndex}}" aria-controls="fda{{recordIndex}}" ng-click="swapTabs('fda', recordIndex); fdaservice(entryData.product.product.code, entryData.product.product.name)">
+                                    <span><i class="fa fa-exclamation-triangle"></i> Adverse Events</span>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -136,6 +141,26 @@
                                     </a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <!-- OpenFDA Pane -->
+                    <div role="tabpanel" class="tab-pane" id="fda{{recordIndex}}">
+                        <div class="sub-entry">
+                            <h3> Adverse Events</h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>Term</td>
+                                        <td>Number reported</td>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="(eventIndex, event) in fdaInfo.results">
+                                    <tr>
+                                        <td>{{event.term}}</td>
+                                        <td>{{event.count}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

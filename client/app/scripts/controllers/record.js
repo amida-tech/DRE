@@ -41,9 +41,26 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     // Medication images
     $scope.imgservice = function imgservice(rxcui) {
-        medapi.getImages(rxcui, function (data, err) {
+        medapi.getImages(rxcui, function (err, data) {
             $scope.medImages = data;
+            console.log(data);
+            // console.log(data);
         });
+    };
+
+    // FDA adverse events
+    $scope.fdaservice = function fdaservice(rxcui, medname) {
+        if (angular.isDefined(rxcui)) {
+            medapi.fdaCode(rxcui, function (err, data) {
+                $scope.fdaInfo = data;
+            });
+        } else {
+            if (angular.isDefined(medname)) {
+                medapi.fdaName(medname, function (err, data) {
+                    $scope.fdaInfo = data;
+                });
+            }
+        }
     };
 
     // Meds active/inactive selector
