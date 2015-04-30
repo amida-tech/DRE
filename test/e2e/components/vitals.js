@@ -8,7 +8,7 @@ var common = require('../../common/common.js');
 var common2 = require('../common.js');
 
 function loadTestRecord(fileName, callback) {
-    var filepath = path.join(__dirname, '../../artifacts/test-r1.0/' + fileName);
+    var filepath = path.join(__dirname, '../../artifacts/test-r1.5/' + fileName);
     api.put('/api/v1/storage')
         .attach('file', filepath)
         .expect(200)
@@ -640,7 +640,7 @@ describe('Vitals API - Test Merged Matches', function () {
                         dupCnt++;
                     }
                     if (res.body.merges[i].merge_reason === 'update') {
-                        //Get record id off loaded rec, 
+                        //Get record id off loaded rec,
                         expect(res.body.merges[i].entry._id).to.equal(base_id);
                         expect(res.body.merges[i].record.filename).to.equal('bluebutton-04-diff-source-partial-matches.xml');
                         mrgCnt++;

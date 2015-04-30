@@ -8,7 +8,7 @@ var common = require('../../common/common.js');
 var common2 = require('../common.js');
 
 function loadTestRecord(fileName, callback) {
-    var filepath = path.join(__dirname, '../../artifacts/test-r1.0/' + fileName);
+    var filepath = path.join(__dirname, '../../artifacts/test-r1.5/' + fileName);
     api.put('/api/v1/storage')
         .attach('file', filepath)
         .expect(200)
