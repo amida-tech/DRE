@@ -42,7 +42,7 @@
     "grunt": "0.4.x",
     "grunt-execute": "0.2.2",
     "hl7": "~1.0.0",
-    "jsdom": "5.1.0",
+    "jsdom": "^3.0.0",
     "method-override": "2.3.2",
     "mllp-node": "~1.0.0",
     "mocha": "2.2.4",
