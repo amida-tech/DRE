@@ -94,14 +94,36 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             if (err) {
                 console.log("Err: " + err);
             } else {
-                $scope.drugResults = data;
+                $scope.rxnormResults = data;
                 medapi.getImages(data.idGroup.rxnormId[0], function (err, imageData) {
                     if (err) {
                         console.log("Err: " + err);
+                    } else {
+                        $scope.rximageResults = imageData;
                     }
-                    data.image = imageData;
-                    $scope.data = data;
                 });
+                medapi.fdaCode(data.idGroup.rxnormId[0], function (err, fdaData) {
+                    if (err) {
+                        console.log("Err: " + err);
+                    } else {
+                        $scope.openfdacodeResults = fdaData;
+                    }
+                });
+                medapi.getmedline(data.idGroup.rxnormId[0], drugName, function (err, medlineData) {
+                    if (err) {
+                        console.log("err: " + err);
+                    } else {
+                        $scope.medlineResults = medlineData;
+                    }
+                });
+            }
+        });
+
+        medapi.fdaName(drugName, function (err, data) {
+            if (err) {
+                console.log("ERR: " + err);
+            } else {
+                $scope.openfdanameResults = data;
             }
         });
     };

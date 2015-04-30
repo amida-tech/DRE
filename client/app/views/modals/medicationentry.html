@@ -39,9 +39,25 @@
                                     <button class="btn btn-default" ng-click="drugSearch(pDrugName)">Search</button>
                                 </div>
                             </div>
-                            <div class="col-sm-12" ng-show="drugResults">
-                                <h4>Retrieved Information</h4>
-                                <pre>{{drugResults}}</pre>
+                            <div class="col-sm-12" ng-show="rxnormResults">
+                                <h4>RxNorm Information</h4>
+                                <pre>{{rxnormResults}}</pre>
+                            </div>
+                            <div class="col-sm-12" ng-show="rximageResults">
+                                <h4>RxImage Information</h4>
+                                <pre>{{rximageResults}}</pre>
+                            </div>
+                            <div class="col-sm-12" ng-show="openfdanameResults">
+                                <h4>OpenFDA Name Information</h4>
+                                <pre>{{openfdanameResults}}</pre>
+                            </div>
+                            <div class="col-sm-12" ng-show="openfdacodeResults">
+                                <h4>OpenFDA Code Information</h4>
+                                <pre>{{openfdacodeResults}}</pre>
+                            </div>
+                            <div class="col-sm-12" ng-show="medlineResults">
+                                <h4>Medline Information</h4>
+                                <pre>{{medlineResults}}</pre>
                             </div>
                         </div>
                     </div>

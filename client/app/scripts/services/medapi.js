@@ -32,23 +32,23 @@ angular.module('phrPrototypeApp')
         };
 
         this.findRxNorm = function (medname, callback) {
-            
+            /*
             $http.get('api/v1/rxnorm/' + name)
                 .success(function(data) {
                     callback(null, data);
                 }).error(function(err) {
                     callback(err);
                 });
-
-            // $http.post('api/v1/rxnorm', {
-            //     medname: medname
-            // }).
-            // success(function (data, status, headers, config) {
-            //     callback(null, data);
-            // }).
-            // error(function (data, status, headers, config) {
-            //     callback(status);
-            // });
+*/
+            $http.post('api/v1/rxnorm', {
+                medname: medname
+            }).
+            success(function (data, status, headers, config) {
+                callback(null, data);
+            }).
+            error(function (data, status, headers, config) {
+                callback(status);
+            });
         };
 
         this.fdaName = function (medname, callback) {
@@ -76,7 +76,6 @@ angular.module('phrPrototypeApp')
                 callback(status);
             });
         };
-
 
         this.getmedline = function (rxcui, medname, callback) {
 
