@@ -18,14 +18,14 @@
   ],
   "dependencies": {
     "async": "0.9.x",
-    "blue-button": "amida-tech/blue-button#martz-npi",
+    "blue-button": "~1.5.0-beta.5",
     "blue-button-fhir": "^1.5.0-beta.5",
-    "blue-button-generate": "amida-tech/blue-button-generate#martz-npi",
+    "blue-button-generate": "~1.5.0-beta.3",
     "blue-button-hl7": "~1.0.0",
-    "blue-button-match": "amida-tech/blue-button-match#martz-npi",
-    "blue-button-meta": "amida-tech/blue-button-meta#martz-npi",
+    "blue-button-match": "~1.5.0-beta.1",
+    "blue-button-meta": "~1.5.0-beta.4",
     "blue-button-pim": "~1.0.0",
-    "blue-button-record": "amida-tech/blue-button-record#martz-npi",
+    "blue-button-record": "~1.5.0-beta.4",
     "blue-button-util": "^1.5.0-beta.2",
     "bluebird": "~2.9.24",
     "body-parser": "1.12.3",
@@ -58,7 +58,7 @@
     "serve-static": "~1.9.2",
     "supertest": "0.15.0",
     "lodash": "^3.7.0",
-    "npi-js": "amida-tech/npi-js"
+    "npi-js": "~0.0.6"
   },
   "engines": {
     "node": "0.10.x"
@@ -72,7 +72,7 @@
     "grunt-jsbeautifier": "^0.2.10",
     "blessed": "~0.1.5",
     "blessed-contrib": "~2.0",
-    "blue-button-cms": "^1.3.1",
+    "blue-button-cms": "~1.5.0-beta.1",
     "blue-button-xml": "^1.5.0-beta.1",
     "libxmljs": "^0.14.0",
     "xmldom": "*",
