@@ -53,7 +53,7 @@ angular.module('phrPrototypeApp')
 
         this.fdaName = function (medname, callback) {
 
-            $http.post('api/v1/openfdaname', {
+            $http.post('api/v1/openfda/name', {
                 medname: medname
             }).
             success(function (data, status, headers, config) {
@@ -66,7 +66,7 @@ angular.module('phrPrototypeApp')
 
         this.fdaCode = function (rxcui, callback) {
 
-            $http.post('api/v1/openfdacode', {
+            $http.post('api/v1/openfda/code', {
                 rxcui: rxcui
             }).
             success(function (data, status, headers, config) {
