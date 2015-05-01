@@ -9,8 +9,8 @@
  */
 angular.module('phrPrototypeApp').service('npiapi', function npi($http) {
 
-    this.getNPI = function (searchObject, callback) {
-        $http.post('api/v1/getnpi', {
+    this.findNPI = function (searchObject, callback) {
+        $http.post('api/v1/findnpi', {
             searchObj: searchObject
         }).
         success(function (data, status, headers, config) {

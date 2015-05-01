@@ -155,7 +155,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             searchTest = true;
         }
         if (searchTest) {
-            npiapi.getNPI(searchObj, function (err, data) {
+            npiapi.findNPI(searchObj, function (err, data) {
                 if (err) {
                     console.log("Martz err: " + err);
                 } else {
