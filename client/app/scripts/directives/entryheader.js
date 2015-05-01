@@ -23,16 +23,23 @@ angular.module('phrPrototypeApp')
             switch (scope.type) {
 
                 case 'allergies':
+                if (scope.recordEntry.metadata.displayDate) {
+                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                }
                 if (scope.entryData.observation) {
                     if (scope.entryData.observation.allergen && scope.entryData.observation.allergen.name) {
                         scope.entryTitle = scope.entryData.observation.allergen.name;
                     }
-                    if (scope.entryData.observation.severity && scope.entryData.observation.severity.code && scope.entryData.observation.severity.code.name) {
-                        scope.entrySubTitleOne = scope.entryData.observation.severity.code.name;
-                    }
                 }
-                if (scope.recordEntry.metadata.displayDate) {
-                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                if (scope.entryData.observation.reactions) {
+                    angular.forEach(scope.entryData.observation.reactions, function (reactionObj, index) {
+                        if (index === 0) {
+                            scope.entrySubTitleOne = scope.entrySubTitleOne+reactionObj.reaction.name;
+                        } else {
+                            scope.entrySubTitleOne = scope.entrySubTitleOne+', '+reactionObj.reaction.name;
+
+                        }
+                    });
                 }
                 break;
                 case 'encounters':
