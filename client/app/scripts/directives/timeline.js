@@ -194,7 +194,7 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                         }).attr("y", function (d) {
                             return d.y;
                         }).text(function (d) {
-                            if (d.text === " 0NaN") {  // Used for an empty timeline
+                            if (d.text === " 0NaN") { // Used for an empty timeline
                                 return " ";
                             } else {
                                 return d.text;
