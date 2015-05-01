@@ -172,59 +172,21 @@ angular.module('phrPrototypeApp')
                     scope.entryMetaData.starred_comments = commentCount;
                 }
                 countStarredComments();
+
                 scope.swapTabs = function (entryClass, entryIndex) {
-
-                    if (entryClass === "details") {
-                        $("#comments" + entryIndex).removeClass("in");
-                        $("#history" + entryIndex).removeClass("in");
-                        $("#match" + entryIndex).removeClass("in");
-                        $("#images" + entryIndex).removeClass("in");
-                        $("#fda" + entryIndex).removeClass("in");
-                        $("#medline" + entryIndex).removeClass("in");
-                    } else if (entryClass === "comments") {
-                        $("#details" + entryIndex).removeClass("in");
-                        $("#history" + entryIndex).removeClass("in");
-                        $("#match" + entryIndex).removeClass("in");
-                        $("#images" + entryIndex).removeClass("in");
-                        $("#fda" + entryIndex).removeClass("in");
-                        $("#medline" + entryIndex).removeClass("in");
-                    } else if (entryClass === "history") {
-                        $("#details" + entryIndex).removeClass("in");
-                        $("#comments" + entryIndex).removeClass("in");
-                        $("#match" + entryIndex).removeClass("in");
-                        $("#images" + entryIndex).removeClass("in");
-                        $("#fda" + entryIndex).removeClass("in");
-                        $("#medline" + entryIndex).removeClass("in");
-                    } else if (entryClass === "match") {
-                        $("#details" + entryIndex).removeClass("in");
-                        $("#comments" + entryIndex).removeClass("in");
-                        $("#history" + entryIndex).removeClass("in");
-                        $("#images" + entryIndex).removeClass("in");
-                        $("#fda" + entryIndex).removeClass("in");
-                        $("#medline" + entryIndex).removeClass("in");
-                    } else if (entryClass === "images") {
-                        $("#details" + entryIndex).removeClass("in");
-                        $("#comments" + entryIndex).removeClass("in");
-                        $("#history" + entryIndex).removeClass("in");
-                        $("#match" + entryIndex).removeClass("in");
-                        $("#fda" + entryIndex).removeClass("in");
-                        $("#medline" + entryIndex).removeClass("in");
-                    } else if (entryClass === "fda") {
-                        $("#details" + entryIndex).removeClass("in");
-                        $("#comments" + entryIndex).removeClass("in");
-                        $("#history" + entryIndex).removeClass("in");
-                        $("#match" + entryIndex).removeClass("in");
-                        $("#images" + entryIndex).removeClass("in");
-                        $("#medline" + entryIndex).removeClass("in");
-                    } else if (entryClass === "medline") {
-                        $("#details" + entryIndex).removeClass("in");
-                        $("#comments" + entryIndex).removeClass("in");
-                        $("#history" + entryIndex).removeClass("in");
-                        $("#match" + entryIndex).removeClass("in");
-                        $("#images" + entryIndex).removeClass("in");
-                        $("#fda" + entryIndex).removeClass("in");
-                    }
-
+                    var entries = [
+                        'details',
+                        'comments',
+                        'history',
+                        'match',
+                        'images',
+                        'fda',
+                        'medline'
+                    ];
+                    _.pull(entries, entryClass);
+                    _.forEach(entries, function (entry) {
+                        $('#' + entry + entryIndex).removeClass('in');
+                    });
                 };
 
                 scope.clickStar = function (starVal, starIndex, recordIndex, entry) {
