@@ -68,11 +68,11 @@ angular.module('phrPrototypeApp')
                 if (scope.entryData.administration && scope.entryData.administration.route && scope.entryData.administration.route.name) {
                     scope.entrySubTitleOne = scope.entryData.administration.route.name;
                 }
-                if (scope.recordEntry.metadata.displayDate) {
-                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
-                }
+                // if (scope.recordEntry.metadata.displayDate) {
+                //     scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                // }
                 if (scope.entryData.administration.dose.value && scope.entryData.administration.dose.unit) {
-                    scope.entryDose = " - " + scope.entryData.administration.dose.value + " " + scope.entryData.administration.dose.unit;
+                    scope.entrySubTitleTwo = " - " + scope.entryData.administration.dose.value + " " + scope.entryData.administration.dose.unit;
                 }
                 break;
                 case 'conditions':
@@ -87,11 +87,11 @@ angular.module('phrPrototypeApp')
                 if (scope.entryData.procedure && scope.entryData.procedure.name) {
                     scope.entryTitle = scope.entryData.procedure.name;
                 }
-                if (scope.entryData.status) {
-                    scope.entrySubTitleOne = scope.entryData.status;
-                }
+                // if (scope.entryData.status) {
+                //     scope.entrySubTitleOne = scope.entryData.status;
+                // }
                 if (scope.recordEntry.metadata.displayDate) {
-                    scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
+                    scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
                 }
                 break;
                 case 'vitals':
