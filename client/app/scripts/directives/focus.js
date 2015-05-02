@@ -5,14 +5,15 @@ angular.module('phrPrototypeApp')
         function ($timeout) {
             return {
                 scope: {
-                    trigger: '@focus'
+                    trigger: '=focus'
                 },
                 link: function (scope, element) {
                     scope.$watch('trigger', function (value) {
-                        if (value === "true") {
-                            $timeout(function () {
+                        if (value === true) {
+                            // $timeout(function () {
                                 element[0].focus();
-                            });
+                                scope.trigger = false;
+                            // });
                         }
                     });
                 }
