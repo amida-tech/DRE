@@ -468,20 +468,25 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 category: val
             });
             // Filter on active/inactive
-            if (val === 'medications') {
+            if (val === 'medications' || val === 'social') {
                 if ($scope.activeSelection.indexOf('active') > -1 && $scope.activeSelection.indexOf('inactive') > -1) { // All entries
 
                 } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                         var curDate = new Date();
-                        var entryDate = new Date(entry.data.date_time.high.date);
+                        var entryDate = new Date();
+                        if (_.has(entry, 'data.date_time.high')) {
+                            entryDate = new Date(entry.data.date_time.high.date);
+                        }
                         return (entry.category === val) && (entryDate >= curDate);
                     });
                 } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
-                        console.log(entry);
                         var curDate = new Date();
-                        var entryDate = new Date(entry.data.date_time.high.date);
+                        var entryDate = new Date();
+                        if (_.has(entry, 'data.date_time.high')) {
+                            entryDate = new Date(entry.data.date_time.high.date);
+                        }
                         return (entry.category === val) && (entryDate < curDate);
                     });
                 } else { // None
