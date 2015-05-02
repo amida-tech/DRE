@@ -42,7 +42,7 @@
     "grunt": "0.4.x",
     "grunt-execute": "0.2.2",
     "hl7": "~1.0.0",
-    "jsdom": "5.1.0",
+    "jsdom": "^3.0.0",
     "method-override": "2.3.2",
     "mllp-node": "~1.0.0",
     "mocha": "2.2.4",
@@ -64,7 +64,7 @@
     "node": "0.10.x"
   },
   "scripts": {
-    "start": "grunt",
+    "start": "node server.js",
     "bench": "grunt benchmark && node lib/benchmark/show.js",
     "test": "grunt"
   },
@@ -89,6 +89,7 @@
     "grunt-concurrent": "~1.0.0",
     "grunt-karma": "~0.10.1",
     "load-grunt-tasks": "~3.1.0",
+    "grunt-shell": "^1.1.2",
     "grunt-express-server": "~0.5.1"
   }
 }
