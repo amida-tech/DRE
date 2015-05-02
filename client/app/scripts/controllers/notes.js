@@ -20,7 +20,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
         'displayName': 'un-starred'
     }];
 
-
     $scope.setEntry = function (section, entryId) {
         console.log("set entry type for my record view ", section.section);
         dataservice.curr_section = section;
@@ -221,7 +220,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
                 };
 
                 var titles;
-                notes.getTitles(entry_data, function(err, res) {
+                notes.getTitles(entry_data, function (err, res) {
                     if (err) {
                         console.log("Error:", err);
                     } else {
