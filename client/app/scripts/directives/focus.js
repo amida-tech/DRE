@@ -12,7 +12,7 @@ angular.module('phrPrototypeApp')
                         if (value === true) {
                             // $timeout(function () {
                                 element[0].focus();
-                                scope.trigger = false;
+                                // scope.trigger = false;
                             // });
                         }
                     });
