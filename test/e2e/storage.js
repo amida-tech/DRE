@@ -98,7 +98,7 @@ describe('Storage API', function () {
     });
 
     it('File Endpoint PUT', function (done) {
-        var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
+        var filepath = path.join(__dirname, '../artifacts/test-r1.5/bluebutton-01-original.xml');
         api.put('/api/v1/storage')
             .attach('file', filepath)
             .expect(200)

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title ng-controller="titleController">{{pageTitle}}</title>
+    <title ng-controller="titleController" ng-bind="pageTitle"></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -24,7 +24,7 @@
       <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="wrapper" id="index-wrapper" ng-controller="bonusCtrl">
+    <div class="wrapper" id="index-wrapper">
 
         <!--Site Header.-->
         <div class="navbar navbar-default" role="navigation" ng-controller="NavbarCtrl">
@@ -180,7 +180,6 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
-    <script src="bower_components/konami-code/src/jquery.konami.min.js"></script>
     <script src="bower_components/diff/index.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
@@ -223,11 +222,11 @@
     <script src="scripts/services/partial.js"></script>
     <script src="scripts/controllers/files/upload.js"></script>
     <script src="scripts/services/files/upload.js"></script>
-    <script src="scripts/controllers/bonus.js"></script>
     <script src="scripts/services/d3.js"></script>
     <script src="scripts/controllers/notes.js"></script>
     <script src="scripts/services/notes.js"></script>
     <script src="scripts/directives/entry.js"></script>
+    <script src="scripts/directives/entryheader.js"></script>
     <script src="scripts/directives/billingentry.js"></script>
     <script src="scripts/filters/starred.js"></script>
     <script src="scripts/filters/sections.js"></script>
@@ -241,7 +240,10 @@
     <script src="scripts/directives/printentry.js"></script>
     <script src="scripts/directives/profiledetail.js"></script>
     <script src="scripts/directives/finishrender.js"></script>
+    <script src="scripts/directives/focus.js"></script>
     <script src="scripts/assets/d3-tip/index.js"></script>
+    <script src="scripts/services/medapi.js"></script>
+    <script src="scripts/services/npiapi.js"></script>
     <!-- endbuild -->
 </body>
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice, medapi, npiapi) {
     console.log("RECORD CONTROLLER LOAD ");
 
     $scope.dashMetrics = {};
@@ -39,12 +39,44 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         content: 'Hello Modal<br />This is a multiline message!'
     };
 
+    // Medication images
+    $scope.imgservice = function imgservice(rxcui) {
+        medapi.getImages(rxcui, function (err, data) {
+            $scope.medImages = data;
+            console.log(data);
+            // console.log(data);
+        });
+    };
+
+    // FDA adverse events
+    $scope.fdaservice = function fdaservice(rxcui, medname) {
+        if (angular.isDefined(rxcui)) {
+            medapi.fdaCode(rxcui, function (err, data) {
+                $scope.fdaInfo = data;
+            });
+        } else {
+            if (angular.isDefined(medname)) {
+                medapi.fdaName(medname, function (err, data) {
+                    $scope.fdaInfo = data;
+                });
+            }
+        }
+    };
+
+    // Medline Plus Connect link
+    $scope.medlineservice = function medlineservice(rxcui, medname) {
+        medapi.getmedline(rxcui, medname, function (err, data) {
+            $scope.medline = data;
+            console.log(data);
+        });
+    };
+
     // Meds active/inactive selector
     $scope.activeSelection = ['active', 'inactive'];
 
     $scope.toggleSelection = function toggleSelection(buttonName) {
         var idx = $scope.activeSelection.indexOf(buttonName);
-
+        
         // is currently selected
         if (idx > -1) {
             $scope.activeSelection.splice(idx, 1);
@@ -56,6 +88,102 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
+    $scope.drugSearch = function drugSearch(drugName) {
+        console.log("drugname: " + drugName);
+        medapi.findRxNorm(drugName, function (err, data) {
+            if (err) {
+                console.log("Err: " + err);
+            } else {
+                $scope.rxnormResults = data;
+                medapi.getImages(data.idGroup.rxnormId[0], function (err, imageData) {
+                    if (err) {
+                        console.log("Err: " + err);
+                    } else {
+                        $scope.rximageResults = imageData;
+                    }
+                });
+                medapi.fdaCode(data.idGroup.rxnormId[0], function (err, fdaData) {
+                    if (err) {
+                        console.log("Err: " + err);
+                    } else {
+                        $scope.openfdacodeResults = fdaData;
+                    }
+                });
+                medapi.getmedline(data.idGroup.rxnormId[0], drugName, function (err, medlineData) {
+                    if (err) {
+                        console.log("err: " + err);
+                    } else {
+                        $scope.medlineResults = medlineData;
+                    }
+                });
+            }
+        });
+
+        medapi.fdaName(drugName, function (err, data) {
+            if (err) {
+                console.log("ERR: " + err);
+            } else {
+                $scope.openfdanameResults = data;
+            }
+        });
+    };
+
+    $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {
+        var searchTest = false;
+        var searchObj = {
+            name: [],
+            address: []
+        };
+        if (firstName !== "" && lastName !== "") {
+            searchObj.name.push({
+                first: firstName,
+                last: lastName
+            });
+            searchTest = true;
+        } else {
+            if (lastName !== "") {
+                searchObj.name.push({
+                    last: lastName
+                });
+                searchTest = true;
+            }
+        }
+        if (zipCode !== "") {
+            searchObj.address.push({
+                zip: zipCode
+            });
+            searchTest = true;
+        }
+        if (searchTest) {
+            npiapi.findNPI(searchObj, function (err, data) {
+                if (err) {
+                    console.log("Martz err: " + err);
+                } else {
+                    console.log("Martz success: " + JSON.stringify(data));
+                    $scope.prescriberResults = data;
+                }
+            });
+        }
+    };
+
+    //this doesn't really do anything at the moment
+    /*
+        $scope.swapMedTabs = function swapMedTabs(entryClass) {
+            if (entryClass === "drug") {
+                $("#drug").addClass("in");
+                $("#prescriber").removeClass("in");
+                $("#summary").removeClass("in");
+            } else if (entryClass === "prescriber") {
+                $("#drug").removeClass("in");
+                $("#prescriber").addClass("in");
+                $("#summary").removeClass("in");
+            } else if (entryClass === "summary") {
+                $("#drug").removeClass("in");
+                $("#prescriber").removeClass("in");
+                $("#summary").addClass("in");
+            }
+        };
+    */
     console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
 
     function refresh() {
@@ -339,21 +467,30 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $scope.entryListFiltered = _.where($scope.recordEntries, {
                 category: val
             });
+
+            console.log("filtered ", $scope.entryListFiltered);
+            console.log("val", val);
             // Filter on active/inactive
-            if (val === 'medications') {
+            if (val === 'medications' || val === 'social') {
                 if ($scope.activeSelection.indexOf('active') > -1 && $scope.activeSelection.indexOf('inactive') > -1) { // All entries
 
                 } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
+
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                         var curDate = new Date();
-                        var entryDate = new Date(entry.data.date_time.high.date);
+                        var entryDate = new Date();
+                        if (angular.isDefined(entry.data.date_time)&&angular.isDefined(entry.data.date_time.high)) {
+                            entryDate = new Date(entry.data.date_time.high.date);
+                        }
                         return (entry.category === val) && (entryDate >= curDate);
                     });
                 } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
-                        console.log(entry);
                         var curDate = new Date();
-                        var entryDate = new Date(entry.data.date_time.high.date);
+                        var entryDate = new Date();
+                        if (angular.isDefined(entry.data.date_time)&&angular.isDefined(entry.data.date_time.high)) {
+                            entryDate = new Date(entry.data.date_time.high.date);
+                        }
                         return (entry.category === val) && (entryDate < curDate);
                     });
                 } else { // None
@@ -361,7 +498,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 }
             }
 
-            console.log("category ", val);
             console.log("FILTERED ", $scope.entryListFiltered);
         }
 

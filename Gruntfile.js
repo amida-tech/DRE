@@ -11,6 +11,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-execute');
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-shell');
     //grunt.loadNpmTasks('grunt-node-inspector');
     //grunt.loadNpmTasks('grunt-csslint');
     //grunt.loadNpmTasks('grunt-ng-annotate');
@@ -59,7 +60,7 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            files: ['gruntFile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js'], //['./test/unit/*.js'], 
+            files: ['gruntFile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js'], //['./test/unit/*.js'],
             options: {
                 browser: true,
                 curly: true,
@@ -135,7 +136,7 @@ module.exports = function (grunt) {
         },
         env: {
             options: {
-                //Shared Options Hash 
+                //Shared Options Hash
             },
             all: {
                 src: ["env/*"],
@@ -167,6 +168,11 @@ module.exports = function (grunt) {
             target: {
                 src: ['./lib/benchmark/index.js']
             }
+        },
+        shell: {
+            run_istanbul: {
+                command: "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec --recursive"
+            }
         }
         /*        karma: {
                     unit: {
@@ -182,6 +188,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest']);
 
     grunt.registerTask('benchmark', ['execute']);
+    grunt.registerTask('coverage', ['shell:run_istanbul']);
 
     // Test task.
     //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);

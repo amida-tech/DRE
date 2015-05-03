@@ -17,7 +17,7 @@
                 <form novalidate role="form" name="regForm1" ng-submit="nextStep()">
                     <div class="form-group">
                         <label for="inputLogin">User ID:</label>
-                        <input type="text" class="form-control" name="inputLogin" ng-model="inputLogin" required ng-required="true" ng-minLength="1" ng-maxLength="30">
+                        <input type="text" class="form-control" name="inputLogin" ng-model="inputLogin" required ng-required="true" ng-minLength="1" ng-maxLength="30" focus="!focusInput">
                         <p ng-show="regForm1.inputLogin.$invalid && !regForm1.inputLogin.$pristine" class="help-block">Username must be between 1 and 30 characters.</p>
                     </div>
                     <div class="form-group">
@@ -59,7 +59,7 @@
                 <form novalidate role="form" name="regForm2" ng-submit="nextStep()">
                     <div class="form-group">
                         <label for="inputFirst">First Name:</label>
-                        <input type="text" class="form-control" name="inputFirst" ng-model="inputFirst" required ng-required="true" ng-minLength="1" ng-maxLength="80">
+                        <input type="text" class="form-control" name="inputFirst" ng-model="inputFirst" required ng-required="true" ng-minLength="1" ng-maxLength="80" focus="focusInput">
                         <p ng-show="regForm2.inputFirst.$invalid && !regForm2.inputFirst.$pristine" class="help-block">First name must be between 1 and 80 characters.</p>
                     </div>
                     <div class="form-group">
