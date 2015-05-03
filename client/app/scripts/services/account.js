@@ -15,7 +15,13 @@ account.$inject = ['$http'];
 
 function account($http) {
     /* jshint validthis: true */
-    this.changePassword = function(info) {
-        return $http.post('api/v1/changepassword', info);
+    this.changePassword = function(info, callback) {
+        $http.post('api/v1/changepassword', info)
+            .success(function(data) {
+                callback(null, data);
+            })
+            .error(function(data) {
+                callback(data);
+        });
     };
 }
