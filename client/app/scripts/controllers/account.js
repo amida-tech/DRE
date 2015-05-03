@@ -12,13 +12,13 @@ angular
     .module('phrPrototypeApp')
     .controller('AccountCtrl', Account);
 
-Account.$inject = ['$location', '$http'];
+Account.$inject = ['$location', 'account'];
 
-function Account ($location, $http) {
+function Account ($location, account) {
     /* jshint validthis: true */
     var vm = this;
     vm.resetPassword = resetPassword;
-    console.log(vm);
+
     function resetPassword () {
         if (vm.inputNewPassword === vm.inputRepeatPassword) {
             vm.resetForm.$setPristine();
@@ -30,8 +30,8 @@ function Account ($location, $http) {
                 "old": vm.inputOldPassword,
                 "new": vm.inputNewPassword
             };
-
-            $http.post('api/v1/changepassword', info)
+            
+            account.changePassword(info)
                 .success(function (data) {
                     console.log("password change successful");
                     $location.path('/home');
