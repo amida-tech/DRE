@@ -63,7 +63,8 @@ angular
             })
             .when('/files', {
                 templateUrl: 'views/files.html',
-                controller: 'FilesCtrl'
+                controller: 'FilesCtrl',
+                controllerAs: 'vm'
             })
             .when('/record', {
                 templateUrl: 'views/record.html',
