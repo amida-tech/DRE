@@ -84,7 +84,8 @@ angular
             })
             .when('/files/upload', {
                 templateUrl: 'views/files/upload.html',
-                controller: 'FilesUploadCtrl'
+                controller: 'FilesUploadCtrl',
+                controllerAs: 'vm'
             })
             .when('/notes', {
                 templateUrl: 'views/notes.html',
