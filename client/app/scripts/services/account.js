@@ -14,6 +14,7 @@ angular
 account.$inject = ['$http'];
 
 function account($http) {
+    /* jshint validthis: true */
     this.changePassword = function(info) {
         return $http.post('api/v1/changepassword', info);
     };
