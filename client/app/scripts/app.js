@@ -33,7 +33,8 @@ angular
             })
             .when('/about', {
                 templateUrl: 'views/about.html',
-                controller: 'AboutCtrl'
+                controller: 'AboutCtrl',
+                controllerAs: 'vm'
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
@@ -53,15 +54,12 @@ angular
             })
             .when('/account', {
                 templateUrl: 'views/account.html',
-                controller: 'AccountCtrl'
+                controller: 'AccountCtrl',
+                controllerAs: 'vm'
             })
             .when('/reset', {
                 templateUrl: 'views/reset.html',
                 controller: 'ResetCtrl'
-            })
-            .when('/account', {
-                templateUrl: 'views/account.html',
-                controller: 'AccountCtrl'
             })
             .when('/files', {
                 templateUrl: 'views/files.html',

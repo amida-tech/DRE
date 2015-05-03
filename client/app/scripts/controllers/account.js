@@ -1,3 +1,4 @@
+/// <reference path="../../../../typings/angularjs/angular.d.ts"/>
 'use strict';
 
 /**
@@ -7,33 +8,38 @@
  * # AccountCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('AccountCtrl', function ($scope, $location, $http) {
+angular
+    .module('phrPrototypeApp')
+    .controller('AccountCtrl', Account);
 
-        $scope.resetPassword = function () {
-            if ($scope.inputNewPassword === $scope.inputRepeatPassword) {
-                $scope.resetForm.$setPristine();
-                $scope.error = null;
+Account.$inject = ['$location', '$http'];
 
-                console.log("password changed here");
+function Account ($location, $http) {
+    /* jshint validthis: true */
+    var vm = this;
+    vm.resetPassword = resetPassword;
+    console.log(vm);
+    function resetPassword () {
+        if (vm.inputNewPassword === vm.inputRepeatPassword) {
+            vm.resetForm.$setPristine();
+            vm.error = null;
 
-                var info = {
-                    "old": $scope.inputOldPassword,
-                    "new": $scope.inputNewPassword
-                };
+            console.log("password changed here");
 
-                $http.post('api/v1/changepassword', info)
-                    .success(function (data) {
-                        console.log("password change successful");
-                        $location.path('/home');
-                    }).error(function (data) {
-                        $scope.error = "Password change failed, wrong old password";
-                    });
+            var info = {
+                "old": vm.inputOldPassword,
+                "new": vm.inputNewPassword
+            };
 
-            } else {
-                $scope.error = "New passwords did not match";
-            }
-
-        };
-
-    });
+            $http.post('api/v1/changepassword', info)
+                .success(function (data) {
+                    console.log("password change successful");
+                    $location.path('/home');
+                }).error(function (data) {
+                    vm.error = "Password change failed, wrong old password";
+                });
+        } else {
+            vm.error = "New passwords did not match";
+        }
+    }
+}
