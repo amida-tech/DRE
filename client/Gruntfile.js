@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         //protratorjs
         protractor: {
             options: {
-                configFile: "test/conf.js", // Default config file 
+                configFile: "test/conf.js", // Default config file
                 keepAlive: true
             },
             all: {},
@@ -264,11 +264,6 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: '.',
                     src: 'app/bower_components/d3/*',
-                    dest: '<%= yeoman.dist %>'
-                }, {
-                    expand: true,
-                    cwd: '.',
-                    src: 'app/bower_components/d3-tip/*',
                     dest: '<%= yeoman.dist %>'
                 }]
             },

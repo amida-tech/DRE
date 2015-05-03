@@ -35,7 +35,7 @@ angular.module('d3', [])
             var scriptTipTag = $document[0].createElement('script');
             scriptTipTag.type = 'text/javascript';
             scriptTipTag.async = true;
-            scriptTipTag.src = 'bower_components/d3-tip/index.js';
+            scriptTipTag.src = 'scripts/assets/d3-tip/index.js';
 
             scriptTag.onreadystatechange = function () {
                 if (this.readyState === 'complete') {

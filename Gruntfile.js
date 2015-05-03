@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-mocha-test');
@@ -5,18 +7,60 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-jsbeautifier');
+    grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-execute');
+    grunt.loadNpmTasks('grunt-nodemon');
+    grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-shell');
+    //grunt.loadNpmTasks('grunt-node-inspector');
+    //grunt.loadNpmTasks('grunt-csslint');
+    //grunt.loadNpmTasks('grunt-ng-annotate');
+    //grunt.loadNpmTasks('grunt-contrib-uglify');
+    //grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('default', ['jshint', 'express:dev', 'mochaTest']);
-    grunt.registerTask('dev', ['jshint', 'jsbeautifier']);
+    // Unified Watch Object
+    var watchFiles = {
+        serverJS: ['Gruntfile.js', 'server.js', 'lib/**/*.js'],
+        clientViews: ['client/app/views/**/*.html', 'client/app/index.html'],
+        clientJS: ['client/app/scripts/**/*.js'],
+        clientCSS: ['client/app/styles/*.css'],
+        mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
+    };
 
-    // Print a timestamp (useful for when watching)
-    grunt.registerTask('timestamp', function () {
-        grunt.log.subhead(Date());
-    });
-
+    // Project Configuration
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        watch: {
+            serverJS: {
+                files: watchFiles.serverJS,
+                tasks: ['jshint', 'jsbeautifier'],
+                options: {
+                    livereload: true
+                }
+            },
+            clientViews: {
+                files: watchFiles.clientViews,
+                options: {
+                    livereload: true,
+                }
+            },
+            clientJS: {
+                files: watchFiles.clientJS,
+                tasks: ['jshint', 'jsbeautifier'],
+                options: {
+                    livereload: true
+                }
+            },
+            clientCSS: {
+                files: watchFiles.clientCSS,
+                //tasks: ['csslint'],
+                options: {
+                    livereload: true
+                }
+            }
+        },
         jshint: {
-            files: ['./test/unit/*.js'], //['gruntFile.js', 'package.json', '*.js', './lib/*.js','./lib/**/*.js','./test/*.js', './test/**/*.js'],
+            files: ['gruntFile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js'], //['./test/unit/*.js'],
             options: {
                 browser: true,
                 curly: true,
@@ -57,17 +101,51 @@ module.exports = function (grunt) {
                 }
             }
         },
-        express: {
+        nodemon: {
             dev: {
+                script: 'server.js',
                 options: {
-                    script: './server.js'
+                    //nodeArgs: ['--debug'],
+                    ext: 'js,html',
+                    watch: watchFiles.serverJS
                 }
             }
         },
-        watch: {
+        /*        'node-inspector': {
+                    custom: {
+                        options: {
+                            'web-port': 3000,
+                            'web-host': 'localhost',
+                            'debug-port': 5858,
+                            'save-live-edit': true,
+                            'no-preload': true,
+                            'stack-trace-limit': 50,
+                            'hidden': []
+                        }
+                    }
+                }, */
+        concurrent: {
+            default: ['nodemon', 'watch'],
+            //test: ['nodemon', 'watch', 'node-inspector', 'mochaTest'], //'karma:unit'
+            test: ['env:test', 'nodemon', 'watch', 'mochaTest'], //'karma:unit'
+            //test: ['nodemon', 'mochaTest'], //'karma:unit'
+            options: {
+                logConcurrentOutput: true,
+                limit: 10
+            }
+        },
+        env: {
+            options: {
+                //Shared Options Hash
+            },
             all: {
-                files: ['./lib/**/index.js', 'config.js', 'gruntFile.js', './models/*.js'],
-                tasks: ['default']
+                src: ["env/*"],
+                options: {
+                    envdir: true
+                }
+            },
+            test: {
+                DBname: 'devtests'
             }
         },
         mochaTest: {
@@ -76,9 +154,51 @@ module.exports = function (grunt) {
                     reporter: 'spec',
                     timeout: '10000'
                 },
-                src: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
+                src: watchFiles.mochaTests
+            }
+        },
+        express: {
+            dev: {
+                options: {
+                    script: './server.js'
+                }
+            }
+        },
+        execute: {
+            target: {
+                src: ['./lib/benchmark/index.js']
+            }
+        },
+        shell: {
+            run_istanbul: {
+                command: "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec --recursive"
             }
         }
+        /*        karma: {
+                    unit: {
+                        configFile: 'karma.conf.js'
+                    }
+                } */
     });
 
+    // Making grunt default to force in order not to break the project.
+    grunt.option('force', true);
+
+    // Default task(s).
+    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest']);
+
+    grunt.registerTask('benchmark', ['execute']);
+    grunt.registerTask('coverage', ['shell:run_istanbul']);
+
+    // Test task.
+    //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
+    grunt.registerTask('live', ['concurrent:default']);
+
+    // Print a timestamp (useful for when watching)
+    grunt.registerTask('timestamp', function () {
+        grunt.log.subhead(Date());
+    });
+
+    // Lint task(s).
+    //grunt.registerTask('lint', ['jshint', 'csslint']);
 };

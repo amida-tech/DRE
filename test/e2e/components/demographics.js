@@ -1,37 +1,14 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
-var database = require('mongodb').Db;
+var common = require('../../common/common.js');
 var common2 = require('../common.js');
 
-function removeCollection(inputCollection, callback) {
-    var db;
-    database.connect(databaseLocation, function (err, dbase) {
-        if (err) {
-            throw err;
-        }
-        db = dbase;
-        db.collection(inputCollection, function (err, coll) {
-            if (err) {
-                throw err;
-            }
-            coll.remove({}, function (err, results) {
-                if (err) {
-                    throw err;
-                }
-                db.close();
-                callback();
-            });
-        });
-    });
-}
-
 function loadTestRecord(fileName, callback) {
-    var filepath = path.join(__dirname, '../../artifacts/test-r1.0/' + fileName);
+    var filepath = path.join(__dirname, '../../artifacts/test-r1.5/' + fileName);
     api.put('/api/v1/storage')
         .attach('file', filepath)
         .expect(200)
@@ -46,23 +23,23 @@ function loadTestRecord(fileName, callback) {
 describe('Pre Test Cleanup', function () {
 
     it('Remove Demographic Collections', function (done) {
-        removeCollection('demographics', function (err) {
+        common.removeCollection('demographics', function (err) {
             if (err) {
                 done(err);
             }
-            removeCollection('demographicsmerges', function (err) {
+            common.removeCollection('demographicsmerges', function (err) {
                 if (err) {
                     done(err);
                 }
-                removeCollection('demographicsmatches', function (err) {
+                common.removeCollection('demographicsmatches', function (err) {
                     if (err) {
                         done(err);
                     }
-                    removeCollection('storage.files', function (err) {
+                    common.removeCollection('storage.files', function (err) {
                         if (err) {
                             done(err);
                         }
-                        removeCollection('storage.chunks', function (err) {
+                        common.removeCollection('storage.chunks', function (err) {
                             if (err) {
                                 done(err);
                             }
@@ -589,7 +566,7 @@ describe('Demographic API - Test Merged Matches', function () {
                         dupCnt++;
                     }
                     if (res.body.merges[i].merge_reason === 'update') {
-                        //Get record id off loaded rec, 
+                        //Get record id off loaded rec,
                         expect(res.body.merges[i].entry._id).to.equal(base_id);
                         expect(res.body.merges[i].record.filename).to.equal('bluebutton-04-diff-source-partial-matches.xml');
                         mrgCnt++;

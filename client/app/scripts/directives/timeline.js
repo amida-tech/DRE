@@ -11,11 +11,6 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
         template: "<svg style='width:100%;'></svg>",
         link: function postLink(scope, element, attrs) {
 
-            var navClick = function (ele) {
-                $location.hash(ele);
-                // call $anchorScroll()
-                $anchorScroll();
-            };
             var plotHeight = 60;
             var boundaryOffset = 15;
             var boundaryWidth = 3;
@@ -199,7 +194,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                         }).attr("y", function (d) {
                             return d.y;
                         }).text(function (d) {
-                            return d.text;
+                            if (d.text === " 0NaN") { // Used for an empty timeline
+                                return " ";
+                            } else {
+                                return d.text;
+                            }
                         }).style("text-anchor", function (d) {
                             return d.anchor;
                         });
@@ -255,9 +254,6 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             tip.attr('class', 'd3-tip').show(d);
                             tip.hide();
                         });
-                        /*.on("click", function(d) {
-                                                    navClick(d.href);
-                                                });*/
                     }
                     getSVGWidth();
                     buildScale();
@@ -291,6 +287,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
             }, true);
             scope.$watch('pageLoaded', function (newValue, oldValue) {
                 console.log('page loaded ' + newValue + ' ' + oldValue);
+                gatherData();
+                renderPlot();
+            }, true);
+            scope.$watch('entryListFiltered', function (newValue, oldValue) {
+                console.log('filter updated');
                 gatherData();
                 renderPlot();
             }, true);

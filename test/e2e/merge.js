@@ -4,7 +4,7 @@ chai.config.includeStack = true;
 
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + process.env.DBname || 'tests';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
@@ -51,7 +51,7 @@ describe('Base Merge API:', function () {
     };
 
     it('File Endpoint PUT', function (done) {
-        var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
+        var filepath = path.join(__dirname, '../artifacts/test-r1.5/bluebutton-01-original.xml');
         api.put('/api/v1/storage')
             .attach('file', filepath)
             .expect(200)
@@ -77,7 +77,7 @@ describe('Base Merge API:', function () {
                     expect(res.body.merges.length).to.equal(26); //was 31 with disabled sections
 
                     for (var i in res.body.merges) {
-                        supportedCount[res.body.merges[i].entry_type] ++;
+                        supportedCount[res.body.merges[i].entry_type]++;
 
                         expect(res.body.merges[i].entry).to.exist;
                         expect(res.body.merges[i].entry._id).to.exist;
