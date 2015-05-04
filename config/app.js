@@ -158,6 +158,9 @@ module.exports = function () {
     var notes = require('../lib/notes');
     app.use(notes);
 
+    var medapi = require('../lib/medapi');
+    app.use(medapi);
+
     app.set('port', (process.env.PORT || 3000));
 
     app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
