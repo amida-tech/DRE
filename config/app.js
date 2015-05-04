@@ -161,10 +161,10 @@ module.exports = function () {
     var medications = require('../lib/medications');
     app.use(medications);
     
-    var medapi = require('../lib/medapi');
+    var medapi = require('../lib/medAPI');
     app.use(medapi);
     
-    var npiapi = require('../lib/npiapi');
+    var npiapi = require('../lib/npiAPI');
     app.use(npiapi);
 
     app.set('port', (process.env.PORT || 3000));
