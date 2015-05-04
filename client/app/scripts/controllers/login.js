@@ -11,7 +11,7 @@ angular
     .module('phrPrototypeApp')
     .controller('LoginCtrl', Login);
     
-Login.$inject = ['$location', 'login']
+Login.$inject = ['$location', 'login'];
 
 function Login ($location, login) {
     /* jshint validthis: true */
