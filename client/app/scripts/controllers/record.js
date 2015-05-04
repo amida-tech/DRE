@@ -51,14 +51,25 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         if (angular.isDefined(rxcui)) {
             medapi.fdaCode(rxcui, function (err, data) {
                 $scope.fdaInfo = data;
+                $scope.fdatotal($scope.fdaInfo.results);
             });
         } else {
             if (angular.isDefined(medname)) {
                 medapi.fdaName(medname, function (err, data) {
                     $scope.fdaInfo = data;
+                    $scope.fdatotal($scope.fdaInfo.results);
                 });
             }
         }
+    };
+
+    $scope.fdatotal = function fdatotal(eventsArray) {
+        $scope.totalReports = _.sum(_.pluck(eventsArray, 'count'));
+        _.forEach(eventsArray, function(event) {
+        console.log('before', event.count);
+            event.count = (100*event.count/$scope.totalReports);
+        console.log('after', event.count);
+        });
     };
 
     // Medline Plus Connect link

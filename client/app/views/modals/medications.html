@@ -159,13 +159,13 @@
                                 <thead>
                                     <tr>
                                         <td>Term</td>
-                                        <td>Number reported</td>
+                                        <td>Number reported (out of {{totalReports}} )</td>
                                     </tr>
                                 </thead>
                                 <tbody ng-repeat="(eventIndex, event) in fdaInfo.results">
                                     <tr>
                                         <td>{{event.term}}</td>
-                                        <td>{{event.count}}</td>
+                                        <td>{{event.count | number:2}} %</td>
                                     </tr>
                                 </tbody>
                             </table>
