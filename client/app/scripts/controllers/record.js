@@ -126,7 +126,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 $scope.openfdanameResults = data;
             }
         });
-    };
+    }
 
     function prescriberSearch(firstName, lastName, zipCode) {
         var searchTest = false;
@@ -164,7 +164,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 }
             });
         }
-    };
+    }
 
     $scope.initInfoSearch = function (sType) {
         if (sType === 'prescription') {
