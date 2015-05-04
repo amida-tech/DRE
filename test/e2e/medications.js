@@ -54,7 +54,9 @@ describe('Medications API', function () {
             }
         }
     };
-    var tmp_med = {'data': data}
+    var tmp_med = {
+        'data': data
+    }
 
     it('Medications Endpoint: POST', function (done) {
         api.post('/api/v1/medications/add')
@@ -109,7 +111,9 @@ describe('Medications API Edit', function () {
             }
         }
     };
-    var tmp_edit = {'data': data}
+    var tmp_edit = {
+        'data': data
+    }
 
     before(function (done) {
 

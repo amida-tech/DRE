@@ -9,9 +9,9 @@
  */
 angular
     .module('phrPrototypeApp')
-    .controller('AboutCtrl', About); 
-        
-function About () {
+    .controller('AboutCtrl', About);
+
+function About() {
     this.awesomeThings = [
         'HTML5 Boilerplate',
         'AngularJS',

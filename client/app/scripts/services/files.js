@@ -10,9 +10,9 @@
 angular
     .module('phrPrototypeApp')
     .service('files', files);
-    
+
 files.$inject = ['$http'];
- 
+
 function files($http) {
     /* jshint validthis: true */
     this.getFiles = function (callback) {

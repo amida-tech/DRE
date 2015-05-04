@@ -76,7 +76,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     $scope.toggleSelection = function toggleSelection(buttonName) {
         var idx = $scope.activeSelection.indexOf(buttonName);
-        
+
         // is currently selected
         if (idx > -1) {
             $scope.activeSelection.splice(idx, 1);
@@ -88,7 +88,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    $scope.drugSearch = function drugSearch(drugName) {
+    function drugSearch(drugName) {
         console.log("drugname: " + drugName);
         medapi.findRxNorm(drugName, function (err, data) {
             if (err) {
@@ -128,7 +128,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         });
     };
 
-    $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {
+    function prescriberSearch(firstName, lastName, zipCode) {
         var searchTest = false;
         var searchObj = {
             name: [],
@@ -163,6 +163,21 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     $scope.prescriberResults = data;
                 }
             });
+        }
+    };
+
+    $scope.initInfoSearch = function (sType) {
+        if (sType === 'prescription') {
+            $scope.medSearchType = 'prescription';
+        } else {
+            $scope.medSearchType = 'otc-supplement';
+        }
+    };
+
+    $scope.medInfoSearch = function medInfoSearch() {
+        drugSearch($scope.drugName);
+        if ($scope.medSearchType === 'prescription') {
+            prescriberSearch($scope.firstName, $scope.lastName, $scope.zipCode);
         }
     };
 
@@ -479,7 +494,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                         var curDate = new Date();
                         var entryDate = new Date();
-                        if (angular.isDefined(entry.data.date_time)&&angular.isDefined(entry.data.date_time.high)) {
+                        if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
                             entryDate = new Date(entry.data.date_time.high.date);
                         }
                         return (entry.category === val) && (entryDate >= curDate);
@@ -488,7 +503,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                         var curDate = new Date();
                         var entryDate = new Date();
-                        if (angular.isDefined(entry.data.date_time)&&angular.isDefined(entry.data.date_time.high)) {
+                        if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
                             entryDate = new Date(entry.data.date_time.high.date);
                         }
                         return (entry.category === val) && (entryDate < curDate);
