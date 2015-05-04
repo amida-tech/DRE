@@ -174,10 +174,11 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    $scope.medInfoSearch = function medInfoSearch() {
-        drugSearch($scope.drugName);
+    $scope.medInfoSearch = function medInfoSearch(searchObj) {
+        console.log("searchObj: " + searchObj);
+        drugSearch(searchObj.drug);
         if ($scope.medSearchType === 'prescription') {
-            prescriberSearch($scope.firstName, $scope.lastName, $scope.zipCode);
+            prescriberSearch(scopeObj.first, scopeObj.last, scopeObj.zip);
         }
     };
 
