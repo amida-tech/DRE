@@ -66,15 +66,13 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     $scope.fdatotal = function fdatotal(eventsArray) {
         $scope.totalReports = _.sum(_.pluck(eventsArray, 'count'));
         _.forEach(eventsArray, function(event) {
-        console.log('before', event.count);
             event.count = (100*event.count/$scope.totalReports);
-        console.log('after', event.count);
         });
     };
 
     // Medline Plus Connect link
     $scope.medlineservice = function medlineservice(rxcui, medname) {
-        medapi.getmedline(rxcui, medname, function (err, data) {
+        medapi.findmedline(rxcui, medname, function (err, data) {
             $scope.medline = data;
         });
     };
@@ -103,7 +101,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 console.log("Err: " + err);
             } else {
                 $scope.rxnormResults = data;
-                medapi.getImages(data.idGroup.rxnormId[0], function (err, imageData) {
+                medapi.findImages(data.idGroup.rxnormId[0], function (err, imageData) {
                     if (err) {
                         console.log("Err: " + err);
                     } else {
@@ -117,7 +115,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                         $scope.openfdacodeResults = fdaData;
                     }
                 });
-                medapi.getmedline(data.idGroup.rxnormId[0], drugName, function (err, medlineData) {
+                medapi.findmedline(data.idGroup.rxnormId[0], drugName, function (err, medlineData) {
                     if (err) {
                         console.log("err: " + err);
                     } else {
