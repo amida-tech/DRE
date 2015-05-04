@@ -7,11 +7,9 @@ before_script:
 - npm install -g mocha
 - npm install -g istanbul
 - npm install --quiet
-# - node server.js &
 - sleep 3
 - cd ./client
 - npm install --quiet
-# - grunt
 - cd ..
 services:
 - mongodb
