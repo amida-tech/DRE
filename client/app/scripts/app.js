@@ -96,7 +96,8 @@ angular
             })
             .when('/matches', {
                 templateUrl: 'views/matches.html',
-                controller: 'MatchesCtrl'
+                controller: 'MatchesCtrl',
+                controllerAs: 'vm'
             })
             .otherwise({
                 redirectTo: '/'

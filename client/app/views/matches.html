@@ -22,7 +22,7 @@
                     <div class="col-sm-12">
                         <div class="col-sm-8">
                             <div class="pull-left">
-                                <h4>{{user_first}}'s  {{section}} Updates</h4>
+                                <h4>{{user_first}}'s  {{vm.section}} Updates</h4>
                                 <p>Entries to the left are possible updates to a current entry in your record, displayed to the right.</p>
                                 <p>Use the checkboxes to select updates you wish to apply.</p>
                                 <h6>Note:  only differences between the entries are displayed.</h6>
@@ -40,7 +40,7 @@
                 <div class="panel-body" ng-cloak>
                     <!--div ng-repeat="match in masterMatches" ng-if="masterMatches[0].data" class="panel-body"-->
 
-                    <div entry-details details="match.data" category="section"></div>
+                    <div entry-details details="vm.match.data" category="vm.section"></div>
 
                     <!--/div-->
                 </div>
