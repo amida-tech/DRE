@@ -43,8 +43,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     $scope.imgservice = function imgservice(rxcui) {
         medapi.getImages(rxcui, function (err, data) {
             $scope.medImages = data;
-            console.log(data);
-            // console.log(data);
         });
     };
 
@@ -67,7 +65,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     $scope.medlineservice = function medlineservice(rxcui, medname) {
         medapi.getmedline(rxcui, medname, function (err, data) {
             $scope.medline = data;
-            console.log(data);
         });
     };
 
