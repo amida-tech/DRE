@@ -153,7 +153,7 @@
                     <div role="tabpanel" class="tab-pane" id="fda{{recordIndex}}">
                         <div class="sub-entry">
                             <h3> Adverse Events</h3>
-                            <div ng-hide="fdaInfo.error"> No information found for this medication. Error: {{fdaInfo.error.code}}</div>
+                            <div ng-show="fdaInfo.error"> No information found for this medication. Error: {{fdaInfo.error.code}}</div>
                             <div ng-show="fdaInfo.results">
                             <table class="table table-bordered">
                                 <thead>
