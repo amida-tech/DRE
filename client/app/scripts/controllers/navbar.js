@@ -56,6 +56,6 @@ function Navbar($rootScope, $location, authentication, logout) {
                 $location.path('/');
             }
         });
-    };
+    }
 
 }
