@@ -88,8 +88,11 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    function drugSearch(drugName) {
+    $scope.drugSearch = function drugSearch(drugName) {
         console.log("drugname: " + drugName);
+        $scope.selDrug = {};
+        $scope.rxnormResults = {};
+        $scope.openfdanameResults = {};
         medapi.findRxNormGroup(drugName, function (err, data) {
             if (err) {
                 console.log("Err: " + err);
@@ -97,7 +100,14 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 if (data.drugGroup.conceptGroup === undefined || data.drugGroup.conceptGroup === null) {
                     $scope.rxnormResults = "No match found";
                 } else {
-                    $scope.rxnormResults = data;
+                    $scope.rxnormResults = data.drugGroup;
+                    var drugCount = 0;
+                    for (var j = 0; j < data.drugGroup.conceptGroup.length; j++) {
+                        if (data.drugGroup.conceptGroup[j].conceptProperties) {
+                            drugCount += data.drugGroup.conceptGroup[j].conceptProperties.length;
+                        }
+                    }
+                    $scope.drugCount = drugCount;
                     medapi.fdaName(drugName, function (err, data) {
                         if (err) {
                             console.log("ERR: " + err);
@@ -131,9 +141,27 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 */
             }
         });
-    }
+    };
 
-    function prescriberSearch(firstName, lastName, zipCode) {
+    $scope.setSelectedDrug = function setSelectedDrug() {
+        if (this.rxdrug.selected) {
+            this.rxdrug.selected = false;
+            $scope.selDrug = {};
+        } else {
+            for (var j = 0; j < $scope.rxnormResults.conceptGroup.length; j++) {
+                var drugGroup = $scope.rxnormResults.conceptGroup[j];
+                if (drugGroup.conceptProperties) {
+                    for (var k = 0; k < drugGroup.conceptProperties.length; k++) {
+                        drugGroup.conceptProperties[k].selected = false;
+                    }
+                }
+            }
+            this.rxdrug.selected = true;
+            $scope.selDrug = this.rxdrug;
+        }
+    };
+
+    $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {
         var searchTest = false;
         var searchObj = {
             name: [],
@@ -169,7 +197,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 }
             });
         }
-    }
+    };
 
     $scope.initInfoSearch = function (sType) {
         if (sType === 'prescription') {
@@ -179,14 +207,28 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    $scope.medInfoSearch = function medInfoSearch(searchObj) {
-        console.log("searchObj: " + searchObj);
-        drugSearch(searchObj.drug);
-        if ($scope.medSearchType === 'prescription') {
-            prescriberSearch(searchObj.first, searchObj.last, searchObj.zip);
-        }
+    $scope.medReset = function () {
+        $scope.swapMedTabs('medtype');
+        $scope.prescriberResults = {};
+        $scope.pFirstName = "";
+        $scope.pLastName = "";
+        $scope.pZip = "";
+        $scope.openfdanameResults = {};
+        $scope.rxnormResults = {};
+        $scope.medlineResults = {};
+        $scope.rximageResults = {};
+        $scope.openfdacodeResults = {};
+        $scope.selDrug = {};
     };
-
+    /*
+        $scope.medInfoSearch = function medInfoSearch(searchObj) {
+            console.log("searchObj: " + searchObj);
+            drugSearch(searchObj.drug);
+            if ($scope.medSearchType === 'prescription') {
+                prescriberSearch(searchObj.first, searchObj.last, searchObj.zip);
+            }
+        };
+    */
     //this doesn't really do anything at the moment
     /*
         $scope.swapMedTabs = function swapMedTabs(entryClass) {

@@ -25,16 +25,16 @@
                 </div>
             </div>
             <div class="col-sm-8">
-                <h4>Main content</h4>
-                <!--Medication Type pane.-->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="medtype">
                         <div class="sub-entry">
                             <h3>Drug Information</h3>
                             <div class="col-sm-6 col-sm-offset-3">
-                                <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('prescription')">Prescription</button>
-                                <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('otc')">Over the Counter</button>
-                                <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('supplement')">Supplement</button>
+                                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('prescription')">Prescription</button>
+                                <br />
+                                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('otc')">Over the Counter</button>
+                                <br />
+                                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('supplement')">Supplement</button>
                             </div>
                         </div>
                     </div>
@@ -43,32 +43,71 @@
                         <div class="sub-entry">
                             <h3>Medication Information</h3>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name">
+                                <h4>Drug Information</h4>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name">
+                                </div>
+                                <button class="btn btn-default col-sm-2 col-sm-offset-1" ng-click="drugSearch(pDrugName)">Search</button>
+                                <div class="col-sm-12" ng-show="rxnormResults">
+                                    <h4>RxNorm Results ({{drugCount}})</h4>
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Synonym</th>
+                                                <th>RxId</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="rxdruggroup in rxnormResults.conceptGroup">
+                                            <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxdruggroup.conceptProperties" ng-click="setSelectedDrug()">
+                                                <td>{{rxdrug.name}}</td>
+                                                <td>{{rxdrug.tty}}</td>
+                                                <td>{{rxdrug.synonym}}</td>
+                                                <td>{{rxdrug.rxcui}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <pre>{{rxnormResults}}</pre>
+                                </div>
                             </div>
+                            <br />
                             <div class="col-sm-12" ng-if="medSearchType=='prescription'">
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" ng-model="pFirstName" placeholder="First Name">
+                                <h4>Prescriber Information</h4>
+                                <div class="col-sm-12">
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" ng-model="pFirstName" placeholder="First Name">
+                                    </div>
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <input type="text" class="form-control" ng-model="pLastName" placeholder="Last Name">
+                                    </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" ng-model="pLastName" placeholder="Last Name">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-3 col-sm-offset-1">
+                                        <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code">
+                                    </div>
+                                    <button class="btn btn-default col-sm-2 col-sm-offset-6" ng-click="prescriberSearch(pFirstName, pLastName, pZip)">Search</button>
                                 </div>
-                                <div class="col-sm-4">
-                                    <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code">
+                                <div class="col-sm-12" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
+                                    <h4>Prescriber Results</h4>
+                                    <pre>{{prescriberResults}}</pre>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-sm-offset-3">
-                                <button class="btn btn-default" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="medInfoSearch({drug:pDrugName,first:pFirstName,last:pLastName,zip:pZip})">Next</button>
+                            <br />
+                            <div class="col-sm-12">
+                                <div class="col-sm-3">
+                                    <button class="btn btn-default" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+                                </div>
+                                <div class="col-sm-3 col-sm-offset-6">
+                                    <button class="btn btn-default" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="medInfoSearch({drug:pDrugName,first:pFirstName,last:pLastName,zip:pZip})">Next</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!--Medication summary pane.-->
                     <div role="tabpanel" class="tab-pane" id="summary">
                         <div class="sub-entry">
-                            <h3>Medication Summary</h3>
-                            <div class="col-sm-12" ng-show="rxnormResults">
-                                <h4>RxNorm Information</h4>
-                                <pre>{{rxnormResults}}</pre>
-                            </div>
+                            <h3>Drug Results</h3>
                             <div class="col-sm-12" ng-show="rximageResults">
                                 <h4>RxImage Information</h4>
                                 <pre>{{rximageResults}}</pre>
@@ -85,9 +124,17 @@
                                 <h4>Medline Information</h4>
                                 <pre>{{medlineResults}}</pre>
                             </div>
-                            <div class="col-sm-12" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
-                                <h4>Prescriber Information</h4>
-                                <pre>{{prescriberResults}}</pre>
+                            <br />
+                            <div class="col-sm-12">
+                                <div class="col-sm-3">
+                                    <button class="btn btn-default" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+                                </div>
+                                <div class="col-sm-3 col-sm-offset-2">
+                                    <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="swapMedTabs('medinfo')">Back</button>
+                                </div>
+                                <div class="col-sm-3 col-sm-offset-1">
+                                    <button class="btn btn-default" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="">Submit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
