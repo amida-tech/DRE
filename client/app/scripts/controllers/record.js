@@ -90,9 +90,15 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     $scope.drugSearch = function drugSearch(drugName) {
         console.log("drugname: " + drugName);
-        $scope.selDrug = {};
-        $scope.rxnormResults = {};
-        $scope.openfdanameResults = {};
+        if ($scope.selDrug) {
+            $scope.selDrug = {};
+        }
+        if ($scope.rxnormResults) {
+            $scope.rxnormResults = {};
+        }
+        if ($scope.openfdanameResults) {
+            $scope.openfdanameResults = {};
+        }
         medapi.findRxNormGroup(drugName, function (err, data) {
             if (err) {
                 console.log("Err: " + err);
@@ -208,17 +214,18 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     };
 
     $scope.medReset = function () {
-        $scope.swapMedTabs('medtype');
-        $scope.prescriberResults = {};
-        $scope.pFirstName = "";
-        $scope.pLastName = "";
-        $scope.pZip = "";
-        $scope.openfdanameResults = {};
-        $scope.rxnormResults = {};
-        $scope.medlineResults = {};
-        $scope.rximageResults = {};
-        $scope.openfdacodeResults = {};
-        $scope.selDrug = {};
+        console.log("RESETTING MEDICATION ENTRY");
+        delete $scope.prescriberResults;
+        delete $scope.pFirstName;
+        delete $scope.pLastName;
+        delete $scope.pZip;
+        delete $scope.pDrugName;
+        delete $scope.openfdanameResults;
+        delete $scope.rxnormResults;
+        delete $scope.medlineResults;
+        delete $scope.rximageResults;
+        delete $scope.openfdacodeResults;
+        delete $scope.selDrug;
     };
     /*
         $scope.medInfoSearch = function medInfoSearch(searchObj) {
