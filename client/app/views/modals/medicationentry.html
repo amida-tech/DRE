@@ -90,6 +90,10 @@
                                 <pre>{{prescriberResults}}</pre>
                             </div>
                             <input type="submit" ng-click="saveMedication()" value="Save" />
+                            <div ng-if="saveMedicationStatus==='error'">
+                                <span>There was an error saving the medication.</span>
+                            </div>
+                            <div ng-if="saveMedicationStatus==='success'" ng-init="$hide()"></div>
                         </div>
                     </div>
                 </div>
