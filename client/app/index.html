@@ -27,11 +27,11 @@
     <div class="wrapper" id="index-wrapper">
 
         <!--Site Header.-->
-        <div class="navbar navbar-default" role="navigation" ng-controller="NavbarCtrl">
+        <div class="navbar navbar-default" role="navigation" ng-controller="NavbarCtrl as vm">
 
             <!--Logged In Navbar-->
             <!--<div ng-if="true" class="container-fluid">-->
-            <div ng-cloak ng-if="loginStatus === true" class="container-fluid">
+            <div ng-cloak ng-if="vm.loginStatus === true" class="container-fluid">
                 <!--div ng-if="true" class="container-fluid"-->
                 <div style="margin: 0px 20px;">
                     <div class="navbar-header">
@@ -71,7 +71,7 @@
                                     <li><a href="#/account">My Account</a>
                                     </li>
                                     <li class="divider"></li>
-                                    <li><a ng-click="logout()">Log out</a>
+                                    <li><a ng-click="vm.navbarLogout()">Log out</a>
                                     </li>
                                 </ul>
                             </li>
@@ -81,7 +81,7 @@
             </div>
 
             <!--Logged Out Navbar-->
-            <div ng-cloak ng-if="loginStatus === false" class="container-fluid">
+            <div ng-cloak ng-if="vm.loginStatus === false" class="container-fluid">
                 <!--div ng-if="false" class="container-fluid"-->
                 <div style="margin: 0px 20px;">
                     <div class="navbar-header">
@@ -105,7 +105,7 @@
                     </div>
                 </div>
             </div>
-            <!--<div ng-if="loginStatus === false" class="container-fluid">
+            <!--<div ng-if="vm.loginStatus === false" class="container-fluid">
           <div style="margin: 0px 20px; height:70px" class="navbar-default">
             <div class="navbar-header">
               <a class="navbar-brand" href="#"><img class="img-navbar-logo" src="images/bb-logo-vector.png"></a>

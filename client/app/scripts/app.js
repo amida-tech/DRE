@@ -25,7 +25,8 @@ angular
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                controllerAs: 'vm'
             })
             .when('/print', {
                 templateUrl: 'views/print.html',
@@ -38,11 +39,13 @@ angular
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
-                controller: 'LoginCtrl'
+                controller: 'LoginCtrl',
+                controllerAs: 'vm'
             })
             .when('/home', {
                 templateUrl: 'views/home.html',
-                controller: 'HomeCtrl'
+                controller: 'HomeCtrl',
+                controllerAs: 'vm'
             })
             .when('/register', {
                 templateUrl: 'views/register.html',
@@ -93,7 +96,8 @@ angular
             })
             .when('/matches', {
                 templateUrl: 'views/matches.html',
-                controller: 'MatchesCtrl'
+                controller: 'MatchesCtrl',
+                controllerAs: 'vm'
             })
             .otherwise({
                 redirectTo: '/'

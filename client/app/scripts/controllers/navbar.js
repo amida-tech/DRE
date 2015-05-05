@@ -7,46 +7,55 @@
  * # NavbarCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('NavbarCtrl', function ($rootScope, $scope, $location, authentication, logout) {
+angular
+    .module('phrPrototypeApp')
+    .controller('NavbarCtrl', Navbar);
 
-        $scope.loginStatus = false;
+Navbar.$inject = ['$rootScope', '$location', 'authentication', 'logout'];
 
-        function checkAuthStatus() {
-            //console.log("check aut status");
-            authentication.authStatus(function (err, res) {
-                if (err) {
-                    //console.log("status fetch error ", err);
-                    $scope.loginStatus = false;
-                    //console.log(err);
-                } else {
-                    //console.log("auth status ", res);
-                    if (!res) {
-                        $scope.loginStatus = false;
-                    } else {
-                        $scope.loginStatus = true;
-                    }
-                }
-            });
-        }
+function Navbar($rootScope, $location, authentication, logout) {
+    /* jshint validthis: true */
+    var vm = this;
+    vm.loginStatus = false;
+    vm.navbarLogout = navbarLogout;
 
+    activate();
+
+    function activate() {
         checkAuthStatus();
+    }
 
-        $rootScope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
-            checkAuthStatus();
-        });
-
-        //TODO: isValid is not used??
-        $scope.logout = function (isValid) {
-            //console.log("navbar controller, logout()", isValid);
-            logout.logout(function (err) {
-                if (err) {
-                    $scope.error = err;
-                } else {
-                    // $scope.loginStatus = false;
-                    $location.path('/');
-                }
-            });
-        };
-
+    $rootScope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+        checkAuthStatus();
     });
+
+    function checkAuthStatus() {
+        //console.log("check aut status");
+        authentication.authStatus(function (err, res) {
+            if (err) {
+                //console.log("status fetch error ", err);
+                vm.loginStatus = false;
+                //console.log(err);
+            } else {
+                //console.log("auth status ", res);
+                if (!res) {
+                    vm.loginStatus = false;
+                } else {
+                    vm.loginStatus = true;
+                }
+            }
+        });
+    }
+
+    function navbarLogout() {
+        logout.logout(function (err) {
+            if (err) {
+                vm.error = err;
+            } else {
+                // $scope.loginStatus = false;
+                $location.path('/');
+            }
+        });
+    }
+
+}
