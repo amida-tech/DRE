@@ -44,7 +44,7 @@ function Home(history, merges, dataservice) {
             });
         });
     }
-    
+
     function getHistory() {
         history.getHistory(function (err, history) {
             if (err) {

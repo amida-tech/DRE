@@ -90,11 +90,23 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     function drugSearch(drugName) {
         console.log("drugname: " + drugName);
-        medapi.findRxNorm(drugName, function (err, data) {
+        medapi.findRxNormGroup(drugName, function (err, data) {
             if (err) {
                 console.log("Err: " + err);
             } else {
-                $scope.rxnormResults = data;
+                if (data.drugGroup.conceptGroup === undefined || data.drugGroup.conceptGroup === null) {
+                    $scope.rxnormResults = "No match found";
+                } else {
+                    $scope.rxnormResults = data;
+                    medapi.fdaName(drugName, function (err, data) {
+                        if (err) {
+                            console.log("ERR: " + err);
+                        } else {
+                            $scope.openfdanameResults = data;
+                        }
+                    });
+                }
+                /*
                 medapi.getImages(data.idGroup.rxnormId[0], function (err, imageData) {
                     if (err) {
                         console.log("Err: " + err);
@@ -116,14 +128,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                         $scope.medlineResults = medlineData;
                     }
                 });
-            }
-        });
-
-        medapi.fdaName(drugName, function (err, data) {
-            if (err) {
-                console.log("ERR: " + err);
-            } else {
-                $scope.openfdanameResults = data;
+*/
             }
         });
     }
@@ -178,7 +183,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         console.log("searchObj: " + searchObj);
         drugSearch(searchObj.drug);
         if ($scope.medSearchType === 'prescription') {
-            prescriberSearch(scopeObj.first, scopeObj.last, scopeObj.zip);
+            prescriberSearch(searchObj.first, searchObj.last, searchObj.zip);
         }
     };
 

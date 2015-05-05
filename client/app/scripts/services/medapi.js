@@ -31,16 +31,20 @@ angular.module('phrPrototypeApp')
             });
         };
 
-        this.findRxNorm = function (medname, callback) {
-            /*
-            $http.get('api/v1/rxnorm/' + name)
-                .success(function(data) {
-                    callback(null, data);
-                }).error(function(err) {
-                    callback(err);
-                });
-*/
-            $http.post('api/v1/rxnorm', {
+        this.findRxNormName = function (medname, callback) {
+            $http.post('api/v1/rxnorm/name', {
+                medname: medname
+            }).
+            success(function (data, status, headers, config) {
+                callback(null, data);
+            }).
+            error(function (data, status, headers, config) {
+                callback(status);
+            });
+        };
+
+        this.findRxNormGroup = function (medname, callback) {
+            $http.post('api/v1/rxnorm/group', {
                 medname: medname
             }).
             success(function (data, status, headers, config) {
