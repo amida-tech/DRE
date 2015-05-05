@@ -76,7 +76,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     $scope.toggleSelection = function toggleSelection(buttonName) {
         var idx = $scope.activeSelection.indexOf(buttonName);
-
+        
         // is currently selected
         if (idx > -1) {
             $scope.activeSelection.splice(idx, 1);
@@ -467,15 +467,19 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $scope.entryListFiltered = _.where($scope.recordEntries, {
                 category: val
             });
+
+            console.log("filtered ", $scope.entryListFiltered);
+            console.log("val", val);
             // Filter on active/inactive
             if (val === 'medications' || val === 'social') {
                 if ($scope.activeSelection.indexOf('active') > -1 && $scope.activeSelection.indexOf('inactive') > -1) { // All entries
 
                 } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
+
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                         var curDate = new Date();
                         var entryDate = new Date();
-                        if (_.has(entry, 'data.date_time.high')) {
+                        if (angular.isDefined(entry.data.date_time)&&angular.isDefined(entry.data.date_time.high)) {
                             entryDate = new Date(entry.data.date_time.high.date);
                         }
                         return (entry.category === val) && (entryDate >= curDate);
@@ -484,7 +488,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                         var curDate = new Date();
                         var entryDate = new Date();
-                        if (_.has(entry, 'data.date_time.high')) {
+                        if (angular.isDefined(entry.data.date_time)&&angular.isDefined(entry.data.date_time.high)) {
                             entryDate = new Date(entry.data.date_time.high.date);
                         }
                         return (entry.category === val) && (entryDate < curDate);
@@ -494,7 +498,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 }
             }
 
-            console.log("category ", val);
             console.log("FILTERED ", $scope.entryListFiltered);
         }
 
