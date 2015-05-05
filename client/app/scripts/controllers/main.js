@@ -7,20 +7,22 @@
  * # MainCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('MainCtrl', function ($scope, $location, login, authentication) {
+angular
+    .module('phrPrototypeApp')
+    .controller('MainCtrl', Main);
 
-        //TODO: isValid is not used
-        $scope.login = function (isValid) {
-            console.log("main controller, login()", isValid);
-            login.login($scope.inputLogin, $scope.inputPassword, function (err) {
-                if (err) {
-                    $scope.error = err;
-                } else {
-                    $location.path('/home');
-                }
-            });
-        };
+Main.$inject = ['$location', 'login', 'authentication'];
+
+function Main($location, login, authentication) {
+    /* jshint validthis: true */
+    var vm = this;
+    vm.mainLogin = mainLogin;
+
+    activate();
+
+    function activate() {
+        
+        redirectUser();
 
         function redirectUser() {
             authentication.authStatus(function (err, res) {
@@ -33,7 +35,15 @@ angular.module('phrPrototypeApp')
                 }
             });
         }
+    }
 
-        redirectUser();
-
-    });
+    function mainLogin() {
+        login.login(vm.inputLogin, vm.inputPassword, function (err) {
+            if (err) {
+                vm.error = err;
+            } else {
+                $location.path('/home');
+            }
+        });
+    }
+}
