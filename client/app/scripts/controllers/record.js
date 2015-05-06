@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice, medapi, npiapi) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice, medapi, npiapi, medications) {
     console.log("RECORD CONTROLLER LOAD ");
 
     $scope.dashMetrics = {};
@@ -33,11 +33,10 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     angular.element("#nav" + $scope.entryType).addClass("active");
 
     // TODO make these more descriptive
-    // Meds modal
-    $scope.modal = {
-        title: 'Title',
-        content: 'Hello Modal<br />This is a multiline message!'
-    };
+
+    $scope.saveMedication = saveMedication;
+    $scope.enteredMedication = {};
+    $scope.saveMedicationStatus = null;
 
     // Medication images
     $scope.imgservice = function imgservice(rxcui) {
@@ -70,6 +69,21 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             console.log(data);
         });
     };
+
+    function saveMedication () {
+        medications.addMedication($scope.enteredMedication, function(err, results) {
+            if (err) {
+                // Display an error in the med entry modal
+                $scope.saveMedicationStatus = 'error';
+            } else {
+                // Display success in the med entry modal
+                $scope.saveMedicationStatus = 'success';
+                setTimeout(function() {
+                    $scope.saveMedicationStatus = null;
+                }, 100);
+            }
+        });
+    }
 
     // Meds active/inactive selector
     $scope.activeSelection = ['active', 'inactive'];
