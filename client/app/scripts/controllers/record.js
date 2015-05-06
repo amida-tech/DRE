@@ -76,7 +76,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
             console.log("...was a prescription");
             $scope.enteredMedication = {
                 //"identifiers": [],
-                "sig": $scope.selDrug.name,
+                "sig": $scope.selectedDrug.name,
                 "status": "Completed",
                 //"is_brand": true,
                 "administration": {
@@ -107,12 +107,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 },*/
                 "product": {
                     "identifiers": [{
-                        rxcui: $scope.selDrug.rxcui
+                        rxcui: $scope.selectedDrug.rxcui
                     }],
                     "product": {
-                        'name': $scope.selDrug.synonym
+                        'name': $scope.selectedDrug.synonym
                     },
-                    "unencoded_name": $scope.selDrug.name //,
+                    "unencoded_name": $scope.selectedDrug.name //,
                         //"manufacturer": 
                 },
                 "supply": {
@@ -121,11 +121,11 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                     //"quantity": "",
                     "author": {
                         "identifiers": [{
-                            npi: $scope.selPrescriber.npi
+                            npi: $scope.selectedPrescriber.npi
                         }],
                         //"date_time": "",
-                        "name": $scope.selPrescriber.first_name + " " + $scope.selPrescriber.last_name,
-                        "npi": $scope.selPrescriber.npi,
+                        "name": $scope.selectedPrescriber.first_name + " " + $scope.selectedPrescriber.last_name,
+                        "npi": $scope.selectedPrescriber.npi,
                         //"organization": ""
                     }
                 },
@@ -135,7 +135,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                     "date_time": "",
                     "value": ""
                 },*/
-                "performer": $scope.selPrescriber.first_name + " " + $scope.selPrescriber.last_name //,
+                "performer": $scope.selectedPrescriber.first_name + " " + $scope.selectedPrescriber.last_name //,
                     //"drug_vehicle": "",
                     /*
                     "dispense": {
@@ -146,7 +146,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         } else {
             $scope.enteredMedication = {
                 //"identifiers": [],
-                "sig": $scope.selDrug.name,
+                "sig": $scope.selectedDrug.name,
                 "status": "Completed",
                 //"is_brand": true,
                 "administration": {
@@ -177,12 +177,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 },*/
                 "product": {
                     "identifiers": [{
-                        rxcui: $scope.selDrug.rxcui
+                        rxcui: $scope.selectedDrug.rxcui
                     }],
                     "product": {
-                        'name': $scope.selDrug.synonym
+                        'name': $scope.selectedDrug.synonym
                     },
-                    "unencoded_name": $scope.selDrug.name //,
+                    "unencoded_name": $scope.selectedDrug.name //,
                         //"manufacturer": 
                 },
                 "supply": {
@@ -251,8 +251,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
 
     $scope.drugSearch = function drugSearch(drugName) {
         console.log("drugname: " + drugName);
-        if ($scope.selDrug) {
-            $scope.selDrug = {};
+        if ($scope.selectedDrug) {
+            $scope.selectedDrug = {};
         }
         if ($scope.rxnormResults) {
             $scope.rxnormResults = {};
@@ -313,7 +313,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
     $scope.setSelectedDrug = function setSelectedDrug() {
         if (this.rxdrug.selected) {
             this.rxdrug.selected = false;
-            $scope.selDrug = {};
+            $scope.selectedDrug = {};
         } else {
             for (var j = 0; j < $scope.rxnormResults.conceptGroup.length; j++) {
                 var drugGroup = $scope.rxnormResults.conceptGroup[j];
@@ -324,20 +324,20 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 }
             }
             this.rxdrug.selected = true;
-            $scope.selDrug = this.rxdrug;
+            $scope.selectedDrug = this.rxdrug;
         }
     };
 
     $scope.setSelectedPrescriber = function setSelectedDrug() {
         if (this.prescriber.selected) {
             this.prescriber.selected = false;
-            $scope.selPrescriber = {};
+            $scope.selectedPrescriber = {};
         } else {
             for (var k = 0; k < $scope.prescriberResults.length; k++) {
                 $scope.prescriberResults[k].selected = false;
             }
             this.prescriber.selected = true;
-            $scope.selPrescriber = this.prescriber;
+            $scope.selectedPrescriber = this.prescriber;
         }
     };
 
@@ -400,8 +400,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
         delete $scope.medlineResults;
         delete $scope.rximageResults;
         delete $scope.openfdacodeResults;
-        delete $scope.selDrug;
-        delete $scope.selPrescriber;
+        delete $scope.selectedDrug;
+        delete $scope.selectedPrescriber;
     };
     /*
         $scope.medInfoSearch = function medInfoSearch(searchObj) {
