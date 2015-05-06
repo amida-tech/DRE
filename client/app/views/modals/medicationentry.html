@@ -68,7 +68,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <pre>{{rxnormResults}}</pre>
+                                    <!--<pre>{{rxnormResults}}</pre>-->
                                 </div>
                             </div>
                             <br />
@@ -89,7 +89,26 @@
                                     <button class="btn btn-default col-sm-2 col-sm-offset-6" ng-click="prescriberSearch(pFirstName, pLastName, pZip)">Search</button>
                                 </div>
                                 <div class="col-sm-12" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
-                                    <h4>Prescriber Results</h4>
+                                    <h4>Prescriber Results ({{prescriberCount}})</h4>
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Business Address</th>
+                                                <th>Practice Address</th>
+                                                <th>Gender</th>
+                                                <th>NPI</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setSelectedPrescriber()">
+                                                <td>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</td>
+                                                <td>{{prescriber.business_address}}</td>
+                                                <td>{{prescriber.practice_address}}</td>
+                                                <td>{{prescriber.npi}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <pre>{{prescriberResults}}</pre>
                                 </div>
                             </div>
@@ -147,5 +166,4 @@
             </div>
         </div>
     </div>
-
 </div>

@@ -70,15 +70,15 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         });
     };
 
-    function saveMedication () {
-        medications.addMedication($scope.enteredMedication, function(err, results) {
+    function saveMedication() {
+        medications.addMedication($scope.enteredMedication, function (err, results) {
             if (err) {
                 // Display an error in the med entry modal
                 $scope.saveMedicationStatus = 'error';
             } else {
                 // Display success in the med entry modal
                 $scope.saveMedicationStatus = 'success';
-                setTimeout(function() {
+                setTimeout(function () {
                     $scope.saveMedicationStatus = null;
                 }, 100);
             }
@@ -181,6 +181,19 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
+    $scope.setSelectedPrescriber = function setSelectedDrug() {
+        if (this.prescriber.selected) {
+            this.prescriber.selected = false;
+            $scope.selPrescriber = {};
+        } else {
+            for (var k = 0; k < $scope.prescriberResults.length; k++) {
+                $scope.prescriberResults[k].selected = false;
+            }
+            this.prescriber.selected = true;
+            $scope.selPrescriber = this.prescriber;
+        }
+    };
+
     $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {
         var searchTest = false;
         var searchObj = {
@@ -240,6 +253,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         delete $scope.rximageResults;
         delete $scope.openfdacodeResults;
         delete $scope.selDrug;
+        delete $scope.selPrescriber;
     };
     /*
         $scope.medInfoSearch = function medInfoSearch(searchObj) {
