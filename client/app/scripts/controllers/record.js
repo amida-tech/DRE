@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $window, $location, $modal, $anchorScroll, format, matches, merges, history, dataservice, medapi, npiapi, medications) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, $route, format, matches, merges, history, dataservice, medapi, npiapi, medications) {
+
     console.log("RECORD CONTROLLER LOAD ");
 
     $scope.dashMetrics = {};
@@ -226,7 +227,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function($scope, $win
                 // Display success in the med entry modal
                 $scope.saveMedicationStatus = 'success';
                 setTimeout(function() {
-                    $scope.saveMedicationStatus = null;
+                    $route.reload();
                 }, 100);
             }
         });
