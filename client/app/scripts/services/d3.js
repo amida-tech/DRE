@@ -28,7 +28,7 @@ angular.module('d3', [])
             }
 
             // Check if we already loaded d3
-	    if( typeof $window.d3 == 'undefined') {
+	    if( typeof $window.d3 === 'undefined') {
 	    
 	        //d3 and d3-tip should be loaded sequntially, since d3-tip depends on d3
 		d.promise.then( function() {
