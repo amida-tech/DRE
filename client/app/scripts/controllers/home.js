@@ -7,46 +7,51 @@
  * # HomeCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('HomeCtrl', function ($scope, history, merges, dataservice) {
+angular
+    .module('phrPrototypeApp')
+    .controller('HomeCtrl', Home);
 
-        //TODO : fetch notes and updates counts
-        $scope.noteCount = 0;
-        $scope.updatesCount = 0;
+Home.$inject = ['history', 'merges', 'dataservice'];
 
-        function refresh() {
-            dataservice.curr_section = $scope.entryType;
-            dataservice.getData(function () {
-                $scope.noteCount = 0;
+function Home(history, merges, dataservice) {
+    /* jshint validthis: true */
+    var vm = this;
+    //TODO : fetch notes and updates counts
+    vm.noteCount = 0;
+    vm.updatesCount = 0;
 
-                _.each(dataservice.all_notes, function (entry) {
-                    //console.log(entry);
-                    if (entry.star) {
-                        $scope.noteCount++;
-                    }
-                });
+    activate();
 
-                merges.getMerges(function (err, merges) {
-                    $scope.updatesCount = merges.length;
-                });
-                //$scope.updatesCount = dataservice.matches
-
-            });
-        }
-
+    function activate() {
         refresh();
+        getHistory();
+    }
 
-        function getHistory() {
-            history.getHistory(function (err, history) {
-                if (err) {
-                    console.log('ERRROR', err);
-                } else {
-                    //console.log('>>>>accountHistory', history);
-                    $scope.accountHistory = history;
+    function refresh() {
+        dataservice.curr_section = vm.entryType;
+        dataservice.getData(function () {
+            vm.noteCount = 0;
+
+            _.each(dataservice.all_notes, function (entry) {
+                //console.log(entry);
+                if (entry.star) {
+                    vm.noteCount++;
                 }
             });
-        }
 
-        getHistory();
+            merges.getMerges(function (err, merges) {
+                vm.updatesCount = merges.length;
+            });
+        });
+    }
 
-    });
+    function getHistory() {
+        history.getHistory(function (err, history) {
+            if (err) {
+                console.log('ERRROR', err);
+            } else {
+                vm.accountHistory = history;
+            }
+        });
+    }
+}

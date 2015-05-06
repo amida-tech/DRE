@@ -102,13 +102,41 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    function drugSearch(drugName) {
+    $scope.drugSearch = function drugSearch(drugName) {
         console.log("drugname: " + drugName);
-        medapi.findRxNorm(drugName, function (err, data) {
+        if ($scope.selDrug) {
+            $scope.selDrug = {};
+        }
+        if ($scope.rxnormResults) {
+            $scope.rxnormResults = {};
+        }
+        if ($scope.openfdanameResults) {
+            $scope.openfdanameResults = {};
+        }
+        medapi.findRxNormGroup(drugName, function (err, data) {
             if (err) {
                 console.log("Err: " + err);
             } else {
-                $scope.rxnormResults = data;
+                if (data.drugGroup.conceptGroup === undefined || data.drugGroup.conceptGroup === null) {
+                    $scope.rxnormResults = "No match found";
+                } else {
+                    $scope.rxnormResults = data.drugGroup;
+                    var drugCount = 0;
+                    for (var j = 0; j < data.drugGroup.conceptGroup.length; j++) {
+                        if (data.drugGroup.conceptGroup[j].conceptProperties) {
+                            drugCount += data.drugGroup.conceptGroup[j].conceptProperties.length;
+                        }
+                    }
+                    $scope.drugCount = drugCount;
+                    medapi.fdaName(drugName, function (err, data) {
+                        if (err) {
+                            console.log("ERR: " + err);
+                        } else {
+                            $scope.openfdanameResults = data;
+                        }
+                    });
+                }
+                /*
                 medapi.getImages(data.idGroup.rxnormId[0], function (err, imageData) {
                     if (err) {
                         console.log("Err: " + err);
@@ -130,19 +158,30 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                         $scope.medlineResults = medlineData;
                     }
                 });
+*/
             }
         });
+    };
 
-        medapi.fdaName(drugName, function (err, data) {
-            if (err) {
-                console.log("ERR: " + err);
-            } else {
-                $scope.openfdanameResults = data;
+    $scope.setSelectedDrug = function setSelectedDrug() {
+        if (this.rxdrug.selected) {
+            this.rxdrug.selected = false;
+            $scope.selDrug = {};
+        } else {
+            for (var j = 0; j < $scope.rxnormResults.conceptGroup.length; j++) {
+                var drugGroup = $scope.rxnormResults.conceptGroup[j];
+                if (drugGroup.conceptProperties) {
+                    for (var k = 0; k < drugGroup.conceptProperties.length; k++) {
+                        drugGroup.conceptProperties[k].selected = false;
+                    }
+                }
             }
-        });
-    }
+            this.rxdrug.selected = true;
+            $scope.selDrug = this.rxdrug;
+        }
+    };
 
-    function prescriberSearch(firstName, lastName, zipCode) {
+    $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {
         var searchTest = false;
         var searchObj = {
             name: [],
@@ -178,7 +217,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 }
             });
         }
-    }
+    };
 
     $scope.initInfoSearch = function (sType) {
         if (sType === 'prescription') {
@@ -187,7 +226,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $scope.medSearchType = 'otc-supplement';
         }
     };
-
+    
     $scope.medInfoSearch = function medInfoSearch(searchObj) {
         console.log("searchObj: " + searchObj);
         drugSearch(searchObj.drug);
@@ -196,6 +235,29 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
+    $scope.medReset = function () {
+        console.log("RESETTING MEDICATION ENTRY");
+        delete $scope.prescriberResults;
+        delete $scope.pFirstName;
+        delete $scope.pLastName;
+        delete $scope.pZip;
+        delete $scope.pDrugName;
+        delete $scope.openfdanameResults;
+        delete $scope.rxnormResults;
+        delete $scope.medlineResults;
+        delete $scope.rximageResults;
+        delete $scope.openfdacodeResults;
+        delete $scope.selDrug;
+    };
+    /*
+        $scope.medInfoSearch = function medInfoSearch(searchObj) {
+            console.log("searchObj: " + searchObj);
+            drugSearch(searchObj.drug);
+            if ($scope.medSearchType === 'prescription') {
+                prescriberSearch(searchObj.first, searchObj.last, searchObj.zip);
+            }
+        };
+    */
     //this doesn't really do anything at the moment
     /*
         $scope.swapMedTabs = function swapMedTabs(entryClass) {
