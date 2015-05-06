@@ -20,7 +20,9 @@ function medications($http) {
     this.getMedication = getMedications;
 
     function addMedication(medication, callback) {
-        $http.post('/api/v1/medications/add', medication)
+        $http.post('/api/v1/medications/add', {
+                medication: medication
+            })
             .success(function (data) {
                 console.log("medication added successfully");
                 callback(null, data);
