@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, $route, format, matches, merges, history, dataservice, medapi, npiapi, medications) {
+
     console.log("RECORD CONTROLLER LOAD ");
 
     $scope.dashMetrics = {};
@@ -13,7 +14,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         "data": {},
         "chartName": "d3template"
     }];
-    $scope.$watch('tabs.activeTab', function (newVal, oldVal) {
+    $scope.$watch('tabs.activeTab', function(newVal, oldVal) {
         console.log('TAB CHANGE');
         if (newVal !== oldVal) {
             $scope.$broadcast('tabchange', {
@@ -40,7 +41,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     // Medication images
     $scope.imgservice = function imgservice(rxcui) {
-        medapi.getImages(rxcui, function (err, data) {
+        medapi.getImages(rxcui, function(err, data) {
             $scope.medImages = data;
             console.log(data);
             // console.log(data);
@@ -50,12 +51,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     // FDA adverse events
     $scope.fdaservice = function fdaservice(rxcui, medname) {
         if (angular.isDefined(rxcui)) {
-            medapi.fdaCode(rxcui, function (err, data) {
+            medapi.fdaCode(rxcui, function(err, data) {
                 $scope.fdaInfo = data;
             });
         } else {
             if (angular.isDefined(medname)) {
-                medapi.fdaName(medname, function (err, data) {
+                medapi.fdaName(medname, function(err, data) {
                     $scope.fdaInfo = data;
                 });
             }
@@ -64,13 +65,160 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     // Medline Plus Connect link
     $scope.medlineservice = function medlineservice(rxcui, medname) {
-        medapi.getmedline(rxcui, medname, function (err, data) {
+        medapi.getmedline(rxcui, medname, function(err, data) {
             $scope.medline = data;
             console.log(data);
         });
     };
 
-    function saveMedication () {
+    $scope.enteredObject = function enteredObject() {
+        console.log("entering object...");
+        if ($scope.medSearchType === 'prescription') {
+            console.log("...was a prescription");
+            $scope.enteredMedication = {
+                //"identifiers": [],
+                "sig": $scope.selDrug.name,
+                "status": "Completed",
+                //"is_brand": true,
+                "administration": {
+                    "dose": $scope.pDose,
+                    "form": $scope.pAdminister,
+                    "rate": $scope.pOften,
+                    //"route": "",
+                    //"dose_restriction": "",
+                    //"site": "",
+                    /*"interval": {
+                        "xsiType": "",
+                        "phase": "",
+                        "period": "",
+                        "frequency": true,
+                        "alignment": "",
+                        "event": "",
+                        "event_offset": {
+                            "low": "",
+                            "high": "",
+                            "center": "",
+                            "width": ""
+                        }
+                    }*/
+                },
+                /*"precondition": {
+                    "code": "",
+                    "value": ""
+                },*/
+                "product": {
+                    "identifiers": [{
+                        rxcui: $scope.selDrug.rxcui
+                    }],
+                    "product": {
+                        'name': $scope.selDrug.synonym
+                    },
+                    "unencoded_name": $scope.selDrug.name //,
+                        //"manufacturer": 
+                },
+                "supply": {
+                    //"date_time": "",
+                    //"repeatNumber": "",
+                    //"quantity": "",
+                    "author": {
+                        "identifiers": [{
+                            npi: $scope.selPrescriber.npi
+                        }],
+                        //"date_time": "",
+                        "name": $scope.selPrescriber.first_name + " " + $scope.selPrescriber.last_name,
+                        "npi": $scope.selPrescriber.npi,
+                        //"organization": ""
+                    }
+                },
+                /*"indication": {
+                    "identifiers": [],
+                    "code": "",
+                    "date_time": "",
+                    "value": ""
+                },*/
+                "performer": $scope.selPrescriber.first_name + " " + $scope.selPrescriber.last_name //,
+                    //"drug_vehicle": "",
+                    /*
+                    "dispense": {
+                        "identifiers": [],
+                        "performer": ""
+                    }*/
+            };
+        } else {
+            $scope.enteredMedication = {
+                //"identifiers": [],
+                "sig": $scope.selDrug.name,
+                "status": "Completed",
+                //"is_brand": true,
+                "administration": {
+                    "dose": $scope.pDose,
+                    "form": $scope.pAdminister,
+                    "rate": $scope.pOften,
+                    //"route": "",
+                    //"dose_restriction": "",
+                    //"site": "",
+                    /*"interval": {
+                        "xsiType": "",
+                        "phase": "",
+                        "period": "",
+                        "frequency": true,
+                        "alignment": "",
+                        "event": "",
+                        "event_offset": {
+                            "low": "",
+                            "high": "",
+                            "center": "",
+                            "width": ""
+                        }
+                    }*/
+                },
+                /*"precondition": {
+                    "code": "",
+                    "value": ""
+                },*/
+                "product": {
+                    "identifiers": [{
+                        rxcui: $scope.selDrug.rxcui
+                    }],
+                    "product": {
+                        'name': $scope.selDrug.synonym
+                    },
+                    "unencoded_name": $scope.selDrug.name //,
+                        //"manufacturer": 
+                },
+                "supply": {
+                    //"date_time": "",
+                    //"repeatNumber": "",
+                    //"quantity": "",
+                    "author": {
+                        "identifiers": [{
+                            npi: ""
+                        }],
+                        //"date_time": "",
+                        "name": "",
+                        "npi": "",
+                        //"organization": ""
+                    }
+                },
+                /*"indication": {
+                    "identifiers": [],
+                    "code": "",
+                    "date_time": "",
+                    "value": ""
+                },*/
+                "performer": "" //,
+                    //"drug_vehicle": "",
+                    /*
+                    "dispense": {
+                        "identifiers": [],
+                        "performer": ""
+                    }*/
+            };
+        }
+        console.log("...entered Medication: " + $scope.enteredMedication);
+    };
+
+    function saveMedication() {
         medications.addMedication($scope.enteredMedication, function(err, results) {
             if (err) {
                 // Display an error in the med entry modal
@@ -113,7 +261,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         if ($scope.openfdanameResults) {
             $scope.openfdanameResults = {};
         }
-        medapi.findRxNormGroup(drugName, function (err, data) {
+        medapi.findRxNormGroup(drugName, function(err, data) {
             if (err) {
                 console.log("Err: " + err);
             } else {
@@ -128,7 +276,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                         }
                     }
                     $scope.drugCount = drugCount;
-                    medapi.fdaName(drugName, function (err, data) {
+                    medapi.fdaName(drugName, function(err, data) {
                         if (err) {
                             console.log("ERR: " + err);
                         } else {
@@ -181,6 +329,19 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
+    $scope.setSelectedPrescriber = function setSelectedDrug() {
+        if (this.prescriber.selected) {
+            this.prescriber.selected = false;
+            $scope.selPrescriber = {};
+        } else {
+            for (var k = 0; k < $scope.prescriberResults.length; k++) {
+                $scope.prescriberResults[k].selected = false;
+            }
+            this.prescriber.selected = true;
+            $scope.selPrescriber = this.prescriber;
+        }
+    };
+
     $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {
         var searchTest = false;
         var searchObj = {
@@ -208,18 +369,19 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             searchTest = true;
         }
         if (searchTest) {
-            npiapi.findNPI(searchObj, function (err, data) {
+            npiapi.findNPI(searchObj, function(err, data) {
                 if (err) {
                     console.log("Martz err: " + err);
                 } else {
                     console.log("Martz success: " + JSON.stringify(data));
                     $scope.prescriberResults = data;
+                    $scope.prescriberCount = data.length;
                 }
             });
         }
     };
 
-    $scope.initInfoSearch = function (sType) {
+    $scope.initInfoSearch = function(sType) {
         if (sType === 'prescription') {
             $scope.medSearchType = 'prescription';
         } else {
@@ -227,7 +389,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    $scope.medReset = function () {
+    $scope.medReset = function() {
         console.log("RESETTING MEDICATION ENTRY");
         delete $scope.prescriberResults;
         delete $scope.pFirstName;
@@ -240,6 +402,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         delete $scope.rximageResults;
         delete $scope.openfdacodeResults;
         delete $scope.selDrug;
+        delete $scope.selPrescriber;
     };
     /*
         $scope.medInfoSearch = function medInfoSearch(searchObj) {
@@ -272,7 +435,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     function refresh() {
         dataservice.curr_section = $scope.entryType;
-        dataservice.getData(function () {
+        dataservice.getData(function() {
             console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
             //console.log("MORE: ", dataservice.all_merges, dataservice.merges_record, dataservice.merges_billing);
 
@@ -288,7 +451,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     refresh();
 
-    $scope.$on('ngRepeatFinished', function (element) {
+    $scope.$on('ngRepeatFinished', function(element) {
         if (dataservice.curr_location) {
             $location.hash(dataservice.curr_location);
             $anchorScroll();
@@ -299,7 +462,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     //Flip All as active selected item in DOM
     function getHistory() {
-        history.getHistory(function (err, history) {
+        history.getHistory(function(err, history) {
             if (err) {
                 console.log('ERRROR', err);
             } else {
@@ -311,36 +474,36 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     getHistory();
 
     // produces singular name for section name - in records merges list
-    $scope.singularName = function (section) {
+    $scope.singularName = function(section) {
         switch (section) {
-        case 'social_history':
-            return 'social history';
-        case 'vitals':
-            return 'vital sign';
-        case 'allergies':
-            return 'allergy';
-        case 'medications':
-            return 'medication';
-        case 'problems':
-            return 'problem';
-        case 'claims':
-            return 'claim';
-        case 'results':
-            return 'test result';
-        case 'encounters':
-            return 'encounter';
-        case 'immunizations':
-            return 'immunization';
-        case 'procedures':
-            return 'procedure';
-        case 'claims':
-            return 'claim';
-        case 'insurance':
-            return 'insurance';
-        case 'payers':
-            return 'payer';
-        default:
-            return section;
+            case 'social_history':
+                return 'social history';
+            case 'vitals':
+                return 'vital sign';
+            case 'allergies':
+                return 'allergy';
+            case 'medications':
+                return 'medication';
+            case 'problems':
+                return 'problem';
+            case 'claims':
+                return 'claim';
+            case 'results':
+                return 'test result';
+            case 'encounters':
+                return 'encounter';
+            case 'immunizations':
+                return 'immunization';
+            case 'procedures':
+                return 'procedure';
+            case 'claims':
+                return 'claim';
+            case 'insurance':
+                return 'insurance';
+            case 'payers':
+                return 'payer';
+            default:
+                return section;
         }
     };
 
@@ -354,7 +517,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             var bpDateArraySystolic = [];
             var bpDateArrayDiastolic = [];
             //Build arrays of all dates per section.
-            _.each($scope.recordEntries, function (entry) {
+            _.each($scope.recordEntries, function(entry) {
                 var vitalEntry = {};
                 //skip non vitals entries
                 if (entry.category !== "vitals") {
@@ -365,22 +528,22 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 console.log("vital entry ", vitalEntry);
 
                 if (vitalEntry.data.vital.name === "Height") {
-                    _.each(vitalEntry.data.date_time, function (dateArr) {
+                    _.each(vitalEntry.data.date_time, function(dateArr) {
                         heightDateArray.push(moment(dateArr.date));
                     });
                 }
                 if (vitalEntry.data.vital.name === "Patient Body Weight - Measured") {
-                    _.each(vitalEntry.data.date_time, function (dateArr) {
+                    _.each(vitalEntry.data.date_time, function(dateArr) {
                         weightDateArray.push(moment(dateArr.date));
                     });
                 }
                 if (vitalEntry.data.vital.name === "Intravascular Systolic") {
-                    _.each(vitalEntry.data.date_time, function (dateArr) {
+                    _.each(vitalEntry.data.date_time, function(dateArr) {
                         bpDateArraySystolic.push(moment(dateArr.date));
                     });
                 }
                 if (vitalEntry.data.vital.name === "Intravascular Diastolic") {
-                    _.each(vitalEntry.data.date_time, function (dateArr) {
+                    _.each(vitalEntry.data.date_time, function(dateArr) {
                         bpDateArrayDiastolic.push(moment(dateArr.date));
                     });
                 }
@@ -391,14 +554,14 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             var bpMaxDateDiastolic = moment.max(bpDateArrayDiastolic);
             var bpMaxDateSystolic = moment.max(bpDateArraySystolic);
             //Recover associated max value.
-            _.each($scope.entries.vitals, function (vitalEntry2) {
+            _.each($scope.entries.vitals, function(vitalEntry2) {
                 var vitalEntry = {
                     "data": vitalEntry2
                 };
 
                 //Find most current height.
                 if (vitalEntry.data.vital.name.indexOf("Height") > -1) {
-                    _.each(vitalEntry.data.date_time, function (dateArr) {
+                    _.each(vitalEntry.data.date_time, function(dateArr) {
                         if (moment(moment(dateArr.date)).isSame(heightMaxDate, 'day')) {
                             $scope.dashMetrics.height = {
                                 value: vitalEntry.data.value,
@@ -408,7 +571,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     });
                 }
                 if (vitalEntry.data.vital.name.indexOf("Weight") > -1) {
-                    _.each(vitalEntry.data.date_time, function (dateArr) {
+                    _.each(vitalEntry.data.date_time, function(dateArr) {
                         if (moment(moment(dateArr.date)).isSame(weightMaxDate, 'day')) {
                             $scope.dashMetrics.weight = {
                                 value: vitalEntry.data.value,
@@ -418,7 +581,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     });
                 }
                 if (vitalEntry.data.vital.name.indexOf("Systolic") > -1) {
-                    _.each(vitalEntry.data.date_time, function (dateArr) {
+                    _.each(vitalEntry.data.date_time, function(dateArr) {
                         if (moment(moment(dateArr.date)).isSame(bpMaxDateSystolic, 'day')) {
                             $scope.dashMetrics.systolic = {
                                 value: vitalEntry.data.value,
@@ -428,7 +591,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     });
                 }
                 if (vitalEntry.data.vital.name.indexOf("Diastolic") > -1) {
-                    _.each(vitalEntry.data.date_time, function (dateArr) {
+                    _.each(vitalEntry.data.date_time, function(dateArr) {
                         if (moment(moment(dateArr.date)).isSame(bpMaxDateDiastolic, 'day')) {
                             $scope.dashMetrics.diastolic = {
                                 value: vitalEntry.data.value,
@@ -539,7 +702,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         */
 
         function sortList() {
-            $scope.entryList = _.sortBy($scope.entryList, function (entry) {
+            $scope.entryList = _.sortBy($scope.entryList, function(entry) {
                 return entry.data.date_time.plotDate;
             });
             $scope.entryList.reverse();
@@ -560,7 +723,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
                 } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
 
-                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
+                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function(entry) {
                         var curDate = new Date();
                         var entryDate = new Date();
                         if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
@@ -569,7 +732,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                         return (entry.category === val) && (entryDate >= curDate);
                     });
                 } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
-                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
+                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function(entry) {
                         var curDate = new Date();
                         var entryDate = new Date();
                         if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
@@ -598,7 +761,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         //sortList();
         $scope.tabs.activeTab = 0;
 
-        $scope.recordEntries = _.sortBy($scope.recordEntries, function (entry) {
+        $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
             if (entry.metadata.datetime[0]) {
                 return entry.metadata.datetime[0].date.substring(0, 9);
             } else {
@@ -625,11 +788,11 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         //Flip All as active selected item in DOM
         angular.element("#nav" + $scope.entryType).addClass("active");
 
-        $scope.$watch('activeSelection', function (newVal, oldVal) {
+        $scope.$watch('activeSelection', function(newVal, oldVal) {
             filterEntries($scope.entryType);
         }, true);
 
-        $scope.$watch('entryType', function (newVal, oldVal) {
+        $scope.$watch('entryType', function(newVal, oldVal) {
             //keeping current section name in scope
             //alert('entryType new:'+newVal+" old:"+oldVal);
             $scope.entryType = newVal;
@@ -662,12 +825,12 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             //TODO get matches data again, here
 
             dataservice.curr_section = $scope.entryType;
-            dataservice.getMatchesData(function () {
+            dataservice.getMatchesData(function() {
 
                 $scope.masterMatches = dataservice.curr_processed_matches;
                 $scope.recordEntries = dataservice.processed_record;
 
-                $scope.recordEntries = _.sortBy($scope.recordEntries, function (entry) {
+                $scope.recordEntries = _.sortBy($scope.recordEntries, function(entry) {
                     if (entry.metadata.datetime[0]) {
                         return entry.metadata.datetime[0].date.substring(0, 9);
                     } else {
@@ -695,13 +858,13 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     //console.log(">>>>>>", record.masterRecord, record.recordDirty);
 
-    $scope.goToMatches = function (section) {
+    $scope.goToMatches = function(section) {
         //console.log(section);
         //matches.setSection(section);
         $location.path('/matches');
     };
     //launch specific match (by ID and section name)
-    $scope.launchMatch = function (el) {
+    $scope.launchMatch = function(el) {
         console.log("Launch MATCH>> ", el);
         //console.log(section);
         //setting section name for matches page
