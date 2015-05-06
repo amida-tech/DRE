@@ -226,14 +226,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             $scope.medSearchType = 'otc-supplement';
         }
     };
-    
-    $scope.medInfoSearch = function medInfoSearch(searchObj) {
-        console.log("searchObj: " + searchObj);
-        drugSearch(searchObj.drug);
-        if ($scope.medSearchType === 'prescription') {
-            prescriberSearch(searchObj.first, searchObj.last, searchObj.zip);
-        }
-    };
 
     $scope.medReset = function () {
         console.log("RESETTING MEDICATION ENTRY");
