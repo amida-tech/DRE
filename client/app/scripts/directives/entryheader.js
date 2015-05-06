@@ -71,7 +71,7 @@ angular.module('phrPrototypeApp')
                 // if (scope.recordEntry.metadata.displayDate) {
                 //     scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
                 // }
-                if (scope.entryData.administration.dose.value && scope.entryData.administration.dose.unit) {
+                if (scope.entryData.administration && scope.entryData.administration.dose && scope.entryData.administration.dose.value && scope.entryData.administration.dose.unit) {
                     scope.entrySubTitleTwo = " - " + scope.entryData.administration.dose.value + " " + scope.entryData.administration.dose.unit;
                 }
                 break;
