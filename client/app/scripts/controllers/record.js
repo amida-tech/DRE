@@ -223,7 +223,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             };
         }
         console.log("...entered Medication: " + $scope.enteredMedication);
-    };
+    }
 
     $scope.nextStep = function nextStep() {
         if ($scope.entryStep === 1) {
