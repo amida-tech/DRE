@@ -41,7 +41,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     // Medication images
     $scope.imgservice = function imgservice(rxcui) {
-        medapi.getImages(rxcui, function (err, data) {
+        medapi.findImages(rxcui, function (err, data) {
             $scope.medImages = data;
         });
     };
