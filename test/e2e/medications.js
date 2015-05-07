@@ -55,7 +55,7 @@ describe('Medications API', function () {
         }
     };
     var tmp_med = {
-        'data': data
+        "medications": data
     }
 
     it('Medications Endpoint: POST', function (done) {
