@@ -217,19 +217,20 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                     }];
                 }
 
+                var medANQ = that.medAddressNameQuant(type, entry);
+
                 //collate all notes into array (with formatting) for current entry
                 var comments = that.collateComments(entry);
 
                 var display_type = that.displayType(type);
 
-                //formats processed entry for processed record
                 var tmpEntry = {
-                    'data': entry,
-                    'category': display_type,
-                    'metadata': {
-                        'comments': comments,
-                        'displayDate': dates.display,
-                        'datetime': dates.temp
+                'data': entry,
+                'category': display_type,
+                'metadata': {
+                    'comments': comments,
+                    'displayDate': dates.display,
+                    'datetime': dates.temp
                     }
                 };
 
@@ -337,6 +338,58 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             "display": displayDates,
             "temp": tmpDates
         };
+    };
+
+    this.medAddressNameQuant = function (type, entry) {
+
+        //handling address for medications
+        if (type === 'medications') {
+            if (!_.isUndefined(entry.performer)) {
+                _.forEach(entry.performer.address, function (addr) {
+                    format.formatAddress(addr);
+                });
+            }
+            if (!_.isUndefined(entry.dispense) && (!_.isUndefined(entry.dispense.performer))) {
+                _.forEach(entry.dispense.performer.address, function (dispaddr) {
+                    format.formatAddress(dispaddr);
+                });
+            }
+
+            if (!_.isUndefined(entry.supply) && !_.isUndefined(entry.supply.author) && !_.isUndefined(entry.supply.author.name)) {
+                format.formatName(entry.supply.author.name);
+            }
+
+            if (!_.isUndefined(entry.administration)) {
+                if (!_.isUndefined(entry.administration.dose)) {
+                    format.formatQuantity(entry.administration.dose);
+                }
+                if (!_.isUndefined(entry.administration.rate)) {
+                    format.formatQuantity(entry.administration.rate);
+                }
+                if (!_.isUndefined(entry.administration.dose_restriction)) {
+                    format.formatQuantity(entry.administration.dose_restriction);
+                }
+                if (!_.isUndefined(entry.administration.interval)) {
+                    if (!_.isUndefined(entry.administration.interval.period)) {
+                        format.formatQuantity(entry.administration.interval.period);
+                    }
+                    if (!_.isUndefined(entry.administration.interval.event_offset)) {
+                        if (!_.isUndefined(entry.administration.interval.event_offset.low)) {
+                            format.formatQuantity(entry.administration.interval.event_offset.low);
+                        }
+                        if (!_.isUndefined(entry.administration.interval.event_offset.high)) {
+                            format.formatQuantity(entry.administration.interval.event_offset.high);
+                        }
+                        if (!_.isUndefined(entry.administration.interval.event_offset.center)) {
+                            format.formatQuantity(entry.administration.interval.event_offset.center);
+                        }
+                        if (!_.isUndefined(entry.administration.interval.event_offset.width)) {
+                            format.formatQuantity(entry.administration.interval.event_offset.width);
+                        }
+                    }
+                }
+            }
+        }
     };
 
     //split merges for display in records view and billing view
