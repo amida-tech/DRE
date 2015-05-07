@@ -55,8 +55,8 @@ describe('Medications API', function () {
         }
     };
     var tmp_med = {
-        'data': data
-    }
+        "medication": data
+    };
 
     it('Add (POST)', function (done) {
         api.post('/api/v1/medications/add')
