@@ -12,7 +12,7 @@
                             </li>
                             <li>
                                 <button class="btn btn-link" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="swapMedTabs('medinfo')">
-                                    <span>Prescription</span>
+                                    <span>Medication</span>
                                 </button>
                             </li>
                             <li>
@@ -145,10 +145,7 @@
                             <div class="row">
                                 <div class="col-sm-5">When did you start taking it?</div>
                                 <div class="col-sm-4 col-sm-offset-1">
-                                    <input type="search" class="form-control" ng-model="pStart" placeholder="MM/DD/YYYY">
-                                </div>
-                                <div class="col-sm-1 col-sm-offset-1">
-                                    <button class="btn btn-default">C</button>
+                                    <input type="date" class="form-control" ng-model="pStart" placeholder="MM/DD/YYYY">
                                 </div>
                             </div>
                             <div class="row">
@@ -165,10 +162,7 @@
                             <div class="row" ng-hide="pCurrentMedRadio">
                                 <div class="col-sm-5">If you're not currently taking it, when was your last dose?</div>
                                 <div class="col-sm-4 col-sm-offset-1">
-                                    <input type="search" class="form-control" ng-model="pLast" placeholder="MM/DD/YYYY">
-                                </div>
-                                <div class="col-sm-1 col-sm-offset-1">
-                                    <button class="btn btn-default">C</button>
+                                    <input type="date" class="form-control" ng-model="pLast" placeholder="MM/DD/YYYY">
                                 </div>
                             </div>
                             <div class="row" ng-show="pCurrentMedRadio">
