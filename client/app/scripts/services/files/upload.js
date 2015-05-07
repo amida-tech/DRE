@@ -12,8 +12,8 @@ angular
     .service('upload', upload);
 
 upload.$inject = ['$http'];
- 
-function upload ($http) {
+
+function upload($http) {
     /* jshint validthis: true */
     this.uploadRecord = function (file, check, callback) {
         var uploadUrl = "/api/v1/storage";

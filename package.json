@@ -58,7 +58,7 @@
     "serve-static": "~1.9.2",
     "supertest": "0.15.0",
     "lodash": "^3.7.0",
-    "npi-js": "~0.0.6"
+    "npi-js": "0.0.9"
   },
   "engines": {
     "node": "0.10.x"

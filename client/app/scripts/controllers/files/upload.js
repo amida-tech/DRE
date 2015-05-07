@@ -10,10 +10,10 @@
 angular
     .module('phrPrototypeApp')
     .controller('FilesUploadCtrl', FilesUpload);
-    
+
 FilesUpload.$inject = ['$location', '$route', 'upload', '$http', 'format', 'record']
 
-function FilesUpload ($location, $route, upload, $http, format, record) {
+function FilesUpload($location, $route, upload, $http, format, record) {
     /* jshint validthis: true */
     var vm = this;
     vm.importAndSave = importAndSave;
@@ -26,8 +26,8 @@ function FilesUpload ($location, $route, upload, $http, format, record) {
     vm.new_middle = "";
     vm.returnToFiles = returnToFiles;
     vm.uploadStep = 0;
-    
-    function incrementStep () {
+
+    function incrementStep() {
         vm.uploadStep = vm.uploadStep + 1;
 
         if (vm.uploadStep === 1) {
@@ -59,11 +59,11 @@ function FilesUpload ($location, $route, upload, $http, format, record) {
         }
     }
 
-    function returnToFiles () {
+    function returnToFiles() {
         $location.path('/files');
     }
 
-    function importAndSave () {
+    function importAndSave() {
         var uploadFile = vm.myFile;
         console.log("uploading file", uploadFile);
 

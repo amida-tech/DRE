@@ -17,11 +17,11 @@ function Matches($location, matches) {
     var vm = this;
     vm.masterMatches = [];
     vm.match = {};
-    
+
     activate();
 
     function activate() {
-        
+
         setScopeVars();
         getData(vm.section);
 
@@ -67,7 +67,7 @@ function Matches($location, matches) {
 
             }
         }
-        
+
         function getData(section) {
             matches.getCategory(section).then(function (data) {
                 //console.log('data', data);

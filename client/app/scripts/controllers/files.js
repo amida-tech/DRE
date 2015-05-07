@@ -10,10 +10,10 @@
 angular
     .module('phrPrototypeApp')
     .controller('FilesCtrl', Files);
-    
+
 Files.$inject = ['files'];
- 
-function Files (files) {
+
+function Files(files) {
     /* jshint validthis: true */
     var vm = this;
     vm.fileList = [];
@@ -23,15 +23,15 @@ function Files (files) {
     vm.typeSort = typeSort;
 
     activate();
-    
+
     function activate() {
         files.getFiles(function (err, results) {
             vm.fileList = results;
             console.log(results);
         });
     }
-    
-    function nameSort () {
+
+    function nameSort() {
         if (vm.predicate === "file_name") {
             vm.predicate = "-file_name";
         } else {
@@ -39,7 +39,7 @@ function Files (files) {
         }
     }
 
-    function typeSort () {
+    function typeSort() {
         if (vm.predicate === "file_class") {
             vm.predicate = "-file_class";
         } else {
@@ -47,7 +47,7 @@ function Files (files) {
         }
     }
 
-    function modifiedSort () {
+    function modifiedSort() {
         if (vm.predicate === "file_upload_date") {
             vm.predicate = "-file_upload_date";
         } else {
@@ -55,4 +55,4 @@ function Files (files) {
         }
     }
 
- }
+}

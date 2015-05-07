@@ -21,7 +21,7 @@ function Main($location, login, authentication) {
     activate();
 
     function activate() {
-        
+
         redirectUser();
 
         function redirectUser() {
