@@ -1,3 +1,5 @@
+/// <reference path="../../../typings/jquery/jquery.d.ts"/>
+/// <reference path="/../../../typings/angularjs/angular.d.ts"/>
 'use strict';
 
 /**
@@ -23,7 +25,8 @@ angular
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                controllerAs: 'vm'
             })
             .when('/print', {
                 templateUrl: 'views/print.html',
@@ -31,15 +34,18 @@ angular
             })
             .when('/about', {
                 templateUrl: 'views/about.html',
-                controller: 'AboutCtrl'
+                controller: 'AboutCtrl',
+                controllerAs: 'vm'
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
-                controller: 'LoginCtrl'
+                controller: 'LoginCtrl',
+                controllerAs: 'vm'
             })
             .when('/home', {
                 templateUrl: 'views/home.html',
-                controller: 'HomeCtrl'
+                controller: 'HomeCtrl',
+                controllerAs: 'vm'
             })
             .when('/register', {
                 templateUrl: 'views/register.html',
@@ -51,19 +57,17 @@ angular
             })
             .when('/account', {
                 templateUrl: 'views/account.html',
-                controller: 'AccountCtrl'
+                controller: 'AccountCtrl',
+                controllerAs: 'vm'
             })
             .when('/reset', {
                 templateUrl: 'views/reset.html',
                 controller: 'ResetCtrl'
             })
-            .when('/account', {
-                templateUrl: 'views/account.html',
-                controller: 'AccountCtrl'
-            })
             .when('/files', {
                 templateUrl: 'views/files.html',
-                controller: 'FilesCtrl'
+                controller: 'FilesCtrl',
+                controllerAs: 'vm'
             })
             .when('/record', {
                 templateUrl: 'views/record.html',
@@ -83,7 +87,8 @@ angular
             })
             .when('/files/upload', {
                 templateUrl: 'views/files/upload.html',
-                controller: 'FilesUploadCtrl'
+                controller: 'FilesUploadCtrl',
+                controllerAs: 'vm'
             })
             .when('/notes', {
                 templateUrl: 'views/notes.html',
@@ -91,7 +96,8 @@ angular
             })
             .when('/matches', {
                 templateUrl: 'views/matches.html',
-                controller: 'MatchesCtrl'
+                controller: 'MatchesCtrl',
+                controllerAs: 'vm'
             })
             .otherwise({
                 redirectTo: '/'

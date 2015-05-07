@@ -7,15 +7,22 @@
  * # LoginCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('LoginCtrl', function ($scope, $location, login) {
-        $scope.login = function () {
-            login.login($scope.inputLogin, $scope.inputPassword, function (err) {
-                if (err) {
-                    $scope.error = err;
-                } else {
-                    $location.path('/home');
-                }
-            });
-        };
-    });
+angular
+    .module('phrPrototypeApp')
+    .controller('LoginCtrl', Login);
+
+Login.$inject = ['$location', 'login'];
+
+function Login($location, login) {
+    /* jshint validthis: true */
+    var vm = this;
+    vm.login = function () {
+        login.login(vm.inputLogin, vm.inputPassword, function (err) {
+            if (err) {
+                vm.error = err;
+            } else {
+                $location.path('/home');
+            }
+        });
+    };
+}

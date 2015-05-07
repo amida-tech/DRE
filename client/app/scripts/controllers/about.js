@@ -7,11 +7,14 @@
  * # AboutCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('AboutCtrl', function ($scope) {
-        $scope.awesomeThings = [
-            'HTML5 Boilerplate',
-            'AngularJS',
-            'Karma'
-        ];
-    });
+angular
+    .module('phrPrototypeApp')
+    .controller('AboutCtrl', About);
+
+function About() {
+    this.awesomeThings = [
+        'HTML5 Boilerplate',
+        'AngularJS',
+        'Karma'
+    ];
+}

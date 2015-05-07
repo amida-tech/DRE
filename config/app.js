@@ -157,6 +157,15 @@ module.exports = function () {
 
     var notes = require('../lib/notes');
     app.use(notes);
+    
+    var medications = require('../lib/medications');
+    app.use(medications);
+    
+    var medapi = require('../lib/medAPI');
+    app.use(medapi);
+    
+    var npiapi = require('../lib/npiAPI');
+    app.use(npiapi);
 
     var medapi = require('../lib/medapi');
     app.use(medapi);
@@ -165,7 +174,6 @@ module.exports = function () {
 
     app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
     app.set('mllp_port', (process.env.PORT || 6969));
-
 
     //Launch MLLP server/listener
     var mllp = require('mllp-node');

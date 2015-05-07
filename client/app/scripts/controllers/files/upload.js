@@ -7,93 +7,71 @@
  * # FilesUploadCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('FilesUploadCtrl', function ($scope, $location, $route, upload, $http, format, record) {
+angular
+    .module('phrPrototypeApp')
+    .controller('FilesUploadCtrl', FilesUpload);
 
-        $scope.uploadStep = 0;
-        var myFile;
+FilesUpload.$inject = ['$location', '$route', 'upload', '$http', 'format', 'record']
 
-        $scope.new_first = "";
-        $scope.new_last = "";
-        $scope.new_middle = "";
-        $scope.new_dob = "";
-        $scope.new_gender = "";
+function FilesUpload($location, $route, upload, $http, format, record) {
+    /* jshint validthis: true */
+    var vm = this;
+    vm.importAndSave = importAndSave;
+    vm.incrementStep = incrementStep;
+    vm.myFile = null;
+    vm.new_dob = "";
+    vm.new_first = "";
+    vm.new_gender = "";
+    vm.new_last = "";
+    vm.new_middle = "";
+    vm.returnToFiles = returnToFiles;
+    vm.uploadStep = 0;
 
-        $scope.incrementStep = function () {
-            $scope.uploadStep = $scope.uploadStep + 1;
+    function incrementStep() {
+        vm.uploadStep = vm.uploadStep + 1;
 
-            if ($scope.uploadStep === 1) {
+        if (vm.uploadStep === 1) {
 
-                var uploadFile = $scope.myFile;
-                console.log("extracting demographics", uploadFile);
+            var uploadFile = vm.myFile;
+            console.log("extracting demographics", uploadFile);
 
-                upload.uploadRecord(uploadFile, true, function (err, results) {
-                    //do something
-                    console.log("file check ", results);
+            upload.uploadRecord(uploadFile, true, function (err, results) {
+                console.log("file check ", results);
 
-                    $scope.new_first = results.name.first;
-                    $scope.new_last = results.name.last;
-                    if (results.name.middle && results.name.middle[0]) {
-                        $scope.new_middle = results.name.middle[0];
-                    }
-                    $scope.new_dob = format.formatDate(results.dob.point);
-                    $scope.new_gender = results.gender;
-                });
+                vm.new_first = results.name.first;
+                vm.new_last = results.name.last;
+                if (results.name.middle && results.name.middle[0]) {
+                    vm.new_middle = results.name.middle[0];
+                }
+                vm.new_dob = format.formatDate(results.dob.point);
+                vm.new_gender = results.gender;
+            });
 
-            }
-
-            if ($scope.uploadStep === 2) {
-
-                var uploadFile = $scope.myFile;
-                console.log("uploading file", uploadFile);
-
-                upload.uploadRecord(uploadFile, false, function (err, results) {
-                    //do something
-
-                    $scope.uploadStep = 0;
-                    $location.path('/files');
-                    //record.getData(function(err, data) { return; });
-                    $route.reload();
-
-                });
-            }
-
-            // $scope.uploadStep++;
-        }
-
-        $scope.return = function () {
-            $location.path('/files');
-        }
-
-        $scope.importAndSave = function () {
-            var uploadFile = $scope.myFile;
+        } else if (vm.uploadStep === 2) {
+            var uploadFile = vm.myFile;
             console.log("uploading file", uploadFile);
 
             upload.uploadRecord(uploadFile, false, function (err, results) {
-                //do something
-                $scope.uploadStep = 0;
-
+                vm.uploadStep = 0;
                 $location.path('/files');
+                $route.reload();
             });
-
         }
+    }
 
-    });
+    function returnToFiles() {
+        $location.path('/files');
+    }
 
-angular.module('phrPrototypeApp')
-    .directive('validFile', function () {
-        return {
-            require: 'ngModel',
-            link: function (scope, el, attrs, ngModel) {
-                ngModel.$render = function () {
-                    ngModel.$setViewValue(el.val());
-                };
+    function importAndSave() {
+        var uploadFile = vm.myFile;
+        console.log("uploading file", uploadFile);
 
-                el.bind('change', function () {
-                    scope.$apply(function () {
-                        ngModel.$render();
-                    });
-                });
-            }
-        };
-    });
+        upload.uploadRecord(uploadFile, false, function (err, results) {
+            vm.uploadStep = 0;
+            $location.path('/files');
+        });
+
+    }
+
+}

@@ -6,96 +6,81 @@
  * # RecordCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp').controller('MatchesCtrl', function ($scope, matches, $location) {
-    $scope.masterMatches = [];
-    $scope.match = {};
+angular
+    .module('phrPrototypeApp')
+    .controller('MatchesCtrl', Matches);
 
-    //$scope.categories = ['medications', 'results', 'encounters', 'vitals', 'immunizations', 'allergies', 'procedures'];
+Matches.$inject = ['$location', 'matches'];
 
-    function setScopeVars() {
-        if (_.isEmpty(matches.getSection())) {
+function Matches($location, matches) {
+    /* jshint validthis: true */
+    var vm = this;
+    vm.masterMatches = [];
+    vm.match = {};
 
-            console.log("ACHTUNG!!!!!!!");
-            /* UNCOMMENT BEFORE FLIGTH! -> blocks refresh on matches page and riderects to records page
-                $location.path('/record');
-            */
+    activate();
 
-            //for development use only, hardcode section to work on matching pages
-            $scope.section = "medications";
-        } else {
-            $scope.section = matches.getSection();
-        }
+    function activate() {
 
-        if (_.isEmpty(matches.getMatchId())) {
-            $scope.matchId = "";
-            //pick match with index 0 for development purposes?
+        setScopeVars();
+        getData(vm.section);
 
-            console.log("ACHTUNG!!!!!!!");
-            /* UNCOMMENT BEFORE FLIGTH! -> blocks refresh on matches page and riderects to records page
-                $location.path('/record');
-            */
-            //for dev use only, reset mach to first one in the list
-            if ($scope.masterMatches && $scope.masterMatches[0]) {
-                $scope.match = $scope.masterMatches[0];
+        function setScopeVars() {
+            if (_.isEmpty(matches.getSection())) {
+
+                console.log("ACHTUNG!!!!!!!");
+                /* UNCOMMENT BEFORE FLIGHT! -> blocks refresh on matches page and riderects to records page
+                    $location.path('/record');
+                */
+                //for development use only, hardcode section to work on matching pages
+                vm.section = "medications";
             } else {
-                $location.path('/record');
-
+                vm.section = matches.getSection();
             }
 
-        } else {
-            $scope.matchId = matches.getMatchId();
-            //inject-select proper match to use in view template
-            _.each($scope.masterMatches, function (match) {
-                //console.log("match", match.data._id, $scope.matchId);
-                if (match.data._id === $scope.matchId) {
-                    $scope.match = match;
+            if (_.isEmpty(matches.getMatchId())) {
+                vm.matchId = "";
+                //pick match with index 0 for development purposes?
+
+                console.log("ACHTUNG!!!!!!!");
+                /* UNCOMMENT BEFORE FLIGTH! -> blocks refresh on matches page and riderects to records page
+                    $location.path('/record');
+                */
+                //for dev use only, reset mach to first one in the list
+                if (vm.masterMatches && vm.masterMatches[0]) {
+                    vm.match = vm.masterMatches[0];
+                } else {
+                    $location.path('/record');
+
                 }
 
-            });
+            } else {
+                vm.matchId = matches.getMatchId();
+                //inject-select proper match to use in view template
+                _.each(vm.masterMatches, function (match) {
+                    //console.log("match", match.data._id, vm.matchId);
+                    if (match.data._id === vm.matchId) {
+                        vm.match = match;
+                    }
 
-        }
-    }
-
-    setScopeVars();
-
-    function getData(section) {
-        matches.getCategory(section).then(function (data) {
-            //console.log('data', data);
-            _.each(data.matches, function (match) {
-                $scope.masterMatches.push({
-                    'category': section,
-                    'data': match
                 });
 
-            });
+            }
+        }
 
-            setScopeVars();
-
-        });
-
-        //do stuff here
-        //$scope.allergyMatch = $scope.masterMatches.data[1];
-
-    }
-    getData($scope.section);
-});
-
-/*
-
- _.each($scope.categories, function (section) {
-            matches.getCategory(section).then(function(data) {
+        function getData(section) {
+            matches.getCategory(section).then(function (data) {
+                //console.log('data', data);
                 _.each(data.matches, function (match) {
-                    $scope.masterMatches.push({
+                    vm.masterMatches.push({
                         'category': section,
                         'data': match
                     });
 
                 });
-                
+
+                setScopeVars();
             });
-
-
-
-        })
-
-        */
+        }
+    }
+}
