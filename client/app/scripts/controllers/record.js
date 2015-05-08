@@ -243,7 +243,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     }
                 } else {
                     $scope.entryStep = 2;
-                    medapi.getImages($scope.selectedDrug.rxcui, function (err, imageData) {
+                    medapi.findImages($scope.selectedDrug.rxcui, function (err, imageData) {
                         if (err) {
                             console.log("Err: " + err);
                         } else {
@@ -256,7 +256,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                     $scope.drugError = "You must select a drug";
                 } else {
                     $scope.entryStep = 2;
-                    medapi.getImages($scope.selectedDrug.rxcui, function (err, imageData) {
+                    medapi.findImages($scope.selectedDrug.rxcui, function (err, imageData) {
                         if (err) {
                             console.log("Err: " + err);
                         } else {
@@ -347,7 +347,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 */
                 }
                 /*
-                medapi.getImages(data.idGroup.rxnormId[0], function (err, imageData) {
+                medapi.findImages(data.idGroup.rxnormId[0], function (err, imageData) {
                     if (err) {
                         console.log("Err: " + err);
                     } else {
