@@ -50,7 +50,7 @@
     "mongodb": "2.0.x",
     "mongoose": "4.0.2",
     "morgan": "1.5.2",
-    "npi-js": "0.0.8",
+    "npi-js": "0.0.9",
     "passport": "0.2.x",
     "passport-local": "1.0.x",
     "passport-local-mongoose": "~1.0.0",
