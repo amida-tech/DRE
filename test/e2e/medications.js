@@ -56,70 +56,70 @@ describe('Medications API', function () {
     };
     var tmp_med = {
         "medication": data
-    }
+    };
 
-    it('Medications Endpoint: POST', function (done) {
+    it('Add (POST)', function (done) {
         api.post('/api/v1/medications/add')
             .send(tmp_med)
             .expect(200)
             .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                } else {
-                    done();
-                }
-            });
-    });
-
-});
-
-describe('Medications API Get All', function () {
-
-    it('Medications Endpoint: GET', function (done) {
-        api.get('/api/v1/medications/all')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                } else {
-                    expect(res.body.length).to.equal(1);
-                    expect(res.body[0]._id).to.exist;
-                    expect(res.body[0].data.product.name).to.equal('Test med');
-                    done();
-                }
-            });
-    });
-
-});
-
-describe('Medications API Edit', function () {
-
-    var data = {
-        "date_range": {
-            "start": "2011-03-01T05:00:00Z",
-            "end": "2012-03-01T05:00:00Z"
-        },
-        "product": {
-            "name": "Test med edited",
-            "code": "329498",
-            "code_system": null,
-            "translation": {
-                "name": null,
-                "code": "573621",
-                "code_system": null,
-                "code_system_name": null
+            if (err) {
+                return done(err);
+            } else {
+                done();
             }
-        }
-    };
-    var tmp_edit = {
-        'data': data
-    }
+        });
+    });
 
-    before(function (done) {
 
+
+
+
+    it('GET all', function (done) {
         api.get('/api/v1/medications/all')
             .expect(200)
             .end(function (err, res) {
+            if (err) {
+                return done(err);
+            } else {
+                expect(res.body.length).to.equal(1);
+                expect(res.body[0]._id).to.exist;
+                expect(res.body[0].data.product.name).to.equal('Test med');
+                done();
+            }
+        });
+    });
+
+
+
+    describe('Edit', function () {
+
+        var data = {
+            "date_range": {
+                "start": "2011-03-01T05:00:00Z",
+                "end": "2012-03-01T05:00:00Z"
+            },
+            "product": {
+                "name": "Test med edited",
+                "code": "329498",
+                "code_system": null,
+                "translation": {
+                    "name": null,
+                    "code": "573621",
+                    "code_system": null,
+                    "code_system_name": null
+                }
+            }
+        };
+        var tmp_edit = {
+            'data': data
+        }
+
+        before(function (done) {
+
+            api.get('/api/v1/medications/all')
+                .expect(200)
+                .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
@@ -127,25 +127,25 @@ describe('Medications API Edit', function () {
                     done();
                 }
             });
-    });
+        });
 
-    it('Medications Endpoint: POST Edit', function (done) {
-        api.post('/api/v1/medications/edit')
-            .send(tmp_edit)
-            .expect(200)
-            .end(function (err, res) {
+        it('POST', function (done) {
+            api.post('/api/v1/medications/edit')
+                .send(tmp_edit)
+                .expect(200)
+                .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
                     done();
                 }
             });
-    });
+        });
 
-    it('Medications Endpoint: GET', function (done) {
-        api.get('/api/v1/medications/all')
-            .expect(200)
-            .end(function (err, res) {
+        it('GET all', function (done) {
+            api.get('/api/v1/medications/all')
+                .expect(200)
+                .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
@@ -155,21 +155,21 @@ describe('Medications API Edit', function () {
                     done();
                 }
             });
+        });
+
     });
 
-});
+    describe('Delete', function () {
 
-describe('Medications API Delete', function () {
+        var tmp_delete = {
+            id: ""
+        };
 
-    var tmp_delete = {
-        id: ""
-    };
+        before(function (done) {
 
-    before(function (done) {
-
-        api.get('/api/v1/medications/all')
-            .expect(200)
-            .end(function (err, res) {
+            api.get('/api/v1/medications/all')
+                .expect(200)
+                .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
@@ -177,25 +177,25 @@ describe('Medications API Delete', function () {
                     done();
                 }
             });
-    });
+        });
 
-    it('Medications Endpoint: POST Delete', function (done) {
-        api.post('/api/v1/medications/delete')
-            .send(tmp_delete)
-            .expect(200)
-            .end(function (err, res) {
+        it('POST', function (done) {
+            api.post('/api/v1/medications/delete')
+                .send(tmp_delete)
+                .expect(200)
+                .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
                     done();
                 }
             });
-    });
+        });
 
-    it('Medications Endpoint: GET', function (done) {
-        api.get('/api/v1/medications/all')
-            .expect(200)
-            .end(function (err, res) {
+        it('GET all', function (done) {
+            api.get('/api/v1/medications/all')
+                .expect(200)
+                .end(function (err, res) {
                 if (err) {
                     return done(err);
                 } else {
@@ -204,6 +204,8 @@ describe('Medications API Delete', function () {
                     done();
                 }
             });
+        });
+
     });
 
 });
