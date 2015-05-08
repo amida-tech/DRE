@@ -135,7 +135,7 @@
                 <div ng-if="rximageResults.nlmRxImages.length > 1">
                     <h4>Is your pill one of these?</h4>
                     <div class="col-sm-2" ng-repeat="rxImage in rximageResults.nlmRxImages">
-                        <a class="thumbnail" ng-class="{active:rximageResults.nlmRxImages[0].selected}" ng-click="setSelectedImage(rximageResults.nlmRxImages[0])"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
+                        <a class="thumbnail" ng-class="{active:rxImage.selected}" ng-click="setSelectedImage(rxImage)"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
                     </div>
                 </div>
                 <!--<pre>{{rximageResults}}</pre>-->
