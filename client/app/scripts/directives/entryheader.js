@@ -71,10 +71,10 @@ angular.module('phrPrototypeApp')
                     // if (scope.recordEntry.metadata.displayDate) {
                     //     scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
                     // }
-                    if (scope.entryData.administration.dose.value && scope.entryData.administration.dose.unit) {
+                    if (scope.entryData.administration && scope.entryData.administration.dose && scope.entryData.administration.dose.value && scope.entryData.administration.dose.unit) {
                         scope.entrySubTitleTwo = " - " + scope.entryData.administration.dose.value + " " + scope.entryData.administration.dose.unit;
                     }
-                    break;
+                break;
                 case 'conditions':
                     if (scope.entryData.problem && scope.entryData.problem.code && scope.entryData.problem.code.name) {
                         scope.entryTitle = scope.entryData.problem.code.name;

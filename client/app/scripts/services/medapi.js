@@ -11,7 +11,7 @@
 angular.module('phrPrototypeApp')
     .service('medapi', function medapi($http) {
 
-        this.getImages = function (rxcui, callback) {
+        this.findImages = function (rxcui, callback) {
             /*
             $http.get('api/v1/rximage/' + rxcui)
                 .success(function(data) {
@@ -81,7 +81,7 @@ angular.module('phrPrototypeApp')
             });
         };
 
-        this.getmedline = function (rxcui, medname, callback) {
+        this.findmedline = function (rxcui, medname, callback) {
 
             $http.post('api/v1/medlineplus', {
                 rxcui: rxcui,
