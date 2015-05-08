@@ -1,5 +1,9 @@
 # DRE Release Notes
 
+# v1.5.0 - mid-June, 2015
+
+TBD
+
 # v1.4.0 - March 16, 2015
 
 This release of the DRE includes:
