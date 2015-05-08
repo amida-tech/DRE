@@ -167,9 +167,6 @@ module.exports = function () {
     var npiapi = require('../lib/npiAPI');
     app.use(npiapi);
 
-    var medapi = require('../lib/medAPI');
-    app.use(medapi);
-
     app.set('port', (process.env.PORT || 3000));
 
     app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
