@@ -49,6 +49,16 @@ angular.module('phrPrototypeApp')
                 if (iconEntry) {
                     if (iconEntry.type === 'medications') {
                         var html = '<img ng-src=images/benadryl_test.jpeg>';
+                        if (attrs.timelineIconMeta) {
+                            var iconMeta = JSON.parse(attrs.timelineIconMeta);
+                            if (iconMeta.image) {
+                                if (iconMeta.image.imageUrl) {
+                                    if (iconMeta.image.imageUrl !== "") {
+                                        html = '<img ng-src=' + iconMeta.image.imageUrl + '>';
+                                    }
+                                }
+                            }
+                        }
                         var i = $compile(html)(scope);
                         element.children().replaceWith(i);
                     } else {

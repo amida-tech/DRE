@@ -19,7 +19,7 @@
                     <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name" ng-disabled="drugSearchActive">
                 </div>
                 <div class="col-sm-2 col-sm-offset-1">
-                <button class="btn btn-default " ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
+                    <button class="btn btn-default " ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
                 </div>
             </div>
             <div class="row">
@@ -56,7 +56,7 @@
             <h4>Prescriber Information</h4>
             <div class="row">
                 <div class="col-sm-9">
-                    <div class = "col-sm-5 form-group">
+                    <div class="col-sm-5 form-group">
                         <label>Prescriber's first name (required)</label>
                         <input type="text" class="form-control" ng-model="pFirstName" placeholder="First Name" ng-disabled="prescriberSearchActive">
                     </div>
@@ -72,7 +72,7 @@
                     <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
                 </div>
                 <div class=" col-sm-2 col-sm-offset-7">
-                <button class="btn btn-default" ng-click="prescriberSearch(pFirstName, pLastName, pZip)" ng-disabled="prescriberSearchActive">Search</button>
+                    <button class="btn btn-default" ng-click="prescriberSearch(pFirstName, pLastName, pZip)" ng-disabled="prescriberSearchActive">Search</button>
                 </div>
             </div>
             <div class="row">
@@ -122,17 +122,20 @@
             <div class="row">
                 Drug Info: {{selectedDrug.synonym}}
             </div>
+            <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length == 0">
+                <h4>No Images Found</h4>
+            </div>
             <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length >= 1">
                 <div ng-if="rximageResults.nlmRxImages.length == 1">
                     <h4>Is this what it looks like?</h4>
                     <div class="col-sm-2">
-                        <img src="{{rximageResults.nlmRxImages[0].imageUrl}}" class="img-responsive img-thumbnail">
+                        <a class="thumbnail" ng-class="{active:rximageResults.nlmRxImages[0].selected}" ng-click="setSelectedImage(rximageResults.nlmRxImages[0])"><img ng-src="{{rximageResults.nlmRxImages[0].imageUrl}}" class="img-responsive img-thumbnail" /></a>
                     </div>
                 </div>
                 <div ng-if="rximageResults.nlmRxImages.length > 1">
                     <h4>Is your pill one of these?</h4>
                     <div class="col-sm-2" ng-repeat="rxImage in rximageResults.nlmRxImages">
-                        <img src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail">
+                        <a class="thumbnail" ng-class="{active:rxImage.selected}" ng-click="setSelectedImage(rxImage)"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
                     </div>
                 </div>
                 <!--<pre>{{rximageResults}}</pre>-->

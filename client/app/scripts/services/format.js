@@ -118,7 +118,6 @@ angular.module('phrPrototypeApp')
 
             var outputlines = '';
 
-
             if (address.street_lines.length > 0) {
                 for (var addrLine in address.street_lines) {
                     // displayAddress.push(address.street_lines[addrLine]);

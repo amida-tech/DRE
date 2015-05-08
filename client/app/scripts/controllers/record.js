@@ -68,8 +68,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     $scope.fdatotal = function fdatotal(eventsArray) {
         $scope.totalReports = _.sum(_.pluck(eventsArray, 'count'));
-        _.forEach(eventsArray, function(event) {
-            event.count = (100*event.count/$scope.totalReports);
+        _.forEach(eventsArray, function (event) {
+            event.count = (100 * event.count / $scope.totalReports);
         });
     };
 
@@ -90,6 +90,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             console.log("...was a prescription");
             $scope.enteredMedication = {
                 //"identifiers": [],
+                "metadata": {
+                    image: $scope.selectedImage
+                },
                 "sig": $scope.selectedDrug.name,
                 "status": "Completed",
                 //"is_brand": true,
@@ -160,6 +163,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         } else {
             $scope.enteredMedication = {
                 //"identifiers": [],
+                "metadata": {
+                    image: $scope.selectedImage
+                },
                 "sig": $scope.selectedDrug.name,
                 "status": "Completed",
                 //"is_brand": true,
@@ -401,6 +407,20 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             }
             this.prescriber.selected = true;
             $scope.selectedPrescriber = this.prescriber;
+        }
+    };
+
+    $scope.setSelectedImage = function setSelectedImage(rxImage) {
+        console.log("trying to set image");
+        if (rxImage.selected) {
+            rxImage.selected = false;
+            $scope.selectedImage = null;
+        } else {
+            for (var k = 0; k < $scope.rximageResults.nlmRxImages.length; k++) {
+                $scope.rximageResults.nlmRxImages[k].selected = false;
+            }
+            rxImage.selected = true;
+            $scope.selectedImage = rxImage;
         }
     };
 
