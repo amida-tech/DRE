@@ -217,7 +217,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                     }];
                 }
 
-                var medANQ = that.medAddressNameQuant(type, entry);
+                // var medANQ = that.medAddressNameQuant(type, entry);
 
                 //collate all notes into array (with formatting) for current entry
                 var comments = that.collateComments(entry);
