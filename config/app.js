@@ -167,7 +167,7 @@ module.exports = function () {
     var npiapi = require('../lib/npiAPI');
     app.use(npiapi);
 
-    var medapi = require('../lib/medapi');
+    var medapi = require('../lib/medAPI');
     app.use(medapi);
 
     app.set('port', (process.env.PORT || 3000));
