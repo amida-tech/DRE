@@ -33,31 +33,33 @@ describe('Pre Test Cleanup', function () {
     });
 });
 
-describe('NPI web services', function() {
-	
-	describe("Find NPI", function () {
-		
-		var searchObj = {
-			'name': [{
-				'last': 'DENNIS',
-				'first': 'HARRY'
-			}],
-			'address': [{
-				'zip': '940406203'
-			}]
-		};
-		
-		it("post", function(done) {
-			api.post('/api/v1/findnpi')
-				.send({searchObj: searchObj})
-				.expect(200)
-				.end(function(err, res) {
-					if (err) {
-						return done(err);
-					} else {
-						done();
-					}
-				});
-		});
-	});
+describe('NPI web services', function () {
+
+    describe("Find NPI", function () {
+
+        var searchObj = {
+            'name': [{
+                'last': 'DENNIS',
+                'first': 'HARRY'
+            }],
+            'address': [{
+                'zip': '940406203'
+            }]
+        };
+
+        it("post", function (done) {
+            api.post('/api/v1/findnpi')
+                .send({
+                    searchObj: searchObj
+                })
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) {
+                        return done(err);
+                    } else {
+                        done();
+                    }
+                });
+        });
+    });
 });

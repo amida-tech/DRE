@@ -63,34 +63,28 @@ describe('Medications API', function () {
             .send(tmp_med)
             .expect(200)
             .end(function (err, res) {
-            if (err) {
-                return done(err);
-            } else {
-                done();
-            }
-        });
+                if (err) {
+                    return done(err);
+                } else {
+                    done();
+                }
+            });
     });
-
-
-
-
 
     it('GET all', function (done) {
         api.get('/api/v1/medications/all')
             .expect(200)
             .end(function (err, res) {
-            if (err) {
-                return done(err);
-            } else {
-                expect(res.body.length).to.equal(1);
-                expect(res.body[0]._id).to.exist;
-                expect(res.body[0].data.product.name).to.equal('Test med');
-                done();
-            }
-        });
+                if (err) {
+                    return done(err);
+                } else {
+                    expect(res.body.length).to.equal(1);
+                    expect(res.body[0]._id).to.exist;
+                    expect(res.body[0].data.product.name).to.equal('Test med');
+                    done();
+                }
+            });
     });
-
-
 
     describe('Edit', function () {
 
@@ -120,13 +114,13 @@ describe('Medications API', function () {
             api.get('/api/v1/medications/all')
                 .expect(200)
                 .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                } else {
-                    tmp_edit.id = res.body[0]._id;
-                    done();
-                }
-            });
+                    if (err) {
+                        return done(err);
+                    } else {
+                        tmp_edit.id = res.body[0]._id;
+                        done();
+                    }
+                });
         });
 
         it('POST', function (done) {
@@ -134,27 +128,27 @@ describe('Medications API', function () {
                 .send(tmp_edit)
                 .expect(200)
                 .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                } else {
-                    done();
-                }
-            });
+                    if (err) {
+                        return done(err);
+                    } else {
+                        done();
+                    }
+                });
         });
 
         it('GET all', function (done) {
             api.get('/api/v1/medications/all')
                 .expect(200)
                 .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                } else {
-                    expect(res.body.length).to.equal(1);
-                    expect(res.body[0]._id).to.exist;
-                    expect(res.body[0].data.product.name).to.equal('Test med edited');
-                    done();
-                }
-            });
+                    if (err) {
+                        return done(err);
+                    } else {
+                        expect(res.body.length).to.equal(1);
+                        expect(res.body[0]._id).to.exist;
+                        expect(res.body[0].data.product.name).to.equal('Test med edited');
+                        done();
+                    }
+                });
         });
 
     });
@@ -170,13 +164,13 @@ describe('Medications API', function () {
             api.get('/api/v1/medications/all')
                 .expect(200)
                 .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                } else {
-                    tmp_delete.id = res.body[0]._id;
-                    done();
-                }
-            });
+                    if (err) {
+                        return done(err);
+                    } else {
+                        tmp_delete.id = res.body[0]._id;
+                        done();
+                    }
+                });
         });
 
         it('POST', function (done) {
@@ -184,26 +178,26 @@ describe('Medications API', function () {
                 .send(tmp_delete)
                 .expect(200)
                 .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                } else {
-                    done();
-                }
-            });
+                    if (err) {
+                        return done(err);
+                    } else {
+                        done();
+                    }
+                });
         });
 
         it('GET all', function (done) {
             api.get('/api/v1/medications/all')
                 .expect(200)
                 .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                } else {
-                    expect(res.body.length).to.equal(0);
-                    expect(res.body[0]).to.not.exist;
-                    done();
-                }
-            });
+                    if (err) {
+                        return done(err);
+                    } else {
+                        expect(res.body.length).to.equal(0);
+                        expect(res.body[0]).to.not.exist;
+                        done();
+                    }
+                });
         });
 
     });

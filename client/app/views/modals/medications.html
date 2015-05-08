@@ -143,7 +143,7 @@
                             <div ng-hide="medImages.nlmRxImages[0]"> No images found for search term '{{entryData.product.product.name}}'</div>
                             <div ng-repeat="(imageIndex, image) in medImages.nlmRxImages">
                                 <div class="col-xs-6">
-                                    <a style="padding-left:15px" target="_blank" ng-href="{{image.imageUrl}}"><img class="img-thumbnail" ng-src="{{image.imageUrl}}"/>
+                                    <a style="padding-left:15px" target="_blank" ng-href="{{image.imageUrl}}"><img class="img-thumbnail" ng-src="{{image.imageUrl}}" />
                                     </a>
                                 </div>
                             </div>
@@ -155,20 +155,20 @@
                             <h3> Adverse Events</h3>
                             <div ng-show="fdaInfo.error"> No information found for this medication. Error: {{fdaInfo.error.code}}</div>
                             <div ng-show="fdaInfo.results">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <td>Term</td>
-                                        <td>Number reported (out of {{totalReports}} )</td>
-                                    </tr>
-                                </thead>
-                                <tbody ng-repeat="(eventIndex, event) in fdaInfo.results">
-                                    <tr>
-                                        <td>{{event.term}}</td>
-                                        <td>{{event.count | number:2}} %</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td>Term</td>
+                                            <td>Number reported (out of {{totalReports}} )</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="(eventIndex, event) in fdaInfo.results">
+                                        <tr>
+                                            <td>{{event.term}}</td>
+                                            <td>{{event.count | number:2}} %</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                     <!-- MedlinePlus Connect Pane -->
                     <div role="tabpanel" class="tab-pane" id="medline{{recordIndex}}">
                         <div class="sub-entry">
-                            <h3> Learn More</h3> 
+                            <h3> Learn More</h3>
                             <div ng-show="medline.feed.entry" ng-repeat="(medlineIndex, medlineEntry) in medline.feed.entry">
                                 <div ng-repeat="(linkIndex, link) in medlineEntry.link"><a target="_blank" ng-href="{{link.href}}">{{link.href}}</a>
                                 </div>

@@ -225,12 +225,12 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 var display_type = that.displayType(type);
 
                 var tmpEntry = {
-                'data': entry,
-                'category': display_type,
-                'metadata': {
-                    'comments': comments,
-                    'displayDate': dates.display,
-                    'datetime': dates.temp
+                    'data': entry,
+                    'category': display_type,
+                    'metadata': {
+                        'comments': comments,
+                        'displayDate': dates.display,
+                        'datetime': dates.temp
                     }
                 };
 
