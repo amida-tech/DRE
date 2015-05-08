@@ -114,10 +114,15 @@ angular.module('phrPrototypeApp')
 
         //Collapse Address to text entry.
         this.formatAddress = function (address) {
-            var displayAddress = [];
+            var displayAddress = '';
+
+            var outputlines = '';
+
+
             if (address.street_lines.length > 0) {
                 for (var addrLine in address.street_lines) {
-                    displayAddress.push(address.street_lines[addrLine]);
+                    // displayAddress.push(address.street_lines[addrLine]);
+                    outputlines = outputlines + address.street_lines[addrLine];
                 }
             }
             var cityLine = "";
@@ -132,9 +137,9 @@ angular.module('phrPrototypeApp')
                 cityTest = cityLine.length > 0 ? cityLine = cityLine + " " + address.zip : cityLine = address.zip;
             }
             if (cityLine.length > 0) {
-                displayAddress.push(cityLine);
+                outputlines = outputlines + ', ' + cityLine;
             }
-            address.displayAddress = displayAddress;
+            address.displayAddress = outputlines;
             return address;
         };
 
@@ -144,7 +149,11 @@ angular.module('phrPrototypeApp')
             var outputName = "";
 
             if (inputName.last && inputName.first) {
-                outputName = inputName.first + " " + inputName.last;
+                if (inputName.prefix) {
+                    outputName = inputName.prefix + " " + inputName.first + " " + inputName.last;
+                } else {
+                    outputName = inputName.first + " " + inputName.last;
+                }
             } else if (inputName.first) {
                 outputName = inputName.first;
             } else if (inputName.last) {
@@ -168,7 +177,9 @@ angular.module('phrPrototypeApp')
                 } else if (inputQuantity.unit === "[lb_av]") {
                     quantityUnit = "lbs";
                 } else if (inputQuantity.unit === "mm[Hg]") {
-                    quantityUnit = "mm";
+                    quantityUnit = "mmHg";
+                } else if (inputQuantity.unit === "h") {
+                    quantityUnit = "hour(s)";
                 } else {
                     quantityUnit = inputQuantity.unit;
                 }

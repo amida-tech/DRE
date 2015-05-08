@@ -41,10 +41,8 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     // Medication images
     $scope.imgservice = function imgservice(rxcui) {
-        medapi.getImages(rxcui, function(err, data) {
+        medapi.findImages(rxcui, function (err, data) {
             $scope.medImages = data;
-            console.log(data);
-            // console.log(data);
         });
     };
 
@@ -53,21 +51,29 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         if (angular.isDefined(rxcui)) {
             medapi.fdaCode(rxcui, function(err, data) {
                 $scope.fdaInfo = data;
+                $scope.fdatotal($scope.fdaInfo.results);
             });
         } else {
             if (angular.isDefined(medname)) {
                 medapi.fdaName(medname, function(err, data) {
                     $scope.fdaInfo = data;
+                    $scope.fdatotal($scope.fdaInfo.results);
                 });
             }
         }
     };
 
+    $scope.fdatotal = function fdatotal(eventsArray) {
+        $scope.totalReports = _.sum(_.pluck(eventsArray, 'count'));
+        _.forEach(eventsArray, function(event) {
+            event.count = (100*event.count/$scope.totalReports);
+        });
+    };
+
     // Medline Plus Connect link
     $scope.medlineservice = function medlineservice(rxcui, medname) {
-        medapi.getmedline(rxcui, medname, function(err, data) {
+        medapi.findmedline(rxcui, medname, function (err, data) {
             $scope.medline = data;
-            console.log(data);
         });
     };
 
@@ -299,7 +305,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                         $scope.openfdacodeResults = fdaData;
                     }
                 });
-                medapi.getmedline(data.idGroup.rxnormId[0], drugName, function (err, medlineData) {
+                medapi.findmedline(data.idGroup.rxnormId[0], drugName, function (err, medlineData) {
                     if (err) {
                         console.log("err: " + err);
                     } else {
