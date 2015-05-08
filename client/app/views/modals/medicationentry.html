@@ -14,10 +14,13 @@
         <div class="row">
             <h4>Drug Information</h4>
             <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-9 form-group">
+                    <label>Drug name (required)</label>
                     <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name" ng-disabled="drugSearchActive">
                 </div>
-                <button class="btn btn-default col-sm-2 col-sm-offset-1" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
+                <div class="col-sm-2 col-sm-offset-1">
+                <button class="btn btn-default " ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
+                </div>
             </div>
             <div class="row">
                 <div class="alert alert-danger" role="alert" ng-show="drugError">
@@ -52,18 +55,25 @@
         <div class="row" ng-if="medSearchType=='prescription'">
             <h4>Prescriber Information</h4>
             <div class="row">
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" ng-model="pFirstName" placeholder="First Name" ng-disabled="prescriberSearchActive">
-                </div>
-                <div class="col-sm-4 col-sm-offset-2">
-                    <input type="text" class="form-control" ng-model="pLastName" placeholder="Last Name" ng-disabled="prescriberSearchActive">
+                <div class="col-sm-9">
+                    <div class = "col-sm-5 form-group">
+                        <label>Prescriber's first name (required)</label>
+                        <input type="text" class="form-control" ng-model="pFirstName" placeholder="First Name" ng-disabled="prescriberSearchActive">
+                    </div>
+                    <div class="col-sm-5 col-sm-offset-2 form-group">
+                        <label>Prescriber's last name (required)</label>
+                        <input type="text" class="form-control" ng-model="pLastName" placeholder="Last Name" ng-disabled="prescriberSearchActive">
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-3 col-sm-offset-1">
+                <div class="col-sm-3 form-group">
+                    <label>Prescriber's office zip code</label>
                     <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
                 </div>
-                <button class="btn btn-default col-sm-2 col-sm-offset-6" ng-click="prescriberSearch(pFirstName, pLastName, pZip)" ng-disabled="prescriberSearchActive">Search</button>
+                <div class=" col-sm-2 col-sm-offset-7">
+                <button class="btn btn-default" ng-click="prescriberSearch(pFirstName, pLastName, pZip)" ng-disabled="prescriberSearchActive">Search</button>
+                </div>
             </div>
             <div class="row">
                 <div class="alert alert-danger" role="alert" ng-show="prescriberError">
