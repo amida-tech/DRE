@@ -53,15 +53,13 @@
                         <tr>
                             <th>Name</th>
                             <th>Type</th>
-                            <th>Synonym</th>
                             <th>RxId</th>
                         </tr>
                     </thead>
-                    <tbody ng-repeat="rxdruggroup in rxnormResults.drugGroup.conceptGroup">
-                        <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxdruggroup.conceptProperties | filter:pDrugFilter:strict" ng-click="setSelectedDrug()">
-                            <td>{{rxdrug.name}}</td>
-                            <td>{{rxdrug.tty}}</td>
-                            <td>{{rxdrug.synonym}}</td>
+                    <tbody>
+                        <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxnormResults.compiled | filter:pDrugFilter:strict" ng-click="setSelectedDrug()">
+                            <td title="{{rxdrug.synonym}}">{{rxdrug.name}}</td>
+                            <td>{{rxdrug.dfg}}</td>
                             <td>{{rxdrug.rxcui}}</td>
                         </tr>
                     </tbody>
