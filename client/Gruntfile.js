@@ -171,10 +171,13 @@ module.exports = function(grunt) {
         },
         uglify: {
            dist: {
+             options: {
+               mangle: false
+             },
              files: [{
                expand: true,
                cwd: '.tmp/scripts',
-               src: '{,*/}*.js',
+               src: '{,**/}*.js',
                dest: '<%= yeoman.dist %>/scripts'
              }]
            }
@@ -231,7 +234,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: '<%= yeoman.app %>/scripts',
                 dest: '.tmp/scripts/',
-                src: '{,*/}*.js'
+                src: '{,**/}*.js'
             }
         },
         // Run some tasks in parallel to speed up the build process
