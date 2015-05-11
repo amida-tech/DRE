@@ -14,9 +14,20 @@
         <div class="row">
             <h4>Drug Information</h4>
             <div class="row">
-                <div class="col-sm-9 form-group">
+                <div class="col-sm-3 form-group">
                     <label>Drug name (required)</label>
                     <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name" ng-disabled="drugSearchActive">
+                </div>
+                <div class="col-sm-2 col-sm-offset-1 form-group">
+                    <label>Dose</label>
+                    <input type="text" class="form-control" ng-model="pDrugFilter.name">
+                </div>
+                <div class="col-sm-2 col-sm-offset-1 form-group">
+                    <label>Type</label>
+                    <!--<input type="text" class="form-control" ng-model="pDrugFilter.$">-->
+                    <select class="form-control" ng-model="pDrugFilter.$" ng-disabled="!rxnormResults.dfg">
+                        <option ng-repeat="dfg in rxnormResults.dfg">{{dfg}}</option>
+                    </select>
                 </div>
                 <div class="col-sm-2 col-sm-offset-1">
                     <button class="btn btn-default " ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
@@ -26,6 +37,13 @@
                 <div class="alert alert-danger" role="alert" ng-show="drugError">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     <span class="sr-only">Error:</span> {{drugError}}
+                </div>
+                <div class="alert alert-warning" role="alert" ng-show="drugWarning">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Warning:</span> {{drugWarning}}
+                    <ul ng-show="drugSpelling">
+                        <li ng-repeat="drugSpell in drugSpelling"><a ng-click="drugSearch(drugSpell)">{{drugSpell}}</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="row" ng-show="rxnormResults">
@@ -39,8 +57,8 @@
                             <th>RxId</th>
                         </tr>
                     </thead>
-                    <tbody ng-repeat="rxdruggroup in rxnormResults.conceptGroup">
-                        <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxdruggroup.conceptProperties" ng-click="setSelectedDrug()">
+                    <tbody ng-repeat="rxdruggroup in rxnormResults.drugGroup.conceptGroup">
+                        <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxdruggroup.conceptProperties | filter:pDrugFilter:strict" ng-click="setSelectedDrug()">
                             <td>{{rxdrug.name}}</td>
                             <td>{{rxdrug.tty}}</td>
                             <td>{{rxdrug.synonym}}</td>

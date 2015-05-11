@@ -324,16 +324,44 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         if ($scope.rximagesResults) {
             $scope.rximagesResults = null;
         }
+        $scope.drugError = null;
+        $scope.drugWarning = null;
+        $scope.drugSpelling = null;
         medapi.findRxNormGroup(drugName, function (err, data) {
+            //console.log("rxnormgroup data: "+JSON.stringify(data));
             $scope.drugSearchActive = false;
             if (err) {
                 console.log("Err: " + err);
             } else {
                 if (data.drugGroup.conceptGroup === undefined || data.drugGroup.conceptGroup === null) {
                     //$scope.rxnormResults = "No match found";
-                    $scope.drugError = "No matches found.  Please Try Again";
+                    medapi.findRxNormSpelling(drugName, function (err2, data2) {
+                        if (err2) {
+                            console.log("Err: " + err2);
+                            $scope.drugError = "No matches found.  Please Try Something Else";
+                        } else {
+                            if (data2.suggestionGroup !== null) {
+                                if (data2.suggestionGroup.suggestionList !== null) {
+                                    if (data2.suggestionGroup.suggestionList.suggestion !== null) {
+                                        if (data2.suggestionGroup.suggestionList.suggestion.length > 0) {
+                                            $scope.drugWarning = "No matches found... did you mean one of these: ";
+                                            $scope.drugSpelling = data2.suggestionGroup.suggestionList.suggestion;
+                                        } else {
+                                            $scope.drugError = "No matches found.  Please Try Something Else";
+                                        }
+                                    } else {
+                                        $scope.drugError = "No matches found.  Please Try Something Else";
+                                    }
+                                } else {
+                                    $scope.drugError = "No matches found.  Please Try Something Else";
+                                }
+                            } else {
+                                $scope.drugError = "No matches found.  Please Try Something Else";
+                            }
+                        }
+                    });
                 } else {
-                    $scope.rxnormResults = data.drugGroup;
+                    $scope.rxnormResults = data;
                     var drugCount = 0;
                     for (var j = 0; j < data.drugGroup.conceptGroup.length; j++) {
                         if (data.drugGroup.conceptGroup[j].conceptProperties) {
@@ -411,7 +439,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     };
 
     $scope.setSelectedImage = function setSelectedImage(rxImage) {
-        console.log("trying to set image");
         if (rxImage.selected) {
             rxImage.selected = false;
             $scope.selectedImage = null;
@@ -492,6 +519,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         $scope.selectedDrug = null;
         $scope.selectedPrescriber = null;
         $scope.drugError = null;
+        $scope.drugWarning = null;
         $scope.prescriberError = null;
         $scope.entryStep = 0;
         $scope.pWhy = "";
@@ -501,6 +529,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         $scope.pLast = "";
         $scope.pCurrentMedRadio = true;
         $scope.pStart = "";
+        $scope.drugSpelling = null;
     };
     /*
         $scope.medInfoSearch = function medInfoSearch(searchObj) {
