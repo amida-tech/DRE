@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title ng-controller="titleController" ng-bind="pageTitle"></title>
+    <title ng-controller="TitleCtrl as title" ng-bind="title.pageTitle"></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -231,7 +231,7 @@
     <script src="scripts/directives/billingentry.js"></script>
     <script src="scripts/filters/starred.js"></script>
     <script src="scripts/filters/sections.js"></script>
-    <script src="scripts/controllers/pagetitle.js"></script>
+    <script src="scripts/controllers/title.js"></script>
     <script src="scripts/controllers/recordDownload.js"></script>
     <script src="scripts/services/billing.js"></script>
     <script src="scripts/services/matches.js"></script>
