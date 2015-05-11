@@ -254,9 +254,9 @@ module.exports = function(grunt) {
         grunt.task.run(['serve:' + target]);
     });
     //Fully minified/clean build.
-    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
+    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'compass:dev']);
     grunt.registerTask('default', ['newer:jshint']);
     grunt.registerTask('dev', ['jshint', 'compass:dev', 'watch']);
     grunt.registerTask('test', ['jshint', 'compass:dev','protractor', 'watch']);
-    grunt.registerTask('release', []);
+    grunt.registerTask('release', ['jshint', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
 };
