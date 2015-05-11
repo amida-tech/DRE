@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name phrPrototypeApp.controller:PagetitleCtrl
+ * @name phrPrototypeApp.controller:TitleCtrl
  * @description
- * # PagetitleCtrl
+ * # TitleCtrl
  * Controller of the phrPrototypeApp
  */
 angular

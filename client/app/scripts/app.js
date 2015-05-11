@@ -30,7 +30,8 @@ angular
             })
             .when('/print', {
                 templateUrl: 'views/print.html',
-                controller: 'PrintCtrl'
+                controller: 'PrintCtrl',
+                controllerAs: 'vm'
             })
             .when('/about', {
                 templateUrl: 'views/about.html',
