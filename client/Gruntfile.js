@@ -158,24 +158,24 @@ module.exports = function(grunt) {
         // By default, your `index.html`'s <!-- Usemin block --> will take care of
         // minification. These next options are pre-configured if you do not wish
         // to use the Usemin blocks.
-        // cssmin: {
-        //   dist: {
-        //     files: {
-        //       '<%= yeoman.dist %>/styles/main.css': [
-        //         '.tmp/styles/{,*/}*.css'
-        //       ]
-        //     }
-        //   }
-        // },
-        // uglify: {
-        //   dist: {
-        //     files: {
-        //       '<%= yeoman.dist %>/scripts/scripts.js': [
-        //         '<%= yeoman.dist %>/scripts/scripts.js'
-        //       ]
-        //     }
-        //   }
-        // },
+         cssmin: {
+           dist: {
+             files: {
+               '<%= yeoman.dist %>/styles/main.css': [
+                 '.tmp/styles/{,*/}*.css'
+               ]
+             }
+           }
+         },
+         uglify: {
+           dist: {
+             files: {
+               '<%= yeoman.dist %>/scripts/scripts.js': [
+                 '<%= yeoman.dist %>/scripts/scripts.js'
+               ]
+             }
+           }
+         },
         // concat: {
         //   dist: {}
         // },
@@ -291,8 +291,9 @@ module.exports = function(grunt) {
         grunt.task.run(['serve:' + target]);
     });
     //Fully minified/clean build.
-    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'useminPrepare', 'concurrent:dist', 'autoprefixer', 'concat', 'ngAnnotate', 'copy:dist', 'cdnify', 'cssmin', 'uglify', 'filerev', 'usemin']);
+    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'useminPrepare', 'concurrent:dist', 'autoprefixer', 'concat', 'ngAnnotate', 'copy:dist', 'cdnify', 'filerev', 'usemin']);
     grunt.registerTask('default', ['newer:jshint']);
     grunt.registerTask('dev', ['jshint', 'compass:dev', 'watch']);
     grunt.registerTask('test', ['jshint', 'compass:dev','protractor', 'watch']);
+    grunt.registerTask('release', ['jshint', 'clean:dist', 'wiredep', 'useminPrepare', 'concurrent:dist', 'autoprefixer', 'concat', 'ngAnnotate', 'copy:dist', 'cdnify', 'cssmin', 'uglify', 'filerev', 'usemin']);
 };
