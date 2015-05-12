@@ -97,11 +97,15 @@
             </div>
             <div class="row">
                 <div class="col-sm-3 form-group">
-                    <label>Prescriber's office zip code</label>
+                    <label>Prescriber's State</label>
+                    <input type="search" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
+                </div>
+                <div class="col-sm-3 col-sm-offset-1 form-group">
+                    <label>Prescriber's Zip Code</label>
                     <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
                 </div>
-                <div class=" col-sm-2 col-sm-offset-7">
-                    <button class="btn btn-default" ng-click="prescriberSearch(pFirstName, pLastName, pZip)" ng-disabled="prescriberSearchActive">Search</button>
+                <div class=" col-sm-2 col-sm-offset-3">
+                    <button class="btn btn-default" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
                 </div>
             </div>
             <div class="row">
@@ -116,19 +120,30 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Business Address</th>
-                            <th>Practice Address</th>
+                            <th>Practice</th>
+                            <th>Business</th>
                             <th>Gender</th>
-                            <th>NPI</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setSelectedPrescriber()">
-                            <td>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</td>
-                            <td>{{prescriber.business_address}}</td>
-                            <td>{{prescriber.practice_address}}</td>
+                            <td title="NPI: {{prescriber.npi}}">
+                                <span>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</span>
+                                <br/>
+                                <span class="text-muted">NPI: {{prescriber.npi}}</span>
+                            </td>
+                            <!--<td title="Practice Address: {{prescriber.business_address}}">{{prescriber.practice_address}}</td>-->
+                            <td>
+                                <span ng-show="prescriber.practice_address">{{prescriber.practice_address.address_line}}, {{prescriber.practice_address.address_details_line}}</span>
+                                <br/>
+                                <span ng-show="prescriber.practice_address">{{prescriber.practice_address.city}}, {{prescriber.practice_address.state}} {{prescriber.practice_address.zip}}</span>
+                            </td>
+                            <td>
+                                <span ng-show="prescriber.business_address">{{prescriber.business_address.address_line}}, {{prescriber.business_address.address_details_line}}</span>
+                                <br/>
+                                <span ng-show="prescriber.business_address">{{prescriber.business_address.city}}, {{prescriber.business_address.state}} {{prescriber.business_address.zip}}</span>
+                            </td>
                             <td>{{prescriber.gender}}</td>
-                            <td>{{prescriber.npi}}</td>
                         </tr>
                     </tbody>
                 </table>

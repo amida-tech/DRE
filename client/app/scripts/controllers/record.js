@@ -448,7 +448,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {
+    $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode, state) {
         $scope.prescriberSearchActive = true;
         var searchTest = false;
         var searchObj = {
@@ -470,11 +470,25 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 searchTest = true;
             }
         }
-        if (zipCode !== "") {
+        if (zipCode !== "" && state !== "") {
             searchObj.address.push({
-                zip: zipCode
+                zip: zipCode,
+                state: state
             });
             searchTest = true;
+        } else {
+            if (zipCode !== "") {
+                searchObj.address.push({
+                    zip: zipCode
+                });
+                searchTest = true;
+            }
+            if (state !== "") {
+                searchObj.address.push({
+                    state: state
+                });
+                searchTest = true;
+            }
         }
         if (searchTest) {
             npiapi.findNPI(searchObj, function (err, data) {
