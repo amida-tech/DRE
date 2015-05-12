@@ -54,7 +54,8 @@ angular
             })
             .when('/profile', {
                 templateUrl: 'views/profile.html',
-                controller: 'ProfileCtrl'
+                controller: 'ProfileCtrl',
+                controllerAs: 'vm'
             })
             .when('/account', {
                 templateUrl: 'views/account.html',
