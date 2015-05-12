@@ -82,7 +82,11 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     };
 
     $scope.previousStep = function previousStep() {
-        $scope.entryStep--;
+        if ($scope.entryStep === 3 && $scope.medSearchType !== 'prescription') {
+            $scope.entryStep = 1;
+        } else {
+            $scope.entryStep--;
+        }
     };
 
     function enteredObject() {
@@ -239,44 +243,38 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     }
 
     $scope.nextStep = function nextStep() {
-        if ($scope.entryStep === 1) {
-            if ($scope.medSearchType === 'prescription') {
-                if (!$scope.selectedDrug || !$scope.selectedPrescriber) {
-                    if (!$scope.selectedDrug) {
-                        $scope.drugError = "You must select a drug";
-                    }
-                    if (!$scope.selectedPrescriber) {
-                        $scope.prescriberError = "You must select a prescriber";
-                    }
-                } else {
-                    $scope.entryStep = 2;
-                    medapi.findImages($scope.selectedDrug.rxcui, function (err, imageData) {
-                        if (err) {
-                            console.log("Err: " + err);
-                        } else {
-                            $scope.rximageResults = imageData;
-                        }
-                    });
-                }
+        switch ($scope.entryStep) {
+        case 1:
+            if (!$scope.selectedDrug) {
+                $scope.drugError = "You must select a drug";
             } else {
-                if (!$scope.selectedDrug) {
-                    $scope.drugError = "You must select a drug";
-                } else {
+                if ($scope.medSearchType === 'prescription') {
                     $scope.entryStep = 2;
-                    medapi.findImages($scope.selectedDrug.rxcui, function (err, imageData) {
-                        if (err) {
-                            console.log("Err: " + err);
-                        } else {
-                            $scope.rximageResults = imageData;
-                        }
-                    });
+                } else {
+                    $scope.entryStep = 3;
                 }
+                medapi.findImages($scope.selectedDrug.rxcui, function (err, imageData) {
+                    if (err) {
+                        console.log("Err: " + err);
+                    } else {
+                        $scope.rximageResults = imageData;
+                    }
+                });
             }
-        } else {
-            if ($scope.entryStep === 2) {
-                enteredObject();
+            break;
+        case 2:
+            if (!$scope.selectedPrescriber) {
+                $scope.prescriberError = "You must select a prescriber";
+            } else {
                 $scope.entryStep = 3;
             }
+            break;
+        case 3:
+            enteredObject();
+            $scope.entryStep = 4;
+            break;
+        default:
+            break;
         }
     };
 
@@ -414,7 +412,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             this.rxdrug.selected = false;
             $scope.selectedDrug = null;
         } else {
-            if ($scope.rxnormResults.compiled != null) {
+            if ($scope.rxnormResults.compiled !== null) {
                 for (var j = 0; j < $scope.rxnormResults.compiled.length; j++) {
                     $scope.rxnormResults.compiled[j].selected = false;
                 }
