@@ -1,74 +1,80 @@
 <div class="modal-inner-content">
     <div class="row" ng-if="entryStep===0">
-        <h3>Drug Information</h3>
-        <div class="col-sm-6 col-sm-offset-3">
-            <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('prescription')">Prescription</button>
-            <br />
-            <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('otc')">Over the Counter</button>
-            <br />
-            <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('supplement')">Supplement</button>
+        <h3>Select a drug type:</h3>
+        <div class="col-sm-6 col-sm-offset-3 btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('prescription')">Prescription</button>
+            </div>
+            <div class="btn-group" role="group">
+                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('otc')">Over the Counter</button>
+            </div>
+            <div class="btn-group" role="group">
+                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('supplement')">Supplement</button>
+            </div>
         </div>
     </div>
     <div class="row" ng-if="entryStep===1">
         <h3>Medication Information</h3>
         <div class="row">
             <h4>Drug Information</h4>
-            <div class="row">
-                <div class="col-sm-3 form-group">
-                    <label>Drug name (required)</label>
-                    <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name" ng-disabled="drugSearchActive">
-                </div>
-                <div class="col-sm-2 col-sm-offset-1 form-group">
-                    <label>Dose</label>
-                    <input type="text" class="form-control" ng-model="pDrugFilter.name">
-                </div>
-                <div class="col-sm-2 col-sm-offset-1 form-group">
-                    <label>Type</label>
-                    <!--<input type="text" class="form-control" ng-model="pDrugFilter.$">-->
-                    <select class="form-control" ng-model="pDrugFilter.$" ng-disabled="!rxnormResults.dfg">
-                        <option></option>
-                        <option ng-repeat="dfg in rxnormResults.dfg">{{dfg}}</option>
-                    </select>
-                </div>
-                <div class="col-sm-2 col-sm-offset-1">
+            <form novalidate role="form" class="form-inline">
+                <div class="row">
+                    <div class="form-group">
+                        <label>Drug name (required)</label>
+                        <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name" ng-disabled="drugSearchActive">
+                    </div>
+                    <div class="form-group">
+                        <label>Dose</label>
+                        <input type="text" class="form-control" ng-model="pDrugFilter.name">
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <!--<input type="text" class="form-control" ng-model="pDrugFilter.$">-->
+                        <select class="form-control" ng-model="pDrugFilter.$" ng-disabled="!rxnormResults.dfg">
+                            <option></option>
+                            <option ng-repeat="dfg in rxnormResults.dfg">{{dfg}}</option>
+                        </select>
+                    </div>
                     <button class="btn btn-default form-control" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
                 </div>
-            </div>
-            <div class="row">
-                <div class="alert alert-danger" role="alert" ng-show="drugError">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span> {{drugError}}
+                <div class="row">
+                    <div class="alert alert-danger" role="alert" ng-show="drugError">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span> {{drugError}}
+                    </div>
+                    <div class="alert alert-warning" role="alert" ng-show="drugWarning">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Warning:</span> {{drugWarning}}
+                        <ul ng-show="drugSpelling">
+                            <li ng-repeat="drugSpell in drugSpelling"><a ng-click="drugSearch(drugSpell)">{{drugSpell}}</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="alert alert-warning" role="alert" ng-show="drugWarning">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Warning:</span> {{drugWarning}}
-                    <ul ng-show="drugSpelling">
-                        <li ng-repeat="drugSpell in drugSpelling"><a ng-click="drugSearch(drugSpell)">{{drugSpell}}</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row" ng-show="rxnormResults">
-                <h4>RxNorm Results ({{drugCount}})</h4>
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Brand</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>RxId</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxnormResults.compiled | filter:pDrugFilter:strict" ng-click="setSelectedDrug()">
-                            <td>{{rxdrug.brand}}
+                <div class="row" ng-show="rxnormResults">
+                    <h4>RxNorm Results ({{drugCount}})</h4>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center"><span><i class="fa fa-times" style="color: black"></i></span></th>
+                                <th>Brand</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>RxId</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxnormResults.compiled | filter:pDrugFilter:strict" ng-click="setSelectedDrug()">
+                                <td style="text-align: center"><span ng-show="rxdrug.selected"><i class="fa fa-times" style="color: green"></i></span></td>
+                                <td>{{rxdrug.brand}}</td>
                                 <td title="{{rxdrug.synonym}}">{{rxdrug.modifiedname}}</td>
                                 <td><span ng-repeat="dfgName in rxdrug.dfg">{{dfgName}}</span><span ng-show=" ! $last ">, </span></td>
                                 <td>{{rxdrug.rxcui}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!--<pre>{{rxnormResults}}</pre>-->
-            </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--<pre>{{rxnormResults}}</pre>-->
+                </div>
+            </form>
         </div>
         <br />
         <div class="row">
