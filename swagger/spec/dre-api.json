@@ -834,7 +834,7 @@
                 }
             }
         },
-        "/rximage/": {
+        "/rximage": {
             "post": {
                 "summary": "Look up image for an RxNorm code",
                 "description": "Retrieve image URL from NIH NLM RxImage database",
