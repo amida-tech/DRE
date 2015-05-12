@@ -55,6 +55,7 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
+                                <th style="text-align: center"><span><i class="fa fa-times" style="color: black"></i></span></th>
                                 <th>Brand</th>
                                 <th>Name</th>
                                 <th>Type</th>
@@ -63,10 +64,11 @@
                         </thead>
                         <tbody>
                             <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxnormResults.compiled | filter:pDrugFilter:strict" ng-click="setSelectedDrug()">
-                                <td>{{rxdrug.brand}}
-                                    <td title="{{rxdrug.synonym}}">{{rxdrug.modifiedname}}</td>
-                                    <td><span ng-repeat="dfgName in rxdrug.dfg">{{dfgName}}</span><span ng-show=" ! $last ">, </span></td>
-                                    <td>{{rxdrug.rxcui}}</td>
+                                <td style="text-align: center"><span ng-show="rxdrug.selected"><i class="fa fa-times" style="color: green"></i></span></td>
+                                <td>{{rxdrug.brand}}</td>
+                                <td title="{{rxdrug.synonym}}">{{rxdrug.modifiedname}}</td>
+                                <td><span ng-repeat="dfgName in rxdrug.dfg">{{dfgName}}</span><span ng-show=" ! $last ">, </span></td>
+                                <td>{{rxdrug.rxcui}}</td>
                             </tr>
                         </tbody>
                     </table>
