@@ -59,7 +59,7 @@
                     <tbody>
                         <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxnormResults.compiled | filter:pDrugFilter:strict" ng-click="setSelectedDrug()">
                             <td title="{{rxdrug.synonym}}">{{rxdrug.name}}</td>
-                            <td>{{rxdrug.dfg}}</td>
+                            <td><span ng-repeat="dfgName in rxdrug.dfg">{{dfgName}}</span><span ng-show=" ! $last ">, </span></td>
                             <td>{{rxdrug.rxcui}}</td>
                         </tr>
                     </tbody>
