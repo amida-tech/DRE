@@ -422,7 +422,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    $scope.setSelectedPrescriber = function setSelectedDrug() {
+    $scope.setSelectedPrescriber = function setSelectedPrescriber() {
         if (this.prescriber.selected) {
             this.prescriber.selected = false;
             $scope.selectedPrescriber = null;
