@@ -8,6 +8,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     $scope.prescriberSearchActive = false;
     $scope.drugSearchActive = false;
     $scope.dashMetrics = {};
+    $scope.pDrugName = "";
     $scope.tabs = [{
         "title": "Weight",
         "data": {},
@@ -324,6 +325,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         if ($scope.rximagesResults) {
             $scope.rximagesResults = null;
         }
+        $scope.pDrugName = drugName;
         $scope.drugError = null;
         $scope.drugWarning = null;
         $scope.drugSpelling = null;
@@ -412,12 +414,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             this.rxdrug.selected = false;
             $scope.selectedDrug = null;
         } else {
-            for (var j = 0; j < $scope.rxnormResults.conceptGroup.length; j++) {
-                var drugGroup = $scope.rxnormResults.conceptGroup[j];
-                if (drugGroup.conceptProperties) {
-                    for (var k = 0; k < drugGroup.conceptProperties.length; k++) {
-                        drugGroup.conceptProperties[k].selected = false;
-                    }
+            if ($scope.rxnormResults.compiled != null) {
+                for (var j = 0; j < $scope.rxnormResults.compiled.length; j++) {
+                    $scope.rxnormResults.compiled[j].selected = false;
                 }
             }
             this.rxdrug.selected = true;

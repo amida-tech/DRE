@@ -26,11 +26,12 @@
                     <label>Type</label>
                     <!--<input type="text" class="form-control" ng-model="pDrugFilter.$">-->
                     <select class="form-control" ng-model="pDrugFilter.$" ng-disabled="!rxnormResults.dfg">
+                        <option></option>
                         <option ng-repeat="dfg in rxnormResults.dfg">{{dfg}}</option>
                     </select>
                 </div>
                 <div class="col-sm-2 col-sm-offset-1">
-                    <button class="btn btn-default " ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
+                    <button class="btn btn-default form-control" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
                 </div>
             </div>
             <div class="row">
