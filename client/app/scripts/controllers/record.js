@@ -8,6 +8,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     $scope.prescriberSearchActive = false;
     $scope.drugSearchActive = false;
     $scope.dashMetrics = {};
+    $scope.pDrugName = "";
     $scope.tabs = [{
         "title": "Weight",
         "data": {},
@@ -81,7 +82,11 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     };
 
     $scope.previousStep = function previousStep() {
-        $scope.entryStep--;
+        if ($scope.entryStep === 3 && $scope.medSearchType !== 'prescription') {
+            $scope.entryStep = 1;
+        } else {
+            $scope.entryStep--;
+        }
     };
 
     function enteredObject() {
@@ -238,44 +243,38 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     }
 
     $scope.nextStep = function nextStep() {
-        if ($scope.entryStep === 1) {
-            if ($scope.medSearchType === 'prescription') {
-                if (!$scope.selectedDrug || !$scope.selectedPrescriber) {
-                    if (!$scope.selectedDrug) {
-                        $scope.drugError = "You must select a drug";
-                    }
-                    if (!$scope.selectedPrescriber) {
-                        $scope.prescriberError = "You must select a prescriber";
-                    }
-                } else {
-                    $scope.entryStep = 2;
-                    medapi.findImages($scope.selectedDrug.rxcui, function (err, imageData) {
-                        if (err) {
-                            console.log("Err: " + err);
-                        } else {
-                            $scope.rximageResults = imageData;
-                        }
-                    });
-                }
+        switch ($scope.entryStep) {
+        case 1:
+            if (!$scope.selectedDrug) {
+                $scope.drugError = "You must select a drug";
             } else {
-                if (!$scope.selectedDrug) {
-                    $scope.drugError = "You must select a drug";
-                } else {
+                if ($scope.medSearchType === 'prescription') {
                     $scope.entryStep = 2;
-                    medapi.findImages($scope.selectedDrug.rxcui, function (err, imageData) {
-                        if (err) {
-                            console.log("Err: " + err);
-                        } else {
-                            $scope.rximageResults = imageData;
-                        }
-                    });
+                } else {
+                    $scope.entryStep = 3;
                 }
+                medapi.findImages($scope.selectedDrug.rxcui, function (err, imageData) {
+                    if (err) {
+                        console.log("Err: " + err);
+                    } else {
+                        $scope.rximageResults = imageData;
+                    }
+                });
             }
-        } else {
-            if ($scope.entryStep === 2) {
-                enteredObject();
+            break;
+        case 2:
+            if (!$scope.selectedPrescriber) {
+                $scope.prescriberError = "You must select a prescriber";
+            } else {
                 $scope.entryStep = 3;
             }
+            break;
+        case 3:
+            enteredObject();
+            $scope.entryStep = 4;
+            break;
+        default:
+            break;
         }
     };
 
@@ -324,16 +323,45 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         if ($scope.rximagesResults) {
             $scope.rximagesResults = null;
         }
+        $scope.pDrugName = drugName;
+        $scope.drugError = null;
+        $scope.drugWarning = null;
+        $scope.drugSpelling = null;
         medapi.findRxNormGroup(drugName, function (err, data) {
+            //console.log("rxnormgroup data: "+JSON.stringify(data));
             $scope.drugSearchActive = false;
             if (err) {
                 console.log("Err: " + err);
             } else {
                 if (data.drugGroup.conceptGroup === undefined || data.drugGroup.conceptGroup === null) {
                     //$scope.rxnormResults = "No match found";
-                    $scope.drugError = "No matches found.  Please Try Again";
+                    medapi.findRxNormSpelling(drugName, function (err2, data2) {
+                        if (err2) {
+                            console.log("Err: " + err2);
+                            $scope.drugError = "No matches found.  Please Try Something Else";
+                        } else {
+                            if (data2.suggestionGroup !== null) {
+                                if (data2.suggestionGroup.suggestionList !== null) {
+                                    if (data2.suggestionGroup.suggestionList.suggestion !== null) {
+                                        if (data2.suggestionGroup.suggestionList.suggestion.length > 0) {
+                                            $scope.drugWarning = "No matches found... did you mean one of these: ";
+                                            $scope.drugSpelling = data2.suggestionGroup.suggestionList.suggestion;
+                                        } else {
+                                            $scope.drugError = "No matches found.  Please Try Something Else";
+                                        }
+                                    } else {
+                                        $scope.drugError = "No matches found.  Please Try Something Else";
+                                    }
+                                } else {
+                                    $scope.drugError = "No matches found.  Please Try Something Else";
+                                }
+                            } else {
+                                $scope.drugError = "No matches found.  Please Try Something Else";
+                            }
+                        }
+                    });
                 } else {
-                    $scope.rxnormResults = data.drugGroup;
+                    $scope.rxnormResults = data;
                     var drugCount = 0;
                     for (var j = 0; j < data.drugGroup.conceptGroup.length; j++) {
                         if (data.drugGroup.conceptGroup[j].conceptProperties) {
@@ -384,12 +412,9 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
             this.rxdrug.selected = false;
             $scope.selectedDrug = null;
         } else {
-            for (var j = 0; j < $scope.rxnormResults.conceptGroup.length; j++) {
-                var drugGroup = $scope.rxnormResults.conceptGroup[j];
-                if (drugGroup.conceptProperties) {
-                    for (var k = 0; k < drugGroup.conceptProperties.length; k++) {
-                        drugGroup.conceptProperties[k].selected = false;
-                    }
+            if ($scope.rxnormResults.compiled !== null) {
+                for (var j = 0; j < $scope.rxnormResults.compiled.length; j++) {
+                    $scope.rxnormResults.compiled[j].selected = false;
                 }
             }
             this.rxdrug.selected = true;
@@ -397,7 +422,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    $scope.setSelectedPrescriber = function setSelectedDrug() {
+    $scope.setSelectedPrescriber = function setSelectedPrescriber() {
         if (this.prescriber.selected) {
             this.prescriber.selected = false;
             $scope.selectedPrescriber = null;
@@ -411,7 +436,6 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
     };
 
     $scope.setSelectedImage = function setSelectedImage(rxImage) {
-        console.log("trying to set image");
         if (rxImage.selected) {
             rxImage.selected = false;
             $scope.selectedImage = null;
@@ -424,7 +448,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         }
     };
 
-    $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode) {
+    $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode, state) {
         $scope.prescriberSearchActive = true;
         var searchTest = false;
         var searchObj = {
@@ -446,11 +470,25 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
                 searchTest = true;
             }
         }
-        if (zipCode !== "") {
+        if (zipCode !== "" && state !== "") {
             searchObj.address.push({
-                zip: zipCode
+                zip: zipCode,
+                state: state
             });
             searchTest = true;
+        } else {
+            if (zipCode !== "") {
+                searchObj.address.push({
+                    zip: zipCode
+                });
+                searchTest = true;
+            }
+            if (state !== "") {
+                searchObj.address.push({
+                    state: state
+                });
+                searchTest = true;
+            }
         }
         if (searchTest) {
             npiapi.findNPI(searchObj, function (err, data) {
@@ -492,6 +530,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         $scope.selectedDrug = null;
         $scope.selectedPrescriber = null;
         $scope.drugError = null;
+        $scope.drugWarning = null;
         $scope.prescriberError = null;
         $scope.entryStep = 0;
         $scope.pWhy = "";
@@ -501,6 +540,7 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         $scope.pLast = "";
         $scope.pCurrentMedRadio = true;
         $scope.pStart = "";
+        $scope.drugSpelling = null;
     };
     /*
         $scope.medInfoSearch = function medInfoSearch(searchObj) {

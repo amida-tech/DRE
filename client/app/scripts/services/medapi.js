@@ -12,14 +12,6 @@ angular.module('phrPrototypeApp')
     .service('medapi', function medapi($http) {
 
         this.findImages = function (rxcui, callback) {
-            /*
-            $http.get('api/v1/rximage/' + rxcui)
-                .success(function(data) {
-                    callback(data);
-                }).error(function(err) {
-                    callback(err);
-                });
-*/
             $http.post('api/v1/rximage', {
                 rxcui: rxcui
             }).
@@ -48,6 +40,19 @@ angular.module('phrPrototypeApp')
                 medname: medname
             }).
             success(function (data, status, headers, config) {
+                callback(null, data);
+            }).
+            error(function (data, status, headers, config) {
+                callback(status);
+            });
+        };
+
+        this.findRxNormSpelling = function (medname, callback) {
+            $http.post('api/v1/rxnorm/spelling', {
+                medname: medname
+            }).
+            success(function (data, status, headers, config) {
+                console.log("spelling data: " + JSON.stringify(data));
                 callback(null, data);
             }).
             error(function (data, status, headers, config) {
