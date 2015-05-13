@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - '0.12'
 before_script:
-- npm install -g npm@>=2.7 grunt-cli@0.4.x mocha istanbul bower
+- npm install -g npm grunt-cli mocha istanbul bower
 - gem update --system
 - gem install compass
 - npm install --quiet
