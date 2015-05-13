@@ -16,26 +16,33 @@
     <div class="row" ng-if="entryStep===1">
         <h3>Medication Information</h3>
         <div class="row">
-            <h4>Drug Information</h4>
-            <form novalidate role="form" class="form-inline">
-                <div class="row">
-                    <div class="form-group">
-                        <label>Drug name (required)</label>
-                        <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name" ng-disabled="drugSearchActive">
+            <br/>
+            <form novalidate role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Drug name (required)</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="pDrugName" ng-disabled="drugSearchActive">
                     </div>
-                    <div class="form-group">
-                        <label>Dose</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Dose</label>
+                    <div class="col-sm-10">
                         <input type="text" class="form-control" ng-model="pDrugFilter.name">
                     </div>
-                    <div class="form-group">
-                        <label>Type</label>
-                        <!--<input type="text" class="form-control" ng-model="pDrugFilter.$">-->
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Type</label>
+                    <div class="col-sm-2">
                         <select class="form-control" ng-model="pDrugFilter.$" ng-disabled="!rxnormResults.dfg">
                             <option></option>
                             <option ng-repeat="dfg in rxnormResults.dfg">{{dfg}}</option>
                         </select>
                     </div>
-                    <button class="btn btn-default form-control" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button style="width: initial" class="btn btn-default form-control" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="alert alert-danger" role="alert" ng-show="drugError">
@@ -89,74 +96,76 @@
     <div class="row" ng-if="entryStep===2">
         <div class="row">
             <h4>Prescriber Information</h4>
-            <div class="row">
-                <div class="col-sm-9">
-                    <div class="col-sm-5 form-group">
-                        <label>Prescriber's first name (required)</label>
-                        <input type="text" class="form-control" ng-model="pFirstName" placeholder="First Name" ng-disabled="prescriberSearchActive">
+            <form novalidate role="form" class="form-horizontal">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="col-sm-5 form-group">
+                            <label>Prescriber's first name (required)</label>
+                            <input type="text" class="form-control" ng-model="pFirstName" placeholder="First Name" ng-disabled="prescriberSearchActive">
+                        </div>
+                        <div class="col-sm-5 col-sm-offset-2 form-group">
+                            <label>Prescriber's last name (required)</label>
+                            <input type="text" class="form-control" ng-model="pLastName" placeholder="Last Name" ng-disabled="prescriberSearchActive">
+                        </div>
                     </div>
-                    <div class="col-sm-5 col-sm-offset-2 form-group">
-                        <label>Prescriber's last name (required)</label>
-                        <input type="text" class="form-control" ng-model="pLastName" placeholder="Last Name" ng-disabled="prescriberSearchActive">
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 form-group">
+                        <label>Prescriber's State</label>
+                        <input type="search" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
+                    </div>
+                    <div class="col-sm-3 col-sm-offset-1 form-group">
+                        <label>Prescriber's Zip Code</label>
+                        <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
+                    </div>
+                    <div class=" col-sm-2 col-sm-offset-3">
+                        <button class="btn btn-default" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3 form-group">
-                    <label>Prescriber's State</label>
-                    <input type="search" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
+                <div class="row">
+                    <div class="alert alert-danger" role="alert" ng-show="prescriberError">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span> {{prescriberError}}
+                    </div>
                 </div>
-                <div class="col-sm-3 col-sm-offset-1 form-group">
-                    <label>Prescriber's Zip Code</label>
-                    <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
+                <div class="row" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
+                    <h4>Prescriber Results ({{prescriberCount}})</h4>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center"><span><i class="fa fa-check" style="color: black"></i></span></th>
+                                <th>Name</th>
+                                <th>Practice</th>
+                                <th>Business</th>
+                                <th>Gender</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setSelectedPrescriber()">
+                                <td style="text-align: center"><span ng-show="prescriber.selected"><i class="fa fa-check" style="color: green"></i></span></td>
+                                <td title="NPI: {{prescriber.npi}}">
+                                    <span>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</span>
+                                    <br/>
+                                    <span class="text-muted">NPI: {{prescriber.npi}}</span>
+                                </td>
+                                <!--<td title="Practice Address: {{prescriber.business_address}}">{{prescriber.practice_address}}</td>-->
+                                <td>
+                                    <span ng-show="prescriber.practice_address">{{prescriber.practice_address.address_line}}, {{prescriber.practice_address.address_details_line}}</span>
+                                    <br/>
+                                    <span ng-show="prescriber.practice_address">{{prescriber.practice_address.city}}, {{prescriber.practice_address.state}} {{prescriber.practice_address.zip}}</span>
+                                </td>
+                                <td>
+                                    <span ng-show="prescriber.business_address">{{prescriber.business_address.address_line}}, {{prescriber.business_address.address_details_line}}</span>
+                                    <br/>
+                                    <span ng-show="prescriber.business_address">{{prescriber.business_address.city}}, {{prescriber.business_address.state}} {{prescriber.business_address.zip}}</span>
+                                </td>
+                                <td>{{prescriber.gender}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--<pre>{{prescriberResults}}</pre>-->
                 </div>
-                <div class=" col-sm-2 col-sm-offset-3">
-                    <button class="btn btn-default" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="alert alert-danger" role="alert" ng-show="prescriberError">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span> {{prescriberError}}
-                </div>
-            </div>
-            <div class="row" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
-                <h4>Prescriber Results ({{prescriberCount}})</h4>
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th style="text-align: center"><span><i class="fa fa-check" style="color: black"></i></span></th>
-                            <th>Name</th>
-                            <th>Practice</th>
-                            <th>Business</th>
-                            <th>Gender</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setSelectedPrescriber()">
-                            <td style="text-align: center"><span ng-show="prescriber.selected"><i class="fa fa-check" style="color: green"></i></span></td>
-                            <td title="NPI: {{prescriber.npi}}">
-                                <span>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</span>
-                                <br/>
-                                <span class="text-muted">NPI: {{prescriber.npi}}</span>
-                            </td>
-                            <!--<td title="Practice Address: {{prescriber.business_address}}">{{prescriber.practice_address}}</td>-->
-                            <td>
-                                <span ng-show="prescriber.practice_address">{{prescriber.practice_address.address_line}}, {{prescriber.practice_address.address_details_line}}</span>
-                                <br/>
-                                <span ng-show="prescriber.practice_address">{{prescriber.practice_address.city}}, {{prescriber.practice_address.state}} {{prescriber.practice_address.zip}}</span>
-                            </td>
-                            <td>
-                                <span ng-show="prescriber.business_address">{{prescriber.business_address.address_line}}, {{prescriber.business_address.address_details_line}}</span>
-                                <br/>
-                                <span ng-show="prescriber.business_address">{{prescriber.business_address.city}}, {{prescriber.business_address.state}} {{prescriber.business_address.zip}}</span>
-                            </td>
-                            <td>{{prescriber.gender}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!--<pre>{{prescriberResults}}</pre>-->
-            </div>
+            </form>
         </div>
         <br />
         <div class="row">
