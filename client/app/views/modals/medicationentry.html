@@ -125,6 +125,7 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th style="text-align: center"><span><i class="fa fa-check" style="color: black"></i></span></th>
                             <th>Name</th>
                             <th>Practice</th>
                             <th>Business</th>
@@ -133,6 +134,7 @@
                     </thead>
                     <tbody>
                         <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setSelectedPrescriber()">
+                            <td style="text-align: center"><span ng-show="prescriber.selected"><i class="fa fa-check" style="color: green"></i></span></td>
                             <td title="NPI: {{prescriber.npi}}">
                                 <span>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</span>
                                 <br/>
