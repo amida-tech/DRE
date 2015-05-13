@@ -41,6 +41,18 @@ module.exports = function(grunt) {
                 tasks: ['compass:dev']
             },
         },
+        // Automatically include angular files
+        includeSource: {
+            options: {
+                basePath: '<%= yeoman.app %>',
+                baseUrl: '/',
+            },
+            dist: {
+                files: {
+                    '<%= yeoman.app %>/index.html': '<%= yeoman.app %>/index.html'
+                }
+            }
+        },
         // Make sure code styles are up to par and there are no obvious mistakes
         jshint: {
             options: {
@@ -291,7 +303,7 @@ module.exports = function(grunt) {
         grunt.task.run(['serve:' + target]);
     });
     //Fully minified/clean build.
-    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'useminPrepare', 'concurrent:dist', 'autoprefixer', 'concat', 'ngAnnotate', 'copy:dist', 'cdnify', 'cssmin', 'uglify', 'filerev', 'usemin']);
+    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'includeSource:dist', 'useminPrepare', 'concurrent:dist', 'autoprefixer', 'concat', 'ngAnnotate', 'copy:dist', 'cdnify', 'cssmin', 'uglify', 'filerev', 'usemin']);
     grunt.registerTask('default', ['newer:jshint']);
     grunt.registerTask('dev', ['jshint', 'compass:dev', 'watch']);
     grunt.registerTask('test', ['jshint', 'compass:dev','protractor', 'watch']);
