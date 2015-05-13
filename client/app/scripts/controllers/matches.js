@@ -60,7 +60,7 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function ($scope, ma
 
     function getData(section) {
         matches.getCategory(section).then(function (data) {
-            //console.log('data', data);
+            //console.log('data #550 ', data);
             _.each(data.matches, function (match) {
                 $scope.masterMatches.push({
                     'category': section,
@@ -71,7 +71,9 @@ angular.module('phrPrototypeApp').controller('MatchesCtrl', function ($scope, ma
 
             setScopeVars();
 
-        });
+        }, function(error) {
+		console.log(error);
+	});
 
         //do stuff here
         //$scope.allergyMatch = $scope.masterMatches.data[1];
