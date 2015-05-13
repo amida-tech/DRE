@@ -28,24 +28,26 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         console.log('from server');
         var deferred = $q.defer();
         var dataurl = '/api/v1/matches/' + category;
-        return $http({
+	
+        $http({
             url: dataurl,
             method: 'GET',
             cache: true
-        }).then(function (response) {
-            if (typeof response.data === 'object') {
-                console.log("GOT MATCHES ", response.data);
-                return response.data;
+        }).success(function (data, status, headers, config) {
+            if (typeof data === 'object') {
+                console.log("GOT MATCHES ", data);
+                deferred.resolve(data); // GitHub issue #550
             } else {
                 // invalid response
                 console.log('didnt get data');
-                return deferred.reject(response.data);
+		deferred.reject(status);
             }
-        }, function (error) {
+        }).error( function (data, status, headers, config) {
             // something went wrong
             console.log('data errorrrrrrr');
-            return deferred.reject(error);
+             deferred.reject(status);
         });
+	return deferred.promise;
     };
 
     this.getSection = function () {
