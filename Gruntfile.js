@@ -12,6 +12,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-contrib-compass');
+    //grunt.loadNpmTasks('grunt-newer');
     //grunt.loadNpmTasks('grunt-node-inspector');
     //grunt.loadNpmTasks('grunt-csslint');
     //grunt.loadNpmTasks('grunt-ng-annotate');
@@ -24,12 +26,21 @@ module.exports = function (grunt) {
         clientViews: ['client/app/views/**/*.html', 'client/app/index.html'],
         clientJS: ['client/app/scripts/**/*.js'],
         clientCSS: ['client/app/styles/*.css'],
+        clientSCSS: ['client/app/styles/{,*/}*.{scss,sass}'],
         mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
     };
 
     // Project Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+/*        protractor: { //protratorjs (from client)
+            options: {
+                configFile: "client/test/conf.js", // Default config file
+                keepAlive: true
+            },
+            all: {},
+        },
+        */
         watch: {
             serverJS: {
                 files: watchFiles.serverJS,
@@ -57,11 +68,19 @@ module.exports = function (grunt) {
                 options: {
                     livereload: true
                 }
+            },
+            clientSCSS: {
+                files: watchFiles.clientSCSS,
+                tasks: ['compass:dev'],
+                options: {
+                    livereload: true
+                }
             }
         },
         jshint: {
             files: ['gruntFile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js'], //['./test/unit/*.js'],
             options: {
+                reporter: require('jshint-stylish'),
                 browser: true,
                 curly: true,
                 eqeqeq: true,
@@ -98,6 +117,40 @@ module.exports = function (grunt) {
                 options: {
                     mode: 'VERIFY_ONLY',
                     config: '.jsbeautifyrc'
+                }
+            }
+        },
+        compass: { //from client
+            options: {
+                sassDir: 'client/app/styles',
+                cssDir: '.tmp/styles',
+                generatedImagesDir: '.tmp/images/generated',
+                imagesDir: 'client/app/images',
+                javascriptsDir: 'client/app/scripts',
+                fontsDir: 'client/app/styles/fonts',
+                importPath: 'client/app/bower_components',
+                httpImagesPath: 'client/app/images',
+                httpGeneratedImagesPath: 'client/app/images/generated',
+                httpFontsPath: 'client/app/styles/fonts',
+                relativeAssets: false,
+                assetCacheBuster: false,
+                raw: 'Sass::Script::Number.precision = 10\n'
+            },
+            dist: {
+                options: {
+                    generatedImagesDir: './client/app/images/generated'
+                }
+            },
+            server: {
+                options: {
+                    debugInfo: true
+                }
+            },
+            dev: { // Another target
+                options: {
+                    sassDir: './client/app/styles',
+                    cssDir: './client/app/styles',
+                    debugInfo: false
                 }
             }
         },
@@ -185,7 +238,7 @@ module.exports = function (grunt) {
     grunt.option('force', true);
 
     // Default task(s).
-    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest']);
+    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest', 'jshint', /*'compass:dev',*/ /*'protractor',*/ 'execute']);
 
     grunt.registerTask('benchmark', ['execute']);
     grunt.registerTask('coverage', ['shell:run_istanbul']);

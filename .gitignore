@@ -22,3 +22,6 @@ npm-debug.log
 .anvil
 
 #client/app/styles/main.css
+
+.nodemon_find_ref
+.sass_cache
