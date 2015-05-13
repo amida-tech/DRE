@@ -4,6 +4,10 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
 
     console.log("RECORD CONTROLLER LOAD ");
 
+    $scope.$on('modal.hide', function () {
+        $scope.medReset();
+    });
+
     $scope.entryStep = 0;
     $scope.prescriberSearchActive = false;
     $scope.drugSearchActive = false;
