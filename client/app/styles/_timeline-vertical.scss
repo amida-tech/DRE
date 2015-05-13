@@ -38,7 +38,6 @@
   @extend .timeline-entry-icon;
   height: 90px;
   width: 90px;
-  background: $brand-primary;
   position:initial;
 }
 
@@ -50,6 +49,12 @@
 
 .timeline-entry-icon i {
   vertical-align: middle;
+}
+
+.timeline-entry-icon-medication i {
+    vertical-align: text-top;
+    line-height: 1.4em;
+    font-size: 3em;
 }
 
 .timeline-entry-icon:hover {

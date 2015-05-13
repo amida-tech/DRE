@@ -73,7 +73,10 @@ angular.module('phrPrototypeApp')
                                     var medRouteIconEntry = _.findWhere(medRouteIconMap, {
                                         code: route
                                     });
-                                    html = '<i class="fa-2x"' + medRouteIconEntry.icon + '></i>';
+                                    if (medRouteIconEntry) {
+                                        console.log(medRouteIconEntry.icon);
+                                        html = '<i class="fa-2x ' + medRouteIconEntry.icon + '"></i>';
+                                    }
                                 }
                             }
                         }
