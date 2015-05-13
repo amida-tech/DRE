@@ -58,9 +58,9 @@
                             <p>{{profile.gender}}</p>
                         </div>
                         <div class="form-group col-sm-3 col-sm-offset-1">
-                            <h5>Race/Ethnicity</h5>
-                            <p ng-hide="profile.race_ethnicity">None entered</p>
-                            <p>{{profile.race_ethnicity}}</p>
+                            <h5>Race</h5>
+                            <p ng-hide="profile.race">None entered</p>
+                            <p>{{profile.race}}</p>
                         </div>
                         <div class="form-group col-sm-4 col-sm-offset-1">
                             <h5>Marital Status</h5>
@@ -126,8 +126,8 @@
                                     <p ng-show="profileForm.inputGender.$invalid && !profileForm.inputGender.$pristine" class="help-block">Gender is required.</p>
                                 </div>
                                 <div class="form-group col-sm-3 col-sm-offset-1">
-                                    <label for="inputRace">Race/Ethnicity</label>
-                                    <select class="form-control" name="inputRace" ng-model="profile.race_ethnicity">
+                                    <label for="inputRace">Race</label>
+                                    <select class="form-control" name="inputRace" ng-model="profile.race">
                                         <option>White</option>
                                         <option>Black</option>
                                         <option>Hispanic</option>
