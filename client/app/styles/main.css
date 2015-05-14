@@ -8380,7 +8380,7 @@ h6, .h6 {
 .timeline-entry-icon-medication {
   height: 90px;
   width: 90px;
-  background: #6aa6ff;
+  background: #6AA6FF;
   position: initial;
 }
 
@@ -8751,6 +8751,11 @@ form .button-well {
 /* line 22, _modals.scss */
 .modal-body span {
   font-size: 14px;
+}
+
+/* line 26, _modals.scss */
+.modal-body .control-label {
+  padding-right: 11px;
 }
 
 /*

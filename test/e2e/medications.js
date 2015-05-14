@@ -107,7 +107,7 @@ describe('Medications API', function () {
         };
         var tmp_edit = {
             'data': data
-        }
+        };
 
         before(function (done) {
 

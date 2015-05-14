@@ -22,3 +22,5 @@ npm-debug.log
 .anvil
 
 #client/app/styles/main.css
+
+.nodemon-find-ref
