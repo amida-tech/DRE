@@ -156,6 +156,13 @@ app.use(accountHistory);
 var notes = require('./lib/notes');
 app.use(notes);
 
+var metadata = require('./lib/metadata');
+app.use(metadata);
+
+var metadata = require('./lib/oauth2');
+app.use(metadata);
+
+
 app.set('port', (process.env.PORT || 3000));
 
 app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
