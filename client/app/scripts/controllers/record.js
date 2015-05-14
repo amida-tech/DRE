@@ -1,20 +1,35 @@
 'use strict';
 
-angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, $route, format, matches, merges, history, dataservice, medapi, npiapi, medications) {
+angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, $route, format, matches, merges, history, dataservice) {
 
     console.log("RECORD CONTROLLER LOAD ");
 
-    $scope.$on('modal.hide', function () {
-        $scope.medReset();
-    });
-    $scope.entryModal = function entryModal() {
+    $scope.medicationDetails = function (medication) {
         var modalInstance = $modal.open({
+            animation: false,
+            templateUrl: 'views/modals/medications.html',
+            controller: 'MedicationDetailModalCtrl',
+            resolve: {
+                medication: function () {
+                    return medication;
+                }
+            }
+        });
+        modalInstance.result.then(function (response) {
+            console.log(response);
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
+    };
+
+    $scope.entryModal = function () {
+        var modalInstance = $modal.open({
+            animation: false,
             templateUrl: 'views/modals/medicationentry.html',
             controller: 'MedicationEntryModalCtrl'
         });
-
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
+        modalInstance.result.then(function (response) {
+            console.log(response);
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });
