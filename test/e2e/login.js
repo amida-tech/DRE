@@ -46,13 +46,9 @@ describe('authentication', function (done) {
                 'email': 'kevin@ba.com'
             })
             .end(function (err, res) {
-<<<<<<< HEAD
-                if (err) {throw err;}
-=======
                 if (err) {
                     throw err;
                 }
->>>>>>> origin/release-1.5
                 done();
             });
     });
@@ -62,13 +58,9 @@ describe('authentication', function (done) {
             .get('/api/v1/account')
             .expect(200)
             .end(function (err, res) {
-<<<<<<< HEAD
-                if (err) {throw err;}
-=======
                 if (err) {
                     throw err;
                 }
->>>>>>> origin/release-1.5
                 expect(res.body.authenticated).to.equal(false);
                 done();
             });
@@ -83,13 +75,9 @@ describe('authentication', function (done) {
             .get('/api/v1/account')
             .expect(200)
             .end(function (err, res) {
-<<<<<<< HEAD
-                if (err) {throw err;}
-=======
                 if (err) {
                     throw err;
                 }
->>>>>>> origin/release-1.5
                 expect(res.body.authenticated).to.equal(true);
                 done();
             });
@@ -100,13 +88,9 @@ describe('authentication', function (done) {
             .post('/api/v1/logout')
             .expect(200)
             .end(function (err, res) {
-<<<<<<< HEAD
-                if (err) {throw err;}
-=======
                 if (err) {
                     throw err;
                 }
->>>>>>> origin/release-1.5
                 done();
             });
     });
@@ -116,13 +100,9 @@ describe('authentication', function (done) {
             .get('/api/v1/account')
             .expect(200)
             .end(function (err, res) {
-<<<<<<< HEAD
-                if (err) {throw err;}
-=======
                 if (err) {
                     throw err;
                 }
->>>>>>> origin/release-1.5
                 expect(res.body.authenticated).to.equal(false);
                 done();
             });

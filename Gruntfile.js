@@ -252,6 +252,13 @@ module.exports = function (grunt) {
         grunt.log.subhead(Date());
     });
 
+    // Client tasks 
+    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'compass:dev']);
+    grunt.registerTask('dev', ['jshint', 'compass:dev', 'watch']);
+    grunt.registerTask('test', ['jshint', 'compass:dev','protractor', 'watch']);
+    grunt.registerTask('release', ['jshint', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
+
+
     // Lint task(s).
     //grunt.registerTask('lint', ['jshint', 'csslint']);
 };
