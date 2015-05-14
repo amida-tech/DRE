@@ -2,23 +2,10 @@
 
 module.exports = function (grunt) {
 
-    grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-express-server');
-    grunt.loadNpmTasks('grunt-jsbeautifier');
-    grunt.loadNpmTasks('grunt-env');
-    grunt.loadNpmTasks('grunt-execute');
-    grunt.loadNpmTasks('grunt-nodemon');
-    grunt.loadNpmTasks('grunt-concurrent');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-contrib-compass');
-    //grunt.loadNpmTasks('grunt-newer');
-    //grunt.loadNpmTasks('grunt-node-inspector');
-    //grunt.loadNpmTasks('grunt-csslint');
-    //grunt.loadNpmTasks('grunt-ng-annotate');
-    //grunt.loadNpmTasks('grunt-contrib-uglify');
-    //grunt.loadNpmTasks('grunt-karma');
+    // Load grunt tasks automatically
+    require('load-grunt-tasks')(grunt);
+    // Time how long tasks take. Can help when optimizing build times
+    require('time-grunt')(grunt);
 
     // Unified Watch Object
     var watchFiles = {
@@ -119,6 +106,16 @@ module.exports = function (grunt) {
                     config: '.jsbeautifyrc'
                 }
             }
+        },
+        // Empties folders to start fresh
+        clean: {
+            dist: {
+                files: [{
+                    dot: true,
+                    src: ['.tmp', '<%= yeoman.dist %>/{,*/}*', '!<%= yeoman.dist %>/.git*']
+                }]
+            },
+            server: '.tmp'
         },
         compass: { //from client
             options: {
