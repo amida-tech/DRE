@@ -21,18 +21,23 @@ angular.module('phrPrototypeApp')
         $scope.nextStep = function () {
             if ($scope.step === 0) {
 
-                username.checkLogin(function (err, userInfo) {
-                    $scope.userList = userInfo;
-                    // console.log('register controller', $scope.userList);
-                    for (var element in $scope.userList) {
-                        // console.log($scope.userList[element].username);
-                        if ($scope.inputLogin === $scope.userList[element].username) {
-                            $scope.isUser = true;
-                            // console.log($scope.isUser, $scope.userList[element].username, $scope.inputLogin);
-                            $scope.error = "That Username already exists, please choose another";
-                            return;
-                        }
+                username.checkLogin($scope.inputLogin, function (err, user_exists) {
+                    if (user_exists === "true") {
+                        $scope.error = "That Username already exists, please choose another";
+                        return;
                     }
+
+                    // $scope.userList = userInfo;
+                    // // console.log('register controller', $scope.userList);
+                    // for (var element in $scope.userList) {
+                    //     // console.log($scope.userList[element].username);
+                    //     if ($scope.inputLogin === $scope.userList[element].username) {
+                    //         $scope.isUser = true;
+                    //         // console.log($scope.isUser, $scope.userList[element].username, $scope.inputLogin);
+                    //         $scope.error = "That Username already exists, please choose another";
+                    //         return;
+                    //     }
+                    // }
                     if ($scope.inputPassword === $scope.inputRepeatPassword) {
                         $scope.step = $scope.step + 1;
                         $scope.error = null;
