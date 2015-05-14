@@ -180,22 +180,24 @@
             }
         },
         "/users": {
-            "get": {
-                "summary": "Retrieve list of users",
-                "description": "Retrieve list of all users",
-                "operationId": "getUsers",
+            "post": {
+                "summary": "Check if username exists",
+                "description": "Check if username exists during registration",
+                "operationId": "checkUsername",
                 "tags": [
                     "account"
                 ],
+                "parameters": [{
+                    "name": "username",
+                    "description": "Username",
+                    "in": "body",
+                    "type": "string",
+                    "required": true
+                }],
                 "responses": {
                     "200": {
-                        "description": "get list of users",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/userSchema"
-                            }
-                        }
+                        "description": "check if username exists",
+                        "type": "boolean"
                     }
                 }
             }
