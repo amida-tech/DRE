@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('phrPrototypeApp')
-    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, medapi, npiapi, medications) {
+    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications) {
         $scope.entryStep = 0;
         $scope.prescriberSearchActive = false;
         $scope.drugSearchActive = false;
