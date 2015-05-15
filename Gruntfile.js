@@ -165,6 +165,20 @@ module.exports = function (grunt) {
             },
             all: {},
         },
+        // Add vendor prefixed styles
+        autoprefixer: {
+            options: {
+                browsers: ['last 1 version']
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'client/.tmp/styles/',
+                    src: '{,*/}*.css',
+                    dest: 'client/.tmp/styles/'
+                }]
+            }
+        },
         compass: { //from client
             options: {
                 sassDir: 'client/app/styles',
@@ -209,24 +223,127 @@ module.exports = function (grunt) {
                 }
             }
         },
-        /*        'node-inspector': {
-                    custom: {
-                        options: {
-                            'web-port': 3000,
-                            'web-host': 'localhost',
-                            'debug-port': 5858,
-                            'save-live-edit': true,
-                            'no-preload': true,
-                            'stack-trace-limit': 50,
-                            'hidden': []
-                        }
-                    }
-                }, */
+        // Replace Google CDN references
+        cdnify: {
+            dist: {
+                html: ['<%= yeoman.dist %>/*.html']
+            }
+        },
+        // The following *-min tasks will produce minified files in the dist folder
+        // By default, your `index.html`'s <!-- Usemin block --> will take care of
+        // minification. These next options are pre-configured if you do not wish
+        // to use the Usemin blocks.
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>/images',
+                    src: '{,*/}*.{png,jpg,jpeg,gif}',
+                    dest: '<%= yeoman.dist %>/images'
+                }]
+            }
+        },
+        svgmin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>/images',
+                    src: '{,*/}*.svg',
+                    dest: '<%= yeoman.dist %>/images'
+                }]
+            }
+        },
+        htmlmin: {
+            dist: {
+                options: {
+                    collapseWhitespace: true,
+                    conservativeCollapse: true,
+                    collapseBooleanAttributes: true,
+                    removeCommentsFromCDATA: true,
+                    removeOptionalTags: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.dist %>/views',
+                    src: ['{,*/}*.html'],
+                    dest: '<%= yeoman.dist %>/views'
+                }]
+            }
+        },
+        uglify: {
+           dist: {
+             options: {
+               mangle: false
+             },
+             files: [{
+               expand: true,
+               cwd: '.tmp/scripts',
+               src: '{,**/}*.js',
+               dest: '<%= yeoman.dist %>/scripts'
+             }]
+           }
+         },
+         cssmin: {
+           dist: {
+             files: {
+               '<%= yeoman.dist %>/styles/main.css': [
+                 '.tmp/styles/{,*/}*.css'
+               ]
+             }
+           }
+         },
+        // Copies remaining files to places other tasks can use
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
+                    src: ['*.{ico,png,txt}', '.htaccess', '*.html', 'views/{,*/}*.html', 'views/templates/{,*/}*.html', 'views/record/{,*/}*.html', 'images/{,*/}*.{webp}', 'fonts/*']
+                }, {
+                    expand: true,
+                    cwd: 'client/.tmp/images',
+                    dest: '<%= yeoman.dist %>/images',
+                    src: ['generated/*']
+                }, {
+                    expand: true,
+                    cwd: 'client',
+                    src: 'app/bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+                    flatten: true,
+                    dest: '<%= yeoman.dist %>/fonts'
+                }, {
+                    expand: true,
+                    cwd: 'client',
+                    src: 'app/bower_components/font-awesome/fonts/*',
+                    flatten: true,
+                    dest: '<%= yeoman.dist %>/fonts'
+                }, {
+                    expand: true,
+                    cwd: '<%= yeoman.app %>/bower_components',
+                    src: '**/*',
+                    dest: '<%= yeoman.dist %>/bower_components'
+                }]
+            },
+            styles: {
+                expand: true,
+                cwd: '<%= yeoman.app %>/styles',
+                dest: 'client/.tmp/styles/',
+                src: '{,*/}*.css'
+            },
+            scripts: {
+                expand: true,
+                cwd: '<%= yeoman.app %>/scripts',
+                dest: 'client/.tmp/scripts/',
+                src: '{,**/}*.js'
+            }
+        },
+        // Run some tasks in parallel to speed up the build process
         concurrent: {
             default: ['nodemon', 'watch'],
-            //test: ['nodemon', 'watch', 'node-inspector', 'mochaTest'], //'karma:unit'
-            test: ['env:test', 'nodemon', 'watch', 'mochaTest'], //'karma:unit'
-            //test: ['nodemon', 'mochaTest'], //'karma:unit'
+            test: ['env:test', 'nodemon', 'watch', 'mochaTest'],
+            server: ['compass:server'],
+            dist: ['compass:dist', 'imagemin', 'svgmin', 'htmlmin'],
             options: {
                 logConcurrentOutput: true,
                 limit: 10
@@ -272,10 +389,5 @@ module.exports = function (grunt) {
                 command: "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec --recursive"
             }
         }
-        /*        karma: {
-                    unit: {
-                        configFile: 'karma.conf.js'
-                    }
-                } */
     });
 };
