@@ -24,5 +24,6 @@
     "angular-scenario": "~1.2.0",
     "lodash-deep": "~1.6.0"
   },
-  "appPath": "client/app"
+  "appPath": "client/app",
+  "distPath": "client/dist"
 }

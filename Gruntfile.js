@@ -16,6 +16,11 @@ module.exports = function (grunt) {
         clientSCSS: ['client/app/styles/{,*/}*.{scss,sass}'],
         mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
     };
+    
+    var appConfig = {
+        app: require('./bower.json').appPath || 'app',
+        dist: require('./bower.json').distPath || 'dist'
+    };
 
     // Project Configuration
     grunt.initConfig({
@@ -28,6 +33,9 @@ module.exports = function (grunt) {
             all: {},
         },
         */
+        // Project settings
+        yeoman: appConfig,
+        
         watch: {
             serverJS: {
                 files: watchFiles.serverJS,
@@ -235,9 +243,12 @@ module.exports = function (grunt) {
     grunt.option('force', true);
 
     // Default task(s).
-    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest', 'jshint', /*'compass:dev',*/ /*'protractor',*/ 'execute']);
+    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest', 'jshint']);
 
+    // Run benchmark tests
     grunt.registerTask('benchmark', ['execute']);
+    
+    // Not ready for use
     grunt.registerTask('coverage', ['shell:run_istanbul']);
 
     // Test task.
