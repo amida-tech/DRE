@@ -24,4 +24,4 @@ npm-debug.log
 #client/app/styles/main.css
 
 .nodemon_find_ref
-.sass_cache
+.sass-cache

@@ -22,6 +22,33 @@ module.exports = function (grunt) {
         dist: require('./bower.json').distPath || 'dist'
     };
 
+    // Making grunt default to force in order not to break the project.
+    grunt.option('force', true);
+
+    // Default task(s).
+    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest', 'jshint']);
+
+    // Run benchmark tests
+    grunt.registerTask('benchmark', ['execute']);
+    
+    // Not ready for use
+    grunt.registerTask('coverage', ['shell:run_istanbul']);
+
+    // Test task.
+    //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
+    grunt.registerTask('live', ['concurrent:default']);
+
+    // Print a timestamp (useful for when watching)
+    grunt.registerTask('timestamp', function () {
+        grunt.log.subhead(Date());
+    });
+
+    // Client tasks 
+    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'compass:dev']);
+    grunt.registerTask('dev', ['jshint', 'compass:dev', 'watch']);
+    grunt.registerTask('test', ['jshint', 'compass:dev','protractor', 'watch']);
+    grunt.registerTask('release', ['jshint', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
+
     // Project Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -73,7 +100,7 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            files: ['gruntFile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js'], //['./test/unit/*.js'],
+            files: ['Gruntfile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js', '<%= yeoman.app %>/scripts/{,*/}*.js'],
             options: {
                 reporter: require('jshint-stylish'),
                 browser: true,
@@ -115,21 +142,33 @@ module.exports = function (grunt) {
                 }
             }
         },
-        // Empties folders to start fresh
+        // Empties client folders to start fresh
         clean: {
             dist: {
                 files: [{
                     dot: true,
-                    src: ['.tmp', '<%= yeoman.dist %>/{,*/}*', '!<%= yeoman.dist %>/.git*']
+                    src: ['client/.tmp', '<%= yeoman.dist %>/{,*/}*', '!<%= yeoman.dist %>/.git*']
                 }]
             },
-            server: '.tmp'
+            server: 'client/.tmp'
+        },
+        // Automatically inject Bower components into the app
+        wiredep: {
+            app: {
+                src: ['<%= yeoman.app %>/index.html'],
+                exclude: ['client/app/bower_components/bootstrap/'],
+                ignorePath: /\.\.\//
+            },
+            sass: {
+                src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+                ignorePath: /(\.\.\/){1,2}app\/bower_components\//
+            }
         },
         compass: { //from client
             options: {
                 sassDir: 'client/app/styles',
-                cssDir: '.tmp/styles',
-                generatedImagesDir: '.tmp/images/generated',
+                cssDir: 'client/.tmp/styles',
+                generatedImagesDir: 'client/.tmp/images/generated',
                 imagesDir: 'client/app/images',
                 javascriptsDir: 'client/app/scripts',
                 fontsDir: 'client/app/styles/fonts',
@@ -238,35 +277,4 @@ module.exports = function (grunt) {
                     }
                 } */
     });
-
-    // Making grunt default to force in order not to break the project.
-    grunt.option('force', true);
-
-    // Default task(s).
-    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest', 'jshint']);
-
-    // Run benchmark tests
-    grunt.registerTask('benchmark', ['execute']);
-    
-    // Not ready for use
-    grunt.registerTask('coverage', ['shell:run_istanbul']);
-
-    // Test task.
-    //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
-    grunt.registerTask('live', ['concurrent:default']);
-
-    // Print a timestamp (useful for when watching)
-    grunt.registerTask('timestamp', function () {
-        grunt.log.subhead(Date());
-    });
-
-    // Client tasks 
-    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'compass:dev']);
-    grunt.registerTask('dev', ['jshint', 'compass:dev', 'watch']);
-    grunt.registerTask('test', ['jshint', 'compass:dev','protractor', 'watch']);
-    grunt.registerTask('release', ['jshint', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
-
-
-    // Lint task(s).
-    //grunt.registerTask('lint', ['jshint', 'csslint']);
 };
