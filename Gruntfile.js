@@ -16,7 +16,7 @@ module.exports = function (grunt) {
         clientSCSS: ['client/app/styles/{,*/}*.{scss,sass}'],
         mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
     };
-    
+
     var appConfig = {
         app: require('./bower.json').appPath || 'app',
         dist: require('./bower.json').distPath || 'dist'
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 
     // Run benchmark tests
     grunt.registerTask('benchmark', ['execute']);
-    
+
     // Not ready for use
     grunt.registerTask('coverage', ['shell:run_istanbul']);
 
@@ -46,23 +46,16 @@ module.exports = function (grunt) {
     // Client tasks 
     grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'compass:dev']);
     grunt.registerTask('dev', ['jshint', 'compass:dev', 'watch']);
-    grunt.registerTask('test', ['jshint', 'compass:dev','protractor', 'watch']);
+    grunt.registerTask('test', ['jshint', 'compass:dev', 'protractor', 'watch']);
     grunt.registerTask('release', ['jshint', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
 
     // Project Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-/*        protractor: { //protratorjs (from client)
-            options: {
-                configFile: "client/test/conf.js", // Default config file
-                keepAlive: true
-            },
-            all: {},
-        },
-        */
+
         // Project settings
         yeoman: appConfig,
-        
+
         watch: {
             serverJS: {
                 files: watchFiles.serverJS,
@@ -163,6 +156,14 @@ module.exports = function (grunt) {
                 src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 ignorePath: /(\.\.\/){1,2}app\/bower_components\//
             }
+        },
+        //protratorjs
+        protractor: {
+            options: {
+                configFile: "client/test/conf.js", // Default config file 
+                keepAlive: true
+            },
+            all: {},
         },
         compass: { //from client
             options: {
