@@ -271,27 +271,27 @@ module.exports = function (grunt) {
             }
         },
         uglify: {
-           dist: {
-             options: {
-               mangle: false
-             },
-             files: [{
-               expand: true,
-               cwd: '.tmp/scripts',
-               src: '{,**/}*.js',
-               dest: '<%= yeoman.dist %>/scripts'
-             }]
-           }
-         },
-         cssmin: {
-           dist: {
-             files: {
-               '<%= yeoman.dist %>/styles/main.css': [
-                 '.tmp/styles/{,*/}*.css'
-               ]
-             }
-           }
-         },
+            dist: {
+                options: {
+                    mangle: false
+                },
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/scripts',
+                    src: '{,**/}*.js',
+                    dest: '<%= yeoman.dist %>/scripts'
+                }]
+            }
+        },
+        cssmin: {
+            dist: {
+                files: {
+                    '<%= yeoman.dist %>/styles/main.css': [
+                        '.tmp/styles/{,*/}*.css'
+                    ]
+                }
+            }
+        },
         // Copies remaining files to places other tasks can use
         copy: {
             dist: {

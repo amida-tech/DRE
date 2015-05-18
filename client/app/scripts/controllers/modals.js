@@ -26,7 +26,7 @@ angular.module('phrPrototypeApp')
                     "metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
-                        prescription: true
+                        is_prescription: true
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
@@ -62,7 +62,9 @@ angular.module('phrPrototypeApp')
                             rxcui: $scope.selectedDrug.rxcui
                         }],
                         "product": {
-                            'name': $scope.selectedDrug.synonym
+                            'name': $scope.selectedDrug.synonym,
+                            'code': $scope.selectedDrug.rxcui,
+                            'code_system_name': 'RxNorm'
                         },
                         "unencoded_name": $scope.selectedDrug.name //,
                             //"manufacturer": 
@@ -87,7 +89,7 @@ angular.module('phrPrototypeApp')
                         "date_time": "",
                         "value": ""
                     },*/
-                    "performer": $scope.selectedPrescriber.first_name + " " + $scope.selectedPrescriber.last_name //,
+                    "performer": $scope.selectedPrescriber //,
                         //"drug_vehicle": "",
                         /*
                         "dispense": {
@@ -101,7 +103,7 @@ angular.module('phrPrototypeApp')
                     "metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
-                        prescription: false
+                        is_prescription: false
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
@@ -137,7 +139,9 @@ angular.module('phrPrototypeApp')
                             rxcui: $scope.selectedDrug.rxcui
                         }],
                         "product": {
-                            'name': $scope.selectedDrug.synonym
+                            'name': $scope.selectedDrug.synonym,
+                            'code': $scope.selectedDrug.rxcui,
+                            'code_system_name': 'RxNorm'
                         },
                         "unencoded_name": $scope.selectedDrug.name //,
                             //"manufacturer": 
@@ -162,13 +166,13 @@ angular.module('phrPrototypeApp')
                         "date_time": "",
                         "value": ""
                     },*/
-                    "performer": "" //,
-                        //"drug_vehicle": "",
-                        /*
-                        "dispense": {
-                            "identifiers": [],
-                            "performer": ""
-                        }*/
+                    "performer": {} //,
+                    //"drug_vehicle": "",
+                    /*
+                    "dispense": {
+                        "identifiers": [],
+                        "performer": ""
+                    }*/
                 };
             }
             console.log("...entered Medication: " + $scope.enteredMedication);
@@ -219,6 +223,7 @@ angular.module('phrPrototypeApp')
                     // Display success in the med entry modal
                     $scope.saveMedicationStatus = 'success';
                     setTimeout(function () {
+                        $modalInstance.close();
                         $route.reload();
                     }, 100);
                 }
@@ -465,13 +470,30 @@ angular.module('phrPrototypeApp')
     })
     .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, medication, medapi, npiapi, medications) {
         $scope.medication = medication;
+        $scope.saveMedication = saveMedication;
 
         $scope.initStuff = function () {
-            console.log("init-ing stuff");
-            medapi.findImages(medication.product.product.code, function (err, data) {
+            console.log("init-ing stuff... " + $scope.medication.metadata.is_prescription);
+            medapi.findImages($scope.medication.product.product.code, function (err, data) {
                 $scope.medImages = data;
             });
         };
+
+        function saveMedication() {
+            medications.editMedication($scope.medication, function (err, results) {
+                if (err) {
+                    // Display an error in the med entry modal
+                    $scope.saveMedicationStatus = 'error';
+                } else {
+                    // Display success in the med entry modal
+                    $scope.saveMedicationStatus = 'success';
+                    setTimeout(function () {
+                        $modalInstance.close();
+                        $route.reload();
+                    }, 100);
+                }
+            });
+        }
 
         $scope.close = function () {
             $modalInstance.dismiss('cancel');
