@@ -19,8 +19,11 @@ coverage
 
 npm-debug.log
 
+log
+
 .anvil
 
 #client/app/styles/main.css
 
-.nodemon-find-ref
+.nodemon_find_ref
+.sass-cache
