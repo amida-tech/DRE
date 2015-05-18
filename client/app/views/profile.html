@@ -45,29 +45,32 @@
                             <h5>Date of Birth</h5>
                             <p>{{vm.viewDOB}}</p>
                         </div>
-                        <div class="form-group col-sm-6 col-sm-offset-1">
+                        <div class="form-group col-sm-3 col-sm-offset-1">
+                            <h5>Gender</h5>
+                            <p>{{profile.gender}}</p>
+                        </div>
+                        <div class="form-group col-sm-3 col-sm-offset-1">
                             <h5>Primary Email Address</h5>
                             <p>{{vm.profile.email[0].email}}</p>
                         </div>
                     </div>
 
                     <div class="row">
-
                         <div class="form-group col-sm-3">
-                            <h5>Gender</h5>
-                            <p>{{vm.profile.gender}}</p>
+                            <h5>Race</h5>
+                            <p ng-hide="profile.race">None entered</p>
+                            <p>{{profile.race}}</p>
                         </div>
                         <div class="form-group col-sm-3 col-sm-offset-1">
-                            <h5>Race/Ethnicity</h5>
-                            <p ng-hide="vm.profile.race_ethnicity">None entered</p>
-                            <p>{{vm.profile.race_ethnicity}}</p>
+                            <h5>Ethnicity</h5>
+                            <p ng-hide="profile.ethnicity">None entered</p>
+                            <p>{{profile.ethnicity}}</p>
                         </div>
                         <div class="form-group col-sm-4 col-sm-offset-1">
                             <h5>Marital Status</h5>
                             <p ng-hide="vm.profile.marital_status">None entered</p>
                             <p>{{vm.profile.marital_status}}</p>
                         </div>
-
                     </div>
 
                     <div class="row">
@@ -108,15 +111,7 @@
                                     <input type="date" class="form-control" name="inputDOB" ng-model="vm.editDOB" required ng-required="true">
                                     <p ng-show="vm.profileForm.inputDOB.$invalid && !vm.profileForm.inputDOB.$pristine" class="help-block">Must be a valid date.</p>
                                 </div>
-                                <div class="form-group col-sm-8 col-sm-offset-1">
-                                    <label for="inputEmail">Primary Email Address*</label>
-                                    <input type="email" class="form-control" name="inputEmail" ng-model="vm.profile.email[0].email" required ng-required="true" ng-minLength="1">
-                                    <p ng-show="vm.profileForm.inputEmail.$invalid && !vm.profileForm.inputEmail.$pristine" class="help-block">Must be a valid email address.</p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-sm-3">
+                                <div class="form-group col-sm-3 col-sm-offset-1">
                                     <label for="inputGender">Gender*</label>
                                     <select class="form-control" name="inputGender" ng-model="vm.profile.gender" required ng-required="true">
                                         <option>Male</option>
@@ -125,13 +120,28 @@
                                     </select>
                                     <p ng-show="vm.profileForm.inputGender.$invalid && !vm.profileForm.inputGender.$pristine" class="help-block">Gender is required.</p>
                                 </div>
-                                <div class="form-group col-sm-3 col-sm-offset-1">
-                                    <label for="inputRace">Race/Ethnicity</label>
-                                    <select class="form-control" name="inputRace" ng-model="vm.profile.race_ethnicity">
+                                <div class="form-group col-sm-4 col-sm-offset-1">
+                                    <label for="inputEmail">Primary Email Address*</label>
+                                    <input type="email" class="form-control" name="inputEmail" ng-model="profile.email[0].email" required ng-required="true" ng-minLength="1">
+                                    <p ng-show="profileForm.inputEmail.$invalid && !profileForm.inputEmail.$pristine" class="help-block">Must be a valid email address.</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-sm-3">
+                                    <label for="inputRace">Race</label>
+                                    <select class="form-control" name="inputRace" ng-model="profile.race">
                                         <option>White</option>
                                         <option>Black</option>
                                         <option>Hispanic</option>
                                         <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3 col-sm-offset-1">
+                                    <label for="inputEthnicity">Ethnicity</label>
+                                    <select class="form-control" name="inputEthnicity" ng-model="profile.ethnicity">
+                                        <option>Hispanic or Latino</option>
+                                        <option>Not Hispanic or Latino</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-4 col-sm-offset-1">
@@ -145,6 +155,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="row">
                             <a>
                                 <button type="submit" class="btn btn-default col-sm-2 col-sm-offset-3" ng-disabled="vm.profileForm.$invalid" ng-click="vm.cancelProf()">Cancel</button>

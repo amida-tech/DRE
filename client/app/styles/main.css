@@ -1485,6 +1485,17 @@ img {
   height: auto;
 }
 
+.img-header {
+  display: block;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  float: left !important;
+  margin-top: -10px;
+  margin-left: -10px;
+  margin-right: 10px;
+}
+
 /* line 86, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
 .img-rounded {
   border-radius: 6px;

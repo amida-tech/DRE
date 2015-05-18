@@ -1,4 +1,8 @@
-<div class="modal-inner-content">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title">Medication Entry</h3>
+</div>
+<div class="modal-body">
     <div class="row" ng-if="entryStep===0">
         <h3>Select a drug type:</h3>
         <div class="col-sm-6 col-sm-offset-3 btn-group btn-group-justified" role="group">
@@ -83,15 +87,6 @@
                 </div>
             </form>
         </div>
-        <br />
-        <div class="row">
-            <div class="col-sm-3">
-                <button class="btn btn-default" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-6">
-                <button class="btn btn-default" ng-click="nextStep()">Next</button>
-            </div>
-        </div>
     </div>
     <div class="row" ng-if="entryStep===2">
         <h3>Prescriber Information</h3>
@@ -172,15 +167,6 @@
                 </div>
             </form>
         </div>
-        <br />
-        <div class="row">
-            <div class="col-sm-3">
-                <button class="btn btn-default" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-6">
-                <button class="btn btn-default" ng-click="nextStep()">Next</button>
-            </div>
-        </div>
     </div>
     <div class="row" ng-if="entryStep===3">
         <h3>Info so far:</h3>
@@ -258,18 +244,6 @@
                 <textarea ng-model="pWhy" class="form-control" rows="3"></textarea>
             </div>
         </div>
-        <br />
-        <div class="row">
-            <div class="col-sm-3">
-                <button class="btn btn-default" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-2">
-                <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="previousStep()">Back</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-1">
-                <button class="btn btn-default" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="nextStep()">Next</button>
-            </div>
-        </div>
     </div>
     <div class="row" ng-if="entryStep===4">
         <h3>Summary</h3>
@@ -284,20 +258,31 @@
         <h4>Save Object</h4>
         <pre>{{enteredMedication}}</pre>
         <br />
-        <div class="row">
-            <div class="col-sm-3">
-                <button class="btn btn-default" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-2">
-                <button class="btn btn-default" data-toggle="tab" data-target="#addinfo" aria-controls="addinfo" ng-click="previousStep()">Back</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-1">
-                <button class="btn btn-default" ng-click="saveMedication()">Submit</button>
-            </div>
-        </div>
         <div ng-if="saveMedicationStatus==='error'">
             <span>There was an error saving the medication.</span>
         </div>
         <div ng-if="saveMedicationStatus==='success'" ng-init="$hide()"></div>
     </div>
+</div>
+<div class="modal-footer" ng-if="entryStep===0">
+    <!--<button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
+</div>
+<div class="modal-footer" ng-if="entryStep===1">
+    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+    <button class="btn btn-primary" ng-click="nextStep()">Next</button>
+</div>
+<div class="modal-footer" ng-if="entryStep===2">
+    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+    <button class="btn btn-primary" ng-click="nextStep()">Next</button>
+</div>
+<div class="modal-footer" ng-if="entryStep===3">
+    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+    <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="previousStep()">Back</button>
+    <button class="btn btn-primary" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="nextStep()">Next</button>
+</div>
+<div class="modal-footer" ng-if="entryStep===4">
+    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+    <button class="btn btn-default" data-toggle="tab" data-target="#addinfo" aria-controls="addinfo" ng-click="previousStep()">Back</button>
+    <button class="btn btn-primary" ng-click="saveMedication()">Submit</button>
 </div>

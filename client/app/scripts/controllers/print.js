@@ -26,11 +26,11 @@ function Print($scope, $window, $location, format, matches, merges, history, dat
     function activate() {
         console.log("RECORD CONTROLLER LOAD ");
         console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
-        
+
         refresh();
         getHistory();
         // produces singular name for section name - in records merges list
-    
+
         //TODO may need callback
         function refresh() {
             dataservice.curr_section = vm.entryType;
@@ -45,7 +45,7 @@ function Print($scope, $window, $location, format, matches, merges, history, dat
                 vm.mergesList = dataservice.all_merges;
             });
         }
-        
+
         //Flip All as active selected item in DOM
         function getHistory() {
             history.getHistory(function (err, history) {
@@ -97,46 +97,46 @@ function Print($scope, $window, $location, format, matches, merges, history, dat
         }
     });
 
-    function filterBySection (entries, section) {
+    function filterBySection(entries, section) {
         return _.where(entries, {
             category: section
         });
     }
-    
-    function lastSection (last) {
+
+    function lastSection(last) {
         console.log('last?', last);
     }
-    
-    function singularName (section) {
+
+    function singularName(section) {
         switch (section) {
-            case 'social_history':
-                return 'social history';
-            case 'vitals':
-                return 'vital sign';
-            case 'allergies':
-                return 'allergy';
-            case 'medications':
-                return 'medication';
-            case 'problems':
-                return 'problem';
-            case 'claims':
-                return 'claim';
-            case 'results':
-                return 'test result';
-            case 'encounters':
-                return 'encounter';
-            case 'immunizations':
-                return 'immunization';
-            case 'procedures':
-                return 'procedure';
-            case 'claims':
-                return 'claim';
-            case 'insurance':
-                return 'insurance';
-            case 'payers':
-                return 'payer';
-            default:
-                return section;
+        case 'social_history':
+            return 'social history';
+        case 'vitals':
+            return 'vital sign';
+        case 'allergies':
+            return 'allergy';
+        case 'medications':
+            return 'medication';
+        case 'problems':
+            return 'problem';
+        case 'claims':
+            return 'claim';
+        case 'results':
+            return 'test result';
+        case 'encounters':
+            return 'encounter';
+        case 'immunizations':
+            return 'immunization';
+        case 'procedures':
+            return 'procedure';
+        case 'claims':
+            return 'claim';
+        case 'insurance':
+            return 'insurance';
+        case 'payers':
+            return 'payer';
+        default:
+            return section;
         }
     }
 }

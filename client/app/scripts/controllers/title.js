@@ -12,12 +12,12 @@ angular
     .controller('TitleCtrl', Title);
 
 Title.$inject = ['$rootScope', '$location', 'profile'];
-    
-function Title ($rootScope, $location, profile) {
+
+function Title($rootScope, $location, profile) {
     /* jshint validthis: true */
     var vm = this;
     vm.pageTitle = 'My PHR';
-    
+
     var routeMap = {
         'home': 'Home',
         'record': 'My Record',

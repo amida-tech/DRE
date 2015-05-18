@@ -1,50 +1,50 @@
 <table class="table table-hover">
     <tbody>
-        <tr ng-show="entryData.status">
+        <tr ng-show="medication.status">
             <td>Status:</td>
-            <td>{{entryData.status}}</td>
+            <td>{{medication.status}}</td>
         </tr>
-        <tr ng-show="entryData.sig">
+        <tr ng-show="medication.sig">
             <td>Sig:</td>
-            <td>{{entryData.sig}}</td>
+            <td>{{medication.sig}}</td>
         </tr>
-        <tr ng-show="entryData.administration&&entryData.administration.dose.displayQuantity">
+        <tr ng-show="medication.administration&&medication.administration.dose.displayQuantity">
             <td>Dose:</td>
-            <td>{{entryData.administration.dose.displayQuantity}}</td>
+            <td>{{medication.administration.dose.displayQuantity}}</td>
         </tr>
-        <tr ng-show="entryData.administration.rate.displayQuantity">
+        <tr ng-show="medication.administration.rate.displayQuantity">
             <td>Rate:</td>
-            <td>{{entryData.administration.rate.displayQuantity}}</td>
+            <td>{{medication.administration.rate.displayQuantity}}</td>
         </tr>
-        <!--        <tr ng-show="entryData.administration.rate">
+        <!--        <tr ng-show="medication.administration.rate">
             <td>Rate:</td>
-            <td>{{entryData.administration.rate}}</td>
+            <td>{{medication.administration.rate}}</td>
         </tr> -->
-        <!--        <tr ng-show="entryData.administration.interval">
+        <!--        <tr ng-show="medication.administration.interval">
             <td>Interval:</td>
-            <td>{{entryData.administration.interval}}</td>
+            <td>{{medication.administration.interval}}</td>
         </tr> -->
-        <div ng-show="entryData.product">
-            <tr ng-show="entryData.product.manufacturer">
+        <div ng-show="medication.product">
+            <tr ng-show="medication.product.manufacturer">
                 <td>Manufacturer:</td>
-                <td>{{entryData.product.manufacturer}}</td>
+                <td>{{medication.product.manufacturer}}</td>
             </tr>
-            <tr ng-show="entryData.product.product.code">
+            <tr ng-show="medication.product.product.code">
                 <td>Product Code:</td>
-                <td>{{entryData.product.product.code}}</td>
+                <td>{{medication.product.product.code}}</td>
             </tr>
-            <tr ng-show="entryData.product.product.code_system_name">
+            <tr ng-show="medication.product.product.code_system_name">
                 <td>Product Code System:</td>
-                <td>{{entryData.product.product.code_system_name}}</td>
+                <td>{{medication.product.product.code_system_name}}</td>
             </tr>
-            <tr ng-show="entryData.product.unencoded_name">
+            <tr ng-show="medication.product.unencoded_name">
                 <td>Unencoded Name:</td>
-                <td>{{entryData.product.unencoded_name}}</td>
+                <td>{{medication.product.unencoded_name}}</td>
             </tr>
-            <tr ng-show="entryData.product.product.translations">
+            <tr ng-show="medication.product.product.translations">
                 <td>Other Descriptions:</td>
                 <td>
-                    <div class="panel" ng-repeat="(itemIndex, itemEntry) in entryData.product.product.translations">
+                    <div class="panel" ng-repeat="(itemIndex, itemEntry) in medication.product.product.translations">
                         <table class="table sub-table">
                             <thead ng-show="itemEntry.name">
                                 <tr>
@@ -67,11 +67,11 @@
                 </td>
             </tr>
         </div>
-        <div ng-show="entryData.performer">
-            <tr ng-show="entryData.performer.name">
+        <div ng-show="medication.performer">
+            <tr ng-show="medication.performer.name">
                 <td>Performer Name:</td>
                 <td>
-                    <div class="panel" ng-repeat="performer_name in entryData.performer.name">
+                    <div class="panel" ng-repeat="performer_name in medication.performer.name">
                         <table class="table sub-table">
                             <tr>
                                 <td>{{performer_name.displayName}}</td>
@@ -80,10 +80,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.performer.organization">
+            <tr ng-show="medication.performer.organization">
                 <td>Performer Organization:</td>
                 <td>
-                    <div class="panel" ng-repeat="performer_org in entryData.performer.organization">
+                    <div class="panel" ng-repeat="performer_org in medication.performer.organization">
                         <table class="table sub-table">
                             <tr ng-repeat="performer_org_name in performer_org.name">
                                 <td ng-show="performer_org_name.displayName">{{performer_org_name.displayName}}</td>
@@ -93,14 +93,14 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.performer.type">
+            <tr ng-show="medication.performer.type">
                 <td>Performer Type:</td>
-                <td>{{entryData.performer.type}}</td>
+                <td>{{medication.performer.type}}</td>
             </tr>
-            <tr ng-show="entryData.performer.address">
+            <tr ng-show="medication.performer.address">
                 <td>Performer Address:</td>
                 <td>
-                    <div class="panel" ng-repeat="performer_addr in entryData.performer.address">
+                    <div class="panel" ng-repeat="performer_addr in medication.performer.address">
                         <table class="table sub-table">
                             <tr>
                                 <td>{{performer_addr.displayAddress}}</td>
@@ -109,10 +109,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.performer.name">
+            <tr ng-show="medication.performer.name">
                 <td>Performer Name:</td>
                 <td>
-                    <div class="panel" ng-repeat="performer_name in entryData.performer.name">
+                    <div class="panel" ng-repeat="performer_name in medication.performer.name">
                         <table class="table sub-table">
                             <tr>
                                 <td>{{performer_name.displayName}}</td>
@@ -121,10 +121,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.performer.phone">
+            <tr ng-show="medication.performer.phone">
                 <td>Performer Phone:</td>
                 <td>
-                    <div class="panel" ng-repeat="performer_phone in entryData.performer.phone">
+                    <div class="panel" ng-repeat="performer_phone in medication.performer.phone">
                         <table class="table sub-table">
                             <tr ng-show="performer_phone.type">
                                 <td>Type:</td>
@@ -138,10 +138,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.performer.email">
+            <tr ng-show="medication.performer.email">
                 <td>Performer Email:</td>
                 <td>
-                    <div class="panel" ng-repeat="performer_email in entryData.performer.email">
+                    <div class="panel" ng-repeat="performer_email in medication.performer.email">
                         <table class="table sub-table">
                             <tr>
                                 <td>{{performer_email.address}}</td>
@@ -150,10 +150,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.performer.code">
+            <tr ng-show="medication.performer.code">
                 <td>Performer Code:</td>
                 <td>
-                    <div class="panel" ng-repeat="(performer_codeIndex, performer_code) in entryData.performer.code">
+                    <div class="panel" ng-repeat="(performer_codeIndex, performer_code) in medication.performer.code">
                         <table class="table sub-table">
                             <thead ng-show="performer_code.name">
                                 <tr>
@@ -176,11 +176,11 @@
                 </td>
             </tr>
         </div>
-        <div ng-show="entryData.dispense.performer">
-            <tr ng-show="entryData.dispense.performer.name">
+        <div ng-show="medication.dispense.performer">
+            <tr ng-show="medication.dispense.performer.name">
                 <td>Dispense Name:</td>
                 <td>
-                    <div class="panel" ng-repeat="dispense_name in entryData.dispense.performer.name">
+                    <div class="panel" ng-repeat="dispense_name in medication.dispense.performer.name">
                         <table class="table sub-table">
                             <tr>
                                 <td>{{dispense_name.displayName}}</td>
@@ -189,10 +189,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.dispense.performer.organization">
+            <tr ng-show="medication.dispense.performer.organization">
                 <td>Dispense Organization:</td>
                 <td>
-                    <div class="panel" ng-repeat="dispense_org in entryData.dispense.performer.organization">
+                    <div class="panel" ng-repeat="dispense_org in medication.dispense.performer.organization">
                         <table class="table sub-table">
                             <tr ng-repeat="dispense_org_name in dispense_org.name">
                                 <td ng-show="dispense_org_name.displayName">{{dispense_org_name.displayName}}</td>
@@ -202,14 +202,14 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.dispense.performer.type">
+            <tr ng-show="medication.dispense.performer.type">
                 <td>Dispense Type:</td>
-                <td>{{entryData.dispense.performer.type}}</td>
+                <td>{{medication.dispense.performer.type}}</td>
             </tr>
-            <tr ng-show="entryData.dispense.performer.address">
+            <tr ng-show="medication.dispense.performer.address">
                 <td>Dispense Address:</td>
                 <td>
-                    <div class="panel" ng-repeat="dispense_addr in entryData.dispense.performer.address">
+                    <div class="panel" ng-repeat="dispense_addr in medication.dispense.performer.address">
                         <table class="table sub-table">
                             <tr>
                                 <td>{{dispense_addr.displayAddress}}</td>
@@ -218,10 +218,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.dispense.performer.name">
+            <tr ng-show="medication.dispense.performer.name">
                 <td>Dispense Name:</td>
                 <td>
-                    <div class="panel" ng-repeat="dispense_name in entryData.dispense.performer.name">
+                    <div class="panel" ng-repeat="dispense_name in medication.dispense.performer.name">
                         <table class="table sub-table">
                             <tr>
                                 <td>{{dispense_name.displayName}}</td>
@@ -230,10 +230,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.dispense.performer.phone">
+            <tr ng-show="medication.dispense.performer.phone">
                 <td>Dispense Phone:</td>
                 <td>
-                    <div class="panel" ng-repeat="dispense_phone in entryData.dispense.performer.phone">
+                    <div class="panel" ng-repeat="dispense_phone in medication.dispense.performer.phone">
                         <table class="table sub-table">
                             <tr ng-show="dispense_phone.type">
                                 <td>Type:</td>
@@ -247,10 +247,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.dispense.performer.email">
+            <tr ng-show="medication.dispense.performer.email">
                 <td>Dispense Email:</td>
                 <td>
-                    <div class="panel" ng-repeat="dispense_email in entryData.dispense.performer.email">
+                    <div class="panel" ng-repeat="dispense_email in medication.dispense.performer.email">
                         <table class="table sub-table">
                             <tr>
                                 <td>{{dispense_email.address}}</td>
@@ -259,10 +259,10 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.dispense.performer.code">
+            <tr ng-show="medication.dispense.performer.code">
                 <td>Dispense Code:</td>
                 <td>
-                    <div class="panel" ng-repeat="(dispense_codeIndex, dispense_code) in entryData.dispense.performer.code">
+                    <div class="panel" ng-repeat="(dispense_codeIndex, dispense_code) in medication.dispense.performer.code">
                         <table class="table sub-table">
                             <thead ng-show="dispense_code.name">
                                 <tr>
@@ -285,231 +285,231 @@
                 </td>
             </tr>
         </div>
-        <tr ng-show="entryData.supply">
+        <tr ng-show="medication.supply">
             <td>Supply:</td>
             <td>
                 <div class="panel">
                     <table class="table sub-table">
-                        <tr ng-show="entryData.supply.date_time.displayDate">
+                        <tr ng-show="medication.supply.date_time.displayDate">
                             <td>Date:</td>
-                            <td>{{entryData.supply.date_time.displayDate}}</td>
+                            <td>{{medication.supply.date_time.displayDate}}</td>
                         </tr>
-                        <tr ng-show="entryData.supply.repeatNumber">
+                        <tr ng-show="medication.supply.repeatNumber">
                             <td>Repeat Number:</td>
                             <td>
-                                {{entryData.supply.repeatNumber}}
+                                {{medication.supply.repeatNumber}}
                             </td>
                         </tr>
-                        <tr ng-show="entryData.supply.quantity">
+                        <tr ng-show="medication.supply.quantity">
                             <td>Quantity:</td>
-                            <td>{{entryData.supply.quantity}}</td>
+                            <td>{{medication.supply.quantity}}</td>
                         </tr>
-                        <tr ng-show="entryData.supply.author.name.displayName">
+                        <tr ng-show="medication.supply.author.name.displayName">
                             <td>Author:</td>
-                            <td>{{entryData.supply.author.name.displayName}}</td>
+                            <td>{{medication.supply.author.name.displayName}}</td>
                         </tr>
-                        <tr ng-show="entryData.supply.author.organization && entryData.supply.author.organization.name.displayName">
+                        <tr ng-show="medication.supply.author.organization && medication.supply.author.organization.name.displayName">
                             <td>Author Organization:</td>
-                            <td>{{entryData.supply.author.organization.name.displayName}}</td>
+                            <td>{{medication.supply.author.organization.name.displayName}}</td>
                         </tr>
                     </table>
                 </div>
             </td>
         </tr>
-        <div ng-show="entryData.administration">
-            <tr ng-show="entryData.administration.route">
+        <div ng-show="medication.administration">
+            <tr ng-show="medication.administration.route">
                 <td>Route:</td>
                 <td>
                     <div class="panel">
                         <table class="table sub-table">
-                            <tr ng-show="entryData.administration.route.name">
+                            <tr ng-show="medication.administration.route.name">
                                 <td>Name:</td>
-                                <td>{{entryData.administration.route.name}}</td>
+                                <td>{{medication.administration.route.name}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.route.code">
+                            <tr ng-show="medication.administration.route.code">
                                 <td>Code:</td>
-                                <td>{{entryData.administration.route.code}}</td>
+                                <td>{{medication.administration.route.code}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.route.code_system_name">
+                            <tr ng-show="medication.administration.route.code_system_name">
                                 <td>Code System:</td>
-                                <td>{{entryData.administration.route.code_system_name}}</td>
+                                <td>{{medication.administration.route.code_system_name}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.administration.form">
+            <tr ng-show="medication.administration.form">
                 <td>Form:</td>
                 <td>
                     <div class="panel">
                         <table class="table sub-table">
-                            <tr ng-show="entryData.administration.form.name">
+                            <tr ng-show="medication.administration.form.name">
                                 <td>Name:</td>
-                                <td>{{entryData.administration.form.name}}</td>
+                                <td>{{medication.administration.form.name}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.form.code">
+                            <tr ng-show="medication.administration.form.code">
                                 <td>Code:</td>
-                                <td>{{entryData.administration.form.code}}</td>
+                                <td>{{medication.administration.form.code}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.form.code_system_name">
+                            <tr ng-show="medication.administration.form.code_system_name">
                                 <td>Code System:</td>
-                                <td>{{entryData.administration.form.code_system_name}}</td>
+                                <td>{{medication.administration.form.code_system_name}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.administration.dose_restriction">
+            <tr ng-show="medication.administration.dose_restriction">
                 <td>Dose Restriction:</td>
                 <td>
                     <div class="panel">
                         <table class="table sub-table">
-                            <tr ng-show="entryData.administration.dose_restriction.value">
+                            <tr ng-show="medication.administration.dose_restriction.value">
                                 <td>Name:</td>
-                                <td>{{entryData.administration.dose_restriction.value}}</td>
+                                <td>{{medication.administration.dose_restriction.value}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.dose_restriction.unit">
+                            <tr ng-show="medication.administration.dose_restriction.unit">
                                 <td>Code:</td>
-                                <td>{{entryData.administration.dose_restriction.unit}}</td>
+                                <td>{{medication.administration.dose_restriction.unit}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.administration.site">
+            <tr ng-show="medication.administration.site">
                 <td>Site of Administration:</td>
                 <td>
                     <div class="panel">
                         <table class="table sub-table">
-                            <tr ng-show="entryData.administration.site.name">
+                            <tr ng-show="medication.administration.site.name">
                                 <td>Name:</td>
-                                <td>{{entryData.administration.site.name}}</td>
+                                <td>{{medication.administration.site.name}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.site.code">
+                            <tr ng-show="medication.administration.site.code">
                                 <td>Code:</td>
-                                <td>{{entryData.administration.site.code}}</td>
+                                <td>{{medication.administration.site.code}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.site.code_system_name">
+                            <tr ng-show="medication.administration.site.code_system_name">
                                 <td>Code System:</td>
-                                <td>{{entryData.administration.site.code_system_name}}</td>
+                                <td>{{medication.administration.site.code_system_name}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.drug_vehicle">
+            <tr ng-show="medication.drug_vehicle">
                 <td>Drug Vehicle:</td>
                 <td>
                     <div class="panel">
                         <table class="table sub-table">
-                            <tr ng-show="entryData.drug_vehicle.name">
+                            <tr ng-show="medication.drug_vehicle.name">
                                 <td>Name:</td>
-                                <td>{{entryData.drug_vehicle.name}}</td>
+                                <td>{{medication.drug_vehicle.name}}</td>
                             </tr>
-                            <tr ng-show="entryData.drug_vehicle.code">
+                            <tr ng-show="medication.drug_vehicle.code">
                                 <td>Code:</td>
-                                <td>{{entryData.drug_vehicle.code}}</td>
+                                <td>{{medication.drug_vehicle.code}}</td>
                             </tr>
-                            <tr ng-show="entryData.drug_vehicle.code_system_name">
+                            <tr ng-show="medication.drug_vehicle.code_system_name">
                                 <td>Code System:</td>
-                                <td>{{entryData.drug_vehicle.code_system_name}}</td>
+                                <td>{{medication.drug_vehicle.code_system_name}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.administration.interval">
+            <tr ng-show="medication.administration.interval">
                 <td>Interval:</td>
                 <td>
                     <div class="panel">
                         <table class="table sub-table">
-                            <tr ng-show="entryData.administration.interval.phase.displayDate">
+                            <tr ng-show="medication.administration.interval.phase.displayDate">
                                 <td>Phase:</td>
-                                <td>{{entryData.administration.interval.phase.displayDate}}</td>
+                                <td>{{medication.administration.interval.phase.displayDate}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.interval.period.displayQuantity">
+                            <tr ng-show="medication.administration.interval.period.displayQuantity">
                                 <td>Period:</td>
-                                <td>{{entryData.administration.interval.period.displayQuantity}}</td>
+                                <td>{{medication.administration.interval.period.displayQuantity}}</td>
                             </tr>
                             <tr>
                                 <td>Frequency:</td>
-                                <td>{{entryData.administration.interval.frequency}}</td>
+                                <td>{{medication.administration.interval.frequency}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.interval.alignment">
+                            <tr ng-show="medication.administration.interval.alignment">
                                 <td>Alignment:</td>
-                                <td>{{entryData.administration.interval.alignment}}</td>
+                                <td>{{medication.administration.interval.alignment}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.interval.event">
+                            <tr ng-show="medication.administration.interval.event">
                                 <td>Event:</td>
-                                <td>{{entryData.administration.interval.event}}</td>
+                                <td>{{medication.administration.interval.event}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-show="entryData.administration.interval&&entryData.administration.interval.event_offset">
+            <tr ng-show="medication.administration.interval&&medication.administration.interval.event_offset">
                 <td>Interval Offset:</td>
                 <td>
                     <div class="panel">
                         <table class="table sub-table">
-                            <tr ng-show="entryData.administration.interval.event_offset.low">
+                            <tr ng-show="medication.administration.interval.event_offset.low">
                                 <td>Low:</td>
-                                <td>{{entryData.administration.interval.event_offset.low.value}} {{entryData.administration.interval.event_offset.low.unit}}</td>
+                                <td>{{medication.administration.interval.event_offset.low.value}} {{medication.administration.interval.event_offset.low.unit}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.interval.event_offset.high">
+                            <tr ng-show="medication.administration.interval.event_offset.high">
                                 <td>High:</td>
-                                <td>{{entryData.administration.interval.event_offset.high.value}} {{entryData.administration.interval.event_offset.high.unit}}</td>
+                                <td>{{medication.administration.interval.event_offset.high.value}} {{medication.administration.interval.event_offset.high.unit}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.interval.event_offset.center">
+                            <tr ng-show="medication.administration.interval.event_offset.center">
                                 <td>Center:</td>
-                                <td>{{entryData.administration.interval.event_offset.center.value}} {{entryData.administration.interval.event_offset.center.unit}}</td>
+                                <td>{{medication.administration.interval.event_offset.center.value}} {{medication.administration.interval.event_offset.center.unit}}</td>
                             </tr>
-                            <tr ng-show="entryData.administration.interval.event_offset.width">
+                            <tr ng-show="medication.administration.interval.event_offset.width">
                                 <td>Width:</td>
-                                <td>{{entryData.administration.interval.event_offset.width.value}} {{entryData.administration.interval.event_offset.width.unit}}</td>
+                                <td>{{medication.administration.interval.event_offset.width.value}} {{medication.administration.interval.event_offset.width.unit}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
         </div>
-        <tr ng-show="entryData.precondition">
+        <tr ng-show="medication.precondition">
             <td>Precondition:</td>
             <td>
                 <div class="panel">
                     <table class="table sub-table">
-                        <tr ng-show="entryData.precondition.value.name">
+                        <tr ng-show="medication.precondition.value.name">
                             <td>Name:</td>
-                            <td>{{entryData.precondition.value.name}}</td>
+                            <td>{{medication.precondition.value.name}}</td>
                         </tr>
-                        <tr ng-show="entryData.precondition.value.code">
+                        <tr ng-show="medication.precondition.value.code">
                             <td>Code:</td>
-                            <td>{{entryData.precondition.value.code}}</td>
+                            <td>{{medication.precondition.value.code}}</td>
                         </tr>
-                        <tr ng-show="entryData.precondition.value.code_system_name">
+                        <tr ng-show="medication.precondition.value.code_system_name">
                             <td>Code System:</td>
-                            <td>{{entryData.precondition.value.code_system_name}}</td>
+                            <td>{{medication.precondition.value.code_system_name}}</td>
                         </tr>
                     </table>
                 </div>
             </td>
         </tr>
-        <tr ng-show="entryData.indication">
+        <tr ng-show="medication.indication">
             <td>Indication:</td>
             <td>
                 <div class="panel">
                     <table class="table sub-table">
-                        <tr ng-show="entryData.indication.value.name">
+                        <tr ng-show="medication.indication.value.name">
                             <td>Name:</td>
-                            <td>{{entryData.indication.value.name}}</td>
+                            <td>{{medication.indication.value.name}}</td>
                         </tr>
-                        <tr ng-show="entryData.indication.value.code">
+                        <tr ng-show="medication.indication.value.code">
                             <td>Code:</td>
-                            <td>{{entryData.indication.value.code}}</td>
+                            <td>{{medication.indication.value.code}}</td>
                         </tr>
-                        <tr ng-show="entryData.indication.value.code_system_name">
+                        <tr ng-show="medication.indication.value.code_system_name">
                             <td>Code System:</td>
-                            <td>{{entryData.indication.value.code_system_name}}</td>
+                            <td>{{medication.indication.value.code_system_name}}</td>
                         </tr>
                     </table>
                 </div>
