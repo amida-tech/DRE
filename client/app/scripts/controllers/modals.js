@@ -468,7 +468,7 @@ angular.module('phrPrototypeApp')
             $modalInstance.dismiss('cancel');
         };
     })
-    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, medication, medapi, npiapi, medications) {
+    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications) {
         $scope.medication = medication;
         $scope.saveMedication = saveMedication;
 

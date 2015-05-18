@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button style="width: initial" class="btn btn-default form-control" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
+                        <button style="width: initial" class="btn btn-default form-control pull-right" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
                     </div>
                 </div>
                 <div class="row">
@@ -119,7 +119,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button style="width: initial" class="btn btn-default" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
+                        <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
                     </div>
                 </div>
                 <div class="row">
@@ -270,11 +270,11 @@
 </div>
 <div class="modal-footer" ng-if="entryStep===1">
     <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-    <button class="btn btn-primary" ng-click="nextStep()">Next</button>
+    <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedDrug">Next</button>
 </div>
 <div class="modal-footer" ng-if="entryStep===2">
     <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-    <button class="btn btn-primary" ng-click="nextStep()">Next</button>
+    <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedPrescriber">Next</button>
 </div>
 <div class="modal-footer" ng-if="entryStep===3">
     <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>

@@ -106,7 +106,7 @@ describe('Medications API', function () {
             }
         };
         var tmp_edit = {
-            'data': data
+            'medication': data
         };
 
         before(function (done) {
