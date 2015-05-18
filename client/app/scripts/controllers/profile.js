@@ -14,7 +14,7 @@ angular
 
 Profile.$inject = ['$location', '$route', '$anchorScroll', 'account', 'profile', 'format'];
 
-function Profile ($location, $route, $anchorScroll, account, profile, format) {
+function Profile($location, $route, $anchorScroll, account, profile, format) {
     /* jshint validthis: true */
     var vm = this;
     vm.cancelAddressSection = cancelAddressSection;
@@ -28,17 +28,17 @@ function Profile ($location, $route, $anchorScroll, account, profile, format) {
     vm.editProfSection = editProfSection;
     vm.navClick = navClick;
     vm.updateProfile = updateProfile;
-    
+
     activate();
-    
+
     function activate() {
         displayProfile();
     }
-    
+
     function editAddressSection() {
         vm.editAddress = true;
     }
-    
+
     function cancelAddressSection() {
         vm.editAddress = false;
         vm.new_address = {};
@@ -48,7 +48,7 @@ function Profile ($location, $route, $anchorScroll, account, profile, format) {
     function editPhoneSection() {
         vm.editPhone = true;
     }
-    
+
     function cancelPhoneSection() {
         vm.editPhone = false;
         vm.new_phone = {};
@@ -58,7 +58,7 @@ function Profile ($location, $route, $anchorScroll, account, profile, format) {
     function editProfSection() {
         vm.editProf = true;
     }
-    
+
     function cancelProf() {
         vm.editProf = false;
         displayProfile();
@@ -183,4 +183,3 @@ function Profile ($location, $route, $anchorScroll, account, profile, format) {
     }
 
 }
-
