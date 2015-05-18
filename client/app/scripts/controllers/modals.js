@@ -24,7 +24,9 @@ angular.module('phrPrototypeApp')
                 $scope.enteredMedication = {
                     //"identifiers": [],
                     "metadata": {
-                        image: $scope.selectedImage
+                        image: $scope.selectedImage,
+                        patient_entered: true,
+                        prescription: true
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
@@ -97,7 +99,9 @@ angular.module('phrPrototypeApp')
                 $scope.enteredMedication = {
                     //"identifiers": [],
                     "metadata": {
-                        image: $scope.selectedImage
+                        image: $scope.selectedImage,
+                        patient_entered: true,
+                        prescription: false
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
@@ -432,6 +436,7 @@ angular.module('phrPrototypeApp')
             $scope.pLastName = null;
             $scope.pZip = null;
             $scope.pDrugName = null;
+            $scope.selectedImage = null;
             //$scope.openfdanameResults = null;
             $scope.rxnormResults = null;
             //$scope.medlineResults = null;
@@ -458,8 +463,19 @@ angular.module('phrPrototypeApp')
             $modalInstance.dismiss('cancel');
         };
     })
-    .controller('MedicationUpdateModalCtrl', function ($scope, $window, $location, $modal, $anchorScroll, $route, format, matches, merges, history, dataservice, medapi, npiapi, medications) {
+    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, medication, medapi, npiapi, medications) {
+        $scope.medication = medication;
 
+        $scope.initStuff = function () {
+            console.log("init-ing stuff");
+            medapi.findImages(medication.product.product.code, function (err, data) {
+                $scope.medImages = data;
+            });
+        };
+
+        $scope.close = function () {
+            $modalInstance.dismiss('cancel');
+        };
     })
     .controller('MedicationDetailModalCtrl', function ($scope, $modalInstance, medication, medapi, npiapi, medications) {
         $scope.medication = medication;
