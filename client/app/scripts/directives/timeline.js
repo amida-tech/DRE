@@ -86,7 +86,7 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
 
                 } else {
                     console.log('>>>plotting something else');
-                    console.log("num of points ", dataToPlot.length);
+                    console.log("num of points ", dataToPlot);
 
                     _.each(dataToPlot, function (entry) {
                         var plotDate;

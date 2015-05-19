@@ -13,7 +13,7 @@ angular.module('phrPrototypeApp')
 
         //TODO:  Hygiene here for max length of inputs.
         this.login = function (username, password, callback) {
-            console.log("login service:", username, password);
+            // console.log("login service:", username, password);
             if (username && password) {
 
                 $http.post('api/v1/login', {
