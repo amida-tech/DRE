@@ -499,6 +499,30 @@ angular.module('phrPrototypeApp')
             $modalInstance.dismiss('cancel');
         };
     })
+    .controller('MedicationDeleteModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications) {
+        $scope.medication = medication;
+        $scope.deleteConfirm = deleteConfirm;
+
+        function deleteConfirm() {
+            medications.deleteMedication($scope.medication, function (err, results) {
+                if (err) {
+                    // Display an error in the med entry modal
+                    $scope.saveMedicationStatus = 'error';
+                } else {
+                    // Display success in the med entry modal
+                    $scope.saveMedicationStatus = 'success';
+                    setTimeout(function () {
+                        $modalInstance.close();
+                        $route.reload();
+                    }, 100);
+                }
+            });
+        }
+
+        $scope.close = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    })
     .controller('MedicationDetailModalCtrl', function ($scope, $modalInstance, medication, medapi, npiapi, medications) {
         $scope.medication = medication;
         $scope.medicationDetailPath = "views/templates/details/medications.html";

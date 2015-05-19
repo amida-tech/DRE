@@ -18,6 +18,7 @@ function medications($http) {
     /* jshint validthis: true */
     this.addMedication = addMedication;
     this.editMedication = editMedication;
+    this.deleteMedication = deleteMedication;
     this.getMedication = getMedications;
 
     function addMedication(medication, callback) {
@@ -45,6 +46,20 @@ function medications($http) {
             })
             .error(function (err) {
                 console.log("editing the medication failed");
+                callback(err);
+            });
+    }
+
+    function deleteMedication(medication, callback) {
+        $http.post('/api/v1/medications/delete', {
+                id: medication._id
+            })
+            .success(function (data) {
+                console.log("medication deleted successfully");
+                callback(null, data);
+            })
+            .error(function (err) {
+                console.log("deleting the medication failed");
                 callback(err);
             });
     }

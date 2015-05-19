@@ -53,6 +53,24 @@ angular.module('phrPrototypeApp').controller('RecordCtrl', function ($scope, $wi
         });
     };
 
+    $scope.deleteModal = function (medication) {
+        var modalInstance = $modal.open({
+            animation: false,
+            templateUrl: 'views/modals/medicationdelete.html',
+            controller: 'MedicationDeleteModalCtrl',
+            resolve: {
+                medication: function () {
+                    return medication;
+                }
+            }
+        });
+        modalInstance.result.then(function (response) {
+            console.log(response);
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
+    };
+
     $scope.dashMetrics = {};
     $scope.pDrugName = "";
     $scope.tabs = [{
