@@ -13,7 +13,9 @@ function login(api, username, password, done) {
             'email': 'kevin@ba.com'
         })
         .end(function (err, res) {
-            if (err) throw err;
+            if (err) {
+                throw err;
+            }
             done();
         });
 }

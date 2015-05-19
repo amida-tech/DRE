@@ -1,0 +1,29 @@
+{
+  "name": "phr-prototype",
+  "version": "0.0.0",
+  "dependencies": {
+    "d3": "~3.5.5",
+    "lodash": "~3.7.0",
+    "angular": "~1.4.0-rc.2",
+    "moment": "~2.10.3",
+    "json3": "~3.3.2",
+    "es5-shim": "~4.1.1",
+    "bootstrap-sass-official": "~3.3.4",
+    "font-awesome": "~4.3.0",
+    "angular-resource": "~1.4.0-rc.2",
+    "angular-cookies": "~1.4.0-rc.2",
+    "angular-sanitize": "~1.4.0-rc.2",
+    "angular-animate": "~1.4.0-rc.2",
+    "angular-touch": "~1.4.0-rc.2",
+    "angular-route": "~1.4.0-rc.2",
+    "diff": "~0.3.0",
+    "angular-bootstrap": "~0.13.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.0-rc.2",
+    "angular-scenario": "~1.4.0-rc.2",
+    "lodash-deep": "~1.6.0"
+  },
+  "appPath": "client/app",
+  "distPath": "client/dist"
+}

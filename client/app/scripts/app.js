@@ -18,7 +18,7 @@ angular
         'ngRoute',
         'ngSanitize',
         'ngTouch',
-        'mgcrea.ngStrap',
+        'ui.bootstrap',
         'd3'
     ])
     .config(function ($routeProvider) {
@@ -30,7 +30,8 @@ angular
             })
             .when('/print', {
                 templateUrl: 'views/print.html',
-                controller: 'PrintCtrl'
+                controller: 'PrintCtrl',
+                controllerAs: 'vm'
             })
             .when('/about', {
                 templateUrl: 'views/about.html',
@@ -53,7 +54,8 @@ angular
             })
             .when('/profile', {
                 templateUrl: 'views/profile.html',
-                controller: 'ProfileCtrl'
+                controller: 'ProfileCtrl',
+                controllerAs: 'vm'
             })
             .when('/account', {
                 templateUrl: 'views/account.html',

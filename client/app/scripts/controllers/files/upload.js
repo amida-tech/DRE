@@ -54,7 +54,7 @@ function FilesUpload($location, $route, upload, $http, format, record) {
             upload.uploadRecord(uploadFile, false, function (err, results) {
                 vm.uploadStep = 0;
                 $location.path('/files');
-                $route.reload();
+                //$route.reload();
             });
         }
     }

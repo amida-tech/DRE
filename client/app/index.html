@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title ng-controller="titleController" ng-bind="pageTitle"></title>
+    <title ng-controller="TitleCtrl as title" ng-bind="title.pageTitle"></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -157,7 +157,6 @@
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/d3-tip/index.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/moment/moment.js"></script>
@@ -179,73 +178,78 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
-    <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/diff/index.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!--<script src="bower_components/jquery-lockfixed/jquery.lockfixed.js"></script>-->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/services/dataservice.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/print.js"></script>
-    <script src="scripts/controllers/about.js"></script>
-    <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/services/authentication.js"></script>
-    <script src="scripts/services/username.js"></script>
-    <script src="scripts/controllers/home.js"></script>
-    <script src="scripts/services/history.js"></script>
-    <script src="scripts/directives/timeline.js"></script>
-    <script src="scripts/controllers/navbar.js"></script>
-    <script src="scripts/controllers/register.js"></script>
-    <script src="scripts/services/registration.js"></script>
-    <script src="scripts/controllers/profile.js"></script>
-    <script src="scripts/controllers/account.js"></script>
-    <script src="scripts/controllers/reset.js"></script>
-    <script src="scripts/services/account.js"></script>
-    <script src="scripts/services/profile.js"></script>
-    <script src="scripts/services/login.js"></script>
-    <script src="scripts/services/logout.js"></script>
-    <script src="scripts/directives/profile.js"></script>
-    <script src="scripts/directives/username.js"></script>
-    <script src="scripts/controllers/files.js"></script>
-    <script src="scripts/services/files.js"></script>
-    <script src="scripts/directives/breadcrumb.js"></script>
-    <script src="scripts/controllers/record.js"></script>
-    <script src="scripts/services/record.js"></script>
-    <script src="scripts/directives/measurements.js"></script>
-    <script src="scripts/services/format.js"></script>
-    <script src="scripts/directives/recordnavigation.js"></script>
-    <script src="scripts/controllers/billing.js"></script>
-    <script src="scripts/directives/billingnavigation.js"></script>
-    <script src="scripts/directives/timeline-icon.js"></script>
-    <script src="scripts/services/partial.js"></script>
-    <script src="scripts/controllers/files/upload.js"></script>
-    <script src="scripts/services/files/upload.js"></script>
-    <script src="scripts/services/d3.js"></script>
-    <script src="scripts/controllers/notes.js"></script>
-    <script src="scripts/services/notes.js"></script>
-    <script src="scripts/directives/entry.js"></script>
-    <script src="scripts/directives/entryheader.js"></script>
-    <script src="scripts/directives/billingentry.js"></script>
-    <script src="scripts/filters/starred.js"></script>
-    <script src="scripts/filters/sections.js"></script>
-    <script src="scripts/controllers/pagetitle.js"></script>
-    <script src="scripts/controllers/recordDownload.js"></script>
-    <script src="scripts/services/billing.js"></script>
-    <script src="scripts/services/matches.js"></script>
-    <script src="scripts/services/merges.js"></script>
-    <script src="scripts/controllers/matches.js"></script>
-    <script src="scripts/directives/entrydetails.js"></script>
-    <script src="scripts/directives/printentry.js"></script>
-    <script src="scripts/directives/profiledetail.js"></script>
-    <script src="scripts/directives/finishrender.js"></script>
-    <script src="scripts/directives/focus.js"></script>
-    <script src="scripts/directives/validfile.js"></script>
-    <script src="scripts/services/medapi.js"></script>
-    <script src="scripts/services/npiapi.js"></script>
-    <script src="scripts/services/medications.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/assets/d3-tip/index.js"></script>
+    <script src="/scripts/controllers/about.js"></script>
+    <script src="/scripts/controllers/account.js"></script>
+    <script src="/scripts/controllers/billing.js"></script>
+    <script src="/scripts/controllers/files.js"></script>
+    <script src="/scripts/controllers/files/upload.js"></script>
+    <script src="/scripts/controllers/home.js"></script>
+    <script src="/scripts/controllers/login.js"></script>
+    <script src="/scripts/controllers/main.js"></script>
+    <script src="/scripts/controllers/matches.js"></script>
+    <script src="/scripts/controllers/navbar.js"></script>
+    <script src="/scripts/controllers/notes.js"></script>
+    <script src="/scripts/controllers/print.js"></script>
+    <script src="/scripts/controllers/profile.js"></script>
+    <script src="/scripts/controllers/record.js"></script>
+    <script src="/scripts/controllers/recordDownload.js"></script>
+    <script src="/scripts/controllers/register.js"></script>
+    <script src="/scripts/controllers/reset.js"></script>
+    <script src="/scripts/controllers/title.js"></script>
+    <script src="/scripts/controllers/modals.js"></script>
+    <script src="/scripts/directives/billingentry.js"></script>
+    <script src="/scripts/directives/billingentry_old.js"></script>
+    <script src="/scripts/directives/billingnavigation.js"></script>
+    <script src="/scripts/directives/billingnavigation_old.js"></script>
+    <script src="/scripts/directives/breadcrumb.js"></script>
+    <script src="/scripts/directives/entry.js"></script>
+    <script src="/scripts/directives/entrydetails.js"></script>
+    <script src="/scripts/directives/entryheader.js"></script>
+    <script src="/scripts/directives/finishrender.js"></script>
+    <script src="/scripts/directives/focus.js"></script>
+    <script src="/scripts/directives/measurements.js"></script>
+    <script src="/scripts/directives/printentry.js"></script>
+    <script src="/scripts/directives/profile.js"></script>
+    <script src="/scripts/directives/profiledetail.js"></script>
+    <script src="/scripts/directives/recordnavigation.js"></script>
+    <script src="/scripts/directives/timeline-icon.js"></script>
+    <script src="/scripts/directives/timeline.js"></script>
+    <script src="/scripts/directives/username.js"></script>
+    <script src="/scripts/directives/validfile.js"></script>
+    <script src="/scripts/filters/sections.js"></script>
+    <script src="/scripts/filters/starred.js"></script>
+    <script src="/scripts/services/account.js"></script>
+    <script src="/scripts/services/authentication.js"></script>
+    <script src="/scripts/services/billing.js"></script>
+    <script src="/scripts/services/d3.js"></script>
+    <script src="/scripts/services/dataservice.js"></script>
+    <script src="/scripts/services/files.js"></script>
+    <script src="/scripts/services/files/upload.js"></script>
+    <script src="/scripts/services/format.js"></script>
+    <script src="/scripts/services/history.js"></script>
+    <script src="/scripts/services/login.js"></script>
+    <script src="/scripts/services/logout.js"></script>
+    <script src="/scripts/services/matches.js"></script>
+    <script src="/scripts/services/medapi.js"></script>
+    <script src="/scripts/services/medications.js"></script>
+    <script src="/scripts/services/merges.js"></script>
+    <script src="/scripts/services/notes.js"></script>
+    <script src="/scripts/services/npiapi.js"></script>
+    <script src="/scripts/services/partial.js"></script>
+    <script src="/scripts/services/profile.js"></script>
+    <script src="/scripts/services/record.js"></script>
+    <script src="/scripts/services/registration.js"></script>
+    <script src="/scripts/services/username.js"></script>
+
     <!-- endbuild -->
 </body>
 

@@ -26,8 +26,8 @@ describe('Pre Test Cleanup', function () {
         dbinfo = record.connectDatabase('localhost', options, function (err) {
             //assert.ifError(err);
             if (err) {
-                console.log(">>>> ", err)
-            };
+                console.log(">>>> ", err);
+            }
 
             record.clearDatabase(function (err) {
                 done(err);
