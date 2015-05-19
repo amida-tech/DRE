@@ -46,6 +46,9 @@ angular.module('phrPrototypeApp')
                     code: 'C38216',
                     icon: 'icon-inhaler'
                 }, {
+                    code: 'C42944',
+                    icon: 'icon-inhaler'
+                }, {
                     code: 'C42998',
                     icon: 'icon-pill'
                 }];
