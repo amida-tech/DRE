@@ -527,95 +527,6 @@ angular.module('phrPrototypeApp')
         $scope.$watch('activeSelection', function (newVal, oldVal) {
             filterEntries($scope.entryType);
         }, true);
-/*
-        function refresh() {
-            dataservice.curr_section = $scope.entryType;
-            dataservice.getData(function () {
-                console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
-                //console.log("MORE: ", dataservice.all_merges, dataservice.merges_record, dataservice.merges_billing);
-
-                pageRender(dataservice.master_record, dataservice.all_notes);
-                $scope.masterMatches = dataservice.curr_processed_matches;
-
-                //update merges in scope
-                $scope.mergesList_record = dataservice.merges_record;
-                $scope.mergesList_billing = dataservice.merges_billing;
-                $scope.mergesList = dataservice.all_merges;
-            });
-        }
-
-        refresh();
-
-        //Flip All as active selected item in DOM
-        function getHistory() {
-            history.getHistory(function (err, history) {
-                if (err) {
-                    console.log('ERRROR', err);
-                } else {
-                    //console.log('>>>>accountHistory', history);
-                    $scope.accountHistory = history;
-                }
-            });
-        }
-        getHistory();
-
-        // produces singular name for section name - in records merges list
-        $scope.singularName = singularName;
-
-        function pageRender(data, data_notes) {
-
-            function filterEntries(val) {
-                console.log("UNFILTERED ", $scope.recordEntries);
-
-                $scope.entryListFiltered = _.where($scope.recordEntries, {
-                    category: val
-                });
-
-                if ($scope.activeSelection.indexOf('active') > -1 && $scope.activeSelection.indexOf('inactive') > -1) { // All entries
-
-                } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
-
-                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
-                        var curDate = new Date();
-                        var entryDate = new Date();
-                        if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
-                            entryDate = new Date(entry.data.date_time.high.date);
-                        }
-                        return (entry.category === val) && (entryDate >= curDate);
-                    });
-                } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
-                    $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
-                        var curDate = new Date();
-                        var entryDate = new Date();
-                        if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
-                            entryDate = new Date(entry.data.date_time.high.date);
-                        }
-                        return (entry.category === val) && (entryDate < curDate);
-                    });
-                } else { // None
-                    $scope.entryListFiltered = [];
-                }
-                console.log("FILTERED ", $scope.entryListFiltered);
-            }
-
-            $scope.recordEntries = dataservice.processed_record;
-
-            $scope.entries = dataservice.master_record;
-
-            $scope.recordEntries = _.sortBy($scope.recordEntries, function (entry) {
-                if (entry.metadata.datetime[0]) {
-                    return entry.metadata.datetime[0].date.substring(0, 9);
-                } else {
-                    return '1979-12-12';
-                }
-            }).reverse();
-
-            filterEntries($scope.entryType);
-
-            $scope.$watch('activeSelection', function (newVal, oldVal) {
-                filterEntries($scope.entryType);
-            }, true);
-        }
 
         $scope.goToMatches = function (section) {
             $location.path('/matches');
@@ -635,6 +546,8 @@ angular.module('phrPrototypeApp')
 
         $scope.entryType = tempSection[tempSection.length - 1];
 
+        $scope.singularName = singularName;
+
         $scope.setEntryType = function (newEntry) {
             if (newEntry === 'all') {
                 $location.path('record');
@@ -647,65 +560,43 @@ angular.module('phrPrototypeApp')
             dataservice.curr_section = $scope.entryType;
         }
 
-        console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
-
-        function refresh() {
-            dataservice.curr_section = $scope.entryType;
-            dataservice.getData(function () {
-                pageRender(dataservice.master_record, dataservice.all_notes);
-                $scope.masterMatches = dataservice.curr_processed_matches;
-
-                //update merges in scope
-                $scope.mergesList_record = dataservice.merges_record;
-                $scope.mergesList_billing = dataservice.merges_billing;
-                $scope.mergesList = dataservice.all_merges;
-            });
-        }
-
-        refresh();
-
-        //Flip All as active selected item in DOM
-        function getHistory() {
-            history.getHistory(function (err, history) {
-                if (err) {
-                    console.log('ERRROR', err);
-                } else {
-                    //console.log('>>>>accountHistory', history);
-                    $scope.accountHistory = history;
-                }
-            });
-        }
-        getHistory();
-
-        // produces singular name for section name - in records merges list
-        $scope.singularName = singularName;
-
-        function pageRender(data, data_notes) {
-
-            function filterEntries(val) {
-                $scope.entryListFiltered = _.where($scope.recordEntries, {
-                    category: val
-                });
+        dataservice.getMatchSection($scope.entryType, function (err, matches) {
+            if (err) {
+                console.log("err: " + err);
+            } else {
+                $scope.masterMatches = matches;
             }
+        });
 
-            $scope.recordEntries = dataservice.processed_record;
+        history.getAccountHistory(function (err, history) {
+            if (err) {
+                console.log("err: " + err);
+            } else {
+                $scope.accountHistory = history;
+            }
+        });        
 
-            $scope.entries = dataservice.master_record;
-
-            $scope.recordEntries = _.sortBy($scope.recordEntries, function (entry) {
-                if (entry.metadata.datetime[0]) {
-                    return entry.metadata.datetime[0].date.substring(0, 9);
-                } else {
-                    return '1979-12-12';
-                }
-            }).reverse();
-
-            $scope.entryType = dataservice.curr_section;
-
-            filterEntries($scope.entryType);
-
+        function filterEntries(val) {
+            $scope.entryListFiltered = _.where($scope.recordEntries, {
+                category: val
+            });
         }
-*/
+
+        dataservice.getProcessedRecord(function (err, processed_record) {
+            if (err) {
+                console.log("err: " + err);
+            } else {
+                $scope.recordEntries = _.sortBy(processed_record, function (entry) {
+                    if (entry.metadata.datetime[0]) {
+                        return entry.metadata.datetime[0].date.substring(0, 9);
+                    } else {
+                        return '1979-12-12';
+                    }
+                }).reverse();
+                filterEntries($scope.entryType);
+            }
+        });
+
         $scope.goToMatches = function (section) {
             $location.path('/matches');
         };
