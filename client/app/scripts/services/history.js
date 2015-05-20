@@ -12,6 +12,8 @@ angular.module('phrPrototypeApp')
 
         var that = this;
 
+        var master_history = {};
+
         this.getFullEventName = function (typestring) {
             var fullEventNames = {
                 initAccount: 'Account created',
@@ -57,24 +59,38 @@ angular.module('phrPrototypeApp')
                 //     chartDates.push()
                 // })
 
-                var history = {
+                master_history = {
                     recordHistory: fullHistoryProcessed.reverse()
                 };
 
                 if (recent.login) {
-                    history.lastLogin = recent.login.time;
+                    master_history.lastLogin = recent.login.time;
                 }
 
                 if (recent.update) {
-                    history.lastUpdate = recent.update.time;
+                    master_history.lastUpdate = recent.update.time;
                 }
 
                 //console.log(history);
-                callback(null, history);
+                callback(null, master_history);
 
             }, function (err) {
                 callback(err);
             });
+        };
+
+        this.getAccountHistory = function (callback) {
+            if (Object.keys(master_history).length === 0) {
+                this.getHistory(function (err, master_history) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null, master_history);
+                    }
+                });
+            } else {
+                callback(null, master_history);
+            }
         };
 
         this.recentUpdates = function (callback) {

@@ -99,7 +99,6 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             if (_.isNull(plotDate)) {
                                 plotDate = isoFormatSubsecond.parse(entry.metadata.datetime[0].date);
                             }
-                            console.log("entry", entry);
                             var tempCat = entry.category;
                             plotCircles.push({
                                 "date": plotDate,
