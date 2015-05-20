@@ -9,7 +9,7 @@
     "globals": {
         "$": false,
         "DeepDiff": false,
-        "_": false,
+        "_": true,
         "after": true,
         "angular": false,
         "before": true,
@@ -17,6 +17,7 @@
         "done": true,
         "it": true,
         "moment": false,
+        "Promise": true,
         "xdescribe": true,
         "xit": true
     },

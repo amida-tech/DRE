@@ -22,7 +22,7 @@ describe('Pre Test Cleanup', function () {
             supported_sections: ['allergies', 'procedures']
         };
 
-        dbinfo = record.connectDatabase('localhost', options, function (err) {
+        var dbinfo = record.connectDatabase('localhost', options, function (err) {
             //assert.ifError(err);
             if (err) {
                 console.log(">>>> ", err);

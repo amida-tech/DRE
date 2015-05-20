@@ -42,7 +42,7 @@ angular.module('phrPrototypeApp')
             if (newEntry !== 'all') {
                 $location.path('record/' + newEntry);
             }
-        }
+        };
 
         $scope.dashMetrics = {};
         $scope.tabs = [{
@@ -279,7 +279,7 @@ angular.module('phrPrototypeApp')
             } else {
                 $location.path('record/' + newEntry);
             }
-        }
+        };
 
         $scope.medicationDetails = function (medication) {
             var modalInstance = $modal.open({
@@ -476,7 +476,7 @@ angular.module('phrPrototypeApp')
             } else {
                 $location.path('record/' + newEntry);
             }
-        }
+        };
 
         dataservice.curr_section = $scope.entryType;
 
@@ -608,7 +608,7 @@ angular.module('phrPrototypeApp')
             } else {
                 $location.path('record/' + newEntry);
             }
-        }
+        };
 
         if (!dataservice.curr_section) {
             dataservice.curr_section = $scope.entryType;

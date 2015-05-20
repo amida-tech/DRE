@@ -10,7 +10,7 @@ angular.module('phrPrototypeApp')
         return {
             restrict: 'E',
             templateUrl: 'views/templates/details/measurements.html'
-        }
+        };
     })
     .directive('d3template', ['$window', '$timeout', 'd3Service',
         function ($window, $timeout, d3Service) {
