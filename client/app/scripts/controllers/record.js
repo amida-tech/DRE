@@ -574,7 +574,7 @@ angular.module('phrPrototypeApp')
             } else {
                 $scope.accountHistory = history;
             }
-        });        
+        });
 
         function filterEntries(val) {
             $scope.entryListFiltered = _.where($scope.recordEntries, {
