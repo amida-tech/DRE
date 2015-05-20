@@ -68,15 +68,10 @@ Documentation for record.js [API](./docs/recordjs.md)
 # you need Node.js and Grunt.js installed
 # and MongoDB + Redis runnning
 
-#build client app
-cd client
-npm install
-bower install
-grunt build # you can run "grunt live" for dev purposes
-
 #run server side tests
 cd ..
 npm install
+bower install
 grunt
 
 #run server
@@ -97,6 +92,9 @@ Contributors are welcome. See issues https://github.com/amida-tech/DRE/issues
 - Matt McCall
 - Ekavali Mishra
 - Jamie Johnson
+- Matt Martz
+- Jacob Sachs
+- Mike Hiner
 - Byung Joo Shin (summer '14 intern, UVA)
 - Kevin Young (summer '14 intern, UMD)
 - Nadia Wallace (winter '15 intern, MIT)
