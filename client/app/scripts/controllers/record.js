@@ -442,8 +442,6 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        dataservice.curr_section = $scope.entryType;
-
         $scope.activeSelection = ['active', 'inactive'];
         $scope.toggleSelection = function toggleSelection(buttonName) {
             var idx = $scope.activeSelection.indexOf(buttonName);
@@ -459,6 +457,77 @@ angular.module('phrPrototypeApp')
             }
         };
 
+        dataservice.getMatchSection($scope.entryType, function (err, matches) {
+            if (err) {
+                console.log("err: " + err);
+            } else {
+                $scope.masterMatches = matches;
+            }
+        });
+
+        history.getAccountHistory(function (err, history) {
+            if (err) {
+                console.log("err: " + err);
+            } else {
+                $scope.accountHistory = history;
+            }
+        });
+
+        function filterEntries(val) {
+            console.log("UNFILTERED ", $scope.recordEntries);
+
+            $scope.entryListFiltered = _.where($scope.recordEntries, {
+                category: val
+            });
+
+            console.log("filtered ", $scope.entryListFiltered);
+            console.log("val", val);
+            // Filter on active/inactive
+            if ($scope.activeSelection.indexOf('active') > -1 && $scope.activeSelection.indexOf('inactive') > -1) { // All entries
+
+            } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
+
+                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
+                    var curDate = new Date();
+                    var entryDate = new Date();
+                    if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
+                        entryDate = new Date(entry.data.date_time.high.date);
+                    }
+                    return (entry.category === val) && (entryDate >= curDate);
+                });
+            } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
+                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
+                    var curDate = new Date();
+                    var entryDate = new Date();
+                    if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
+                        entryDate = new Date(entry.data.date_time.high.date);
+                    }
+                    return (entry.category === val) && (entryDate < curDate);
+                });
+            } else { // None
+                $scope.entryListFiltered = [];
+            }
+        }
+
+        dataservice.getProcessedRecord(function (err, processed_record) {
+            if (err) {
+                console.log("err: " + err);
+            } else {
+                $scope.recordEntries = _.sortBy(processed_record, function (entry) {
+                    if (entry.metadata.datetime[0]) {
+                        return entry.metadata.datetime[0].date.substring(0, 9);
+                    } else {
+                        return '1979-12-12';
+                    }
+                }).reverse();
+                filterEntries($scope.entryType);
+            }
+        });
+
+        $scope.$watch('activeSelection', function (newVal, oldVal) {
+            filterEntries($scope.entryType);
+        }, true);
+/*
         function refresh() {
             dataservice.curr_section = $scope.entryType;
             dataservice.getData(function () {
@@ -636,7 +705,7 @@ angular.module('phrPrototypeApp')
             filterEntries($scope.entryType);
 
         }
-
+*/
         $scope.goToMatches = function (section) {
             $location.path('/matches');
         };
