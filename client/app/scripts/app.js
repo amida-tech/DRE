@@ -75,6 +75,46 @@ angular
                 templateUrl: 'views/record.html',
                 controller: 'RecordCtrl'
             })
+            .when('/record/all', {
+                templateUrl: 'views/record.html',
+                controller: 'RecordCtrl'
+            })
+            .when('/record/medications', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionMedicationCtrl'
+            })
+            .when('/record/results', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionResultCtrl'
+            })
+            .when('/record/encounters', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionEncounterCtrl'
+            })
+            .when('/record/vitals', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionVitalCtrl'
+            })
+            .when('/record/immunizations', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionImmunizationCtrl'
+            })
+            .when('/record/allergies', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionAllergyCtrl'
+            })
+            .when('/record/conditions', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionConditionCtrl'
+            })
+            .when('/record/procedures', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionProcedureCtrl'
+            })
+            .when('/record/social', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionSocialCtrl'
+            })
             .when('/billing', {
                 templateUrl: 'views/billing.html',
                 controller: 'BillingCtrl'

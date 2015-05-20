@@ -81,83 +81,7 @@
         </div>
         <!--d3. -->
         <div class="col-sm-12" ng-show="entryType==='all' && recordEntries">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-sm-5">
-                        <div class="row">
-                            <h4>Measurements</h4>
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h4 class="text-muted">Height</h4>
-                                        </td>
-                                        <td>
-                                            <h5>{{dashMetrics.height.disp}}</h5>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4 class="text-muted">Weight</h4>
-                                        </td>
-                                        <td>
-                                            <h5>{{dashMetrics.weight.disp}}</h5>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4 class="text-muted">BMI</h4>
-                                        </td>
-                                        <td>
-                                            <h5>{{dashMetrics.bmi}}</h5>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4 class="text-muted">Blood Pressure</h4>
-                                        </td>
-                                        <td>
-                                            <h5>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h5>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-sm-1">
-                    </div>
-                    <div class="col-sm-6">
-                        <tabset>
-                            <tab ng-repeat="tab in tabs" heading="{{tab.title}}" select="onTabSelect(tab)">
-                                <div linechart graph-type="{{tab.type}}" data="recordEntries"></div>
-                                <div class="col-sm-12 text-center">{{tab.lower}}</div>
-                            </tab>
-                        </tabset>
-                        <!--
-                        <div bs-active-pane="tabs.activeTab" data-nav-class="nav-pills" bs-tabs>
-                            <div title="{{ tabs[0].title }}" bs-pane>
-
-
-                                <div linechart graph-type="weight" data="recordEntries"></div>
-                                <div class="col-sm-12 text-center">
-                                    Weight (lbs)
-                                </div>
-
-                            </div>
-                            <div title="{{ tabs[1].title }}" bs-pane>
-
-
-                                <div linechart graph-type="bloodPressure" data="recordEntries"></div>
-                                <div class="col-sm-12 text-center">
-                                    Blood Pressure
-                                </div>
-
-                            </div>
-                        </div>
-                        -->
-                    </div>
-                </div>
-            </div>
+            <measurements dash-metrics="{{dashMetrics}}" graph-type="{{tab.type}}" data="recordEntries" />
         </div>
         <div class="col-sm-12">
             <!--end d3-->
@@ -177,7 +101,12 @@
                                 <div>
                                     <p>Timeline</p>
                                 </div>
+                                <div class="row col-sm-12">
+                                    <div timeline chart-data="recordEntries" chart-location='all' class="timeline-graph"></div>
+                                </div>
+                                <!--
                                 <div ng-if="mergesList_record" timeline chart-data="mergesList_record" chart-type="merges" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
+                                -->
                                 <div ng-repeat="(recordIndex, recordEntry) in mergesList_record | orderBy:'-merged':reverse" class="col-sm-12 row" id="record{{recordIndex}}">
                                     <div class="col-sm-12 row timeline-side" ng-if="recordEntry.entry_type !== 'demographics' ">
                                         <!--Timeline Icon-->
@@ -224,7 +153,9 @@
                         <div>
                             <p>Timeline</p>
                         </div>
-                        <div timeline chart-data="entryListFiltered" class="timeline-graph"></div>
+                        <div class="row col-sm-12">
+                            <div timeline chart-data="entryListFiltered" class="timeline-graph"></div>
+                        </div>
                         <div ng-if="entryType=='medications' || entryType=='social'" class="col-sm-12 row timeline-side">
                             <div class="btn-group">
                                 <label class="btn btn-default">

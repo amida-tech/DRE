@@ -40,6 +40,7 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                 plotCircles = [];
                 plotDomain = [];
                 dataToPlot = scope[attrs.chartData];
+                var chartLocation = scope[attrs.chartLocation];
                 var dataType = attrs.chartType;
                 var tmpDomain = [];
                 var minDate, maxDate, plotFloor, plotCeiling;
@@ -120,6 +121,8 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
 
                     function getSVGWidth() {
                         width = parseInt(svg.style('width'), 10);
+                        console.log("svg width = " + width);
+                        console.log("element width = " + element.width());
 
                         //Shim, keeps it from erroring on first pass.
                         if (width === 0) {

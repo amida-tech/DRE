@@ -13,15 +13,15 @@ angular.module('phrPrototypeApp').directive('recordNavigation', ['$window',
             link: function postLink(scope, element, attrs) {
                 //Active Link Highlighting.
                 element.find("#nav" + scope.entryType).addClass("active");
+                /*
+                                scope.setEntryType = function (type) {
+                                    console.log("recordnavigation set entry type ", type);
 
-                scope.setEntryType = function (type) {
-                    console.log("recordnavigation set entry type ", type);
-
-                    element.find("#nav" + scope.entryType).removeClass("active");
-                    scope.entryType = type;
-                    element.find("#nav" + scope.entryType).addClass("active");
-                };
-
+                                    element.find("#nav" + scope.entryType).removeClass("active");
+                                    scope.entryType = type;
+                                    element.find("#nav" + scope.entryType).addClass("active");
+                                };
+                */
             }
         };
     }
