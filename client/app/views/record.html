@@ -89,7 +89,9 @@
             </div>
         </div>
         <div class="col-sm-12" ng-show="entryType==='all' && recordEntries">
-            <measurements ng-hide="!accountHistory.lastUpdate" dash-metrics="{{dashMetrics}}" graph-type="{{tab.type}}" data="recordEntries" />
+            <div ng-if="accountHistory.lastUpdate">
+                <measurements dash-metrics="{{dashMetrics}}" graph-type="{{tab.type}}" data="recordEntries"></measurements>
+            </div>
         </div>
         <div class="col-sm-12" ng-hide="!accountHistory.lastUpdate">
             <!--end d3-->
