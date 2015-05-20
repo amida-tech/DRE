@@ -1,7 +1,7 @@
 <div class="container-fluid body-content">
     <div id="profileSidebar" class="col-sm-3 body-left">
         <div profile></div>
-        <div record-navigation class="col-sm-12"></div>&nbsp;
+        <div record-navigation class="col-sm-12" ng-hide="!accountHistory.lastUpdate"></div>&nbsp;
     </div>
     <!--Body-->
     <div class="col-sm-9 body-right">
@@ -29,7 +29,7 @@
                             <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
                             <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
                         </div>
-                        <div class="col-sm-3" ng-if="entryType==='all'">
+                        <div class="col-sm-3" ng-if="entryType==='all'" ng-hide="!accountHistory.lastUpdate">
                             <a href="#/print" target="_blank">
                                 <button class="btn btn-default btn-responsive" style="color: #6AA6FF">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
@@ -46,7 +46,7 @@
                             <!--br/>
                             <h6 style="max-width: 175px; text-align: center;"><i class="fa fa-print"></i> <a href="/#/print" target="_blank">Print</a> my health record.</h6-->
                         </div>
-                        <div class="col-sm-3 col-sm-offset-3" ng-if="entryType==='medications'">
+                        <div class="col-sm-3 col-sm-offset-3" ng-if="entryType==='medications'" ng-hide="!accountHistory.lastUpdate">
                             <!--<button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;" data-placement="center" data-title="Medication Entry" data-content-template="views/modals/medicationentry.html" bs-modal="modal">-->
                             <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;" ng-click="entryModal()">
                                 <div class="col-sm-12 text-left" style="text-transform: none;">
@@ -56,7 +56,7 @@
                                 </div>
                             </button>
                         </div>
-                        <div class="col-sm-3" ng-if="entryType==='all'">
+                        <div class="col-sm-3" ng-if="entryType==='all'" ng-hide="!accountHistory.lastUpdate">
                             <a href="/api/v1/master_health_record/xml">
                                 <button class="btn btn-default btn-responsive" style="color: #6AA6FF">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
@@ -80,10 +80,20 @@
             </div>
         </div>
         <!--d3. -->
-        <div class="col-sm-12" ng-show="entryType==='all' && recordEntries">
-            <measurements dash-metrics="{{dashMetrics}}" graph-type="{{tab.type}}" data="recordEntries" />
+        <div class="panel panel-default" ng-show="!accountHistory.lastUpdate">
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <h4>No Records Available</h4>
+                    <a href="/#/files">Please upload a record...</a>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-12" ng-show="entryType==='all' && recordEntries">
+            <div ng-if="accountHistory.lastUpdate">
+                <measurements dash-metrics="{{dashMetrics}}" graph-type="{{tab.type}}" data="recordEntries"></measurements>
+            </div>
+        </div>
+        <div class="col-sm-12" ng-hide="!accountHistory.lastUpdate">
             <!--end d3-->
             <div ng-show="entryType==='all'">
                 <div class="col-sm-12">
@@ -148,6 +158,14 @@
                         <h5 class="col-sm-12 text-center">No Record Entries</h5>
                     </div>
                 </div>
+                <!-- debug stuff -->
+                <!--
+                <div class="panel">
+                    <div class="panel-body">
+                        <pre>{{recordEntries}}</pre>
+                    </div>
+                </div>
+                -->
                 <div class="panel" ng-if="recordEntries">
                     <div class="panel-body">
                         <div>

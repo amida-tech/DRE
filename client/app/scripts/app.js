@@ -119,6 +119,14 @@ angular
                 templateUrl: 'views/billing.html',
                 controller: 'BillingCtrl'
             })
+            .when('/billing/insurance', {
+                templateUrl: 'views/billing.html',
+                controller: 'BillingCtrl'
+            })
+            .when('/billing/claims', {
+                templateUrl: 'views/billing.html',
+                controller: 'BillingCtrl'
+            })
             .when('/review', {
                 templateUrl: 'views/review.html',
                 controller: 'ReviewCtrl'

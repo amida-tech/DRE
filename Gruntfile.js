@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     grunt.registerTask('live', ['concurrent:default']);
 
     // Print a timestamp (useful for when watching)
-    grunt.registerTask('timestamp', function() {
+    grunt.registerTask('timestamp', function () {
         grunt.log.subhead(Date());
     });
 
