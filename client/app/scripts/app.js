@@ -85,31 +85,31 @@ angular
             })
             .when('/record/results', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionResultCtrl'
+                controller: 'SectionOtherCtrl'
             })
             .when('/record/encounters', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionEncounterCtrl'
+                controller: 'SectionOtherCtrl'
             })
             .when('/record/vitals', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionVitalCtrl'
+                controller: 'SectionOtherCtrl'
             })
             .when('/record/immunizations', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionImmunizationCtrl'
+                controller: 'SectionOtherCtrl'
             })
             .when('/record/allergies', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionAllergyCtrl'
+                controller: 'SectionOtherCtrl'
             })
             .when('/record/conditions', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionConditionCtrl'
+                controller: 'SectionOtherCtrl'
             })
             .when('/record/procedures', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionProcedureCtrl'
+                controller: 'SectionOtherCtrl'
             })
             .when('/record/social', {
                 templateUrl: 'views/record.html',
