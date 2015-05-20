@@ -96,28 +96,41 @@ module.exports = function (grunt) {
             files: ['Gruntfile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js', '<%= yeoman.app %>/scripts/{,*/}*.js'],
             options: {
                 reporter: require('jshint-stylish'),
-                browser: true,
-                curly: true,
-                eqeqeq: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: false,
-                boss: true,
-                eqnull: true,
-                node: true,
-                expr: true,
-                globals: {
-                    'xit': true,
-                    'xdescribe': true,
-                    'it': true,
-                    'describe': true,
-                    'before': true,
-                    'after': true,
-                    'done': true
-                }
+                "bitwise": true,
+                "browser": false,
+                "camelcase": false,
+                "curly": true,
+                "eqeqeq": true,
+                "esnext": true,
+                "expr": true,
+                "globals": {
+                    "$": false,
+                    "DeepDiff": false,
+                    "_": true,
+                    "after": true,
+                    "angular": false,
+                    "before": true,
+                    "describe": true,
+                    "done": true,
+                    "it": true,
+                    "moment": false,
+                    "Promise": true,
+                    "xdescribe": true,
+                    "xit": true
+                },
+                "immed": true,
+                "indent": 4,
+                "latedef": "nofunc",
+                "multistr": true,
+                "newcap": true,
+                "noarg": true,
+                "node": true,
+                "quotmark": false,
+                "regexp": true,
+                "smarttabs": true,
+                "trailing": true,
+                "undef": true,
+                "unused": false
             }
         },
         jsbeautifier: {
@@ -271,27 +284,27 @@ module.exports = function (grunt) {
             }
         },
         uglify: {
-           dist: {
-             options: {
-               mangle: false
-             },
-             files: [{
-               expand: true,
-               cwd: '.tmp/scripts',
-               src: '{,**/}*.js',
-               dest: '<%= yeoman.dist %>/scripts'
-             }]
-           }
-         },
-         cssmin: {
-           dist: {
-             files: {
-               '<%= yeoman.dist %>/styles/main.css': [
-                 '.tmp/styles/{,*/}*.css'
-               ]
-             }
-           }
-         },
+            dist: {
+                options: {
+                    mangle: false
+                },
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/scripts',
+                    src: '{,**/}*.js',
+                    dest: '<%= yeoman.dist %>/scripts'
+                }]
+            }
+        },
+        cssmin: {
+            dist: {
+                files: {
+                    '<%= yeoman.dist %>/styles/main.css': [
+                        '.tmp/styles/{,*/}*.css'
+                    ]
+                }
+            }
+        },
         // Copies remaining files to places other tasks can use
         copy: {
             dist: {

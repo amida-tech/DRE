@@ -1,0 +1,55 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-sm-5">
+            <div class="row">
+                <h4>Measurements</h4>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h4 class="text-muted">Height</h4>
+                            </td>
+                            <td>
+                                <h5>{{dashMetrics.height.disp}}</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4 class="text-muted">Weight</h4>
+                            </td>
+                            <td>
+                                <h5>{{dashMetrics.weight.disp}}</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4 class="text-muted">BMI</h4>
+                            </td>
+                            <td>
+                                <h5>{{dashMetrics.bmi}}</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4 class="text-muted">Blood Pressure</h4>
+                            </td>
+                            <td>
+                                <h5>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h5>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-6">
+            <tabset>
+                <tab ng-repeat="tab in tabs" heading="{{tab.title}}" select="onTabSelect(tab)">
+                    <div linechart graph-type="{{tab.type}}" data="recordEntries"></div>
+                    <div class="col-sm-12 text-center">{{tab.lower}}</div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>

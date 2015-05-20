@@ -99,8 +99,10 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             if (_.isNull(plotDate)) {
                                 plotDate = isoFormatSubsecond.parse(entry.metadata.datetime[0].date);
                             }
+                            var tempCat = entry.category;
                             plotCircles.push({
-                                "date": plotDate
+                                "date": plotDate,
+                                "category": tempCat.charAt(0).toUpperCase() + tempCat.slice(1)
                             });
                             tmpDomain.push(plotDate);
                         }
@@ -120,6 +122,8 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
 
                     function getSVGWidth() {
                         width = parseInt(svg.style('width'), 10);
+                        console.log("svg width = " + width);
+                        console.log("element width = " + element.width());
 
                         //Shim, keeps it from erroring on first pass.
                         if (width === 0) {
@@ -247,9 +251,15 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             return d.radius;
                         }).attr("class", "plotPoint").on('mouseover', function (d) {
                             var tipFormat = d3.time.format("%m/%d/%Y");
-                            tip.attr('class', 'd3-tip animate').html(function (d) {
-                                return '<span>' + tipFormat(d.date) + '</span>';
-                            }).show(d);
+                            if (attrs.chartLocation === 'all') {
+                                tip.attr('class', 'd3-tip animate').html(function (d) {
+                                    return '<span>' + d.category + '</span> - <span>' + tipFormat(d.date) + '</span>';
+                                }).show(d);
+                            } else {
+                                tip.attr('class', 'd3-tip animate').html(function (d) {
+                                    return '<span>' + tipFormat(d.date) + '</span>';
+                                }).show(d);
+                            }
                         }).on('mouseout', function (d) {
                             tip.attr('class', 'd3-tip').show(d);
                             tip.hide();

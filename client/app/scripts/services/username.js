@@ -28,17 +28,17 @@ angular.module('phrPrototypeApp')
         this.checkLogin = function (user, callback) {
             console.log('user>>>', user);
             $http.post('api/v1/users', {
-                username: user
-            })
-            .success(function (data) {
-                var userInfo = data;
-                // console.log('username service, ', data);
-                // console.log('searching for username:', userInfo);
-                callback(null, userInfo);
-            })
-            .error(function (data) {
-                console.log('error finding username', data);
-            });
+                    username: user
+                })
+                .success(function (data) {
+                    var userInfo = data;
+                    // console.log('username service, ', data);
+                    // console.log('searching for username:', userInfo);
+                    callback(null, userInfo);
+                })
+                .error(function (data) {
+                    console.log('error finding username', data);
+                });
         };
 
     });

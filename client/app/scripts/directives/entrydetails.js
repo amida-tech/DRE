@@ -182,7 +182,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $
                 //record.getData(function(err, data) {
                 //    return;
                 //});
-                $route.reload();
+                //$route.reload();
 
                 /*
                 var send = $window.confirm("Are these changes accurate?");
@@ -204,7 +204,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $
                 //record.getData(function(err, data) {
                 //    return;
                 //});
-                $route.reload();
+                //$route.reload();
 
                 /*
                 var send = $window.confirm("Ignore changes?");
@@ -223,7 +223,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $
                 console.log("match: create new entry");
                 matches.createMatch();
                 $location.path('/record');
-                $route.reload();
+                //$route.reload();
             };
         }
     };
