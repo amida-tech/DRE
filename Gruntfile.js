@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
@@ -39,7 +39,7 @@ module.exports = function (grunt) {
     grunt.registerTask('live', ['concurrent:default']);
 
     // Print a timestamp (useful for when watching)
-    grunt.registerTask('timestamp', function () {
+    grunt.registerTask('timestamp', function() {
         grunt.log.subhead(Date());
     });
 
@@ -96,24 +96,37 @@ module.exports = function (grunt) {
             files: ['Gruntfile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js', '<%= yeoman.app %>/scripts/{,*/}*.js'],
             options: {
                 reporter: require('jshint-stylish'),
-                browser: true,
-                curly: true,
-                eqeqeq: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: false,
-                boss: true,
-                eqnull: true,
-                node: true,
-                expr: true,
+                "node": true,
+                "browser": false,
+                "esnext": true,
+                "bitwise": true,
+                "camelcase": false,
+                "curly": true,
+                "eqeqeq": true,
+                "immed": true,
+                "indent": 4,
+                "latedef": "nofunc",
+                "newcap": true,
+                "noarg": true,
+                "regexp": true,
+                "undef": true,
+                "unused": false,
+                //"strict": true,
+                "trailing": true,
+                "smarttabs": true,
+                "multistr": true,
+                "expr": true,
+                "quotmark": false,
                 globals: {
-                    'xit': true,
-                    'xdescribe': true,
+                    "angular": false,
+                    "moment": false,
+                    "_": false,
+                    "$": false,
+                    "DeepDiff": false,
                     'it': true,
                     'describe': true,
+                    'xit': true,
+                    'xdescribe': true,
                     'before': true,
                     'after': true,
                     'done': true

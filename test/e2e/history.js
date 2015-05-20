@@ -10,7 +10,6 @@ chai.use(require('chai-things'));
 var database = require('mongodb').Db;
 
 var path = require('path');
-var common2 = require('./common.js');
 var common = require(path.join(__dirname, '../common/common.js'));
 
 var record = require('blue-button-record');
@@ -87,8 +86,8 @@ describe('Pre Test Cleanup', function () {
     });
 
     it('Login', function (done) {
-        common2.register(api, 'test', 'test', function () {
-            common2.login(api, 'test', 'test', function () {
+        common.register(api, 'test', 'test', function () {
+            common.login(api, 'test', 'test', function () {
                 done();
             });
         });
@@ -109,8 +108,8 @@ describe('Account History - basic', function () {
     });
 
     it('Login', function (done) {
-        common2.register(api, 'test', 'test', function () {
-            common2.login(api, 'test', 'test', function () {
+        common.register(api, 'test', 'test', function () {
+            common.login(api, 'test', 'test', function () {
                 done();
             });
         });

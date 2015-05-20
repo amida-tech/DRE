@@ -34,7 +34,7 @@ function singularName(section) {
 }
 
 angular.module('phrPrototypeApp')
-    .controller('RecordCtrl', function ($scope, $window, $location, $modal, $anchorScroll, $route, format, matches, merges, history, dataservice) {
+    .controller('RecordCtrl', function ($scope, $location, $route, matches, merges, history, dataservice) {
 
         $scope.entryType = 'all';
 
@@ -84,16 +84,6 @@ angular.module('phrPrototypeApp')
         }
 
         refresh();
-        /*
-                $scope.$on('ngRepeatFinished', function(element) {
-                    if (dataservice.curr_location) {
-                        $location.hash(dataservice.curr_location);
-                        $anchorScroll();
-                        dataservice.curr_location = null;
-                        $location.hash("");
-                    }
-                });
-        */
 
         //Flip All as active selected item in DOM
         function getHistory() {
@@ -241,22 +231,10 @@ angular.module('phrPrototypeApp')
                 $scope.dashMetrics.bmi = calculateBMI($scope.dashMetrics.weight.value, $scope.dashMetrics.height.value);
             }
 
-            function sortList() {
-                $scope.entryList = _.sortBy($scope.entryList, function (entry) {
-                    return entry.data.date_time.plotDate;
-                });
-                $scope.entryList.reverse();
-            }
-
             function filterEntries(val) {
-                console.log("UNFILTERED ", $scope.recordEntries);
-
                 $scope.entryListFiltered = _.where($scope.recordEntries, {
                     category: val
                 });
-
-                console.log("filtered ", $scope.entryListFiltered);
-                console.log("val", val);
             }
 
             $scope.recordEntries = dataservice.processed_record;
@@ -264,8 +242,7 @@ angular.module('phrPrototypeApp')
             $scope.entries = dataservice.master_record;
 
             dashPrep();
-            //formatDates();
-            //sortList();
+
             $scope.tabs.activeTab = 0;
 
             $scope.recordEntries = _.sortBy($scope.recordEntries, function (entry) {
@@ -292,7 +269,7 @@ angular.module('phrPrototypeApp')
         };
 
     })
-    .controller('SectionMedicationCtrl', function ($scope, $window, $location, $modal, $anchorScroll, $route, format, matches, merges, history, dataservice) {
+    .controller('SectionMedicationCtrl', function ($scope, $location, $modal, $route, matches, merges, history, dataservice) {
 
         $scope.entryType = 'medications';
 
@@ -371,8 +348,6 @@ angular.module('phrPrototypeApp')
             });
         };
 
-        $scope.pDrugName = "";
-
         dataservice.curr_section = $scope.entryType;
 
         // Meds active/inactive selector
@@ -381,13 +356,9 @@ angular.module('phrPrototypeApp')
         $scope.toggleSelection = function toggleSelection(buttonName) {
             var idx = $scope.activeSelection.indexOf(buttonName);
 
-            // is currently selected
             if (idx > -1) {
                 $scope.activeSelection.splice(idx, 1);
-            }
-
-            // is newly selected
-            else {
+            } else {
                 $scope.activeSelection.push(buttonName);
             }
         };
@@ -396,7 +367,6 @@ angular.module('phrPrototypeApp')
             dataservice.curr_section = $scope.entryType;
             dataservice.getData(function () {
                 console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
-                //console.log("MORE: ", dataservice.all_merges, dataservice.merges_record, dataservice.merges_billing);
 
                 pageRender(dataservice.master_record, dataservice.all_notes);
                 $scope.masterMatches = dataservice.curr_processed_matches;
@@ -407,18 +377,8 @@ angular.module('phrPrototypeApp')
                 $scope.mergesList = dataservice.all_merges;
             });
         }
-
         refresh();
-        /*
-                $scope.$on('ngRepeatFinished', function(element) {
-                    if (dataservice.curr_location) {
-                        $location.hash(dataservice.curr_location);
-                        $anchorScroll();
-                        dataservice.curr_location = null;
-                        $location.hash("");
-                    }
-                });
-        */
+
         //Flip All as active selected item in DOM
         function getHistory() {
             history.getHistory(function (err, history) {
@@ -436,15 +396,6 @@ angular.module('phrPrototypeApp')
         $scope.singularName = singularName;
 
         function pageRender(data, data_notes) {
-
-            //calculate current height/weight/bmi/blood pressure
-            //based on processed record from $scope.recordEntries
-            function sortList() {
-                $scope.entryList = _.sortBy($scope.entryList, function (entry) {
-                    return entry.data.date_time.plotDate;
-                });
-                $scope.entryList.reverse();
-            }
 
             function filterEntries(val) {
                 console.log("UNFILTERED ", $scope.recordEntries);
@@ -515,7 +466,7 @@ angular.module('phrPrototypeApp')
         };
 
     })
-    .controller('SectionSocialCtrl', function ($scope, $window, $location, $modal, $anchorScroll, $route, format, matches, merges, history, dataservice) {
+    .controller('SectionSocialCtrl', function ($scope, $location, $route, matches, merges, history, dataservice) {
 
         $scope.entryType = 'social';
 
@@ -526,7 +477,7 @@ angular.module('phrPrototypeApp')
                 $location.path('record/' + newEntry);
             }
         }
-        $scope.pDrugName = "";
+
         dataservice.curr_section = $scope.entryType;
 
         $scope.activeSelection = ['active', 'inactive'];
@@ -562,15 +513,6 @@ angular.module('phrPrototypeApp')
 
         refresh();
 
-        $scope.$on('ngRepeatFinished', function (element) {
-            if (dataservice.curr_location) {
-                $location.hash(dataservice.curr_location);
-                $anchorScroll();
-                dataservice.curr_location = null;
-                $location.hash("");
-            }
-        });
-
         //Flip All as active selected item in DOM
         function getHistory() {
             history.getHistory(function (err, history) {
@@ -588,13 +530,6 @@ angular.module('phrPrototypeApp')
         $scope.singularName = singularName;
 
         function pageRender(data, data_notes) {
-
-            function sortList() {
-                $scope.entryList = _.sortBy($scope.entryList, function (entry) {
-                    return entry.data.date_time.plotDate;
-                });
-                $scope.entryList.reverse();
-            }
 
             function filterEntries(val) {
                 console.log("UNFILTERED ", $scope.recordEntries);
@@ -661,12 +596,11 @@ angular.module('phrPrototypeApp')
         };
 
     })
-    .controller('SectionOtherCtrl', function ($scope, $window, $location, $modal, $anchorScroll, $route, format, matches, merges, history, dataservice) {
+    .controller('SectionOtherCtrl', function ($scope, $location, $modal, $route, matches, merges, history, dataservice) {
 
         var tempSection = $location.path().split('/');
 
         $scope.entryType = tempSection[tempSection.length - 1];
-        console.log("entry type:" + $scope.entryType);
 
         $scope.setEntryType = function (newEntry) {
             if (newEntry === 'all') {
@@ -696,16 +630,7 @@ angular.module('phrPrototypeApp')
         }
 
         refresh();
-        /*
-                $scope.$on('ngRepeatFinished', function (element) {
-                    if (dataservice.curr_location) {
-                        $location.hash(dataservice.curr_location);
-                        $anchorScroll();
-                        dataservice.curr_location = null;
-                        $location.hash("");
-                    }
-                });
-        */
+
         //Flip All as active selected item in DOM
         function getHistory() {
             history.getHistory(function (err, history) {
@@ -723,13 +648,6 @@ angular.module('phrPrototypeApp')
         $scope.singularName = singularName;
 
         function pageRender(data, data_notes) {
-
-            function sortList() {
-                $scope.entryList = _.sortBy($scope.entryList, function (entry) {
-                    return entry.data.date_time.plotDate;
-                });
-                $scope.entryList.reverse();
-            }
 
             function filterEntries(val) {
                 $scope.entryListFiltered = _.where($scope.recordEntries, {
@@ -756,17 +674,12 @@ angular.module('phrPrototypeApp')
         }
 
         $scope.goToMatches = function (section) {
-            //console.log(section);
-            //matches.setSection(section);
             $location.path('/matches');
         };
+
         //launch specific match (by ID and section name)
         $scope.launchMatch = function (el) {
-            console.log("Launch MATCH>> ", el);
-            //console.log(section);
-            //setting section name for matches page
             matches.setSection(el.match.section);
-            //TODO: set match ID for match page
             matches.setMatchId(el.match.match_id);
 
             $location.path('/matches');

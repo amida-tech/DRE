@@ -2,7 +2,7 @@ var assert = require("assert");
 var request = require('supertest');
 var api = request.agent('http://localhost:3000');
 var expect = require('chai').expect;
-var common = require('./common.js');
+var common = require('../common/common.js');
 
 describe('Array', function () {
     describe('#indexOf()', function () {

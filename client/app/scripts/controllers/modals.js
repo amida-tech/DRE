@@ -289,39 +289,7 @@ angular.module('phrPrototypeApp')
                         }
                         $scope.drugError = null;
                         $scope.drugCount = drugCount;
-                        /*
-                    medapi.fdaName(drugName, function (err, data) {
-                        if (err) {
-                            console.log("ERR: " + err);
-                        } else {
-                            $scope.openfdanameResults = data;
-                        }
-                    });
-*/
                     }
-                    /*
-                medapi.findImages(data.idGroup.rxnormId[0], function (err, imageData) {
-                    if (err) {
-                        console.log("Err: " + err);
-                    } else {
-                        $scope.rximageResults = imageData;
-                    }
-                });
-                medapi.fdaCode(data.idGroup.rxnormId[0], function (err, fdaData) {
-                    if (err) {
-                        console.log("Err: " + err);
-                    } else {
-                        $scope.openfdacodeResults = fdaData;
-                    }
-                });
-                medapi.findmedline(data.idGroup.rxnormId[0], drugName, function (err, medlineData) {
-                    if (err) {
-                        console.log("err: " + err);
-                    } else {
-                        $scope.medlineResults = medlineData;
-                    }
-                });
-*/
                 }
             });
         };
@@ -467,6 +435,8 @@ angular.module('phrPrototypeApp')
             $scope.medReset();
             $modalInstance.dismiss('cancel');
         };
+
+        $scope.medReset();
     })
     .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications) {
         $scope.medication = medication;
@@ -477,6 +447,7 @@ angular.module('phrPrototypeApp')
             medapi.findImages($scope.medication.product.product.code, function (err, data) {
                 $scope.medImages = data;
             });
+            //Add in prescriber alternate search?
         };
 
         function saveMedication() {
@@ -499,18 +470,15 @@ angular.module('phrPrototypeApp')
             $modalInstance.dismiss('cancel');
         };
     })
-    .controller('MedicationDeleteModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications) {
+    .controller('MedicationDeleteModalCtrl', function ($scope, $modalInstance, $route, medication, medications) {
         $scope.medication = medication;
         $scope.deleteConfirm = deleteConfirm;
 
         function deleteConfirm() {
             medications.deleteMedication($scope.medication, function (err, results) {
                 if (err) {
-                    // Display an error in the med entry modal
-                    $scope.saveMedicationStatus = 'error';
+                    console.log("err: " + err);
                 } else {
-                    // Display success in the med entry modal
-                    $scope.saveMedicationStatus = 'success';
                     setTimeout(function () {
                         $modalInstance.close();
                         $route.reload();
@@ -572,35 +540,9 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        // Medication images
-        /*
-        $scope.imgservice = function imgservice(rxcui) {
-            medapi.findImages(rxcui, function(err, data) {
-                $scope.medImages = data;
-            });
-        };
-        */
         medapi.findImages(medication.product.product.code, function (err, data) {
             $scope.medImages = data;
         });
-        // FDA adverse events
-        /*
-        $scope.fdaservice = function fdaservice(rxcui, medname) {
-            if (angular.isDefined(rxcui)) {
-                medapi.fdaCode(rxcui, function(err, data) {
-                    $scope.fdaInfo = data;
-                    $scope.fdatotal($scope.fdaInfo.results);
-                });
-            } else {
-                if (angular.isDefined(medname)) {
-                    medapi.fdaName(medname, function(err, data) {
-                        $scope.fdaInfo = data;
-                        $scope.fdatotal($scope.fdaInfo.results);
-                    });
-                }
-            }
-        };
-        */
 
         if (angular.isDefined(medication.product.product.code)) {
             medapi.fdaCode(medication.product.product.code, function (err, data) {
@@ -623,14 +565,6 @@ angular.module('phrPrototypeApp')
             });
         };
 
-        // Medline Plus Connect link
-        /*
-        $scope.medlineservice = function medlineservice(rxcui, medname) {
-            medapi.findmedline(rxcui, medname, function(err, data) {
-                $scope.medline = data;
-            });
-        };
-        */
         medapi.findmedline(medication.product.product.code, medication.product.product.name, function (err, data) {
             $scope.medline = data;
         });
