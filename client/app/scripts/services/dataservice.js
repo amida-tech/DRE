@@ -140,6 +140,8 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         }
     }
 
+    this.retrieveMasterRecord = retrieveMasterRecord;
+
     function getAllMerges(callback) {
         $http.get('/api/v1/merges')
             .success(function (data) {

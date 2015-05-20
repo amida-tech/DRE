@@ -228,7 +228,14 @@ angular.module('phrPrototypeApp')
                         return '1979-12-12';
                     }
                 }).reverse();
-                //dashPrep();
+                dataservice.retrieveMasterRecord(function(err2, master_record) {
+                    if (err2) {
+                        console.log("err2: "+err2);
+                    } else {
+                        $scope.entries = master_record;
+                        dashPrep();
+                    }
+                });
             }
         });
 
