@@ -23,19 +23,19 @@
             <br/>
             <form novalidate role="form" class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Drug name (required)</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 control-label">Drug name (REQUIRED)</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ng-model="pDrugName" ng-disabled="drugSearchActive">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Dose</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 control-label">Dose (e.g. 20 MG)</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ng-model="pDrugFilter.name">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Type</label>
+                <div class="form-group" ng-show="rxnormResults.dfg">
+                    <label class="col-sm-3 control-label">Filter Search Results by Medication Type:</label>
                     <div class="col-sm-2">
                         <select class="form-control" ng-model="pDrugFilter.$" ng-disabled="!rxnormResults.dfg">
                             <option></option>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
+                    <div class="col-sm-offset-3 col-sm-9">
                         <button style="width: initial" class="btn btn-default form-control pull-right" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
                     </div>
                 </div>
@@ -63,6 +63,7 @@
                 </div>
                 <div class="row" ng-show="rxnormResults">
                     <h4>RxNorm Results ({{drugCount}})</h4>
+                    <h5>Please select one of the drugs in the table below:</h5>
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -94,31 +95,31 @@
             <br/>
             <form novalidate role="form" class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">First name (required)</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 control-label">First name (REQUIRED)</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ng-model="pFirstName" ng-disabled="prescriberSearchActive">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Last name (required)</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 control-label">Last name (REQUIRED)</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ng-model="pLastName" ng-disabled="prescriberSearchActive">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">State</label>
-                    <div class="col-sm-6">
+                    <label class="col-sm-3 control-label">State</label>
+                    <div class="col-sm-5">
                         <input type="search" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Zip Code</label>
-                    <div class="col-sm-6">
+                    <label class="col-sm-3 control-label">Zip Code</label>
+                    <div class="col-sm-5">
                         <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
+                    <div class="col-sm-offset-3 col-sm-9">
                         <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
                     </div>
                 </div>
@@ -130,6 +131,7 @@
                 </div>
                 <div class="row" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
                     <h4>Prescriber Results ({{prescriberCount}})</h4>
+                    <h5>Please select your prescriber by clicking on one of the rows below:</h5>
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -175,17 +177,17 @@
                 Drug Info: {{selectedDrug.synonym}}
             </div>
             <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length == 0">
-                <h4>No Images Found</h4>
+                <h5>No Images Found</h5>
             </div>
             <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length >= 1">
                 <div ng-if="rximageResults.nlmRxImages.length == 1">
-                    <h4>Is this what it looks like?</h4>
+                    <h5>Is this what it looks like? If so, please click on the image to select it.</h5>
                     <div class="col-sm-2">
                         <a class="thumbnail" ng-class="{active:rximageResults.nlmRxImages[0].selected}" ng-click="setSelectedImage(rximageResults.nlmRxImages[0])"><img ng-src="{{rximageResults.nlmRxImages[0].imageUrl}}" class="img-responsive img-thumbnail" /></a>
                     </div>
                 </div>
                 <div ng-if="rximageResults.nlmRxImages.length > 1">
-                    <h4>Is your pill one of these?</h4>
+                    <h4>Is your pill one of these? Please click on an image to select it.</h4>
                     <div class="col-sm-2" ng-repeat="rxImage in rximageResults.nlmRxImages">
                         <a class="thumbnail" ng-class="{active:rxImage.selected}" ng-click="setSelectedImage(rxImage)"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
                     </div>
@@ -273,7 +275,7 @@
     <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedDrug">Next</button>
 </div>
 <div class="modal-footer" ng-if="entryStep===2">
-    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+    <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="previousStep()">Back</button>
     <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedPrescriber">Next</button>
 </div>
 <div class="modal-footer" ng-if="entryStep===3">
