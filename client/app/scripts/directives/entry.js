@@ -43,22 +43,6 @@ angular.module('phrPrototypeApp')
                 }
                 countStarredComments();
 
-                scope.swapTabs = function (entryClass, entryIndex) {
-                    var entries = [
-                        'details',
-                        'comments',
-                        'history',
-                        'match',
-                        'images',
-                        'fda',
-                        'medline'
-                    ];
-                    _.pull(entries, entryClass);
-                    _.forEach(entries, function (entry) {
-                        $('#' + entry + entryIndex).removeClass('in');
-                    });
-                };
-
                 scope.clickStar = function (starVal, starIndex, recordIndex, entry) {
                     console.log("click Star ", !starVal, entry);
 
@@ -77,16 +61,20 @@ angular.module('phrPrototypeApp')
                 scope.toggleNewStar = function () {
                     scope.newComment.starred = !scope.newComment.starred;
                 };
+
                 scope.toggleStar = function () {
-                    scope.entryMetaData.comments[0].starred = !scope.entryMetaData.comments[0].starred;
+                    notes.starNote(scope.entryMetaData.comments[0].note_id, !scope.entryMetaData.comments[0].starred, function (err, data) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            console.log("new star data: ", data);
+                            scope.entryMetaData.comments[0].starred = !scope.entryMetaData.comments[0].starred;
+                            countStarredComments();
+                        }
+                    });
                 };
 
                 scope.addNote = function () {
-                    console.log("adding note");
-                    console.log(scope);
-
-                    console.log(scope.newComment.starred);
-
                     scope.newComment.entry = scope.recordEntry.data._id;
                     scope.newComment.note = scope.newComment.comment;
                     scope.newComment.section = scope.recordEntry.category;
@@ -142,21 +130,18 @@ angular.module('phrPrototypeApp')
                     scope.editflag = false;
                 };
 
-                scope.saveNote = function () {
+                scope.saveNote = function (editComment) {
                     console.log("save note");
-                    scope.entryMetaData.comments[0].comment = scope.editComment;
+                    scope.entryMetaData.comments[0].comment = editComment;
                     var noteID = scope.entryMetaData.comments[0].note_id;
-                    notes.editNote(noteID, scope.editComment, function (err, data) {
-
-                        notes.starNote(noteID, scope.entryMetaData.comments[0].starred, function (err, data) {
-                            console.log('add note star error ', err);
-                            console.log('add note with star ', data);
-                        });
-
-                        countStarredComments();
+                    notes.editNote(noteID, editComment, function (err, data) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            console.log("edited note saved: ", data);
+                        }
                     });
                     scope.editflag = false;
-                    console.log("edited note saved");
                 };
 
             }

@@ -100,4 +100,8 @@ angular.module('phrPrototypeApp')
         this.fullHistory = function (callback) {
 
         };
+
+        this.forceRefresh = function () {
+            master_history = {};
+        };
     });
