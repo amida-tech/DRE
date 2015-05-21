@@ -11,7 +11,7 @@ angular
     .module('phrPrototypeApp')
     .controller('FilesUploadCtrl', FilesUpload);
 
-FilesUpload.$inject = ['$location', '$route', 'upload', '$http', 'format', 'record']
+FilesUpload.$inject = ['$location', '$route', 'upload', '$http', 'format', 'record'];
 
 function FilesUpload($location, $route, upload, $http, format, record) {
     /* jshint validthis: true */
