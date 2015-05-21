@@ -71,7 +71,12 @@ Documentation for record.js [API](./docs/recordjs.md)
 #run tests
 npm install
 bower install
+
+#run server side tests
 grunt
+
+#run client side tests
+grunt test
 
 #run server
 node server.js
