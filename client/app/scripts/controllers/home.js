@@ -11,47 +11,35 @@ angular
     .module('phrPrototypeApp')
     .controller('HomeCtrl', Home);
 
-Home.$inject = ['history', 'merges', 'dataservice'];
+Home.$inject = ['history', 'dataservice', 'notes'];
 
-function Home(history, merges, dataservice) {
+function Home(history, dataservice, notes) {
     /* jshint validthis: true */
     var vm = this;
-    //TODO : fetch notes and updates counts
-    vm.noteCount = 0;
+    
     vm.updatesCount = 0;
+    vm.noteCount = 0;
+    notes.noteCount(function(err,noteCount){
+        if (err) {
+            console.log("err: ",err);
+        } else {
+            vm.noteCount = noteCount;
+        }
+    });
 
-    activate();
+    dataservice.getMergesListRecord(function(err,merges){
+        if(err){
+            console.log("err: ",err);
+        } else {
+            vm.updatesCount = merges.length;
+        }
+    });
 
-    function activate() {
-        refresh();
-        getHistory();
-    }
-
-    function refresh() {
-        dataservice.curr_section = vm.entryType;
-        dataservice.getData(function () {
-            vm.noteCount = 0;
-
-            _.each(dataservice.all_notes, function (entry) {
-                //console.log(entry);
-                if (entry.star) {
-                    vm.noteCount++;
-                }
-            });
-
-            merges.getMerges(function (err, merges) {
-                vm.updatesCount = merges.length;
-            });
-        });
-    }
-
-    function getHistory() {
-        history.getHistory(function (err, history) {
-            if (err) {
-                console.log('ERRROR', err);
-            } else {
-                vm.accountHistory = history;
-            }
-        });
-    }
+    history.getAccountHistory(function (err, history) {
+        if (err) {
+            console.log('ERRROR', err);
+        } else {
+            vm.accountHistory = history;
+        }
+    });
 }
