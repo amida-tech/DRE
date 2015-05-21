@@ -12,7 +12,6 @@
                         <button class="pull-right btn btn-link" ng-click="launchMatch(recordEntry.metadata)"><i class="fa fa-flag fa-inline"></i>{{recordEntry.metadata.match.count}} pending update<span ng-show="recordEntry.metadata.match.count > 1">s</span>
                         </button>
                     </div>
-
                     <div ng-if="recordEntry.metadata.starred_comments > 0">
                         <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star fa-inline"></i>{{recordEntry.metadata.starred_comments}} starred note<span ng-show="recordEntry.metadata.starred_comments > 1">s</span>
                         </button>
@@ -42,7 +41,6 @@
                     </div>-->
                     <!--Record detail pane.-->
                     <div role="tabpanel" class="collapse" id="details{{recordIndex}}">
-
                         <div class="sub-entry">
                             <h3>Entry Details</h3>
                             <div ng-include="entryTemplatePath"></div>
@@ -80,7 +78,8 @@
                                     <h5>{{commentEntry.date | date:'short'}}</h5>
                                 </div>
                                 <div class="col-sm-1 panel-body text-center">
-                                    <h5 ng-show="commentEntry.starred === true"><a><i class="fa fa-star"></i></a></h5>
+                                    <h5 ng-show="commentEntry.starred === true" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
+                                    <h5 ng-show="commentEntry.starred === false" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="panel">
@@ -126,12 +125,11 @@
                                         <button type="submit" ng-click="deleteNote()" class="btn btn-danger pull-left">Delete Note</button>
                                         <div class="pull-right">
                                             <button type="cancel" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
-                                            <button type="submit" ng-click="saveNote()" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>
+                                            <button type="submit" ng-click="saveNote(editComment)" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>

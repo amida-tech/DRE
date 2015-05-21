@@ -11,6 +11,17 @@ angular.module('phrPrototypeApp')
     .service('notes', function notes($http, format) { //
 
         var tmpNotes = [];
+        var all_notes = {};
+
+        function refreshNotes() {
+            $http.get('/api/v1/notes/all')
+                .success(function (data) {
+                    all_notes = data;
+                })
+                .error(function (err) {
+                    console.log("fetching notes failed", err);
+                });
+        }
 
         this.starNote = function (note_id, star, callback) {
             var comment = {
@@ -23,6 +34,7 @@ angular.module('phrPrototypeApp')
             $http.post('/api/v1/notes/star', comment)
                 .success(function (data) {
                     console.log("note added successfuly");
+                    refreshNotes();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -36,6 +48,7 @@ angular.module('phrPrototypeApp')
             $http.post('/api/v1/notes/add', comment)
                 .success(function (data) {
                     console.log("note added successfuly");
+                    refreshNotes();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -45,14 +58,19 @@ angular.module('phrPrototypeApp')
         };
 
         this.getNotes = function (callback) {
-            console.log('get notes data from API');
-
-            $http.get('/api/v1/notes/all')
-                .success(function (data) {
-                    callback(null, data);
-                }).error(function (err) {
-                    callback(err);
-                });
+            if (Object.keys(all_notes).length > 0) {
+                callback(null, all_notes);
+            } else {
+                $http.get('/api/v1/notes/all')
+                    .success(function (data) {
+                        all_notes = data;
+                        callback(null, data);
+                    })
+                    .error(function (err) {
+                        console.log("fetching notes failed", err);
+                        callback(err);
+                    });
+            }
         };
 
         this.editNote = function (note_id, edit, callback) {
@@ -65,6 +83,7 @@ angular.module('phrPrototypeApp')
             $http.post('/api/v1/notes/edit', comment)
                 .success(function (data) {
                     console.log("note edited successfully");
+                    refreshNotes();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -83,6 +102,7 @@ angular.module('phrPrototypeApp')
             $http.post('/api/v1/notes/delete', note_id)
                 .success(function (data) {
                     console.log("note removed successfull");
+                    refreshNotes();
                     callback(null, data);
                 })
                 .error(function (err) {

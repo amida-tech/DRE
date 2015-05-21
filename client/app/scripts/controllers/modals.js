@@ -439,7 +439,7 @@ angular.module('phrPrototypeApp')
         $scope.medReset();
     })
     .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications) {
-        $scope.medication = medication;
+        $scope.medication = medication.data;
         $scope.saveMedication = saveMedication;
 
         $scope.initStuff = function () {
@@ -471,7 +471,7 @@ angular.module('phrPrototypeApp')
         };
     })
     .controller('MedicationDeleteModalCtrl', function ($scope, $modalInstance, $route, medication, medications) {
-        $scope.medication = medication;
+        $scope.medication = medication.data;
         $scope.deleteConfirm = deleteConfirm;
 
         function deleteConfirm() {
@@ -491,8 +491,9 @@ angular.module('phrPrototypeApp')
             $modalInstance.dismiss('cancel');
         };
     })
-    .controller('MedicationDetailModalCtrl', function ($scope, $modalInstance, medication, medapi, npiapi, medications) {
-        $scope.medication = medication;
+    .controller('MedicationDetailModalCtrl', function ($scope, $modalInstance, medication, medapi, npiapi, medications, notes) {
+        $scope.medication = medication.data;
+        $scope.comments = medication.metadata.comments;
         $scope.medicationDetailPath = "views/templates/details/medications.html";
         $scope.tabs = [{
             title: 'Details',
@@ -540,18 +541,18 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        medapi.findImages(medication.product.product.code, function (err, data) {
+        medapi.findImages($scope.medication.product.product.code, function (err, data) {
             $scope.medImages = data;
         });
 
-        if (angular.isDefined(medication.product.product.code)) {
-            medapi.fdaCode(medication.product.product.code, function (err, data) {
+        if (angular.isDefined($scope.medication.product.product.code)) {
+            medapi.fdaCode($scope.medication.product.product.code, function (err, data) {
                 $scope.fdaInfo = data;
                 $scope.fdatotal($scope.fdaInfo.results);
             });
         } else {
-            if (angular.isDefined(medication.product.product.name)) {
-                medapi.fdaName(medication.product.product.name, function (err, data) {
+            if (angular.isDefined($scope.medication.product.product.name)) {
+                medapi.fdaName($scope.medication.product.product.name, function (err, data) {
                     $scope.fdaInfo = data;
                     $scope.fdatotal($scope.fdaInfo.results);
                 });
@@ -565,9 +566,80 @@ angular.module('phrPrototypeApp')
             });
         };
 
-        medapi.findmedline(medication.product.product.code, medication.product.product.name, function (err, data) {
+        medapi.findmedline($scope.medication.product.product.code, $scope.medication.product.product.name, function (err, data) {
             $scope.medline = data;
         });
+
+        $scope.addNote = function (newComment) {
+            console.log("medication: ", medication);
+            var newComment = {
+                entry: $scope.data.medication._id,
+                note: newComment,
+                section: 'medications'
+            };
+            //$scope.newComment.entry = $scope.recordEntry.data._id;
+            //$scope.newComment.note = $scope.newComment.comment;
+            //$scope.newComment.section = $scope.recordEntry.category;
+
+            notes.addNote(newComment, function (err, data) {
+                if (err) {
+                    console.log("err: ", err);
+                } else {
+                    console.log('data ', data);
+                    $scope.comments[0] = data;
+                    $scope.comments[0].starred = false;
+
+                    $scope.newComment = {};
+                }
+            });
+
+        };
+
+        $scope.toggleStar = function () {
+            notes.starNote($scope.comments[0].note_id, !$scope.comments[0].starred, function (err, data) {
+                if (err) {
+                    console.log("err: " + err);
+                } else {
+                    console.log("new star data: ", data);
+                    $scope.comments[0].starred = !$scope.comments[0].starred;
+                }
+            });
+        };
+
+        $scope.editNote = function () {
+            console.log("edit note");
+            $scope.editflag = true;
+            $scope.editComment = $scope.comments[0].comment;
+        };
+
+        $scope.cancelEdit = function () {
+            console.log("cancel edit");
+            $scope.editflag = false;
+        };
+
+        $scope.deleteNote = function () {
+            console.log("delete note");
+            notes.deleteNote($scope.comments[0].note_id, function (err, data) {
+                console.log('deleting note ', err);
+                console.log('deleting note ', data);
+            });
+            $scope.comments = [];
+            $scope.editflag = false;
+        };
+
+        $scope.saveNote = function (editComment) {
+            console.log("save note");
+            $scope.comments[0].comment = editComment;
+            var noteID = $scope.comments[0].note_id;
+            notes.editNote(noteID, editComment, function (err, data) {
+                if (err) {
+                    console.log("err: " + err);
+                } else {
+                    console.log("edited note saved: ", data);
+                }
+            });
+            $scope.editflag = false;
+        };
 
         $scope.close = function () {
             $modalInstance.dismiss('cancel');
