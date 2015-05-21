@@ -71,7 +71,7 @@ module.exports = function () {
     //app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
     //to run development version of UI use this line
-    app.set('client_location', path.resolve(__dirname, '../client/app'));
+    app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
     //app.set('client_location', path.resolve(__dirname, '../phr-prototype/dist'));
 
