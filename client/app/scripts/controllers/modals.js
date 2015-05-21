@@ -423,7 +423,8 @@ angular.module('phrPrototypeApp')
             $scope.entryStep = 0;
             $scope.pWhy = "";
             $scope.pAdminister = "";
-            $scope.pDose = "";
+            $scope.pDoseValue = "";
+            $scope.pDoseUnit = "";
             $scope.pOften = "";
             $scope.pLast = "";
             $scope.pCurrentMedRadio = true;

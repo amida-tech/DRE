@@ -34,15 +34,6 @@
                         <input type="text" class="form-control" ng-model="pDrugFilter.name">
                     </div>
                 </div>
-                <div class="form-group" ng-show="rxnormResults.dfg">
-                    <label class="col-sm-3 control-label">Filter Search Results by Medication Type:</label>
-                    <div class="col-sm-2">
-                        <select class="form-control" ng-model="pDrugFilter.$" ng-disabled="!rxnormResults.dfg">
-                            <option></option>
-                            <option ng-repeat="dfg in rxnormResults.dfg">{{dfg}}</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
                         <button style="width: initial" class="btn btn-default form-control pull-right" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
@@ -63,6 +54,15 @@
                 </div>
                 <div class="row" ng-show="rxnormResults">
                     <h4>RxNorm Results ({{drugCount}})</h4>
+                    <div class="form-group" ng-show="rxnormResults.dfg">
+                        <label class="col-sm-3 control-label">Filter Search Results by Medication Type:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" ng-model="pDrugFilter.$" ng-disabled="!rxnormResults.dfg">
+                                <option></option>
+                                <option ng-repeat="dfg in rxnormResults.dfg">{{dfg}}</option>
+                            </select>
+                        </div>
+                    </div>
                     <h5>Please select one of the drugs in the table below:</h5>
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -199,50 +199,51 @@
             </div>
         </div>
         <h3>Additional Info</h3>
-        <div class="row">
-            <div class="col-sm-5">When did you start taking it?</div>
-            <div class="col-sm-4 col-sm-offset-1">
+        <div class="form-group row">
+            <label class="col-sm-5 control-label">When did you start taking it?</label>
+            <div class="col-sm-6">
                 <input type="date" class="form-control" ng-model="pStart" placeholder="MM/DD/YYYY">
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-5">Is this a current medication?</div>
-            <div class="col-sm-6 col-sm-offset-1">
-                <label class="radio-inline" ng-init="pCurrentMedRadio='true'">
-                    <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="currentRadioYes" value="true"> Yes
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="currentRadioNo" value="false"> No
-                </label>
+        <div class="form-group row">
+            <label class="col-sm-5 control-label">Is this a current medication?</label>
+            <div class="col-sm-6">
+                <div class="radio-inline" ng-init="pCurrentMedRadio='true'">
+                    <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="currentRadioYes" ng-value="true"> Yes
+                </div>
+                <div class="radio-inline">
+                    <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="currentRadioNo" ng-value="false"> No
+                </div>
             </div>
         </div>
-        <div class="row" ng-hide="pCurrentMedRadio">
-            <div class="col-sm-5">If you're not currently taking it, when was your last dose?</div>
-            <div class="col-sm-4 col-sm-offset-1">
+        <div class="form-group row" ng-hide="pCurrentMedRadio">
+            <label class="col-sm-5 control-label">If you're not currently taking it, when was your last dose?</label>
+            <div class="col-sm-6">
                 <input type="date" class="form-control" ng-model="pLast" placeholder="MM/DD/YYYY">
             </div>
         </div>
-        <div class="row" ng-show="pCurrentMedRadio">
-            <div class="col-sm-5">How often do you take it?</div>
-            <div class="col-sm-6 col-sm-offset-1">
+        <div class="form-group row">
+            <label class="col-sm-5 control-label">How often do/did you take it?</label>
+            <div class="col-sm-6">
                 <input type="search" class="form-control" ng-model="pOften">
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-5">How much is a dose?</div>
-            <div class="col-sm-6 col-sm-offset-1">
-                <input type="search" class="form-control" ng-model="pDose">
+        <div class="form-group row">
+            <label class="col-sm-5 control-label">How much is a dose?</label>
+            <div class="col-sm-6">
+                <input type="search" class="form-control" ng-model="pDoseValue" placeholder="Value">
+                <input type="search" class="form-control" ng-model="pDoseUnit" placeholder="Unit">
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-5">How is it administered? (i.e. Pill, Injection, Inhaler, etc)</div>
-            <div class="col-sm-6 col-sm-offset-1">
+        <div class="form-group row">
+            <label class="col-sm-5 control-label">How is it administered? (i.e. Pill, Injection, Inhaler, etc)</label>
+            <div class="col-sm-6">
                 <input type="search" class="form-control" ng-model="pAdminister">
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-5">Why do you take it?</div>
-            <div class="col-sm-6 col-sm-offset-1">
+        <div class="form-group row">
+            <label class="col-sm-5 control-label">Why do you take it?</label>
+            <div class="col-sm-6">
                 <textarea ng-model="pWhy" class="form-control" rows="3"></textarea>
             </div>
         </div>
