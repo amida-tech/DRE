@@ -5,7 +5,14 @@
  * @description
  * # measurements
  */
-angular.module('phrPrototypeApp').directive('d3template', ['$window', '$timeout', 'd3Service',
+angular.module('phrPrototypeApp')
+    .directive('measurements', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'views/templates/details/measurements.html'
+        };
+    })
+    .directive('d3template', ['$window', '$timeout', 'd3Service',
         function ($window, $timeout, d3Service) {
             return {
                 restrict: 'A',

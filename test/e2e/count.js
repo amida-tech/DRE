@@ -6,7 +6,6 @@ var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 var database = require('mongodb').Db;
-var common2 = require('./common.js');
 var common = require(path.join(__dirname, '../common/common.js'));
 
 describe('Pre Test Cleanup', function () {
@@ -22,8 +21,8 @@ describe('Pre Test Cleanup', function () {
     });
 
     it('Login', function (done) {
-        common2.register(api, 'test', 'test', function () {
-            common2.login(api, 'test', 'test', function () {
+        common.register(api, 'test', 'test', function () {
+            common.login(api, 'test', 'test', function () {
                 done();
             });
         });

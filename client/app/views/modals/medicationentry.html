@@ -1,122 +1,174 @@
-<div class="modal-inner-content">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title">Medication Entry</h3>
+</div>
+<div class="modal-body">
     <div class="row" ng-if="entryStep===0">
-        <h3>Drug Information</h3>
-        <div class="col-sm-6 col-sm-offset-3">
-            <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('prescription')">Prescription</button>
-            <br />
-            <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('otc')">Over the Counter</button>
-            <br />
-            <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('supplement')">Supplement</button>
+        <h3>Select a drug type:</h3>
+        <div class="col-sm-6 col-sm-offset-3 btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('prescription')">Prescription</button>
+            </div>
+            <div class="btn-group" role="group">
+                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('otc')">Over the Counter</button>
+            </div>
+            <div class="btn-group" role="group">
+                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('supplement')">Supplement</button>
+            </div>
         </div>
     </div>
     <div class="row" ng-if="entryStep===1">
         <h3>Medication Information</h3>
         <div class="row">
-            <h4>Drug Information</h4>
-            <div class="row">
-                <div class="col-sm-9 form-group">
-                    <label>Drug name (required)</label>
-                    <input type="text" class="form-control" ng-model="pDrugName" placeholder="Drug Name" ng-disabled="drugSearchActive">
-                </div>
-                <div class="col-sm-2 col-sm-offset-1">
-                    <button class="btn btn-default " ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="alert alert-danger" role="alert" ng-show="drugError">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span> {{drugError}}
-                </div>
-            </div>
-            <div class="row" ng-show="rxnormResults">
-                <h4>RxNorm Results ({{drugCount}})</h4>
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Synonym</th>
-                            <th>RxId</th>
-                        </tr>
-                    </thead>
-                    <tbody ng-repeat="rxdruggroup in rxnormResults.conceptGroup">
-                        <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxdruggroup.conceptProperties" ng-click="setSelectedDrug()">
-                            <td>{{rxdrug.name}}</td>
-                            <td>{{rxdrug.tty}}</td>
-                            <td>{{rxdrug.synonym}}</td>
-                            <td>{{rxdrug.rxcui}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!--<pre>{{rxnormResults}}</pre>-->
-            </div>
-        </div>
-        <br />
-        <div class="row" ng-if="medSearchType=='prescription'">
-            <h4>Prescriber Information</h4>
-            <div class="row">
-                <div class="col-sm-9">
-                    <div class="col-sm-5 form-group">
-                        <label>Prescriber's first name (required)</label>
-                        <input type="text" class="form-control" ng-model="pFirstName" placeholder="First Name" ng-disabled="prescriberSearchActive">
-                    </div>
-                    <div class="col-sm-5 col-sm-offset-2 form-group">
-                        <label>Prescriber's last name (required)</label>
-                        <input type="text" class="form-control" ng-model="pLastName" placeholder="Last Name" ng-disabled="prescriberSearchActive">
+            <br/>
+            <form novalidate role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Drug name (required)</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="pDrugName" ng-disabled="drugSearchActive">
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3 form-group">
-                    <label>Prescriber's office zip code</label>
-                    <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Dose</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="pDrugFilter.name">
+                    </div>
                 </div>
-                <div class=" col-sm-2 col-sm-offset-7">
-                    <button class="btn btn-default" ng-click="prescriberSearch(pFirstName, pLastName, pZip)" ng-disabled="prescriberSearchActive">Search</button>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Type</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" ng-model="pDrugFilter.$" ng-disabled="!rxnormResults.dfg">
+                            <option></option>
+                            <option ng-repeat="dfg in rxnormResults.dfg">{{dfg}}</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="alert alert-danger" role="alert" ng-show="prescriberError">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span> {{prescriberError}}
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button style="width: initial" class="btn btn-default form-control pull-right" ng-click="drugSearch(pDrugName)" ng-disabled="drugSearchActive">Search</button>
+                    </div>
                 </div>
-            </div>
-            <div class="row" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
-                <h4>Prescriber Results ({{prescriberCount}})</h4>
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Business Address</th>
-                            <th>Practice Address</th>
-                            <th>Gender</th>
-                            <th>NPI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setSelectedPrescriber()">
-                            <td>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</td>
-                            <td>{{prescriber.business_address}}</td>
-                            <td>{{prescriber.practice_address}}</td>
-                            <td>{{prescriber.gender}}</td>
-                            <td>{{prescriber.npi}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!--<pre>{{prescriberResults}}</pre>-->
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-sm-3">
-                <button class="btn btn-default" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-6">
-                <button class="btn btn-default" ng-click="nextStep()">Next</button>
-            </div>
+                <div class="row">
+                    <div class="alert alert-danger" role="alert" ng-show="drugError">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span> {{drugError}}
+                    </div>
+                    <div class="alert alert-warning" role="alert" ng-show="drugWarning">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Warning:</span> {{drugWarning}}
+                        <ul ng-show="drugSpelling">
+                            <li ng-repeat="drugSpell in drugSpelling"><a ng-click="drugSearch(drugSpell)">{{drugSpell}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row" ng-show="rxnormResults">
+                    <h4>RxNorm Results ({{drugCount}})</h4>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center"><span><i class="fa fa-check" style="color: black"></i></span></th>
+                                <th>Brand</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>RxId</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class="{info: rxdrug.selected}" ng-repeat="rxdrug in rxnormResults.compiled | filter:pDrugFilter:strict" ng-click="setSelectedDrug()">
+                                <td style="text-align: center"><span ng-show="rxdrug.selected"><i class="fa fa-check" style="color: green"></i></span></td>
+                                <td>{{rxdrug.brand}}</td>
+                                <td title="{{rxdrug.synonym}}">{{rxdrug.modifiedname}}</td>
+                                <td><span ng-repeat="dfgName in rxdrug.dfg">{{dfgName}}</span><span ng-show=" ! $last ">, </span></td>
+                                <td>{{rxdrug.rxcui}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--<pre>{{rxnormResults}}</pre>-->
+                </div>
+            </form>
         </div>
     </div>
     <div class="row" ng-if="entryStep===2">
+        <h3>Prescriber Information</h3>
+        <div class="row">
+            <br/>
+            <form novalidate role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">First name (required)</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="pFirstName" ng-disabled="prescriberSearchActive">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Last name (required)</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="pLastName" ng-disabled="prescriberSearchActive">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">State</label>
+                    <div class="col-sm-6">
+                        <input type="search" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Zip Code</label>
+                    <div class="col-sm-6">
+                        <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="alert alert-danger" role="alert" ng-show="prescriberError">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span> {{prescriberError}}
+                    </div>
+                </div>
+                <div class="row" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
+                    <h4>Prescriber Results ({{prescriberCount}})</h4>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center"><span><i class="fa fa-check" style="color: black"></i></span></th>
+                                <th>Name</th>
+                                <th>Practice</th>
+                                <th>Business</th>
+                                <th>Gender</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setSelectedPrescriber()">
+                                <td style="text-align: center"><span ng-show="prescriber.selected"><i class="fa fa-check" style="color: green"></i></span></td>
+                                <td title="NPI: {{prescriber.npi}}">
+                                    <span>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</span>
+                                    <br/>
+                                    <span class="text-muted">NPI: {{prescriber.npi}}</span>
+                                </td>
+                                <!--<td title="Practice Address: {{prescriber.business_address}}">{{prescriber.practice_address}}</td>-->
+                                <td>
+                                    <span ng-show="prescriber.practice_address">{{prescriber.practice_address.address_line}}, {{prescriber.practice_address.address_details_line}}</span>
+                                    <br/>
+                                    <span ng-show="prescriber.practice_address">{{prescriber.practice_address.city}}, {{prescriber.practice_address.state}} {{prescriber.practice_address.zip}}</span>
+                                </td>
+                                <td>
+                                    <span ng-show="prescriber.business_address">{{prescriber.business_address.address_line}}, {{prescriber.business_address.address_details_line}}</span>
+                                    <br/>
+                                    <span ng-show="prescriber.business_address">{{prescriber.business_address.city}}, {{prescriber.business_address.state}} {{prescriber.business_address.zip}}</span>
+                                </td>
+                                <td>{{prescriber.gender}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--<pre>{{prescriberResults}}</pre>-->
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" ng-if="entryStep===3">
         <h3>Info so far:</h3>
         <div class="row">
             <div class="row">
@@ -192,20 +244,8 @@
                 <textarea ng-model="pWhy" class="form-control" rows="3"></textarea>
             </div>
         </div>
-        <br />
-        <div class="row">
-            <div class="col-sm-3">
-                <button class="btn btn-default" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-2">
-                <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="previousStep()">Back</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-1">
-                <button class="btn btn-default" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="nextStep()">Next</button>
-            </div>
-        </div>
     </div>
-    <div class="row" ng-if="entryStep===3">
+    <div class="row" ng-if="entryStep===4">
         <h3>Summary</h3>
         <div class="row">
             <div class="row">
@@ -218,20 +258,31 @@
         <h4>Save Object</h4>
         <pre>{{enteredMedication}}</pre>
         <br />
-        <div class="row">
-            <div class="col-sm-3">
-                <button class="btn btn-default" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-2">
-                <button class="btn btn-default" data-toggle="tab" data-target="#addinfo" aria-controls="addinfo" ng-click="previousStep()">Back</button>
-            </div>
-            <div class="col-sm-3 col-sm-offset-1">
-                <button class="btn btn-default" ng-click="saveMedication()">Submit</button>
-            </div>
-        </div>
         <div ng-if="saveMedicationStatus==='error'">
             <span>There was an error saving the medication.</span>
         </div>
         <div ng-if="saveMedicationStatus==='success'" ng-init="$hide()"></div>
     </div>
+</div>
+<div class="modal-footer" ng-if="entryStep===0">
+    <!--<button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
+</div>
+<div class="modal-footer" ng-if="entryStep===1">
+    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+    <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedDrug">Next</button>
+</div>
+<div class="modal-footer" ng-if="entryStep===2">
+    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+    <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedPrescriber">Next</button>
+</div>
+<div class="modal-footer" ng-if="entryStep===3">
+    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+    <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="previousStep()">Back</button>
+    <button class="btn btn-primary" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="nextStep()">Next</button>
+</div>
+<div class="modal-footer" ng-if="entryStep===4">
+    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+    <button class="btn btn-default" data-toggle="tab" data-target="#addinfo" aria-controls="addinfo" ng-click="previousStep()">Back</button>
+    <button class="btn btn-primary" ng-click="saveMedication()">Submit</button>
 </div>

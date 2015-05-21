@@ -1485,6 +1485,17 @@ img {
   height: auto;
 }
 
+.img-header {
+  display: block;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  float: left !important;
+  margin-top: -10px;
+  margin-left: -10px;
+  margin-right: 10px;
+}
+
 /* line 86, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
 .img-rounded {
   border-radius: 6px;
@@ -8380,44 +8391,50 @@ h6, .h6 {
 .timeline-entry-icon-medication {
   height: 90px;
   width: 90px;
-  background: #6aa6ff;
   position: initial;
 }
 
-/* line 45, _timeline-vertical.scss */
+/* line 44, _timeline-vertical.scss */
 .timeline-entry-icon-medication img {
   width: 90px;
   height: 90px;
   -webkit-border-radius: 45px;
 }
 
-/* line 51, _timeline-vertical.scss */
+/* line 50, _timeline-vertical.scss */
 .timeline-entry-icon i, .timeline-entry-icon-medication i {
   vertical-align: middle;
 }
 
-/* line 55, _timeline-vertical.scss */
+/* line 54, _timeline-vertical.scss */
+.timeline-entry-icon-medication i {
+  vertical-align: text-top;
+  line-height: 1.4em;
+  font-size: 3em;
+}
+
+/* line 60, _timeline-vertical.scss */
 .timeline-entry-icon:hover, .timeline-entry-icon-medication:hover {
   cursor: default;
   background: #6AA6FF;
 }
-/* line 58, _timeline-vertical.scss */
+/* line 63, _timeline-vertical.scss */
 .timeline-entry-icon:hover i, .timeline-entry-icon-medication:hover i {
   color: #fff;
 }
 
-/* line 64, _timeline-vertical.scss */
+/* line 69, _timeline-vertical.scss */
 .timeline-footer circle {
   fill: #ccc;
 }
 @media (max-width: 991px) {
-  /* line 64, _timeline-vertical.scss */
+  /* line 69, _timeline-vertical.scss */
   .timeline-footer circle {
     display: none;
   }
 }
 @media (min-width: 768px) {
-  /* line 64, _timeline-vertical.scss */
+  /* line 69, _timeline-vertical.scss */
   .timeline-footer circle {
     display: inherit;
   }
@@ -8751,6 +8768,11 @@ form .button-well {
 /* line 22, _modals.scss */
 .modal-body span {
   font-size: 14px;
+}
+
+/* line 26, _modals.scss */
+.modal-body .control-label {
+  padding-right: 11px;
 }
 
 /*

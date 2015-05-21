@@ -1,192 +1,159 @@
-<div class="modal-inner-content">
-
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="sidebar-nav">
-                    <div class="navbar navbar-default" role="navigation">
-                        <ul class="nav navbar-nav">
-                            <li>
-                                <button class="btn btn-link" data-toggle="tab" data-target="#details{{recordIndex}}" aria-controls="details{{recordIndex}}" ng-click="swapTabs('details', recordIndex)">
-                                    <span><i class="fa fa-ellipsis-h"></i> Details</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-link" data-toggle="tab" data-target="#comments{{recordIndex}}" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)">
-                                    <span><i class="fa fa-comment"></i> Notes</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-link" data-toggle="tab" data-target="#history{{recordIndex}}" aria-controls="history{{recordIndex}}" ng-click="swapTabs('history', recordIndex)">
-                                    <span><i class="fa fa-clock-o"></i> History</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-link" data-toggle="tab" data-target="#images{{recordIndex}}" aria-controls="images{{recordIndex}}" ng-click="swapTabs('images', recordIndex); imgservice(entryData.product.product.code)">
-                                    <span><i class="fa fa-picture-o"></i> Images</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-link" data-toggle="tab" data-target="#fda{{recordIndex}}" aria-controls="fda{{recordIndex}}" ng-click="swapTabs('fda', recordIndex); fdaservice(entryData.product.product.code, entryData.product.product.name)">
-                                    <span><i class="fa fa-exclamation-triangle"></i> Adverse Events</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-link" data-toggle="tab" data-target="#medline{{recordIndex}}" aria-controls="medline{{recordIndex}}" ng-click="swapTabs('medline', recordIndex); medlineservice(entryData.product.product.code, entryData.product.product.name)">
-                                    <span><i class="fa fa-question-circle"></i> Learn More</span>
-                                </button>
-                            </li>
-                        </ul>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <img class="img-header" ng-if="medication.metadata.image.imageUrl" ng-src="{{medication.metadata.image.imageUrl}}">
+    <h3 class="modal-title">Details for {{medication.product.product.name}}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="sidebar-nav">
+                <div class="navbar navbar-default" role="navigation">
+                    <ul class="nav navbar-nav">
+                        <li ng-repeat="tab in tabs" ng-class="{active: tab.selected}">
+                            <button class="btn btn-link" ng-click="selectTab()">
+                                <span><i class="fa" ng-class="tab.icon"></i> {{tab.title}}</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="row" ng-if="activeTab==='details'">
+                <h3>Details</h3>
+                <div class="sub-entry">
+                    <div ng-include="medicationDetailPath"></div>
+                </div>
+            </div>
+            <div class="row" ng-if="activeTab==='notes'">
+                <h3>Notes</h3>
+                <div class="sub-entry">
+                    <div ng-hide="editflag" class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
+                        <div class="col-sm-11 col-sm-offset-1">
+                            <h5>{{commentEntry.date | date:'short'}}</h5>
+                        </div>
+                        <div class="col-sm-1 panel-body text-center">
+                            <h5 ng-show="commentEntry.starred === true"><a><i class="fa fa-star"></i></a></h5>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <p>{{commentEntry.comment}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <div class="pull-right">
+                                <button ng-click="editNote()" class="btn btn-primary">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" ng-show="!entryMetaData.comments[0]">
+                        <form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
+                            <div class="col-sm-1 panel-body text-center">
+                                <h5 ng-show="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star"></i></a></h5>
+                                <h5 ng-hide="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star-o"></i></a></h5>
+                            </div>
+                            <div class="form-group col-sm-10">
+                                <label for="commentEntry">New:</label>
+                                <textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="newComment.comment" name="commentEntry"></textarea>
+                            </div>
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary" ng-disabled="commentForm.$invalid">Add Note</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-12" ng-show="editflag">
+                        <form novalidate role="form" name="editForm">
+                            <div class="col-sm-1 panel-body text-center">
+                                <h5 ng-show="entryMetaData.comments[0].starred === true" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
+                                <h5 ng-show="entryMetaData.comments[0].starred === false" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
+                            </div>
+                            <div class="form-group col-sm-10">
+                                <label for="commentEntry">Edit:</label>
+                                <textarea class="form-control" rows="2" required ng-required="true" ng-minLength="1" ng-model="editComment" name="commentEntry"></textarea>
+                            </div>
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <button type="submit" ng-click="deleteNote()" class="btn btn-danger pull-left">Delete Note</button>
+                                <div class="pull-right">
+                                    <button type="cancel" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
+                                    <button type="submit" ng-click="saveNote()" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-9">
-                <h4>{{entryTitle}}</h4>
-                <!--Record detail pane.-->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="details{{recordIndex}}">
-
-                        <div class="sub-entry">
-                            <h3>Entry Details</h3>
-                            <div ng-include="entryTemplatePath"></div>
+            <div class="row" ng-if="activeTab==='history'">
+                <h3>History</h3>
+                <div class="sub-entry">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <td>Source</td>
+                                <td>Status</td>
+                                <td>Merged</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(attrIndex, attrEntry) in medication.metadata.attribution">
+                                <td><a href="#/files">{{attrEntry.record.filename}}</a>
+                                </td>
+                                <td class="capitalize">{{attrEntry.merge_reason}}</td>
+                                <td>{{attrEntry.merged | date:'short'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" ng-if="activeTab==='images'">
+                <h3>Images</h3>
+                <div class="sub-entry">
+                    <div ng-hide="medImages.nlmRxImages[0]"> No images found for search term '{{medication.product.product.name}}'</div>
+                    <div ng-repeat="(imageIndex, image) in medImages.nlmRxImages">
+                        <div class="col-xs-6">
+                            <a style="padding-left:15px" target="_blank" ng-href="{{image.imageUrl}}"><img class="img-thumbnail" ng-src="{{image.imageUrl}}" />
+                            </a>
                         </div>
                     </div>
-                    <!--Record history pane.-->
-                    <div role="tabpanel" class="tab-pane" id="history{{recordIndex}}">
-                        <div class="sub-entry">
-                            <h3>Entry History</h3>
-                            <table class="table table-hover table-condensed">
-                                <thead>
-                                    <tr>
-                                        <td>Source</td>
-                                        <td>Status</td>
-                                        <td>Merged</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="(attrIndex, attrEntry) in entryData.metadata.attribution">
-                                        <td><a href="#/files">{{attrEntry.record.filename}}</a>
-                                        </td>
-                                        <td class="capitalize">{{attrEntry.merge_reason}}</td>
-                                        <td>{{attrEntry.merged | date:'short'}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                </div>
+            </div>
+            <div class="row" ng-if="activeTab==='adverse'">
+                <h3>Adverse Events</h3>
+                <div class="sub-entry">
+                    <div ng-show="fdaInfo.error"> No information found for this medication. Error: {{fdaInfo.error.code}}</div>
+                    <div ng-show="fdaInfo.results">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Term</td>
+                                    <td>Number reported (out of {{totalReports}} )</td>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="(eventIndex, event) in fdaInfo.results">
+                                <tr>
+                                    <td>{{event.term}}</td>
+                                    <td>{{event.count | number:2}} %</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="activeTab==='learn'">
+                <h3>Learn More</h3>
+                <div class="sub-entry">
+                    <div ng-show="medline.feed.entry" ng-repeat="(medlineIndex, medlineEntry) in medline.feed.entry">
+                        <div ng-repeat="(linkIndex, link) in medlineEntry.link"><a target="_blank" ng-href="{{link.href}}">{{link.href}}</a>
                         </div>
                     </div>
-                    <!--Record comments pane.-->
-                    <div role="tabpanel" class="tab-pane" id="comments{{recordIndex}}" data-parent="#selector">
-                        <div class="sub-entry">
-                            <h3>Entry Notes</h3>
-                            <div ng-hide="editflag" class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
-                                <div class="col-sm-11 col-sm-offset-1">
-                                    <h5>{{commentEntry.date | date:'short'}}</h5>
-                                </div>
-                                <div class="col-sm-1 panel-body text-center">
-                                    <h5 ng-show="commentEntry.starred === true"><a><i class="fa fa-star"></i></a></h5>
-                                </div>
-                                <div class="col-sm-10">
-                                    <div class="panel">
-                                        <div class="panel-body">
-                                            <p>{{commentEntry.comment}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-10 col-sm-offset-1">
-                                    <div class="pull-right">
-                                        <button ng-click="editNote()" class="btn btn-primary">Edit</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12" ng-show="!entryMetaData.comments[0]">
-                                <form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
-                                    <div class="col-sm-1 panel-body text-center">
-                                        <h5 ng-show="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star"></i></a></h5>
-                                        <h5 ng-hide="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star-o"></i></a></h5>
-                                    </div>
-                                    <div class="form-group col-sm-10">
-                                        <label for="commentEntry">New:</label>
-                                        <textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="newComment.comment" name="commentEntry"></textarea>
-                                    </div>
-                                    <div class="col-sm-10 col-sm-offset-1">
-                                        <div class="pull-right">
-                                            <button type="submit" class="btn btn-primary" ng-disabled="commentForm.$invalid">Add Note</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-sm-12" ng-show="editflag">
-                                <form novalidate role="form" name="editForm">
-                                    <div class="col-sm-1 panel-body text-center">
-                                        <h5 ng-show="entryMetaData.comments[0].starred === true" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
-                                        <h5 ng-show="entryMetaData.comments[0].starred === false" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
-                                    </div>
-                                    <div class="form-group col-sm-10">
-                                        <label for="commentEntry">Edit:</label>
-                                        <textarea class="form-control" rows="2" required ng-required="true" ng-minLength="1" ng-model="editComment" name="commentEntry"></textarea>
-                                    </div>
-                                    <div class="col-sm-10 col-sm-offset-1">
-                                        <button type="submit" ng-click="deleteNote()" class="btn btn-danger pull-left">Delete Note</button>
-                                        <div class="pull-right">
-                                            <button type="cancel" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
-                                            <button type="submit" ng-click="saveNote()" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- RxImage Pane -->
-                    <div role="tabpanel" class="tab-pane" id="images{{recordIndex}}">
-                        <div class="sub-entry">
-                            <h3> Images</h3>
-                            <div ng-hide="medImages.nlmRxImages[0]"> No images found for search term '{{entryData.product.product.name}}'</div>
-                            <div ng-repeat="(imageIndex, image) in medImages.nlmRxImages">
-                                <div class="col-xs-6">
-                                    <a style="padding-left:15px" target="_blank" ng-href="{{image.imageUrl}}"><img class="img-thumbnail" ng-src="{{image.imageUrl}}" />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- OpenFDA Pane -->
-                    <div role="tabpanel" class="tab-pane" id="fda{{recordIndex}}">
-                        <div class="sub-entry">
-                            <h3> Adverse Events</h3>
-                            <div ng-show="fdaInfo.error"> No information found for this medication. Error: {{fdaInfo.error.code}}</div>
-                            <div ng-show="fdaInfo.results">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <td>Term</td>
-                                            <td>Number reported (out of {{totalReports}} )</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody ng-repeat="(eventIndex, event) in fdaInfo.results">
-                                        <tr>
-                                            <td>{{event.term}}</td>
-                                            <td>{{event.count | number:2}} %</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- MedlinePlus Connect Pane -->
-                    <div role="tabpanel" class="tab-pane" id="medline{{recordIndex}}">
-                        <div class="sub-entry">
-                            <h3> Learn More</h3>
-                            <div ng-show="medline.feed.entry" ng-repeat="(medlineIndex, medlineEntry) in medline.feed.entry">
-                                <div ng-repeat="(linkIndex, link) in medlineEntry.link"><a target="_blank" ng-href="{{link.href}}">{{link.href}}</a>
-                                </div>
-                            </div>
-                            <div ng-hide="medline.feed.entry"> No MedlinePlus links found for search term '{{entryData.product.product.name}}'</div>
-                        </div>
-                    </div>
+                    <div ng-hide="medline.feed.entry"> No MedlinePlus links found for search term '{{medication.product.product.name}}'</div>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
+<div class="modal-footer">
 </div>

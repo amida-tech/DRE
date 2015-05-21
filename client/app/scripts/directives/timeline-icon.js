@@ -41,6 +41,17 @@ angular.module('phrPrototypeApp')
                     type: 'social',
                     icon: 'fa-group'
                 }];
+                
+                var medRouteIconMap = [{
+                    code: 'C38216',
+                    icon: 'icon-inhaler'
+                }, {
+                    code: 'C42944',
+                    icon: 'icon-inhaler'
+                }, {
+                    code: 'C42998',
+                    icon: 'icon-pill'
+                }];
 
                 var iconEntry = _.findWhere(iconMap, {
                     type: attrs.timelineIconType
@@ -48,13 +59,26 @@ angular.module('phrPrototypeApp')
 
                 if (iconEntry) {
                     if (iconEntry.type === 'medications') {
-                        var html = '<img ng-src=images/benadryl_test.jpeg>';
+                        var html = '<i class="fa-2x icon-pill"></i>';
                         if (attrs.timelineIconMeta) {
                             var iconMeta = JSON.parse(attrs.timelineIconMeta);
                             if (iconMeta.image) {
                                 if (iconMeta.image.imageUrl) {
                                     if (iconMeta.image.imageUrl !== "") {
                                         html = '<img ng-src=' + iconMeta.image.imageUrl + '>';
+                                    }
+                                }
+                            } else {
+                                // put in the correct default icon
+                                // this branching is sloppy and should be rewritten
+                                if (_.has(scope.entryData, 'administration.form.code')) {
+                                    var route = scope.entryData.administration.form.code;
+                                    var medRouteIconEntry = _.findWhere(medRouteIconMap, {
+                                        code: route
+                                    });
+                                    if (medRouteIconEntry) {
+                                        console.log(medRouteIconEntry.icon);
+                                        html = '<i class="fa-2x ' + medRouteIconEntry.icon + '"></i>';
                                     }
                                 }
                             }

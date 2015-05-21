@@ -5,7 +5,6 @@ var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 var common = require('../common/common.js');
-var common2 = require('./common.js');
 
 describe('Pre Test Cleanup 1', function () {
 
@@ -90,8 +89,8 @@ describe('Storage API', function () {
     var sampleFile = '';
 
     before(function (done) {
-        common2.register(api, 'test', 'test', function () {
-            common2.login(api, 'test', 'test', function () {
+        common.register(api, 'test', 'test', function () {
+            common.login(api, 'test', 'test', function () {
                 done();
             });
         });

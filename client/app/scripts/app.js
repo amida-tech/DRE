@@ -18,7 +18,7 @@ angular
         'ngRoute',
         'ngSanitize',
         'ngTouch',
-        'mgcrea.ngStrap',
+        'ui.bootstrap',
         'd3'
     ])
     .config(function ($routeProvider) {
@@ -30,7 +30,8 @@ angular
             })
             .when('/print', {
                 templateUrl: 'views/print.html',
-                controller: 'PrintCtrl'
+                controller: 'PrintCtrl',
+                controllerAs: 'vm'
             })
             .when('/about', {
                 templateUrl: 'views/about.html',
@@ -53,7 +54,8 @@ angular
             })
             .when('/profile', {
                 templateUrl: 'views/profile.html',
-                controller: 'ProfileCtrl'
+                controller: 'ProfileCtrl',
+                controllerAs: 'vm'
             })
             .when('/account', {
                 templateUrl: 'views/account.html',
@@ -73,7 +75,55 @@ angular
                 templateUrl: 'views/record.html',
                 controller: 'RecordCtrl'
             })
+            .when('/record/all', {
+                templateUrl: 'views/record.html',
+                controller: 'RecordCtrl'
+            })
+            .when('/record/medications', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionMedicationCtrl'
+            })
+            .when('/record/results', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/encounters', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/vitals', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/immunizations', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/allergies', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/conditions', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/procedures', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/social', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionSocialCtrl'
+            })
             .when('/billing', {
+                templateUrl: 'views/billing.html',
+                controller: 'BillingCtrl'
+            })
+            .when('/billing/insurance', {
+                templateUrl: 'views/billing.html',
+                controller: 'BillingCtrl'
+            })
+            .when('/billing/claims', {
                 templateUrl: 'views/billing.html',
                 controller: 'BillingCtrl'
             })

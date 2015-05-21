@@ -1,18 +1,37 @@
 {
-    "browser": false, // Standard browser globals e.g. `window`, `document`.
-
-    "node": true, // Enable globals available when code is running inside of the NodeJS runtime environment.
-    "indent": 4, // Specify indentation spacing
-
+    "bitwise": true,
+    "browser": false,
+    "camelcase": false,
+    "curly": true,
+    "eqeqeq": true,
+    "esnext": true,
     "expr": true,
-    "quotmark":false,
     "globals": {
-        'it': true,
-        'describe': true,
-        'xit': true,
-        'xdescribe': true,
-        'before': true,
-        'after': true,
-        'done': true
-    }
+        "$": false,
+        "DeepDiff": false,
+        "_": true,
+        "after": true,
+        "angular": false,
+        "before": true,
+        "describe": true,
+        "done": true,
+        "it": true,
+        "moment": false,
+        "Promise": true,
+        "xdescribe": true,
+        "xit": true
+    },
+    "immed": true,
+    "indent": 4,
+    "latedef": "nofunc",
+    "multistr": true,
+    "newcap": true,
+    "noarg": true,
+    "node": true,
+    "quotmark": false,
+    "regexp": true,
+    "smarttabs": true,
+    "trailing": true,
+    "undef": true,
+    "unused": false
 }

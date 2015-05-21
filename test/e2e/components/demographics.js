@@ -5,7 +5,6 @@ var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 var common = require('../../common/common.js');
-var common2 = require('../common.js');
 
 function loadTestRecord(fileName, callback) {
     var filepath = path.join(__dirname, '../../artifacts/test-r1.5/' + fileName);
@@ -51,8 +50,8 @@ describe('Pre Test Cleanup', function () {
         });
     });
     it('Login', function (done) {
-        common2.register(api, 'test', 'test', function () {
-            common2.login(api, 'test', 'test', function () {
+        common.register(api, 'test', 'test', function () {
+            common.login(api, 'test', 'test', function () {
                 done();
             });
         });
@@ -440,7 +439,8 @@ describe('Demographic API - Test Merged Matches', function () {
             "number": "(813)276-6909",
             "type": "primary work"
         }],
-        "race_ethnicity": "White",
+        "race": "White",
+        "ethnicity": "Not Hispanic or Latino",
         "religion": "Christian (non-Catholic, non-specific)"
     };
 
@@ -534,7 +534,8 @@ describe('Demographic API - Test Merged Matches', function () {
                         expect(res.body.demographics[iEntry].marital_status).to.deep.equal(tmp_updated_entry.marital_status);
                         expect(res.body.demographics[iEntry].name).to.deep.equal(tmp_updated_entry.name);
                         expect(res.body.demographics[iEntry].phone).to.deep.equal(tmp_updated_entry.phone);
-                        expect(res.body.demographics[iEntry].race_ethnicity).to.deep.equal(tmp_updated_entry.race_ethnicity);
+                        expect(res.body.demographics[iEntry].race).to.deep.equal(tmp_updated_entry.race);
+                        expect(res.body.demographics[iEntry].ethnicity).to.deep.equal(tmp_updated_entry.ethnicity);
                         expect(res.body.demographics[iEntry].religion).to.deep.equal(tmp_updated_entry.religion);
                         //Metadata slightly different test.
                         expect(res.body.demographics[iEntry].metadata.attribution.length).to.equal(base_object.metadata.attribution.length + 1);
