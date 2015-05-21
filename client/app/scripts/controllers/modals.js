@@ -207,6 +207,7 @@ angular.module('phrPrototypeApp')
                 break;
             case 3:
                 enteredObject();
+                $scope.medication = $scope.enteredMedication;
                 $scope.entryStep = 4;
                 break;
             default:
@@ -427,7 +428,7 @@ angular.module('phrPrototypeApp')
             $scope.pDoseUnit = "";
             $scope.pOften = "";
             $scope.pLast = "";
-            $scope.pCurrentMedRadio = true;
+            $scope.pCurrentMedRadio = null;
             $scope.pStart = "";
             $scope.drugSpelling = null;
         };
