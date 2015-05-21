@@ -257,9 +257,10 @@
             <div class="row" ng-show="selectedPrescriber">
                 Prescriber: {{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}
             </div>
+            <div class="sub-entry" ng-include="'views/templates/details/medications.html'"></div>
         </div>
-        <h4>Save Object</h4>
-        <pre>{{enteredMedication}}</pre>
+<!--         <h4>Save Object</h4>
+        <pre>{{enteredMedication}}</pre> -->
         <br />
         <div ng-if="saveMedicationStatus==='error'">
             <span>There was an error saving the medication.</span>
