@@ -26,7 +26,13 @@ angular.module('phrPrototypeApp')
                     "metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
-                        is_prescription: true
+                        is_prescription: true,
+                        attribution: [
+                            {
+                                merged: new Date(),
+                                merge_reason: "new"
+                            }
+                        ]
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
@@ -59,7 +65,7 @@ angular.module('phrPrototypeApp')
                     },*/
                     "product": {
                         "identifiers": [{
-                            rxcui: $scope.selectedDrug.rxcui
+                            'rxcui': $scope.selectedDrug.rxcui
                         }],
                         "product": {
                             'name': $scope.selectedDrug.synonym,
@@ -103,7 +109,13 @@ angular.module('phrPrototypeApp')
                     "metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
-                        is_prescription: false
+                        is_prescription: false,
+                        attribution: [
+                            {
+                                merged: new Date(),
+                                merge_reason: "new"
+                            }
+                        ]
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
@@ -207,6 +219,7 @@ angular.module('phrPrototypeApp')
                 break;
             case 3:
                 enteredObject();
+                $scope.medication = $scope.enteredMedication;
                 $scope.entryStep = 4;
                 break;
             default:
@@ -423,10 +436,11 @@ angular.module('phrPrototypeApp')
             $scope.entryStep = 0;
             $scope.pWhy = "";
             $scope.pAdminister = "";
-            $scope.pDose = "";
+            $scope.pDoseValue = "";
+            $scope.pDoseUnit = "";
             $scope.pOften = "";
             $scope.pLast = "";
-            $scope.pCurrentMedRadio = true;
+            $scope.pCurrentMedRadio = null;
             $scope.pStart = "";
             $scope.drugSpelling = null;
         };
