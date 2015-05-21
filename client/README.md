@@ -67,6 +67,8 @@ webdriver-manager start
 ```
 This will start a Selenium server for Protractor to use. To learn more, check out the [tutorial](https://angular.github.io/protractor/#/tutorial).
 
+In order to successfully execute the tests, you will also need to run the DRE server.
+
 ####License
 
 Licensed under [Apache 2.0 License]('http://www.apache.org/licenses/LICENSE-2.0').

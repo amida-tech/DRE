@@ -1,7 +1,7 @@
 describe('angularjs homepage', function() {
 
     var path = require('path');
-    var files = element(by.css('[href="#/files"]'));
+    var files = element.all(by.css('[href="#/files"]'));
 
     var pathToFiles = "../../test/artifacts/demo-r1.3.1/";
 
@@ -29,7 +29,7 @@ describe('angularjs homepage', function() {
     }
 
     beforeEach(function() {
-        browser.get('http://localhost:3000/');
+        browser.get('http://localhost:3000/#/home');
         browser.driver.manage().window().setSize(1280, 1024);
     });
 
