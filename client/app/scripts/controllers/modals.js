@@ -26,7 +26,13 @@ angular.module('phrPrototypeApp')
                     "metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
-                        is_prescription: true
+                        is_prescription: true,
+                        attribution: [
+                            {
+                                merged: new Date(),
+                                merge_reason: "new"
+                            }
+                        ]
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
@@ -59,7 +65,7 @@ angular.module('phrPrototypeApp')
                     },*/
                     "product": {
                         "identifiers": [{
-                            rxcui: $scope.selectedDrug.rxcui
+                            'rxcui': $scope.selectedDrug.rxcui
                         }],
                         "product": {
                             'name': $scope.selectedDrug.synonym,
@@ -103,7 +109,13 @@ angular.module('phrPrototypeApp')
                     "metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
-                        is_prescription: false
+                        is_prescription: false,
+                        attribution: [
+                            {
+                                merged: new Date(),
+                                merge_reason: "new"
+                            }
+                        ]
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
