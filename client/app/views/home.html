@@ -38,7 +38,7 @@
                 <div>
                     <p>Timeline</p>
                 </div>
-                <div timeline ng-if="vm.accountHistory" chart-data="vm.accountHistory" chart-type="account" class="timeline-graph"></div>
+                <div timeline ng-if="vm.accountHistory" chart-data="vm" chart-type="account" class="timeline-graph"></div>
 
                 <div ng-repeat="(recordIndex, recordEntry) in vm.accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
 

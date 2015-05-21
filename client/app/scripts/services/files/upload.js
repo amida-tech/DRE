@@ -11,7 +11,7 @@ angular
     .module('phrPrototypeApp')
     .service('upload', upload);
 
-upload.$inject = ['$http'];
+upload.$inject = ['$http', 'dataservice', 'history'];
 
 function upload($http, dataservice, history) {
     /* jshint validthis: true */

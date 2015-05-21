@@ -5,7 +5,7 @@
  * @Takes two inputs, chartData and chartType.
  * # timeline
  */
-angular.module('phrPrototypeApp').directive('timeline', function ($window, $location, $anchorScroll, d3Service) {
+angular.module('phrPrototypeApp').directive('timeline', function ($window, $location, $anchorScroll, $timeout, d3Service) {
     return {
         restrict: 'EA',
         template: "<svg style='width:100%;'></svg>",
@@ -39,17 +39,20 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                 var dataToPlot = [];
                 plotCircles = [];
                 plotDomain = [];
-                dataToPlot = scope[attrs.chartData];
                 var dataType = attrs.chartType;
+                if (dataType === 'account') {
+                    dataToPlot = scope[attrs.chartData].accountHistory.recordHistory;
+                } else {
+                    dataToPlot = scope[attrs.chartData];
+                    console.log("dtp: ",dataToPlot);
+                }
                 var tmpDomain = [];
                 var minDate, maxDate, plotFloor, plotCeiling;
                 if (dataType === 'account' && dataToPlot) { //&& dataToPlot if no data skip this part
                     console.log('>>>plotting account history');
                     console.log("num of points ", dataToPlot.length);
-                    //console.log('in timeline plotting');
-                    //console.log('plot data exists', dataToPlot);
-                    for (var i in dataToPlot.recordHistory) {
-                        var plotDate = isoFormatSubsecond.parse(dataToPlot.recordHistory[i].date);
+                    for (var i in dataToPlot) {
+                        var plotDate = isoFormatSubsecond.parse(dataToPlot[i].date);
                         //console.log('plot date', plotDate);
                         plotCircles.push({
                             "date": plotDate
@@ -277,6 +280,12 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                 gatherData();
                 renderPlot();
             };
+
+            $timeout(function(){
+                console.log('timeout... should be after DOM loaded');
+                gatherData();
+                renderPlot();  
+            },0);
 
             //Re-evaluate scope on resize.
             $window.onresize = function () {

@@ -302,7 +302,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         });
     };
 
-    this.forceRefresh = function () {
+    this.forceRefresh = function forceRefresh() {
         master_record = {};
         master_merges = [];
         master_entries = [];
