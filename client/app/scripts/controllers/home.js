@@ -19,6 +19,7 @@ function Home(history, dataservice, notes) {
     
     vm.updatesCount = 0;
     vm.noteCount = 0;
+
     notes.noteCount(function(err,noteCount){
         if (err) {
             console.log("err: ",err);
