@@ -3,7 +3,7 @@ describe('angularjs homepage', function() {
     var path = require('path');
     var files = element(by.css('[href="#/files"]'));
 
-    var pathToFiles = "../../test/artifacts/demo-r1.3.1/";
+    var pathToFiles = "../../test/artifacts/demo-r1.5/";
 
     function uploadTest(un, pw) {
     	files.click();

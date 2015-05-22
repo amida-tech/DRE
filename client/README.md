@@ -15,6 +15,64 @@ This project is written in [AngularJS](https://angularjs.org/), and uses a few c
 
 Additional dependencies exist for this project, and are managed through Bower.
 
+####Getting Started
+
+To get started you will need to install Bower, Compass, Yeoman and Grunt.  Instructions for installation of those packages are available on the respective websites. 
+
+Below is quick summary, assuming you have Ruby, Node.js and NPM running.
+
+```
+npm install -g bower
+
+gem update --system
+gem install compass
+
+npm install -g yo
+
+npm install -g grunt-cli
+
+npm install -g generator-angular
+
+```
+
+Install dependencies from base project directory:
+
+```
+npm install
+
+bower install
+```
+
+From the base project directory, you can use Grunt to build and execute the following commands:
+
+```grunt``` - Does nothing but linting.
+
+```grunt build``` - Executes build and puts it into /dist.
+
+```grunt dev``` - Build and watch files for development (just linting, compiling styles and watching).
+
+####Release Build
+
+Running ```grunt serve``` will serve a version of the interface which is meant for development; this command skips several build steps for quicker compilation.
+
+For a release or deployment of the interface, running ```grunt build:dist``` will compile a more thoroughly optimized version.  Additionally, running ```grunt serve:dist``` will serve this optimized version.
+
+####e2e Testing
+
+This project uses [Protractor](https://angular.github.io/protractor/#/) to run end-to-end tests. To set up for Protractor testing:
+```
+npm install -g protractor
+webdriver-manager update
+webdriver-manager start
+
+protractor conf.js --suite populate
+protractor conf.js --suite scenarios
+```
+This will start a Selenium server for Protractor to use, then run two test suites.
+To learn more, check out the [tutorial](https://angular.github.io/protractor/#/tutorial).
+
+In order to successfully execute the tests, you will also need to be running the DRE server.
+
 ####License
 
 Licensed under [Apache 2.0 License]('http://www.apache.org/licenses/LICENSE-2.0').
