@@ -30,16 +30,16 @@ angular.module('phrPrototypeApp')
                         if (scope.entryData.observation.allergen && scope.entryData.observation.allergen.name) {
                             scope.entryTitle = scope.entryData.observation.allergen.name;
                         }
-                    }
-                    if (scope.entryData.observation.reactions) {
-                        angular.forEach(scope.entryData.observation.reactions, function (reactionObj, index) {
-                            if (index === 0) {
-                                scope.entrySubTitleOne = scope.entrySubTitleOne + reactionObj.reaction.name;
-                            } else {
-                                scope.entrySubTitleOne = scope.entrySubTitleOne + ', ' + reactionObj.reaction.name;
+                        if (scope.entryData.observation.reactions) {
+                            angular.forEach(scope.entryData.observation.reactions, function (reactionObj, index) {
+                                if (index === 0) {
+                                    scope.entrySubTitleOne = scope.entrySubTitleOne + reactionObj.reaction.name;
+                                } else {
+                                    scope.entrySubTitleOne = scope.entrySubTitleOne + ', ' + reactionObj.reaction.name;
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
                     break;
                 case 'encounters':

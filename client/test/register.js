@@ -1,7 +1,8 @@
 
 var path = require('path');
+var Db = require('mongodb').Db;
+var Server = require('mongodb').Server;
 var common = require(path.join(__dirname, '../../test/common/common.js'));
-
 
 describe('register user', function () {
     var registerLink = element.all(by.css('.navbar-right a')).first();
@@ -38,6 +39,11 @@ describe('register user', function () {
     }
 
     beforeEach(function () {
+        var db = new Db('dre', new Server('localhost', 27017));
+        db.open(function(err, db) {
+            db.dropDatabase();
+        });
+        db.dropDatabase();
         browser.get('http://localhost:3000/');
         browser.driver.manage().window().setSize(1280, 1024);
     });

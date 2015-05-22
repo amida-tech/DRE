@@ -68,9 +68,10 @@ webdriver-manager start
 protractor conf.js --suite populate
 protractor conf.js --suite scenarios
 ```
-This will start a Selenium server for Protractor to use. To learn more, check out the [tutorial](https://angular.github.io/protractor/#/tutorial).
+This will start a Selenium server for Protractor to use, then run two test suites.
+To learn more, check out the [tutorial](https://angular.github.io/protractor/#/tutorial).
 
-In order to successfully execute the tests, you will also need to run the DRE server.
+In order to successfully execute the tests, you will also need to be running the DRE server.
 
 ####License
 
