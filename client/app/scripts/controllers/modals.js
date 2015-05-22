@@ -27,12 +27,10 @@ angular.module('phrPrototypeApp')
                         image: $scope.selectedImage,
                         patient_entered: true,
                         is_prescription: true,
-                        attribution: [
-                            {
-                                merged: new Date(),
-                                merge_reason: "new"
-                            }
-                        ]
+                        attribution: [{
+                            merged: new Date(),
+                            merge_reason: "new"
+                        }]
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
@@ -110,12 +108,10 @@ angular.module('phrPrototypeApp')
                         image: $scope.selectedImage,
                         patient_entered: true,
                         is_prescription: false,
-                        attribution: [
-                            {
-                                merged: new Date(),
-                                merge_reason: "new"
-                            }
-                        ]
+                        attribution: [{
+                            merged: new Date(),
+                            merge_reason: "new"
+                        }]
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
@@ -584,11 +580,11 @@ angular.module('phrPrototypeApp')
             $scope.medline = data;
         });
 
-        $scope.addNote = function (newComment) {
+        $scope.addNote = function (inputComment) {
             console.log("medication: ", medication);
             var newComment = {
                 entry: $scope.data.medication._id,
-                note: newComment,
+                note: inputComment,
                 section: 'medications'
             };
             //$scope.newComment.entry = $scope.recordEntry.data._id;
