@@ -9,13 +9,14 @@
  */
 
 angular.module('phrPrototypeApp')
-    .service('logout', function logout($location, $http, dataservice, history) {
+    .service('logout', function logout($location, $http, dataservice, history, notes) {
 
         this.logout = function (callback) {
             console.log("logout service");
             var err = null;
             dataservice.forceRefresh();
             history.forceRefresh();
+            notes.forceRefresh();
 
             $http.post('api/v1/logout')
                 .success(function () {

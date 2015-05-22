@@ -30,7 +30,7 @@ function upload($http, dataservice, history) {
                 }
             })
             .success(function (data) {
-                dataservice.forceRefresh();
+                dataservice.manualRefresh();
                 history.forceRefresh();
                 callback(null, data);
             })
