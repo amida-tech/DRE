@@ -159,9 +159,8 @@ app.use(notes);
 var metadata = require('./lib/metadata');
 app.use(metadata);
 
-var metadata = require('./lib/oauth2');
-app.use(metadata);
-
+//var metadata = require('./lib/oauth2');
+//app.use(metadata);
 
 app.set('port', (process.env.PORT || 3000));
 

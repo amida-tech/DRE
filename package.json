@@ -52,7 +52,12 @@
     "serve-favicon": "2.1.5",
     "serve-static": "1.9.2",
     "supertest": "0.10.0",
-    "underscore": "1.6.x"
+    "underscore": "1.6.x",
+    "connect-ensure-login": "0.1.1",
+    "oauth2orize": "1.0.1",
+    "passport-http-bearer":"1.0.1",
+    "passport-http": "0.2.2",
+    "passport-oauth2-client-password": "0.1.2"
   },
   "engines": {
     "node": "0.10.x"
