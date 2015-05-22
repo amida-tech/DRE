@@ -32,7 +32,7 @@ angular.module('phrPrototypeApp')
                             merge_reason: "new"
                         }]
                     },
-                    "sig": $scope.selectedDrug.name,
+                    "sig": $scope.pWhy,
                     "status": "Completed",
                     //"is_brand": true,
                     "administration": {
@@ -125,7 +125,7 @@ angular.module('phrPrototypeApp')
                             merge_reason: "new"
                         }]
                     },
-                    "sig": $scope.selectedDrug.name,
+                    "sig": $scope.pWhy,
                     "status": "Completed",
                     //"is_brand": true,
                     "administration": {
