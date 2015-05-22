@@ -36,7 +36,10 @@ angular.module('phrPrototypeApp')
                     "status": "Completed",
                     //"is_brand": true,
                     "administration": {
-                        "dose": $scope.pDose,
+                        "dose": {
+                            "value": $scope.pDosevalue,
+                            "unit": $scope.pDoseUnit
+                        },
                         "form": $scope.pAdminister,
                         "rate": $scope.pOften,
                         //"route": "",
@@ -117,7 +120,10 @@ angular.module('phrPrototypeApp')
                     "status": "Completed",
                     //"is_brand": true,
                     "administration": {
-                        "dose": $scope.pDose,
+                        "dose": {
+                            "value": $scope.pDosevalue,
+                            "unit": $scope.pDoseUnit
+                        },
                         "form": $scope.pAdminister,
                         "rate": $scope.pOften,
                         //"route": "",

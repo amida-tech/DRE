@@ -45,14 +45,14 @@
                         <div class="panel" ng-repeat="(itemIndex, itemEntry) in medication.product.product.translations">
                             <input class="col-sm-7" type="text" ng-model="itemEntry.name" />
                         </div>
-                        <input ng-hide="medication.product.product.translations[0].name"class="col-sm-7" type="text" ng-model="medication.product.product.translations[0].name"/>
+                        <input ng-hide="medication.product.product.translations[0].name" class="col-sm-7" type="text" ng-model="medication.product.product.translations[0].name" />
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-5 control-label">Dispense Name (where did you obtain this medication?):</label>
                         <div class="panel" ng-repeat="dispense_name in medication.dispense.performer.name">
                             <input class="col-sm-7" type="text" ng-model="dispense_name" />
                         </div>
-                        <input ng-hide="medication.product.product.translations[0].name"class="col-sm-7" type="text" ng-model="medication.product.product.translations[0].name"/>
+                        <input ng-hide="medication.product.product.translations[0].name" class="col-sm-7" type="text" ng-model="medication.product.product.translations[0].name" />
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-5 control-label">Dispense Type (e.g. Pharmacy?):</label>
