@@ -8,9 +8,7 @@ describe('record scenario', function() {
         var allergies = element(by.id('navallergies'));
         allergies.click();
 
-
         var firstEntry = element(by.css('[entry-index="0"]'));
-
 
         var details = firstEntry.all(by.css('[data-target="#details0"]')).last();
         details.click();
@@ -18,34 +16,26 @@ describe('record scenario', function() {
         var history = firstEntry.all(by.css('[data-target="#history0"]')).last();
         history.click();
 
-
-
         var notes = firstEntry.all(by.css('[data-target="#comments0"]')).last();
-
         notes.click();
-        
-
-        
-
-        
-        
 
         var noteField = firstEntry.element(by.model('newComment.comment'));
         noteField.sendKeys('New comment');
 
         var addNote = firstEntry.element(by.className('btn-primary'));
         addNote.click();
+        
+        var editNote = firstEntry.element(by.css('[ng-click="editNote()"]'));
+        editNote.click();
 
-        var star = firstEntry.all(by.css('[ng-show="commentEntry.starred === false"]')).last().element(by.tagName('a'));
+        var star = firstEntry.all(by.css('[ng-click="toggleStar()"]')).get(1);
         star.click();
+        
+        var saveNote = firstEntry.element(by.css('[ng-click="saveNote()"]'));
+        saveNote.click();
 
         var notePage = element(by.css('[href="#/notes"]'));
-
         notePage.click();
-
-
-
-
     }
 
     beforeEach(function() {
@@ -68,11 +58,6 @@ describe('record scenario', function() {
   });
 
     it('should run', function() {
-        
-    	
-
         scenarioOne();
-
-
     });
 });

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('phrPrototypeApp')
-    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications) {
+    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications, dataservice) {
         $scope.entryStep = 0;
         $scope.prescriberSearchActive = false;
         $scope.drugSearchActive = false;
@@ -98,12 +98,12 @@ angular.module('phrPrototypeApp')
                     },*/
                     "performer": {
                         "address": [
-                            $scope.prescriberResults.practice_address,
-                            $scope.prescriberResults.business_address
+                            $scope.selectedPrescriber.practice_address,
+                            $scope.selectedPrescriber.business_address
                         ],
                         "name": {
-                            "first": $scope.pFirstName,
-                            "last": $scope.pLastName
+                            "first": $scope.selectedPrescriber.first_name,
+                            "last": $scope.selectedPrescriber.last_name
                         }
                     } //,
                     //"drug_vehicle": "",
@@ -189,16 +189,7 @@ angular.module('phrPrototypeApp')
                         "date_time": "",
                         "value": ""
                     },*/
-                    "performer": {
-                        "address": [
-                            $scope.prescriberResults.practice_address,
-                            $scope.prescriberResults.business_address
-                        ],
-                        "name": {
-                            "first": $scope.pFirstName,
-                            "last": $scope.pLastName
-                        }
-                    } //,
+                    //,
                     //"drug_vehicle": "",
                     /*
                     "dispense": {
@@ -255,13 +246,12 @@ angular.module('phrPrototypeApp')
                 } else {
                     // Display success in the med entry modal
                     $scope.saveMedicationStatus = 'success';
-                    setTimeout(function () {
-                        $modalInstance.close();
-                        $route.reload();
-                    }, 100);
+                    $scope.medReset();
+                    $modalInstance.close();
+                    dataservice.forceRefresh();
+                    $route.reload();
                 }
             });
-            $scope.medReset();
         }
         $scope.drugSearch = function drugSearch(drugName) {
             $scope.drugSearchActive = true;
@@ -472,7 +462,7 @@ angular.module('phrPrototypeApp')
 
         $scope.medReset();
     })
-    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications) {
+    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications, dataservice) {
         $scope.medication = medication.data;
         $scope.saveMedication = saveMedication;
 
@@ -492,10 +482,10 @@ angular.module('phrPrototypeApp')
                 } else {
                     // Display success in the med entry modal
                     $scope.saveMedicationStatus = 'success';
-                    setTimeout(function () {
-                        $modalInstance.close();
-                        $route.reload();
-                    }, 100);
+                    $scope.medReset();
+                    $modalInstance.close();
+                    dataservice.forceRefresh();
+                    $route.reload();
                 }
             });
         }
