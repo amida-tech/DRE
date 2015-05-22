@@ -66,15 +66,15 @@ angular.module('phrPrototypeApp')
                     },*/
                     "product": {
                         "identifiers": [{
-                            'rxcui': $scope.selectedDrug.rxcui
+                            rxcui: $scope.selectedDrug.rxcui
                         }],
                         "product": {
                             'name': $scope.selectedDrug.synonym,
                             'code': $scope.selectedDrug.rxcui,
                             'code_system_name': 'RxNorm'
                         },
-                        "unencoded_name": $scope.selectedDrug.name //,
-                            //"manufacturer": 
+                        // "unencoded_name": $scope.selectedDrug.name //,
+                        //"manufacturer": 
                     },
                     "supply": {
                         //"date_time": "",
@@ -82,11 +82,11 @@ angular.module('phrPrototypeApp')
                         //"quantity": "",
                         "author": {
                             "identifiers": [{
-                                npi: $scope.selectedPrescriber.npi
+                                npi: ""
                             }],
                             //"date_time": "",
-                            "name": $scope.selectedPrescriber.first_name + " " + $scope.selectedPrescriber.last_name,
-                            "npi": $scope.selectedPrescriber.npi,
+                            "name": "",
+                            "npi": "",
                             //"organization": ""
                         }
                     },
@@ -96,13 +96,22 @@ angular.module('phrPrototypeApp')
                         "date_time": "",
                         "value": ""
                     },*/
-                    "performer": $scope.selectedPrescriber //,
-                        //"drug_vehicle": "",
-                        /*
-                        "dispense": {
-                            "identifiers": [],
-                            "performer": ""
-                        }*/
+                    "performer": {
+                        "address": [
+                            $scope.prescriberResults.practice_address,
+                            $scope.prescriberResults.business_address
+                        ],
+                        "name": {
+                            "first": $scope.pFirstName,
+                            "last": $scope.pLastName
+                        }
+                    } //,
+                    //"drug_vehicle": "",
+                    /*
+                    "dispense": {
+                        "identifiers": [],
+                        "performer": ""
+                    }*/
                 };
             } else {
                 $scope.enteredMedication = {
@@ -157,8 +166,8 @@ angular.module('phrPrototypeApp')
                             'code': $scope.selectedDrug.rxcui,
                             'code_system_name': 'RxNorm'
                         },
-                        "unencoded_name": $scope.selectedDrug.name //,
-                            //"manufacturer": 
+                        // "unencoded_name": $scope.selectedDrug.name //,
+                        //"manufacturer": 
                     },
                     "supply": {
                         //"date_time": "",
@@ -180,7 +189,16 @@ angular.module('phrPrototypeApp')
                         "date_time": "",
                         "value": ""
                     },*/
-                    "performer": {} //,
+                    "performer": {
+                        "address": [
+                            $scope.prescriberResults.practice_address,
+                            $scope.prescriberResults.business_address
+                        ],
+                        "name": {
+                            "first": $scope.pFirstName,
+                            "last": $scope.pLastName
+                        }
+                    } //,
                     //"drug_vehicle": "",
                     /*
                     "dispense": {
@@ -459,7 +477,7 @@ angular.module('phrPrototypeApp')
         $scope.saveMedication = saveMedication;
 
         $scope.initStuff = function () {
-            console.log("init-ing stuff... " + $scope.medication.metadata.is_prescription);
+            console.log("init-ing stuff... " + $scope.medication.med_metadata.is_prescription);
             medapi.findImages($scope.medication.product.product.code, function (err, data) {
                 $scope.medImages = data;
             });
