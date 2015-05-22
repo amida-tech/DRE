@@ -189,16 +189,7 @@ angular.module('phrPrototypeApp')
                         "date_time": "",
                         "value": ""
                     },*/
-                    "performer": {
-                        "address": [
-                            $scope.prescriberResults.practice_address,
-                            $scope.prescriberResults.business_address
-                        ],
-                        "name": {
-                            "first": $scope.pFirstName,
-                            "last": $scope.pLastName
-                        }
-                    } //,
+                    //,
                     //"drug_vehicle": "",
                     /*
                     "dispense": {
