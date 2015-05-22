@@ -607,7 +607,7 @@ angular.module('phrPrototypeApp')
         $scope.addNote = function (inputComment) {
             console.log("medication: ", medication);
             var newComment = {
-                entry: $scope.data.medication._id,
+                entry: $scope.medication._id,
                 note: inputComment,
                 section: 'medications'
             };
@@ -621,7 +621,9 @@ angular.module('phrPrototypeApp')
                 } else {
                     console.log('data ', data);
                     $scope.comments[0] = data;
-                    $scope.comments[0].starred = false;
+                    $scope.comments[0].date = data.datetime;
+                    $scope.comments[0].comment = data.note;
+                    $scope.comments[0].starred = data.star;
 
                     $scope.newComment = {};
                 }
