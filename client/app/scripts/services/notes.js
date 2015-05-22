@@ -13,9 +13,9 @@ angular.module('phrPrototypeApp')
         var tmpNotes = [];
         var all_notes = {};
 
-        function forceRefresh () {
+        this.forceRefresh = function() {
             all_notes = {};
-        }
+        };
 
         this.starNote = function (note_id, star, callback) {
             var comment = {
