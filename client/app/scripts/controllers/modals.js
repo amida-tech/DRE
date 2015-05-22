@@ -23,7 +23,7 @@ angular.module('phrPrototypeApp')
                 console.log("...was a prescription");
                 $scope.enteredMedication = {
                     //"identifiers": [],
-                    "metadata": {
+                    "med_metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
                         is_prescription: true,
@@ -106,7 +106,7 @@ angular.module('phrPrototypeApp')
             } else {
                 $scope.enteredMedication = {
                     //"identifiers": [],
-                    "metadata": {
+                    "med_metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
                         is_prescription: false,
