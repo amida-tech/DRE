@@ -16,7 +16,7 @@
                         <input type="password" class="form-control" name="inputPassword" ng-model="vm.inputPassword" required ng-required="true" ng-minLength="1">
                         <p ng-show="vm.loginForm.inputPassword.$invalid && !vm.loginForm.inputPassword.$pristine" class="help-block">Password is required.</p>
                     </div>
-                    <button type="submit" class="btn btn-block btn-primary" ng-disabled="vm.loginForm.$invalid">Log In</button>
+                    <button id="main-login-btn" type="submit" class="btn btn-block btn-primary" ng-disabled="vm.loginForm.$invalid">Log In</button>
                     <div ng-if="vm.error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{vm.error}}</div>
                     <!--         <div class="text-center col-sm-12">
             <div class="col-sm-5 text-right">

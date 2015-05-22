@@ -32,11 +32,6 @@ describe('record scenario', function() {
     });
 
     it('should run', function() {
-        
-    	
-
         matchScenario();
-
-
     });
 });

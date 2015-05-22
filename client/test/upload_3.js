@@ -29,7 +29,7 @@ describe('angularjs homepage', function() {
     }
 
     beforeEach(function() {
-        browser.get('http://localhost:3000/#/home');
+        browser.get('http://localhost:3000/');
         browser.driver.manage().window().setSize(1280, 1024);
     });
 

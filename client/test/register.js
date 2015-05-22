@@ -61,5 +61,6 @@ describe('register user', function () {
             return;
         });
         registerTest();
+        expect(browser.getLocationAbsUrl()).toContain('home');
     });
 });
