@@ -98,12 +98,12 @@ angular.module('phrPrototypeApp')
                     },*/
                     "performer": {
                         "address": [
-                            $scope.prescriberResults.practice_address,
-                            $scope.prescriberResults.business_address
+                            $scope.selectedPrescriber.practice_address,
+                            $scope.selectedPrescriber.business_address
                         ],
                         "name": {
-                            "first": $scope.pFirstName,
-                            "last": $scope.pLastName
+                            "first": $scope.selectedPrescriber.first_name,
+                            "last": $scope.selectedPrescriber.last_name
                         }
                     } //,
                     //"drug_vehicle": "",
@@ -189,16 +189,7 @@ angular.module('phrPrototypeApp')
                         "date_time": "",
                         "value": ""
                     },*/
-                    "performer": {
-                        "address": [
-                            $scope.prescriberResults.practice_address,
-                            $scope.prescriberResults.business_address
-                        ],
-                        "name": {
-                            "first": $scope.pFirstName,
-                            "last": $scope.pLastName
-                        }
-                    } //,
+                    //,
                     //"drug_vehicle": "",
                     /*
                     "dispense": {
