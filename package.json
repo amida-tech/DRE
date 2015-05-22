@@ -56,7 +56,12 @@
         "request": "~2.55.0",
         "serve-favicon": "2.2.0",
         "serve-static": "~1.9.2",
-        "supertest": "0.15.0"
+        "supertest": "0.15.0",
+        "connect-ensure-login": "0.1.1",
+        "oauth2orize": "1.0.1",
+        "passport-http-bearer":"1.0.1",
+        "passport-http": "0.2.2",
+        "passport-oauth2-client-password": "0.1.2"
     },
     "engines": {
         "node": "0.10.x"

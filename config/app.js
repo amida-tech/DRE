@@ -167,6 +167,9 @@ module.exports = function () {
     var npiapi = require('../lib/npiapi');
     app.use(npiapi);
 
+    var metadata = require('../lib/metadata');
+    app.use(metadata);
+
     app.set('port', (process.env.PORT || 3000));
 
     app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
