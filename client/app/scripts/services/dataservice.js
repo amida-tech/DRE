@@ -25,40 +25,47 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     }
 
     function getAllNotes(callback) {
-        notes.getNotes(function (err, notes) {
+        if (Object.keys(all_notes).length > 1) {
+            callback(null, all_notes);
+        } else {
+            notes.getNotes(function(err, notes) {
+                if (err) {
+                    console.log("err: ", err);
+                    callback(err);
+                } else {
+                    all_notes = notes;
+                    callback(null, notes);
+                }
+            });
+        }
+    }
+
+    function collateCommentsNew(entry, callback) {
+        var comments = [];
+
+        //find all notes for current entry
+        getAllNotes(function(err, notes) {
             if (err) {
                 console.log("err: ", err);
                 callback(err);
             } else {
-                all_notes = notes;
-                callback(null, notes);
+                var note = _.where(notes, {
+                    entry: entry._id
+                });
+                _.each(note, function(n) {
+                    var comment = {
+                        date: n.datetime,
+                        starred: n.star,
+                        comment: n.note,
+                        entry_id: n.entry,
+                        note_id: n._id
+                    };
+                    comments.push(comment);
+
+                });
+                callback(null, comments);
             }
         });
-    }
-
-    function collateCommentsNew(entry) {
-        var comments = [];
-
-        //find all notes for current entry
-        var note = _.where(all_notes, {
-            entry: entry._id
-        });
-
-        //format each note, and collate into array
-        _.each(note, function (n) {
-            var comment = {
-                date: n.datetime,
-                starred: n.star,
-                comment: n.note,
-                entry_id: n.entry,
-                note_id: n._id
-            };
-
-            comments.push(comment);
-
-        });
-
-        return comments;
     }
 
     function extractAndFormat(type, entry) {
@@ -122,28 +129,61 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             callback(null, master_record);
         } else {
             $http.get('/api/v1/get_record')
-                .success(function (data) {
+                .success(function(data) {
                     console.log("master record fetched successfuly");
                     master_record = data;
                     callback(null, data);
                 })
-                .error(function (err) {
+                .error(function(err) {
                     console.log("fetching master record failed", err);
                     callback("master_record failed " + err);
                 });
         }
     }
-
     this.retrieveMasterRecord = retrieveMasterRecord;
+
+    var processMatches = function(section, matchSection, callback) {
+        var processed_matches = {
+            'category': section,
+            'data': matchSection,
+            'count': matchSection.length
+        };
+
+        _.each(master_entries, function(recordEntry) {
+            delete recordEntry.metadata.match;
+        });
+
+
+        _.each(processed_matches.data, function(match) {
+            var match_count = 0;
+            _.each(master_entries, function(recordEntry) {
+                if (recordEntry.data._id === match.matches[0].match_entry._id) {
+                    //calculate number of pending matches per entry
+                    if (recordEntry.metadata.match && recordEntry.metadata.match.count > 0) {
+                        match_count = match_count + recordEntry.metadata.match.count + 1;
+                    } else {
+                        match_count = match_count + 1;
+                    }
+
+                    recordEntry.metadata.match = {
+                        'match_id': match._id,
+                        'section': section,
+                        'count': match_count
+                    };
+                }
+            });
+        });
+        callback(null, processed_matches);
+    };
 
     function getAllMerges(callback) {
         $http.get('/api/v1/merges')
-            .success(function (data) {
-                console.log("merges fetched successfuly");
+            .success(function(data) {
+                console.log("merges fetched successfuly", data);
                 master_merges = data.merges;
                 callback(null, data.merges);
             })
-            .error(function (err) {
+            .error(function(err) {
                 console.log("fetching merges failed", err);
                 callback(err);
             });
@@ -151,8 +191,8 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
     function parseEntries(callback) {
         master_entries = [];
-        _.each(master_record, function (entries, type) {
-            _.each(entries, function (entry) {
+        _.each(master_record, function(entries, type) {
+            _.each(entries, function(entry) {
                 //gate (ignore) possible sections that are not applicable here
                 if (_.contains(['demographics', 'plan_of_care'], type)) {
                     //skip to next entry (next iteration)
@@ -161,7 +201,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
                 //calculate displayDates for entry based on type
                 var dates = extractAndFormat(type, entry);
-
                 if (dates.temp === "") {
                     dates.temp = [{
                         "date": "2015-02-11T00:00:00.000Z",
@@ -171,52 +210,110 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 }
 
                 //collate all notes into array (with formatting) for current entry
-                var comments = collateCommentsNew(entry);
+                collateCommentsNew(entry, function(err, comments) {
+                    if (err) {
+                        console.log("err: ", err);
+                    } else {
+                        var display_type = displayTypeNew(type);
 
-                var display_type = displayTypeNew(type);
-
-                var tmpEntry = {
-                    'data': entry,
-                    'category': display_type,
-                    'metadata': {
-                        'comments': comments,
-                        'displayDate': dates.display,
-                        'datetime': dates.temp
+                        var tmpEntry = {
+                            'data': entry,
+                            'category': display_type,
+                            'metadata': {
+                                'comments': comments,
+                                'displayDate': dates.display,
+                                'datetime': dates.temp
+                            }
+                        };
+                        master_entries.push(tmpEntry);
                     }
-                };
-
-                //add cleaned up and formatted entry to processed entries array
-                master_entries.push(tmpEntry);
+                });
             });
         });
         callback(null, master_entries);
     }
 
-    this.getProcessedRecord = function (callback) {
+    function getMatchSection(section, callback) {
+        if (!section || section === "all") {
+            console.log('no need to fetch matches for all');
+            callback("no section or not needed for all");
+        } else {
+            //translating section name to backend API terms
+            var section_backend = section;
+            switch (section) {
+                case "conditions":
+                    section_backend = "problems";
+                    break;
+                case "social":
+                    section_backend = "social_history";
+                    break;
+            }
+
+            console.log('getting matches from API for section ' + section_backend);
+            $http.get('/api/v1/matches/' + section_backend)
+                .success(function(data) {
+                    console.log("matches fetched successfuly");
+                    processMatches(section, data.matches, function(err2, processed_matches) {
+                        if (err2) {
+                            console.log("err2: ", err2);
+                            callback(err2);
+                        } else {
+                            callback(null, processed_matches);
+                        }
+                    });
+                })
+                .error(function(err) {
+                    console.log("fetching matches failed", err);
+                    callback(err);
+                });
+        }
+    }
+    this.getMatchSection = getMatchSection;
+
+    function getProcessedRecord(section, callback) {
         console.log("get processed record");
         if (master_entries.length > 0) {
-            callback(null, master_entries);
+            if (section === 'all') {
+                callback(null, master_entries);
+            } else {
+                getMatchSection(section, function(err5, sectionentries) {
+                    if (err5) {
+                        console.log("err5: ", err5);
+                        callback(err5);
+                    } else {
+                        callback(null, master_entries);
+                    }
+                });
+            }
         } else {
-            getAllNotes(function (err, notes) {
-                console.log("get all notes");
+            getAllNotes(function(err, notes) {
                 if (err) {
                     console.log("err: " + err);
                     callback(err);
                 } else {
-                    retrieveMasterRecord(function (err3, record) {
-                        console.log("get all records");
+                    retrieveMasterRecord(function(err3, record) {
                         if (err3) {
                             console.log("err3: " + err3);
                             callback(err3);
                         } else {
-                            parseEntries(function (err4, entries) {
-                                console.log("parsed");
+                            parseEntries(function(err4, entries) {
                                 if (err4) {
                                     console.log('err4: ' + err4);
                                     callback(err4);
                                 } else {
-                                    console.log("entries", entries);
-                                    callback(null, entries);
+                                    master_entries = entries;
+                                    if (section === 'all') {
+                                        callback(null, entries);
+                                    } else {
+                                        getMatchSection(section, function(err5, sectionentries) {
+                                            if (err5) {
+                                                console.log("err5: ", err5);
+                                                callback(err5);
+                                            } else {
+                                                callback(null, master_entries);
+                                            }
+                                        });
+                                    }
                                 }
                             });
                         }
@@ -224,13 +321,14 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 }
             });
         }
-    };
+    }
+    this.getProcessedRecord = getProcessedRecord;
 
-    this.getMergesListRecord = function (callback) {
+    this.getMergesListRecord = function(callback) {
         if (master_merges.length > 0) {
             callback(null, master_merges);
         } else {
-            getAllMerges(function (err2, merges) {
+            getAllMerges(function(err2, merges) {
                 if (err2) {
                     console.log("err: " + err2);
                     callback(err2);
@@ -241,39 +339,10 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         }
     };
 
-    this.getMatchSection = function (section, callback) {
-        if (!section || section === "all") {
-            console.log('no need to fetch matches for all');
-            callback("no section or not needed for all");
-        } else {
-            //translating section name to backend API terms
-            var section_backend = section;
-            switch (section) {
-            case "conditions":
-                section_backend = "problems";
-                break;
-            case "social":
-                section_backend = "social_history";
-                break;
-            }
-
-            console.log('getting matches from API for section ' + section_backend);
-            $http.get('/api/v1/matches/' + section_backend)
-                .success(function (data) {
-                    console.log("matches fetched successfuly");
-                    callback(null, data.matches);
-                })
-                .error(function (err) {
-                    console.log("fetching matches failed", err);
-                    callback(err);
-                });
-        }
-    };
-
     function filterMerges(merges, callback) {
         var filtered_record = [];
         var filtered_billing = [];
-        _.each(merges, function (merge) {
+        _.each(merges, function(merge) {
             if (!_.contains(['claims', 'payers'], merge.entry_type)) {
                 filtered_record.push(merge);
             } else {
@@ -283,18 +352,17 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         callback(null, filtered_billing, filtered_record);
     }
 
-    this.getBillingMerges = function (section, callback) {
-        this.getMergesListRecord(function (err, merges) {
+    this.getBillingMerges = function(section, callback) {
+        this.getMergesListRecord(function(err, merges) {
             if (err) {
                 console.log("err: " + err);
                 callback(err);
             } else {
-                filterMerges(merges, function (err, billing, record) {
+                filterMerges(merges, function(err, billing, record) {
                     if (err) {
                         console.log("err: " + err);
                         callback(err);
                     } else {
-                        console.log("billing: ", billing);
                         callback(null, billing);
                     }
                 });
@@ -302,10 +370,14 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         });
     };
 
-    this.forceRefresh = function forceRefresh() {
+    this.forceRefresh = function() {
         master_record = {};
         master_merges = [];
         master_entries = [];
+        all_notes = {};
+    };
+
+    this.clearNotes = function() {
         all_notes = {};
     };
 });
