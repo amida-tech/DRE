@@ -200,8 +200,12 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
     $scope.clickStar = function (starVal, starIndex, section, entry) {
         console.log("click Star ", !starVal, starIndex, section, entry);
         notes.starNote(entry.note.note_id, !starVal, function (err, data) {
-            console.log('err ', err);
-            console.log('updated note ', data);
+            if (err) {
+                console.log('err ', err);
+            } else {
+                console.log('updated note ', data);
+                dataservice.clearNotes();
+            }
         });
         var tmpSection = _.where($scope.notes, {
             'section': section

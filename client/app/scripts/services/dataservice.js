@@ -26,7 +26,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
     function getAllNotes(callback) {
         if (Object.keys(all_notes).length > 1) {
-            callback(null,all_notes);
+            callback(null, all_notes);
         } else {
             notes.getNotes(function(err, notes) {
                 if (err) {
@@ -40,18 +40,21 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         }
     }
 
-    function collateCommentsNew(entry) {
+    function collateCommentsNew(entry, callback) {
         var comments = [];
 
         //find all notes for current entry
         getAllNotes(function(err, notes) {
             if (err) {
                 console.log("err: ", err);
-                return comments;
+                callback(err);
             } else {
+                console.log("entry: ", entry);
+                console.log("notes: ", notes);
                 var note = _.where(notes, {
                     entry: entry._id
                 });
+                console.log("note: ", note);
                 _.each(note, function(n) {
                     var comment = {
                         date: n.datetime,
@@ -60,12 +63,12 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                         entry_id: n.entry,
                         note_id: n._id
                     };
+                    console.log("comment: ", comment);
 
                     comments.push(comment);
 
                 });
-
-                return comments;
+                callback(null, comments);
             }
         });
     }
@@ -152,7 +155,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         };
 
         _.each(master_entries, function(recordEntry) {
-            console.log("record entry: ", recordEntry);
             delete recordEntry.metadata.match;
         });
 
@@ -213,22 +215,24 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 }
 
                 //collate all notes into array (with formatting) for current entry
-                var comments = collateCommentsNew(entry);
+                collateCommentsNew(entry, function(err, comments) {
+                    if (err) {
+                        console.log("err: ", err);
+                    } else {
+                        var display_type = displayTypeNew(type);
 
-                var display_type = displayTypeNew(type);
-
-                var tmpEntry = {
-                    'data': entry,
-                    'category': display_type,
-                    'metadata': {
-                        'comments': comments,
-                        'displayDate': dates.display,
-                        'datetime': dates.temp
+                        var tmpEntry = {
+                            'data': entry,
+                            'category': display_type,
+                            'metadata': {
+                                'comments': comments,
+                                'displayDate': dates.display,
+                                'datetime': dates.temp
+                            }
+                        };
+                        master_entries.push(tmpEntry);
                     }
-                };
-
-                //add cleaned up and formatted entry to processed entries array
-                master_entries.push(tmpEntry);
+                });
             });
         });
         callback(null, master_entries);
@@ -303,6 +307,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                                     callback(err4);
                                 } else {
                                     master_entries = entries;
+                                    console.log("entries should have notes: ", entries);
                                     if (section === 'all') {
                                         callback(null, entries);
                                     } else {
@@ -372,14 +377,14 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         });
     };
 
-    this.forceRefresh = function () {
+    this.forceRefresh = function() {
         master_record = {};
         master_merges = [];
         master_entries = [];
         all_notes = {};
     };
 
-    this.clearNotes = function () {
+    this.clearNotes = function() {
         all_notes = {};
     };
 });

@@ -13,7 +13,7 @@ angular.module('phrPrototypeApp')
         var tmpNotes = [];
         var all_notes = {};
 
-        function forceRefresh () {
+        function forceRefresh() {
             all_notes = {};
         }
 
