@@ -64,28 +64,34 @@ Documentation for record.js [API](./docs/recordjs.md)
 - Redis
 - Ruby/Compass/Bower
 
+#### prepare
 ```
 # you need Node.js and Grunt.js installed
 # and MongoDB + Redis runnning
 
-#run tests
+npm install -g bower
+gem update --system
+gem install compass
+npm install -g yo
+npm install -g grunt-cli
+npm install -g generator-angular
+
+#then
 npm install
 bower install
-
-#run server side tests
-grunt
-
-#run client side tests
-grunt test
-
-#run server
-node server.js
-
-# go to localhost:3000 in your browser
-
-#development mode (watches for file changes and live-reloads)
-grunt live
 ```
+
+To run, use `node server`
+
+#### Grunt commands:
+
+`grunt` - To Run Server Side tests
+
+`grunt test` - To Run Client Side tests
+
+```grunt build``` - Executes build and puts it into /dist.
+
+```grunt live``` - Build and watch files for development (just linting, compiling styles and watching).
 
 ## Contributing
 
