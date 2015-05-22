@@ -64,6 +64,9 @@ This project uses [Protractor](https://angular.github.io/protractor/#/) to run e
 npm install -g protractor
 webdriver-manager update
 webdriver-manager start
+
+protractor conf.js --suite populate
+protractor conf.js --suite scenarios
 ```
 This will start a Selenium server for Protractor to use. To learn more, check out the [tutorial](https://angular.github.io/protractor/#/tutorial).
 
