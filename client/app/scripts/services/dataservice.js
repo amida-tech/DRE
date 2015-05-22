@@ -7,6 +7,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     var master_record = {};
     var master_merges = [];
     var master_entries = [];
+    var all_notes = {};
 
     function displayTypeNew(type) {
         var display_type = type;
@@ -24,26 +25,31 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     }
 
     function getAllNotes(callback) {
-        notes.getNotes(function(err, notes) {
-            if (err) {
-                console.log("err: ", err);
-                callback(err);
-            } else {
-                callback(null, notes);
-            }
-        });
+        if (Object.keys(all_notes).length > 0) {
+            callback(null, all_notes);
+        } else {
+            notes.getNotes(function(err, notes) {
+                if (err) {
+                    console.log("err: ", err);
+                    callback(err);
+                } else {
+                    all_notes = notes;
+                    callback(null, notes);
+                }
+            });
+        }
     }
 
     function collateCommentsNew(entry) {
         var comments = [];
 
         //find all notes for current entry
-        getAllNotes(function(err, all_notes) {
+        getAllNotes(function(err, notes) {
             if (err) {
                 console.log("err: ", err);
                 return comments;
             } else {
-                var note = _.where(all_notes, {
+                var note = _.where(notes, {
                     entry: entry._id
                 });
                 _.each(note, function(n) {
@@ -136,13 +142,47 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 });
         }
     }
-
     this.retrieveMasterRecord = retrieveMasterRecord;
+
+    var processMatches = function(section, matchSection, callback) {
+        var processed_matches = {
+            'category': section,
+            'data': matchSection,
+            'count': matchSection.length
+        };
+
+        _.each(master_entries, function(recordEntry) {
+            console.log("record entry: ", recordEntry);
+            delete recordEntry.metadata.match;
+        });
+
+
+        _.each(processed_matches.data, function(match) {
+            var match_count = 0;
+            _.each(master_entries, function(recordEntry) {
+                if (recordEntry.data._id === match.matches[0].match_entry._id) {
+                    //calculate number of pending matches per entry
+                    if (recordEntry.metadata.match && recordEntry.metadata.match.count > 0) {
+                        match_count = match_count + recordEntry.metadata.match.count + 1;
+                    } else {
+                        match_count = match_count + 1;
+                    }
+
+                    recordEntry.metadata.match = {
+                        'match_id': match._id,
+                        'section': section,
+                        'count': match_count
+                    };
+                }
+            });
+        });
+        callback(null, processed_matches);
+    };
 
     function getAllMerges(callback) {
         $http.get('/api/v1/merges')
             .success(function(data) {
-                console.log("merges fetched successfuly");
+                console.log("merges fetched successfuly", data);
                 master_merges = data.merges;
                 callback(null, data.merges);
             })
@@ -194,53 +234,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         callback(null, master_entries);
     }
 
-    this.getProcessedRecord = function(callback) {
-        console.log("get processed record");
-        if (master_entries.length > 0) {
-            callback(null, master_entries);
-        } else {
-            getAllNotes(function(err, notes) {
-                if (err) {
-                    console.log("err: " + err);
-                    callback(err);
-                } else {
-                    retrieveMasterRecord(function(err3, record) {
-                        if (err3) {
-                            console.log("err3: " + err3);
-                            callback(err3);
-                        } else {
-                            parseEntries(function(err4, entries) {
-                                if (err4) {
-                                    console.log('err4: ' + err4);
-                                    callback(err4);
-                                } else {
-                                    console.log("entries", entries);
-                                    callback(null, entries);
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    };
-
-    this.getMergesListRecord = function(callback) {
-        if (master_merges.length > 0) {
-            callback(null, master_merges);
-        } else {
-            getAllMerges(function(err2, merges) {
-                if (err2) {
-                    console.log("err: " + err2);
-                    callback(err2);
-                } else {
-                    callback(null, merges);
-                }
-            });
-        }
-    };
-
-    this.getMatchSection = function(section, callback) {
+    function getMatchSection(section, callback) {
         if (!section || section === "all") {
             console.log('no need to fetch matches for all');
             callback("no section or not needed for all");
@@ -260,12 +254,89 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             $http.get('/api/v1/matches/' + section_backend)
                 .success(function(data) {
                     console.log("matches fetched successfuly");
-                    callback(null, data.matches);
+                    processMatches(section, data.matches, function(err2, processed_matches) {
+                        if (err2) {
+                            console.log("err2: ", err2);
+                            callback(err2);
+                        } else {
+                            callback(null, processed_matches);
+                        }
+                    });
                 })
                 .error(function(err) {
                     console.log("fetching matches failed", err);
                     callback(err);
                 });
+        }
+    }
+    this.getMatchSection = getMatchSection;
+
+    function getProcessedRecord(section, callback) {
+        console.log("get processed record");
+        if (master_entries.length > 0) {
+            if (section === 'all') {
+                callback(null, master_entries);
+            } else {
+                getMatchSection(section, function(err5, sectionentries) {
+                    if (err5) {
+                        console.log("err5: ", err5);
+                        callback(err5);
+                    } else {
+                        callback(null, master_entries);
+                    }
+                });
+            }
+        } else {
+            getAllNotes(function(err, notes) {
+                if (err) {
+                    console.log("err: " + err);
+                    callback(err);
+                } else {
+                    retrieveMasterRecord(function(err3, record) {
+                        if (err3) {
+                            console.log("err3: " + err3);
+                            callback(err3);
+                        } else {
+                            parseEntries(function(err4, entries) {
+                                if (err4) {
+                                    console.log('err4: ' + err4);
+                                    callback(err4);
+                                } else {
+                                    master_entries = entries;
+                                    if (section === 'all') {
+                                        callback(null, entries);
+                                    } else {
+                                        getMatchSection(section, function(err5, sectionentries) {
+                                            if (err5) {
+                                                console.log("err5: ", err5);
+                                                callback(err5);
+                                            } else {
+                                                callback(null, master_entries);
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    }
+    this.getProcessedRecord = getProcessedRecord;
+
+    this.getMergesListRecord = function(callback) {
+        if (master_merges.length > 0) {
+            callback(null, master_merges);
+        } else {
+            getAllMerges(function(err2, merges) {
+                if (err2) {
+                    console.log("err: " + err2);
+                    callback(err2);
+                } else {
+                    callback(null, merges);
+                }
+            });
         }
     };
 
@@ -305,23 +376,28 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         master_record = {};
         master_merges = [];
         master_entries = [];
+        all_notes = {};
     };
 
     this.manualRefresh = function forceRefresh() {
-        retrieveMasterRecord(function(err,record){
+        master_record = {};
+        master_merges = [];
+        master_entries = [];
+        all_notes = {};
+        retrieveMasterRecord(function(err, record) {
             if (err) {
-                console.log("err: ",err);
+                console.log("err: ", err);
             } else {
-                parseEntries(function(err2,entries){
+                parseEntries(function(err2, entries) {
                     if (err2) {
-                        console.log("err2: ",err2);
+                        console.log("err2: ", err2);
                     }
                 });
             }
         });
-        getAllMerges(function(err,merges){
+        getAllMerges(function(err, merges) {
             if (err) {
-                console.log("err: ",err);
+                console.log("err: ", err);
             }
         });
     };
