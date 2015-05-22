@@ -13,9 +13,9 @@ angular.module('phrPrototypeApp')
         var tmpNotes = [];
         var all_notes = {};
 
-        function forceRefresh () {
+        this.forceRefresh = function () {
             all_notes = {};
-        }
+        };
 
         this.starNote = function (note_id, star, callback) {
             var comment = {
@@ -28,7 +28,7 @@ angular.module('phrPrototypeApp')
             $http.post('/api/v1/notes/star', comment)
                 .success(function (data) {
                     console.log("note added successfuly");
-                    forceRefresh();
+                    this.forceRefresh();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -42,7 +42,7 @@ angular.module('phrPrototypeApp')
             $http.post('/api/v1/notes/add', comment)
                 .success(function (data) {
                     console.log("note added successfuly");
-                    forceRefresh();
+                    this.forceRefresh();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -77,7 +77,7 @@ angular.module('phrPrototypeApp')
             $http.post('/api/v1/notes/edit', comment)
                 .success(function (data) {
                     console.log("note edited successfully");
-                    forceRefresh();
+                    this.forceRefresh();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -96,7 +96,7 @@ angular.module('phrPrototypeApp')
             $http.post('/api/v1/notes/delete', note_id)
                 .success(function (data) {
                     console.log("note removed successfull");
-                    forceRefresh();
+                    this.forceRefresh();
                     callback(null, data);
                 })
                 .error(function (err) {
