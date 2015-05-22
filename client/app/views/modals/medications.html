@@ -100,8 +100,9 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="(attrIndex, attrEntry) in medication.metadata.attribution">
-                                <td><a href="#/files">{{attrEntry.record.filename}}</a>
+                                <td ng-hide="medication.metadata.patient_entered"><a href="#/files">{{attrEntry.record.filename}}</a>
                                 </td>
+                                <td ng-show="medication.metadata.patient_entered">User-entered</td>
                                 <td class="capitalize">{{attrEntry.merge_reason}}</td>
                                 <td>{{attrEntry.merged | date:'short'}}</td>
                             </tr>
