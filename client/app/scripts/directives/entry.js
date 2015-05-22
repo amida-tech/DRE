@@ -86,7 +86,7 @@ angular.module('phrPrototypeApp')
                         scope.newComment.entry_id = data.entry;
                         scope.newComment.note_id = data._id;
 
-                        scope.entryMetaData.comments[0] = scope.newComment;
+                        scope.entryMetaData.comments = [scope.newComment];
 
                         console.log(scope.newComment.starred);
                         if (angular.isUndefined(scope.newComment.starred)) {

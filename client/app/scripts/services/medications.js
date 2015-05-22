@@ -12,9 +12,9 @@ angular
     .module('phrPrototypeApp')
     .service('medications', medications);
 
-medications.$inject = ['$http'];
+medications.$inject = ['$http','dataservice','notes'];
 
-function medications($http) {
+function medications($http, dataservice, notes) {
     /* jshint validthis: true */
     this.addMedication = addMedication;
     this.editMedication = editMedication;
@@ -27,6 +27,7 @@ function medications($http) {
             })
             .success(function (data) {
                 console.log("medication added successfully");
+                notes.forceRefresh();
                 dataservice.forceRefresh();
                 callback(null, data);
             })
@@ -43,6 +44,7 @@ function medications($http) {
             })
             .success(function (data) {
                 console.log("medication edited successfully");
+                notes.forceRefresh();
                 dataservice.forceRefresh();
                 callback(null, data);
             })
@@ -58,6 +60,7 @@ function medications($http) {
             })
             .success(function (data) {
                 console.log("medication deleted successfully");
+                notes.forceRefresh();
                 dataservice.forceRefresh();
                 callback(null, data);
             })

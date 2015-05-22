@@ -14,10 +14,6 @@ angular.module('phrPrototypeApp')
         //TODO:  Hygiene here for max length of inputs.
         this.login = function (username, password, callback) {
             // console.log("login service:", username, password);
-            dataservice.forceRefresh();
-            history.forceRefresh();
-            notes.forceRefresh();
-            
             if (username && password) {
 
                 $http.post('api/v1/login', {
@@ -26,6 +22,9 @@ angular.module('phrPrototypeApp')
                     })
                     .success(function (data) {
                         console.log("login successful");
+                        notes.forceRefresh();
+                        dataservice.forceRefresh();
+                        history.forceRefresh();
                         callback(null);
                     })
                     .error(function (data) {

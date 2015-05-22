@@ -8,7 +8,7 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-    .service('notes', function notes($http, format, dataservice) { //
+    .service('notes', function notes($http, format) { //
 
         var tmpNotes = [];
         var all_notes = {};
@@ -30,7 +30,6 @@ angular.module('phrPrototypeApp')
                     console.log("note added successfuly");
 
                     forceRefresh();
-                    dataservice.forceRefresh();
                     callback(null, data);
                 })
                 .error(function(err) {
@@ -45,7 +44,6 @@ angular.module('phrPrototypeApp')
                 .success(function(data) {
                     console.log("note added successfuly");
                     forceRefresh();
-                    dataservice.forceRefresh();
                     callback(null, data);
                 })
                 .error(function(err) {
@@ -81,7 +79,6 @@ angular.module('phrPrototypeApp')
                 .success(function(data) {
                     console.log("note edited successfully");
                     forceRefresh();
-                    dataservice.forceRefresh();
                     callback(null, data);
                 })
                 .error(function(err) {
@@ -101,7 +98,6 @@ angular.module('phrPrototypeApp')
                 .success(function(data) {
                     console.log("note removed successfull");
                     forceRefresh();
-                    dataservice.forceRefresh();
                     callback(null, data);
                 })
                 .error(function(err) {

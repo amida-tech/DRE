@@ -14,13 +14,13 @@ angular.module('phrPrototypeApp')
         this.logout = function (callback) {
             console.log("logout service");
             var err = null;
-            dataservice.forceRefresh();
-            history.forceRefresh();
-            notes.forceRefresh();
 
             $http.post('api/v1/logout')
                 .success(function () {
                     console.log("logout successful");
+                    notes.forceRefresh();
+                    dataservice.forceRefresh();
+                    history.forceRefresh();
                     //$rootScope.isAuthenticated = false;
                     //$location.path('/home');
                     callback(null);

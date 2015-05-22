@@ -7,6 +7,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     var master_record = {};
     var master_merges = [];
     var master_entries = [];
+    var all_notes = {};
 
     function displayTypeNew(type) {
         var display_type = type;
@@ -24,26 +25,31 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     }
 
     function getAllNotes(callback) {
-        notes.getNotes(function(err, notes) {
-            if (err) {
-                console.log("err: ", err);
-                callback(err);
-            } else {
-                callback(null, notes);
-            }
-        });
+        if (Object.keys(all_notes).length > 1) {
+            callback(null,all_notes);
+        } else {
+            notes.getNotes(function(err, notes) {
+                if (err) {
+                    console.log("err: ", err);
+                    callback(err);
+                } else {
+                    all_notes = notes;
+                    callback(null, notes);
+                }
+            });
+        }
     }
 
     function collateCommentsNew(entry) {
         var comments = [];
 
         //find all notes for current entry
-        getAllNotes(function(err, all_notes) {
+        getAllNotes(function(err, notes) {
             if (err) {
                 console.log("err: ", err);
                 return comments;
             } else {
-                var note = _.where(all_notes, {
+                var note = _.where(notes, {
                     entry: entry._id
                 });
                 _.each(note, function(n) {
@@ -370,24 +376,10 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         master_record = {};
         master_merges = [];
         master_entries = [];
+        all_notes = {};
     };
 
-    this.manualRefresh = function forceRefresh() {
-        retrieveMasterRecord(function(err, record) {
-            if (err) {
-                console.log("err: ", err);
-            } else {
-                parseEntries(function(err2, entries) {
-                    if (err2) {
-                        console.log("err2: ", err2);
-                    }
-                });
-            }
-        });
-        getAllMerges(function(err, merges) {
-            if (err) {
-                console.log("err: ", err);
-            }
-        });
+    this.clearNotes = function () {
+        all_notes = {};
     };
 });
