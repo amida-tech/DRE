@@ -9,11 +9,15 @@
  */
 
 angular.module('phrPrototypeApp')
-    .service('login', function login($location, $http) {
+    .service('login', function login($location, $http, dataservice, history, notes) {
 
         //TODO:  Hygiene here for max length of inputs.
         this.login = function (username, password, callback) {
             // console.log("login service:", username, password);
+            dataservice.forceRefresh();
+            history.forceRefresh();
+            notes.forceRefresh();
+            
             if (username && password) {
 
                 $http.post('api/v1/login', {
