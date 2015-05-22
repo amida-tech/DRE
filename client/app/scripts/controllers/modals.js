@@ -23,105 +23,23 @@ angular.module('phrPrototypeApp')
                 console.log("...was a prescription");
                 $scope.enteredMedication = {
                     //"identifiers": [],
-                    "metadata": {
+                    "med_metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
                         is_prescription: true,
-                        attribution: [
-                            {
-                                merged: new Date(),
-                                merge_reason: "new"
-                            }
-                        ]
+                        attribution: [{
+                            merged: new Date(),
+                            merge_reason: "new"
+                        }]
                     },
                     "sig": $scope.selectedDrug.name,
                     "status": "Completed",
                     //"is_brand": true,
                     "administration": {
-                        "dose": $scope.pDose,
-                        "form": $scope.pAdminister,
-                        "rate": $scope.pOften,
-                        //"route": "",
-                        //"dose_restriction": "",
-                        //"site": "",
-                        /*"interval": {
-                            "xsiType": "",
-                            "phase": "",
-                            "period": "",
-                            "frequency": true,
-                            "alignment": "",
-                            "event": "",
-                            "event_offset": {
-                                "low": "",
-                                "high": "",
-                                "center": "",
-                                "width": ""
-                            }
-                        }*/
-                    },
-                    /*"precondition": {
-                        "code": "",
-                        "value": ""
-                    },*/
-                    "product": {
-                        "identifiers": [{
-                            'rxcui': $scope.selectedDrug.rxcui
-                        }],
-                        "product": {
-                            'name': $scope.selectedDrug.synonym,
-                            'code': $scope.selectedDrug.rxcui,
-                            'code_system_name': 'RxNorm'
+                        "dose": {
+                            "value": $scope.pDosevalue,
+                            "unit": $scope.pDoseUnit
                         },
-                        "unencoded_name": $scope.selectedDrug.name //,
-                            //"manufacturer": 
-                    },
-                    "supply": {
-                        //"date_time": "",
-                        //"repeatNumber": "",
-                        //"quantity": "",
-                        "author": {
-                            "identifiers": [{
-                                npi: $scope.selectedPrescriber.npi
-                            }],
-                            //"date_time": "",
-                            "name": $scope.selectedPrescriber.first_name + " " + $scope.selectedPrescriber.last_name,
-                            "npi": $scope.selectedPrescriber.npi,
-                            //"organization": ""
-                        }
-                    },
-                    /*"indication": {
-                        "identifiers": [],
-                        "code": "",
-                        "date_time": "",
-                        "value": ""
-                    },*/
-                    "performer": $scope.selectedPrescriber //,
-                        //"drug_vehicle": "",
-                        /*
-                        "dispense": {
-                            "identifiers": [],
-                            "performer": ""
-                        }*/
-                };
-            } else {
-                $scope.enteredMedication = {
-                    //"identifiers": [],
-                    "metadata": {
-                        image: $scope.selectedImage,
-                        patient_entered: true,
-                        is_prescription: false,
-                        attribution: [
-                            {
-                                merged: new Date(),
-                                merge_reason: "new"
-                            }
-                        ]
-                    },
-                    "sig": $scope.selectedDrug.name,
-                    "status": "Completed",
-                    //"is_brand": true,
-                    "administration": {
-                        "dose": $scope.pDose,
                         "form": $scope.pAdminister,
                         "rate": $scope.pOften,
                         //"route": "",
@@ -155,8 +73,8 @@ angular.module('phrPrototypeApp')
                             'code': $scope.selectedDrug.rxcui,
                             'code_system_name': 'RxNorm'
                         },
-                        "unencoded_name": $scope.selectedDrug.name //,
-                            //"manufacturer": 
+                        // "unencoded_name": $scope.selectedDrug.name //,
+                        //"manufacturer": 
                     },
                     "supply": {
                         //"date_time": "",
@@ -178,7 +96,109 @@ angular.module('phrPrototypeApp')
                         "date_time": "",
                         "value": ""
                     },*/
-                    "performer": {} //,
+                    "performer": {
+                        "address": [
+                            $scope.prescriberResults.practice_address,
+                            $scope.prescriberResults.business_address
+                        ],
+                        "name": {
+                            "first": $scope.pFirstName,
+                            "last": $scope.pLastName
+                        }
+                    } //,
+                    //"drug_vehicle": "",
+                    /*
+                    "dispense": {
+                        "identifiers": [],
+                        "performer": ""
+                    }*/
+                };
+            } else {
+                $scope.enteredMedication = {
+                    //"identifiers": [],
+                    "med_metadata": {
+                        image: $scope.selectedImage,
+                        patient_entered: true,
+                        is_prescription: false,
+                        attribution: [{
+                            merged: new Date(),
+                            merge_reason: "new"
+                        }]
+                    },
+                    "sig": $scope.selectedDrug.name,
+                    "status": "Completed",
+                    //"is_brand": true,
+                    "administration": {
+                        "dose": {
+                            "value": $scope.pDosevalue,
+                            "unit": $scope.pDoseUnit
+                        },
+                        "form": $scope.pAdminister,
+                        "rate": $scope.pOften,
+                        //"route": "",
+                        //"dose_restriction": "",
+                        //"site": "",
+                        /*"interval": {
+                            "xsiType": "",
+                            "phase": "",
+                            "period": "",
+                            "frequency": true,
+                            "alignment": "",
+                            "event": "",
+                            "event_offset": {
+                                "low": "",
+                                "high": "",
+                                "center": "",
+                                "width": ""
+                            }
+                        }*/
+                    },
+                    /*"precondition": {
+                        "code": "",
+                        "value": ""
+                    },*/
+                    "product": {
+                        "identifiers": [{
+                            rxcui: $scope.selectedDrug.rxcui
+                        }],
+                        "product": {
+                            'name': $scope.selectedDrug.synonym,
+                            'code': $scope.selectedDrug.rxcui,
+                            'code_system_name': 'RxNorm'
+                        },
+                        // "unencoded_name": $scope.selectedDrug.name //,
+                        //"manufacturer": 
+                    },
+                    "supply": {
+                        //"date_time": "",
+                        //"repeatNumber": "",
+                        //"quantity": "",
+                        "author": {
+                            "identifiers": [{
+                                npi: ""
+                            }],
+                            //"date_time": "",
+                            "name": "",
+                            "npi": "",
+                            //"organization": ""
+                        }
+                    },
+                    /*"indication": {
+                        "identifiers": [],
+                        "code": "",
+                        "date_time": "",
+                        "value": ""
+                    },*/
+                    "performer": {
+                        "address": [
+                            $scope.prescriberResults.practice_address,
+                            $scope.prescriberResults.business_address
+                        ],
+                        "name": {
+                            "first": $scope.pFirstName,
+                            "last": $scope.pLastName
+                        }
+                    } //,
                     //"drug_vehicle": "",
                     /*
                     "dispense": {
@@ -457,7 +477,7 @@ angular.module('phrPrototypeApp')
         $scope.saveMedication = saveMedication;
 
         $scope.initStuff = function () {
-            console.log("init-ing stuff... " + $scope.medication.metadata.is_prescription);
+            console.log("init-ing stuff... " + $scope.medication.med_metadata.is_prescription);
             medapi.findImages($scope.medication.product.product.code, function (err, data) {
                 $scope.medImages = data;
             });
@@ -584,11 +604,11 @@ angular.module('phrPrototypeApp')
             $scope.medline = data;
         });
 
-        $scope.addNote = function (newComment) {
+        $scope.addNote = function (inputComment) {
             console.log("medication: ", medication);
             var newComment = {
                 entry: $scope.data.medication._id,
-                note: newComment,
+                note: inputComment,
                 section: 'medications'
             };
             //$scope.newComment.entry = $scope.recordEntry.data._id;

@@ -44,7 +44,7 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                     dataToPlot = scope[attrs.chartData].accountHistory.recordHistory;
                 } else {
                     dataToPlot = scope[attrs.chartData];
-                    console.log("dtp: ",dataToPlot);
+                    console.log("dtp: ", dataToPlot);
                 }
                 var tmpDomain = [];
                 var minDate, maxDate, plotFloor, plotCeiling;
@@ -281,11 +281,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                 renderPlot();
             };
 
-            $timeout(function(){
+            $timeout(function () {
                 console.log('timeout... should be after DOM loaded');
                 gatherData();
-                renderPlot();  
-            },0);
+                renderPlot();
+            }, 0);
 
             //Re-evaluate scope on resize.
             $window.onresize = function () {

@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
-    <img class="img-header" ng-if="medication.metadata.image.imageUrl" ng-src="{{medication.metadata.image.imageUrl}}">
+    <img class="img-header" ng-if="medication.med_metadata.image.imageUrl" ng-src="{{medication.med_metadata.image.imageUrl}}">
     <h3 class="modal-title">Details for {{medication.product.product.name}}</h3>
 </div>
 <div class="modal-body">
@@ -99,9 +99,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="(attrIndex, attrEntry) in medication.metadata.attribution">
-                                <td><a href="#/files">{{attrEntry.record.filename}}</a>
+                            <tr ng-repeat="(attrIndex, attrEntry) in medication.med_metadata.attribution">
+                                <td ng-hide="medication.med_metadata.patient_entered"><a href="#/files">{{attrEntry.record.filename}}</a>
                                 </td>
+                                <td ng-show="medication.med_metadata.patient_entered">User-entered</td>
                                 <td class="capitalize">{{attrEntry.merge_reason}}</td>
                                 <td>{{attrEntry.merged | date:'short'}}</td>
                             </tr>

@@ -9,112 +9,78 @@
             <div class="row">
                 <h3>Details</h3>
                 <div class="sub-entry">
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Do you have an alternative name for this medication?:</label>
+                        <input class="col-sm-7" type="text" ng-model="medication.product.unenconded_name" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Status (are you still taking this medication?):</label>
+                        <select ng-model="medication.status" class="col-sm-3">
+                            <option value="Complete">Complete</option>
+                            <option value="Active">Active</option>
+                            <option value="On Hold">On Hold</option>
+                            <option value="No longer active">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Instructions from your physician:</label>
+                        <input class="col-sm-7" type="text" ng-model="medication.sig" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Dose (how much do you take at a time?):</label>
+                        <input class="col-sm-3" type="number" ng-model="medication.dose.value" placeholder="Value (Please enter a number)" />
+                        <input class="col-sm-3 col-sm-offset-1" type="text" ng-model="medication.dose.unit" placeholder="Unit e.g. MG" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Rate (how often do you take this medication?):</label>
+                        <input class="col-sm-3" type="number" ng-model="medication.rate.value" placeholder="Value (Please enter a number)" />
+                        <input class="col-sm-3 col-sm-offset-1" type="text" ng-model="medication.rate.unit" placeholder="Unit e.g. daily" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Manufacturer (who makes this medication?):</label>
+                        <input class="col-sm-7" type="text" ng-model="medication.product.manufacturer" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Other Descriptions (other names?):</label>
+                        <div class="panel" ng-repeat="(itemIndex, itemEntry) in medication.product.product.translations">
+                            <input class="col-sm-7" type="text" ng-model="itemEntry.name" />
+                        </div>
+                        <input ng-hide="medication.product.product.translations[0].name" class="col-sm-7" type="text" ng-model="medication.product.product.translations[0].name" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Dispense Name (where did you obtain this medication?):</label>
+                        <div class="panel" ng-repeat="dispense_name in medication.dispense.performer.name">
+                            <input class="col-sm-7" type="text" ng-model="dispense_name" />
+                        </div>
+                        <input ng-hide="medication.product.product.translations[0].name" class="col-sm-7" type="text" ng-model="medication.product.product.translations[0].name" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Dispense Type (e.g. Pharmacy):</label>
+                        <input class="col-sm-7" type="text" ng-model="medication.dispense.performer.type" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Route (how do you take this medication? e.g. Oral):</label>
+                        <input class="col-sm-7" type="text" ng-model="medication.administration.route.name" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Form (what form of medication is it? e.g. Tablet):</label>
+                        <input class="col-sm-7" type="text" ng-model="medication.administration.form.name" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Dose Restriction (are there any restrictions on how much of this medication you can take?):</label>
+                        <input class="col-sm-3" type="number" ng-model="medication.administration.dose_restriction.value" placeholder="Value (Please enter a number)" />
+                        <input class="col-sm-3 col-sm-offset-1" type="text" ng-model="medication.administration.dose_restriction.unit" placeholder="Unit e.g. daily" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Precondition:</label>
+                        <input class="col-sm-7" type="text" ng-model="medication.precondition.value.name" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Indication (why are you taking this medication?):</label>
+                        <input class="col-sm-7" type="text" ng-model="medication.indication.value.name" />
+                    </div>
                     <table class="table table-hover">
-                        <tbody>
-                            <tr>
-                                <td>Status:</td>
-                                <td>
-                                    <input type="text" ng-model="medication.status" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sig:</td>
-                                <td>
-                                    <input type="text" ng-model="medication.sig" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Dose:</td>
-                                <td>
-                                    <input type="text" ng-model="medication.administration.dose.displayQuantity" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Rate:</td>
-                                <td>
-                                    <input type="text" ng-model="medication.administration.rate.displayQuantity" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Manufacturer:</td>
-                                <td>
-                                    <input type="text" ng-model="medication.product.manufacturer" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Product Code:</td>
-                                <td>
-                                    <input type="text" ng-model="medication.product.product.code" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Product Code System:</td>
-                                <td>
-                                    <input type="text" ng-model="medication.product.product.code_system_name" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Unencoded Name:</td>
-                                <td>
-                                    <input type="text" ng-model="medication.product.unencoded_name" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Other Descriptions:</td>
-                                <td>
-                                    <div class="panel" ng-repeat="(itemIndex, itemEntry) in medication.product.product.translations">
-                                        <table class="table sub-table">
-                                            <thead ng-show="itemEntry.name">
-                                                <tr>
-                                                    <td>Name:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="itemEntry.name" />
-                                                    </td>
-                                                </tr>
-                                            </thead>
-                                            <tbody ng-show="itemEntry.code||itemEntry.code_system_name">
-                                                <tr>
-                                                    <td>Code:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="itemEntry.code" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Code System:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="itemEntry.code_system_name" />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
                         <tbody ng-if="medication.metadata.is_prescription">
-                            <tr>
-                                <td>Dispense Name:</td>
-                                <td>
-                                    <div class="panel" ng-if="medication.dispense.performer.name.length==0">
-                                        <table class="table sub-table">
-                                            <tr>
-                                                <td>
-                                                    <input type="text" ng-model="medication.dispense.performer.name[0]" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="panel" ng-repeat="dispense_name in medication.dispense.performer.name">
-                                        <table class="table sub-table">
-                                            <tr>
-                                                <td>
-                                                    <input type="text" ng-model="dispense_name.displayName" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
                             <tr>
                                 <td>Dispense Organization:</td>
                                 <td>
@@ -129,12 +95,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Dispense Type:</td>
-                                <td>
-                                    <input type="text" ng-model="medication.dispense.performer.type" />
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>Dispense Address:</td>
                                 <td>
                                     <div class="panel" ng-repeat="dispense_addr in medication.dispense.performer.address">
@@ -142,20 +102,6 @@
                                             <tr>
                                                 <td>
                                                     <input type="text" ng-model="dispense_addr.displayAddress" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Dispense Name:</td>
-                                <td>
-                                    <div class="panel" ng-repeat="dispense_name in medication.dispense.performer.name">
-                                        <table class="table sub-table">
-                                            <tr>
-                                                <td>
-                                                    <input type="text" ng-model="dispense_name.displayName" />
                                                 </td>
                                             </tr>
                                         </table>
@@ -193,37 +139,6 @@
                                                     <input type="text" ng-model="dispense_email.address" />
                                                 </td>
                                             </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Dispense Code:</td>
-                                <td>
-                                    <div class="panel" ng-repeat="(dispense_codeIndex, dispense_code) in medication.dispense.performer.code">
-                                        <table class="table sub-table">
-                                            <thead ng-show="dispense_code.name">
-                                                <tr>
-                                                    <td>Name:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="dispense_code.name" />
-                                                    </td>
-                                                </tr>
-                                            </thead>
-                                            <tbody ng-show="dispense_code.code||dispense_code.code_system_name">
-                                                <tr>
-                                                    <td>Code:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="dispense_code.code" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Code System:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="dispense_code.code_system_name" />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
                                         </table>
                                     </div>
                                 </td>
@@ -270,81 +185,6 @@
                                 </td>
                             </tr>
                             <div>
-                                <tr>
-                                    <td>Route:</td>
-                                    <td>
-                                        <div class="panel">
-                                            <table class="table sub-table">
-                                                <tr>
-                                                    <td>Name:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="medication.administration.route.name" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Code:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="medication.administration.route.code" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Code System:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="medication.administration.route.code_system_name" />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Form:</td>
-                                    <td>
-                                        <div class="panel">
-                                            <table class="table sub-table">
-                                                <tr>
-                                                    <td>Name:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="medication.administration.form.name" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Code:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="medication.administration.form.code" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Code System:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="medication.administration.form.code_system_name" />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Dose Restriction:</td>
-                                    <td>
-                                        <div class="panel">
-                                            <table class="table sub-table">
-                                                <tr>
-                                                    <td>Name:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="medication.administration.dose_restriction.value" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Code:</td>
-                                                    <td>
-                                                        <input type="text" ng-model="medication.administration.dose_restriction.unit" />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td>Site of Administration:</td>
                                     <td>
@@ -472,62 +312,8 @@
                                     </td>
                                 </tr>
                             </div>
-                            <tr>
-                                <td>Precondition:</td>
-                                <td>
-                                    <div class="panel">
-                                        <table class="table sub-table">
-                                            <tr>
-                                                <td>Name:</td>
-                                                <td>
-                                                    <input type="text" ng-model="medication.precondition.value.name" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Code:</td>
-                                                <td>
-                                                    <input type="text" ng-model="medication.precondition.value.code" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Code System:</td>
-                                                <td>
-                                                    <input type="text" ng-model="medication.precondition.value.code_system_name" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Indication:</td>
-                                <td>
-                                    <div class="panel">
-                                        <table class="table sub-table">
-                                            <tr>
-                                                <td>Name:</td>
-                                                <td>
-                                                    <input type="text" ng-model="medication.indication.value.name" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Code:</td>
-                                                <td>
-                                                    <input type="text" ng-model="medication.indication.value.code" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Code System:</td>
-                                                <td>
-                                                    <input type="text" ng-model="medication.indication.value.code_system_name" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
                         </tbody>
-                        <tbody ng-if="medication.metadata.is_prescription">
+                        <tbody ng-if="medication.med_metadata.is_prescription">
                             <tr>
                                 <td>Prescriber Name:</td>
                                 <td>

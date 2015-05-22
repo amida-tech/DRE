@@ -13,12 +13,12 @@
                             <i class="fa fa-info-circle fa-2x"></i>
                         </button>
                     </div>
-                    <div ng-show="recordEntry.metadata.patient_entered">
+                    <div ng-show="recordEntry.data.med_metadata.patient_entered">
                         <button class="pull-right btn btn-link" ng-click="deleteModal(recordEntry)">
                             <i class="fa fa-trash-o fa-2x"></i>
                         </button>
                     </div>
-                    <div ng-show="recordEntry.metadata.patient_entered">
+                    <div ng-show="recordEntry.data.med_metadata.patient_entered">
                         <button class="pull-right btn btn-link" ng-click="updateModal(recordEntry)">
                             <i class="fa fa-edit fa-2x"></i>
                         </button>
