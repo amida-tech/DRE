@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('phrPrototypeApp')
-    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications) {
+    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications, dataservice) {
         $scope.entryStep = 0;
         $scope.prescriberSearchActive = false;
         $scope.drugSearchActive = false;
@@ -235,13 +235,12 @@ angular.module('phrPrototypeApp')
                 } else {
                     // Display success in the med entry modal
                     $scope.saveMedicationStatus = 'success';
-                    setTimeout(function () {
-                        $modalInstance.close();
-                        $route.reload();
-                    }, 100);
+                    $scope.medReset();
+                    $modalInstance.close();
+                    dataservice.forceRefresh();
+                    $route.reload();
                 }
             });
-            $scope.medReset();
         }
         $scope.drugSearch = function drugSearch(drugName) {
             $scope.drugSearchActive = true;
@@ -472,10 +471,10 @@ angular.module('phrPrototypeApp')
                 } else {
                     // Display success in the med entry modal
                     $scope.saveMedicationStatus = 'success';
-                    setTimeout(function () {
-                        $modalInstance.close();
-                        $route.reload();
-                    }, 100);
+                    $scope.medReset();
+                    $modalInstance.close();
+                    dataservice.forceRefresh();
+                    $route.reload();
                 }
             });
         }
