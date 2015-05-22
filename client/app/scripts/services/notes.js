@@ -13,18 +13,8 @@ angular.module('phrPrototypeApp')
         var tmpNotes = [];
         var all_notes = {};
 
-        function forceRefresh() {
+        function forceRefresh () {
             all_notes = {};
-        }
-
-        function refreshNotes() {
-            $http.get('/api/v1/notes/all')
-                .success(function(data) {
-                    all_notes = data;
-                })
-                .error(function(err) {
-                    console.log("fetching notes failed", err);
-                });
         }
 
         this.starNote = function(note_id, star, callback) {
@@ -38,6 +28,7 @@ angular.module('phrPrototypeApp')
             $http.post('/api/v1/notes/star', comment)
                 .success(function(data) {
                     console.log("note added successfuly");
+
                     forceRefresh();
                     dataservice.forceRefresh();
                     callback(null, data);

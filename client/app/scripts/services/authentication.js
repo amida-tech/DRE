@@ -9,7 +9,7 @@
  */
 angular.module('phrPrototypeApp')
     .service('authentication', function authentication($location, $http) {
-
+/*
         this.logout = function (callback) {
 
             var err = null;
@@ -22,14 +22,8 @@ angular.module('phrPrototypeApp')
                 }).error(function (err) {
                     callback(err);
                 });
-
-            //Stubbed logout.
-            /*if (err) {
-                callback(err);
-            } else {
-                callback(null);
-            }*/
         };
+        */
 
         //This would be a server call, but now just stubbed with $location.
         this.authStatus = function (callback) {

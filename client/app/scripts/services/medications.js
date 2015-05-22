@@ -27,6 +27,7 @@ function medications($http) {
             })
             .success(function (data) {
                 console.log("medication added successfully");
+                dataservice.forceRefresh();
                 callback(null, data);
             })
             .error(function (err) {
@@ -42,6 +43,7 @@ function medications($http) {
             })
             .success(function (data) {
                 console.log("medication edited successfully");
+                dataservice.forceRefresh();
                 callback(null, data);
             })
             .error(function (err) {
@@ -56,6 +58,7 @@ function medications($http) {
             })
             .success(function (data) {
                 console.log("medication deleted successfully");
+                dataservice.forceRefresh();
                 callback(null, data);
             })
             .error(function (err) {
