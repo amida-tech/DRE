@@ -28,52 +28,52 @@ angular.module('d3', [])
             }
 
             // Check if we already loaded d3
-        if( typeof $window.d3 === 'undefined') {
-        
-            //d3 and d3-tip should be loaded sequntially, since d3-tip depends on d3
-        d.promise.then( function() {
+            if (typeof $window.d3 === 'undefined') {
 
-            var scriptTipTag = $document[0].createElement('script');
-            scriptTipTag.type = 'text/javascript';
-            scriptTipTag.async = true;
-            scriptTipTag.src = 'bower_components/d3-tip/index.js';
+                //d3 and d3-tip should be loaded sequntially, since d3-tip depends on d3
+                d.promise.then(function () {
 
-            scriptTipTag.onreadystatechange = function () {
-            if (this.readyState === 'complete') {
-            onTipScriptLoad();
-            }
-            };
+                    var scriptTipTag = $document[0].createElement('script');
+                    scriptTipTag.type = 'text/javascript';
+                    scriptTipTag.async = true;
+                    scriptTipTag.src = 'bower_components/d3-tip/index.js';
 
-            scriptTipTag.onload = onTipScriptLoad;
+                    scriptTipTag.onreadystatechange = function () {
+                        if (this.readyState === 'complete') {
+                            onTipScriptLoad();
+                        }
+                    };
 
-            var s = $document[0].getElementsByTagName('body')[0];
-            s.appendChild(scriptTipTag);
-        });
+                    scriptTipTag.onload = onTipScriptLoad;
 
-        (function() {
-            var scriptTag = $document[0].createElement('script');
-            scriptTag.type = 'text/javascript';
-            scriptTag.async = true;
-            scriptTag.src = 'bower_components/d3/d3.js';
+                    var s = $document[0].getElementsByTagName('body')[0];
+                    s.appendChild(scriptTipTag);
+                });
 
-            scriptTag.onreadystatechange = function () {
-            if (this.readyState === 'complete') {
-            onScriptLoad();
-            }
-            };
+                (function () {
+                    var scriptTag = $document[0].createElement('script');
+                    scriptTag.type = 'text/javascript';
+                    scriptTag.async = true;
+                    scriptTag.src = 'bower_components/d3/d3.js';
 
-            scriptTag.onload = onScriptLoad;
+                    scriptTag.onreadystatechange = function () {
+                        if (this.readyState === 'complete') {
+                            onScriptLoad();
+                        }
+                    };
 
-            var s = $document[0].getElementsByTagName('body')[0];
-            s.appendChild(scriptTag);
-        })();
-        
+                    scriptTag.onload = onScriptLoad;
+
+                    var s = $document[0].getElementsByTagName('body')[0];
+                    s.appendChild(scriptTag);
+                })();
+
             } else {
-            // Have it - just resolve Promises
-        d.resolve($window.d3);
-        dt.resolve($window.d3tip);
-        }
-        
+                // Have it - just resolve Promises
+                d.resolve($window.d3);
+                dt.resolve($window.d3tip);
+            }
+
             return d3service;
         }
     ])

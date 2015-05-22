@@ -33,24 +33,24 @@
 
                 <!--File Listing Header-->
                 <div class="col-sm-12 row">
-                    <h5 ng-hide="fileList">There are currently no files in the DRE. Upload a file to get started and establish your Master Health Record!</h5>
-                    <table class="table table-hover table-responsive panel" ng-show="fileList">
+                    <h5 ng-hide="vm.fileList[0]">There are currently no files in the DRE. Upload a file to get started and establish your Master Health Record!</h5>
+                    <table class="table table-hover table-responsive panel" ng-show="vm.fileList[0]">
                         <thead>
                             <td></td>
                             <td>
-                                <a href="" ng-click="nameSort()">Name <i class="fa fa-caret-down" ng-show="predicate === 'file_name'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_name'"></i></a>
+                                <a href="" ng-click="vm.nameSort()">Name <i class="fa fa-caret-down" ng-show="vm.predicate === 'file_name'"></i><i class="fa fa-caret-up" ng-hide="vm.predicate === 'file_name'"></i></a>
                             </td>
                             <td>
-                                <a ng-click="typeSort()">Format <i class="fa fa-caret-down" ng-show="predicate === 'file_class'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_class'"></i></a>
+                                <a ng-click="vm.typeSort()">Format <i class="fa fa-caret-down" ng-show="vm.predicate === 'file_class'"></i><i class="fa fa-caret-up" ng-hide="vm.predicate === 'file_class'"></i></a>
                             </td>
                             <td>
                                 <a>Type</a>
                             </td>
                             <td>
-                                <a ng-click="modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="predicate === 'file_upload_date'"></i><i class="fa fa-caret-up" ng-hide="predicate === 'file_upload_date'"></i></a>
+                                <a ng-click="vm.modifiedSort()">Modified <i class="fa fa-caret-down" ng-show="vm.predicate === 'file_upload_date'"></i><i class="fa fa-caret-up" ng-hide="vm.predicate === 'file_upload_date'"></i></a>
                             </td>
                         </thead>
-                        <tr ng-repeat="file in fileList | orderBy:predicate">
+                        <tr ng-repeat="file in vm.fileList | orderBy:vm.predicate">
                             <td>
                                 <a ng-show="file.file_class === 'ccda'"><i class="fa fa-file-code-o"></i></a>
                                 <a ng-show="file.file_class === 'cms'"><i class="fa fa-file-text-o"></i></a>

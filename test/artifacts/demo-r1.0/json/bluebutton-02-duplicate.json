@@ -43,7 +43,8 @@
                 "type": "primary home"
             }
         ],
-        "race_ethnicity": "White",
+        "race": "White",
+        "ethnicity": "Not Hispanic or Latino",
         "languages": [
             {
                 "language": "en",
@@ -1440,7 +1441,7 @@
                     "code_system_name": "SNOMED CT"
                 }
             },
-            "performer": [
+            "performers": [
                 {
                     "identifiers": [
                         {
@@ -1529,7 +1530,7 @@
                 "code": "CR",
                 "code_system_name": "ActPriority"
             },
-            "performer": [
+            "performers": [
                 {
                     "identifiers": [
                         {
@@ -1615,7 +1616,7 @@
                 "code": "CR",
                 "code_system_name": "ActPriority"
             },
-            "performer": [
+            "performers": [
                 {
                     "identifiers": [
                         {

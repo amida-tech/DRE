@@ -12,7 +12,7 @@ angular.module('phrPrototypeApp')
 
         //TODO:  Hygiene here for max length of inputs.
         this.signup = function (info, callback) {
-            console.log("signup", info);
+            // console.log("signup", info);
 
             // verify info for all the elements in api
 

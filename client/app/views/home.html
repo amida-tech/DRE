@@ -13,9 +13,9 @@
                     <div class="col-sm-7">
                         <h4>Hi {{user_first}} !</h4>
                         <p>Welcome to your Personal Health Record. You can review your record summary and account history from this home page.</p>
-                        <p>Last Login: {{accountHistory.lastLogin | date: 'short'}}</p>
-                        <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
-                        <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
+                        <p>Last Login: {{vm.accountHistory.lastLogin | date: 'short'}}</p>
+                        <p ng-if="vm.accountHistory.lastUpdate">Last Updated: {{vm.accountHistory.lastUpdate | date: 'short'}}</p>
+                        <p ng-if="!vm.accountHistory.lastUpdate">Last Updated: Never</p>
                     </div>
 
                     <div class="col-sm-5">
@@ -23,8 +23,8 @@
                             <button class="btn btn-link"><i class="fa fa-flag fa-inline"></i>{{updatesCount}} pending update<span ng-show="updatesCount > 1">s</span>
                             </button>
                         </a-->
-                        <a href="#/notes" class="pull-right" ng-show="noteCount > 0">
-                            <button class="btn btn-link"><i class="fa fa-star fa-inline"></i>{{noteCount}} starred note<span ng-show="noteCount > 1">s</span>
+                        <a href="#/notes" class="pull-right" ng-show="vm.noteCount > 0">
+                            <button class="btn btn-link"><i class="fa fa-star fa-inline"></i>{{vm.noteCount}} starred note<span ng-show="vm.noteCount > 1">s</span>
                             </button>
                         </a>
 
@@ -33,14 +33,14 @@
             </div>
         </div>
         <h4 class="text-center text-white">Account History</h4>
-        <div class="panel" ng-cloak ng-show="accountHistory && accountHistory.recordHistory">
+        <div class="panel" ng-cloak ng-show="vm.accountHistory && vm.accountHistory.recordHistory">
             <div class="panel-body">
                 <div>
                     <p>Timeline</p>
                 </div>
-                <div timeline ng-if="accountHistory" chart-data="accountHistory" chart-type="account" class="timeline-graph"></div>
+                <div timeline ng-if="vm.accountHistory" chart-data="vm" chart-type="account" class="timeline-graph"></div>
 
-                <div ng-repeat="(recordIndex, recordEntry) in accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
+                <div ng-repeat="(recordIndex, recordEntry) in vm.accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
 
                     <div class="col-sm-12 row timeline-side">
 

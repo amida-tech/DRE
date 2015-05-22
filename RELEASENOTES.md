@@ -1,8 +1,8 @@
 # DRE Release Notes
 
-# v1.5.0 - mid-June, 2015
+# v1.5.0 - TBD
 
-TBD
+- Parser benchmarking
 
 # v1.4.0 - March 16, 2015
 
@@ -11,7 +11,7 @@ This release of the DRE includes:
 - New DIRECT/Abelian DRE integration, see https://github.com/amida-tech/abelian-connector
 - FHIR data model support in DRE (for five resources), see https://github.com/amida-tech/blue-button-fhir
 - Export notes to CCDA
-- Updated UI 
+- Updated UI
     - New images
     - Measurements Chart
     - Notes editing/deleting
@@ -31,7 +31,7 @@ This release of the DRE includes:
     - Password reset
     - Improved sign up forms
     - Profile updates
-    
+
 # v1.3.0.1 - January 24, 2015
 
 This minor release of the DRE includes:
@@ -89,6 +89,3 @@ This is the initial release of the DRE.
 	- e.g. Identity Management solution to track patient IDs
 - Records are uploaded from web UI
 	- Integration with DIRECT is possible
-
-
-

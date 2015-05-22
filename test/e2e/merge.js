@@ -4,12 +4,11 @@ chai.config.includeStack = true;
 
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + process.env.DBname || 'tests';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 var database = require('mongodb').Db;
-var common2 = require('./common.js');
 var common = require(path.join(__dirname, '../common/common.js'));
 
 describe('Pre Test Cleanup', function () {
@@ -25,8 +24,8 @@ describe('Pre Test Cleanup', function () {
     });
 
     it('Login', function (done) {
-        common2.register(api, 'test', 'test', function () {
-            common2.login(api, 'test', 'test', function () {
+        common.register(api, 'test', 'test', function () {
+            common.login(api, 'test', 'test', function () {
                 done();
             });
         });
@@ -51,7 +50,7 @@ describe('Base Merge API:', function () {
     };
 
     it('File Endpoint PUT', function (done) {
-        var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
+        var filepath = path.join(__dirname, '../artifacts/test-r1.5/bluebutton-01-original.xml');
         api.put('/api/v1/storage')
             .attach('file', filepath)
             .expect(200)
@@ -77,7 +76,7 @@ describe('Base Merge API:', function () {
                     expect(res.body.merges.length).to.equal(26); //was 31 with disabled sections
 
                     for (var i in res.body.merges) {
-                        supportedCount[res.body.merges[i].entry_type] ++;
+                        supportedCount[res.body.merges[i].entry_type]++;
 
                         expect(res.body.merges[i].entry).to.exist;
                         expect(res.body.merges[i].entry._id).to.exist;

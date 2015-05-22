@@ -5,17 +5,12 @@
  * @Takes two inputs, chartData and chartType.
  * # timeline
  */
-angular.module('phrPrototypeApp').directive('timeline', function ($window, $location, $anchorScroll, d3Service) {
+angular.module('phrPrototypeApp').directive('timeline', function ($window, $location, $anchorScroll, $timeout, d3Service) {
     return {
         restrict: 'EA',
         template: "<svg style='width:100%;'></svg>",
         link: function postLink(scope, element, attrs) {
 
-            var navClick = function (ele) {
-                $location.hash(ele);
-                // call $anchorScroll()
-                $anchorScroll();
-            };
             var plotHeight = 60;
             var boundaryOffset = 15;
             var boundaryWidth = 3;
@@ -44,17 +39,20 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                 var dataToPlot = [];
                 plotCircles = [];
                 plotDomain = [];
-                dataToPlot = scope[attrs.chartData];
                 var dataType = attrs.chartType;
+                if (dataType === 'account') {
+                    dataToPlot = scope[attrs.chartData].accountHistory.recordHistory;
+                } else {
+                    dataToPlot = scope[attrs.chartData];
+                    console.log("dtp: ", dataToPlot);
+                }
                 var tmpDomain = [];
                 var minDate, maxDate, plotFloor, plotCeiling;
                 if (dataType === 'account' && dataToPlot) { //&& dataToPlot if no data skip this part
                     console.log('>>>plotting account history');
                     console.log("num of points ", dataToPlot.length);
-                    //console.log('in timeline plotting');
-                    //console.log('plot data exists', dataToPlot);
-                    for (var i in dataToPlot.recordHistory) {
-                        var plotDate = isoFormatSubsecond.parse(dataToPlot.recordHistory[i].date);
+                    for (var i in dataToPlot) {
+                        var plotDate = isoFormatSubsecond.parse(dataToPlot[i].date);
                         //console.log('plot date', plotDate);
                         plotCircles.push({
                             "date": plotDate
@@ -91,7 +89,7 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
 
                 } else {
                     console.log('>>>plotting something else');
-                    console.log("num of points ", dataToPlot.length);
+                    console.log("num of points ", dataToPlot);
 
                     _.each(dataToPlot, function (entry) {
                         var plotDate;
@@ -104,8 +102,10 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             if (_.isNull(plotDate)) {
                                 plotDate = isoFormatSubsecond.parse(entry.metadata.datetime[0].date);
                             }
+                            var tempCat = entry.category;
                             plotCircles.push({
-                                "date": plotDate
+                                "date": plotDate,
+                                "category": tempCat.charAt(0).toUpperCase() + tempCat.slice(1)
                             });
                             tmpDomain.push(plotDate);
                         }
@@ -125,6 +125,8 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
 
                     function getSVGWidth() {
                         width = parseInt(svg.style('width'), 10);
+                        console.log("svg width = " + width);
+                        console.log("element width = " + element.width());
 
                         //Shim, keeps it from erroring on first pass.
                         if (width === 0) {
@@ -199,7 +201,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                         }).attr("y", function (d) {
                             return d.y;
                         }).text(function (d) {
-                            return d.text;
+                            if (d.text === " 0NaN") { // Used for an empty timeline
+                                return " ";
+                            } else {
+                                return d.text;
+                            }
                         }).style("text-anchor", function (d) {
                             return d.anchor;
                         });
@@ -248,16 +254,19 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             return d.radius;
                         }).attr("class", "plotPoint").on('mouseover', function (d) {
                             var tipFormat = d3.time.format("%m/%d/%Y");
-                            tip.attr('class', 'd3-tip animate').html(function (d) {
-                                return '<span>' + tipFormat(d.date) + '</span>';
-                            }).show(d);
+                            if (attrs.chartLocation === 'all') {
+                                tip.attr('class', 'd3-tip animate').html(function (d) {
+                                    return '<span>' + d.category + '</span> - <span>' + tipFormat(d.date) + '</span>';
+                                }).show(d);
+                            } else {
+                                tip.attr('class', 'd3-tip animate').html(function (d) {
+                                    return '<span>' + tipFormat(d.date) + '</span>';
+                                }).show(d);
+                            }
                         }).on('mouseout', function (d) {
                             tip.attr('class', 'd3-tip').show(d);
                             tip.hide();
                         });
-                        /*.on("click", function(d) {
-                                                    navClick(d.href);
-                                                });*/
                     }
                     getSVGWidth();
                     buildScale();
@@ -271,6 +280,12 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                 gatherData();
                 renderPlot();
             };
+
+            $timeout(function () {
+                console.log('timeout... should be after DOM loaded');
+                gatherData();
+                renderPlot();
+            }, 0);
 
             //Re-evaluate scope on resize.
             $window.onresize = function () {
@@ -291,6 +306,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
             }, true);
             scope.$watch('pageLoaded', function (newValue, oldValue) {
                 console.log('page loaded ' + newValue + ' ' + oldValue);
+                gatherData();
+                renderPlot();
+            }, true);
+            scope.$watch('entryListFiltered', function (newValue, oldValue) {
+                console.log('filter updated');
                 gatherData();
                 renderPlot();
             }, true);

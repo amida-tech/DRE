@@ -1,6 +1,8 @@
 node_modules
 bower_components
 
+typings
+
 .project
 .settings
 .vagrant
@@ -17,6 +19,11 @@ coverage
 
 npm-debug.log
 
+log
+
 .anvil
 
 #client/app/styles/main.css
+
+.nodemon_find_ref
+.sass-cache

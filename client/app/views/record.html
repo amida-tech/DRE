@@ -28,43 +28,49 @@
                             <p ng-if="entryType==='all'">This page gives an overview of your health record activity.</p>
                             <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
                             <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
-
                         </div>
-                        <div class="col-sm-3" ng-if="entryType==='all'">
+                        <div class="col-sm-3" ng-if="entryType==='all'" ng-hide="!accountHistory.lastUpdate">
                             <a href="#/print" target="_blank">
-                                <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
+                                <button class="btn btn-default btn-responsive" style="color: #6AA6FF">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
-                                        <div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
+                                        <div class="pull-left" style="margin-top: 15px;">
                                             <i class="fa fa-print fa-2x"></i>
                                         </div>
-                                        <div class="pull-right">
+                                        <div class="pull-right" style="margin-left: 9px">
                                             <h6 style="text-transform: none; margin: 0px;">&nbsp;</h6>
                                             <h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Print <br/> my record</h5>
                                         </div>
                                     </div>
                                 </button>
                             </a>
-
                             <!--br/>
                             <h6 style="max-width: 175px; text-align: center;"><i class="fa fa-print"></i> <a href="/#/print" target="_blank">Print</a> my health record.</h6-->
                         </div>
-
-                        <div class="col-sm-3" ng-if="entryType==='all'">
+                        <div class="col-sm-3 col-sm-offset-3" ng-if="entryType==='medications'" ng-hide="!accountHistory.lastUpdate">
+                            <!--<button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;" data-placement="center" data-title="Medication Entry" data-content-template="views/modals/medicationentry.html" bs-modal="modal">-->
+                            <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;" ng-click="entryModal()">
+                                <div class="col-sm-12 text-left" style="text-transform: none;">
+                                    <div class="pull-right">
+                                        <h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Add Medication</h5>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="col-sm-3" ng-if="entryType==='all'" ng-hide="!accountHistory.lastUpdate">
                             <a href="/api/v1/master_health_record/xml">
-                                <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;">
+                                <button class="btn btn-default btn-responsive" style="color: #6AA6FF">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
-                                        <div class="pull-left" style="margin-right: 10px; margin-top: 15px;">
+                                        <div class="pull-left" style="margin-top: 12px;">
                                             <img class="img-navbar-logo img-responsive" src="images/bb-logo-vector.png" style="margin: 0px;">
                                         </div>
-                                        <div class="pull-right">
+                                        <div class="pull-right" style="margin-left: 9px">
                                             <h6 style="text-transform: none; margin: 0px;">BlueButton</h6>
                                             <h5 style="margin-top: 0px; margin-bottom: 0px; font-size: 1.5em;">Download</br>my data<span style="font-size: 8px; vertical-align: top;">&reg;</span></h5>
                                         </div>
                                     </div>
                                 </button>
                             </a>
-                            <h6 style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
-
+                            <h6 class="h6-responsive" style="max-width: 175px; text-align: center;"><a href="http://healthit.gov/patients-families/your-health-data" target="_blank">Blue Button</a> lets you go online and download your health records.</h6>
                         </div>
                     </div>
                     <div class="col-sm-10 col-sm-offset-1 text-center" ng-if="entryType!=='all' && masterMatches.count>0">
@@ -74,86 +80,21 @@
             </div>
         </div>
         <!--d3. -->
-        <div class="col-sm-12" ng-show="entryType==='all' && recordEntries">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-sm-5">
-                        <div class="row">
-                            <h4>Measurements</h4>
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h4 class="text-muted">Height</h4>
-                                        </td>
-                                        <td>
-                                            <h5>{{dashMetrics.height.disp}}</h5>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4 class="text-muted">Weight</h4>
-                                        </td>
-                                        <td>
-                                            <h5>{{dashMetrics.weight.disp}}</h5>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4 class="text-muted">BMI</h4>
-                                        </td>
-                                        <td>
-                                            <h5>{{dashMetrics.bmi}}</h5>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4 class="text-muted">Blood Pressure</h4>
-                                        </td>
-                                        <td>
-                                            <h5>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h5>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-sm-1">
-                    </div>
-                    <div class="col-sm-6">
-                        <!-- DISABLE CHARTS -->
-
-
-                        <div bs-active-pane="tabs.activeTab" data-nav-class="nav-pills" bs-tabs>
-                            <div title="{{ tabs[0].title }}" bs-pane>
-
-
-                                <div linechart graph-type="weight" data="recordEntries"></div>
-                                <div class="col-sm-12 text-center">
-                                    Weight (lbs)
-                                </div>
-
-                            </div>
-                            <div title="{{ tabs[1].title }}" bs-pane>
-
-
-                                <div linechart graph-type="bloodPressure" data="recordEntries"></div>
-                                <div class="col-sm-12 text-center">
-                                    Blood Pressure
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-
+        <div class="panel panel-default" ng-show="!accountHistory.lastUpdate">
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <h4>No Records Available</h4>
+                    <a href="/#/files">Please upload a record...</a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-12" ng-show="entryType==='all' && recordEntries">
+            <div ng-if="accountHistory.lastUpdate">
+                <measurements dash-metrics="{{dashMetrics}}" graph-type="{{tab.type}}" data="recordEntries"></measurements>
+            </div>
+        </div>
+        <div class="col-sm-12" ng-hide="!accountHistory.lastUpdate">
             <!--end d3-->
-
-
             <div ng-show="entryType==='all'">
                 <div class="col-sm-12">
                     <!--end d3-->
@@ -170,14 +111,18 @@
                                 <div>
                                     <p>Timeline</p>
                                 </div>
+                                <div class="row col-sm-12">
+                                    <div timeline chart-data="recordEntries" chart-location='all' class="timeline-graph"></div>
+                                </div>
+                                <!--
                                 <div ng-if="mergesList_record" timeline chart-data="mergesList_record" chart-type="merges" class="timeline-graph" inactive-flag="{{inactiveFlag}}"></div>
-
-
+                                -->
                                 <div ng-repeat="(recordIndex, recordEntry) in mergesList_record | orderBy:'-merged':reverse" class="col-sm-12 row" id="record{{recordIndex}}">
                                     <div class="col-sm-12 row timeline-side" ng-if="recordEntry.entry_type !== 'demographics' ">
                                         <!--Timeline Icon-->
                                         <div class="col-sm-2">
-                                            <a class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{recordEntry.entry_type}}" timeline-index="{{recordIndex}}"></a>
+                                            <a ng-if="recordEntry.entry_type === 'medications'" class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{recordEntry.entry_type}}" timeline-index="{{recordIndex}}" timeline-icon-meta="{{entryData.metadata}}"></a>
+                                            <a ng-if="recordEntry.entry_type !== 'medications'" class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{recordEntry.entry_type}}" timeline-index="{{recordIndex}}" timeline-icon-meta="{{entryData.metadata}}"></a>
                                         </div>
                                         <div class="col-sm-10">
                                             <div class="panel timeline-entry">
@@ -205,7 +150,6 @@
                 </div>
                 <!--<pre>{{masterRecord | json}}</pre>-->
             </div>
-
             <!--Timeline View-->
             <div id="category-view" ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
                 <h4 class="text-center text-white">{{entryType}}</h4>
@@ -214,15 +158,37 @@
                         <h5 class="col-sm-12 text-center">No Record Entries</h5>
                     </div>
                 </div>
+                <!-- debug stuff -->
+                <!--
+                <div class="panel">
+                    <div class="panel-body">
+                        <pre>{{recordEntries}}</pre>
+                    </div>
+                </div>
+                -->
                 <div class="panel" ng-if="recordEntries">
                     <div class="panel-body">
                         <div>
                             <p>Timeline</p>
                         </div>
-                        <div timeline ng-show="entryListFiltered" chart-data="entryListFiltered" class="timeline-graph"></div>
+                        <div class="row col-sm-12">
+                            <div timeline chart-data="entryListFiltered" class="timeline-graph"></div>
+                        </div>
+                        <div ng-if="entryType=='medications' || entryType=='social'" class="col-sm-12 row timeline-side">
+                            <div class="btn-group">
+                                <label class="btn btn-default">
+                                    <input type="checkbox" value="active" ng-checked="activeSelection.indexOf('active') > -1" ng-click="toggleSelection('active')"> Active</label>
+                                <label class="btn btn-default">
+                                    <input type="checkbox" value="inactive" ng-checked="activeSelection.indexOf('inactive') > -1" ng-click="toggleSelection('inactive')"> Inactive</label>
+                            </div>
+                        </div>
                         <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
                             <div class="col-sm-12 row timeline-side">
-                                <entry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></entry>
+                                <entry id="{{recordEntry.data._id}}" type="{{recordEntry.category}}" entry-index="{{recordIndex}}" on-finish-render="ngRepeatFinished"></entry>
+                            </div>
+                        </div>
+                        <div ng-hide="entryListFiltered" class="timeline-side row col-sm-12">
+                            <div class="col-sm-offset-2">Please make a selection using the Active and Inactive buttons to view your medication entries.
                             </div>
                         </div>
                         <div class="col-sm-2 center-block text-center timeline-footer">
@@ -236,5 +202,4 @@
             </div>
         </div>
         <!--<pre>{{masterRecord | json}}</pre>-->
-
     </div>

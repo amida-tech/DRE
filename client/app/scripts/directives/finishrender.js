@@ -1,10 +1,5 @@
 'use strict';
-/**
- * @ngdoc directive
- * @name phrPrototypeApp.directive:username
- * @description
- * # username
- */
+
 angular.module('phrPrototypeApp').directive('onFinishRender', function ($timeout) {
     return {
         restrict: 'A',

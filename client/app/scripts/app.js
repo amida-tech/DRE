@@ -1,3 +1,5 @@
+/// <reference path="../../../typings/jquery/jquery.d.ts"/>
+/// <reference path="/../../../typings/angularjs/angular.d.ts"/>
 'use strict';
 
 /**
@@ -16,30 +18,35 @@ angular
         'ngRoute',
         'ngSanitize',
         'ngTouch',
-        'mgcrea.ngStrap',
+        'ui.bootstrap',
         'd3'
     ])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                controllerAs: 'vm'
             })
             .when('/print', {
                 templateUrl: 'views/print.html',
-                controller: 'PrintCtrl'
+                controller: 'PrintCtrl',
+                controllerAs: 'vm'
             })
             .when('/about', {
                 templateUrl: 'views/about.html',
-                controller: 'AboutCtrl'
+                controller: 'AboutCtrl',
+                controllerAs: 'vm'
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
-                controller: 'LoginCtrl'
+                controller: 'LoginCtrl',
+                controllerAs: 'vm'
             })
             .when('/home', {
                 templateUrl: 'views/home.html',
-                controller: 'HomeCtrl'
+                controller: 'HomeCtrl',
+                controllerAs: 'vm'
             })
             .when('/register', {
                 templateUrl: 'views/register.html',
@@ -47,29 +54,76 @@ angular
             })
             .when('/profile', {
                 templateUrl: 'views/profile.html',
-                controller: 'ProfileCtrl'
+                controller: 'ProfileCtrl',
+                controllerAs: 'vm'
             })
             .when('/account', {
                 templateUrl: 'views/account.html',
-                controller: 'AccountCtrl'
+                controller: 'AccountCtrl',
+                controllerAs: 'vm'
             })
             .when('/reset', {
                 templateUrl: 'views/reset.html',
                 controller: 'ResetCtrl'
             })
-            .when('/account', {
-                templateUrl: 'views/account.html',
-                controller: 'AccountCtrl'
-            })
             .when('/files', {
                 templateUrl: 'views/files.html',
-                controller: 'FilesCtrl'
+                controller: 'FilesCtrl',
+                controllerAs: 'vm'
             })
             .when('/record', {
                 templateUrl: 'views/record.html',
                 controller: 'RecordCtrl'
             })
+            .when('/record/all', {
+                templateUrl: 'views/record.html',
+                controller: 'RecordCtrl'
+            })
+            .when('/record/medications', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionMedicationCtrl'
+            })
+            .when('/record/results', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/encounters', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/vitals', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/immunizations', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/allergies', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/conditions', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/procedures', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionOtherCtrl'
+            })
+            .when('/record/social', {
+                templateUrl: 'views/record.html',
+                controller: 'SectionSocialCtrl'
+            })
             .when('/billing', {
+                templateUrl: 'views/billing.html',
+                controller: 'BillingCtrl'
+            })
+            .when('/billing/insurance', {
+                templateUrl: 'views/billing.html',
+                controller: 'BillingCtrl'
+            })
+            .when('/billing/claims', {
                 templateUrl: 'views/billing.html',
                 controller: 'BillingCtrl'
             })
@@ -83,7 +137,8 @@ angular
             })
             .when('/files/upload', {
                 templateUrl: 'views/files/upload.html',
-                controller: 'FilesUploadCtrl'
+                controller: 'FilesUploadCtrl',
+                controllerAs: 'vm'
             })
             .when('/notes', {
                 templateUrl: 'views/notes.html',
@@ -91,7 +146,8 @@ angular
             })
             .when('/matches', {
                 templateUrl: 'views/matches.html',
-                controller: 'MatchesCtrl'
+                controller: 'MatchesCtrl',
+                controllerAs: 'vm'
             })
             .otherwise({
                 redirectTo: '/'
@@ -101,7 +157,7 @@ angular
 
         var routesThatDontRequireAuth = ['/login', '/', '/register'];
 
-        // if current location matches route  
+        // if current location matches route
         var routeClean = function (route) {
             return _.find(routesThatDontRequireAuth,
                 function (noAuthRoute) {

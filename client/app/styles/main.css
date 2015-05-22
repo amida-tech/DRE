@@ -1485,6 +1485,17 @@ img {
   height: auto;
 }
 
+.img-header {
+  display: block;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  float: left !important;
+  margin-top: -10px;
+  margin-left: -10px;
+  margin-right: 10px;
+}
+
 /* line 86, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
 .img-rounded {
   border-radius: 6px;
@@ -1507,7 +1518,7 @@ img {
 }
 
 /* line 106, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
-.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .icon-circle {
+.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .timeline-entry-icon-medication, .icon-circle {
   border-radius: 50%;
 }
 
@@ -8131,12 +8142,6 @@ html, body {
   /* the bottom margin is the negative value of the footer's height */
 }
 
-/* line 77, _body.scss */
-.konami-background {
-  background-image: url("../images/va_photo.jpg");
-  background-repeat: repeat;
-}
-
 /* line 5, _fonts.scss */
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -8367,43 +8372,69 @@ h6, .h6 {
 }
 
 /* line 21, _timeline-vertical.scss */
-.timeline-entry-icon {
+.timeline-entry-icon, .timeline-entry-icon-medication {
   background: #fff;
   height: 50px;
   width: 50px;
-  border: thick solid #6AA6FF;
+  box-shadow: 0 0 0 4px #6AA6FF, 0 3px 0 4px rgba(0, 0, 0, 0.05);
   line-height: 3.5em;
   position: relative;
   bottom: -20px;
   z-index: 100;
 }
-/* line 31, _timeline-vertical.scss */
-.timeline-entry-icon i {
+/* line 32, _timeline-vertical.scss */
+.timeline-entry-icon i, .timeline-entry-icon-medication i {
   color: #6AA6FF;
 }
 
-/* line 36, _timeline-vertical.scss */
-.timeline-entry-icon:hover {
+/* line 37, _timeline-vertical.scss */
+.timeline-entry-icon-medication {
+  height: 90px;
+  width: 90px;
+  position: initial;
+}
+
+/* line 44, _timeline-vertical.scss */
+.timeline-entry-icon-medication img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 45px;
+}
+
+/* line 50, _timeline-vertical.scss */
+.timeline-entry-icon i, .timeline-entry-icon-medication i {
+  vertical-align: middle;
+}
+
+/* line 54, _timeline-vertical.scss */
+.timeline-entry-icon-medication i {
+  vertical-align: text-top;
+  line-height: 1.4em;
+  font-size: 3em;
+}
+
+/* line 60, _timeline-vertical.scss */
+.timeline-entry-icon:hover, .timeline-entry-icon-medication:hover {
   cursor: default;
   background: #6AA6FF;
 }
-/* line 39, _timeline-vertical.scss */
-.timeline-entry-icon:hover i {
+/* line 63, _timeline-vertical.scss */
+.timeline-entry-icon:hover i, .timeline-entry-icon-medication:hover i {
   color: #fff;
 }
 
-/* line 45, _timeline-vertical.scss */
+/* line 69, _timeline-vertical.scss */
 .timeline-footer circle {
   fill: #ccc;
 }
 @media (max-width: 991px) {
-  /* line 45, _timeline-vertical.scss */
+  /* line 69, _timeline-vertical.scss */
   .timeline-footer circle {
     display: none;
   }
 }
 @media (min-width: 768px) {
-  /* line 45, _timeline-vertical.scss */
+  /* line 69, _timeline-vertical.scss */
   .timeline-footer circle {
     display: inherit;
   }
@@ -8432,31 +8463,54 @@ h6, .h6 {
   text-transform: uppercase;
 }
 
-/* line 11, _buttons.scss */
+@media (max-width: 1051px) {
+  /* line 10, _buttons.scss */
+  .btn-responsive {
+    padding: 4px 4px;
+    font-size: 65%;
+    line-height: 1;
+    min-width: 123px;
+  }
+  /* line 16, _buttons.scss */
+  .btn-responsive i {
+    font-size: 3em;
+  }
+
+  /* line 20, _buttons.scss */
+  .h6-responsive {
+    visibility: hidden;
+  }
+}
+/* line 27, _buttons.scss */
 .btn-group-vertical .btn {
   border-radius: 0px;
 }
-/* line 15, _buttons.scss */
+/* line 31, _buttons.scss */
 .btn-group-vertical .btn:first-child:not(:last-child) {
   border-top-right-radius: 0px;
 }
-/* line 19, _buttons.scss */
+/* line 35, _buttons.scss */
 .btn-group-vertical .btn:last-child:not(:first-child) {
   border-bottom-left-radius: 0px;
 }
-/* line 23, _buttons.scss */
+/* line 39, _buttons.scss */
 .btn-group-vertical .btn.btn-default {
   border-color: #ddd;
 }
-/* line 26, _buttons.scss */
+/* line 42, _buttons.scss */
 .btn-group-vertical .btn.btn-info {
   background-color: transparent;
   border-color: #fff;
   border-width: 2px;
 }
-/* line 31, _buttons.scss */
+/* line 47, _buttons.scss */
 .btn-group-vertical .btn.btn-info.active, .btn-group-vertical .btn.btn-info:hover {
   background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* line 52, _buttons.scss */
+.btn-group {
+  float: right;
 }
 
 /* line 1, _tables.scss */
@@ -8686,13 +8740,109 @@ form .button-well {
   padding-left: 20px;
 }
 
-/* line 77, main.scss */
+/* line 2, _modals.scss */
+.modal-dialog {
+  width: 80%;
+}
+
+/* line 6, _modals.scss */
+.modal-content {
+  text-align: left;
+}
+
+/* line 10, _modals.scss */
+.modal-open {
+  overflow: scroll;
+}
+
+/* line 14, _modals.scss */
+.modal-body .navbar {
+  background-color: white;
+}
+
+/* line 18, _modals.scss */
+.modal-body li {
+  width: 100%;
+}
+
+/* line 22, _modals.scss */
+.modal-body span {
+  font-size: 14px;
+}
+
+/* line 26, _modals.scss */
+.modal-body .control-label {
+  padding-right: 11px;
+}
+
+/*
+  Icon Font: fontcustom
+*/
+@font-face {
+  font-family: "fontcustom";
+  src: url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.eot");
+  src: url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.eot?#iefix") format("embedded-opentype"), url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.woff") format("woff"), url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.ttf") format("truetype"), url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.svg#fontcustom") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  @font-face {
+    font-family: "fontcustom";
+    src: url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.svg#fontcustom") format("svg");
+  }
+}
+/* line 23, _fontcustom.scss */
+[data-icon]:before {
+  content: attr(data-icon);
+}
+
+/* line 25, _fontcustom.scss */
+[data-icon]:before,
+.icon-inhaler:before,
+.icon-liquid:before,
+.icon-pill:before,
+.icon-syringe:before {
+  display: inline-block;
+  font-family: "fontcustom";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+/* line 44, _fontcustom.scss */
+.icon-inhaler:before {
+  content: "\f104";
+}
+
+/* line 45, _fontcustom.scss */
+.icon-liquid:before {
+  content: "\f105";
+}
+
+/* line 46, _fontcustom.scss */
+.icon-pill:before {
+  content: "\f106";
+}
+
+/* line 47, _fontcustom.scss */
+.icon-syringe:before {
+  content: "\f107";
+}
+
+/* line 79, main.scss */
 .update-selected {
   background-color: #def;
   color: black;
 }
 
-/* line 84, main.scss */
+/* line 86, main.scss */
 .update-pill :hover {
   color: #fff;
 }

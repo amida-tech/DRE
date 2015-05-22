@@ -8,147 +8,29 @@
 angular.module('phrPrototypeApp')
     .directive('entry', function (format, notes) {
         return {
-            templateUrl: 'views/templates/entry.html',
+            template: '<ng-include src="getTemplateUrl()"/>',
             restrict: 'EA',
+            transclude: true,
+            controller: function ($scope) {
+                $scope.getTemplateUrl = function () {
+                    if ($scope.type === 'medications') {
+                        return 'views/templates/entries/medications.html';
+                    } else {
+                        return 'views/templates/entry.html';
+                    }
+                };
+            },
             link: function postLink(scope, element, attrs) {
                 //Attribute Variables.
                 scope.type = attrs.type;
                 scope.entryIndex = attrs.entryIndex;
+
                 //Scope Inherited Variables.
                 scope.entryData = scope.recordEntry.data;
                 scope.entryMetaData = scope.recordEntry.metadata;
+
                 //Generated Variables.
-                scope.entryTitle = "";
-                scope.entrySubTitleOne = "";
-                scope.entrySubTitleTwo = "";
                 scope.entryTemplatePath = "views/templates/details/" + scope.type + ".html";
-
-                //console.log("SCOPE.TYPE ", scope.type);
-                switch (scope.type) {
-
-                case 'allergies':
-                    if (scope.entryData.observation) {
-                        if (scope.entryData.observation.allergen && scope.entryData.observation.allergen.name) {
-                            scope.entryTitle = scope.entryData.observation.allergen.name;
-                        }
-                        if (scope.entryData.observation.severity && scope.entryData.observation.severity.code && scope.entryData.observation.severity.code.name) {
-                            scope.entrySubTitleOne = scope.entryData.observation.severity.code.name;
-                        }
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'encounters':
-                    if (scope.entryData.encounter && scope.entryData.encounter.name) {
-                        scope.entryTitle = scope.entryData.encounter.name;
-                    }
-                    if (scope.entryData.locations && scope.entryData.locations[0].name) {
-                        scope.entrySubTitleOne = scope.entryData.locations[0].name;
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'immunizations':
-                    if (scope.entryData.product && scope.entryData.product.product && scope.entryData.product.product.name) {
-                        scope.entryTitle = scope.entryData.product.product.name;
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'medications':
-                    if (scope.entryData.product && scope.entryData.product.product && scope.entryData.product.product.name) {
-                        scope.entryTitle = scope.entryData.product.product.name;
-                    }
-                    if (scope.entryData.administration && scope.entryData.administration.route && scope.entryData.administration.route.name) {
-                        scope.entrySubTitleOne = scope.entryData.administration.route.name;
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'conditions':
-                    if (scope.entryData.problem && scope.entryData.problem.code && scope.entryData.problem.code.name) {
-                        scope.entryTitle = scope.entryData.problem.code.name;
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'procedures':
-                    if (scope.entryData.procedure && scope.entryData.procedure.name) {
-                        scope.entryTitle = scope.entryData.procedure.name;
-                    }
-                    if (scope.entryData.status) {
-                        scope.entrySubTitleOne = scope.entryData.status;
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'vitals':
-                    var quantityUnit = "";
-                    if (scope.entryData.unit) {
-                        if (scope.entryData.unit === "[in_i]") {
-                            quantityUnit = "inches";
-                        } else if (scope.entryData.unit === "[lb_av]") {
-                            quantityUnit = "lbs";
-                        } else if (scope.entryData.unit === "mm[Hg]") {
-                            quantityUnit = "mm";
-                        } else {
-                            quantityUnit = scope.entryData.unit;
-                        }
-                        if (scope.entryData.value && scope.entryData.value + " " + quantityUnit) {
-                            scope.entryTitle = scope.entryData.value + " " + quantityUnit;
-                        }
-                    }
-                    if (scope.entryData.vital && scope.entryData.vital.name) {
-                        scope.entrySubTitleOne = scope.entryData.vital.name;
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'results':
-                    if (scope.entryData.result_set && scope.entryData.result_set.name) {
-                        scope.entryTitle = scope.entryData.result_set.name;
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'social':
-                    if (scope.entryData.value) {
-                        scope.entryTitle = scope.entryData.value;
-                    }
-                    if (scope.entryData.code && scope.entryData.code.name) {
-                        scope.entrySubTitleOne = scope.entryData.code.name;
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleTwo = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'claims':
-                    if (scope.entryData.payer[0]) {
-                        scope.entryTitle = scope.entryData.payer[0];
-                    }
-                    if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                case 'insurance':
-                    //console.log("INSURANCE", scope.entryData, scope.recordEntry.metadata);
-                    if (scope.entryData.policy.insurance.performer.organization[0].name[0]) {
-                        //scope.entryTitle = scope.entryData.name;
-                        scope.entryTitle = scope.entryData.policy.insurance.performer.organization[0].name[0];
-                    }
-                    if (scope.entryData.participant.date_time) {
-                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
-                    }
-                    break;
-                }
 
                 function countStarredComments(recordIndex) {
                     var commentCount = 0;
@@ -160,27 +42,6 @@ angular.module('phrPrototypeApp')
                     scope.entryMetaData.starred_comments = commentCount;
                 }
                 countStarredComments();
-                scope.swapTabs = function (entryClass, entryIndex) {
-
-                    if (entryClass === "details") {
-                        $("#comments" + entryIndex).removeClass("in");
-                        $("#history" + entryIndex).removeClass("in");
-                        $("#match" + entryIndex).removeClass("in");
-                    } else if (entryClass === "comments") {
-                        $("#details" + entryIndex).removeClass("in");
-                        $("#history" + entryIndex).removeClass("in");
-                        $("#match" + entryIndex).removeClass("in");
-                    } else if (entryClass === "history") {
-                        $("#details" + entryIndex).removeClass("in");
-                        $("#comments" + entryIndex).removeClass("in");
-                        $("#match" + entryIndex).removeClass("in");
-                    } else if (entryClass === "match") {
-                        $("#details" + entryIndex).removeClass("in");
-                        $("#comments" + entryIndex).removeClass("in");
-                        $("#history" + entryIndex).removeClass("in");
-                    }
-
-                };
 
                 scope.clickStar = function (starVal, starIndex, recordIndex, entry) {
                     console.log("click Star ", !starVal, entry);
@@ -200,16 +61,20 @@ angular.module('phrPrototypeApp')
                 scope.toggleNewStar = function () {
                     scope.newComment.starred = !scope.newComment.starred;
                 };
+
                 scope.toggleStar = function () {
-                    scope.entryMetaData.comments[0].starred = !scope.entryMetaData.comments[0].starred;
+                    notes.starNote(scope.entryMetaData.comments[0].note_id, !scope.entryMetaData.comments[0].starred, function (err, data) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            console.log("new star data: ", data);
+                            scope.entryMetaData.comments[0].starred = !scope.entryMetaData.comments[0].starred;
+                            countStarredComments();
+                        }
+                    });
                 };
 
                 scope.addNote = function () {
-                    console.log("adding note");
-                    console.log(scope);
-
-                    console.log(scope.newComment.starred);
-
                     scope.newComment.entry = scope.recordEntry.data._id;
                     scope.newComment.note = scope.newComment.comment;
                     scope.newComment.section = scope.recordEntry.category;
@@ -265,21 +130,18 @@ angular.module('phrPrototypeApp')
                     scope.editflag = false;
                 };
 
-                scope.saveNote = function () {
+                scope.saveNote = function (editComment) {
                     console.log("save note");
-                    scope.entryMetaData.comments[0].comment = scope.editComment;
+                    scope.entryMetaData.comments[0].comment = editComment;
                     var noteID = scope.entryMetaData.comments[0].note_id;
-                    notes.editNote(noteID, scope.editComment, function (err, data) {
-
-                        notes.starNote(noteID, scope.entryMetaData.comments[0].starred, function (err, data) {
-                            console.log('add note star error ', err);
-                            console.log('add note with star ', data);
-                        });
-
-                        countStarredComments();
+                    notes.editNote(noteID, editComment, function (err, data) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            console.log("edited note saved: ", data);
+                        }
                     });
                     scope.editflag = false;
-                    console.log("edited note saved");
                 };
 
             }
