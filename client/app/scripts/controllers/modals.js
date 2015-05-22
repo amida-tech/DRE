@@ -451,7 +451,7 @@ angular.module('phrPrototypeApp')
 
         $scope.medReset();
     })
-    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications) {
+    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications, dataservice) {
         $scope.medication = medication.data;
         $scope.saveMedication = saveMedication;
 
