@@ -23,12 +23,8 @@ angular.module('phrPrototypeApp')
                 "star": star
             };
 
-            console.log("POSTing star ", comment);
-
             $http.post('/api/v1/notes/star', comment)
                 .success(function(data) {
-                    console.log("note added successfuly");
-
                     forceRefresh();
                     callback(null, data);
                 })
@@ -39,10 +35,8 @@ angular.module('phrPrototypeApp')
         };
 
         this.addNote = function(comment, callback) {
-            console.log("POSTing comment ", comment);
             $http.post('/api/v1/notes/add', comment)
                 .success(function(data) {
-                    console.log("note added successfuly");
                     forceRefresh();
                     callback(null, data);
                 })
@@ -73,11 +67,8 @@ angular.module('phrPrototypeApp')
                 "id": note_id,
                 "note": edit
             };
-            console.log("editing note API ", comment);
-
             $http.post('/api/v1/notes/edit', comment)
                 .success(function(data) {
-                    console.log("note edited successfully");
                     forceRefresh();
                     callback(null, data);
                 })
@@ -91,12 +82,8 @@ angular.module('phrPrototypeApp')
             var note_id = {
                 "id": id
             };
-
-            console.log("removing note ", note_id);
-
             $http.post('/api/v1/notes/delete', note_id)
                 .success(function(data) {
-                    console.log("note removed successfull");
                     forceRefresh();
                     callback(null, data);
                 })
@@ -113,7 +100,6 @@ angular.module('phrPrototypeApp')
                 var noteCount = 0;
 
                 _.each(results, function(entry) {
-                    //console.log(entry);
                     if (entry.star) {
                         noteCount++;
                     }
@@ -130,7 +116,6 @@ angular.module('phrPrototypeApp')
             scope.entrySubTitleTwo = "";
 
             var entry = scope.entryData;
-            //console.log("TITLES: ", entry);
             var tmpDates = [];
             var dispDates = "Not Available";
 

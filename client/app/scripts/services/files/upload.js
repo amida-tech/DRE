@@ -22,7 +22,6 @@ function upload($http, dataservice, history, notes) {
         var ff = document.getElementById('uploadFile').files[0];
         fd.append('file', ff);
         fd.append('check', check);
-        console.log("fd", fd);
         $http.put(uploadUrl, fd, {
                 transformRequest: angular.identity,
                 headers: {

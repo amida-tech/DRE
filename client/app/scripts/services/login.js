@@ -15,13 +15,11 @@ angular.module('phrPrototypeApp')
         this.login = function (username, password, callback) {
             // console.log("login service:", username, password);
             if (username && password) {
-
                 $http.post('api/v1/login', {
                         username: username,
                         password: password
                     })
                     .success(function (data) {
-                        console.log("login successful");
                         notes.forceRefresh();
                         dataservice.forceRefresh();
                         history.forceRefresh();

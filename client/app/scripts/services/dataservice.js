@@ -49,12 +49,9 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 console.log("err: ", err);
                 callback(err);
             } else {
-                console.log("entry: ", entry);
-                console.log("notes: ", notes);
                 var note = _.where(notes, {
                     entry: entry._id
                 });
-                console.log("note: ", note);
                 _.each(note, function(n) {
                     var comment = {
                         date: n.datetime,
@@ -63,8 +60,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                         entry_id: n.entry,
                         note_id: n._id
                     };
-                    console.log("comment: ", comment);
-
                     comments.push(comment);
 
                 });
@@ -307,7 +302,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                                     callback(err4);
                                 } else {
                                     master_entries = entries;
-                                    console.log("entries should have notes: ", entries);
                                     if (section === 'all') {
                                         callback(null, entries);
                                     } else {
@@ -369,7 +363,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                         console.log("err: " + err);
                         callback(err);
                     } else {
-                        console.log("billing: ", billing);
                         callback(null, billing);
                     }
                 });

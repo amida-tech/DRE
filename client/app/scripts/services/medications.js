@@ -26,7 +26,6 @@ function medications($http, dataservice, notes) {
                 medication: medication
             })
             .success(function (data) {
-                console.log("medication added successfully");
                 notes.forceRefresh();
                 dataservice.forceRefresh();
                 callback(null, data);
@@ -43,7 +42,6 @@ function medications($http, dataservice, notes) {
                 id: medication._id
             })
             .success(function (data) {
-                console.log("medication edited successfully");
                 notes.forceRefresh();
                 dataservice.forceRefresh();
                 callback(null, data);
@@ -59,7 +57,6 @@ function medications($http, dataservice, notes) {
                 id: medication._id
             })
             .success(function (data) {
-                console.log("medication deleted successfully");
                 notes.forceRefresh();
                 dataservice.forceRefresh();
                 callback(null, data);
