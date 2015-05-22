@@ -11,9 +11,9 @@ angular
     .module('phrPrototypeApp')
     .service('upload', upload);
 
-upload.$inject = ['$http'];
+upload.$inject = ['$http', 'dataservice', 'history'];
 
-function upload($http) {
+function upload($http, dataservice, history) {
     /* jshint validthis: true */
     this.uploadRecord = function (file, check, callback) {
         var uploadUrl = "/api/v1/storage";
@@ -30,6 +30,8 @@ function upload($http) {
                 }
             })
             .success(function (data) {
+                dataservice.forceRefresh();
+                history.forceRefresh();
                 callback(null, data);
             })
             .error(function (data) {

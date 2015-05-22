@@ -22,9 +22,13 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
 
     $scope.setEntry = function (section, entryId) {
         console.log("set entry type for my record view ", section.section);
-        dataservice.curr_section = section;
-        dataservice.curr_location = entryId;
-        $location.path('/record');
+        //dataservice.curr_section = section;
+        //dataservice.curr_location = entryId;
+        if (section === 'insurance' || section === 'claims') {
+            $location.path('/billing/' + section);
+        } else {
+            $location.path('/record/' + section);
+        }
     };
 
     $scope.dateSort = function () {
@@ -37,21 +41,22 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
         console.log('new predicate ' + $scope.predicate);
     };
 
-    //TODO may need callback
-    function refresh() {
-        dataservice.curr_section_billing = $scope.entryType;
-        dataservice.getData(function () {
-            console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
-
-            $scope.masterRecord = dataservice.master_record;
-            $scope.notes = mashNotesWithRecord(dataservice.all_notes, $scope.masterRecord);
-            $scope.filters = updateFilters(dataservice.all_notes);
-            updateAnySectionsSelected();
-
-        });
-    }
-
-    refresh();
+    dataservice.retrieveMasterRecord(function (err, master) {
+        if (err) {
+            console.log("err: ", err);
+        } else {
+            $scope.masterRecord = master;
+            notes.getNotes(function (err2, notes) {
+                if (err2) {
+                    console.log("err2: ", err2);
+                } else {
+                    $scope.notes = mashNotesWithRecord(notes, master);
+                    $scope.filters = updateFilters(notes);
+                    updateAnySectionsSelected();
+                }
+            });
+        }
+    });
 
     //updates list of sections in filters based on what sections are present in notes
     function updateFilters(notes) {
@@ -93,56 +98,6 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
         });
         $scope.checkNotes();
     };
-
-    /* EXAMPLE OF NOTES DATA
-    [{
-        "_id": "54d503e8c053a20a26f2ee47",
-        "username": "test",
-        "section": "vitals",
-        "entry": "54d500c1b1fca190214985f1",
-        "note": "fatty fat!",
-        "__v": 0,
-        "star": false,
-        "datetime": "2015-02-06T18:11:52.031Z"
-    }, {
-        "_id": "54d503ecc053a20a26f2ee48",
-        "username": "test",
-        "section": "vitals",
-        "entry": "54d500c1b1fca190214985f1",
-        "note": "fatty fat!",
-        "__v": 0,
-        "star": false,
-        "datetime": "2015-02-06T18:11:56.350Z"
-    }, {
-        "_id": "54d5046bc053a20a26f2ee4b",
-        "username": "test",
-        "section": "allergies",
-        "entry": "54d42901c1647f0000ffad24",
-        "note": "love my drugs!",
-        "__v": 0,
-        "star": false,
-        "datetime": "2015-02-06T18:14:03.991Z"
-    }]
-
-    */
-    /* NOTES OBJECT
-
-    [{
-        'displaySection': 'vital signs',
-        'section': 'vitals',
-        'notes': [{
-            'entryTitle': 'Blood pressure',
-            'entrySubTitleOne': 'January 1, 2015',
-            'entrySubTitleTwo': '120/80',
-            'note': {
-                'comment': 'too high!',
-                'date': '2015-01-01',
-                'starred': true
-            }
-        }]
-
-    }]
-    */
 
     function displaySection(section) {
         var displayName = {

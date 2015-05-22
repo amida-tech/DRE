@@ -41,7 +41,7 @@ angular.module('phrPrototypeApp')
                     type: 'social',
                     icon: 'fa-group'
                 }];
-                
+
                 var medRouteIconMap = [{
                     code: 'C38216',
                     icon: 'icon-inhaler'
