@@ -49,7 +49,7 @@ angular.module('phrPrototypeApp')
                         if (err) {
                             console.log('err ', err);
                         } else {
-                            dataservice.clearNotes();
+                            dataservice.forceRefresh();
                         }
                     });
 
@@ -71,7 +71,7 @@ angular.module('phrPrototypeApp')
                         } else {
                             scope.entryMetaData.comments[0].starred = !scope.entryMetaData.comments[0].starred;
                             countStarredComments();
-                            dataservice.clearNotes();
+                            dataservice.forceRefresh();
                         }
                     });
                 };
@@ -103,7 +103,7 @@ angular.module('phrPrototypeApp')
 
                             countStarredComments();
                             */
-                            dataservice.clearNotes();
+                            dataservice.forceRefresh();
 
                             scope.newComment = {};
                         }
@@ -127,7 +127,7 @@ angular.module('phrPrototypeApp')
                         if (err) {
                             console.log('deleting note ', err);
                         } else {
-                            dataservice.clearNotes();
+                            dataservice.forceRefresh();
                             scope.entryMetaData.comments = [];
                             countStarredComments();
                             scope.editflag = false;
@@ -142,7 +142,7 @@ angular.module('phrPrototypeApp')
                         if (err) {
                             console.log("err: " + err);
                         } else {
-                            dataservice.clearNotes();
+                            dataservice.forceRefresh();
                         }
                     });
                     scope.editflag = false;
