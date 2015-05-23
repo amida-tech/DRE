@@ -82,8 +82,8 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         }).
         success(function (data, status, headers, config) {
             //TODO something
-            //$location.path("match/reconciliation");
             dataservice.forceRefresh();
+            //$location.path("match/reconciliation");
         }).
         error(function (data, status, headers, config) {
             console.log('error');

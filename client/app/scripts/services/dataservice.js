@@ -7,6 +7,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     var master_record = {};
     var master_merges = [];
     var master_entries = [];
+    var all_notes = {};
 
     function displayTypeNew(type) {
         var display_type = type;
@@ -24,26 +25,31 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     }
 
     function getAllNotes(callback) {
-        notes.getNotes(function(err, notes) {
+        if (Object.keys(all_notes).length > 1) {
+            callback(null, all_notes);
+        } else {
+            notes.getNotes(function(err, notes) {
+                if (err) {
+                    console.log("err: ", err);
+                    callback(err);
+                } else {
+                    all_notes = notes;
+                    callback(null, notes);
+                }
+            });
+        }
+    }
+
+    function collateCommentsNew(entry, callback) {
+        var comments = [];
+
+        //find all notes for current entry
+        getAllNotes(function(err, notes) {
             if (err) {
                 console.log("err: ", err);
                 callback(err);
             } else {
-                callback(null, notes);
-            }
-        });
-    }
-
-    function collateCommentsNew(entry) {
-        var comments = [];
-
-        //find all notes for current entry
-        getAllNotes(function(err, all_notes) {
-            if (err) {
-                console.log("err: ", err);
-                return comments;
-            } else {
-                var note = _.where(all_notes, {
+                var note = _.where(notes, {
                     entry: entry._id
                 });
                 _.each(note, function(n) {
@@ -54,12 +60,10 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                         entry_id: n.entry,
                         note_id: n._id
                     };
-
                     comments.push(comment);
 
                 });
-
-                return comments;
+                callback(null, comments);
             }
         });
     }
@@ -146,7 +150,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         };
 
         _.each(master_entries, function(recordEntry) {
-            console.log("record entry: ", recordEntry);
             delete recordEntry.metadata.match;
         });
 
@@ -207,22 +210,24 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 }
 
                 //collate all notes into array (with formatting) for current entry
-                var comments = collateCommentsNew(entry);
+                collateCommentsNew(entry, function(err, comments) {
+                    if (err) {
+                        console.log("err: ", err);
+                    } else {
+                        var display_type = displayTypeNew(type);
 
-                var display_type = displayTypeNew(type);
-
-                var tmpEntry = {
-                    'data': entry,
-                    'category': display_type,
-                    'metadata': {
-                        'comments': comments,
-                        'displayDate': dates.display,
-                        'datetime': dates.temp
+                        var tmpEntry = {
+                            'data': entry,
+                            'category': display_type,
+                            'metadata': {
+                                'comments': comments,
+                                'displayDate': dates.display,
+                                'datetime': dates.temp
+                            }
+                        };
+                        master_entries.push(tmpEntry);
                     }
-                };
-
-                //add cleaned up and formatted entry to processed entries array
-                master_entries.push(tmpEntry);
+                });
             });
         });
         callback(null, master_entries);
@@ -358,7 +363,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                         console.log("err: " + err);
                         callback(err);
                     } else {
-                        console.log("billing: ", billing);
                         callback(null, billing);
                     }
                 });
@@ -366,28 +370,14 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         });
     };
 
-    this.forceRefresh = function forceRefresh() {
+    this.forceRefresh = function() {
         master_record = {};
         master_merges = [];
         master_entries = [];
+        all_notes = {};
     };
 
-    this.manualRefresh = function forceRefresh() {
-        retrieveMasterRecord(function(err, record) {
-            if (err) {
-                console.log("err: ", err);
-            } else {
-                parseEntries(function(err2, entries) {
-                    if (err2) {
-                        console.log("err2: ", err2);
-                    }
-                });
-            }
-        });
-        getAllMerges(function(err, merges) {
-            if (err) {
-                console.log("err: ", err);
-            }
-        });
+    this.clearNotes = function() {
+        all_notes = {};
     };
 });

@@ -98,8 +98,7 @@ angular.module('phrPrototypeApp')
                 } else {
                     vitalEntry = entry;
                 }
-                console.log("vital entry ", vitalEntry);
-
+                
                 if (vitalEntry.data.vital.name === "Height") {
                     _.each(vitalEntry.data.date_time, function(dateArr) {
                         heightDateArray.push(moment(dateArr.date));
