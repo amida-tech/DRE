@@ -66,22 +66,6 @@ angular.module('phrPrototypeApp')
             });
         };
 
-        dataservice.getMergesListRecord(function(err, merges_record) {
-            if (err) {
-                console.log("err: " + err);
-            } else {
-                $scope.mergesList_record = merges_record;
-            }
-        });
-
-        history.getAccountHistory(function(err, history) {
-            if (err) {
-                console.log("err: " + err);
-            } else {
-                $scope.accountHistory = history;
-            }
-        });
-
         //calculate current height/weight/bmi/blood pressure
         //based on processed record from $scope.recordEntries
         function dashPrep() {
@@ -227,25 +211,48 @@ angular.module('phrPrototypeApp')
             });
         }
 
-        dataservice.getProcessedRecord($scope.entryType, function(err, processed_record) {
+        history.getAccountHistory(function(err, history) {
             if (err) {
                 console.log("err: " + err);
             } else {
-                $scope.recordEntries = _.sortBy(processed_record, function(entry) {
-                    if (entry.metadata.datetime[0]) {
-                        return entry.metadata.datetime[0].date.substring(0, 9);
-                    } else {
-                        return '1979-12-12';
-                    }
-                }).reverse();
-                dataservice.retrieveMasterRecord(function(err2, master_record) {
-                    if (err2) {
-                        console.log("err2: " + err2);
-                    } else {
-                        $scope.entries = master_record;
-                        dashPrep();
+                $scope.accountHistory = history;
+                $scope.fileUploaded = false;
+                _.each(history.recordHistory, function(historyObj) {
+                    if (_.includes(historyObj, 'fileUploaded')) {
+                        $scope.fileUploaded = true;
                     }
                 });
+                if ($scope.fileUploaded) {
+                    dataservice.getMergesListRecord(function(err, merges_record) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            $scope.mergesList_record = merges_record;
+                        }
+                    });
+
+                    dataservice.getProcessedRecord($scope.entryType, function(err, processed_record) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            $scope.recordEntries = _.sortBy(processed_record, function(entry) {
+                                if (entry.metadata.datetime[0]) {
+                                    return entry.metadata.datetime[0].date.substring(0, 9);
+                                } else {
+                                    return '1979-12-12';
+                                }
+                            }).reverse();
+                            dataservice.retrieveMasterRecord(function(err2, master_record) {
+                                if (err2) {
+                                    console.log("err2: " + err2);
+                                } else {
+                                    $scope.entries = master_record;
+                                    dashPrep();
+                                }
+                            });
+                        }
+                    });
+                }
             }
         });
 
