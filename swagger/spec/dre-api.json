@@ -14,6 +14,8 @@
     }, {
         "name": "match"
     }, {
+        "name": "medications"
+    }, {
         "name": "merges"
     }, {
         "name": "notes"
@@ -621,6 +623,95 @@
                 }
             }
         },
+        "/medications/all": {
+            "get": {
+                "summary": "Get all medications",
+                "description": "Retrieve all medications in chronological order",
+                "tags": [
+                    "medications"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all medications"
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/medications/add": {
+            "post": {
+                "summary": "Save a medication",
+                "description": "Add and save a new medication",
+                "tags": [
+                    "medications"
+                ],
+                "parameters": [{
+                    "name": "Medication",
+                    "description": "New medication entry",
+                    "in": "body",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Medication added to account"
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/medications/edit": {
+            "post": {
+                "summary": "Edit a medication",
+                "description": "Edit a current medication",
+                "tags": [
+                    "medications"
+                ],
+                "parameters": [{
+                    "name": "Medication",
+                    "description": "Updated medication entry",
+                    "in": "body",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Edited medication"
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/medications/delete": {
+            "post": {
+                "summary": "Delete a medication",
+                "description": "Delete a medication by its ID",
+                "tags": [
+                    "medications"
+                ],
+                "parameters": [{
+                    "name": "Medication ID",
+                    "description": "Medication identifier",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/deleteMedicationSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Medication successfully deleted"
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
         "/merges": {
             "get": {
                 "summary": "Get all merges",
@@ -993,7 +1084,7 @@
                 "description": "Retrieve URLs for MedlinePlus information on drug using RxNorm code",
                 "tags": [
                     "medapi"
-                ],
+                ], 
                 "parameters": [{
                     "name": "rxcui",
                     "description": "drug code",
@@ -1038,119 +1129,6 @@
                         "schema": {
                             "type": "object"
                         }
-                    },
-                    "400": {
-                        "description": "Error"
-                    }
-                }
-            }
-        },
-        "/notes/add": {
-            "post": {
-                "summary": "Save a note",
-                "description": "Add and save a new note",
-                "tags": [
-                    "notes"
-                ],
-                "parameters": [{
-                    "name": "Note",
-                    "description": "Entry, section, note",
-                    "in": "body",
-                    "schema": {
-                        "$ref": "#/definitions/addNoteSchema"
-                    },
-                    "required": true
-                }],
-                "responses": {
-                    "200": {
-                        "description": "Note added to account",
-                        "schema": {
-                            "$ref": "#/definitions/noteSchema"
-                        }
-                    },
-                    "400": {
-                        "description": "Error"
-                    }
-                }
-            }
-        },
-        "/notes/star": {
-            "post": {
-                "summary": "Star a note",
-                "description": "Star a note to mark as important",
-                "tags": [
-                    "notes"
-                ],
-                "parameters": [{
-                    "name": "Star",
-                    "description": "Mark notes as important",
-                    "in": "body",
-                    "schema": {
-                        "$ref": "#/definitions/starSchema"
-                    },
-                    "required": true
-                }],
-                "responses": {
-                    "200": {
-                        "description": "Star a note",
-                        "schema": {
-                            "$ref": "#/definitions/noteSchema"
-                        }
-                    },
-                    "400": {
-                        "description": "Error"
-                    }
-                }
-            }
-        },
-        "/notes/edit": {
-            "post": {
-                "summary": "Edit a note",
-                "description": "Edit a note that already exists",
-                "tags": [
-                    "notes"
-                ],
-                "parameters": [{
-                    "name": "note",
-                    "description": "Updated note to be saved",
-                    "in": "body",
-                    "schema": {
-                        "$ref": "#/definitions/editNoteSchema"
-                    },
-                    "required": true
-                }],
-                "responses": {
-                    "200": {
-                        "description": "Edited note",
-                        "schema": {
-                            "$ref": "#/definitions/noteSchema"
-                        }
-                    },
-                    "400": {
-                        "description": "Error"
-                    }
-                }
-            }
-        },
-        "/notes/delete": {
-            "post": {
-                "summary": "Delete a note",
-                "description": "Locate a note using ID and delete",
-                "tags": [
-                    "notes"
-                ],
-                "parameters": [{
-                    "name": "note ID",
-                    "description": "Note locator",
-                    "in": "body",
-                    "schema": {
-                        "$ref": "#/definitions/deleteNoteSchema"
-                    },
-                    "required": true
-                }],
-                "responses": {
-                    "200": {
-                        "description": "Note successfully deleted"
                     },
                     "400": {
                         "description": "Error"
@@ -1449,6 +1427,16 @@
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "deleteMedicationSchema": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
                     "type": "string"
                 }
             }
