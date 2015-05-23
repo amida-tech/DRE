@@ -45,12 +45,12 @@ angular.module('phrPrototypeApp')
                             merge_reason: "new"
                         }]
                     },
-                    "date_time": {
-                        "low": {
-                            "date": $scope.pStart,
-                            "precision": "day"
-                        }
-                    },
+                    // "date_time": {
+                    //     "low": {
+                    //         "date": $scope.pStart,
+                    //         "precision": "day"
+                    //     }
+                    // },
                     "sig": $scope.pWhy,
                     "product": {
                         "identifiers": [{
@@ -65,10 +65,10 @@ angular.module('phrPrototypeApp')
                     "performer": {
                         "address": [{
                             "street_lines": [
-                                $scope.selectedPrescriber.address_line
+                                $scope.selectedPrescriber.practice_address.address_line
                             ],
-                            "city": $scope.selectedPrescriber.city,
-                            "state": $scope.selectedPrescriber.state
+                            "city": $scope.selectedPrescriber.practice_address.city,
+                            "state": $scope.selectedPrescriber.practice_address.state
                         }],
                         "name": [{
                             "first": $scope.selectedPrescriber.first_name,
@@ -92,12 +92,12 @@ angular.module('phrPrototypeApp')
                             merge_reason: "new"
                         }]
                     },
-                    "date_time": {
-                        "date": {
-                            "low": $scope.pStart,
-                            "precision": "day"
-                        }
-                    },
+                    // "date_time": {
+                    //     "date": {
+                    //         "low": $scope.pStart,
+                    //         "precision": "day"
+                    //     }
+                    // },
                     "sig": $scope.pWhy,
                     "product": {
                         "identifiers": [{
@@ -143,9 +143,9 @@ angular.module('phrPrototypeApp')
                 break;
             case 3:
                 enteredObject();
-                if ($scope.enteredMedication.date_time) {
-                    format.formatDate($scope.enteredMedication.date_time);
-                }
+                // if ($scope.enteredMedication.date_time && $scope.enteredMedication.date_time) {
+                //     format.formatDate($scope.enteredMedication.date_time);
+                // }
                 if ($scope.enteredMedication.performer.address) {
                     format.formatAddress($scope.enteredMedication.performer.address[0]);
                 }
