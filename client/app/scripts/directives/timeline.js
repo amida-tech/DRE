@@ -256,7 +256,8 @@ angular.module('phrPrototypeApp').directive('timeline', function($window, $locat
                                 var tipFormat = d3.time.format("%m/%d/%Y");
                                 if (attrs.chartLocation === 'all') {
                                     tip.attr('class', 'd3-tip animate').html(function(d) {
-                                        return '<span>' + d.category + '</span> - <span>' + tipFormat(d.date) + '</span>';
+                                        //return '<span>' + d.category + '</span> - <span>' + tipFormat(d.date) + '</span>';
+                                        return '<span>' + tipFormat(d.date) + '</span>';
                                     }).show(d);
                                 } else {
                                     tip.attr('class', 'd3-tip animate').html(function(d) {
