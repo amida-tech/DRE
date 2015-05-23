@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('phrPrototypeApp')
-    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications, dataservice) {
+    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications, dataservice, format) {
         $scope.entryStep = 0;
         $scope.prescriberSearchActive = false;
         $scope.drugSearchActive = false;
@@ -45,6 +45,12 @@ angular.module('phrPrototypeApp')
                             merge_reason: "new"
                         }]
                     },
+                    "date_time": {
+                        "low": {
+                            "date": $scope.pStart,
+                            "precision": "day"
+                        }
+                    },
                     "sig": $scope.pWhy,
                     "product": {
                         "identifiers": [{
@@ -57,9 +63,13 @@ angular.module('phrPrototypeApp')
                         }
                     },
                     "performer": {
-                        "address": [
-                            $scope.selectedPrescriber.practice_address
-                        ],
+                        "address": [{
+                            "street_lines": [
+                                $scope.selectedPrescriber.address_line
+                            ],
+                            "city": $scope.selectedPrescriber.city,
+                            "state": $scope.selectedPrescriber.state
+                        }],
                         "name": {
                             "first": $scope.selectedPrescriber.first_name,
                             "last": $scope.selectedPrescriber.last_name
@@ -67,6 +77,10 @@ angular.module('phrPrototypeApp')
                     }
                 };
                 console.log($scope.pWhy);
+                // if (!$scope.pCurrentMedRadio) {
+                //     $scope.enteredMedication.date_time.high.date = $scope.pLast;
+                //     $scope.enteredMedication.date_time.high.precision = "day";
+                // }
             } else {
                 $scope.enteredMedication = {
                     "med_metadata": {
@@ -79,7 +93,10 @@ angular.module('phrPrototypeApp')
                         }]
                     },
                     "date_time": {
-                        "low": $scope.pStart
+                        "date": {
+                            "low": $scope.pStart,
+                            "precision": "day"
+                        }
                     },
                     "sig": $scope.pWhy,
                     "product": {
@@ -126,6 +143,15 @@ angular.module('phrPrototypeApp')
                 break;
             case 3:
                 enteredObject();
+                if ($scope.enteredMedication.date_time) {
+                    format.formatDate($scope.enteredMedication.date_time);
+                }
+                if ($scope.enteredMedication.performer.address) {
+                    format.formatAddress($scope.enteredMedication.performer.address[0]);
+                }
+                if ($scope.enteredMedication.performer.name) {
+                    format.formatName($scope.enteredMedication.performer.name);
+                }
                 console.log($scope.enteredMedication);
                 $scope.medication = $scope.enteredMedication;
                 $scope.entryStep = 4;
