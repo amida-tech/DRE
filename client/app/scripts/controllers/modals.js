@@ -70,10 +70,10 @@ angular.module('phrPrototypeApp')
                             "city": $scope.selectedPrescriber.city,
                             "state": $scope.selectedPrescriber.state
                         }],
-                        "name": {
+                        "name": [{
                             "first": $scope.selectedPrescriber.first_name,
                             "last": $scope.selectedPrescriber.last_name
-                        }
+                        }]
                     }
                 };
                 console.log($scope.pWhy);
@@ -150,7 +150,7 @@ angular.module('phrPrototypeApp')
                     format.formatAddress($scope.enteredMedication.performer.address[0]);
                 }
                 if ($scope.enteredMedication.performer.name) {
-                    format.formatName($scope.enteredMedication.performer.name);
+                    format.formatName($scope.enteredMedication.performer.name[0]);
                 }
                 console.log($scope.enteredMedication);
                 $scope.medication = $scope.enteredMedication;
