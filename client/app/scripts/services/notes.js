@@ -16,6 +16,7 @@ angular.module('phrPrototypeApp')
         function forceRefresh() {
             all_notes = {};
         }
+        this.forceRefresh = forceRefresh;
 
         this.starNote = function(note_id, star, callback) {
             var comment = {
