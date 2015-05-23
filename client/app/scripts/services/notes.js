@@ -10,11 +10,9 @@
 angular.module('phrPrototypeApp')
     .service('notes', function notes($http, format) { //
 
-        var tmpNotes = [];
         var all_notes = [];
 
         function forceRefresh() {
-            console.log('force refresh notes');
             all_notes = [];
         }
         this.forceRefresh = forceRefresh;

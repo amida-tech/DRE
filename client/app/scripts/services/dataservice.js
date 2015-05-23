@@ -364,15 +364,9 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     };
 
     this.forceRefresh = function() {
-        console.log('force refresh ds');
         master_record = {};
         master_merges = [];
         master_entries = [];
-        all_notes = [];
-    };
-
-    this.clearNotes = function() {
-        console.log('clear notes');
         all_notes = [];
     };
 });

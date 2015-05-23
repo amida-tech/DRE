@@ -201,7 +201,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
             if (err) {
                 console.log('err ', err);
             } else {
-                dataservice.clearNotes();
+                dataservice.forceRefresh();
             }
         });
         var tmpSection = _.where($scope.notes, {
