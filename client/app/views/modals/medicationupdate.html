@@ -122,7 +122,7 @@
                 <br />
                 <div class="sub-entry">
                     <div>
-                        <input type="radio" name="uCurrentImage" ng-model="uCurrentImage" id="ucurrentRadioYes" ng-value="true"> 
+                        <input type="radio" name="uCurrentImage" ng-model="uCurrentImage" id="ucurrentRadioYes" ng-value="true">
                         <div class="col-sm-2">
                             <a class="thumbnail active"><img ng-src="{{medication.metadata.image.imageUrl}}" class="img-responsive img-thumbnail" /></a>
                         </div>
@@ -135,7 +135,7 @@
                 <div class="sub-entry">
                     <div class="row" ng-repeat="rxImage in medImages.nlmRxImages">
                         <div>
-                        <input type="checkbox" class="pull-left" ng-click="setSelectedImage(rxImage)" ng-model="uCurrentImage" id="ucurrentRadioYes" ng-value="true">
+                            <input type="checkbox" class="pull-left" ng-click="setSelectedImage(rxImage)" ng-model="uCurrentImage" id="ucurrentRadioYes" ng-value="true">
                         </div>
                         <div class="col-sm-2">
                             <a class="thumbnail" ng-class="{active:rxImage.selected}"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>

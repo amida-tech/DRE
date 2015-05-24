@@ -28,7 +28,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         if (all_notes.length > 0) {
             callback(null, all_notes);
         } else {
-            notes.getNotes(function(err, notes) {
+            notes.getNotes(function (err, notes) {
                 if (err) {
                     console.log("err: ", err);
                     callback(err);
@@ -47,7 +47,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         var note = _.where(all_notes, {
             entry: entry._id
         });
-        _.each(note, function(n) {
+        _.each(note, function (n) {
             var comment = {
                 date: n.datetime,
                 starred: n.star,
@@ -122,12 +122,12 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             callback(null, master_record);
         } else {
             $http.get('/api/v1/get_record')
-                .success(function(data) {
+                .success(function (data) {
                     console.log("master record fetched successfuly");
                     master_record = data;
                     callback(null, data);
                 })
-                .error(function(err) {
+                .error(function (err) {
                     console.log("fetching master record failed", err);
                     callback("master_record failed " + err);
                 });
@@ -135,21 +135,20 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     }
     this.retrieveMasterRecord = retrieveMasterRecord;
 
-    var processMatches = function(section, matchSection, callback) {
+    var processMatches = function (section, matchSection, callback) {
         var processed_matches = {
             'category': section,
             'data': matchSection,
             'count': matchSection.length
         };
 
-        _.each(master_entries, function(recordEntry) {
+        _.each(master_entries, function (recordEntry) {
             delete recordEntry.metadata.match;
         });
 
-
-        _.each(processed_matches.data, function(match) {
+        _.each(processed_matches.data, function (match) {
             var match_count = 0;
-            _.each(master_entries, function(recordEntry) {
+            _.each(master_entries, function (recordEntry) {
                 if (recordEntry.data._id === match.matches[0].match_entry._id) {
                     //calculate number of pending matches per entry
                     if (recordEntry.metadata.match && recordEntry.metadata.match.count > 0) {
@@ -171,12 +170,12 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
     function getAllMerges(callback) {
         $http.get('/api/v1/merges')
-            .success(function(data) {
+            .success(function (data) {
                 console.log("merges fetched successfuly", data);
                 master_merges = data.merges;
                 callback(null, data.merges);
             })
-            .error(function(err) {
+            .error(function (err) {
                 console.log("fetching merges failed", err);
                 callback(err);
             });
@@ -184,8 +183,8 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
     function parseEntries(callback) {
         master_entries = [];
-        _.each(master_record, function(entries, type) {
-            _.each(entries, function(entry) {
+        _.each(master_record, function (entries, type) {
+            _.each(entries, function (entry) {
                 //gate (ignore) possible sections that are not applicable here
                 if (_.contains(['demographics', 'plan_of_care'], type)) {
                     //skip to next entry (next iteration)
@@ -203,7 +202,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 }
 
                 //collate all notes into array (with formatting) for current entry
-                collateCommentsNew(entry, function(err, comments) {
+                collateCommentsNew(entry, function (err, comments) {
                     if (err) {
                         console.log("err: ", err);
                     } else {
@@ -234,19 +233,19 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             //translating section name to backend API terms
             var section_backend = section;
             switch (section) {
-                case "conditions":
-                    section_backend = "problems";
-                    break;
-                case "social":
-                    section_backend = "social_history";
-                    break;
+            case "conditions":
+                section_backend = "problems";
+                break;
+            case "social":
+                section_backend = "social_history";
+                break;
             }
 
             console.log('getting matches from API for section ' + section_backend);
             $http.get('/api/v1/matches/' + section_backend)
-                .success(function(data) {
+                .success(function (data) {
                     console.log("matches fetched successfuly");
-                    processMatches(section, data.matches, function(err2, processed_matches) {
+                    processMatches(section, data.matches, function (err2, processed_matches) {
                         if (err2) {
                             console.log("err2: ", err2);
                             callback(err2);
@@ -255,7 +254,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                         }
                     });
                 })
-                .error(function(err) {
+                .error(function (err) {
                     console.log("fetching matches failed", err);
                     callback(err);
                 });
@@ -269,7 +268,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
             if (section === 'all') {
                 callback(null, master_entries);
             } else {
-                getMatchSection(section, function(err5, sectionentries) {
+                getMatchSection(section, function (err5, sectionentries) {
                     if (err5) {
                         console.log("err5: ", err5);
                         callback(err5);
@@ -279,17 +278,17 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 });
             }
         } else {
-            getAllNotes(function(err, notes) {
+            getAllNotes(function (err, notes) {
                 if (err) {
                     console.log("err: " + err);
                     callback(err);
                 } else {
-                    retrieveMasterRecord(function(err3, record) {
+                    retrieveMasterRecord(function (err3, record) {
                         if (err3) {
                             console.log("err3: " + err3);
                             callback(err3);
                         } else {
-                            parseEntries(function(err4, entries) {
+                            parseEntries(function (err4, entries) {
                                 if (err4) {
                                     console.log('err4: ' + err4);
                                     callback(err4);
@@ -298,7 +297,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                                     if (section === 'all') {
                                         callback(null, entries);
                                     } else {
-                                        getMatchSection(section, function(err5, sectionentries) {
+                                        getMatchSection(section, function (err5, sectionentries) {
                                             if (err5) {
                                                 console.log("err5: ", err5);
                                                 callback(err5);
@@ -317,11 +316,11 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     }
     this.getProcessedRecord = getProcessedRecord;
 
-    this.getMergesListRecord = function(callback) {
+    this.getMergesListRecord = function (callback) {
         if (master_merges.length > 0) {
             callback(null, master_merges);
         } else {
-            getAllMerges(function(err2, merges) {
+            getAllMerges(function (err2, merges) {
                 if (err2) {
                     console.log("err: " + err2);
                     callback(err2);
@@ -335,7 +334,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     function filterMerges(merges, callback) {
         var filtered_record = [];
         var filtered_billing = [];
-        _.each(merges, function(merge) {
+        _.each(merges, function (merge) {
             if (!_.contains(['claims', 'payers'], merge.entry_type)) {
                 filtered_record.push(merge);
             } else {
@@ -345,13 +344,13 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         callback(null, filtered_billing, filtered_record);
     }
 
-    this.getBillingMerges = function(section, callback) {
-        this.getMergesListRecord(function(err, merges) {
+    this.getBillingMerges = function (section, callback) {
+        this.getMergesListRecord(function (err, merges) {
             if (err) {
                 console.log("err: " + err);
                 callback(err);
             } else {
-                filterMerges(merges, function(err, billing, record) {
+                filterMerges(merges, function (err, billing, record) {
                     if (err) {
                         console.log("err: " + err);
                         callback(err);
@@ -363,7 +362,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         });
     };
 
-    this.forceRefresh = function() {
+    this.forceRefresh = function () {
         master_record = {};
         master_merges = [];
         master_entries = [];

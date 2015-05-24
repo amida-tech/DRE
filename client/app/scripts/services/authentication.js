@@ -9,21 +9,21 @@
  */
 angular.module('phrPrototypeApp')
     .service('authentication', function authentication($location, $http) {
-/*
-        this.logout = function (callback) {
+        /*
+                this.logout = function (callback) {
 
-            var err = null;
+                    var err = null;
 
-            $http.post('api/v1/logout')
-                .success(function () {
-                    //$rootScope.isAuthenticated = false;
-                    //$location.path('/home');
-                    callback(null);
-                }).error(function (err) {
-                    callback(err);
-                });
-        };
-        */
+                    $http.post('api/v1/logout')
+                        .success(function () {
+                            //$rootScope.isAuthenticated = false;
+                            //$location.path('/home');
+                            callback(null);
+                        }).error(function (err) {
+                            callback(err);
+                        });
+                };
+                */
 
         //This would be a server call, but now just stubbed with $location.
         this.authStatus = function (callback) {

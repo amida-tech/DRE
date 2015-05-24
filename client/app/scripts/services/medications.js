@@ -12,7 +12,7 @@ angular
     .module('phrPrototypeApp')
     .service('medications', medications);
 
-medications.$inject = ['$http','dataservice','notes'];
+medications.$inject = ['$http', 'dataservice', 'notes'];
 
 function medications($http, dataservice, notes) {
     /* jshint validthis: true */

@@ -2,43 +2,43 @@
 
 function singularName(section) {
     switch (section) {
-        case 'social_history':
-            return 'social history';
-        case 'vitals':
-            return 'vital sign';
-        case 'allergies':
-            return 'allergy';
-        case 'medications':
-            return 'medication';
-        case 'problems':
-            return 'problem';
-        case 'claims':
-            return 'claim';
-        case 'results':
-            return 'test result';
-        case 'encounters':
-            return 'encounter';
-        case 'immunizations':
-            return 'immunization';
-        case 'procedures':
-            return 'procedure';
-        case 'claims':
-            return 'claim';
-        case 'insurance':
-            return 'insurance';
-        case 'payers':
-            return 'payer';
-        default:
-            return section;
+    case 'social_history':
+        return 'social history';
+    case 'vitals':
+        return 'vital sign';
+    case 'allergies':
+        return 'allergy';
+    case 'medications':
+        return 'medication';
+    case 'problems':
+        return 'problem';
+    case 'claims':
+        return 'claim';
+    case 'results':
+        return 'test result';
+    case 'encounters':
+        return 'encounter';
+    case 'immunizations':
+        return 'immunization';
+    case 'procedures':
+        return 'procedure';
+    case 'claims':
+        return 'claim';
+    case 'insurance':
+        return 'insurance';
+    case 'payers':
+        return 'payer';
+    default:
+        return section;
     }
 }
 
 angular.module('phrPrototypeApp')
-    .controller('RecordCtrl', function($scope, $location, $route, matches, merges, history, dataservice) {
+    .controller('RecordCtrl', function ($scope, $location, $route, matches, merges, history, dataservice) {
 
         $scope.entryType = 'all';
 
-        $scope.setEntryType = function(newEntry) {
+        $scope.setEntryType = function (newEntry) {
             if (newEntry !== 'all') {
                 $location.path('record/' + newEntry);
             }
@@ -60,7 +60,7 @@ angular.module('phrPrototypeApp')
             "chartName": "d3template"
         }];
         $scope.tabs.activeTab = 0;
-        $scope.onTabSelect = function(tab) {
+        $scope.onTabSelect = function (tab) {
             $scope.$broadcast('tabchange', {
                 "val": $scope.tabs.indexOf(tab)
             });
@@ -74,7 +74,7 @@ angular.module('phrPrototypeApp')
             var bpDateArraySystolic = [];
             var bpDateArrayDiastolic = [];
             //Build arrays of all dates per section.
-            _.each($scope.recordEntries, function(entry) {
+            _.each($scope.recordEntries, function (entry) {
                 var vitalEntry = {};
                 //skip non vitals entries
                 if (entry.category !== "vitals") {
@@ -85,22 +85,22 @@ angular.module('phrPrototypeApp')
                 if (vitalEntry.data !== null) {
                     if (vitalEntry.data.vital !== null) {
                         if (vitalEntry.data.vital.name === "Height") {
-                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                            _.each(vitalEntry.data.date_time, function (dateArr) {
                                 heightDateArray.push(moment(dateArr.date));
                             });
                         }
                         if (vitalEntry.data.vital.name === "Patient Body Weight - Measured") {
-                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                            _.each(vitalEntry.data.date_time, function (dateArr) {
                                 weightDateArray.push(moment(dateArr.date));
                             });
                         }
                         if (vitalEntry.data.vital.name === "Intravascular Systolic") {
-                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                            _.each(vitalEntry.data.date_time, function (dateArr) {
                                 bpDateArraySystolic.push(moment(dateArr.date));
                             });
                         }
                         if (vitalEntry.data.vital.name === "Intravascular Diastolic") {
-                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                            _.each(vitalEntry.data.date_time, function (dateArr) {
                                 bpDateArrayDiastolic.push(moment(dateArr.date));
                             });
                         }
@@ -115,14 +115,14 @@ angular.module('phrPrototypeApp')
             //Recover associated max value.
             if ($scope.entries !== null) {
                 if ($scope.entries.vitals !== null) {
-                    _.each($scope.entries.vitals, function(vitalEntry2) {
+                    _.each($scope.entries.vitals, function (vitalEntry2) {
                         var vitalEntry = {
                             "data": vitalEntry2
                         };
 
                         //Find most current height.
                         if (vitalEntry.data.vital.name.indexOf("Height") > -1) {
-                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                            _.each(vitalEntry.data.date_time, function (dateArr) {
                                 if (moment(moment(dateArr.date)).isSame(heightMaxDate, 'day')) {
                                     $scope.dashMetrics.height = {
                                         value: vitalEntry.data.value,
@@ -132,7 +132,7 @@ angular.module('phrPrototypeApp')
                             });
                         }
                         if (vitalEntry.data.vital.name.indexOf("Weight") > -1) {
-                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                            _.each(vitalEntry.data.date_time, function (dateArr) {
                                 if (moment(moment(dateArr.date)).isSame(weightMaxDate, 'day')) {
                                     $scope.dashMetrics.weight = {
                                         value: vitalEntry.data.value,
@@ -142,7 +142,7 @@ angular.module('phrPrototypeApp')
                             });
                         }
                         if (vitalEntry.data.vital.name.indexOf("Systolic") > -1) {
-                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                            _.each(vitalEntry.data.date_time, function (dateArr) {
                                 if (moment(moment(dateArr.date)).isSame(bpMaxDateSystolic, 'day')) {
                                     $scope.dashMetrics.systolic = {
                                         value: vitalEntry.data.value,
@@ -152,7 +152,7 @@ angular.module('phrPrototypeApp')
                             });
                         }
                         if (vitalEntry.data.vital.name.indexOf("Diastolic") > -1) {
-                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                            _.each(vitalEntry.data.date_time, function (dateArr) {
                                 if (moment(moment(dateArr.date)).isSame(bpMaxDateDiastolic, 'day')) {
                                     $scope.dashMetrics.diastolic = {
                                         value: vitalEntry.data.value,
@@ -211,19 +211,19 @@ angular.module('phrPrototypeApp')
             });
         }
 
-        history.getAccountHistory(function(err, history) {
+        history.getAccountHistory(function (err, history) {
             if (err) {
                 console.log("err: " + err);
             } else {
                 $scope.accountHistory = history;
                 $scope.fileUploaded = false;
-                _.each(history.recordHistory, function(historyObj) {
+                _.each(history.recordHistory, function (historyObj) {
                     if (_.includes(historyObj, 'fileUploaded')) {
                         $scope.fileUploaded = true;
                     }
                 });
                 if ($scope.fileUploaded) {
-                    dataservice.getMergesListRecord(function(err, merges_record) {
+                    dataservice.getMergesListRecord(function (err, merges_record) {
                         if (err) {
                             console.log("err: " + err);
                         } else {
@@ -231,18 +231,18 @@ angular.module('phrPrototypeApp')
                         }
                     });
 
-                    dataservice.getProcessedRecord($scope.entryType, function(err, processed_record) {
+                    dataservice.getProcessedRecord($scope.entryType, function (err, processed_record) {
                         if (err) {
                             console.log("err: " + err);
                         } else {
-                            $scope.recordEntries = _.sortBy(processed_record, function(entry) {
+                            $scope.recordEntries = _.sortBy(processed_record, function (entry) {
                                 if (entry.metadata.datetime[0]) {
                                     return entry.metadata.datetime[0].date.substring(0, 9);
                                 } else {
                                     return '1979-12-12';
                                 }
                             }).reverse();
-                            dataservice.retrieveMasterRecord(function(err2, master_record) {
+                            dataservice.retrieveMasterRecord(function (err2, master_record) {
                                 if (err2) {
                                     console.log("err2: " + err2);
                                 } else {
@@ -256,12 +256,12 @@ angular.module('phrPrototypeApp')
             }
         });
 
-        $scope.goToMatches = function(section) {
+        $scope.goToMatches = function (section) {
             $location.path('/matches');
         };
 
         //launch specific match (by ID and section name)
-        $scope.launchMatch = function(el) {
+        $scope.launchMatch = function (el) {
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
 
@@ -269,11 +269,11 @@ angular.module('phrPrototypeApp')
         };
 
     })
-    .controller('SectionMedicationCtrl', function($scope, $location, $modal, $route, matches, merges, history, dataservice) {
+    .controller('SectionMedicationCtrl', function ($scope, $location, $modal, $route, matches, merges, history, dataservice) {
 
         $scope.entryType = 'medications';
 
-        $scope.setEntryType = function(newEntry) {
+        $scope.setEntryType = function (newEntry) {
             if (newEntry === 'all') {
                 $location.path('record');
             } else {
@@ -283,69 +283,69 @@ angular.module('phrPrototypeApp')
 
         $scope.singularName = singularName;
 
-        $scope.medicationDetails = function(medication) {
+        $scope.medicationDetails = function (medication) {
             var modalInstance = $modal.open({
                 animation: false,
                 templateUrl: 'views/modals/medications.html',
                 controller: 'MedicationDetailModalCtrl',
                 resolve: {
-                    medication: function() {
+                    medication: function () {
                         return medication;
                     }
                 }
             });
-            modalInstance.result.then(function(response) {
+            modalInstance.result.then(function (response) {
                 console.log(response);
-            }, function() {
+            }, function () {
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
 
-        $scope.entryModal = function() {
+        $scope.entryModal = function () {
             var modalInstance = $modal.open({
                 animation: false,
                 templateUrl: 'views/modals/medicationentry.html',
                 controller: 'MedicationEntryModalCtrl'
             });
-            modalInstance.result.then(function(response) {
+            modalInstance.result.then(function (response) {
                 console.log(response);
-            }, function() {
+            }, function () {
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
 
-        $scope.updateModal = function(medication) {
+        $scope.updateModal = function (medication) {
             var modalInstance = $modal.open({
                 animation: false,
                 templateUrl: 'views/modals/medicationupdate.html',
                 controller: 'MedicationUpdateModalCtrl',
                 resolve: {
-                    medication: function() {
+                    medication: function () {
                         return medication;
                     }
                 }
             });
-            modalInstance.result.then(function(response) {
+            modalInstance.result.then(function (response) {
                 console.log(response);
-            }, function() {
+            }, function () {
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
 
-        $scope.deleteModal = function(medication) {
+        $scope.deleteModal = function (medication) {
             var modalInstance = $modal.open({
                 animation: false,
                 templateUrl: 'views/modals/medicationdelete.html',
                 controller: 'MedicationDeleteModalCtrl',
                 resolve: {
-                    medication: function() {
+                    medication: function () {
                         return medication;
                     }
                 }
             });
-            modalInstance.result.then(function(response) {
+            modalInstance.result.then(function (response) {
                 console.log(response);
-            }, function() {
+            }, function () {
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
@@ -362,7 +362,7 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        dataservice.getMergesListRecord(function(err, merges_record) {
+        dataservice.getMergesListRecord(function (err, merges_record) {
             if (err) {
                 console.log("err: " + err);
             } else {
@@ -370,7 +370,7 @@ angular.module('phrPrototypeApp')
             }
         });
 
-        history.getAccountHistory(function(err, history) {
+        history.getAccountHistory(function (err, history) {
             if (err) {
                 console.log("err: " + err);
             } else {
@@ -392,7 +392,7 @@ angular.module('phrPrototypeApp')
 
             } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
 
-                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function(entry) {
+                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                     var curDate = new Date();
                     var entryDate = new Date();
                     if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
@@ -401,7 +401,7 @@ angular.module('phrPrototypeApp')
                     return (entry.category === val) && (entryDate >= curDate);
                 });
             } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
-                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function(entry) {
+                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                     var curDate = new Date();
                     var entryDate = new Date();
                     if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
@@ -414,18 +414,18 @@ angular.module('phrPrototypeApp')
             }
         }
 
-        dataservice.getProcessedRecord($scope.entryType, function(err, processed_record) {
+        dataservice.getProcessedRecord($scope.entryType, function (err, processed_record) {
             if (err) {
                 console.log("err: " + err);
             } else {
-                dataservice.getMatchSection($scope.entryType, function(err, matches) {
+                dataservice.getMatchSection($scope.entryType, function (err, matches) {
                     if (err) {
                         console.log("err: " + err);
                     } else {
                         $scope.masterMatches = matches;
                     }
                 });
-                $scope.recordEntries = _.sortBy(processed_record, function(entry) {
+                $scope.recordEntries = _.sortBy(processed_record, function (entry) {
                     if (entry.metadata.datetime[0]) {
                         return entry.metadata.datetime[0].date.substring(0, 9);
                     } else {
@@ -436,16 +436,16 @@ angular.module('phrPrototypeApp')
             }
         });
 
-        $scope.$watch('activeSelection', function(newVal, oldVal) {
+        $scope.$watch('activeSelection', function (newVal, oldVal) {
             filterEntries($scope.entryType);
         }, true);
 
-        $scope.goToMatches = function(section) {
+        $scope.goToMatches = function (section) {
             $location.path('/matches');
         };
 
         //launch specific match (by ID and section name)
-        $scope.launchMatch = function(el) {
+        $scope.launchMatch = function (el) {
             console.log("Launch MATCH>> ", el);
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
@@ -454,11 +454,11 @@ angular.module('phrPrototypeApp')
         };
 
     })
-    .controller('SectionSocialCtrl', function($scope, $location, $route, matches, merges, history, dataservice) {
+    .controller('SectionSocialCtrl', function ($scope, $location, $route, matches, merges, history, dataservice) {
 
         $scope.entryType = 'social';
 
-        $scope.setEntryType = function(newEntry) {
+        $scope.setEntryType = function (newEntry) {
             if (newEntry === 'all') {
                 $location.path('record');
             } else {
@@ -481,7 +481,7 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        dataservice.getMergesListRecord(function(err, merges_record) {
+        dataservice.getMergesListRecord(function (err, merges_record) {
             if (err) {
                 console.log("err: " + err);
             } else {
@@ -489,7 +489,7 @@ angular.module('phrPrototypeApp')
             }
         });
 
-        history.getAccountHistory(function(err, history) {
+        history.getAccountHistory(function (err, history) {
             if (err) {
                 console.log("err: " + err);
             } else {
@@ -511,7 +511,7 @@ angular.module('phrPrototypeApp')
 
             } else if ($scope.activeSelection.indexOf('active') > -1) { // Active only
 
-                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function(entry) {
+                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                     var curDate = new Date();
                     var entryDate = new Date();
                     if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
@@ -520,7 +520,7 @@ angular.module('phrPrototypeApp')
                     return (entry.category === val) && (entryDate >= curDate);
                 });
             } else if ($scope.activeSelection.indexOf('inactive') > -1) { // Inactive only
-                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function(entry) {
+                $scope.entryListFiltered = _.filter($scope.entryListFiltered, function (entry) {
                     var curDate = new Date();
                     var entryDate = new Date();
                     if (angular.isDefined(entry.data.date_time) && angular.isDefined(entry.data.date_time.high)) {
@@ -533,18 +533,18 @@ angular.module('phrPrototypeApp')
             }
         }
 
-        dataservice.getProcessedRecord($scope.entryType, function(err, processed_record) {
+        dataservice.getProcessedRecord($scope.entryType, function (err, processed_record) {
             if (err) {
                 console.log("err: " + err);
             } else {
-                dataservice.getMatchSection($scope.entryType, function(err, matches) {
+                dataservice.getMatchSection($scope.entryType, function (err, matches) {
                     if (err) {
                         console.log("err: " + err);
                     } else {
                         $scope.masterMatches = matches;
                     }
                 });
-                $scope.recordEntries = _.sortBy(processed_record, function(entry) {
+                $scope.recordEntries = _.sortBy(processed_record, function (entry) {
                     if (entry.metadata.datetime[0]) {
                         return entry.metadata.datetime[0].date.substring(0, 9);
                     } else {
@@ -555,14 +555,14 @@ angular.module('phrPrototypeApp')
             }
         });
 
-        $scope.$watch('activeSelection', function(newVal, oldVal) {
+        $scope.$watch('activeSelection', function (newVal, oldVal) {
             filterEntries($scope.entryType);
         }, true);
 
-        $scope.goToMatches = function(section) {
+        $scope.goToMatches = function (section) {
             $location.path('/matches');
         };
-        $scope.launchMatch = function(el) {
+        $scope.launchMatch = function (el) {
             console.log("Launch MATCH>> ", el);
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
@@ -571,7 +571,7 @@ angular.module('phrPrototypeApp')
         };
 
     })
-    .controller('SectionOtherCtrl', function($scope, $location, $modal, $route, matches, merges, history, dataservice) {
+    .controller('SectionOtherCtrl', function ($scope, $location, $modal, $route, matches, merges, history, dataservice) {
 
         var tempSection = $location.path().split('/');
 
@@ -579,7 +579,7 @@ angular.module('phrPrototypeApp')
 
         $scope.singularName = singularName;
 
-        $scope.setEntryType = function(newEntry) {
+        $scope.setEntryType = function (newEntry) {
             if (newEntry === 'all') {
                 $location.path('record');
             } else {
@@ -591,7 +591,7 @@ angular.module('phrPrototypeApp')
             dataservice.curr_section = $scope.entryType;
         }
 
-        dataservice.getMergesListRecord(function(err, merges_record) {
+        dataservice.getMergesListRecord(function (err, merges_record) {
             if (err) {
                 console.log("err: " + err);
             } else {
@@ -599,7 +599,7 @@ angular.module('phrPrototypeApp')
             }
         });
 
-        history.getAccountHistory(function(err, history) {
+        history.getAccountHistory(function (err, history) {
             if (err) {
                 console.log("err: " + err);
             } else {
@@ -613,18 +613,18 @@ angular.module('phrPrototypeApp')
             });
         }
 
-        dataservice.getProcessedRecord($scope.entryType, function(err, processed_record) {
+        dataservice.getProcessedRecord($scope.entryType, function (err, processed_record) {
             if (err) {
                 console.log("err: " + err);
             } else {
-                dataservice.getMatchSection($scope.entryType, function(err, matches) {
+                dataservice.getMatchSection($scope.entryType, function (err, matches) {
                     if (err) {
                         console.log("err: " + err);
                     } else {
                         $scope.masterMatches = matches;
                     }
                 });
-                $scope.recordEntries = _.sortBy(processed_record, function(entry) {
+                $scope.recordEntries = _.sortBy(processed_record, function (entry) {
                     if (entry.metadata.datetime[0]) {
                         return entry.metadata.datetime[0].date.substring(0, 9);
                     } else {
@@ -635,12 +635,12 @@ angular.module('phrPrototypeApp')
             }
         });
 
-        $scope.goToMatches = function(section) {
+        $scope.goToMatches = function (section) {
             $location.path('/matches');
         };
 
         //launch specific match (by ID and section name)
-        $scope.launchMatch = function(el) {
+        $scope.launchMatch = function (el) {
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
 
