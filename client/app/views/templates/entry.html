@@ -40,14 +40,14 @@
                         </div>
                     </div>-->
                     <!--Record detail pane.-->
-                    <div role="tabpanel" class="collapse" id="details{{recordIndex}}">
+                    <div ng-show="showDetails">
                         <div class="sub-entry">
                             <h3>Entry Details</h3>
                             <div ng-include="entryTemplatePath"></div>
                         </div>
                     </div>
                     <!--Record history pane.-->
-                    <div role="tabpanel" class="collapse" id="history{{recordIndex}}">
+                    <div ng-show="showHistory">
                         <div class="sub-entry">
                             <h3>Entry History</h3>
                             <table class="table table-hover table-condensed">
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <!--Record comments pane.-->
-                    <div role="tabpanel" class="collapse" id="comments{{recordIndex}}" data-parent="#selector">
+                    <div ng-show="showComments">
                         <div class="sub-entry">
                             <h3>Entry Notes</h3>
                             <div ng-hide="editflag" class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
@@ -78,8 +78,8 @@
                                     <h5>{{commentEntry.date | date:'short'}}</h5>
                                 </div>
                                 <div class="col-sm-1 panel-body text-center">
-                                    <h5 ng-show="commentEntry.starred === true" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
-                                    <h5 ng-show="commentEntry.starred === false" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
+                                    <h5 ng-show="commentEntry.starred" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
+                                    <h5 ng-hide="commentEntry.starred" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="panel">
@@ -96,6 +96,10 @@
                             </div>
                             <div class="col-sm-12" ng-show="!entryMetaData.comments[0]">
                                 <form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
+                                    <div class="col-sm-1 panel-body text-center">
+                                        <h5 ng-show="newComment.starred" ng-click="toggleNewStar()"><a><i class="fa fa-star"></i></a></h5>
+                                        <h5 ng-hide="newComment.starred" ng-click="toggleNewStar()"><a><i class="fa fa-star-o"></i></a></h5>
+                                    </div>
                                     <div class="form-group col-sm-10">
                                         <label for="commentEntry">New:</label>
                                         <textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="newComment.comment" name="commentEntry"></textarea>

@@ -25,6 +25,14 @@ angular.module('phrPrototypeApp')
                 scope.type = attrs.type;
                 scope.entryIndex = attrs.entryIndex;
 
+                //Initialize
+                scope.showDetails = false;
+                scope.showHistory = false;
+                scope.showComments = false;
+                scope.newComment = {
+                    starred: false
+                };
+
                 //Scope Inherited Variables.
                 scope.entryData = scope.recordEntry.data;
                 scope.entryMetaData = scope.recordEntry.metadata;
@@ -76,6 +84,29 @@ angular.module('phrPrototypeApp')
                     });
                 };
 
+                scope.swapTabs = function (entryClass, entryIndex) {
+
+                    if (entryClass === "details") {
+                        scope.showComments = false;
+                        scope.showHistory = false;
+                        scope.showDetails = !scope.showDetails;
+                    } else if (entryClass === "comments") {
+                        scope.showDetails = false;
+                        scope.showHistory = false;
+                        scope.showComments = !scope.showComments;
+                    } else if (entryClass === "history") {
+                        scope.showDetails = false;
+                        scope.showComments = false;
+                        scope.showHistory = !scope.showHistory;
+                    }
+                    /* else if (entryClass === "match") {
+                                            $("#details" + entryIndex).removeClass("in");
+                                            $("#comments" + entryIndex).removeClass("in");
+                                            $("#history" + entryIndex).removeClass("in");
+                                        }*/
+
+                };
+
                 scope.addNote = function () {
                     scope.newComment.entry = scope.recordEntry.data._id;
                     scope.newComment.note = scope.newComment.comment;
@@ -94,18 +125,22 @@ angular.module('phrPrototypeApp')
                             if (angular.isUndefined(scope.newComment.starred)) {
                                 scope.newComment.starred = false;
                             }
-                            /*
-                            notes.starNote(scope.newComment.note_id, scope.newComment.starred, function(err, data) {
-                                console.log('add note star error ', err);
-                                console.log('add note with star ', data);
+
+                            notes.starNote(scope.newComment.note_id, scope.newComment.starred, function (err, data) {
+                                if (err) {
+                                    console.log('add note star error ', err);
+                                } else {
+                                    console.log('add note with star ', data);
+                                }
                             });
 
-
                             countStarredComments();
-                            */
+
                             dataservice.forceRefresh();
 
-                            scope.newComment = {};
+                            scope.newComment = {
+                                starred: false
+                            };
                         }
                     });
 
