@@ -66,22 +66,6 @@ angular.module('phrPrototypeApp')
             });
         };
 
-        dataservice.getMergesListRecord(function(err, merges_record) {
-            if (err) {
-                console.log("err: " + err);
-            } else {
-                $scope.mergesList_record = merges_record;
-            }
-        });
-
-        history.getAccountHistory(function(err, history) {
-            if (err) {
-                console.log("err: " + err);
-            } else {
-                $scope.accountHistory = history;
-            }
-        });
-
         //calculate current height/weight/bmi/blood pressure
         //based on processed record from $scope.recordEntries
         function dashPrep() {
@@ -98,26 +82,29 @@ angular.module('phrPrototypeApp')
                 } else {
                     vitalEntry = entry;
                 }
-                
-                if (vitalEntry.data.vital.name === "Height") {
-                    _.each(vitalEntry.data.date_time, function(dateArr) {
-                        heightDateArray.push(moment(dateArr.date));
-                    });
-                }
-                if (vitalEntry.data.vital.name === "Patient Body Weight - Measured") {
-                    _.each(vitalEntry.data.date_time, function(dateArr) {
-                        weightDateArray.push(moment(dateArr.date));
-                    });
-                }
-                if (vitalEntry.data.vital.name === "Intravascular Systolic") {
-                    _.each(vitalEntry.data.date_time, function(dateArr) {
-                        bpDateArraySystolic.push(moment(dateArr.date));
-                    });
-                }
-                if (vitalEntry.data.vital.name === "Intravascular Diastolic") {
-                    _.each(vitalEntry.data.date_time, function(dateArr) {
-                        bpDateArrayDiastolic.push(moment(dateArr.date));
-                    });
+                if (vitalEntry.data !== null) {
+                    if (vitalEntry.data.vital !== null) {
+                        if (vitalEntry.data.vital.name === "Height") {
+                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                                heightDateArray.push(moment(dateArr.date));
+                            });
+                        }
+                        if (vitalEntry.data.vital.name === "Patient Body Weight - Measured") {
+                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                                weightDateArray.push(moment(dateArr.date));
+                            });
+                        }
+                        if (vitalEntry.data.vital.name === "Intravascular Systolic") {
+                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                                bpDateArraySystolic.push(moment(dateArr.date));
+                            });
+                        }
+                        if (vitalEntry.data.vital.name === "Intravascular Diastolic") {
+                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                                bpDateArrayDiastolic.push(moment(dateArr.date));
+                            });
+                        }
+                    }
                 }
             });
             //Flag maxes.
@@ -126,79 +113,86 @@ angular.module('phrPrototypeApp')
             var bpMaxDateDiastolic = moment.max(bpDateArrayDiastolic);
             var bpMaxDateSystolic = moment.max(bpDateArraySystolic);
             //Recover associated max value.
-            _.each($scope.entries.vitals, function(vitalEntry2) {
-                var vitalEntry = {
-                    "data": vitalEntry2
-                };
+            if ($scope.entries !== null) {
+                if ($scope.entries.vitals !== null) {
+                    _.each($scope.entries.vitals, function(vitalEntry2) {
+                        var vitalEntry = {
+                            "data": vitalEntry2
+                        };
 
-                //Find most current height.
-                if (vitalEntry.data.vital.name.indexOf("Height") > -1) {
-                    _.each(vitalEntry.data.date_time, function(dateArr) {
-                        if (moment(moment(dateArr.date)).isSame(heightMaxDate, 'day')) {
-                            $scope.dashMetrics.height = {
-                                value: vitalEntry.data.value,
-                                unit: vitalEntry.data.unit
-                            };
+                        //Find most current height.
+                        if (vitalEntry.data.vital.name.indexOf("Height") > -1) {
+                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                                if (moment(moment(dateArr.date)).isSame(heightMaxDate, 'day')) {
+                                    $scope.dashMetrics.height = {
+                                        value: vitalEntry.data.value,
+                                        unit: vitalEntry.data.unit
+                                    };
+                                }
+                            });
+                        }
+                        if (vitalEntry.data.vital.name.indexOf("Weight") > -1) {
+                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                                if (moment(moment(dateArr.date)).isSame(weightMaxDate, 'day')) {
+                                    $scope.dashMetrics.weight = {
+                                        value: vitalEntry.data.value,
+                                        unit: vitalEntry.data.unit
+                                    };
+                                }
+                            });
+                        }
+                        if (vitalEntry.data.vital.name.indexOf("Systolic") > -1) {
+                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                                if (moment(moment(dateArr.date)).isSame(bpMaxDateSystolic, 'day')) {
+                                    $scope.dashMetrics.systolic = {
+                                        value: vitalEntry.data.value,
+                                        unit: vitalEntry.data.unit
+                                    };
+                                }
+                            });
+                        }
+                        if (vitalEntry.data.vital.name.indexOf("Diastolic") > -1) {
+                            _.each(vitalEntry.data.date_time, function(dateArr) {
+                                if (moment(moment(dateArr.date)).isSame(bpMaxDateDiastolic, 'day')) {
+                                    $scope.dashMetrics.diastolic = {
+                                        value: vitalEntry.data.value,
+                                        unit: vitalEntry.data.unit
+                                    };
+                                }
+                            });
                         }
                     });
                 }
-                if (vitalEntry.data.vital.name.indexOf("Weight") > -1) {
-                    _.each(vitalEntry.data.date_time, function(dateArr) {
-                        if (moment(moment(dateArr.date)).isSame(weightMaxDate, 'day')) {
-                            $scope.dashMetrics.weight = {
-                                value: vitalEntry.data.value,
-                                unit: vitalEntry.data.unit
-                            };
-                        }
-                    });
+            }
+
+            if ($scope.dashMetrics.height !== null) {
+                //convert height to inches if needed
+                if ($scope.dashMetrics.height.unit === "cm") {
+                    $scope.dashMetrics.height.unit = "[in_us]";
+                    $scope.dashMetrics.height.value = 0.393701 * $scope.dashMetrics.height.value;
+                    $scope.dashMetrics.height.value = Math.round($scope.dashMetrics.height.value);
                 }
-                if (vitalEntry.data.vital.name.indexOf("Systolic") > -1) {
-                    _.each(vitalEntry.data.date_time, function(dateArr) {
-                        if (moment(moment(dateArr.date)).isSame(bpMaxDateSystolic, 'day')) {
-                            $scope.dashMetrics.systolic = {
-                                value: vitalEntry.data.value,
-                                unit: vitalEntry.data.unit
-                            };
-                        }
-                    });
+
+                //Format height output.
+                if ($scope.dashMetrics.height.unit === "[in_us]") {
+                    var displayHeight = Math.floor(($scope.dashMetrics.height.value / 12)) + "' " + Math.floor($scope.dashMetrics.height.value % 12) + '"';
+                    $scope.dashMetrics.height.disp = displayHeight;
                 }
-                if (vitalEntry.data.vital.name.indexOf("Diastolic") > -1) {
-                    _.each(vitalEntry.data.date_time, function(dateArr) {
-                        if (moment(moment(dateArr.date)).isSame(bpMaxDateDiastolic, 'day')) {
-                            $scope.dashMetrics.diastolic = {
-                                value: vitalEntry.data.value,
-                                unit: vitalEntry.data.unit
-                            };
-                        }
-                    });
+            }
+
+            if ($scope.dashMetrics.weight !== null) {
+                //convert weight to lbs
+                if ($scope.dashMetrics.weight.unit === "kg") {
+                    $scope.dashMetrics.weight.unit = "[lb_av]";
+                    $scope.dashMetrics.weight.value = 2.20462 * $scope.dashMetrics.weight.value;
                 }
-            });
-
-            console.log("dash metrics >>>>", $scope.dashMetrics);
-
-            //convert height to inches if needed
-            if ($scope.dashMetrics.height.unit === "cm") {
-                $scope.dashMetrics.height.unit = "[in_us]";
-                $scope.dashMetrics.height.value = 0.393701 * $scope.dashMetrics.height.value;
-                $scope.dashMetrics.height.value = Math.round($scope.dashMetrics.height.value);
+                //Format weight output.
+                if ($scope.dashMetrics.weight.unit === "[lb_av]") {
+                    var displayWeight = Math.floor($scope.dashMetrics.weight.value) + " lbs";
+                    $scope.dashMetrics.weight.disp = displayWeight;
+                }
             }
 
-            //Format height output.
-            if ($scope.dashMetrics.height.unit === "[in_us]") {
-                var displayHeight = Math.floor(($scope.dashMetrics.height.value / 12)) + "' " + Math.floor($scope.dashMetrics.height.value % 12) + '"';
-                $scope.dashMetrics.height.disp = displayHeight;
-            }
-
-            //convert weight to lbs
-            if ($scope.dashMetrics.weight.unit === "kg") {
-                $scope.dashMetrics.weight.unit = "[lb_av]";
-                $scope.dashMetrics.weight.value = 2.20462 * $scope.dashMetrics.weight.value;
-            }
-            //Format weight output.
-            if ($scope.dashMetrics.weight.unit === "[lb_av]") {
-                var displayWeight = Math.floor($scope.dashMetrics.weight.value) + " lbs";
-                $scope.dashMetrics.weight.disp = displayWeight;
-            }
             //BMI Calculation
             //Expects US units.
             function calculateBMI(weight, height) {
@@ -206,7 +200,9 @@ angular.module('phrPrototypeApp')
                 BMI = BMI.toFixed(1);
                 return BMI;
             }
-            $scope.dashMetrics.bmi = calculateBMI($scope.dashMetrics.weight.value, $scope.dashMetrics.height.value);
+            if ($scope.dashMetrics.weight !== null && $scope.dashMetrics.height !== null) {
+                $scope.dashMetrics.bmi = calculateBMI($scope.dashMetrics.weight.value, $scope.dashMetrics.height.value);
+            }
         }
 
         function filterEntries(val) {
@@ -215,25 +211,48 @@ angular.module('phrPrototypeApp')
             });
         }
 
-        dataservice.getProcessedRecord($scope.entryType, function(err, processed_record) {
+        history.getAccountHistory(function(err, history) {
             if (err) {
                 console.log("err: " + err);
             } else {
-                $scope.recordEntries = _.sortBy(processed_record, function(entry) {
-                    if (entry.metadata.datetime[0]) {
-                        return entry.metadata.datetime[0].date.substring(0, 9);
-                    } else {
-                        return '1979-12-12';
-                    }
-                }).reverse();
-                dataservice.retrieveMasterRecord(function(err2, master_record) {
-                    if (err2) {
-                        console.log("err2: " + err2);
-                    } else {
-                        $scope.entries = master_record;
-                        dashPrep();
+                $scope.accountHistory = history;
+                $scope.fileUploaded = false;
+                _.each(history.recordHistory, function(historyObj) {
+                    if (_.includes(historyObj, 'fileUploaded')) {
+                        $scope.fileUploaded = true;
                     }
                 });
+                if ($scope.fileUploaded) {
+                    dataservice.getMergesListRecord(function(err, merges_record) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            $scope.mergesList_record = merges_record;
+                        }
+                    });
+
+                    dataservice.getProcessedRecord($scope.entryType, function(err, processed_record) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            $scope.recordEntries = _.sortBy(processed_record, function(entry) {
+                                if (entry.metadata.datetime[0]) {
+                                    return entry.metadata.datetime[0].date.substring(0, 9);
+                                } else {
+                                    return '1979-12-12';
+                                }
+                            }).reverse();
+                            dataservice.retrieveMasterRecord(function(err2, master_record) {
+                                if (err2) {
+                                    console.log("err2: " + err2);
+                                } else {
+                                    $scope.entries = master_record;
+                                    dashPrep();
+                                }
+                            });
+                        }
+                    });
+                }
             }
         });
 

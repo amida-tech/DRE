@@ -10,11 +10,10 @@
 angular.module('phrPrototypeApp')
     .service('notes', function notes($http, format) { //
 
-        var tmpNotes = [];
-        var all_notes = {};
+        var all_notes = [];
 
         function forceRefresh() {
-            all_notes = {};
+            all_notes = [];
         }
         this.forceRefresh = forceRefresh;
 
@@ -48,7 +47,7 @@ angular.module('phrPrototypeApp')
         };
 
         this.getNotes = function(callback) {
-            if (Object.keys(all_notes).length > 0) {
+            if (all_notes.length > 0) {
                 callback(null, all_notes);
             } else {
                 $http.get('/api/v1/notes/all')

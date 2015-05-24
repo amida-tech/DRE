@@ -7,7 +7,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     var master_record = {};
     var master_merges = [];
     var master_entries = [];
-    var all_notes = {};
+    var all_notes = [];
 
     function displayTypeNew(type) {
         var display_type = type;
@@ -25,7 +25,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     }
 
     function getAllNotes(callback) {
-        if (Object.keys(all_notes).length > 1) {
+        if (all_notes.length > 0) {
             callback(null, all_notes);
         } else {
             notes.getNotes(function(err, notes) {
@@ -44,28 +44,21 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         var comments = [];
 
         //find all notes for current entry
-        getAllNotes(function(err, notes) {
-            if (err) {
-                console.log("err: ", err);
-                callback(err);
-            } else {
-                var note = _.where(notes, {
-                    entry: entry._id
-                });
-                _.each(note, function(n) {
-                    var comment = {
-                        date: n.datetime,
-                        starred: n.star,
-                        comment: n.note,
-                        entry_id: n.entry,
-                        note_id: n._id
-                    };
-                    comments.push(comment);
-
-                });
-                callback(null, comments);
-            }
+        var note = _.where(all_notes, {
+            entry: entry._id
         });
+        _.each(note, function(n) {
+            var comment = {
+                date: n.datetime,
+                starred: n.star,
+                comment: n.note,
+                entry_id: n.entry,
+                note_id: n._id
+            };
+            comments.push(comment);
+
+        });
+        callback(null, comments);
     }
 
     function extractAndFormat(type, entry) {
@@ -374,10 +367,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         master_record = {};
         master_merges = [];
         master_entries = [];
-        all_notes = {};
-    };
-
-    this.clearNotes = function() {
-        all_notes = {};
+        all_notes = [];
     };
 });
