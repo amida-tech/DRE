@@ -33,60 +33,6 @@
                 </div>
             </div>
         </div>
-        <!--d3.
-        <div class="col-sm-12" ng-show="entryType === 'vitals'">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-sm-5">
-                        <div class="row">
-                            <h4>Measurements</h4>
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td><h4 class="text-muted">Height</h4></td>
-                                        <td><h5>{{dashMetrics.height.disp}}</h5></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h4 class="text-muted">Weight</h4></td>
-                                        <td><h5>{{dashMetrics.weight.disp}}</h5></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h4 class="text-muted">BMI</h4></td>
-                                        <td><h5>{{dashMetrics.bmi}}</h5></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h4 class="text-muted">Blood Pressure</h4></td>
-                                        <td><h5>{{dashMetrics.systolic.value}}/{{dashMetrics.diastolic.value}} mmHg</h5></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-sm-1">
-                    </div>
-                    <div class="col-sm-6">
-                        <div bs-active-pane="tabs.activeTab" data-nav-class="nav-pills" bs-tabs>
-                            <div title="{{ tabs[0].title }}" bs-pane>
-                                <div linechart graph-type="weight" data="entries.vitals"></div>
-                                <div class="col-sm-12 text-center">
-                                    Weight (lbs)
-                                </div>
-                            </div>
-                            <div title="{{ tabs[1].title }}" bs-pane>
-                                <div linechart graph-type="bloodPressure" data="entries.vitals"></div>
-                                <div class="col-sm-12 text-center">
-                                    Blood Pressure
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12">
-            end d3-->
-
-
         <div ng-show="entryType==='all'">
             <div class="col-sm-12">
                 <!--end d3-->
@@ -140,14 +86,14 @@
         </div>
 
         <!--Timeline View-->
-        <div ng-cloak ng-if="entryType!=='all' && entryListFiltered.length>0" class="col-sm-12">
+        <div ng-cloak ng-if="entryType!=='all'" class="col-sm-12">
             <h4 class="text-center text-white">{{entryType}}</h4>
-            <div class="panel" ng-hide="recordEntries">
+            <div class="panel" ng-if="!recordEntries || entryListFiltered.length <= 0">
                 <div class="panel-body">
                     <h5 class="col-sm-12 text-center">No Record Entries</h5>
                 </div>
             </div>
-            <div class="panel" ng-if="recordEntries">
+            <div class="panel" ng-if="recordEntries && entryListFiltered.length>0">
                 <div class="panel-body">
                     <div>
                         <p>Timeline</p>
