@@ -82,8 +82,8 @@ angular.module('phrPrototypeApp')
                 } else {
                     vitalEntry = entry;
                 }
-                if (vitalEntry.data != null) {
-                    if (vitalEntry.data.vital != null) {
+                if (vitalEntry.data !== null) {
+                    if (vitalEntry.data.vital !== null) {
                         if (vitalEntry.data.vital.name === "Height") {
                             _.each(vitalEntry.data.date_time, function(dateArr) {
                                 heightDateArray.push(moment(dateArr.date));
@@ -113,8 +113,8 @@ angular.module('phrPrototypeApp')
             var bpMaxDateDiastolic = moment.max(bpDateArrayDiastolic);
             var bpMaxDateSystolic = moment.max(bpDateArraySystolic);
             //Recover associated max value.
-            if ($scope.entries != null) {
-                if ($scope.entries.vitals != null) {
+            if ($scope.entries !== null) {
+                if ($scope.entries.vitals !== null) {
                     _.each($scope.entries.vitals, function(vitalEntry2) {
                         var vitalEntry = {
                             "data": vitalEntry2
@@ -165,7 +165,7 @@ angular.module('phrPrototypeApp')
                 }
             }
 
-            if ($scope.dashMetrics.height != null) {
+            if ($scope.dashMetrics.height !== null) {
                 //convert height to inches if needed
                 if ($scope.dashMetrics.height.unit === "cm") {
                     $scope.dashMetrics.height.unit = "[in_us]";
@@ -180,7 +180,7 @@ angular.module('phrPrototypeApp')
                 }
             }
 
-            if ($scope.dashMetrics.weight != null) {
+            if ($scope.dashMetrics.weight !== null) {
                 //convert weight to lbs
                 if ($scope.dashMetrics.weight.unit === "kg") {
                     $scope.dashMetrics.weight.unit = "[lb_av]";
@@ -200,7 +200,7 @@ angular.module('phrPrototypeApp')
                 BMI = BMI.toFixed(1);
                 return BMI;
             }
-            if ($scope.dashMetrics.weight != null && $scope.dashMetrics.height != null) {
+            if ($scope.dashMetrics.weight !== null && $scope.dashMetrics.height !== null) {
                 $scope.dashMetrics.bmi = calculateBMI($scope.dashMetrics.weight.value, $scope.dashMetrics.height.value);
             }
         }
