@@ -6,13 +6,13 @@
  * # entry
  */
 angular.module('phrPrototypeApp')
-    .directive('entry', function (format, notes) {
+    .directive('entry', function(format, notes, dataservice) {
         return {
             template: '<ng-include src="getTemplateUrl()"/>',
             restrict: 'EA',
             transclude: true,
-            controller: function ($scope) {
-                $scope.getTemplateUrl = function () {
+            controller: function($scope) {
+                $scope.getTemplateUrl = function() {
                     if ($scope.type === 'medications') {
                         return 'views/templates/entries/medications.html';
                     } else {
@@ -34,7 +34,7 @@ angular.module('phrPrototypeApp')
 
                 function countStarredComments(recordIndex) {
                     var commentCount = 0;
-                    _.each(scope.entryMetaData.comments, function (comment) {
+                    _.each(scope.entryMetaData.comments, function(comment) {
                         if (comment.starred) {
                             commentCount++;
                         }
@@ -43,12 +43,14 @@ angular.module('phrPrototypeApp')
                 }
                 countStarredComments();
 
-                scope.clickStar = function (starVal, starIndex, recordIndex, entry) {
-                    console.log("click Star ", !starVal, entry);
+                scope.clickStar = function(starVal, starIndex, recordIndex, entry) {
 
-                    notes.starNote(entry.note_id, !starVal, function (err, data) {
-                        console.log('err ', err);
-                        console.log('updated note ', data);
+                    notes.starNote(entry.note_id, !starVal, function(err, data) {
+                        if (err) {
+                            console.log('err ', err);
+                        } else {
+                            dataservice.clearNotes();
+                        }
                     });
 
                     if (starVal) {
@@ -58,87 +60,89 @@ angular.module('phrPrototypeApp')
                     }
                     countStarredComments();
                 };
-                scope.toggleNewStar = function () {
+                scope.toggleNewStar = function() {
                     scope.newComment.starred = !scope.newComment.starred;
                 };
 
-                scope.toggleStar = function () {
-                    notes.starNote(scope.entryMetaData.comments[0].note_id, !scope.entryMetaData.comments[0].starred, function (err, data) {
+                scope.toggleStar = function() {
+                    notes.starNote(scope.entryMetaData.comments[0].note_id, !scope.entryMetaData.comments[0].starred, function(err, data) {
                         if (err) {
                             console.log("err: " + err);
                         } else {
-                            console.log("new star data: ", data);
                             scope.entryMetaData.comments[0].starred = !scope.entryMetaData.comments[0].starred;
                             countStarredComments();
+                            dataservice.clearNotes();
                         }
                     });
                 };
 
-                scope.addNote = function () {
+                scope.addNote = function() {
                     scope.newComment.entry = scope.recordEntry.data._id;
                     scope.newComment.note = scope.newComment.comment;
                     scope.newComment.section = scope.recordEntry.category;
 
-                    notes.addNote(scope.newComment, function (err, data) {
-                        console.log('err ', err);
-                        console.log('data ', data);
+                    notes.addNote(scope.newComment, function(err, data) {
+                        if (err) {
+                            console.log('err ', err);
+                        } else {
+                            scope.newComment.entry_id = data.entry;
+                            scope.newComment.note_id = data._id;
 
-                        scope.newComment.entry_id = data.entry;
-                        scope.newComment.note_id = data._id;
+                            scope.entryMetaData.comments = [scope.newComment];
 
-                        scope.entryMetaData.comments[0] = scope.newComment;
+                            console.log(scope.newComment.starred);
+                            if (angular.isUndefined(scope.newComment.starred)) {
+                                scope.newComment.starred = false;
+                            }
+                            /*
+                            notes.starNote(scope.newComment.note_id, scope.newComment.starred, function(err, data) {
+                                console.log('add note star error ', err);
+                                console.log('add note with star ', data);
+                            });
 
-                        console.log(scope.newComment.starred);
-                        if (angular.isUndefined(scope.newComment.starred)) {
-                            scope.newComment.starred = false;
+
+                            countStarredComments();
+                            */
+                            dataservice.clearNotes();
+
+                            scope.newComment = {};
                         }
-                        notes.starNote(scope.newComment.note_id, scope.newComment.starred, function (err, data) {
-                            console.log('add note star error ', err);
-                            console.log('add note with star ', data);
-                        });
-
-                        countStarredComments();
-
-                        console.log("scope.newComment", scope.newComment);
-                        scope.newComment = {};
-
                     });
 
                 };
 
                 scope.newComment = {};
 
-                scope.cancelEdit = function () {
-                    console.log("cancel edit");
+                scope.cancelEdit = function() {
                     scope.editflag = false;
                 };
 
-                scope.editNote = function () {
-                    console.log("edit note");
+                scope.editNote = function() {
                     scope.editflag = true;
                     scope.editComment = scope.entryMetaData.comments[0].comment;
                 };
 
-                scope.deleteNote = function () {
-                    console.log("delete note");
-                    notes.deleteNote(scope.entryMetaData.comments[0].note_id, function (err, data) {
-                        console.log('deleting note ', err);
-                        console.log('deleting note ', data);
+                scope.deleteNote = function() {
+                    notes.deleteNote(scope.entryMetaData.comments[0].note_id, function(err, data) {
+                        if (err) {
+                            console.log('deleting note ', err);
+                        } else {
+                            dataservice.clearNotes();
+                            scope.entryMetaData.comments = [];
+                            countStarredComments();
+                            scope.editflag = false;
+                        }
                     });
-                    scope.entryMetaData.comments = [];
-                    countStarredComments();
-                    scope.editflag = false;
                 };
 
-                scope.saveNote = function (editComment) {
-                    console.log("save note");
+                scope.saveNote = function(editComment) {
                     scope.entryMetaData.comments[0].comment = editComment;
                     var noteID = scope.entryMetaData.comments[0].note_id;
-                    notes.editNote(noteID, editComment, function (err, data) {
+                    notes.editNote(noteID, editComment, function(err, data) {
                         if (err) {
                             console.log("err: " + err);
                         } else {
-                            console.log("edited note saved: ", data);
+                            dataservice.clearNotes();
                         }
                     });
                     scope.editflag = false;
