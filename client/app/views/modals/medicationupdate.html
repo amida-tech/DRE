@@ -7,16 +7,27 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
-                <h3>Details</h3>
+                <h3>Update the Details</h3>
                 <div class="sub-entry">
                     <br />
                     <div class="form-group row">
-                        <label class="col-sm-5 control-label">When did you start taking it?</label>
+                        <label class="col-sm-5 control-label">Is this medication still active?</label>
                         <div class="col-sm-7">
-                            <input type="date" class="form-control" ng-model="medication.date_time.low" placeholder="MM/DD/YYYY">
+                            <div>
+                                <input type="radio" name="uCurrentMedRadio" ng-model="uCurrentMedRadio" id="ucurrentRadioYes" ng-value="true"> Yes, I am still taking this medication.
+                            </div>
+                            <div>
+                                <input type="radio" name="uCurrentMedRadio" ng-model="uCurrentMedRadio" id="ucurrentRadioNo" ng-value="false"> No, I am no longer taking this medication.
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row" ng-show="medication.date_time.high">
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">When did you start taking it?</label>
+                        <div class="col-sm-7">
+                            <input type="date" class="form-control" ng-model="medication.date_time.low">
+                        </div>
+                    </div>
+                    <div class="form-group row" ng-show="medication.date_time.high|| !uCurrentMedRadio">
                         <label class="col-sm-5 control-label">When was your last dose?</label>
                         <div class="col-sm-7">
                             <input type="date" class="form-control" ng-model="medication.date_time.high" placeholder="MM/DD/YYYY">
@@ -28,11 +39,93 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="row" ng-show="medication.med_metadata.is_prescription">
+                <h3>Update the Prescriber</h3>
+                <div class="row">
+                    <br/>
+                    <form novalidate role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">First name (REQUIRED)</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="medication.performer.name.first" ng-disabled="prescriberSearchActive">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Last name (REQUIRED)</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="medication.performer.name.last" ng-disabled="prescriberSearchActive">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">State</label>
+                            <div class="col-sm-5">
+                                <input type="search" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="alert alert-danger" role="alert" ng-show="prescriberError">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span> {{prescriberError}}
+                            </div>
+                        </div>
+                        <div class="row" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
+                            <h4>Prescriber Results ({{prescriberCount}})</h4>
+                            <h5>Please select your prescriber by clicking on one of the rows below:</h5>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center"><span><i class="fa fa-check" style="color: black"></i></span></th>
+                                        <th>Name</th>
+                                        <th>Practice</th>
+                                        <th>Business</th>
+                                        <th>Gender</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setSelectedPrescriber()">
+                                        <td style="text-align: center"><span ng-show="prescriber.selected"><i class="fa fa-check" style="color: green"></i></span></td>
+                                        <td title="NPI: {{prescriber.npi}}">
+                                            <span>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</span>
+                                            <br/>
+                                            <span class="text-muted">NPI: {{prescriber.npi}}</span>
+                                        </td>
+                                        <!--<td title="Practice Address: {{prescriber.business_address}}">{{prescriber.practice_address}}</td>-->
+                                        <td>
+                                            <span ng-show="prescriber.practice_address">{{prescriber.practice_address.address_line}}, {{prescriber.practice_address.address_details_line}}</span>
+                                            <br/>
+                                            <span ng-show="prescriber.practice_address">{{prescriber.practice_address.city}}, {{prescriber.practice_address.state}} {{prescriber.practice_address.zip}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="prescriber.business_address">{{prescriber.business_address.address_line}}, {{prescriber.business_address.address_details_line}}</span>
+                                            <br/>
+                                            <span ng-show="prescriber.business_address">{{prescriber.business_address.city}}, {{prescriber.business_address.state}} {{prescriber.business_address.zip}}</span>
+                                        </td>
+                                        <td>{{prescriber.gender}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--<pre>{{prescriberResults}}</pre>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <div class="row" ng-if="medication.metadata.image.imageUrl">
                 <h3>Current Image</h3>
+                <br />
                 <div class="sub-entry">
-                    <div class="col-sm-2">
-                        <a class="thumbnail active"><img ng-src="{{medication.metadata.image.imageUrl}}" class="img-responsive img-thumbnail" /></a>
+                    <div>
+                        <input type="radio" name="uCurrentImage" ng-model="uCurrentImage" id="ucurrentRadioYes" ng-value="true"> 
+                        <div class="col-sm-2">
+                            <a class="thumbnail active"><img ng-src="{{medication.metadata.image.imageUrl}}" class="img-responsive img-thumbnail" /></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,12 +133,16 @@
                 <h3 ng-if="medication.metadata.image.imageUrl">Other Images</h3>
                 <h3 ng-if="!medication.metadata.image.imageUrl">Possible Images</h3>
                 <div class="sub-entry">
-                    <div ng-repeat="rxImage in medImages.nlmRxImages">
+                    <div class="row" ng-repeat="rxImage in medImages.nlmRxImages">
+                        <div>
+                        <input type="checkbox" class="pull-left" ng-click="setSelectedImage(rxImage)" ng-model="uCurrentImage" id="ucurrentRadioYes" ng-value="true">
+                        </div>
                         <div class="col-sm-2">
-                            <a class="thumbnail" ng-class="{active:rxImage.selected}" ng-click="setSelectedImage(rxImage)"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
+                            <a class="thumbnail" ng-class="{active:rxImage.selected}"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
                         </div>
                     </div>
                 </div>
+                <input type="checkbox" class="pull-left" ng-click="setSelectedImage('')">None of these images is correct
             </div>
         </div>
     </div>
