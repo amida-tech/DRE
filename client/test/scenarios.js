@@ -27,11 +27,12 @@ describe('record scenario', function() {
         
         var editNote = firstEntry.element(by.css('[ng-click="editNote()"]'));
         editNote.click();
-
-        var star = firstEntry.all(by.css('[ng-click="toggleStar()"]')).get(1);
+        
+        var edit = firstEntry.element(by.css('[name="editForm"]'));
+        var star = edit.element(by.css('[ng-show="entryMetaData.comments[0].starred === false"]'));
         star.click();
         
-        var saveNote = firstEntry.element(by.css('[ng-click="saveNote()"]'));
+        var saveNote = firstEntry.element(by.css('[ng-click="saveNote(editComment)"]'));
         saveNote.click();
 
         var notePage = element(by.css('[href="#/notes"]'));
