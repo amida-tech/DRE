@@ -6,7 +6,7 @@
  * # record
  * Service in the phrPrototypeApp.
  */
-angular.module('phrPrototypeApp').service('matches', function record($http, $q, format) {
+angular.module('phrPrototypeApp').service('matches', function record($http, $q, format, dataservice) {
     this.masterRecord = {};
     this.processedRecord = {};
     this.section = "";
@@ -82,6 +82,7 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         }).
         success(function (data, status, headers, config) {
             //TODO something
+            dataservice.forceRefresh();
             //$location.path("match/reconciliation");
         }).
         error(function (data, status, headers, config) {
@@ -110,6 +111,7 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
         success(function (data, status, headers, config) {
             //TODO something
             //$location.path("match/reconciliation");
+            dataservice.forceRefresh();
         }).
         error(function (data, status, headers, config) {
             console.log('error');
@@ -133,7 +135,9 @@ angular.module('phrPrototypeApp').service('matches', function record($http, $q, 
                 determination: 'added'
             }
         }).
-        success(function (data, status, headers, config) {}).
+        success(function (data, status, headers, config) {
+            dataservice.forceRefresh();
+        }).
         error(function (data, status, headers, config) {
             console.log('create match error');
         });

@@ -12,9 +12,6 @@
             <div class="btn-group" role="group">
                 <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('otc')">Over the Counter</button>
             </div>
-            <div class="btn-group" role="group">
-                <button class="btn btn-default col-sm-12" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="initInfoSearch('supplement')">Supplement</button>
-            </div>
         </div>
     </div>
     <div class="row" ng-if="entryStep===1">
@@ -217,34 +214,15 @@
             </div>
         </div>
         <div class="form-group row" ng-hide="pCurrentMedRadio">
-            <label class="col-sm-5 control-label">If you're not currently taking it, when was your last dose?</label>
+            <label class="col-sm-5 control-label">When was your last dose?</label>
             <div class="col-sm-6">
                 <input type="date" class="form-control" ng-model="pLast" placeholder="MM/DD/YYYY">
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-5 control-label">How often do/did you take it?</label>
+            <label class="col-sm-5 control-label">Details e.g. Dose amount, instructions, etc:</label>
             <div class="col-sm-6">
-                <input type="search" class="form-control" ng-model="pOften">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-5 control-label">How much is a dose?</label>
-            <div class="col-sm-6">
-                <input type="search" class="form-control" ng-model="pDoseValue" placeholder="Value">
-                <input type="search" class="form-control" ng-model="pDoseUnit" placeholder="Unit">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-5 control-label">How is it administered? (i.e. Pill, Injection, Inhaler, etc)</label>
-            <div class="col-sm-6">
-                <input type="search" class="form-control" ng-model="pAdminister">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-5 control-label">Why do you take it?</label>
-            <div class="col-sm-6">
-                <textarea ng-model="pWhy" class="form-control" rows="3"></textarea>
+                <textarea ng-model="pWhy" class="form-control">{{pWhy}}</textarea>
             </div>
         </div>
     </div>
@@ -259,8 +237,8 @@
             </div>
             <div class="sub-entry" ng-include="'views/templates/details/medications.html'"></div>
         </div>
-        <!--         <h4>Save Object</h4>
-        <pre>{{enteredMedication}}</pre> -->
+        <h4>Save Object</h4>
+        <pre>{{enteredMedication}}</pre>
         <br />
         <div ng-if="saveMedicationStatus==='error'">
             <span>There was an error saving the medication.</span>

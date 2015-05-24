@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('phrPrototypeApp')
-    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications) {
+    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications, dataservice, format) {
         $scope.entryStep = 0;
         $scope.prescriberSearchActive = false;
         $scope.drugSearchActive = false;
@@ -21,6 +21,19 @@ angular.module('phrPrototypeApp')
             console.log("entering object...");
             if ($scope.medSearchType === 'prescription') {
                 console.log("...was a prescription");
+                // $scope.enteredMedication = {};
+                // var pmed_metadata = {
+                //     "image": $scope.selectedImage,
+                //     "patient_entered": true,
+                //     "is_prescription": true,
+                //     "attribution": [{
+                //         merged: new Date(),
+                //         merge_reason: "new"
+                //     }]
+                // };
+                // _.set($scope.enteredMedication, 'med_metadata', pmed_metadata);
+                // _.set($scope.enteredMedication, 'sig', $scope.pWhy);
+                // console.log('sig', $scope.pWhy);
                 $scope.enteredMedication = {
                     //"identifiers": [],
                     "med_metadata": {
@@ -32,38 +45,13 @@ angular.module('phrPrototypeApp')
                             merge_reason: "new"
                         }]
                     },
-                    "sig": $scope.selectedDrug.name,
-                    "status": "Completed",
-                    //"is_brand": true,
-                    "administration": {
-                        "dose": {
-                            "value": $scope.pDosevalue,
-                            "unit": $scope.pDoseUnit
-                        },
-                        "form": $scope.pAdminister,
-                        "rate": $scope.pOften,
-                        //"route": "",
-                        //"dose_restriction": "",
-                        //"site": "",
-                        /*"interval": {
-                            "xsiType": "",
-                            "phase": "",
-                            "period": "",
-                            "frequency": true,
-                            "alignment": "",
-                            "event": "",
-                            "event_offset": {
-                                "low": "",
-                                "high": "",
-                                "center": "",
-                                "width": ""
-                            }
-                        }*/
-                    },
-                    /*"precondition": {
-                        "code": "",
-                        "value": ""
-                    },*/
+                    // "date_time": {
+                    //     "low": {
+                    //         "date": $scope.pStart,
+                    //         "precision": "day"
+                    //     }
+                    // },
+                    "sig": $scope.pWhy,
                     "product": {
                         "identifiers": [{
                             rxcui: $scope.selectedDrug.rxcui
@@ -72,50 +60,29 @@ angular.module('phrPrototypeApp')
                             'name': $scope.selectedDrug.synonym,
                             'code': $scope.selectedDrug.rxcui,
                             'code_system_name': 'RxNorm'
-                        },
-                        // "unencoded_name": $scope.selectedDrug.name //,
-                        //"manufacturer": 
-                    },
-                    "supply": {
-                        //"date_time": "",
-                        //"repeatNumber": "",
-                        //"quantity": "",
-                        "author": {
-                            "identifiers": [{
-                                npi: ""
-                            }],
-                            //"date_time": "",
-                            "name": "",
-                            "npi": "",
-                            //"organization": ""
                         }
                     },
-                    /*"indication": {
-                        "identifiers": [],
-                        "code": "",
-                        "date_time": "",
-                        "value": ""
-                    },*/
                     "performer": {
-                        "address": [
-                            $scope.prescriberResults.practice_address,
-                            $scope.prescriberResults.business_address
-                        ],
-                        "name": {
-                            "first": $scope.pFirstName,
-                            "last": $scope.pLastName
-                        }
-                    } //,
-                    //"drug_vehicle": "",
-                    /*
-                    "dispense": {
-                        "identifiers": [],
-                        "performer": ""
-                    }*/
+                        "address": [{
+                            "street_lines": [
+                                $scope.selectedPrescriber.practice_address.address_line
+                            ],
+                            "city": $scope.selectedPrescriber.practice_address.city,
+                            "state": $scope.selectedPrescriber.practice_address.state
+                        }],
+                        "name": [{
+                            "first": $scope.selectedPrescriber.first_name,
+                            "last": $scope.selectedPrescriber.last_name
+                        }]
+                    }
                 };
+                console.log($scope.pWhy);
+                // if (!$scope.pCurrentMedRadio) {
+                //     $scope.enteredMedication.date_time.high.date = $scope.pLast;
+                //     $scope.enteredMedication.date_time.high.precision = "day";
+                // }
             } else {
                 $scope.enteredMedication = {
-                    //"identifiers": [],
                     "med_metadata": {
                         image: $scope.selectedImage,
                         patient_entered: true,
@@ -125,38 +92,13 @@ angular.module('phrPrototypeApp')
                             merge_reason: "new"
                         }]
                     },
-                    "sig": $scope.selectedDrug.name,
-                    "status": "Completed",
-                    //"is_brand": true,
-                    "administration": {
-                        "dose": {
-                            "value": $scope.pDosevalue,
-                            "unit": $scope.pDoseUnit
-                        },
-                        "form": $scope.pAdminister,
-                        "rate": $scope.pOften,
-                        //"route": "",
-                        //"dose_restriction": "",
-                        //"site": "",
-                        /*"interval": {
-                            "xsiType": "",
-                            "phase": "",
-                            "period": "",
-                            "frequency": true,
-                            "alignment": "",
-                            "event": "",
-                            "event_offset": {
-                                "low": "",
-                                "high": "",
-                                "center": "",
-                                "width": ""
-                            }
-                        }*/
-                    },
-                    /*"precondition": {
-                        "code": "",
-                        "value": ""
-                    },*/
+                    // "date_time": {
+                    //     "date": {
+                    //         "low": $scope.pStart,
+                    //         "precision": "day"
+                    //     }
+                    // },
+                    "sig": $scope.pWhy,
                     "product": {
                         "identifiers": [{
                             rxcui: $scope.selectedDrug.rxcui
@@ -165,46 +107,8 @@ angular.module('phrPrototypeApp')
                             'name': $scope.selectedDrug.synonym,
                             'code': $scope.selectedDrug.rxcui,
                             'code_system_name': 'RxNorm'
-                        },
-                        // "unencoded_name": $scope.selectedDrug.name //,
-                        //"manufacturer": 
-                    },
-                    "supply": {
-                        //"date_time": "",
-                        //"repeatNumber": "",
-                        //"quantity": "",
-                        "author": {
-                            "identifiers": [{
-                                npi: ""
-                            }],
-                            //"date_time": "",
-                            "name": "",
-                            "npi": "",
-                            //"organization": ""
                         }
-                    },
-                    /*"indication": {
-                        "identifiers": [],
-                        "code": "",
-                        "date_time": "",
-                        "value": ""
-                    },*/
-                    "performer": {
-                        "address": [
-                            $scope.prescriberResults.practice_address,
-                            $scope.prescriberResults.business_address
-                        ],
-                        "name": {
-                            "first": $scope.pFirstName,
-                            "last": $scope.pLastName
-                        }
-                    } //,
-                    //"drug_vehicle": "",
-                    /*
-                    "dispense": {
-                        "identifiers": [],
-                        "performer": ""
-                    }*/
+                    }
                 };
             }
             console.log("...entered Medication: " + $scope.enteredMedication);
@@ -239,6 +143,16 @@ angular.module('phrPrototypeApp')
                 break;
             case 3:
                 enteredObject();
+                // if ($scope.enteredMedication.date_time && $scope.enteredMedication.date_time) {
+                //     format.formatDate($scope.enteredMedication.date_time);
+                // }
+                if ($scope.enteredMedication.performer.address) {
+                    format.formatAddress($scope.enteredMedication.performer.address[0]);
+                }
+                if ($scope.enteredMedication.performer.name) {
+                    format.formatName($scope.enteredMedication.performer.name[0]);
+                }
+                console.log($scope.enteredMedication);
                 $scope.medication = $scope.enteredMedication;
                 $scope.entryStep = 4;
                 break;
@@ -255,13 +169,12 @@ angular.module('phrPrototypeApp')
                 } else {
                     // Display success in the med entry modal
                     $scope.saveMedicationStatus = 'success';
-                    setTimeout(function () {
-                        $modalInstance.close();
-                        $route.reload();
-                    }, 100);
+                    $scope.medReset();
+                    $modalInstance.close();
+                    dataservice.forceRefresh();
+                    $route.reload();
                 }
             });
-            $scope.medReset();
         }
         $scope.drugSearch = function drugSearch(drugName) {
             $scope.drugSearchActive = true;
@@ -455,9 +368,6 @@ angular.module('phrPrototypeApp')
             $scope.prescriberError = null;
             $scope.entryStep = 0;
             $scope.pWhy = "";
-            $scope.pAdminister = "";
-            $scope.pDoseValue = "";
-            $scope.pDoseUnit = "";
             $scope.pOften = "";
             $scope.pLast = "";
             $scope.pCurrentMedRadio = null;
@@ -470,9 +380,9 @@ angular.module('phrPrototypeApp')
             $modalInstance.dismiss('cancel');
         };
 
-        $scope.medReset();
+        // $scope.medReset();
     })
-    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications) {
+    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications, dataservice) {
         $scope.medication = medication.data;
         $scope.saveMedication = saveMedication;
 
@@ -492,10 +402,10 @@ angular.module('phrPrototypeApp')
                 } else {
                     // Display success in the med entry modal
                     $scope.saveMedicationStatus = 'success';
-                    setTimeout(function () {
-                        $modalInstance.close();
-                        $route.reload();
-                    }, 100);
+                    $scope.medReset();
+                    $modalInstance.close();
+                    dataservice.forceRefresh();
+                    $route.reload();
                 }
             });
         }
@@ -607,7 +517,7 @@ angular.module('phrPrototypeApp')
         $scope.addNote = function (inputComment) {
             console.log("medication: ", medication);
             var newComment = {
-                entry: $scope.data.medication._id,
+                entry: $scope.medication._id,
                 note: inputComment,
                 section: 'medications'
             };
@@ -621,7 +531,9 @@ angular.module('phrPrototypeApp')
                 } else {
                     console.log('data ', data);
                     $scope.comments[0] = data;
-                    $scope.comments[0].starred = false;
+                    $scope.comments[0].date = data.datetime;
+                    $scope.comments[0].comment = data.note;
+                    $scope.comments[0].starred = data.star;
 
                     $scope.newComment = {};
                 }

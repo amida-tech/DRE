@@ -10,18 +10,12 @@
 angular.module('phrPrototypeApp')
     .service('notes', function notes($http, format) { //
 
-        var tmpNotes = [];
-        var all_notes = {};
+        var all_notes = [];
 
-        function refreshNotes() {
-            $http.get('/api/v1/notes/all')
-                .success(function (data) {
-                    all_notes = data;
-                })
-                .error(function (err) {
-                    console.log("fetching notes failed", err);
-                });
+        function forceRefresh() {
+            all_notes = [];
         }
+        this.forceRefresh = forceRefresh;
 
         this.starNote = function (note_id, star, callback) {
             var comment = {
@@ -29,12 +23,9 @@ angular.module('phrPrototypeApp')
                 "star": star
             };
 
-            console.log("POSTing star ", comment);
-
             $http.post('/api/v1/notes/star', comment)
                 .success(function (data) {
-                    console.log("note added successfuly");
-                    refreshNotes();
+                    forceRefresh();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -44,11 +35,9 @@ angular.module('phrPrototypeApp')
         };
 
         this.addNote = function (comment, callback) {
-            console.log("POSTing comment ", comment);
             $http.post('/api/v1/notes/add', comment)
                 .success(function (data) {
-                    console.log("note added successfuly");
-                    refreshNotes();
+                    forceRefresh();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -58,7 +47,7 @@ angular.module('phrPrototypeApp')
         };
 
         this.getNotes = function (callback) {
-            if (Object.keys(all_notes).length > 0) {
+            if (all_notes.length > 0) {
                 callback(null, all_notes);
             } else {
                 $http.get('/api/v1/notes/all')
@@ -78,12 +67,9 @@ angular.module('phrPrototypeApp')
                 "id": note_id,
                 "note": edit
             };
-            console.log("editing note API ", comment);
-
             $http.post('/api/v1/notes/edit', comment)
                 .success(function (data) {
-                    console.log("note edited successfully");
-                    refreshNotes();
+                    forceRefresh();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -96,13 +82,9 @@ angular.module('phrPrototypeApp')
             var note_id = {
                 "id": id
             };
-
-            console.log("removing note ", note_id);
-
             $http.post('/api/v1/notes/delete', note_id)
                 .success(function (data) {
-                    console.log("note removed successfull");
-                    refreshNotes();
+                    forceRefresh();
                     callback(null, data);
                 })
                 .error(function (err) {
@@ -118,7 +100,6 @@ angular.module('phrPrototypeApp')
                 var noteCount = 0;
 
                 _.each(results, function (entry) {
-                    //console.log(entry);
                     if (entry.star) {
                         noteCount++;
                     }
@@ -135,7 +116,6 @@ angular.module('phrPrototypeApp')
             scope.entrySubTitleTwo = "";
 
             var entry = scope.entryData;
-            //console.log("TITLES: ", entry);
             var tmpDates = [];
             var dispDates = "Not Available";
 

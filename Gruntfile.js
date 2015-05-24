@@ -23,10 +23,10 @@ module.exports = function (grunt) {
     };
 
     // Making grunt default to force in order not to break the project.
-    grunt.option('force', true);
+    //grunt.option('force', true); //DISABLED, not good idea in general
 
     // Default task(s).
-    grunt.registerTask('default', ['env:test', 'express:dev', 'mochaTest', 'jshint']);
+    grunt.registerTask('default', ['jshint', 'jsbeautifier:beautify', 'env:test', 'express:dev', 'mochaTest']);
 
     // Run benchmark tests
     grunt.registerTask('benchmark', ['execute']);
@@ -44,10 +44,10 @@ module.exports = function (grunt) {
     });
 
     // Client tasks 
-    grunt.registerTask('build', ['jshint', 'clean:dist', 'wiredep', 'compass:dev']);
-    grunt.registerTask('dev', ['jshint', 'compass:dev', 'watch']);
-    grunt.registerTask('test', ['jshint', 'compass:dev', 'protractor', 'watch']);
-    grunt.registerTask('release', ['jshint', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
+    grunt.registerTask('build', ['jshint', 'jsbeautifier:beautify', 'clean:dist', 'wiredep', 'compass:dev']);
+    grunt.registerTask('dev', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'watch']);
+    grunt.registerTask('test', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'protractor:populate', 'protractor:scenarios', 'watch']);
+    grunt.registerTask('release', ['jshint', 'jsbeautifier:beautify', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
 
     // Project Configuration
     grunt.initConfig({
@@ -93,7 +93,9 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            files: ['Gruntfile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js', '<%= yeoman.app %>/scripts/{,*/}*.js'],
+            files: ['Gruntfile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js', '<%= yeoman.app %>/scripts/{,*/}*.js',
+                '!./lib/dre/remove_dups.js'
+            ],
             options: {
                 reporter: require('jshint-stylish'),
                 "bitwise": true,
@@ -174,9 +176,22 @@ module.exports = function (grunt) {
         protractor: {
             options: {
                 configFile: "client/test/conf.js", // Default config file 
-                keepAlive: true
+                keepAlive: true,
             },
-            all: {},
+            populate: {
+                options: {
+                    args: {
+                        suite: 'populate'
+                    }
+                }
+            },
+            scenarios: {
+                options: {
+                    args: {
+                        suite: 'scenarios'
+                    }
+                }
+            },
         },
         // Add vendor prefixed styles
         autoprefixer: {

@@ -96,10 +96,6 @@
                             </div>
                             <div class="col-sm-12" ng-show="!entryMetaData.comments[0]">
                                 <form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
-                                    <div class="col-sm-1 panel-body text-center">
-                                        <h5 ng-show="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star"></i></a></h5>
-                                        <h5 ng-hide="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star-o"></i></a></h5>
-                                    </div>
                                     <div class="form-group col-sm-10">
                                         <label for="commentEntry">New:</label>
                                         <textarea class="form-control" placeholder="Enter Note" rows="2" required ng-required="true" ng-minLength="1" ng-model="newComment.comment" name="commentEntry"></textarea>

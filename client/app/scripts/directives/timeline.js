@@ -32,11 +32,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                 return 'Entry';
             });
             svg.call(tip);
+            var dataToPlot = [];
 
             function gatherData() {
                 console.log("timeline gather data");
                 //Clean variables (needed for refresh).
-                var dataToPlot = [];
                 plotCircles = [];
                 plotDomain = [];
                 var dataType = attrs.chartType;
@@ -44,7 +44,6 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                     dataToPlot = scope[attrs.chartData].accountHistory.recordHistory;
                 } else {
                     dataToPlot = scope[attrs.chartData];
-                    console.log("dtp: ", dataToPlot);
                 }
                 var tmpDomain = [];
                 var minDate, maxDate, plotFloor, plotCeiling;
@@ -119,9 +118,15 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
             }
 
             function renderPlot() {
-                    console.log("timeline render plot");
-
                     var width = 0;
+                    if (dataToPlot.length > 0) {
+                        console.log("timeline render plot");
+                        getSVGWidth();
+                        buildScale();
+                        buildTicks();
+                        structureData();
+                        plotData();
+                    }
 
                     function getSVGWidth() {
                         width = parseInt(svg.style('width'), 10);
@@ -256,7 +261,8 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             var tipFormat = d3.time.format("%m/%d/%Y");
                             if (attrs.chartLocation === 'all') {
                                 tip.attr('class', 'd3-tip animate').html(function (d) {
-                                    return '<span>' + d.category + '</span> - <span>' + tipFormat(d.date) + '</span>';
+                                    //return '<span>' + d.category + '</span> - <span>' + tipFormat(d.date) + '</span>';
+                                    return '<span>' + tipFormat(d.date) + '</span>';
                                 }).show(d);
                             } else {
                                 tip.attr('class', 'd3-tip animate').html(function (d) {
@@ -268,11 +274,7 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                             tip.hide();
                         });
                     }
-                    getSVGWidth();
-                    buildScale();
-                    buildTicks();
-                    structureData();
-                    plotData();
+
                 }
                 //gatherData only on first run.
             $window.onload = function () {

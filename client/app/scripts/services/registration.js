@@ -20,7 +20,6 @@ angular.module('phrPrototypeApp')
                 .success(function (data) {
                     console.log("registration successful");
                     callback(null);
-
                 }).error(function (data) {
                     //callback(data);
                     // console.log("error", data);

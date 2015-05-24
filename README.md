@@ -87,7 +87,7 @@ To run, use `node server`
 
 `grunt` - To Run Server Side tests
 
-`grunt test` - To Run Client Side tests
+`grunt test` - To Run Client Side tests. Make sure a Selenium server is running with `webdriver-manager start`.
 
 ```grunt build``` - Executes build and puts it into /dist.
 

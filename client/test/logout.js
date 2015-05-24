@@ -4,7 +4,7 @@ describe('logout', function() {
     function logoutTest() {
         var logoutDropdown = element.all(by.css('.navbar-right a')).first();
     	logoutDropdown.click();
-        var logout = element(by.css('[ng-click="logout()"]'));
+        var logout = element(by.css('[ng-click="vm.navbarLogout()"]'));
         logout.click();
     }
 
