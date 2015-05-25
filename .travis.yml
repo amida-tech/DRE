@@ -6,13 +6,14 @@ install:
 - npm install -g bower grunt-cli 
 - npm install -g mocha 
 - npm install -g istanbul
+- npm install -g protractor
 - npm install --quiet
 - bower install
-- ./node_modules/protractor/bin/webdriver-manager update
+- webdriver-manager update --chrome
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start 
-- nohup bash -c "./node_modules/protractor/bin/webdriver-manager start 2>&1 &"
+- nohup bash -c "webdriver-manager start 2>&1 &"
 - sleep 5
 services:
 - mongodb
