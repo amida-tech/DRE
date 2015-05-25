@@ -15,6 +15,6 @@ services:
 - redis-server
 script:
 - grunt --gruntfile ./Gruntfile.js
-- grunt test --gruntfile ./Gruntfile.js
+- grunt travis-protractor --gruntfile ./Gruntfile.js
 notifications:
   slack: amida:GclZqFLfLqmjWZ4bwUbRIw5M
