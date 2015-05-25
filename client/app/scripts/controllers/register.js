@@ -17,6 +17,12 @@ angular.module('phrPrototypeApp')
         $scope.isUser = false;
         $scope.userList = {};
         $scope.focusInput = false;
+        
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = true;
+        };
 
         $scope.nextStep = function () {
             if ($scope.step === 0) {
