@@ -362,6 +362,24 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         });
     };
 
+    this.getRecordMerges = function (section, callback) {
+        this.getMergesListRecord(function (err, merges) {
+            if (err) {
+                console.log("err: " + err);
+                callback(err);
+            } else {
+                filterMerges(merges, function (err, billing, record) {
+                    if (err) {
+                        console.log("err: " + err);
+                        callback(err);
+                    } else {
+                        callback(null, record);
+                    }
+                });
+            }
+        });
+    };
+
     this.forceRefresh = function () {
         master_record = {};
         master_merges = [];
