@@ -46,9 +46,9 @@ module.exports = function (grunt) {
     // Client tasks 
     grunt.registerTask('build', ['jshint', 'jsbeautifier:beautify', 'clean:dist', 'wiredep', 'compass:dev']);
     grunt.registerTask('dev', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'watch']);
-    grunt.registerTask('test', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'protractor:populate', 'protractor:scenarios', 'watch']);
+    grunt.registerTask('test', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'protractor:populate', 'protractor:medications', 'protractor:scenarios', 'watch']);
     grunt.registerTask('release', ['jshint', 'jsbeautifier:beautify', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
-    grunt.registerTask('travis-protractor', ['protractor:populate', 'protractor:scenarios']);
+    grunt.registerTask('travis-protractor', ['protractor:populate', 'protractor:medications', 'protractor:scenarios',]);
 
     // Project Configuration
     grunt.initConfig({
@@ -193,6 +193,13 @@ module.exports = function (grunt) {
                     }
                 }
             },
+            medications: {
+                options: {
+                    args: {
+                        suite: 'medications'
+                    }
+                }
+            }
         },
         // Add vendor prefixed styles
         autoprefixer: {
