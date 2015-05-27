@@ -55,6 +55,23 @@ angular.module('phrPrototypeApp')
                 _.deepSet($scope.enteredMedication, 'performer.name[0].first', $scope.selectedPrescriber.first_name);
                 _.deepSet($scope.enteredMedication, 'performer.name[0].last', $scope.selectedPrescriber.last_name);
 
+                if ($scope.pStart) {
+                    var pmed_lowdate = {
+                        "date": moment($scope.pStart).format('YYYY-MM-DD'),
+                        "precision": 'day'
+                    };
+                    _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
+                }
+                console.log(moment($scope.pStart).format('YYYY-MM-DD'));
+                if ($scope.pCurrentMedRadio) {
+                    var pmed_highdate = {
+                        "date": moment($scope.pLast).format('YYYY-MM-DD'),
+                        "precision": 'day'
+                    };
+                    _.deepSet($scope.enteredMedication, 'date_time.high', pmed_highdate);
+                }
+                console.log(moment($scope.pLast).format('YYYY-MM-DD'));
+
                 // $scope.enteredMedication = {
                 //     // "date_time": {
                 //     //     "low": {
@@ -142,10 +159,12 @@ angular.module('phrPrototypeApp')
                 break;
             case 3:
                 enteredObject();
-                // if ($scope.enteredMedication.date_time && $scope.enteredMedication.date_time) {
-                //     format.formatDate($scope.enteredMedication.date_time);
-                // }
-                console.log('Entered object:', $scope.enteredMedication);
+                if ($scope.enteredMedication.date_time) {
+                    format.formatDate($scope.enteredMedication.date_time.low);
+                    if ($scope.enteredMedication.date_time.high) {
+                        format.formatDate($scope.enteredMedication.date_time.high);
+                    }
+                }
                 if ($scope.enteredMedication.performer && $scope.enteredMedication.performer.address) {
                     format.formatAddress($scope.enteredMedication.performer.address[0]);
                 }
