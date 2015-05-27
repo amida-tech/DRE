@@ -57,7 +57,7 @@ describe('register user', function () {
                 };
             });
             expect(errors).toEqual(0);
-            console.log('log: ' + require('util').inspect(browserLog));
+            // console.log('log: ' + require('util').inspect(browserLog));
         });
     });
 

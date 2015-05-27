@@ -42,7 +42,7 @@ describe('View medication information', function () {
 			})
 			expect(errors).toEqual(0);
 			// Uncomment to actually see the log.
-			console.log('log: ' + require('util').inspect(browserLog));
+			// console.log('log: ' + require('util').inspect(browserLog));
 		});
 	});
 	
