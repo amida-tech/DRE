@@ -66,7 +66,7 @@ angular.module('phrPrototypeApp')
                         scope.entryTitle = scope.entryData.product.product.name;
                     }
                     if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleOne = scope.recordEntry.metadata.displayDate;
+                        scope.entrySubTitleOne = format.outputDate(scope.entryData.date_time);
                     }
                     break;
                 case 'conditions':

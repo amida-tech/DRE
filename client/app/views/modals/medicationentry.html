@@ -199,7 +199,7 @@
         <div class="form-group row">
             <label class="col-sm-5 control-label">When did you start taking it?</label>
             <div class="col-sm-6">
-                <input type="date" class="form-control" ng-model="pStart" placeholder="MM/DD/YYYY">
+                <input type="date" class="form-control" ng-model="$parent.pStart" placeholder="MM/DD/YYYY">
             </div>
         </div>
         <div class="form-group row">
@@ -216,7 +216,7 @@
         <div class="form-group row" ng-hide="pCurrentMedRadio">
             <label class="col-sm-5 control-label">When was your last dose?</label>
             <div class="col-sm-6">
-                <input type="date" class="form-control" ng-model="pLast" placeholder="MM/DD/YYYY">
+                <input type="date" class="form-control" ng-model="$parent.pLast" placeholder="MM/DD/YYYY">
             </div>
         </div>
         <div class="form-group row">
@@ -235,6 +235,7 @@
             <div class="row" ng-show="selectedPrescriber">
                 Prescriber: {{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}
             </div>
+            <div>Date: {{$scope.enteredMedication.date_time}}</div>
             <div class="sub-entry" ng-include="'views/templates/details/medications.html'"></div>
         </div>
         <h4>Save Object</h4>
