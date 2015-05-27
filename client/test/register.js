@@ -31,8 +31,8 @@ describe('register user', function () {
         firstname.sendKeys('Isabella');
         middlename.sendKeys('M');
         lastname.sendKeys('Jones');
-        dob.sendKeys('05011975');
         gender.sendKeys('f');
+        dob.sendKeys('05/01/1975');
 
         element(by.id('next2')).click();
         element(by.id('next3')).click();

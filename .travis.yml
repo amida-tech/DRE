@@ -1,16 +1,27 @@
 language: node_js
 node_js:
 - '0.12'
-before_script:
+install:
 - npm install -g npm
-- npm install -g grunt-cli 
+- npm install -g bower grunt-cli 
 - npm install -g mocha 
 - npm install -g istanbul
+- npm install -g protractor
 - npm install --quiet
+- bower install
+- webdriver-manager update --chrome
+before_script:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start 
+- nohup bash -c "webdriver-manager start 2>&1 &"
+- sleep 5
 services:
 - mongodb
 - redis-server
 script:
 - grunt --gruntfile ./Gruntfile.js
+- node server.js &
+- sleep 5
+- grunt travis-protractor --gruntfile ./Gruntfile.js
 notifications:
   slack: amida:GclZqFLfLqmjWZ4bwUbRIw5M
