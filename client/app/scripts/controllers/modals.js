@@ -20,11 +20,15 @@ angular.module('phrPrototypeApp')
         };
 
         function enteredObject() {
+            var pmed_metadata = {};
+            var pmed_product = {};
+            var pmed_lowdate = {};
+            var pmed_highdate = {};
             console.log("entering object...");
             if ($scope.medSearchType === 'prescription') {
                 console.log("...was a prescription");
                 $scope.enteredMedication = {};
-                var pmed_metadata = {
+                pmed_metadata = {
                     "patient_entered": true,
                     "is_prescription": true,
                     "attribution": [{
@@ -41,7 +45,7 @@ angular.module('phrPrototypeApp')
                     _.deepSet($scope.enteredMedication, 'sig', $scope.pWhy);
                 }
 
-                var pmed_product = {
+                pmed_product = {
                     "name": $scope.selectedDrug.synonym,
                     "code": $scope.selectedDrug.rxcui,
                     "code_system_name": 'RxNorm'
@@ -56,76 +60,62 @@ angular.module('phrPrototypeApp')
                 _.deepSet($scope.enteredMedication, 'performer.name[0].last', $scope.selectedPrescriber.last_name);
 
                 if ($scope.pStart) {
-                    var pmed_lowdate = {
+                    pmed_lowdate = {
                         "date": moment($scope.pStart).format('YYYY-MM-DD'),
                         "precision": 'day'
                     };
                     _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
                 }
-                console.log(moment($scope.pStart).format('YYYY-MM-DD'));
                 if ($scope.pCurrentMedRadio) {
-                    var pmed_highdate = {
+                    pmed_highdate = {
                         "date": moment($scope.pLast).format('YYYY-MM-DD'),
                         "precision": 'day'
                     };
                     _.deepSet($scope.enteredMedication, 'date_time.high', pmed_highdate);
                 }
-                console.log(moment($scope.pLast).format('YYYY-MM-DD'));
-
-                // $scope.enteredMedication = {
-                //     // "date_time": {
-                //     //     "low": {
-                //     //         "date": $scope.pStart,
-                //     //         "precision": "day"
-                //     //     }
-                //     // },
-                //     "performer": {
-                //         "address": [{
-                //             "street_lines": [
-                //                 $scope.selectedPrescriber.practice_address.address_line
-                //             ],
-                //             "city": $scope.selectedPrescriber.practice_address.city,
-                //             "state": $scope.selectedPrescriber.practice_address.state
-                //         }],
-                //         "name": [{
-                //             "first": $scope.selectedPrescriber.first_name,
-                //             "last": $scope.selectedPrescriber.last_name
-                //         }]
-                //     }
-                // };
-                // if (!$scope.pCurrentMedRadio) {
-                //     $scope.enteredMedication.date_time.high.date = $scope.pLast;
-                //     $scope.enteredMedication.date_time.high.precision = "day";
-                // }
             } else {
-                $scope.enteredMedication = {
-                    "med_metadata": {
-                        image: $scope.selectedImage,
-                        patient_entered: true,
-                        is_prescription: false,
-                        attribution: [{
-                            merged: new Date(),
-                            merge_reason: "new"
-                        }]
-                    },
-                    // "date_time": {
-                    //     "date": {
-                    //         "low": $scope.pStart,
-                    //         "precision": "day"
-                    //     }
-                    // },
-                    "sig": $scope.pWhy,
-                    "product": {
-                        "identifiers": [{
-                            rxcui: $scope.selectedDrug.rxcui
-                        }],
-                        "product": {
-                            'name': $scope.selectedDrug.synonym,
-                            'code': $scope.selectedDrug.rxcui,
-                            'code_system_name': 'RxNorm'
-                        }
-                    }
+
+                $scope.enteredMedication = {};
+                pmed_metadata = {
+                    "patient_entered": true,
+                    "is_prescription": false,
+                    "attribution": [{
+                        merged: new Date(),
+                        merge_reason: "new"
+                    }]
                 };
+                _.deepSet($scope.enteredMedication, 'med_metadata', pmed_metadata);
+                if ($scope.selectedImage) {
+                    _.deepSet($scope.enteredMedication, 'med_metadata.image', $scope.selectedImage);
+                }
+
+                if ($scope.pWhy) {
+                    _.deepSet($scope.enteredMedication, 'sig', $scope.pWhy);
+                }
+
+                pmed_product = {
+                    "name": $scope.selectedDrug.synonym,
+                    "code": $scope.selectedDrug.rxcui,
+                    "code_system_name": 'RxNorm'
+                };
+                _.deepSet($scope.enteredMedication, 'product.identifiers[0].rxcui', $scope.selectedDrug.rxcui);
+                _.deepSet($scope.enteredMedication, 'product.product', pmed_product);
+
+                if ($scope.pStart) {
+                    pmed_lowdate = {
+                        "date": moment($scope.pStart).format('YYYY-MM-DD'),
+                        "precision": 'day'
+                    };
+                    _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
+                }
+                if ($scope.pCurrentMedRadio) {
+                    pmed_highdate = {
+                        "date": moment($scope.pLast).format('YYYY-MM-DD'),
+                        "precision": 'day'
+                    };
+                    _.deepSet($scope.enteredMedication, 'date_time.high', pmed_highdate);
+                }
+
             }
             console.log("...entered Medication: " + $scope.enteredMedication);
         }
