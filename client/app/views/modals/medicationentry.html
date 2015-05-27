@@ -230,12 +230,10 @@
         <h3>Summary</h3>
         <div class="row">
             <div class="row">
-                Drug Info: {{selectedDrug.synonym}}
+                Medication Name: {{selectedDrug.synonym}}
             </div>
-            <div class="row" ng-show="selectedPrescriber">
-                Prescriber: {{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}
-            </div>
-            <div>Date: {{$scope.enteredMedication.date_time}}</div>
+            <div class="row" ng-show="pCurrentMedRadio&&pStart">Date: {{pStart}} - Present</div>
+            <div class="row" ng-show="pStart&&pLast">Date: {{pStart}} - {{pLast}}</div>
             <div class="sub-entry" ng-include="'views/templates/details/medications.html'"></div>
         </div>
         <h4>Save Object</h4>

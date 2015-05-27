@@ -22,6 +22,18 @@
             <div class="row" ng-if="activeTab==='details'">
                 <h3>Details</h3>
                 <div class="sub-entry">
+                    <!--                     <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td>Medication Name:</td>
+                                <td>{{medication.product.product.name}}</td>
+                            </tr>
+                            <tr ng-show="medication.date_time">
+                                <td>Date:</td>
+                                <td>{{medication.date_time.displayDate}}</td>
+                            </tr>
+                        </tbody>
+                    </table> -->
                     <div ng-include="medicationDetailPath"></div>
                 </div>
             </div>
