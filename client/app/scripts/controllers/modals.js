@@ -9,8 +9,6 @@ angular.module('phrPrototypeApp')
         $scope.enteredMedication = {};
         $scope.saveMedicationStatus = null;
 
-        // $scope.obj = _set;
-
         $scope.previousStep = function previousStep() {
             if ($scope.entryStep === 3 && $scope.medSearchType !== 'prescription') {
                 $scope.entryStep = 1;
@@ -20,6 +18,7 @@ angular.module('phrPrototypeApp')
         };
 
         function enteredObject() {
+
             var pmed_metadata = {};
             var pmed_product = {};
             var pmed_lowdate = {};
@@ -378,9 +377,9 @@ angular.module('phrPrototypeApp')
             $scope.entryStep = 0;
             $scope.pWhy = null;
             $scope.pOften = "";
-            $scope.pLast = "";
+            $scope.pLast = null;
             $scope.pCurrentMedRadio = null;
-            $scope.pStart = "";
+            $scope.pStart = null;
             $scope.drugSpelling = null;
         };
 
@@ -394,6 +393,33 @@ angular.module('phrPrototypeApp')
     .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications, dataservice) {
         $scope.medication = medication.data;
         $scope.saveMedication = saveMedication;
+
+        if ($scope.medication.date_time) {
+            if ($scope.medication.date_time.low && !$scope.medication.date_time.high) {
+                $scope.pCurrentMedRadio = true;
+            } else {
+                $scope.pCurrentMedRadio = false;
+            }
+            if ($scope.medication.date_time.low) {
+                $scope.pStart = $scope.medication.date_time.low.date;
+            }
+            if ($scope.medication.date_time.high) {
+                $scope.pLast = $scope.medication.date_time.high.date;
+            }
+        }
+
+        if ($scope.medication.sig) {
+            $scope.pWhy = $scope.medication.sig;
+        }
+
+        if ($scope.medication.performer) {
+            $scope.pFirstName = $scope.medication.performer.name[0].first;
+            $scope.pLastName = $scope.medication.performer.name[0].last;
+
+            if ($scope.medication.performer.address[0] && $scope.medication.performer.address[0].state) {
+                $scope.pState = $scope.medication.performer.address[0].state;
+            }
+        }
 
         $scope.initStuff = function () {
             console.log("init-ing stuff... " + $scope.medication.med_metadata.is_prescription);
@@ -421,6 +447,8 @@ angular.module('phrPrototypeApp')
 
         $scope.close = function () {
             $modalInstance.dismiss('cancel');
+            $scope.medReset();
+
         };
     })
     .controller('MedicationDeleteModalCtrl', function ($scope, $modalInstance, $route, medication, medications) {

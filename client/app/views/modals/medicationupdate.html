@@ -14,28 +14,30 @@
                         <label class="col-sm-5 control-label">Is this medication still active?</label>
                         <div class="col-sm-7">
                             <div>
-                                <input type="radio" name="uCurrentMedRadio" ng-model="uCurrentMedRadio" id="ucurrentRadioYes" ng-value="true"> Yes, I am still taking this medication.
+                                <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="pcurrentRadioYes" ng-value="true"> Yes, I am still taking this medication.
                             </div>
                             <div>
-                                <input type="radio" name="uCurrentMedRadio" ng-model="uCurrentMedRadio" id="ucurrentRadioNo" ng-value="false"> No, I am no longer taking this medication.
+                                <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="pcurrentRadioNo" ng-value="false"> No, I am no longer taking this medication.
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-5 control-label">When did you start taking it?</label>
                         <div class="col-sm-7">
-                            <input type="date" class="form-control" ng-model="medication.date_time.low">
+                            <input type="date" class="form-control" ng-model="$parent.pStart">
                         </div>
                     </div>
-                    <div class="form-group row" ng-show="medication.date_time.high|| !uCurrentMedRadio">
+                    <div class="form-group row" ng-show="pStart || !pCurrentMedRadio">
                         <label class="col-sm-5 control-label">When was your last dose?</label>
                         <div class="col-sm-7">
-                            <input type="date" class="form-control" ng-model="medication.date_time.high" placeholder="MM/DD/YYYY">
+                            <input type="date" class="form-control" ng-model="$parent.pLast">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-5 control-label">Instructions from your physician:</label>
-                        <textarea class="col-sm-7" type="text" ng-model="medication.sig"></textarea>
+                        <div class="col-sm-7">
+                            <textarea ng-model="pWhy" class="form-control"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,13 +51,13 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">First name (REQUIRED)</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" ng-model="medication.performer.name.first" ng-disabled="prescriberSearchActive">
+                                <input type="text" class="form-control" ng-model="pFirstName" ng-disabled="prescriberSearchActive">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Last name (REQUIRED)</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" ng-model="medication.performer.name.last" ng-disabled="prescriberSearchActive">
+                                <input type="text" class="form-control" ng-model="pLastName" ng-disabled="prescriberSearchActive">
                             </div>
                         </div>
                         <div class="form-group">
@@ -142,7 +144,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="checkbox" class="pull-left" ng-click="setSelectedImage('')">None of these images is correct
+                <input type="checkbox" class="pull-left" ng-click="setSelectedImage('')">No Image
             </div>
         </div>
     </div>
