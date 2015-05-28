@@ -1,4 +1,4 @@
-describe('View medication information', function () {
+describe('Enter new medication information', function () {
 
 	function viewMedInfo() {
 		var record = element(by.css('[href="#/record"]'));
@@ -7,24 +7,21 @@ describe('View medication information', function () {
 		var medications = element(by.id('navmedications'));
 		medications.click();
 
-		var firstEntry = element(by.css('[entry-index="0"]'));
-		var info = firstEntry.all(by.css('[ng-click="medicationDetails(recordEntry)"]')).last();
-		info.click();
+		var addMed = element(by.css('[ng-click="entryModal()"]'));
+		addMed.click();
 
-		var notes = element(by.css('[class="fa fa-comment"]'));
-		notes.click();
+		var prescription = element(by.css('[ng-click="initInfoSearch(\'prescription\')"]'));
+		prescription.click();
 
-		var history = element(by.css('[class="fa fa-clock-o"]'));
-		history.click();
-
-		var images = element(by.css('[class="fa fa-picture-o"]'));
-		images.click();
-
-		var adverse = element(by.css('[class="fa fa-exclamation-triangle"]'));
-		adverse.click();
-
-		var learn = element(by.css('[class="fa fa-question-circle"]'));
-		learn.click();
+		var drugName = element(by.model('pDrugName'));
+		drugName.sendKeys('Xanax');
+		var search = element(by.css('[ng-click="drugSearch(pDrugName)"]'));
+		search.click();
+		
+		var firstRow = element(by.repeater('rxdrug in rxnormResults.compiled').row(0));
+		firstRow.click();
+		var next = element(by.css('[ng-click="nextStep()"]'));
+		next.click();
 	}
 
 	beforeEach(function () {
