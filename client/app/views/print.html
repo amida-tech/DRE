@@ -14,7 +14,7 @@
         <div ng-repeat="section in vm.sectionOrder">
             <!--Timeline View-->
             <div class="col-sm-12" ng-show="section !== 'print'">
-                <h4 class="text-center">{{vm.section}}</h4>
+                <h4 class="text-center">{{section}}</h4>
                 <div class="panel" ng-hide="vm.recordEntries">
                     <div class="panel-body">
                         <h5 class="col-sm-12 text-center">No Record Entries</h5>
@@ -24,7 +24,7 @@
 
                 <div ng-repeat="(recordIndex, recordEntry) in vm.filterBySection(vm.recordEntries,section)" class="col-sm-12 row" id="record{{recordIndex}}">
 
-                    <printentry type="{{recordEntry.category}}" entry-index="{{recordIndex}}" on-finish-render="ngRepeatFinished"></printentry>
+                    <printentry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></printentry>
 
                 </div>
                 <!--end timeline-->

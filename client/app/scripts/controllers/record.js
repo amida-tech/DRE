@@ -296,8 +296,22 @@ angular.module('phrPrototypeApp')
             });
             modalInstance.result.then(function (response) {
                 console.log(response);
-            }, function () {
+            }, function (newMedInfo) {
                 console.log('Modal dismissed at: ' + new Date());
+                for (var i = 0; i < $scope.entryListFiltered.length; i++) {
+                    if ($scope.entryListFiltered[i].data._id === newMedInfo.id) {
+                        $scope.entryListFiltered[i].metadata.comments = newMedInfo.comments;
+                        if (newMedInfo.comments.length > 0) {
+                            if (newMedInfo.comments[0].starred) {
+                                $scope.entryListFiltered[i].metadata.starred_comments = 1;
+                            } else {
+                                $scope.entryListFiltered[i].metadata.starred_comments = 0;
+                            }
+                        } else {
+                            $scope.entryListFiltered[i].metadata.starred_comments = 0;
+                        }
+                    }
+                }
             });
         };
 

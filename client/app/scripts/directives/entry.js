@@ -126,13 +126,15 @@ angular.module('phrPrototypeApp')
                                 scope.newComment.starred = false;
                             }
 
-                            notes.starNote(scope.newComment.note_id, scope.newComment.starred, function (err, data) {
-                                if (err) {
-                                    console.log('add note star error ', err);
-                                } else {
-                                    console.log('add note with star ', data);
-                                }
-                            });
+                            if (scope.newComment.starred) {
+                                notes.starNote(scope.newComment.note_id, scope.newComment.starred, function (err, data) {
+                                    if (err) {
+                                        console.log('add note star error ', err);
+                                    } else {
+                                        console.log('add note with star ', data);
+                                    }
+                                });
+                            }
 
                             countStarredComments();
 

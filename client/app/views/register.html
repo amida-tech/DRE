@@ -73,9 +73,16 @@
                         <p ng-show="regForm2.inputLast.$invalid && !regForm2.inputLast.$pristine" class="help-block">Last name must be between 1 and 80 characters.</p>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label for="inputDOB">Date of Birth:</label>
-                        <input type="date" class="form-control" name="inputDOB" ng-model="inputDOB" required ng-required="true">
-                        <p ng-show="regForm2.inputDOB.$invalid && !regForm2.inputDOB.$pristine" class="help-block">Must be a valid date.</p>
+                        <p class="input-group">
+                            <label for="inputDOB">Date of Birth:</label>
+                            <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="inputDOB" is-open="opened" required ng-required="true" close-text="Close" placeholder="mm/dd/yyyy" />
+                            <span class="input-group-btn" style="vertical-align: bottom">
+                                <button type="button" class="btn btn-default" ng-click="open($event)" style="height: 42px">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                            <p ng-show="regForm2.inputDOB.$invalid && !regForm2.inputDOB.$pristine" class="help-block">Must be a valid date.</p>
+                        </p>
                     </div>
                     <div class="form-group col-sm-4 col-sm-offset-2">
                         <label for="inputGender">Gender:</label>
