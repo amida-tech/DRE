@@ -110,14 +110,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Zip Code</label>
-                    <div class="col-sm-5">
-                        <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
-                    </div>
-                </div>
-                <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
+                        <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pState)" ng-disabled="prescriberSearchActive">Search</button>
                     </div>
                 </div>
                 <div class="row">
@@ -171,10 +165,12 @@
         <h3>Info so far:</h3>
         <div class="row">
             <div class="row">
-                Drug Info: {{selectedDrug.synonym}}
+                <h5 class="col-sm-5">Drug Name: </h5>
+                <div class="col-sm-6">{{selectedDrug.synonym}}</div>
             </div>
             <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length == 0">
-                <h5>No Images Found</h5>
+                <h5>Images: </h5>
+                <h5 class="col-sm-6">No Images Found</h5>
             </div>
             <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length >= 1">
                 <div ng-if="rximageResults.nlmRxImages.length == 1">
@@ -192,7 +188,8 @@
                 <!--<pre>{{rximageResults}}</pre>-->
             </div>
             <div class="row" ng-show="selectedPrescriber">
-                Prescriber: {{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}
+                <h5 class="col-sm-5">Prescriber: <h5>
+                <div class="col-sm-6">{{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}</div>
             </div>
         </div>
         <h3>Additional Info</h3>
@@ -229,15 +226,15 @@
     <div class="row" ng-if="entryStep===4">
         <h3>Summary</h3>
         <div class="row">
-            <div class="row">
-                Medication Name: {{selectedDrug.synonym}}
-            </div>
+            <h4 class="row">
+                {{selectedDrug.synonym}}
+            </h4>
             <div class="row" ng-show="pCurrentMedRadio&&pStart">Date: {{pStart}} - Present</div>
             <div class="row" ng-show="pStart&&pLast">Date: {{pStart}} - {{pLast}}</div>
             <div class="sub-entry" ng-include="'views/templates/details/medications.html'"></div>
         </div>
-        <h4>Save Object</h4>
-        <pre>{{enteredMedication}}</pre>
+<!--         <h4>Save Object</h4>
+        <pre>{{enteredMedication}}</pre> -->
         <br />
         <div ng-if="saveMedicationStatus==='error'">
             <span>There was an error saving the medication.</span>
