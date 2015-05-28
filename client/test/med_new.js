@@ -12,7 +12,8 @@ describe('Enter new medication information', function () {
 
 		var prescription = element(by.css('[ng-click="initInfoSearch(\'prescription\')"]'));
 		prescription.click();
-
+		
+		// drug info
 		var drugName = element(by.model('pDrugName'));
 		drugName.sendKeys('Xanax');
 		var search = element(by.css('[ng-click="drugSearch(pDrugName)"]'));
@@ -22,6 +23,28 @@ describe('Enter new medication information', function () {
 		firstRow.click();
 		var next = element(by.css('[ng-click="nextStep()"]'));
 		next.click();
+		
+		// provider info
+		var provFirstName = element(by.model('pFirstName'));
+		var provLastName = element(by.model('pLastName'));
+		provFirstName.sendKeys('Shelly');
+		provLastName.sendKeys('Senders');
+		search = element(by.css('[ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)"]'));
+		search.click();
+		
+		firstRow = element(by.repeater('prescriber in prescriberResults').row(0));
+		firstRow.click();
+		next = element(by.css('[ng-click="nextStep()"]'));
+		next.click();
+		
+		// additional info
+		var medImage = element(by.css('[ng-click="setSelectedImage(rximageResults.nlmRxImages[0])"]'));
+		medImage.click();
+		next = element(by.css('[ng-click="nextStep()"]'));
+		next.click();
+		
+		var submit = element(by.css('[ng-click="saveMedication()"]'));
+		submit.click();
 	}
 
 	beforeEach(function () {
