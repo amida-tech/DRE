@@ -376,7 +376,7 @@ angular.module('phrPrototypeApp')
 
         $scope.updateMedication = updateMedication;
         $scope.updateMedicationStatus = null;
-        $scope.saveMed = $scope.medication;
+        $scope.saveMed = {};
 
         if ($scope.medication.med_metadata.is_prescription) {
             $scope.medSearchType = 'prescription';
@@ -384,6 +384,8 @@ angular.module('phrPrototypeApp')
             $scope.medSearchType = 'otc-supplement';
         }
 
+        //populate ng-model 
+        //date_time and current med toggle
         if ($scope.medication.date_time) {
             if ($scope.medication.date_time.low && !$scope.medication.date_time.high) {
                 $scope.pCurrentMedRadio = true;
@@ -391,17 +393,19 @@ angular.module('phrPrototypeApp')
                 $scope.pCurrentMedRadio = false;
             }
             if ($scope.medication.date_time.low) {
-                $scope.pStart = $scope.medication.date_time.low.displayDate;
+                $scope.pStart = moment($scope.medication.date_time.low.date).toDate();
             }
             if ($scope.medication.date_time.high) {
-                $scope.pLast = $scope.medication.date_time.high.date;
+                $scope.pLast = moment($scope.medication.date_time.high.date).toDate();
             }
         }
 
+        // sig
         if ($scope.medication.sig) {
             $scope.pWhy = $scope.medication.sig;
         }
 
+        // prescriber
         if ($scope.medication.performer) {
             $scope.pFirstName = $scope.medication.performer.name[0].first;
             $scope.pLastName = $scope.medication.performer.name[0].last;
@@ -411,6 +415,7 @@ angular.module('phrPrototypeApp')
             }
         }
 
+        // image
         if ($scope.medication.med_metadata.image) {
             $scope.pCurrentImage = $scope.medication.med_metadata.image;
         }
@@ -486,27 +491,31 @@ angular.module('phrPrototypeApp')
 
         function updatedObject() {
             var pmed_date_time = {};
-
             var pmed_lowdate = {};
             var pmed_highdate = {};
             console.log("updating object...");
 
-            // var attr_length = $scope.medication.med_metadata.attribution.length;
+            // med_metadata
             var attr_new = {
                 "merged": new Date(),
                 "merge_reason": "update"
             };
             _.deepSet($scope.saveMed, 'med_metadata.attribution[0]', attr_new);
+            _.deepSet($scope.saveMed, 'med_metadata.is_prescription', $scope.medication.med_metadata.is_prescription);
+            _.deepSet($scope.saveMed, 'med_metadata.patient_entered', $scope.medication.med_metadata.patient_entered);
 
-            console.log($scope.selectedImage);
+            // image
             if ($scope.selectedImage) {
                 _.deepSet($scope.saveMed, 'med_metadata.image', $scope.selectedImage);
             }
+
+            // sig
             console.log($scope.pWhy);
             if ($scope.pWhy) {
                 _.deepSet($scope.saveMed, 'sig', $scope.pWhy);
             }
 
+            // dates
             if ($scope.pStart) {
                 pmed_lowdate = {
                     "date": moment($scope.pStart).format('YYYY-MM-DD'),
@@ -525,7 +534,6 @@ angular.module('phrPrototypeApp')
                 _.deepSet($scope.saveMed, 'date_time', pmed_date_time);
             }
 
-            console.log($scope.pCurrentMedRadio);
             if ($scope.pStart && !$scope.pCurrentMedRadio) {
                 if ($scope.pLast) {
                     pmed_highdate = {
@@ -571,6 +579,7 @@ angular.module('phrPrototypeApp')
 
         function updateMedication() {
             updatedObject();
+            // format dates, address, names
             if ($scope.saveMed.date_time) {
                 format.formatDate($scope.saveMed.date_time.low);
                 if ($scope.saveMed.date_time.high) {
@@ -583,7 +592,7 @@ angular.module('phrPrototypeApp')
             if ($scope.saveMed.performer.name) {
                 format.formatName($scope.saveMed.performer.name[0]);
             }
-            console.log($scope.saveMed);
+
             medications.editMedication($scope.saveMed, function (err, results) {
                 if (err) {
                     // Display an error in the med entry modal

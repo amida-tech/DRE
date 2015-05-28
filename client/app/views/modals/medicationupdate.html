@@ -36,7 +36,7 @@
                     <div class="form-group row">
                         <label class="col-sm-5 control-label">Instructions from your physician:</label>
                         <div class="col-sm-7">
-                            <textarea ng-model="$parent.pWhy" class="form-control"></textarea>
+                            <textarea ng-model="pWhy" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
@@ -135,10 +135,14 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <!--     <div class="row">
         <h3>Debug</h3>
         <pre>{{medication}}</pre>
+    </div> -->
+    <div ng-if="updateMedicationStatus==='error'">
+        <span>There was an error saving the medication.</span>
     </div>
+    <div ng-if="updateMedicationStatus==='success'" ng-init="$hide()"></div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-danger pull-left" ng-click="close()">Cancel</button>
