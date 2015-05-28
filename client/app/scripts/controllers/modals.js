@@ -361,7 +361,6 @@ angular.module('phrPrototypeApp')
             $scope.pCurrentMedRadio = null;
             $scope.pStart = null;
             $scope.drugSpelling = null;
-            $scope.pCurrentImage = null;
         };
 
         $scope.close = function () {
@@ -373,7 +372,8 @@ angular.module('phrPrototypeApp')
     })
     .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications, dataservice, format) {
         $scope.medication = medication.data;
-
+        $scope.selectedImage = null;
+        console.log($scope.selectedImage);
         $scope.updateMedication = updateMedication;
         $scope.updateMedicationStatus = null;
         $scope.saveMed = {};
@@ -417,7 +417,7 @@ angular.module('phrPrototypeApp')
 
         // image
         if ($scope.medication.med_metadata.image) {
-            $scope.pCurrentImage = $scope.medication.med_metadata.image;
+            $scope.selectedImage = $scope.medication.med_metadata.image;
         }
 
         $scope.initStuff = function () {
@@ -458,6 +458,7 @@ angular.module('phrPrototypeApp')
                 rxImage.selected = true;
                 $scope.selectedImage = rxImage;
             }
+            console.log($scope.selectedImage);
         };
 
         $scope.prescriberSearch = function prescriberSearch(firstName, lastName, state) {
@@ -495,6 +496,12 @@ angular.module('phrPrototypeApp')
             var pmed_highdate = {};
             console.log("updating object...");
 
+            // _id
+            _.deepSet($scope.saveMed, '_id', $scope.medication._id);
+
+            // product
+            _.deepSet($scope.saveMed, 'product', $scope.medication.product);
+
             // med_metadata
             var attr_new = {
                 "merged": new Date(),
@@ -504,8 +511,14 @@ angular.module('phrPrototypeApp')
             _.deepSet($scope.saveMed, 'med_metadata.is_prescription', $scope.medication.med_metadata.is_prescription);
             _.deepSet($scope.saveMed, 'med_metadata.patient_entered', $scope.medication.med_metadata.patient_entered);
 
+            //original performer if not updated
+            if (_.isUndefined($scope.saveMed.performer)) {
+                _.deepSet($scope.saveMed, 'performer', $scope.medication.performer);
+            }
+
             // image
-            if ($scope.selectedImage) {
+            console.log($scope.selectedImage);
+            if (!_.isNull($scope.selectedImage)) {
                 _.deepSet($scope.saveMed, 'med_metadata.image', $scope.selectedImage);
             }
 
@@ -574,7 +587,6 @@ angular.module('phrPrototypeApp')
             $scope.pCurrentMedRadio = null;
             $scope.pStart = null;
             $scope.drugSpelling = null;
-            $scope.pCurrentImage = null;
         };
 
         function updateMedication() {
