@@ -88,6 +88,7 @@ angular.module('phrPrototypeApp')
                     _.deepSet($scope.enteredMedication, 'med_metadata.image', $scope.selectedImage);
                 }
 
+                console.log($scope.pWhy);
                 if ($scope.pWhy) {
                     _.deepSet($scope.enteredMedication, 'sig', $scope.pWhy);
                 }
@@ -108,10 +109,17 @@ angular.module('phrPrototypeApp')
                     _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
                 }
                 if ($scope.pCurrentMedRadio) {
-                    pmed_highdate = {
-                        "date": moment($scope.pLast).format('YYYY-MM-DD'),
-                        "precision": 'day'
-                    };
+                    if ($scope.pLast) {
+                        pmed_highdate = {
+                            "date": moment($scope.pLast).format('YYYY-MM-DD'),
+                            "precision": 'day'
+                        };
+                    } else {
+                        pmed_highdate = {
+                            "date": moment().format('YYYY-MM-DD'),
+                            "precision": 'day'
+                        };
+                    }
                     _.deepSet($scope.enteredMedication, 'date_time.high', pmed_highdate);
                 }
 
@@ -289,49 +297,22 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        $scope.prescriberSearch = function prescriberSearch(firstName, lastName, zipCode, state) {
+        $scope.prescriberSearch = function prescriberSearch(firstName, lastName, state) {
             $scope.prescriberSearchActive = true;
             var searchTest = false;
-            var searchObj = {
-                name: [],
-                address: []
-            };
+            var searchObj = {};
             $scope.selectedPrescriber = null;
-            if (firstName !== "" && lastName !== "") {
-                searchObj.name.push({
-                    first: firstName,
-                    last: lastName
-                });
-                searchTest = true;
-            } else {
-                if (lastName !== "") {
-                    searchObj.name.push({
-                        last: lastName
-                    });
-                    searchTest = true;
-                }
+            if (firstName) {
+                _.deepSet(searchObj, 'name[0].first', firstName);
             }
-            if (zipCode !== "" && state !== "") {
-                searchObj.address.push({
-                    zip: zipCode,
-                    state: state
-                });
-                searchTest = true;
-            } else {
-                if (zipCode !== "") {
-                    searchObj.address.push({
-                        zip: zipCode
-                    });
-                    searchTest = true;
-                }
-                if (state !== "") {
-                    searchObj.address.push({
-                        state: state
-                    });
-                    searchTest = true;
-                }
+            if (lastName) {
+                _.deepSet(searchObj, 'name[0].last', lastName);
             }
-            if (searchTest) {
+            if (state) {
+                _.deepSet(searchObj, 'address[0].state', state);
+            }
+            console.log(state);
+            if (searchObj !== {}) {
                 npiapi.findNPI(searchObj, function (err, data) {
                     $scope.prescriberSearchActive = false;
                     if (err) {
@@ -361,7 +342,6 @@ angular.module('phrPrototypeApp')
             $scope.prescriberResults = null;
             $scope.pFirstName = null;
             $scope.pLastName = null;
-            $scope.pZip = null;
             $scope.pDrugName = null;
             $scope.selectedImage = null;
             //$scope.openfdanameResults = null;
@@ -381,6 +361,7 @@ angular.module('phrPrototypeApp')
             $scope.pCurrentMedRadio = null;
             $scope.pStart = null;
             $scope.drugSpelling = null;
+            $scope.pCurrentImage = null;
         };
 
         $scope.close = function () {
@@ -390,9 +371,18 @@ angular.module('phrPrototypeApp')
 
         // $scope.medReset();
     })
-    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications, dataservice) {
+    .controller('MedicationUpdateModalCtrl', function ($scope, $modalInstance, $route, medication, medapi, npiapi, medications, dataservice, format) {
         $scope.medication = medication.data;
-        $scope.saveMedication = saveMedication;
+
+        $scope.updateMedication = updateMedication;
+        $scope.updateMedicationStatus = null;
+        $scope.saveMed = $scope.medication;
+
+        if ($scope.medication.med_metadata.is_prescription) {
+            $scope.medSearchType = 'prescription';
+        } else {
+            $scope.medSearchType = 'otc-supplement';
+        }
 
         if ($scope.medication.date_time) {
             if ($scope.medication.date_time.low && !$scope.medication.date_time.high) {
@@ -421,22 +411,187 @@ angular.module('phrPrototypeApp')
             }
         }
 
+        if ($scope.medication.med_metadata.image) {
+            $scope.pCurrentImage = $scope.medication.med_metadata.image;
+        }
+
         $scope.initStuff = function () {
             console.log("init-ing stuff... " + $scope.medication.med_metadata.is_prescription);
             medapi.findImages($scope.medication.product.product.code, function (err, data) {
                 $scope.medImages = data;
+                console.log('medImages', $scope.medImages);
             });
             //Add in prescriber alternate search?
         };
 
-        function saveMedication() {
-            medications.editMedication($scope.medication, function (err, results) {
+        $scope.setUpdatedPrescriber = function setUpdatedPrescriber() {
+            if (this.prescriber.selected) {
+                this.prescriber.selected = false;
+                $scope.selectedPrescriber = null;
+            } else {
+                for (var k = 0; k < $scope.prescriberResults.length; k++) {
+                    $scope.prescriberResults[k].selected = false;
+                }
+                this.prescriber.selected = true;
+                $scope.selectedPrescriber = this.prescriber;
+                _.deepSet($scope.saveMed, 'performer.address[0].street_lines[0]', $scope.selectedPrescriber.practice_address.address_line);
+                _.deepSet($scope.saveMed, 'performer.address[0].city', $scope.selectedPrescriber.practice_address.city);
+                _.deepSet($scope.saveMed, 'performer.address[0].state', $scope.selectedPrescriber.practice_address.state);
+                _.deepSet($scope.saveMed, 'performer.name[0].first', $scope.selectedPrescriber.first_name);
+                _.deepSet($scope.saveMed, 'performer.name[0].last', $scope.selectedPrescriber.last_name);
+            }
+        };
+
+        $scope.setUpdatedImage = function setUpdatedImage(rxImage) {
+            if (rxImage.selected) {
+                rxImage.selected = false;
+                $scope.selectedImage = null;
+            } else {
+                for (var k = 0; k < $scope.medImages.nlmRxImages.length; k++) {
+                    $scope.medImages.nlmRxImages[k].selected = false;
+                }
+                rxImage.selected = true;
+                $scope.selectedImage = rxImage;
+            }
+        };
+
+        $scope.prescriberSearch = function prescriberSearch(firstName, lastName, state) {
+            $scope.prescriberSearchActive = true;
+            var searchTest = false;
+            var searchObj = {};
+            $scope.selectedPrescriber = null;
+            if (firstName) {
+                _.deepSet(searchObj, 'name[0].first', firstName);
+            }
+            if (lastName) {
+                _.deepSet(searchObj, 'name[0].last', lastName);
+            }
+            if (state) {
+                _.deepSet(searchObj, 'address[0].state', state);
+            }
+            if (searchObj !== {}) {
+                npiapi.findNPI(searchObj, function (err, data) {
+                    $scope.prescriberSearchActive = false;
+                    if (err) {
+                        $scope.prescriberError = "No matches found, please try again";
+                    } else {
+                        console.log("Martz success: " + JSON.stringify(data));
+                        $scope.prescriberResults = data;
+                        $scope.prescriberCount = data.length;
+                        $scope.prescriberError = null;
+                    }
+                });
+            }
+        };
+
+        function updatedObject() {
+            var pmed_date_time = {};
+
+            var pmed_lowdate = {};
+            var pmed_highdate = {};
+            console.log("updating object...");
+
+            // var attr_length = $scope.medication.med_metadata.attribution.length;
+            var attr_new = {
+                "merged": new Date(),
+                "merge_reason": "update"
+            };
+            _.deepSet($scope.saveMed, 'med_metadata.attribution[0]', attr_new);
+
+            console.log($scope.selectedImage);
+            if ($scope.selectedImage) {
+                _.deepSet($scope.saveMed, 'med_metadata.image', $scope.selectedImage);
+            }
+            console.log($scope.pWhy);
+            if ($scope.pWhy) {
+                _.deepSet($scope.saveMed, 'sig', $scope.pWhy);
+            }
+
+            if ($scope.pStart) {
+                pmed_lowdate = {
+                    "date": moment($scope.pStart).format('YYYY-MM-DD'),
+                    "precision": 'day'
+                };
+                _.deepSet($scope.saveMed, 'date_time.low', pmed_lowdate);
+            }
+
+            if ($scope.pCurrentMedRadio) {
+                pmed_date_time = {
+                    "low": {
+                        "date": moment($scope.pStart).format('YYYY-MM-DD'),
+                        "precision": 'day'
+                    }
+                };
+                _.deepSet($scope.saveMed, 'date_time', pmed_date_time);
+            }
+
+            console.log($scope.pCurrentMedRadio);
+            if ($scope.pStart && !$scope.pCurrentMedRadio) {
+                if ($scope.pLast) {
+                    pmed_highdate = {
+                        "date": moment($scope.pLast).format('YYYY-MM-DD'),
+                        "precision": 'day'
+                    };
+                } else {
+                    pmed_highdate = {
+                        "date": moment().format('YYYY-MM-DD'),
+                        "precision": 'day'
+                    };
+                }
+                _.deepSet($scope.saveMed, 'date_time.high', pmed_highdate);
+            }
+            console.log("...entered Medication: ", $scope.saveMed);
+        }
+
+        $scope.medReset = function () {
+            console.log("RESETTING MEDICATION ENTRY");
+            $scope.prescriberResults = null;
+            $scope.pFirstName = null;
+            $scope.pLastName = null;
+            $scope.pDrugName = null;
+            $scope.selectedImage = null;
+            //$scope.openfdanameResults = null;
+            $scope.rxnormResults = null;
+            //$scope.medlineResults = null;
+            $scope.rximageResults = null;
+            //$scope.openfdacodeResults = null;
+            $scope.selectedDrug = null;
+            $scope.selectedPrescriber = null;
+            $scope.drugError = null;
+            $scope.drugWarning = null;
+            $scope.prescriberError = null;
+            $scope.entryStep = 0;
+            $scope.pWhy = null;
+            $scope.pLast = null;
+            $scope.pCurrentMedRadio = null;
+            $scope.pStart = null;
+            $scope.drugSpelling = null;
+            $scope.pCurrentImage = null;
+        };
+
+        function updateMedication() {
+            updatedObject();
+            if ($scope.saveMed.date_time) {
+                format.formatDate($scope.saveMed.date_time.low);
+                if ($scope.saveMed.date_time.high) {
+                    format.formatDate($scope.saveMed.date_time.high);
+                }
+            }
+            if ($scope.saveMed.performer && $scope.saveMed.performer.address) {
+                format.formatAddress($scope.saveMed.performer.address[0]);
+            }
+            if ($scope.saveMed.performer.name) {
+                format.formatName($scope.saveMed.performer.name[0]);
+            }
+            console.log($scope.saveMed);
+            medications.editMedication($scope.saveMed, function (err, results) {
                 if (err) {
                     // Display an error in the med entry modal
-                    $scope.saveMedicationStatus = 'error';
+                    $scope.updateMedicationStatus = 'error';
                 } else {
                     // Display success in the med entry modal
-                    $scope.saveMedicationStatus = 'success';
+                    console.log($scope.medication, $scope.saveMed);
+                    $scope.updateMedicationStatus = 'success';
                     $scope.medReset();
                     $modalInstance.close();
                     dataservice.forceRefresh();
