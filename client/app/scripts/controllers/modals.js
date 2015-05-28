@@ -391,7 +391,7 @@ angular.module('phrPrototypeApp')
                 $scope.pCurrentMedRadio = false;
             }
             if ($scope.medication.date_time.low) {
-                $scope.pStart = $scope.medication.date_time.low.date;
+                $scope.pStart = $scope.medication.date_time.low.displayDate;
             }
             if ($scope.medication.date_time.high) {
                 $scope.pLast = $scope.medication.date_time.high.date;
