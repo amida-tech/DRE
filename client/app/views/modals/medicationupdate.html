@@ -14,28 +14,30 @@
                         <label class="col-sm-5 control-label">Is this medication still active?</label>
                         <div class="col-sm-7">
                             <div>
-                                <input type="radio" name="uCurrentMedRadio" ng-model="uCurrentMedRadio" id="ucurrentRadioYes" ng-value="true"> Yes, I am still taking this medication.
+                                <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="pcurrentRadioYes" ng-value="true"> Yes, I am still taking this medication.
                             </div>
                             <div>
-                                <input type="radio" name="uCurrentMedRadio" ng-model="uCurrentMedRadio" id="ucurrentRadioNo" ng-value="false"> No, I am no longer taking this medication.
+                                <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="pcurrentRadioNo" ng-value="false"> No, I am no longer taking this medication.
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-5 control-label">When did you start taking it?</label>
                         <div class="col-sm-7">
-                            <input type="date" class="form-control" ng-model="medication.date_time.low">
+                            <input type="date" class="form-control" ng-model="pStart">
                         </div>
                     </div>
-                    <div class="form-group row" ng-show="medication.date_time.high|| !uCurrentMedRadio">
+                    <div class="form-group row" ng-show="!pCurrentMedRadio">
                         <label class="col-sm-5 control-label">When was your last dose?</label>
                         <div class="col-sm-7">
-                            <input type="date" class="form-control" ng-model="medication.date_time.high" placeholder="MM/DD/YYYY">
+                            <input type="date" class="form-control" ng-model="pLast">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-5 control-label">Instructions from your physician:</label>
-                        <textarea class="col-sm-7" type="text" ng-model="medication.sig"></textarea>
+                        <div class="col-sm-7">
+                            <textarea ng-model="pWhy" class="form-control"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,24 +51,24 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">First name (REQUIRED)</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" ng-model="medication.performer.name.first" ng-disabled="prescriberSearchActive">
+                                <input type="text" class="form-control" ng-model="pFirstName" ng-disabled="prescriberSearchActive">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Last name (REQUIRED)</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" ng-model="medication.performer.name.last" ng-disabled="prescriberSearchActive">
+                                <input type="text" class="form-control" ng-model="pLastName" ng-disabled="prescriberSearchActive">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">State</label>
                             <div class="col-sm-5">
-                                <input type="search" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
+                                <input type="text" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
-                                <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
+                                <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pState)" ng-disabled="prescriberSearchActive">Search</button>
                             </div>
                         </div>
                         <div class="row">
@@ -89,7 +91,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setSelectedPrescriber()">
+                                    <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setUpdatedPrescriber()">
                                         <td style="text-align: center"><span ng-show="prescriber.selected"><i class="fa fa-check" style="color: green"></i></span></td>
                                         <td title="NPI: {{prescriber.npi}}">
                                             <span>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</span>
@@ -117,41 +119,32 @@
                 </div>
             </div>
 
-            <div class="row" ng-if="medication.metadata.image.imageUrl">
-                <h3>Current Image</h3>
-                <br />
-                <div class="sub-entry">
-                    <div>
-                        <input type="radio" name="uCurrentImage" ng-model="uCurrentImage" id="ucurrentRadioYes" ng-value="true">
-                        <div class="col-sm-2">
-                            <a class="thumbnail active"><img ng-src="{{medication.metadata.image.imageUrl}}" class="img-responsive img-thumbnail" /></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row" ng-if="medImages.nlmRxImages.length>=1">
                 <h3 ng-if="medication.metadata.image.imageUrl">Other Images</h3>
                 <h3 ng-if="!medication.metadata.image.imageUrl">Possible Images</h3>
                 <div class="sub-entry">
                     <div class="row" ng-repeat="rxImage in medImages.nlmRxImages">
                         <div>
-                            <input type="checkbox" class="pull-left" ng-click="setSelectedImage(rxImage)" ng-model="uCurrentImage" id="ucurrentRadioYes" ng-value="true">
+                            <input type="checkbox" class="pull-left" ng-click="setUpdatedImage(rxImage)" ng-model="selectedImage">
                         </div>
                         <div class="col-sm-2">
                             <a class="thumbnail" ng-class="{active:rxImage.selected}"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
                         </div>
                     </div>
                 </div>
-                <input type="checkbox" class="pull-left" ng-click="setSelectedImage('')">None of these images is correct
             </div>
         </div>
     </div>
-    <div class="row">
+    <!--     <div class="row">
         <h3>Debug</h3>
         <pre>{{medication}}</pre>
+    </div> -->
+    <div ng-if="updateMedicationStatus==='error'">
+        <span>There was an error saving the medication.</span>
     </div>
+    <div ng-if="updateMedicationStatus==='success'" ng-init="$hide()"></div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-danger pull-left" ng-click="close()">Cancel</button>
-    <button class="btn btn-primary pull-right" ng-click="saveMedication()">Save Updates</button>
+    <button class="btn btn-primary pull-right" ng-click="updateMedication()">Save Updates</button>
 </div>

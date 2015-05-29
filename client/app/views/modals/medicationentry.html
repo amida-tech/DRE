@@ -110,14 +110,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Zip Code</label>
-                    <div class="col-sm-5">
-                        <input type="search" class="form-control" ng-model="pZip" placeholder="Zip Code" ng-disabled="prescriberSearchActive">
-                    </div>
-                </div>
-                <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)" ng-disabled="prescriberSearchActive">Search</button>
+                        <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pState)" ng-disabled="prescriberSearchActive">Search</button>
                     </div>
                 </div>
                 <div class="row">
@@ -171,35 +165,19 @@
         <h3>Info so far:</h3>
         <div class="row">
             <div class="row">
-                Drug Info: {{selectedDrug.synonym}}
-            </div>
-            <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length == 0">
-                <h5>No Images Found</h5>
-            </div>
-            <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length >= 1">
-                <div ng-if="rximageResults.nlmRxImages.length == 1">
-                    <h5>Is this what it looks like? If so, please click on the image to select it.</h5>
-                    <div class="col-sm-2">
-                        <a class="thumbnail" ng-class="{active:rximageResults.nlmRxImages[0].selected}" ng-click="setSelectedImage(rximageResults.nlmRxImages[0])"><img ng-src="{{rximageResults.nlmRxImages[0].imageUrl}}" class="img-responsive img-thumbnail" /></a>
-                    </div>
-                </div>
-                <div ng-if="rximageResults.nlmRxImages.length > 1">
-                    <h4>Is your pill one of these? Please click on an image to select it.</h4>
-                    <div class="col-sm-2" ng-repeat="rxImage in rximageResults.nlmRxImages">
-                        <a class="thumbnail" ng-class="{active:rxImage.selected}" ng-click="setSelectedImage(rxImage)"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
-                    </div>
-                </div>
-                <!--<pre>{{rximageResults}}</pre>-->
+                <h5 class="col-sm-5">Drug Name: </h5>
+                <div class="col-sm-6">{{selectedDrug.synonym}}</div>
             </div>
             <div class="row" ng-show="selectedPrescriber">
-                Prescriber: {{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}
+                <h5 class="col-sm-5">Prescriber: <h5>
+                <div class="col-sm-6">{{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}</div>
             </div>
         </div>
         <h3>Additional Info</h3>
         <div class="form-group row">
             <label class="col-sm-5 control-label">When did you start taking it?</label>
             <div class="col-sm-6">
-                <input type="date" class="form-control" ng-model="pStart" placeholder="MM/DD/YYYY">
+                <input type="date" class="form-control" ng-model="$parent.pStart" placeholder="MM/DD/YYYY">
             </div>
         </div>
         <div class="form-group row">
@@ -216,55 +194,73 @@
         <div class="form-group row" ng-hide="pCurrentMedRadio">
             <label class="col-sm-5 control-label">When was your last dose?</label>
             <div class="col-sm-6">
-                <input type="date" class="form-control" ng-model="pLast" placeholder="MM/DD/YYYY">
+                <input type="date" class="form-control" ng-model="$parent.pLast" placeholder="MM/DD/YYYY">
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-5 control-label">Details e.g. Dose amount, instructions, etc:</label>
             <div class="col-sm-6">
-                <textarea ng-model="pWhy" class="form-control">{{pWhy}}</textarea>
+                <textarea ng-model="$parent.pWhy" class="form-control"></textarea>
             </div>
         </div>
-    </div>
-    <div class="row" ng-if="entryStep===4">
-        <h3>Summary</h3>
-        <div class="row">
+        <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length == 0">
+            <h5>Images: </h5>
+                <h5 class="col-sm-6">No Images Found</h5>
+            </div>
+            <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length >= 1">
+                <div ng-if="rximageResults.nlmRxImages.length == 1">
+                    <h5>Is this what it looks like? If so, please click on the image to select it.</h5>
+                    <div class="col-sm-2">
+                        <a class="thumbnail" ng-class="{active:rximageResults.nlmRxImages[0].selected}" ng-click="setSelectedImage(rximageResults.nlmRxImages[0])"><img ng-src="{{rximageResults.nlmRxImages[0].imageUrl}}" class="img-responsive img-thumbnail" /></a>
+                    </div>
+                </div>
+                <div ng-if="rximageResults.nlmRxImages.length > 1">
+                    <h4>Is your pill one of these? Please click on an image to select it.</h4>
+                    <div class="col-sm-2" ng-repeat="rxImage in rximageResults.nlmRxImages">
+                        <a class="thumbnail" ng-class="{active:rxImage.selected}" ng-click="setSelectedImage(rxImage)"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
+                    </div>
+                </div>
+                <!--<pre>{{rximageResults}}</pre>-->
+            </div>
+        </div>
+        <div class="row" ng-if="entryStep===4">
+            <h3>Summary</h3>
             <div class="row">
-                Drug Info: {{selectedDrug.synonym}}
+                <h4 class="row">
+                {{selectedDrug.synonym}}
+            </h4>
+                <div class="row" ng-show="pCurrentMedRadio&&pStart">Date: {{pStart}} - Present</div>
+                <div class="row" ng-show="pStart&&pLast">Date: {{pStart}} - {{pLast}}</div>
+                <div class="sub-entry" ng-include="'views/templates/details/medications.html'"></div>
             </div>
-            <div class="row" ng-show="selectedPrescriber">
-                Prescriber: {{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}
+            <!--         <h4>Save Object</h4>
+        <pre>{{enteredMedication}}</pre> -->
+            <br />
+            <div ng-if="saveMedicationStatus==='error'">
+                <span>There was an error saving the medication.</span>
             </div>
-            <div class="sub-entry" ng-include="'views/templates/details/medications.html'"></div>
+            <div ng-if="saveMedicationStatus==='success'" ng-init="$hide()"></div>
         </div>
-        <h4>Save Object</h4>
-        <pre>{{enteredMedication}}</pre>
-        <br />
-        <div ng-if="saveMedicationStatus==='error'">
-            <span>There was an error saving the medication.</span>
-        </div>
-        <div ng-if="saveMedicationStatus==='success'" ng-init="$hide()"></div>
     </div>
-</div>
-<div class="modal-footer" ng-if="entryStep===0">
-    <!--<button class="btn btn-primary" ng-click="ok()">OK</button>
+    <div class="modal-footer" ng-if="entryStep===0">
+        <!--<button class="btn btn-primary" ng-click="ok()">OK</button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
-</div>
-<div class="modal-footer" ng-if="entryStep===1">
-    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-    <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedDrug">Next</button>
-</div>
-<div class="modal-footer" ng-if="entryStep===2">
-    <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="previousStep()">Back</button>
-    <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedPrescriber">Next</button>
-</div>
-<div class="modal-footer" ng-if="entryStep===3">
-    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-    <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="previousStep()">Back</button>
-    <button class="btn btn-primary" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="nextStep()">Next</button>
-</div>
-<div class="modal-footer" ng-if="entryStep===4">
-    <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
-    <button class="btn btn-default" data-toggle="tab" data-target="#addinfo" aria-controls="addinfo" ng-click="previousStep()">Back</button>
-    <button class="btn btn-primary" ng-click="saveMedication()">Submit</button>
-</div>
+    </div>
+    <div class="modal-footer" ng-if="entryStep===1">
+        <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+        <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedDrug">Next</button>
+    </div>
+    <div class="modal-footer" ng-if="entryStep===2">
+        <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="previousStep()">Back</button>
+        <button class="btn btn-primary" ng-click="nextStep()" ng-disabled="!selectedPrescriber">Next</button>
+    </div>
+    <div class="modal-footer" ng-if="entryStep===3">
+        <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+        <button class="btn btn-default" data-toggle="tab" data-target="#medinfo" aria-controls="medinfo" ng-click="previousStep()">Back</button>
+        <button class="btn btn-primary" data-toggle="tab" data-target="#summary" aria-controls="summary" ng-click="nextStep()">Next</button>
+    </div>
+    <div class="modal-footer" ng-if="entryStep===4">
+        <button class="btn btn-danger" data-toggle="tab" data-target="#medtype" aria-controls="medtype" ng-click="medReset()">Reset</button>
+        <button class="btn btn-default" data-toggle="tab" data-target="#addinfo" aria-controls="addinfo" ng-click="previousStep()">Back</button>
+        <button class="btn btn-primary" ng-click="saveMedication()">Submit</button>
+    </div>
