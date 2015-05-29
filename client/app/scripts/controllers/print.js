@@ -11,31 +11,86 @@ angular
     .module('phrPrototypeApp')
     .controller('PrintCtrl', Print);
 
-Print.$inject = ['$scope', '$window', '$location', 'format', 'matches', 'merges', 'history', 'dataservice'];
+Print.$inject = ['$scope', '$window', '$location', '$timeout', 'format', 'matches', 'merges', 'history', 'dataservice'];
 
-function Print($scope, $window, $location, format, matches, merges, history, dataservice) {
+function Print($scope, $window, $location, $timeout, format, matches, merges, history, dataservice) {
     /* jshint validthis: true */
     var vm = this;
     vm.filterBySection = filterBySection;
     vm.lastSection = lastSection;
     vm.section_count = 0;
     vm.singularName = singularName;
+    vm.sectionOrder = ["allergies", "medications", "conditions", "procedures", "results", "encounters", "immunizations", "insurance", "claims", "social", "vitals", "print"];
+    vm.entryType = 'all';
+
+    //required things: vm.recordEntries, vm.sectionOrder, 
 
     activate();
 
-    function activate() {
-        console.log("RECORD CONTROLLER LOAD ");
-        console.log(Date.now(), " MAGIC OF DATASERVICE STARTS!");
+    function activate() {        
+        function sortList() {
+            vm.entryList = _.sortBy(vm.entryList, function (entry) {
+                return entry.data.date_time.plotDate;
+            });
+            vm.entryList.reverse();
+        }
 
-        refresh();
-        getHistory();
-        // produces singular name for section name - in records merges list
+        history.getAccountHistory(function (err, history) {
+            if (err) {
+                console.log("err: " + err);
+            } else {
+                vm.accountHistory = history;
+                $scope.fileUploaded = false;
+                _.each(history.recordHistory, function (historyObj) {
+                    if (_.includes(historyObj, 'fileUploaded')) {
+                        $scope.fileUploaded = true;
+                    }
+                });
+                if ($scope.fileUploaded) {
+                    dataservice.getMergesListRecord(function (err, merges_record) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            vm.mergesList = merges_record;
+                        }
+                    });
 
-        //TODO may need callback
+                    dataservice.getProcessedRecord(vm.entryType, function (err, processed_record) {
+                        if (err) {
+                            console.log("err: " + err);
+                        } else {
+                            vm.recordEntries = _.sortBy(processed_record, function (entry) {
+                                if (entry.metadata.datetime[0]) {
+                                    return entry.metadata.datetime[0].date.substring(0, 9);
+                                } else {
+                                    return '1979-12-12';
+                                }
+                            }).reverse();
+                            dataservice.retrieveMasterRecord(function (err2, master_record) {
+                                if (err2) {
+                                    console.log("err2: " + err2);
+                                } else {
+                                    vm.entries = master_record;
+                                    vm.demographics = vm.entries.demographics;
+                                    dataservice.getBillingMerges(vm.entryType, function (err, merges_billing) {
+                                        vm.mergesList_billing = merges_billing;
+                                    });
+                                    dataservice.getRecordMerges(vm.entryType, function (err, merges_record) {
+                                        vm.mergesList_record = merges_record;
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+
+        /*
         function refresh() {
-            dataservice.curr_section = vm.entryType;
+            //dataservice.curr_section = vm.entryType;
             dataservice.getData(function () {
-                console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
+                //console.log(Date.now(), "MAGIC IS HERE: ", dataservice.processed_record);
                 //console.log("MORE: ", dataservice.all_merges, dataservice.merges_record, dataservice.merges_billing);
                 pageRender(dataservice.master_record, dataservice.all_notes);
                 vm.masterMatches = dataservice.curr_processed_matches;
@@ -59,17 +114,12 @@ function Print($scope, $window, $location, format, matches, merges, history, dat
         }
 
         function pageRender(data, data_notes) {
-            function sortList() {
-                vm.entryList = _.sortBy(vm.entryList, function (entry) {
-                    return entry.data.date_time.plotDate;
-                });
-                vm.entryList.reverse();
-            }
-            vm.recordEntries = dataservice.processed_record;
+            
+            //vm.recordEntries = dataservice.processed_record;
             console.log("processed record ", dataservice.processed_record);
             console.log("master record ", dataservice.master_record);
-            vm.entries = dataservice.master_record;
-            vm.demographics = vm.entries.demographics;
+            //vm.entries = dataservice.master_record;
+            //vm.demographics = vm.entries.demographics;
             console.log(">>> master record ", vm.entries);
             vm.recordEntries = _.sortBy(vm.recordEntries, function (entry) {
                 if (entry.metadata.datetime[0]) {
@@ -84,18 +134,10 @@ function Print($scope, $window, $location, format, matches, merges, history, dat
             } else {
                 vm.entryType = dataservice.curr_section;
             }
-            vm.sectionOrder = ["allergies", "medications", "conditions", "procedures", "results", "encounters", "immunizations", "insurance", "claims", "social", "vitals", "print"];
+            //vm.sectionOrder = ["allergies", "medications", "conditions", "procedures", "results", "encounters", "immunizations", "insurance", "claims", "social", "vitals", "print"];
         }
+        */
     }
-
-    $scope.$on('ngRepeatFinished', function (element) {
-        $scope.section_count++;
-        console.log($scope.section_count);
-        if ($scope.section_count === 11) {
-            $window.print();
-            $window.close();
-        }
-    });
 
     function filterBySection(entries, section) {
         return _.where(entries, {

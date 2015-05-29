@@ -13,8 +13,7 @@
                         <div ng-include="entryTemplatePath"></div>
                     </div>
                     <!--Record comments pane.-->
-                    <div id="comments{{recordIndex}}" data-parent="#selector" ng-if="entryMetaData.comments">
-
+                    <div id="comments{{recordIndex}}" data-parent="#selector" ng-if="entryMetaData.comments.length > 0">
                         <table class="table">
                             <tr>
                                 <td class="col-xs-1">Notes: </td>

@@ -17,12 +17,18 @@ angular.module('phrPrototypeApp')
         $scope.isUser = false;
         $scope.userList = {};
         $scope.focusInput = false;
+        
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = true;
+        };
 
         $scope.nextStep = function () {
             if ($scope.step === 0) {
 
                 username.checkLogin($scope.inputLogin, function (err, user_exists) {
-                    if (user_exists === "true") {
+                    if (user_exists) {
                         $scope.error = "That Username already exists, please choose another";
                         return;
                     }

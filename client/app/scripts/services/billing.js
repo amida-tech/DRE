@@ -6,7 +6,7 @@
  * # billing
  * Service in the phrPrototypeApp.
  */
-angular.module('phrPrototypeApp').service('billing', function billing($http, $q, format, notes) {
+angular.module('phrPrototypeApp').service('billing', function billing($http, $q, format, notes, dataservice) {
     this.masterRecord = {};
     this.processedRecord = {};
 
@@ -21,26 +21,23 @@ angular.module('phrPrototypeApp').service('billing', function billing($http, $q,
     };
 
     this.getData = function (callback) {
-        console.log('get record data from API');
-
-        $http.get('/api/v1/get_record/')
-            .success(function (data) {
-                notes.getNotes(function (err, notes_data) {
-                    if (err) {
-                        console.log("notes fetching error", err);
-                        callback(err);
+        dataservice.retrieveMasterRecord(function(err,data){
+            if (err) {
+                notes.getNotes(function (err2, notes_data) {
+                    if (err2) {
+                        console.log("notes fetching error", err2);
+                        callback(err2);
                     } else {
                         callback(null, {
                             "records": data,
                             "notes": notes_data
                         });
                     }
-
                 });
-
-            }).error(function (err) {
+            } else {
                 callback(err);
-            });
+            }
+        });
     };
 
     this.processRecord = function (rawRecord, rawNotes, caller) {

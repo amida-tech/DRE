@@ -9,7 +9,7 @@
 angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $location, notes, format, dataservice) {
     $scope.any_sections_selected = false;
 
-    $scope.notes = [];
+    $scope.notesList = [];
     $scope.filters = [{
         'name': 'starred',
         'value': true,
@@ -49,7 +49,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
                 if (err2) {
                     console.log("err2: ", err2);
                 } else {
-                    $scope.notes = mashNotesWithRecord(notes, master);
+                    $scope.notesList = mashNotesWithRecord(notes, master);
                     $scope.filters = updateFilters(notes);
                     updateAnySectionsSelected();
                 }
@@ -204,7 +204,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
                 dataservice.forceRefresh();
             }
         });
-        var tmpSection = _.where($scope.notes, {
+        var tmpSection = _.where($scope.notesList, {
             'section': section
         });
 
@@ -224,7 +224,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
                 if (filter.value) {
                     var section = filter.name;
 
-                    var tmpnotes = _.findWhere($scope.notes, {
+                    var tmpnotes = _.findWhere($scope.notesList, {
                         'section': section
                     });
 

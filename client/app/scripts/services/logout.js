@@ -9,7 +9,7 @@
  */
 
 angular.module('phrPrototypeApp')
-    .service('logout', function logout($location, $http, dataservice, history, notes) {
+    .service('logout', function logout($location, $http, dataservice, history, notes, authentication) {
 
         this.logout = function (callback) {
             var err = null;
@@ -19,6 +19,7 @@ angular.module('phrPrototypeApp')
                     notes.forceRefresh();
                     dataservice.forceRefresh();
                     history.forceRefresh();
+                    authentication.clearAuth();
                     //$rootScope.isAuthenticated = false;
                     //$location.path('/home');
                     callback(null);
