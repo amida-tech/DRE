@@ -9,44 +9,34 @@
  */
 angular.module('phrPrototypeApp')
     .service('authentication', function authentication($location, $http) {
-        /*
-                this.logout = function (callback) {
+        var auth_data = {};
 
-                    var err = null;
+        this.clearAuth = function () {
+            auth_data = {};
+        };
 
-                    $http.post('api/v1/logout')
-                        .success(function () {
-                            //$rootScope.isAuthenticated = false;
-                            //$location.path('/home');
-                            callback(null);
-                        }).error(function (err) {
-                            callback(err);
-                        });
-                };
-                */
-
-        //This would be a server call, but now just stubbed with $location.
         this.authStatus = function (callback) {
-
-            $http.get('api/v1/account')
-                .success(function (data) {
-                    if (data && data.authenticated) {
+            console.log("auth_data",auth_data);
+            if (Object.keys(auth_data).length > 0) {
+                if (auth_data && auth_data.authenticated) {
                         callback(null, true);
-                        // console.log(data, data.authenticated);
                     } else {
                         callback(null, false);
                     }
-
-                }).error(function (err) {
-                    callback(err, false);
-                });
-
-            /*if ($location.path() === "/" || $location.path() === "/login" || $location.path() === "/register" || $location.path() === "/reset") {
-                callback(null, false);
             } else {
-                callback(null, true);
-            }*/
+                $http.get('/api/v1/account')
+                    .success(function (data) {
+                        auth_data = data;
+                        if (data && data.authenticated) {
+                            callback(null, true);
+                        } else {
+                            callback(null, false);
+                        }
 
+                    }).error(function (err) {
+                        callback(err, false);
+                    });
+            }
         };
 
     });

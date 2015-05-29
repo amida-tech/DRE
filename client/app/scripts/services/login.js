@@ -30,15 +30,6 @@ angular.module('phrPrototypeApp')
                         //callback(data);
                         callback('Invalid Login and/or Password.');
                     });
-
-                //Stubbed login.
-                /*
-                if ((username === 'test' && password === 'test') || (username === 'test@amida-demo.com' && password === 'test')) {
-                    callback(null);
-                } else {
-                    callback('Invalid Login and/or Password.');
-                }
-                */
             }
         };
     });
