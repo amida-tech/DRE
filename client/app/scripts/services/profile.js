@@ -31,7 +31,6 @@ angular.module('phrPrototypeApp')
         this.saveProfile = function (info, callback) {
             $http.post('/api/v1/record/demographics', info)
                 .success(function (data) {
-                    // console.log('updated profile information');
                     callback(null);
                 })
                 .error(function (data) {

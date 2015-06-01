@@ -12,9 +12,9 @@ angular
     .module('phrPrototypeApp')
     .controller('ProfileCtrl', Profile);
 
-Profile.$inject = ['$location', '$route', '$anchorScroll', 'account', 'profile', 'format'];
+Profile.$inject = ['$rootScope', '$location', '$route', '$anchorScroll', 'account', 'profile', 'format'];
 
-function Profile($location, $route, $anchorScroll, account, profile, format) {
+function Profile($rootScope, $location, $route, $anchorScroll, account, profile, format) {
     /* jshint validthis: true */
     var vm = this;
     vm.cancelAddressSection = cancelAddressSection;
@@ -118,20 +118,19 @@ function Profile($location, $route, $anchorScroll, account, profile, format) {
     }
 
     function displayProfile() {
-        profile.getProfile(function (err, profileInfo) {
-            vm.profile = profileInfo;
-            //console.log('profile controller', vm.profile);
-            //Shims for HL7 weirdness.
-            if (profileInfo && profileInfo.dob) {
-                vm.editDOB = moment(vm.profile.dob.point.date).format('YYYY-MM-DD');
-                vm.viewDOB = format.formatDate(vm.profile.dob.point);
-            }
-            if (profileInfo && profileInfo.name.middle) {
-                vm.tmpMiddleName = profileInfo.name.middle[0];
-            }
-
-        });
+        vm.profile = $rootScope.profile_info;
+        if (vm.profile && vm.profile.dob) {
+            vm.editDOB = moment(vm.profile.dob.point.date).format('YYYY-MM-DD');
+            vm.viewDOB = format.formatDate(vm.profile.dob.point);
+        }
+        if (vm.profile && vm.profile.name.middle) {
+            vm.tmpMiddleName = vm.profile.name.middle[0];
+        }
     }
+
+    $rootScope.$on('profileAvailable', function (evt, profileInfo) {
+        displayProfile();
+    });
 
     function addPhone() {
         if (angular.isDefined(vm.new_phone)) {

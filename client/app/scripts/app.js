@@ -175,13 +175,24 @@ angular
                 redirectTo: '/'
             });
     })
-    .run(function ($rootScope, $location, authentication) {
+    .run(function ($rootScope, $location, authentication, profile) {
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             authentication.authStatus(function(err, auth) {
                 if (err) {
                     console.log("routeChangeStart auth error: ",err);
                 }
                 $rootScope.isAuthorized = auth;
+                $rootScope.$broadcast("authAvailable",auth);
+                if (auth) {
+                    profile.getProfile(function(err2,profile_info) {
+                        if (err2) {
+                            console.log("profile err: ",err2);
+                        } else {
+                            $rootScope.profile_info = profile_info;
+                            $rootScope.$broadcast("profileAvailable",profile_info);
+                        }
+                    });
+                }
                 if (next.requireLogin) {
                     if (!auth) {
                         event.preventDefault();
