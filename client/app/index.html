@@ -30,7 +30,7 @@
 
             <!--Logged In Navbar-->
             <!--<div ng-if="true" class="container-fluid">-->
-            <div ng-cloak ng-if="vm.loginStatus === true" class="container-fluid">
+            <div ng-cloak ng-if="isAuthorized" class="container-fluid">
                 <!--div ng-if="true" class="container-fluid"-->
                 <div style="margin: 0px 20px;">
                     <div class="navbar-header">
@@ -225,8 +225,6 @@
     <script src="/scripts/services/files/upload.js"></script>
     <script src="/scripts/services/format.js"></script>
     <script src="/scripts/services/history.js"></script>
-    <script src="/scripts/services/login.js"></script>
-    <script src="/scripts/services/logout.js"></script>
     <script src="/scripts/services/matches.js"></script>
     <script src="/scripts/services/medapi.js"></script>
     <script src="/scripts/services/medications.js"></script>

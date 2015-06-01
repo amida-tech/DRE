@@ -11,14 +11,19 @@ angular
     .module('phrPrototypeApp')
     .controller('NavbarCtrl', Navbar);
 
-Navbar.$inject = ['$rootScope', '$location', 'authentication', 'logout'];
+Navbar.$inject = ['$rootScope', '$location', 'authentication'];
 
-function Navbar($rootScope, $location, authentication, logout) {
+//function Navbar($rootScope, $location, authentication, logout) {
+function Navbar($rootScope, $location, authentication) {
     /* jshint validthis: true */
     var vm = this;
-    vm.loginStatus = false;
+    /*
+    authentication.authStatus(function(err,auth){
+        vm.loginStatus = auth;
+    });
+*/
     vm.navbarLogout = navbarLogout;
-
+/*
     activate();
 
     function activate() {
@@ -46,9 +51,10 @@ function Navbar($rootScope, $location, authentication, logout) {
             }
         });
     }
-
+*/
     function navbarLogout() {
-        logout.logout(function (err) {
+        //logout.logout(function (err) {
+        authentication.logout(function (err) {
             if (err) {
                 vm.error = err;
             } else {

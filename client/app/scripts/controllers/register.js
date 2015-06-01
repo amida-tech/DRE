@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RegisterCtrl', function ($scope, $location, registration, login, username) {
+    .controller('RegisterCtrl', function ($scope, $location, registration, authentication, username) {
 
         $scope.step = 0;
 
@@ -85,7 +85,7 @@ angular.module('phrPrototypeApp')
                 if (err) {
                     $scope.error = err;
                 } else {
-                    login.login($scope.inputLogin, $scope.inputPassword, function (err) {
+                    authentication.login($scope.inputLogin, $scope.inputPassword, function (err) {
                         if (err) {
                             $scope.error = err;
                         } else {

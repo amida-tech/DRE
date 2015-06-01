@@ -11,13 +11,13 @@ angular
     .module('phrPrototypeApp')
     .controller('LoginCtrl', Login);
 
-Login.$inject = ['$location', 'login'];
+Login.$inject = ['$location', 'authentication'];
 
-function Login($location, login) {
+function Login($location, authentication) {
     /* jshint validthis: true */
     var vm = this;
     vm.login = function () {
-        login.login(vm.inputLogin, vm.inputPassword, function (err) {
+        authentication.login(vm.inputLogin, vm.inputPassword, function (err) {
             if (err) {
                 vm.error = err;
             } else {
