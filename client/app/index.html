@@ -80,7 +80,7 @@
             </div>
 
             <!--Logged Out Navbar-->
-            <div ng-cloak ng-if="vm.loginStatus === false" class="container-fluid">
+            <div ng-cloak ng-if="!isAuthorized" class="container-fluid">
                 <!--div ng-if="false" class="container-fluid"-->
                 <div style="margin: 0px 20px;">
                     <div class="navbar-header">
