@@ -26,27 +26,26 @@ angular
             .when('/', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireLogin: false
             })
             .when('/print', {
                 templateUrl: 'views/print.html',
                 controller: 'PrintCtrl',
-                controllerAs: 'vm'
-            })
-            .when('/about', {
-                templateUrl: 'views/about.html',
-                controller: 'AboutCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireLogin: true
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireLogin: false
             })
             .when('/home', {
                 templateUrl: 'views/home.html',
                 controller: 'HomeCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireLogin: true
             })
             .when('/register', {
                 templateUrl: 'views/register.html',
@@ -55,134 +54,140 @@ angular
             .when('/profile', {
                 templateUrl: 'views/profile.html',
                 controller: 'ProfileCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireLogin: true
             })
             .when('/account', {
                 templateUrl: 'views/account.html',
                 controller: 'AccountCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireLogin: true
             })
             .when('/reset', {
                 templateUrl: 'views/reset.html',
-                controller: 'ResetCtrl'
+                controller: 'ResetCtrl',
+                requireLogin: true
             })
             .when('/files', {
                 templateUrl: 'views/files.html',
                 controller: 'FilesCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireLogin: true
             })
             .when('/record', {
                 templateUrl: 'views/record.html',
-                controller: 'RecordCtrl'
+                controller: 'RecordCtrl',
+                requireLogin: true
             })
             .when('/record/all', {
                 templateUrl: 'views/record.html',
-                controller: 'RecordCtrl'
+                controller: 'RecordCtrl',
+                requireLogin: true
             })
             .when('/record/medications', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionMedicationCtrl'
+                controller: 'SectionMedicationCtrl',
+                requireLogin: true
             })
             .when('/record/results', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionOtherCtrl'
+                controller: 'SectionOtherCtrl',
+                requireLogin: true
             })
             .when('/record/encounters', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionOtherCtrl'
+                controller: 'SectionOtherCtrl',
+                requireLogin: true
             })
             .when('/record/vitals', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionOtherCtrl'
+                controller: 'SectionOtherCtrl',
+                requireLogin: true
             })
             .when('/record/immunizations', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionOtherCtrl'
+                controller: 'SectionOtherCtrl',
+                requireLogin: true
             })
             .when('/record/allergies', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionOtherCtrl'
+                controller: 'SectionOtherCtrl',
+                requireLogin: true
             })
             .when('/record/conditions', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionOtherCtrl'
+                controller: 'SectionOtherCtrl',
+                requireLogin: true
             })
             .when('/record/procedures', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionOtherCtrl'
+                controller: 'SectionOtherCtrl',
+                requireLogin: true
             })
             .when('/record/social', {
                 templateUrl: 'views/record.html',
-                controller: 'SectionSocialCtrl'
+                controller: 'SectionSocialCtrl',
+                requireLogin: true
             })
             .when('/billing', {
                 templateUrl: 'views/billing.html',
-                controller: 'BillingCtrl'
+                controller: 'BillingCtrl',
+                requireLogin: true
             })
             .when('/billing/insurance', {
                 templateUrl: 'views/billing.html',
-                controller: 'BillingCtrl'
+                controller: 'BillingCtrl',
+                requireLogin: true
             })
             .when('/billing/claims', {
                 templateUrl: 'views/billing.html',
-                controller: 'BillingCtrl'
+                controller: 'BillingCtrl',
+                requireLogin: true
             })
             .when('/review', {
                 templateUrl: 'views/review.html',
-                controller: 'ReviewCtrl'
+                controller: 'ReviewCtrl',
+                requireLogin: true
             })
             .when('/record/download', {
                 templateUrl: 'views/record/download.html',
-                controller: 'RecordDownloadCtrl'
+                controller: 'RecordDownloadCtrl',
+                requireLogin: true
             })
             .when('/files/upload', {
                 templateUrl: 'views/files/upload.html',
                 controller: 'FilesUploadCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireLogin: true
             })
             .when('/notes', {
                 templateUrl: 'views/notes.html',
-                controller: 'NotesCtrl'
+                controller: 'NotesCtrl',
+                requireLogin: true
             })
             .when('/matches', {
                 templateUrl: 'views/matches.html',
                 controller: 'MatchesCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireLogin: true
             })
             .otherwise({
                 redirectTo: '/'
             });
     })
     .run(function ($rootScope, $location, authentication) {
-
-        var routesThatDontRequireAuth = ['/login', '/', '/register'];
-
-        // if current location matches route
-        var routeClean = function (route) {
-            return _.find(routesThatDontRequireAuth,
-                function (noAuthRoute) {
-                    return _.str.startsWith(route, noAuthRoute);
-                });
-        };
-
-        $rootScope.$on('$routeChangeStart', function (event, next, current) {
-            // if route requires auth and user is not logged in
-            authentication.authStatus(function (err, res) {
-                var url = $location.url();
-                //console.log('res', res);
-                if (!res) {
-                    //console.log('url', url, (url ==='/login')||(url==='/')||(url==='/register'));
-                    if ((url === '/login') || (url === '/') || (url === '/register')) {
-                        // console.log('working?');
-                        $location.path(url);
-                    } else {
-                        $location.path('/login');
-                    }
-                } else {
-                    $location.path(url);
-                    // console.log('no login required?');
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+            authentication.authStatus(function(err, auth) {
+                if (err) {
+                    console.log("routeChangeStart auth error: ",err);
                 }
-
+                $rootScope.isAuthorized = auth;
+                if (next.requireLogin) {
+                    if (!auth) {
+                        event.preventDefault();
+                        $location.path("/login");
+                    }
+                }
             });
         });
     });

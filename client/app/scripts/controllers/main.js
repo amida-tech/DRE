@@ -11,13 +11,14 @@ angular
     .module('phrPrototypeApp')
     .controller('MainCtrl', Main);
 
-Main.$inject = ['$location', 'login', 'authentication'];
+Main.$inject = ['$location', 'authentication'];
 
-function Main($location, login, authentication) {
+//function Main($location, login, authentication) {
+function Main($location, authentication) {
     /* jshint validthis: true */
     var vm = this;
     vm.mainLogin = mainLogin;
-
+/*
     activate();
 
     function activate() {
@@ -36,9 +37,11 @@ function Main($location, login, authentication) {
             });
         }
     }
+    */
 
     function mainLogin() {
-        login.login(vm.inputLogin, vm.inputPassword, function (err) {
+    //    login.login(vm.inputLogin, vm.inputPassword, function (err) {
+        authentication.login(vm.inputLogin, vm.inputPassword, function (err) {
             if (err) {
                 vm.error = err;
             } else {
@@ -46,4 +49,5 @@ function Main($location, login, authentication) {
             }
         });
     }
+
 }
