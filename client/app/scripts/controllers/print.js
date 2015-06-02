@@ -35,15 +35,15 @@ function Print($scope, $routeParams, $window, history, dataservice) {
 
     function removePatientEntered(processed_record, callback) {
         var new_processed_record = processed_record;
-        for (var i = new_processed_record.length-1; i >= -1; i--) {
+        for (var i = new_processed_record.length - 1; i >= -1; i--) {
             if (i === -1) {
-                console.log("processed record:",new_processed_record);
-                callback(null,new_processed_record);
+                console.log("processed record:", new_processed_record);
+                callback(null, new_processed_record);
             } else {
                 if (new_processed_record[i].category === "medications") {
                     if (new_processed_record[i].data.med_metadata) {
                         if (new_processed_record[i].data.med_metadata.patient_entered) {
-                            new_processed_record.splice(i,1);
+                            new_processed_record.splice(i, 1);
                         } else {
                             if (new_processed_record[i].metadata) {
                                 delete new_processed_record[i].metadata.comments;
@@ -108,7 +108,7 @@ function Print($scope, $routeParams, $window, history, dataservice) {
                                     }
                                 }).reverse();
                             } else {
-                                removePatientEntered(processed_record, function(err, new_processed) {
+                                removePatientEntered(processed_record, function (err, new_processed) {
                                     vm.recordEntries = _.sortBy(new_processed, function (entry) {
                                         if (entry.metadata.datetime[0]) {
                                             return entry.metadata.datetime[0].date.substring(0, 9);

@@ -831,12 +831,27 @@ angular.module('phrPrototypeApp')
         };
 
         $scope.printWithPatient = function () {
-            $window.open('/#/print/patient','_blank');
+            $window.open('/#/print/patient', '_blank');
             $scope.close();
         };
 
         $scope.printWithoutPatient = function () {
-            $window.open('/#/print','_blank');
+            $window.open('/#/print', '_blank');
+            $scope.close();
+        };
+    })
+    .controller('ExportModalCtrl', function ($scope, $window, $modalInstance) {
+        $scope.close = function () {
+            $modalInstance.dismiss();
+        };
+
+        $scope.exportWithPatient = function () {
+            $window.open('/api/v1/master_health_record/xml/patient');
+            $scope.close();
+        };
+
+        $scope.exportWithoutPatient = function () {
+            $window.open('/api/v1/master_health_record/xml');
             $scope.close();
         };
     });

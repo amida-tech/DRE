@@ -58,7 +58,9 @@
                             </button>
                         </div>
                         <div class="col-sm-3" ng-if="entryType==='all'" ng-hide="!accountHistory.lastUpdate">
-                            <a href="/api/v1/master_health_record/xml">
+
+                            <!--<a href="/api/v1/master_health_record/xml">-->
+                            <a href="" ng-click="exportModal()">
                                 <button class="btn btn-default btn-responsive" style="color: #6AA6FF">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
                                         <div class="pull-left" style="margin-top: 12px;">
