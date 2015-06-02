@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('phrPrototypeApp')
-    .controller('MedicationEntryModalCtrl', function($scope, $modalInstance, $route, medapi, npiapi, medications, dataservice, format) {
+    .controller('MedicationEntryModalCtrl', function ($scope, $modalInstance, $route, medapi, npiapi, medications, dataservice, format) {
         $scope.entryStep = 0;
         $scope.prescriberSearchActive = false;
         $scope.drugSearchActive = false;
@@ -129,56 +129,56 @@ angular.module('phrPrototypeApp')
 
         $scope.nextStep = function nextStep() {
             switch ($scope.entryStep) {
-                case 1:
-                    if (!$scope.selectedDrug) {
-                        $scope.drugError = "You must select a drug";
-                    } else {
-                        if ($scope.medSearchType === 'prescription') {
-                            $scope.entryStep = 2;
-                        } else {
-                            $scope.entryStep = 3;
-                        }
-                        medapi.findImages($scope.selectedDrug.rxcui, function(err, imageData) {
-                            if (err) {
-                                console.log("Err: " + err);
-                            } else {
-                                $scope.rximageResults = imageData;
-                            }
-                        });
-                    }
-                    break;
-                case 2:
-                    if (!$scope.selectedPrescriber) {
-                        $scope.prescriberError = "You must select a prescriber";
+            case 1:
+                if (!$scope.selectedDrug) {
+                    $scope.drugError = "You must select a drug";
+                } else {
+                    if ($scope.medSearchType === 'prescription') {
+                        $scope.entryStep = 2;
                     } else {
                         $scope.entryStep = 3;
                     }
-                    break;
-                case 3:
-                    enteredObject();
-                    if ($scope.enteredMedication.date_time) {
-                        format.formatDate($scope.enteredMedication.date_time.low);
-                        if ($scope.enteredMedication.date_time.high) {
-                            format.formatDate($scope.enteredMedication.date_time.high);
+                    medapi.findImages($scope.selectedDrug.rxcui, function (err, imageData) {
+                        if (err) {
+                            console.log("Err: " + err);
+                        } else {
+                            $scope.rximageResults = imageData;
                         }
+                    });
+                }
+                break;
+            case 2:
+                if (!$scope.selectedPrescriber) {
+                    $scope.prescriberError = "You must select a prescriber";
+                } else {
+                    $scope.entryStep = 3;
+                }
+                break;
+            case 3:
+                enteredObject();
+                if ($scope.enteredMedication.date_time) {
+                    format.formatDate($scope.enteredMedication.date_time.low);
+                    if ($scope.enteredMedication.date_time.high) {
+                        format.formatDate($scope.enteredMedication.date_time.high);
                     }
-                    if ($scope.enteredMedication.performer.address) {
-                        format.formatAddress($scope.enteredMedication.performer.address[0]);
-                    }
-                    if ($scope.enteredMedication.performer.name) {
-                        format.formatName($scope.enteredMedication.performer.name[0]);
-                    }
-                    console.log($scope.enteredMedication);
-                    $scope.medication = $scope.enteredMedication;
-                    $scope.entryStep = 4;
-                    break;
-                default:
-                    break;
+                }
+                if ($scope.enteredMedication.performer.address) {
+                    format.formatAddress($scope.enteredMedication.performer.address[0]);
+                }
+                if ($scope.enteredMedication.performer.name) {
+                    format.formatName($scope.enteredMedication.performer.name[0]);
+                }
+                console.log($scope.enteredMedication);
+                $scope.medication = $scope.enteredMedication;
+                $scope.entryStep = 4;
+                break;
+            default:
+                break;
             }
         };
 
         function saveMedication() {
-            medications.addMedication($scope.enteredMedication, function(err, results) {
+            medications.addMedication($scope.enteredMedication, function (err, results) {
                 if (err) {
                     // Display an error in the med entry modal
                     $scope.saveMedicationStatus = 'error';
@@ -208,7 +208,7 @@ angular.module('phrPrototypeApp')
             $scope.drugError = null;
             $scope.drugWarning = null;
             $scope.drugSpelling = null;
-            medapi.findRxNormGroup(drugName, function(err, data) {
+            medapi.findRxNormGroup(drugName, function (err, data) {
                 //console.log("rxnormgroup data: "+JSON.stringify(data));
                 $scope.drugSearchActive = false;
                 if (err) {
@@ -216,7 +216,7 @@ angular.module('phrPrototypeApp')
                 } else {
                     if (data.drugGroup.conceptGroup === undefined || data.drugGroup.conceptGroup === null) {
                         //$scope.rxnormResults = "No match found";
-                        medapi.findRxNormSpelling(drugName, function(err2, data2) {
+                        medapi.findRxNormSpelling(drugName, function (err2, data2) {
                             if (err2) {
                                 console.log("Err: " + err2);
                                 $scope.drugError = "No matches found.  Please Try Something Else";
@@ -327,7 +327,7 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        $scope.initInfoSearch = function(sType) {
+        $scope.initInfoSearch = function (sType) {
             if (sType === 'prescription') {
                 $scope.medSearchType = 'prescription';
             } else {
@@ -336,7 +336,7 @@ angular.module('phrPrototypeApp')
             $scope.entryStep = 1;
         };
 
-        $scope.medReset = function() {
+        $scope.medReset = function () {
             console.log("RESETTING MEDICATION ENTRY");
             $scope.prescriberResults = null;
             $scope.pFirstName = null;
@@ -362,7 +362,7 @@ angular.module('phrPrototypeApp')
             $scope.drugSpelling = null;
         };
 
-        $scope.close = function() {
+        $scope.close = function () {
             $scope.medReset();
             $modalInstance.dismiss('cancel');
         };
@@ -419,9 +419,9 @@ angular.module('phrPrototypeApp')
             $scope.selectedImage = $scope.medication.med_metadata.image;
         }
 
-        $scope.initStuff = function() {
+        $scope.initStuff = function () {
             console.log("init-ing stuff... " + $scope.medication.med_metadata.is_prescription);
-            medapi.findImages($scope.medication.product.product.code, function(err, data) {
+            medapi.findImages($scope.medication.product.product.code, function (err, data) {
                 $scope.medImages = data;
                 console.log('medImages', $scope.medImages);
             });
@@ -620,22 +620,22 @@ angular.module('phrPrototypeApp')
             });
         }
 
-        $scope.close = function() {
+        $scope.close = function () {
             $modalInstance.dismiss('cancel');
             $scope.medReset();
 
         };
     })
-    .controller('MedicationDeleteModalCtrl', function($scope, $modalInstance, $route, medication, medications) {
+    .controller('MedicationDeleteModalCtrl', function ($scope, $modalInstance, $route, medication, medications) {
         $scope.medication = medication.data;
         $scope.deleteConfirm = deleteConfirm;
 
         function deleteConfirm() {
-            medications.deleteMedication($scope.medication, function(err, results) {
+            medications.deleteMedication($scope.medication, function (err, results) {
                 if (err) {
                     console.log("err: " + err);
                 } else {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $modalInstance.close();
                         $route.reload();
                     }, 100);
@@ -643,11 +643,11 @@ angular.module('phrPrototypeApp')
             });
         }
 
-        $scope.close = function() {
+        $scope.close = function () {
             $modalInstance.dismiss('cancel');
         };
     })
-    .controller('MedicationDetailModalCtrl', function($scope, $modalInstance, medication, medapi, npiapi, medications, notes, dataservice) {
+    .controller('MedicationDetailModalCtrl', function ($scope, $modalInstance, medication, medapi, npiapi, medications, notes, dataservice) {
         $scope.medication = medication.data;
         $scope.comments = medication.metadata.comments;
         $scope.newComment = {
@@ -688,7 +688,7 @@ angular.module('phrPrototypeApp')
 
         $scope.activeTab = 'details';
 
-        $scope.selectTab = function() {
+        $scope.selectTab = function () {
             $scope.activeTab = this.tab.type;
             console.log("this tab type: " + this.tab.type);
             for (var i = 0; i < $scope.tabs.length; i++) {
@@ -700,18 +700,18 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        medapi.findImages($scope.medication.product.product.code, function(err, data) {
+        medapi.findImages($scope.medication.product.product.code, function (err, data) {
             $scope.medImages = data;
         });
 
         if (angular.isDefined($scope.medication.product.product.code)) {
-            medapi.fdaCode($scope.medication.product.product.code, function(err, data) {
+            medapi.fdaCode($scope.medication.product.product.code, function (err, data) {
                 $scope.fdaInfo = data;
                 $scope.fdatotal($scope.fdaInfo.results);
             });
         } else {
             if (angular.isDefined($scope.medication.product.product.name)) {
-                medapi.fdaName($scope.medication.product.product.name, function(err, data) {
+                medapi.fdaName($scope.medication.product.product.name, function (err, data) {
                     $scope.fdaInfo = data;
                     $scope.fdatotal($scope.fdaInfo.results);
                 });
@@ -720,22 +720,22 @@ angular.module('phrPrototypeApp')
 
         $scope.fdatotal = function fdatotal(eventsArray) {
             $scope.totalReports = _.sum(_.pluck(eventsArray, 'count'));
-            _.forEach(eventsArray, function(event) {
+            _.forEach(eventsArray, function (event) {
                 event.count = (100 * event.count / $scope.totalReports);
             });
         };
 
-        medapi.findmedline($scope.medication.product.product.code, $scope.medication.product.product.name, function(err, data) {
+        medapi.findmedline($scope.medication.product.product.code, $scope.medication.product.product.name, function (err, data) {
             $scope.medline = data;
         });
 
-        $scope.addNote = function(inputComment) {
+        $scope.addNote = function (inputComment) {
             $scope.newComment.entry = $scope.medication._id;
             $scope.newComment.note = inputComment;
             $scope.newComment.comment = inputComment;
             $scope.newComment.section = 'medications';
 
-            notes.addNote($scope.newComment, function(err, data) {
+            notes.addNote($scope.newComment, function (err, data) {
                 if (err) {
                     console.log('err ', err);
                 } else {
@@ -745,7 +745,7 @@ angular.module('phrPrototypeApp')
                     $scope.comments = [$scope.newComment];
 
                     if ($scope.newComment.starred) {
-                        notes.starNote($scope.newComment.note_id, $scope.newComment.starred, function(err, data) {
+                        notes.starNote($scope.newComment.note_id, $scope.newComment.starred, function (err, data) {
                             if (err) {
                                 console.log('add note star error ', err);
                             } else {
@@ -764,8 +764,8 @@ angular.module('phrPrototypeApp')
 
         };
 
-        $scope.toggleStar = function() {
-            notes.starNote($scope.comments[0].note_id, !$scope.comments[0].starred, function(err, data) {
+        $scope.toggleStar = function () {
+            notes.starNote($scope.comments[0].note_id, !$scope.comments[0].starred, function (err, data) {
                 if (err) {
                     console.log("err: " + err);
                 } else {
@@ -775,39 +775,39 @@ angular.module('phrPrototypeApp')
             });
         };
 
-        $scope.toggleNewStar = function() {
+        $scope.toggleNewStar = function () {
             $scope.newComment.starred = !$scope.newComment.starred;
         };
 
-        $scope.editNote = function() {
+        $scope.editNote = function () {
             console.log("edit note");
             $scope.editflag = true;
             $scope.editComment = $scope.comments[0].comment;
         };
 
-        $scope.cancelEdit = function() {
+        $scope.cancelEdit = function () {
             console.log("cancel edit");
             $scope.editflag = false;
         };
 
-        $scope.deleteNote = function() {
+        $scope.deleteNote = function () {
             console.log("delete note");
-            notes.deleteNote($scope.comments[0].note_id, function(err, data) {
+            notes.deleteNote($scope.comments[0].note_id, function (err, data) {
                 if (err) {
                     console.log('deleting note ', err);
                 } else {
                     console.log('deleting note ', data);
-                     $scope.comments = [];
-                     $scope.editflag = false;
+                    $scope.comments = [];
+                    $scope.editflag = false;
                 }
             });
         };
 
-        $scope.saveNote = function(editComment) {
+        $scope.saveNote = function (editComment) {
             console.log("save note");
             $scope.comments[0].comment = editComment;
             var noteID = $scope.comments[0].note_id;
-            notes.editNote(noteID, editComment, function(err, data) {
+            notes.editNote(noteID, editComment, function (err, data) {
                 if (err) {
                     console.log("err: " + err);
                 } else {
@@ -817,7 +817,7 @@ angular.module('phrPrototypeApp')
             $scope.editflag = false;
         };
 
-        $scope.close = function() {
+        $scope.close = function () {
             var newMedInfo = {
                 id: $scope.medication._id,
                 comments: $scope.comments

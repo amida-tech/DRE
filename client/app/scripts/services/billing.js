@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp').service('billing', function billing($http, $q,
     };
 
     this.getData = function (callback) {
-        dataservice.retrieveMasterRecord(function(err,data){
+        dataservice.retrieveMasterRecord(function (err, data) {
             if (err) {
                 notes.getNotes(function (err2, notes_data) {
                     if (err2) {

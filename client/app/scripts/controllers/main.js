@@ -18,29 +18,29 @@ function Main($location, authentication) {
     /* jshint validthis: true */
     var vm = this;
     vm.mainLogin = mainLogin;
-/*
-    activate();
+    /*
+        activate();
 
-    function activate() {
+        function activate() {
 
-        redirectUser();
+            redirectUser();
 
-        function redirectUser() {
-            authentication.authStatus(function (err, res) {
-                if (err) {
-                    throw err;
-                } else {
-                    if (res) {
-                        $location.path('/home');
+            function redirectUser() {
+                authentication.authStatus(function (err, res) {
+                    if (err) {
+                        throw err;
+                    } else {
+                        if (res) {
+                            $location.path('/home');
+                        }
                     }
-                }
-            });
+                });
+            }
         }
-    }
-    */
+        */
 
     function mainLogin() {
-    //    login.login(vm.inputLogin, vm.inputPassword, function (err) {
+        //    login.login(vm.inputLogin, vm.inputPassword, function (err) {
         authentication.login(vm.inputLogin, vm.inputPassword, function (err) {
             if (err) {
                 vm.error = err;
