@@ -8,6 +8,7 @@
  */
 angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $location, notes, format, dataservice) {
     $scope.any_sections_selected = false;
+    $scope.reverse = false;
 
     $scope.notesList = [];
     $scope.filters = [{
@@ -31,13 +32,22 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
     };
 
     $scope.dateSort = function () {
-        console.log('old predicate ' + $scope.predicate);
-        if ($scope.predicate === '') {
-            $scope.predicate = 'date';
+        if ($scope.predicate === 'note.date') {
+            //$scope.reverse = !$scope.reverse;
+            $scope.predicate = '-note.date';
         } else {
-            $scope.predicate = '';
+            $scope.predicate = 'note.date';
+            //$scope.reverse = false;
         }
-        console.log('new predicate ' + $scope.predicate);
+    };
+
+    $scope.sectionSort = function () {
+        if ($scope.predicate === 'displaySection') {
+            $scope.reverse = !$scope.reverse;
+        } else {
+            $scope.predicate = 'displaySection';
+            $scope.reverse = false;
+        }
     };
 
     dataservice.retrieveMasterRecord(function (err, master) {
@@ -93,7 +103,7 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
 
     $scope.toggleAll = function () {
         _.each($scope.filters, function (value, key, list) {
-            $scope.filters[key].value = true;
+            $scope.filters[key].value = !$scope.filters[key].value;
         });
         $scope.checkNotes();
     };

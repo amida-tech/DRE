@@ -53,16 +53,17 @@
                 <div ng-if="notesList.length === 0" class="col-sm-12 text-center">
                     <h5>No notes are available for display</h5>
                 </div>
-                <div ng-if="notesList.length !== 0" ng-show="notesList" ng-if="noMatch()" class="col-sm-12 text-center">
+                <div ng-show="notesList" ng-if="noMatch()" class="col-sm-12 text-center">
                     <h5>No notes matching your selection</h5>
                 </div>
 
-                <p ng-if="notesList.length !== 0" class="row pull-right">Sort by: <a href="" ng-click="dateSort()">Date</a> | <a href="" ng-click="predicate = 'displaySection'; reverse=!reverse"> Section Name</a>
+                <p ng-if="notesList.length !== 0" class="row pull-right">Sort by: <a href="" ng-click="dateSort()">Date</a> | <a href="" ng-click="sectionSort()"> Section Name</a>
                 </p>
 
                 <div ng-show="any_sections_selected" ng-repeat="(sectionIndex, sectionEntry) in sections = (notesList | sections:filters) | orderBy:predicate:reverse">
 
-                    <div ng-repeat="(noteIndex, noteEntry) in notesList = (sectionEntry.notes | starred:filters) | orderBy:'note.starred':true:predicate:reverse ">
+                    <!--<div ng-repeat="(noteIndex, noteEntry) in notesList = (sectionEntry.notes | starred:filters) | orderBy:'note.starred':true:predicate:reverse ">-->
+                    <div ng-repeat="(noteIndex, noteEntry) in notesList = (sectionEntry.notes | starred:filters) | orderBy:['-note.starred',predicate]">
                         <div ng-show="noteIndex === 0">
                             <h4>{{sectionEntry.displaySection}}</h4>
                         </div>
