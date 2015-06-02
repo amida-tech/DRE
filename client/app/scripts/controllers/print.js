@@ -11,9 +11,9 @@ angular
     .module('phrPrototypeApp')
     .controller('PrintCtrl', Print);
 
-Print.$inject = ['$scope', '$window', '$location', '$timeout', 'format', 'matches', 'merges', 'history', 'dataservice'];
+Print.$inject = ['$scope', '$routeParams', '$window', 'history', 'dataservice'];
 
-function Print($scope, $window, $location, $timeout, format, matches, merges, history, dataservice) {
+function Print($scope, $routeParams, $window, history, dataservice) {
     /* jshint validthis: true */
     var vm = this;
     vm.filterBySection = filterBySection;
@@ -23,9 +23,48 @@ function Print($scope, $window, $location, $timeout, format, matches, merges, hi
     vm.sectionOrder = ["allergies", "medications", "conditions", "procedures", "results", "encounters", "immunizations", "insurance", "claims", "social", "vitals", "print"];
     vm.entryType = 'all';
 
+    var patientEntered = false;
+    if ($routeParams.patient === "patient") {
+        patientEntered = true;
+        console.log('patient entered');
+    }
+
     //required things: vm.recordEntries, vm.sectionOrder, 
 
     activate();
+
+    function removePatientEntered(processed_record, callback) {
+        var new_processed_record = processed_record;
+        for (var i = new_processed_record.length-1; i >= -1; i--) {
+            if (i === -1) {
+                console.log("processed record:",new_processed_record);
+                callback(null,new_processed_record);
+            } else {
+                if (new_processed_record[i].category === "medications") {
+                    if (new_processed_record[i].data.med_metadata) {
+                        if (new_processed_record[i].data.med_metadata.patient_entered) {
+                            new_processed_record.splice(i,1);
+                        } else {
+                            if (new_processed_record[i].metadata) {
+                                delete new_processed_record[i].metadata.comments;
+                                delete new_processed_record[i].metadata.starred_comments;
+                            }
+                        }
+                    } else {
+                        if (new_processed_record[i].metadata) {
+                            delete new_processed_record[i].metadata.comments;
+                            delete new_processed_record[i].metadata.starred_comments;
+                        }
+                    }
+                } else {
+                    if (new_processed_record[i].metadata) {
+                        delete new_processed_record[i].metadata.comments;
+                        delete new_processed_record[i].metadata.starred_comments;
+                    }
+                }
+            }
+        }
+    }
 
     function activate() {
         function sortList() {
@@ -59,13 +98,26 @@ function Print($scope, $window, $location, $timeout, format, matches, merges, hi
                         if (err) {
                             console.log("err: " + err);
                         } else {
-                            vm.recordEntries = _.sortBy(processed_record, function (entry) {
-                                if (entry.metadata.datetime[0]) {
-                                    return entry.metadata.datetime[0].date.substring(0, 9);
-                                } else {
-                                    return '1979-12-12';
-                                }
-                            }).reverse();
+
+                            if (patientEntered) {
+                                vm.recordEntries = _.sortBy(processed_record, function (entry) {
+                                    if (entry.metadata.datetime[0]) {
+                                        return entry.metadata.datetime[0].date.substring(0, 9);
+                                    } else {
+                                        return '1979-12-12';
+                                    }
+                                }).reverse();
+                            } else {
+                                removePatientEntered(processed_record, function(err, new_processed) {
+                                    vm.recordEntries = _.sortBy(new_processed, function (entry) {
+                                        if (entry.metadata.datetime[0]) {
+                                            return entry.metadata.datetime[0].date.substring(0, 9);
+                                        } else {
+                                            return '1979-12-12';
+                                        }
+                                    }).reverse();
+                                });
+                            }
                             dataservice.retrieveMasterRecord(function (err2, master_record) {
                                 if (err2) {
                                     console.log("err2: " + err2);

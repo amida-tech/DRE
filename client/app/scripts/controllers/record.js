@@ -34,7 +34,7 @@ function singularName(section) {
 }
 
 angular.module('phrPrototypeApp')
-    .controller('RecordCtrl', function ($scope, $location, $route, matches, merges, history, dataservice) {
+    .controller('RecordCtrl', function ($scope, $location, $route, $modal, matches, merges, history, dataservice) {
 
         $scope.entryType = 'all';
 
@@ -42,6 +42,20 @@ angular.module('phrPrototypeApp')
             if (newEntry !== 'all') {
                 $location.path('record/' + newEntry);
             }
+        };
+
+        $scope.printModal = function () {
+            var modalInstance = $modal.open({
+                animation: false,
+                templateUrl: 'views/modals/print.html',
+                size: 'sm',
+                controller: 'PrintModalCtrl'
+            });
+            modalInstance.result.then(function (response) {
+                console.log(response);
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
         };
 
         $scope.singularName = singularName;

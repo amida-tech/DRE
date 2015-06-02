@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title">Print...</h3>
+</div>
+<div class="modal-body">
+    <div class="row text-center">
+        <h3>Would you like to include the additional data you've entered?</h3>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-1">
+            <button ng-click="printWithoutPatient()" class="btn btn-default col-sm-12">No</button>
+        </div>
+        <div class="col-sm-4 col-sm-offset-2">
+            <button ng-click="printWithPatient()" class="btn btn-primary col-sm-12">Yes</button>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+</div>

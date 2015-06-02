@@ -30,7 +30,8 @@
                             <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
                         </div>
                         <div class="col-sm-3" ng-if="entryType==='all'" ng-hide="!accountHistory.lastUpdate">
-                            <a href="#/print" target="_blank">
+                            <!--<a href="#/print" target="_blank">-->
+                            <a href="" ng-click="printModal()">
                                 <button class="btn btn-default btn-responsive" style="color: #6AA6FF">
                                     <div class="col-sm-12 text-left" style="text-transform: none;">
                                         <div class="pull-left" style="margin-top: 15px;">

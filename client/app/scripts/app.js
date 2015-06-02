@@ -35,6 +35,12 @@ angular
                 controllerAs: 'vm',
                 requireLogin: true
             })
+            .when('/print/:patient', {
+                templateUrl: 'views/print.html',
+                controller: 'PrintCtrl',
+                controllerAs: 'vm',
+                requireLogin: true
+            })
             .when('/login', {
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl',
