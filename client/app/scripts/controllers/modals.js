@@ -321,7 +321,7 @@ angular.module('phrPrototypeApp')
                         console.log("Martz err: " + err);
                         $scope.prescriberError = "No matches found, please try again";
                     } else {
-                        if (data.length >= 100) {
+                        if ((data.length >= 100) && (_.isUndefined(state))) {
                             $scope.prescriberError = "More than 100 matches found, please enter a state";
                         } else {
                             console.log("Martz success: " + JSON.stringify(data));
