@@ -40,7 +40,10 @@ angular.module('phrPrototypeApp')
 
         $scope.setEntryType = function (newEntry) {
             if (newEntry !== 'all') {
+                dataservice.setLastSection('record', '/' + newEntry);
                 $location.path('record/' + newEntry);
+            } else {
+                dataservice.setLastSection('record', '');
             }
         };
 
@@ -257,6 +260,7 @@ angular.module('phrPrototypeApp')
         });
 
         $scope.goToMatches = function (section) {
+            dataservice.setLastSection('record', '');
             $location.path('/matches');
         };
 
@@ -265,6 +269,7 @@ angular.module('phrPrototypeApp')
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
 
+            dataservice.setLastSection('record', '');
             $location.path('/matches');
         };
 
@@ -275,8 +280,10 @@ angular.module('phrPrototypeApp')
 
         $scope.setEntryType = function (newEntry) {
             if (newEntry === 'all') {
+                dataservice.setLastSection('record', '');
                 $location.path('record');
             } else {
+                dataservice.setLastSection('record', '/' + newEntry);
                 $location.path('record/' + newEntry);
             }
         };
@@ -455,6 +462,7 @@ angular.module('phrPrototypeApp')
         }, true);
 
         $scope.goToMatches = function (section) {
+            dataservice.setLastSection('record', '/' + $scope.entryType);
             $location.path('/matches');
         };
 
@@ -464,6 +472,7 @@ angular.module('phrPrototypeApp')
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
 
+            dataservice.setLastSection('record', '/' + $scope.entryType);
             $location.path('/matches');
         };
 
@@ -474,8 +483,10 @@ angular.module('phrPrototypeApp')
 
         $scope.setEntryType = function (newEntry) {
             if (newEntry === 'all') {
+                dataservice.setLastSection('record', '');
                 $location.path('record');
             } else {
+                dataservice.setLastSection('record', '/' + newEntry);
                 $location.path('record/' + newEntry);
             }
         };
@@ -574,6 +585,7 @@ angular.module('phrPrototypeApp')
         }, true);
 
         $scope.goToMatches = function (section) {
+            dataservice.setLastSection('record', '/' + $scope.entryType);
             $location.path('/matches');
         };
         $scope.launchMatch = function (el) {
@@ -581,6 +593,7 @@ angular.module('phrPrototypeApp')
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
 
+            dataservice.setLastSection('record', '/' + $scope.entryType);
             $location.path('/matches');
         };
 
@@ -595,8 +608,10 @@ angular.module('phrPrototypeApp')
 
         $scope.setEntryType = function (newEntry) {
             if (newEntry === 'all') {
+                dataservice.setLastSection('record', '');
                 $location.path('record');
             } else {
+                dataservice.setLastSection('record', '/' + newEntry);
                 $location.path('record/' + newEntry);
             }
         };
@@ -650,6 +665,7 @@ angular.module('phrPrototypeApp')
         });
 
         $scope.goToMatches = function (section) {
+            dataservice.setLastSection('record', '/' + $scope.entryType);
             $location.path('/matches');
         };
 
@@ -658,6 +674,7 @@ angular.module('phrPrototypeApp')
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
 
+            dataservice.setLastSection('record', '/' + $scope.entryType);
             $location.path('/matches');
         };
     });

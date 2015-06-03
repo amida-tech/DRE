@@ -10,9 +10,9 @@ angular
     .module('phrPrototypeApp')
     .controller('MatchesCtrl', Matches);
 
-Matches.$inject = ['$location', 'matches'];
+Matches.$inject = ['$location', 'matches', 'dataservice'];
 
-function Matches($location, matches) {
+function Matches($location, matches, dataservice) {
     /* jshint validthis: true */
     var vm = this;
     vm.masterMatches = [];
@@ -50,8 +50,9 @@ function Matches($location, matches) {
                 if (vm.masterMatches && vm.masterMatches[0]) {
                     vm.match = vm.masterMatches[0];
                 } else {
-                    $location.path('/record');
-
+                    dataservice.getLastSection(function (last_section) {
+                        $location.path('/record' + last_section.record);
+                    });
                 }
 
             } else {

@@ -8,6 +8,10 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
     var master_merges = [];
     var master_entries = [];
     var all_notes = [];
+    var last_section = {
+        record: '',
+        billing: ''
+    };
 
     function displayTypeNew(type) {
         var display_type = type;
@@ -360,6 +364,14 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
                 });
             }
         });
+    };
+
+    this.getLastSection = function (callback) {
+        callback(last_section);
+    };
+
+    this.setLastSection = function (section, new_last) {
+        last_section[section] = new_last;
     };
 
     this.getRecordMerges = function (section, callback) {

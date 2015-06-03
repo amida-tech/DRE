@@ -11,47 +11,25 @@ angular
     .module('phrPrototypeApp')
     .controller('NavbarCtrl', Navbar);
 
-Navbar.$inject = ['$rootScope', '$location', 'authentication'];
+Navbar.$inject = ['$rootScope', '$location', 'authentication', 'dataservice'];
 
 //function Navbar($rootScope, $location, authentication, logout) {
-function Navbar($rootScope, $location, authentication) {
+function Navbar($rootScope, $location, authentication, dataservice) {
     /* jshint validthis: true */
     var vm = this;
-    /*
-    authentication.authStatus(function(err,auth){
-        vm.loginStatus = auth;
-    });
-*/
+
     vm.navbarLogout = navbarLogout;
-    /*
-        activate();
 
-        function activate() {
-            checkAuthStatus();
-        }
-
-        $rootScope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
-            checkAuthStatus();
+    vm.navbarClick = function navbarClick(new_location) {
+        dataservice.getLastSection(function (last_section) {
+            if (new_location === 'record' || new_location === 'billing') {
+                $location.path('/' + new_location + last_section[new_location]);
+            } else {
+                $location.path('/' + new_location);
+            }
         });
+    };
 
-        function checkAuthStatus() {
-            //console.log("check aut status");
-            authentication.authStatus(function (err, res) {
-                if (err) {
-                    //console.log("status fetch error ", err);
-                    vm.loginStatus = false;
-                    //console.log(err);
-                } else {
-                    //console.log("auth status ", res);
-                    if (!res) {
-                        vm.loginStatus = false;
-                    } else {
-                        vm.loginStatus = true;
-                    }
-                }
-            });
-        }
-    */
     function navbarLogout() {
         //logout.logout(function (err) {
         authentication.logout(function (err) {
