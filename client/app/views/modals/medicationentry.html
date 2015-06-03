@@ -209,14 +209,22 @@
             <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length >= 1">
                 <div ng-if="rximageResults.nlmRxImages.length == 1">
                     <h5>Is this what it looks like? If so, please click on the image to select it.</h5>
+                    <div>
+                        <input type="checkbox" ng-class="{active:rximageResults.nlmRxImages[0].selected}" class="pull-left" ng-click="setSelectedImage(rximageResults.nlmRxImages[0])">
+                    </div>
                     <div class="col-sm-2">
                         <a class="thumbnail" ng-class="{active:rximageResults.nlmRxImages[0].selected}" ng-click="setSelectedImage(rximageResults.nlmRxImages[0])"><img ng-src="{{rximageResults.nlmRxImages[0].imageUrl}}" class="img-responsive img-thumbnail" /></a>
                     </div>
                 </div>
                 <div ng-if="rximageResults.nlmRxImages.length > 1">
                     <h4>Is your pill one of these? Please click on an image to select it.</h4>
-                    <div class="col-sm-2" ng-repeat="rxImage in rximageResults.nlmRxImages">
-                        <a class="thumbnail" ng-class="{active:rxImage.selected}" ng-click="setSelectedImage(rxImage)"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
+                    <div class="row"  ng-repeat="rxImage in rximageResults.nlmRxImages">
+                        <div>
+                            <input type="checkbox" ng-class="{active:rximage.selected}" class="pull-left" ng-click="setSelectedImage(rximage)">
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="thumbnail" ng-class="{active:rxImage.selected}" ng-click="setSelectedImage(rxImage)"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
+                        </div>
                     </div>
                 </div>
                 <!--<pre>{{rximageResults}}</pre>-->
