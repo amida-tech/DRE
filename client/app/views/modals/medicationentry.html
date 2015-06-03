@@ -156,12 +156,20 @@
         <h3>Info so far:</h3>
         <div class="row">
             <div class="row">
-                <h5 class="col-sm-5">Drug Name: </h5>
-                <div class="col-sm-6">{{selectedDrug.synonym}}</div>
+                <h5 class="col-sm-5">DRUG NAME: </h5>
+                <div class="col-sm-6">
+                    <div class="row">{{selectedDrug.synonym}}</div>
+                </div>
             </div>
+            <br/>
             <div class="row" ng-show="selectedPrescriber">
-                <h5 class="col-sm-5">Prescriber: <h5>
-                <div class="col-sm-6">{{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}</div>
+                <h5 class="col-sm-5">PRESCRIBER: </h5>
+                <div class="col-sm-6">
+                    <div class="row">{{selectedPrescriber.first_name}} {{selectedPrescriber.last_name}}, {{selectedPrescriber.credential}}
+                    </div>
+                    <div class="row">{{selectedPrescriber.practice_address.address_line}}, {{selectedPrescriber.practice_address.address_details_line}}</div>
+                    <div class="row">{{selectedPrescriber.practice_address.city}}, {{selectedPrescriber.practice_address.state}} {{selectedPrescriber.practice_address.zip}}</div>
+                </div>
             </div>
         </div>
         <h3>Additional Info</h3>
