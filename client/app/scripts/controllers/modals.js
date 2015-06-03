@@ -812,6 +812,7 @@ angular.module('phrPrototypeApp')
                     console.log("err: " + err);
                 } else {
                     console.log("edited note saved: ", data);
+                    $scope.comments[0].date = data.datetime;
                 }
             });
             $scope.editflag = false;
