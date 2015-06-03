@@ -67,7 +67,9 @@
     "grunt": "0.4.x",
     "grunt-contrib-jshint": "0.8.x",
     "grunt-contrib-watch": "0.6.x",
+    "grunt-exec": "^0.4.6",
     "grunt-express-server": "0.4.x",
-    "grunt-mocha-test": "0.10.x",    "grunt-jsbeautifier": "^0.2.8"
+    "grunt-mocha-test": "0.10.x",    "grunt-jsbeautifier": "^0.2.8",
+    "istanbul": "0.3.x"
   }
 }
