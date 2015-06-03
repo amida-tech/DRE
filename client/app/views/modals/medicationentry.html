@@ -92,21 +92,21 @@
             <br/>
             <form novalidate role="form" class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">First name (REQUIRED)</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-5 control-label">First name (REQUIRED)</label>
+                    <div class="col-sm-7">
                         <input type="text" class="form-control" ng-model="pFirstName" ng-disabled="prescriberSearchActive">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Last name (REQUIRED)</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-5 control-label">Last name (REQUIRED)</label>
+                    <div class="col-sm-7">
                         <input type="text" class="form-control" ng-model="pLastName" ng-disabled="prescriberSearchActive">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">State</label>
+                    <label class="col-sm-5 control-label">State (Please use the abbreviation i.e. CA for California)</label>
                     <div class="col-sm-5">
-                        <input type="search" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
+                        <input type="search" class="form-control" ng-model="pState" placeholder="" minlength="2" maxlength="2" ng-disabled="prescriberSearchActive">
                     </div>
                 </div>
                 <div class="form-group">
@@ -129,8 +129,6 @@
                                 <th style="text-align: center"><span><i class="fa fa-check" style="color: black"></i></span></th>
                                 <th>Name</th>
                                 <th>Practice</th>
-                                <th>Business</th>
-                                <th>Gender</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,18 +139,11 @@
                                     <br/>
                                     <span class="text-muted">NPI: {{prescriber.npi}}</span>
                                 </td>
-                                <!--<td title="Practice Address: {{prescriber.business_address}}">{{prescriber.practice_address}}</td>-->
                                 <td>
                                     <span ng-show="prescriber.practice_address">{{prescriber.practice_address.address_line}}, {{prescriber.practice_address.address_details_line}}</span>
                                     <br/>
                                     <span ng-show="prescriber.practice_address">{{prescriber.practice_address.city}}, {{prescriber.practice_address.state}} {{prescriber.practice_address.zip}}</span>
                                 </td>
-                                <td>
-                                    <span ng-show="prescriber.business_address">{{prescriber.business_address.address_line}}, {{prescriber.business_address.address_details_line}}</span>
-                                    <br/>
-                                    <span ng-show="prescriber.business_address">{{prescriber.business_address.city}}, {{prescriber.business_address.state}} {{prescriber.business_address.zip}}</span>
-                                </td>
-                                <td>{{prescriber.gender}}</td>
                             </tr>
                         </tbody>
                     </table>
