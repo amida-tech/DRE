@@ -299,6 +299,9 @@ angular.module('phrPrototypeApp')
 
         $scope.prescriberSearch = function prescriberSearch(firstName, lastName, state) {
             $scope.prescriberSearchActive = true;
+            $scope.prescriberResults = null;
+            $scope.prescriberCount = null;
+            $scope.prescriberError = null;
             var searchTest = false;
             var searchObj = {};
             $scope.selectedPrescriber = null;
@@ -318,10 +321,14 @@ angular.module('phrPrototypeApp')
                         console.log("Martz err: " + err);
                         $scope.prescriberError = "No matches found, please try again";
                     } else {
-                        console.log("Martz success: " + JSON.stringify(data));
-                        $scope.prescriberResults = data;
-                        $scope.prescriberCount = data.length;
-                        $scope.prescriberError = null;
+                        if (data.length >= 100) {
+                            $scope.prescriberError = "More than 100 matches found, please enter a state";
+                        } else {
+                            console.log("Martz success: " + JSON.stringify(data));
+                            $scope.prescriberResults = data;
+                            $scope.prescriberCount = data.length;
+                            $scope.prescriberError = null;
+                        }
                     }
                 });
             }
