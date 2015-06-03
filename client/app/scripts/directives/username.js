@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp')
                         if ($rootScope.profile_info.name.middle && $rootScope.profile_info.name.middle[0]) {
                             scope.user_middle = $rootScope.profile_info.name.middle[0];
                         }
-                    }    
+                    }
                 }
                 scope.$on('profileAvailable', function (evt, profileInfo) {
                     displayUsername();
