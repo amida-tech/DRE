@@ -23,35 +23,35 @@ function Navbar($rootScope, $location, authentication) {
     });
 */
     vm.navbarLogout = navbarLogout;
-/*
-    activate();
+    /*
+        activate();
 
-    function activate() {
-        checkAuthStatus();
-    }
+        function activate() {
+            checkAuthStatus();
+        }
 
-    $rootScope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
-        checkAuthStatus();
-    });
-
-    function checkAuthStatus() {
-        //console.log("check aut status");
-        authentication.authStatus(function (err, res) {
-            if (err) {
-                //console.log("status fetch error ", err);
-                vm.loginStatus = false;
-                //console.log(err);
-            } else {
-                //console.log("auth status ", res);
-                if (!res) {
-                    vm.loginStatus = false;
-                } else {
-                    vm.loginStatus = true;
-                }
-            }
+        $rootScope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+            checkAuthStatus();
         });
-    }
-*/
+
+        function checkAuthStatus() {
+            //console.log("check aut status");
+            authentication.authStatus(function (err, res) {
+                if (err) {
+                    //console.log("status fetch error ", err);
+                    vm.loginStatus = false;
+                    //console.log(err);
+                } else {
+                    //console.log("auth status ", res);
+                    if (!res) {
+                        vm.loginStatus = false;
+                    } else {
+                        vm.loginStatus = true;
+                    }
+                }
+            });
+        }
+    */
     function navbarLogout() {
         //logout.logout(function (err) {
         authentication.logout(function (err) {

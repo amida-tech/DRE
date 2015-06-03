@@ -48,7 +48,7 @@ module.exports = function (grunt) {
     grunt.registerTask('dev', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'watch']);
     grunt.registerTask('test', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'protractor:populate', 'protractor:medications', 'protractor:scenarios', 'watch']);
     grunt.registerTask('release', ['jshint', 'jsbeautifier:beautify', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
-    grunt.registerTask('travis-protractor', ['protractor:populate', 'protractor:medications', 'protractor:scenarios',]);
+    grunt.registerTask('travis-protractor', ['protractor:populate', 'protractor:medications', 'protractor:scenarios', ]);
 
     // Project Configuration
     grunt.initConfig({
