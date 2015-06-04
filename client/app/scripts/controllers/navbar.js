@@ -17,7 +17,6 @@ Navbar.$inject = ['$rootScope', '$location', 'authentication', 'dataservice'];
 function Navbar($rootScope, $location, authentication, dataservice) {
     /* jshint validthis: true */
     var vm = this;
-
     vm.navbarLogout = navbarLogout;
 
     vm.navbarClick = function navbarClick(new_location) {
