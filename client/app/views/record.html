@@ -46,7 +46,7 @@
                             <!--br/>
                             <h6 style="max-width: 175px; text-align: center;"><i class="fa fa-print"></i> <a href="/#/print" target="_blank">Print</a> my health record.</h6-->
                         </div>
-                        <div class="col-sm-3 col-sm-offset-3" ng-if="entryType==='medications'" ng-hide="!accountHistory.lastUpdate">
+                        <div class="col-sm-3 col-sm-offset-3" ng-if="entryType==='medications'">
                             <!--<button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;" data-placement="center" data-title="Medication Entry" data-content-template="views/modals/medicationentry.html" bs-modal="modal">-->
                             <button class="btn btn-default" style="color: #6AA6FF; min-width: 175px;" ng-click="entryModal()">
                                 <div class="col-sm-12 text-left" style="text-transform: none;">
@@ -80,7 +80,7 @@
             </div>
         </div>
         <!--d3. -->
-        <div class="panel panel-default" ng-show="!accountHistory.lastUpdate">
+        <!-- <div class="panel panel-default" ng-hide="entryListFiltered.length"> -->
             <div class="panel-body">
                 <div class="col-sm-12">
                     <h4>No Records Available</h4>
@@ -93,7 +93,7 @@
                 <measurements dash-metrics="{{dashMetrics}}" graph-type="{{tab.type}}" data="recordEntries"></measurements>
             </div>
         </div>
-        <div class="col-sm-12" ng-hide="!accountHistory.lastUpdate">
+        <div class="col-sm-12" ng-show="entryListFiltered.length">
             <!--end d3-->
             <div ng-show="entryType==='all'">
                 <div class="col-sm-12">
@@ -201,5 +201,5 @@
                 <!--end timeline-->
             </div>
         </div>
-        <!--<pre>{{masterRecord | json}}</pre>-->
+        <!-- <pre>{{entryListFiltered | json}}</pre> -->
     </div>
