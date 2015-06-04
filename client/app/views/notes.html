@@ -88,8 +88,8 @@
                                             <div role="tabpanel" class="collapse" id="details{{noteIndex}}">
                                                 <div class="sub-entry">
                                                     <h3>Entry Details</h3>
-                                                    <a ng-hide="note.section === 'claims' || note.section === 'insurance'" ng-click="setEntry(note.section, noteEntry.entry_id)"><h5>{{noteEntry.entryTitle}}</h5></a>
-                                                    <a ng-show="note.section === 'claims' || note.section === 'insurance'" ng-click="setEntry(note.section, noteEntry.entry_id)"><h5>{{noteEntry.entryTitle}}</h5></a>
+                                                    <a ng-hide="noteEntry.section === 'claims' || noteEntry.section === 'insurance'" ng-click="setEntry(noteEntry.section, noteEntry.entry_id)"><h5>{{noteEntry.entryTitle}}</h5></a>
+                                                    <a ng-show="noteEntry.section === 'claims' || noteEntry.section === 'insurance'" ng-click="setEntry(noteEntry.section, noteEntry.entry_id)"><h5>{{noteEntry.entryTitle}}</h5></a>
                                                     <h5>{{noteEntry.entrySubTitleOne}}</h5>
                                                     <h5>{{noteEntry.entrySubTitleTwo}}</h5>
                                                 </div>
