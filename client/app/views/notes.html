@@ -47,13 +47,11 @@
                     <h5>No notes matching your selection</h5>
                 </div>
                 <div>
-                    <p>Timeline</p>
+                    <p>Timeline</p><span ng-if="notesList.length !== 0" class="row pull-right">Sort by: <a href="" ng-click="dateSort()">Date <span ng-bind-html="sortString"></span></a></span>
                 </div>
                 <div class="row col-sm-12">
                     <div timeline chart-data="notesList" chart-type="notes" class="timeline-graph"></div>
                 </div>
-                <p ng-if="notesList.length !== 0" class="row pull-right">Sort by: <a href="" ng-click="dateSort()">Date <span ng-bind-html="sortString"></span></a>
-                </p>
                 <div ng-repeat="(noteIndex, noteEntry) in notesList | orderBy:['-starred',predicate]">
                     <div class="col-sm-12 row timeline-side" ng-if="recordEntry.entry_type !== 'demographics' ">
                         <!--Timeline Icon-->
@@ -100,6 +98,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-2 center-block text-center timeline-footer">
+                    <svg width="30" height="30">
+                        <circle cx="15" cy="15" r="15"></circle>
+                    </svg>
                 </div>
             </div>
         </div>
