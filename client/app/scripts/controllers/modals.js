@@ -162,11 +162,13 @@ angular.module('phrPrototypeApp')
                         format.formatDate($scope.enteredMedication.date_time.high);
                     }
                 }
-                if ($scope.enteredMedication.performer.address) {
-                    format.formatAddress($scope.enteredMedication.performer.address[0]);
-                }
-                if ($scope.enteredMedication.performer.name) {
-                    format.formatName($scope.enteredMedication.performer.name[0]);
+                if ($scope.enteredMedication.performer) {
+                    if ($scope.enteredMedication.performer.address) {
+                        format.formatAddress($scope.enteredMedication.performer.address[0]);
+                    }
+                    if ($scope.enteredMedication.performer.name) {
+                        format.formatName($scope.enteredMedication.performer.name[0]);
+                    }
                 }
                 console.log($scope.enteredMedication);
                 $scope.medication = $scope.enteredMedication;
