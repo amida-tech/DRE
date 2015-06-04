@@ -21,7 +21,7 @@ angular.module('phrPrototypeApp').service('record', function record($http, $q, f
     };
 
     this.getData = function (callback) {
-        dataservice.retrieveMasterRecord(function(err,data){
+        dataservice.retrieveMasterRecord(function (err, data) {
             if (err) {
                 notes.getNotes(function (err2, notes_data) {
                     if (err2) {

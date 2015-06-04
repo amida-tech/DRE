@@ -86,6 +86,33 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                     plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
                     plotDomain = [plotFloor, plotCeiling];
 
+                } else if (dataType === 'notes' && dataToPlot) {
+                    console.log('>>>plotting notes');
+                    console.log("num of points ", dataToPlot);
+
+                    _.each(dataToPlot, function (entry) {
+                        var plotDate;
+                        if (entry.note.date) {
+                            if (entry.note.date) {
+                                plotDate = isoFormat.parse(entry.note.date);
+                            }
+                            //Redundancy for isoFormat subsecond support.
+                            if (_.isNull(plotDate)) {
+                                plotDate = isoFormatSubsecond.parse(entry.note.date);
+                            }
+                            var tempCat = entry.section;
+                            plotCircles.push({
+                                "date": plotDate,
+                                "category": tempCat.charAt(0).toUpperCase() + tempCat.slice(1)
+                            });
+                            tmpDomain.push(plotDate);
+                        }
+                    });
+                    minDate = d3.min(tmpDomain);
+                    maxDate = d3.max(tmpDomain);
+                    plotFloor = d3.time.month.floor(d3.time.month.offset(minDate, -2));
+                    plotCeiling = d3.time.month.floor(d3.time.month.offset(maxDate, 2));
+                    plotDomain = [plotFloor, plotCeiling];
                 } else {
                     console.log('>>>plotting something else');
                     console.log("num of points ", dataToPlot);
@@ -119,7 +146,7 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
 
             function renderPlot() {
                 var width = 0;
-                if (dataToPlot.length > 0) {
+                if (plotDomain.length > 0) {
                     console.log("timeline render plot");
                     getSVGWidth();
                     buildScale();
@@ -276,10 +303,9 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                 }
             }
             $timeout(function () {
-                console.log('timeout... should be after DOM loaded');
                 gatherData();
                 renderPlot();
-            }, 0);
+            }, 500);
 
             //Re-evaluate scope on resize.
             $window.onresize = function () {

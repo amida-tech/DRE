@@ -11,27 +11,27 @@ angular.module('phrPrototypeApp')
     .service('authentication', function authentication($rootScope, $location, $http, dataservice, history, notes) {
         var auth_data = {};
 
-        function clearAuth () {
+        function clearAuth() {
             auth_data = {};
             $rootScope.isAuthorized = false;
         }
         this.clearAuth = clearAuth;
 
         this.authStatus = function (callback) {
-            console.log("auth_data",auth_data);
+            console.log("auth_data", auth_data);
             if (Object.keys(auth_data).length > 0) {
                 if (auth_data.authenticated) {
-                        callback(null, true);
-                    } else {
-                        callback(null, false);
-                    }
+                    callback(null, true);
+                } else {
+                    callback(null, false);
+                }
             } else {
                 console.log("should be api call");
                 $http.get('/api/v1/account')
                     .success(function (data) {
                         if (data && data.authenticated) {
                             auth_data.authenticated = true;
-                            console.log("authenticated: ",auth_data);
+                            console.log("authenticated: ", auth_data);
                             callback(null, true);
                         } else {
                             auth_data.authenticated = false;

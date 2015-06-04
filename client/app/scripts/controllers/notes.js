@@ -8,21 +8,50 @@
  */
 angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $location, notes, format, dataservice) {
     $scope.any_sections_selected = false;
+    $scope.predicate = 'note.date';
+    $scope.sortString = '<i class="fa fa-sort-asc"></i>';
 
     $scope.notesList = [];
-    $scope.filters = [{
-        'name': 'starred',
-        'value': true,
-        'displayName': 'starred'
-    }, {
-        'name': 'unStarred',
-        'value': true,
-        'displayName': 'un-starred'
-    }];
+    $scope.masterNotesList = [];
+
+    $scope.starFilters = [true, false];
+    $scope.sectionFilters = [];
+    $scope.sectionList = [];
+    $scope.sectionMasterList = [];
+
+    function updateFilters() {
+        function sectionLoop(possibleNotes) {
+            var filteredNotes = [];
+            _.each(possibleNotes, function (note) {
+                if ($scope.sectionFilters.indexOf(note.section) > -1) {
+                    filteredNotes.push(note);
+                }
+            });
+            $scope.notesList = filteredNotes;
+        }
+        if ($scope.starFilters.length === 2) {
+            sectionLoop(_.clone($scope.masterNotesList));
+            $scope.sectionList = _.clone($scope.sectionMasterList);
+        } else {
+            if ($scope.starFilters.length === 0) {
+                $scope.notesList = [];
+                $scope.sectionList = [];
+            } else {
+                var possibleNotes = [];
+                var filteredSections = [];
+                _.each(_.clone($scope.masterNotesList), function (note) {
+                    if (note.starred === $scope.starFilters[0]) {
+                        possibleNotes.push(note);
+                        filteredSections.push(note.section);
+                    }
+                });
+                $scope.sectionList = _.uniq(filteredSections);
+                sectionLoop(possibleNotes);
+            }
+        }
+    }
 
     $scope.setEntry = function (section, entryId) {
-        //dataservice.curr_section = section;
-        //dataservice.curr_location = entryId;
         if (section === 'insurance' || section === 'claims') {
             $location.path('/billing/' + section);
         } else {
@@ -31,13 +60,15 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
     };
 
     $scope.dateSort = function () {
-        console.log('old predicate ' + $scope.predicate);
-        if ($scope.predicate === '') {
-            $scope.predicate = 'date';
+        if ($scope.predicate === 'note.date') {
+            //$scope.reverse = !$scope.reverse;
+            $scope.predicate = '-note.date';
+            $scope.sortString = '<i class="fa fa-sort-desc"></i>';
         } else {
-            $scope.predicate = '';
+            $scope.predicate = 'note.date';
+            $scope.sortString = '<i class="fa fa-sort-asc"></i>';
+            //$scope.reverse = false;
         }
-        console.log('new predicate ' + $scope.predicate);
     };
 
     dataservice.retrieveMasterRecord(function (err, master) {
@@ -45,57 +76,65 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
             console.log("err: ", err);
         } else {
             $scope.masterRecord = master;
-            notes.getNotes(function (err2, notes) {
+            notes.getNotes(function (err2, all_notes) {
                 if (err2) {
                     console.log("err2: ", err2);
                 } else {
-                    $scope.notesList = mashNotesWithRecord(notes, master);
-                    $scope.filters = updateFilters(notes);
-                    updateAnySectionsSelected();
+                    //$scope.notesList = mashNotesWithRecord(notes, master);
+                    parseNotes(all_notes, master, function (err3, notesList) {
+                        if (err3) {
+                            console.log(err3);
+                        }
+                        $scope.masterNotesList = _.clone(notesList);
+                        $scope.notesList = _.clone(notesList);
+                    });
+                    initFilters(all_notes);
                 }
             });
         }
     });
 
-    //updates list of sections in filters based on what sections are present in notes
-    function updateFilters(notes) {
-        var filters = $scope.filters;
-        //generating list of unique sections present in notes
-        var notes_sections = [];
-        notes_sections = _.pluck(notes, "section");
-        notes_sections = _.uniq(notes_sections);
-        _.each(notes_sections, function (section) {
-            filters.push({
-                'name': section,
-                'value': true,
-                'displayName': displaySection(section)
-            });
-        });
-        return filters;
+    function initFilters(all_notes) {
+        var notes_sections_all = _.pluck(all_notes, "section");
+        var notes_sections = _.uniq(notes_sections_all);
+        $scope.sectionMasterList = _.clone(notes_sections);
+        $scope.sectionList = _.clone(notes_sections);
+        $scope.sectionFilters = _.clone(notes_sections);
+        $scope.notesList = _.clone($scope.masterNotesList);
+        updateFilters();
     }
 
-    //updated flag that says if any sections are selected to view
-    function updateAnySectionsSelected() {
-        $scope.any_sections_selected = false;
-        _.each($scope.filters, function (filter) {
-            if (filter.name !== "starred" && filter.name !== "unStarred" && filter.value) {
-                $scope.any_sections_selected = true;
+    $scope.toggleFilter = function (filterType) {
+        if (filterType === "star" || filterType === "unstar") {
+            if (filterType === "star") {
+                if ($scope.starFilters.indexOf(true) > -1) {
+                    $scope.starFilters.splice($scope.starFilters.indexOf(true), 1);
+                } else {
+                    $scope.starFilters.push(true);
+                }
+            } else {
+                if ($scope.starFilters.indexOf(false) > -1) {
+                    $scope.starFilters.splice($scope.starFilters.indexOf(false), 1);
+                } else {
+                    $scope.starFilters.push(false);
+                }
             }
-        });
-    }
-
-    $scope.toggle = function (index) {
-        $scope.filters[index].value = !$scope.filters[index].value;
-        //calculate if no sections are selected
-        updateAnySectionsSelected();
-        $scope.checkNotes();
+        } else {
+            //section filters
+            if ($scope.sectionFilters.indexOf(filterType) > -1) {
+                $scope.sectionFilters.splice($scope.sectionFilters.indexOf(filterType), 1);
+            } else {
+                $scope.sectionFilters.push(filterType);
+            }
+        }
+        updateFilters();
     };
 
     $scope.toggleAll = function () {
-        _.each($scope.filters, function (value, key, list) {
-            $scope.filters[key].value = true;
-        });
-        $scope.checkNotes();
+        $scope.starFilters = [true, false];
+        $scope.sectionFilters = _.clone($scope.sectionMasterList);
+        $scope.sectionList = _.clone($scope.sectionMasterList);
+        updateFilters();
     };
 
     function displaySection(section) {
@@ -110,93 +149,72 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
             return section;
         }
     }
+    $scope.displaySection = displaySection;
 
-    function mashNotesWithRecord(notesAry, record) {
-        console.log("mashNotesWithRecord ", notesAry, record);
-        //generating list of unique sections present in notes
-        var notes_sections = [];
-        notes_sections = _.pluck(notesAry, "section");
-        notes_sections = _.uniq(notes_sections);
-
-        console.log("sections present in notes ", notes_sections);
-
+    function parseNotes(notesArr, record, callback) {
         var res = [];
-        _.each(notes_sections, function (section) {
 
-            var section_notes = [];
-            section_notes = _.filter(notesAry, {
-                section: section
-            });
-            var section_notes_with_entry = [];
-            _.each(section_notes, function (note) {
-                var result = {};
-                result = {
-                    'entryTitle': note.entry,
-                    'entrySubTitleOne': '',
-                    'entrySubTitleTwo': '',
-                    'entry_id': note.entry,
-                    'note': {
-                        'comment': note.note,
-                        'date': note.datetime,
-                        'starred': note.star,
-                        'note_id': note._id
-                    }
-                };
-
-                var section_mod = section;
-                switch (section) {
-                case "conditions":
-                    section_mod = "problems";
-                    break;
-                case "social":
-                    section_mod = "social_history";
-                    break;
-                case "insurance":
-                    section_mod = "payers";
-                    break;
+        _.each(notesArr, function (note) {
+            var result = {};
+            result = {
+                'entryTitle': note.entry,
+                'entrySubTitleOne': '',
+                'entrySubTitleTwo': '',
+                'entry_id': note.entry,
+                'starred': note.star,
+                'section': note.section,
+                'note': {
+                    'comment': note.note,
+                    'date': note.datetime,
+                    'starred': note.star,
+                    'note_id': note._id
                 }
-
-                var data = _.where(record[section_mod], {
-                    '_id': note.entry
-                })[0];
-
-                if (!data) {
-                    console.log("BAAAD!!!!!", section, record[section_mod], record);
-                    data = {};
-                }
-
-                var entry_data = {
-                    entryData: data,
-                    type: section,
-                    recordEntry: {
-                        metadata: {}
-                    }
-                };
-
-                var titles;
-                notes.getTitles(entry_data, function (err, res) {
-                    if (err) {
-                        console.log("Error:", err);
-                    } else {
-                        titles = res;
-                    }
-                });
-                result.entryTitle = titles.entryTitle;
-                result.entrySubTitleOne = titles.entrySubTitleOne;
-                result.entrySubTitleTwo = titles.entrySubTitleTwo;
-                section_notes_with_entry.push(result);
-            });
-            var result = {
-                'displaySection': displaySection(section),
-                'section': section,
-                'notes': section_notes_with_entry
             };
+            var section_mod = note.section;
+            switch (note.section) {
+            case "conditions":
+                section_mod = "problems";
+                break;
+            case "social":
+                section_mod = "social_history";
+                break;
+            case "insurance":
+                section_mod = "payers";
+                break;
+            }
+            var data = _.where(record[section_mod], {
+                '_id': note.entry
+            })[0];
+
+            if (!data) {
+                console.log("BAAAD!!!!!", note.section, record[section_mod], record);
+                data = {};
+                callback("baaaad error");
+            }
+            var entry_data = {
+                entryData: data,
+                type: note.section,
+                recordEntry: {
+                    metadata: {}
+                }
+            };
+            var titles;
+            notes.getTitles(entry_data, function (err, res) {
+                if (err) {
+                    console.log("Error:", err);
+                } else {
+                    titles = res;
+                }
+            });
+            result.entryTitle = titles.entryTitle;
+            result.entrySubTitleOne = titles.entrySubTitleOne;
+            result.entrySubTitleTwo = titles.entrySubTitleTwo;
             res.push(result);
         });
-        return res;
+        callback(null, res);
     }
 
-    $scope.clickStar = function (starVal, starIndex, section, entry) {
+    $scope.clickStar = function (starVal, entry) {
         notes.starNote(entry.note.note_id, !starVal, function (err, data) {
             if (err) {
                 console.log('err ', err);
@@ -204,56 +222,12 @@ angular.module('phrPrototypeApp').controller('NotesCtrl', function ($scope, $loc
                 dataservice.forceRefresh();
             }
         });
-        var tmpSection = _.where($scope.notesList, {
-            'section': section
-        });
-
-        _.each(tmpSection[0].notes, function (note) {
+        _.each($scope.masterNotesList, function (note) {
             if (entry.note.note_id === note.note.note_id) {
+                note.starred = !starVal;
                 note.note.starred = !starVal;
             }
-
         });
-    };
-
-    $scope.checkNotes = function () {
-        $scope.starredNotes = false;
-        $scope.unstarredNotes = false;
-        _.each($scope.filters, function (filter, index) {
-            if (index > 1) {
-                if (filter.value) {
-                    var section = filter.name;
-
-                    var tmpnotes = _.findWhere($scope.notesList, {
-                        'section': section
-                    });
-
-                    _.each(tmpnotes.notes, function (note) {
-                        if (note.note.starred) {
-                            $scope.starredNotes = true;
-                        } else {
-                            $scope.unstarredNotes = true;
-                        }
-                    });
-
-                }
-            }
-        });
-    };
-
-    $scope.noMatch = function () {
-        $scope.checkNotes();
-        if (!$scope.unstarredNotes && !$scope.filters[0].value) {
-            return true;
-        }
-        if (!$scope.starredNotes && !$scope.filters[1].value) {
-            return true;
-        }
-        if (!$scope.filters[0].value && !$scope.filters[1].value) {
-            return true;
-        }
-        if (!$scope.any_sections_selected) {
-            return true;
-        }
+        updateFilters();
     };
 });

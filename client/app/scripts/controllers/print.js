@@ -27,7 +27,7 @@ function Print($scope, $window, $location, $timeout, format, matches, merges, hi
 
     activate();
 
-    function activate() {        
+    function activate() {
         function sortList() {
             vm.entryList = _.sortBy(vm.entryList, function (entry) {
                 return entry.data.date_time.plotDate;
