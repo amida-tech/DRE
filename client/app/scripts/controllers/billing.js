@@ -14,7 +14,9 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function ($scope, $w
     $scope.setEntryType = function (newEntry) {
         if (newEntry === 'all') {
             $location.path('billing');
+            dataservice.setLastSection('billing', '');
         } else {
+            dataservice.setLastSection('billing', '/' + newEntry);
             $location.path('billing/' + newEntry);
         }
     };
@@ -98,6 +100,11 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function ($scope, $w
     $scope.goToMatches = function (section) {
         //console.log(section);
         //matches.setSection(section);
+        if ($scope.entryType === 'all') {
+            dataservice.setLastSection('billing', '');
+        } else {
+            dataservice.setLastSection('billing', '/' + $scope.entryType);
+        }
         $location.path('/matches');
     };
     //launch specific match (by ID and section name)
@@ -107,7 +114,11 @@ angular.module('phrPrototypeApp').controller('BillingCtrl', function ($scope, $w
         matches.setSection(el.match.section);
         //TODO: set match ID for match page
         matches.setMatchId(el.match.match_id);
-
+        if ($scope.entryType === 'all') {
+            dataservice.setLastSection('billing', '');
+        } else {
+            dataservice.setLastSection('billing', '/' + $scope.entryType);
+        }
         $location.path('/matches');
     };
 });
