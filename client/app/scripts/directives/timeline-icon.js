@@ -71,13 +71,12 @@ angular.module('phrPrototypeApp')
                             } else {
                                 // put in the correct default icon
                                 // this branching is sloppy and should be rewritten
-                                if (_.has(scope.entryData, 'administration.form.code')) {
+                                if (_.deepGet(scope.entryData, 'administration.form.code')) {
                                     var route = scope.entryData.administration.form.code;
                                     var medRouteIconEntry = _.findWhere(medRouteIconMap, {
                                         code: route
                                     });
                                     if (medRouteIconEntry) {
-                                        console.log(medRouteIconEntry.icon);
                                         html = '<i class="fa-2x ' + medRouteIconEntry.icon + '"></i>';
                                     }
                                 }
