@@ -178,25 +178,26 @@ angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $
                 console.log("MATCH!! >>", scope.finalData);
 
                 matches.saveMatch(scope.finalData);
-                dataservice.forceRefresh();
                 dataservice.getLastSection(function (last_section) {
+                    console.log("last_section:",last_section);
                     $location.path('/record' + last_section.record);
+                    dataservice.forceRefresh();
                 });
             };
             scope.ignoreButton = function () {
                 console.log("match ignored");
                 matches.discardMatch();
-                dataservice.forceRefresh();
                 dataservice.getLastSection(function (last_section) {
                     $location.path('/record' + last_section.record);
+                    dataservice.forceRefresh();
                 });
             };
             scope.createNewButton = function () {
                 // create a new entry during reconciliation
                 console.log("match: create new entry");
                 matches.createMatch();
-                dataservice.forceRefresh();
                 dataservice.getLastSection(function (last_section) {
+                    dataservice.forceRefresh();
                     $location.path('/record' + last_section.record);
                 });
             };
