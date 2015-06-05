@@ -8,6 +8,7 @@ angular.module('phrPrototypeApp')
         $scope.saveMedication = saveMedication;
         $scope.enteredMedication = {};
         $scope.saveMedicationStatus = null;
+        $scope.pCurrentMedRadio = true;
 
         $scope.previousStep = function previousStep() {
             if ($scope.entryStep === 3 && $scope.medSearchType !== 'prescription') {
@@ -17,7 +18,7 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        function enteredObject() {
+        function enteredObject(callback) {
 
             var pmed_metadata = {};
             var pmed_product = {};
@@ -60,14 +61,14 @@ angular.module('phrPrototypeApp')
 
                 if ($scope.pStart) {
                     pmed_lowdate = {
-                        "date": moment($scope.pStart).format('YYYY-MM-DD'),
+                        "date": moment($scope.pStart).format('YYYY-MM-DD') + 'T00:00:00.000Z',
                         "precision": 'day'
                     };
                     _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
                 }
                 if ($scope.pCurrentMedRadio) {
                     pmed_highdate = {
-                        "date": moment($scope.pLast).format('YYYY-MM-DD'),
+                        "date": moment($scope.pLast).format('YYYY-MM-DD') + 'T00:00:00.000Z',
                         "precision": 'day'
                     };
                     _.deepSet($scope.enteredMedication, 'date_time.high', pmed_highdate);
@@ -103,20 +104,21 @@ angular.module('phrPrototypeApp')
 
                 if ($scope.pStart) {
                     pmed_lowdate = {
-                        "date": moment($scope.pStart).format('YYYY-MM-DD'),
+                        "date": moment($scope.pStart).format('YYYY-MM-DD') + 'T00:00:00.000Z',
                         "precision": 'day'
                     };
                     _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
                 }
+                console.log("pCurrentMedRadio" + $scope.pCurrentMedRadio);
                 if ($scope.pCurrentMedRadio) {
                     if ($scope.pLast) {
                         pmed_highdate = {
-                            "date": moment($scope.pLast).format('YYYY-MM-DD'),
+                            "date": moment($scope.pLast).format('YYYY-MM-DD') + 'T00:00:00.000Z',
                             "precision": 'day'
                         };
                     } else {
                         pmed_highdate = {
-                            "date": moment().format('YYYY-MM-DD'),
+                            "date": moment().format('YYYY-MM-DD') + 'T00:00:00.000Z',
                             "precision": 'day'
                         };
                     }
@@ -124,7 +126,8 @@ angular.module('phrPrototypeApp')
                 }
 
             }
-            console.log("...entered Medication: " + $scope.enteredMedication);
+            console.log("...entered Medication: ", $scope.enteredMedication);
+            callback();
         }
 
         $scope.nextStep = function nextStep() {
@@ -155,24 +158,25 @@ angular.module('phrPrototypeApp')
                 }
                 break;
             case 3:
-                enteredObject();
-                if ($scope.enteredMedication.date_time) {
-                    format.formatDate($scope.enteredMedication.date_time.low);
-                    if ($scope.enteredMedication.date_time.high) {
-                        format.formatDate($scope.enteredMedication.date_time.high);
+                enteredObject(function () {
+                    if ($scope.enteredMedication.date_time) {
+                        format.formatDate($scope.enteredMedication.date_time.low);
+                        if ($scope.enteredMedication.date_time.high) {
+                            format.formatDate($scope.enteredMedication.date_time.high);
+                        }
                     }
-                }
-                if ($scope.enteredMedication.performer) {
-                    if ($scope.enteredMedication.performer.address) {
-                        format.formatAddress($scope.enteredMedication.performer.address[0]);
+                    if ($scope.enteredMedication.performer) {
+                        if ($scope.enteredMedication.performer.address) {
+                            format.formatAddress($scope.enteredMedication.performer.address[0]);
+                        }
+                        if ($scope.enteredMedication.performer.name) {
+                            format.formatName($scope.enteredMedication.performer.name[0]);
+                        }
                     }
-                    if ($scope.enteredMedication.performer.name) {
-                        format.formatName($scope.enteredMedication.performer.name[0]);
-                    }
-                }
-                console.log($scope.enteredMedication);
-                $scope.medication = $scope.enteredMedication;
-                $scope.entryStep = 4;
+                    console.log($scope.enteredMedication);
+                    $scope.medication = $scope.enteredMedication;
+                    $scope.entryStep = 4;
+                });
                 break;
             default:
                 break;
@@ -352,6 +356,7 @@ angular.module('phrPrototypeApp')
             $scope.pLastName = null;
             $scope.pDrugName = null;
             $scope.selectedImage = null;
+            $scope.pCurrentMedRadio = true;
             //$scope.openfdanameResults = null;
             $scope.rxnormResults = null;
             //$scope.medlineResults = null;
@@ -489,7 +494,6 @@ angular.module('phrPrototypeApp')
                     if (err) {
                         $scope.prescriberError = "No matches found, please try again";
                     } else {
-                        console.log("Martz success: " + JSON.stringify(data));
                         $scope.prescriberResults = data;
                         $scope.prescriberCount = data.length;
                         $scope.prescriberError = null;
@@ -539,7 +543,7 @@ angular.module('phrPrototypeApp')
             // dates
             if ($scope.pStart) {
                 pmed_lowdate = {
-                    "date": moment($scope.pStart).format('YYYY-MM-DD'),
+                    "date": moment($scope.pStart).format('YYYY-MM-DD') + 'T00:00:00.000Z',
                     "precision": 'day'
                 };
                 _.deepSet($scope.saveMed, 'date_time.low', pmed_lowdate);
@@ -548,7 +552,7 @@ angular.module('phrPrototypeApp')
             if ($scope.pCurrentMedRadio) {
                 pmed_date_time = {
                     "low": {
-                        "date": moment($scope.pStart).format('YYYY-MM-DD'),
+                        "date": moment($scope.pStart).format('YYYY-MM-DD') + 'T00:00:00.000Z',
                         "precision": 'day'
                     }
                 };
@@ -558,12 +562,12 @@ angular.module('phrPrototypeApp')
             if ($scope.pStart && !$scope.pCurrentMedRadio) {
                 if ($scope.pLast) {
                     pmed_highdate = {
-                        "date": moment($scope.pLast).format('YYYY-MM-DD'),
+                        "date": moment($scope.pLast).format('YYYY-MM-DD') + 'T00:00:00.000Z',
                         "precision": 'day'
                     };
                 } else {
                     pmed_highdate = {
-                        "date": moment().format('YYYY-MM-DD'),
+                        "date": moment().format('YYYY-MM-DD') + 'T00:00:00.000Z',
                         "precision": 'day'
                     };
                 }
@@ -609,8 +613,10 @@ angular.module('phrPrototypeApp')
             if ($scope.saveMed.performer && $scope.saveMed.performer.address) {
                 format.formatAddress($scope.saveMed.performer.address[0]);
             }
-            if ($scope.saveMed.performer.name) {
-                format.formatName($scope.saveMed.performer.name[0]);
+            if ($scope.saveMed.performer) {
+                if ($scope.saveMed.performer.name) {
+                    format.formatName($scope.saveMed.performer.name[0]);
+                }
             }
 
             medications.editMedication($scope.saveMed, function (err, results) {
