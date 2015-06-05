@@ -311,9 +311,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
 
             //Re-evaluate scope on resize.
             $window.onresize = function () {
-                console.log('on resize');
-                scope.$apply();
-                renderPlot();
+                if ($location.path() !== '/matches') {
+                    console.log('on resize');
+                    scope.$apply();
+                    renderPlot();
+                }
             };
             //Expose function on master scope.
 
