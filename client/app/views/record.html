@@ -83,7 +83,7 @@
             </div>
         </div>
         <!--d3. -->
-        <div class="panel panel-default" ng-if="entryListFiltered.length === 0 || !accountHistory.lastUpdate">
+        <div class="panel panel-default" ng-if="!accountHistory.lastUpdate">
             <div class="panel-body">
                 <div class="col-sm-12" ng-if="entryType==='medications'">
                     <h4>No data imported from records</h4>
@@ -158,7 +158,8 @@
                 <!--<pre>{{masterRecord | json}}</pre>-->
             </div>
             <!--Timeline View-->
-            <div id="category-view" ng-cloak ng-if="entryType!=='all'" ng-show="entryListFiltered.length > 0" class="col-sm-12">
+            <!--<div id="category-view" ng-cloak ng-if="entryType!=='all' && recordEntries.length>0 && ((entryType !=='medications' || entryType !== 'social') && entryListFiltered.length > 0)" class="col-sm-12">-->
+            <div id="category-view" ng-cloak ng-if="(entryType==='medications' && recordEntries.length > 0) || (entryType==='social' && recordEntries.length >0) || ((entryType!=='medications' && entryType!=='social' && entryType !== 'all') && entryListFiltered.length > 0)" class="col-sm-12">
                 <h4 class="text-center text-white">{{entryType}}</h4>
                 <div class="panel" ng-hide="recordEntries">
                     <div class="panel-body">
@@ -196,8 +197,8 @@
                                 <entry id="{{recordEntry.data._id}}" type="{{recordEntry.category}}" entry-index="{{recordIndex}}" on-finish-render="ngRepeatFinished"></entry>
                             </div>
                         </div>
-                        <div ng-hide="entryListFiltered" class="timeline-side row col-sm-12">
-                            <div class="col-sm-offset-2">Please make a selection using the Active and Inactive buttons to view your medication entries.
+                        <div ng-if="entryListFiltered.length===0 && (entryType==='medications' || entryType==='social')" class="timeline-side row col-sm-12">
+                            <div class="col-sm-offset-2">All Entries are Hidden
                             </div>
                         </div>
                         <div class="col-sm-2 center-block text-center timeline-footer">
