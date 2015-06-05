@@ -12,6 +12,8 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         record: '',
         billing: ''
     };
+    var inactiveMeds = ['active', 'inactive'];
+    var inactiveSocial = ['active', 'inactive'];
 
     function displayTypeNew(type) {
         var display_type = type;
@@ -374,6 +376,22 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         last_section[section] = new_last;
     };
 
+    this.getInactiveMeds = function (callback) {
+        callback(inactiveMeds);
+    };
+
+    this.setInactiveMeds = function (newInactiveMeds) {
+        inactiveMeds = newInactiveMeds;
+    };
+
+    this.getInactiveSocial = function (callback) {
+        callback(inactiveSocial);
+    };
+
+    this.setInactiveSocial = function (newInactiveSocial) {
+        inactiveSocial = newInactiveSocial;
+    };
+
     this.getRecordMerges = function (section, callback) {
         this.getMergesListRecord(function (err, merges) {
             if (err) {
@@ -397,5 +415,11 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         master_merges = [];
         master_entries = [];
         all_notes = [];
+        last_section = {
+            record: '',
+            billing: ''
+        };
+        inactiveMeds = ['active', 'inactive'];
+        inactiveSocial = ['active', 'inactive'];
     };
 });

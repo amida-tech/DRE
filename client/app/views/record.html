@@ -181,12 +181,14 @@
                         <div class="row col-sm-12">
                             <div timeline chart-data="entryListFiltered" class="timeline-graph"></div>
                         </div>
-                        <div ng-if="entryType=='medications' || entryType=='social'" class="col-sm-12 row timeline-side">
+                        <div ng-if="entryType==='medications' || entryType==='social'" class="col-sm-12 row timeline-side">
                             <div class="btn-group">
                                 <!-- <label class="btn btn-default">
                                     <input type="checkbox" value="active" ng-checked="activeSelection.indexOf('active') > -1" ng-click="toggleSelection('active')"> Active</label> -->
-                                <label class="btn btn-default">
+                                <label class="btn btn-default" ng-if="entryType==='medications'" >
                                     <input type="checkbox" value="inactive" ng-checked="activeSelection.indexOf('inactive') > -1" ng-click="toggleSelection('inactive')"> Show Inactive Meds</label>
+                                <label class="btn btn-default" ng-if="entryType==='social'" >
+                                    <input type="checkbox" value="inactive" ng-checked="activeSelection.indexOf('inactive') > -1" ng-click="toggleSelection('inactive')"> Show Inactive</label>
                             </div>
                         </div>
                         <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
