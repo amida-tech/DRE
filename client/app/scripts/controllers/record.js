@@ -399,8 +399,9 @@ angular.module('phrPrototypeApp')
             });
         };
 
-        // Meds active/inactive selector
-        $scope.activeSelection = ['active', 'inactive'];
+        dataservice.getInactiveMeds(function (inactiveMeds) {
+            $scope.activeSelection = inactiveMeds;
+        });
         $scope.toggleSelection = function toggleSelection(buttonName) {
             var idx = $scope.activeSelection.indexOf(buttonName);
 
@@ -409,6 +410,7 @@ angular.module('phrPrototypeApp')
             } else {
                 $scope.activeSelection.push(buttonName);
             }
+            dataservice.setInactiveMeds($scope.activeSelection);
         };
 
         dataservice.getMergesListRecord(function (err, merges_record) {
@@ -519,19 +521,19 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        $scope.activeSelection = ['active', 'inactive'];
+        dataservice.getInactiveMeds(function (inactiveMeds) {
+            $scope.activeSelection = inactiveMeds;
+        });
         $scope.toggleSelection = function toggleSelection(buttonName) {
             var idx = $scope.activeSelection.indexOf(buttonName);
 
             // is currently selected
             if (idx > -1) {
                 $scope.activeSelection.splice(idx, 1);
-            }
-
-            // is newly selected
-            else {
+            } else {
                 $scope.activeSelection.push(buttonName);
             }
+            dataservice.setInactiveMeds($scope.activeSelection);
         };
 
         dataservice.getMergesListRecord(function (err, merges_record) {
