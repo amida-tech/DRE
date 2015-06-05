@@ -10,11 +10,11 @@
         </tr>
         <tr ng-show="medication.administration&&medication.administration.dose.displayQuantity">
             <td>Dose:</td>
-            <td>{{medication.administration.dose.displayQuantity}}</td>
+            <td>{{medication.administration.dose}}</td>
         </tr>
         <tr ng-show="medication.administration.rate.displayQuantity">
             <td>Rate:</td>
-            <td>{{medication.administration.rate.displayQuantity}}</td>
+            <td>{{medication.administration.rate}}</td>
         </tr>
         <!--        <tr ng-show="medication.administration.rate">
             <td>Rate:</td>
@@ -74,7 +74,7 @@
                     <div class="panel" ng-repeat="performer_name in medication.performer.name">
                         <table class="table sub-table">
                             <tr>
-                                <td>{{performer_name.displayName}}</td>
+                                <td>{{performer_name | format:'name'}}</td>
                             </tr>
                         </table>
                     </div>
@@ -86,7 +86,7 @@
                     <div class="panel" ng-repeat="performer_org in medication.performer.organization">
                         <table class="table sub-table">
                             <tr ng-repeat="performer_org_name in performer_org.name">
-                                <td ng-show="performer_org_name.displayName">{{performer_org_name.displayName}}</td>
+                                <td ng-show="performer_org_name.displayName">{{performer_org_name}}</td>
                                 <td ng-hide="performer_org_name.displayName">{{performer_org_name}}</td>
                             </tr>
                         </table>
@@ -103,7 +103,7 @@
                     <div class="panel" ng-repeat="performer_addr in medication.performer.address">
                         <table class="table sub-table">
                             <tr>
-                                <td>{{performer_addr.displayAddress}}</td>
+                                <td>{{performer_addr | format:'address'}}</td>
                             </tr>
                         </table>
                     </div>
@@ -171,7 +171,7 @@
                     <div class="panel" ng-repeat="dispense_name in medication.dispense.performer.name">
                         <table class="table sub-table">
                             <tr>
-                                <td>{{dispense_name.displayName}}</td>
+                                <td>{{dispense_name}}</td>
                             </tr>
                         </table>
                     </div>
@@ -200,7 +200,7 @@
                     <div class="panel" ng-repeat="dispense_addr in medication.dispense.performer.address">
                         <table class="table sub-table">
                             <tr>
-                                <td>{{dispense_addr.displayAddress}}</td>
+                                <td>{{dispense_addr | format:'address'}}</td>
                             </tr>
                         </table>
                     </div>
@@ -212,7 +212,7 @@
                     <div class="panel" ng-repeat="dispense_name in medication.dispense.performer.name">
                         <table class="table sub-table">
                             <tr>
-                                <td>{{dispense_name.displayName}}</td>
+                                <td>{{dispense_name}}</td>
                             </tr>
                         </table>
                     </div>
@@ -278,9 +278,9 @@
             <td>
                 <div class="panel">
                     <table class="table sub-table">
-                        <tr ng-show="medication.supply.date_time.displayDate">
+                        <tr ng-show="medication.supply.date_time">
                             <td>Date:</td>
-                            <td>{{medication.supply.date_time.displayDate}}</td>
+                            <td>{{medication.supply.date_time | format:'date'}}</td>
                         </tr>
                         <tr ng-show="medication.supply.repeatNumber">
                             <td>Repeat Number:</td>
@@ -292,13 +292,13 @@
                             <td>Quantity:</td>
                             <td>{{medication.supply.quantity}}</td>
                         </tr>
-                        <tr ng-show="medication.supply.author.name.displayName">
+                        <tr ng-show="medication.supply.author.name">
                             <td>Author:</td>
-                            <td>{{medication.supply.author.name.displayName}}</td>
+                            <td>{{medication.supply.author.name | format:'name'}}</td>
                         </tr>
-                        <tr ng-show="medication.supply.author.organization && medication.supply.author.organization.name.displayName">
+                        <tr ng-show="medication.supply.author.organization && medication.supply.author.organization.name">
                             <td>Author Organization:</td>
-                            <td>{{medication.supply.author.organization.name.displayName}}</td>
+                            <td>{{medication.supply.author.organization.name}}</td>
                         </tr>
                     </table>
                 </div>
@@ -411,17 +411,17 @@
                 <td>
                     <div class="panel">
                         <table class="table sub-table">
-                            <tr ng-show="medication.administration.interval.phase.displayDate">
-                                <td>Phase:</td>
-                                <td>{{medication.administration.interval.phase.displayDate}}</td>
-                            </tr>
-                            <tr ng-show="medication.administration.interval.period.displayQuantity">
+                            <tr ng-show="medication.administration.interval.period">
                                 <td>Period:</td>
-                                <td>{{medication.administration.interval.period.displayQuantity}}</td>
+                                <td>{{medication.administration.interval.period | format:'quantity'}}</td>
                             </tr>
-                            <tr>
+                            <tr ng-show="medication.administration.interval.frequency">
                                 <td>Frequency:</td>
                                 <td>{{medication.administration.interval.frequency}}</td>
+                            </tr>
+                            <tr ng-show="medication.administration.interval.phase">
+                                <td>Phase:</td>
+                                <td>{{medication.administration.interval.phase}}</td>
                             </tr>
                             <tr ng-show="medication.administration.interval.alignment">
                                 <td>Alignment:</td>
@@ -505,3 +505,4 @@
         </tr>
     </tbody>
 </table>
+<pre>{{medication | json}}</pre>
