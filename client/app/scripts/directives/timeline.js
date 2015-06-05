@@ -119,21 +119,23 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
 
                     _.each(dataToPlot, function (entry) {
                         var plotDate;
-                        if (entry.metadata.datetime) {
-                            if (entry.metadata.datetime[0]) {
-                                plotDate = isoFormat.parse(entry.metadata.datetime[0].date);
+                        var tempCat = entry.category;
+                        if (entry.metadata) {
+                            if (entry.metadata.datetime) {
+                                if (entry.metadata.datetime[0]) {
+                                    plotDate = isoFormat.parse(entry.metadata.datetime[0].date);
 
+                                }
+                                //Redundancy for isoFormat subsecond support.
+                                if (_.isNull(plotDate)) {
+                                    plotDate = isoFormatSubsecond.parse(entry.metadata.datetime[0].date);
+                                }
+                                plotCircles.push({
+                                    "date": plotDate,
+                                    "category": tempCat.charAt(0).toUpperCase() + tempCat.slice(1)
+                                });
+                                tmpDomain.push(plotDate);
                             }
-                            //Redundancy for isoFormat subsecond support.
-                            if (_.isNull(plotDate)) {
-                                plotDate = isoFormatSubsecond.parse(entry.metadata.datetime[0].date);
-                            }
-                            var tempCat = entry.category;
-                            plotCircles.push({
-                                "date": plotDate,
-                                "category": tempCat.charAt(0).toUpperCase() + tempCat.slice(1)
-                            });
-                            tmpDomain.push(plotDate);
                         }
                     });
                     minDate = d3.min(tmpDomain);
