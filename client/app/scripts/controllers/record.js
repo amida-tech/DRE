@@ -286,9 +286,12 @@ angular.module('phrPrototypeApp')
                 }
             }
         });
-
+/*
         $scope.goToMatches = function (section) {
             dataservice.setLastSection('record', '');
+            dataservice.getLastSection(function(last_section) {
+                console.log("last section: ",last_section);
+            });
             $location.path('/matches');
         };
 
@@ -300,7 +303,7 @@ angular.module('phrPrototypeApp')
             dataservice.setLastSection('record', '');
             $location.path('/matches');
         };
-
+*/
     })
     .controller('SectionMedicationCtrl', function ($scope, $location, $modal, $route, matches, merges, history, dataservice) {
 
@@ -492,7 +495,7 @@ angular.module('phrPrototypeApp')
         }, true);
 
         $scope.goToMatches = function (section) {
-            dataservice.setLastSection('record', '/' + $scope.entryType);
+            dataservice.setLastSection('record', '/medications');
             $location.path('/matches');
         };
 
@@ -502,7 +505,7 @@ angular.module('phrPrototypeApp')
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
 
-            dataservice.setLastSection('record', '/' + $scope.entryType);
+            dataservice.setLastSection('record', '/medications');
             $location.path('/matches');
         };
 
@@ -615,7 +618,7 @@ angular.module('phrPrototypeApp')
         }, true);
 
         $scope.goToMatches = function (section) {
-            dataservice.setLastSection('record', '/' + $scope.entryType);
+            dataservice.setLastSection('record', '/social');
             $location.path('/matches');
         };
         $scope.launchMatch = function (el) {
@@ -623,7 +626,7 @@ angular.module('phrPrototypeApp')
             matches.setSection(el.match.section);
             matches.setMatchId(el.match.match_id);
 
-            dataservice.setLastSection('record', '/' + $scope.entryType);
+            dataservice.setLastSection('record', '/social');
             $location.path('/matches');
         };
 
