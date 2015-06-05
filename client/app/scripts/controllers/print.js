@@ -64,7 +64,7 @@ function Print($scope, $routeParams, $window, history, dataservice) {
             }
         }
     }
-    
+
     function activate() {
         function sortList() {
             vm.entryList = _.sortBy(vm.entryList, function (entry) {
