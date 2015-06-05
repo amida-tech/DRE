@@ -158,7 +158,7 @@
                 <!--<pre>{{masterRecord | json}}</pre>-->
             </div>
             <!--Timeline View-->
-            <div id="category-view" ng-cloak ng-if="entryType!=='all'" ng-show="entryListFiltered.length > 0" class="col-sm-12">
+            <div id="category-view" ng-cloak ng-if="entryType!=='all' && recordEntries.length>0" class="col-sm-12">
                 <h4 class="text-center text-white">{{entryType}}</h4>
                 <div class="panel" ng-hide="recordEntries">
                     <div class="panel-body">
@@ -181,12 +181,14 @@
                         <div class="row col-sm-12">
                             <div timeline chart-data="entryListFiltered" class="timeline-graph"></div>
                         </div>
-                        <div ng-if="entryType=='medications' || entryType=='social'" class="col-sm-12 row timeline-side">
+                        <div ng-if="entryType==='medications' || entryType==='social'" class="col-sm-12 row timeline-side">
                             <div class="btn-group">
                                 <!-- <label class="btn btn-default">
                                     <input type="checkbox" value="active" ng-checked="activeSelection.indexOf('active') > -1" ng-click="toggleSelection('active')"> Active</label> -->
-                                <label class="btn btn-default">
+                                <label class="btn btn-default" ng-if="entryType==='medications'" >
                                     <input type="checkbox" value="inactive" ng-checked="activeSelection.indexOf('inactive') > -1" ng-click="toggleSelection('inactive')"> Show Inactive Meds</label>
+                                <label class="btn btn-default" ng-if="entryType==='social'" >
+                                    <input type="checkbox" value="inactive" ng-checked="activeSelection.indexOf('inactive') > -1" ng-click="toggleSelection('inactive')"> Show Inactive</label>
                             </div>
                         </div>
                         <div ng-repeat="(recordIndex, recordEntry) in entryListFiltered" class="col-sm-12 row" id="record{{recordIndex}}">
@@ -194,8 +196,8 @@
                                 <entry id="{{recordEntry.data._id}}" type="{{recordEntry.category}}" entry-index="{{recordIndex}}" on-finish-render="ngRepeatFinished"></entry>
                             </div>
                         </div>
-                        <div ng-hide="entryListFiltered" class="timeline-side row col-sm-12">
-                            <div class="col-sm-offset-2">Please make a selection using the Active and Inactive buttons to view your medication entries.
+                        <div ng-if="entryListFiltered.length===0" class="timeline-side row col-sm-12">
+                            <div class="col-sm-offset-2">All Entries are Hidden
                             </div>
                         </div>
                         <div class="col-sm-2 center-block text-center timeline-footer">
