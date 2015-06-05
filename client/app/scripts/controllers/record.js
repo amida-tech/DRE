@@ -521,8 +521,8 @@ angular.module('phrPrototypeApp')
             }
         };
 
-        dataservice.getInactiveMeds(function (inactiveMeds) {
-            $scope.activeSelection = inactiveMeds;
+        dataservice.getInactiveSocial(function (inactiveSocial) {
+            $scope.activeSelection = inactiveSocial;
         });
         $scope.toggleSelection = function toggleSelection(buttonName) {
             var idx = $scope.activeSelection.indexOf(buttonName);
@@ -533,7 +533,7 @@ angular.module('phrPrototypeApp')
             } else {
                 $scope.activeSelection.push(buttonName);
             }
-            dataservice.setInactiveMeds($scope.activeSelection);
+            dataservice.setInactiveSocial($scope.activeSelection);
         };
 
         dataservice.getMergesListRecord(function (err, merges_record) {

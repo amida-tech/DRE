@@ -13,6 +13,7 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         billing: ''
     };
     var inactiveMeds = ['active', 'inactive'];
+    var inactiveSocial = ['active', 'inactive'];
 
     function displayTypeNew(type) {
         var display_type = type;
@@ -381,6 +382,14 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
 
     this.setInactiveMeds = function (newInactiveMeds) {
         inactiveMeds = newInactiveMeds;
+    };
+
+    this.getInactiveSocial = function (callback) {
+        callback(inactiveSocial);
+    };
+
+    this.setInactiveSocial = function (newInactiveSocial) {
+        inactiveSocial = newInactiveSocial;
     };
 
     this.getRecordMerges = function (section, callback) {
