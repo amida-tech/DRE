@@ -68,6 +68,11 @@ angular.module('phrPrototypeApp')
                     if (scope.recordEntry.metadata.displayDate) {
                         scope.entrySubTitleOne = format.outputDate(scope.entryData.date_time);
                     }
+                    if (scope.recordEntry.data.med_metadata) {
+                        if (scope.recordEntry.data.med_metadata.patient_entered) {
+                            scope.entrySubTitleTwo = "Patient Entered";
+                        }
+                    }
                     break;
                 case 'conditions':
                     if (scope.entryData.problem && scope.entryData.problem.code && scope.entryData.problem.code.name) {

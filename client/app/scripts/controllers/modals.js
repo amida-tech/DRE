@@ -680,11 +680,6 @@ angular.module('phrPrototypeApp')
             icon: 'fa-comment',
             selected: false
         }, {
-            title: 'History',
-            type: 'history',
-            icon: 'fa-clock-o',
-            selected: false
-        }, {
             title: 'Images',
             type: 'images',
             icon: 'fa-picture-o',
@@ -698,6 +693,11 @@ angular.module('phrPrototypeApp')
             title: 'Learn More',
             type: 'learn',
             icon: 'fa-question-circle',
+            selected: false
+        }, {
+            title: 'History',
+            type: 'history',
+            icon: 'fa-clock-o',
             selected: false
         }];
 
@@ -715,21 +715,43 @@ angular.module('phrPrototypeApp')
             }
         };
 
+        function removeTab(tabTitle) {
+            for (var i = $scope.tabs.length; i >= 0; i--) {
+                if ($scope.tabs[i]) {
+                    if ($scope.tabs[i].title === tabTitle) {
+                        $scope.tabs.splice(i,1);
+                    }
+                }
+            }
+        }
+
         medapi.findImages($scope.medication.product.product.code, function (err, data) {
             $scope.medImages = data;
+            if (data.nlmRxImages.length === 0) {
+                removeTab('Images');
+            }
         });
 
         if (angular.isDefined($scope.medication.product.product.code)) {
             medapi.fdaCode($scope.medication.product.product.code, function (err, data) {
                 $scope.fdaInfo = data;
+                if (data.error) {
+                    removeTab('Adverse Events');
+                }
                 $scope.fdatotal($scope.fdaInfo.results);
             });
         } else {
             if (angular.isDefined($scope.medication.product.product.name)) {
                 medapi.fdaName($scope.medication.product.product.name, function (err, data) {
                     $scope.fdaInfo = data;
+                    if (data.error) {
+                        removeTab('Adverse Events');
+                    }
                     $scope.fdatotal($scope.fdaInfo.results);
                 });
+            } else {
+                //product name and code not defined...  I don't think this is possible, but...
+                removeTab('Adverse Events');
             }
         }
 
@@ -742,6 +764,9 @@ angular.module('phrPrototypeApp')
 
         medapi.findmedline($scope.medication.product.product.code, $scope.medication.product.product.name, function (err, data) {
             $scope.medline = data;
+            if (data.feed.entry.length === 0) {
+                removeTab('Learn More');
+            }
         });
 
         $scope.addNote = function (inputComment) {
