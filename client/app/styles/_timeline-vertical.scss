@@ -41,6 +41,20 @@
   position:initial;
 }
 
+.timeline-entry-icon-medication-inactive {
+  @extend .img-circle;
+  background: #fff;
+  box-shadow: 0 0 0 4px #777777,
+    0 3px 0 4px rgba(0, 0, 0, 0.05);
+  line-height: 3.5em;
+  position: relative;
+  bottom: -20px;
+  z-index: 100;
+  i {
+  color: #777777;
+  }
+}
+
 .timeline-entry-icon-medication img {
   width: 90px;
   height: 90px;
@@ -60,6 +74,15 @@
 .timeline-entry-icon:hover {
   cursor: default;
   background: $brand-primary;
+  i {
+    color: #fff;
+  }
+
+}
+
+.timeline-entry-icon-medication-inactive:hover {
+  cursor: default;
+  background: #777777;
   i {
     color: #fff;
   }

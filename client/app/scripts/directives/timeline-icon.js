@@ -69,8 +69,6 @@ angular.module('phrPrototypeApp')
                                     }
                                 }
                             } else {
-                                // put in the correct default icon
-                                // this branching is sloppy and should be rewritten
                                 if (_.deepGet(scope.entryData, 'administration.form.code')) {
                                     var route = scope.entryData.administration.form.code;
                                     var medRouteIconEntry = _.findWhere(medRouteIconMap, {

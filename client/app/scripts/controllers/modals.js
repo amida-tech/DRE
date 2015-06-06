@@ -719,7 +719,7 @@ angular.module('phrPrototypeApp')
             for (var i = $scope.tabs.length; i >= 0; i--) {
                 if ($scope.tabs[i]) {
                     if ($scope.tabs[i].title === tabTitle) {
-                        $scope.tabs.splice(i,1);
+                        $scope.tabs.splice(i, 1);
                     }
                 }
             }
