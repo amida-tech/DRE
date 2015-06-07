@@ -1,4 +1,12 @@
 // conf.js
+var HtmlReporter = require('protractor-html-screenshot-reporter');
+
+var reporter=new HtmlReporter({
+    baseDirectory: './protractor-result', // a location to store screen shots.
+    docTitle: 'Protractor Reporter',
+    docName:    'protractor-tests-report.html'
+});
+
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
   specs: [
@@ -18,5 +26,8 @@ exports.config = {
   },
   capabilities: {
     browserName: 'firefox'
+  },
+  onPrepare: function() {
+    jasmine.getEnv().addReporter(reporter);
   }
 }

@@ -10,6 +10,7 @@ typings
 
 server/coverage
 client/coverage
+client/test/protractor-result
 coverage
 .DS_Store
 
