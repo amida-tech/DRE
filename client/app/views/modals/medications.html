@@ -1,7 +1,7 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
     <img class="img-header" ng-if="medication.med_metadata.image.imageUrl" ng-src="{{medication.med_metadata.image.imageUrl}}">
-    <h3 class="modal-title">Details for {{medication.product.product.name}}</h3>
+    <h4 class="modal-title">Details for {{medication.product.product.name}}</h4>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -20,7 +20,7 @@
         </div>
         <div class="col-sm-9">
             <div class="row" ng-if="activeTab==='details'">
-                <h3>Details</h3>
+                <h4>Details</h4>
                 <div class="sub-entry">
                     <!--                     <table class="table table-hover">
                         <tbody>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="row" ng-if="activeTab==='notes'">
-                <h3>Notes</h3>
+                <h4>Notes</h4>
                 <div class="sub-entry">
                     <div ng-hide="editflag" class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in comments">
                         <div class="col-sm-11 col-sm-offset-1">
@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div class="row" ng-if="activeTab==='history'">
-                <h3>Sources</h3>
+                <h4>Sources</h4>
                 <div class="sub-entry">
                     <table class="table table-hover table-condensed">
                         <thead>
@@ -130,7 +130,7 @@
                 </div>
             </div>
             <div class="row" ng-if="activeTab==='images'">
-                <h3>Images</h3>
+                <h4>Images</h4>
                 <div class="sub-entry">
                     <div ng-hide="medImages.nlmRxImages[0]"> No images found for search term '{{medication.product.product.name}}'</div>
                     <div ng-repeat="(imageIndex, image) in medImages.nlmRxImages">
@@ -142,7 +142,7 @@
                 </div>
             </div>
             <div class="row" ng-if="activeTab==='adverse'">
-                <h3>Adverse Events</h3>
+                <h4>Adverse Events</h4>
                 <div class="sub-entry">
                     <div ng-show="fdaInfo.error"> No information found for this medication. Error: {{fdaInfo.error.code}}</div>
                     <div ng-show="fdaInfo.results">
@@ -164,7 +164,7 @@
                 </div>
             </div>
             <div class="row" ng-if="activeTab==='learn'">
-                <h3>Learn More</h3>
+                <h4>Learn More</h4>
                 <div class="sub-entry">
                     <div ng-show="medline.feed.entry" ng-repeat="(medlineIndex, medlineEntry) in medline.feed.entry">
                         <div ng-repeat="(linkIndex, link) in medlineEntry.link"><a target="_blank" ng-href="{{link.href}}">{{link.href}}</a>
