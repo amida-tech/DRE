@@ -1,7 +1,7 @@
 describe('View medication information', function () {
 
 	function viewMedInfo() {
-		var record = element(by.css('[href="#/record"]'));
+		var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
 		record.click();
 
 		var medications = element(by.id('navmedications'));
