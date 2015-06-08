@@ -1,37 +1,5 @@
 describe('View medication information', function () {
 
-	function viewMedInfo() {
-		var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
-		record.click();
-
-		var medications = element(by.id('navmedications'));
-		medications.click();
-
-		var firstEntry = element(by.css('[entry-index="0"]'));
-		var info = firstEntry.all(by.css('[ng-click="medicationDetails(recordEntry)"]')).last();
-		info.click();
-
-		var notes = element(by.css('[class="fa fa-comment"]'));
-		notes.click();
-
-		var history = element(by.css('[class="fa fa-clock-o"]'));
-		history.click();
-
-		var images = element(by.css('[class="fa fa-picture-o"]'));
-		images.click();
-
-		var adverse = element(by.css('[class="fa fa-exclamation-triangle"]'));
-		adverse.click();
-
-		var learn = element(by.css('[class="fa fa-question-circle"]'));
-		learn.click();
-	}
-
-	beforeEach(function () {
-        browser.get('http://localhost:3000/');
-        browser.driver.manage().window().setSize(1280, 1024);
-    });
-
     afterEach(function () {
 		browser.manage().logs().get('browser').then(function (browserLog) {
 			var errors = 0
@@ -46,7 +14,31 @@ describe('View medication information', function () {
 		});
 	});
 	
-	it('should run', function() {
-        viewMedInfo();
-    });
+	it('view notes', function() {
+		browser.get('http://localhost:3000/');
+        browser.driver.manage().window().setSize(1280, 1024);
+		
+		var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
+		record.click();
+
+		var medications = element(by.id('navmedications'));
+		medications.click();
+
+		var firstEntry = element(by.css('[entry-index="0"]'));
+		var info = firstEntry.all(by.css('[ng-click="medicationDetails(recordEntry)"]')).last();
+		info.click();
+
+		var notes = element(by.css('[class="fa fa-comment"]'));
+		notes.click();
+	});
+	
+	it('view history', function() {
+		var history = element(by.css('[class="fa fa-clock-o"]'));
+		history.click();
+	});
+	
+	it('view adverse events', function() {
+		var adverse = element(by.css('[class="fa fa-exclamation-triangle"]'));
+		adverse.click();
+	});
 });
