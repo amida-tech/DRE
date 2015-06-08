@@ -727,31 +727,31 @@ angular.module('phrPrototypeApp')
 
         medapi.findImages($scope.medication.product.product.code, function (err, data) {
             $scope.medImages = data;
-            if (data.nlmRxImages.length === 0) {
-                removeTab('Images');
-            }
+            // if (data.nlmRxImages.length === 0) {
+            //     removeTab('Images');
+            // }
         });
 
         if (angular.isDefined($scope.medication.product.product.code)) {
             medapi.fdaCode($scope.medication.product.product.code, function (err, data) {
                 $scope.fdaInfo = data;
-                if (data.error) {
-                    removeTab('Adverse Events');
-                }
+                // if (data.error) {
+                //     removeTab('Adverse Events');
+                // }
                 $scope.fdatotal($scope.fdaInfo.results);
             });
         } else {
             if (angular.isDefined($scope.medication.product.product.name)) {
                 medapi.fdaName($scope.medication.product.product.name, function (err, data) {
                     $scope.fdaInfo = data;
-                    if (data.error) {
-                        removeTab('Adverse Events');
-                    }
+                    // if (data.error) {
+                    //     removeTab('Adverse Events');
+                    // }
                     $scope.fdatotal($scope.fdaInfo.results);
                 });
             } else {
                 //product name and code not defined...  I don't think this is possible, but...
-                removeTab('Adverse Events');
+                // removeTab('Adverse Events');
             }
         }
 
@@ -764,9 +764,9 @@ angular.module('phrPrototypeApp')
 
         medapi.findmedline($scope.medication.product.product.code, $scope.medication.product.product.name, function (err, data) {
             $scope.medline = data;
-            if (data.feed.entry.length === 0) {
-                removeTab('Learn More');
-            }
+            // if (data.feed.entry.length === 0) {
+            //     removeTab('Learn More');
+            // }
         });
 
         $scope.addNote = function (inputComment) {
