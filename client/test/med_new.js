@@ -1,7 +1,7 @@
 describe('Enter new medication information', function () {
 
 	function viewMedInfo() {
-		var record = element(by.css('[href="#/record"]'));
+		var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
 		record.click();
 
 		var medications = element(by.id('navmedications'));
@@ -29,7 +29,7 @@ describe('Enter new medication information', function () {
 		var provLastName = element(by.model('pLastName'));
 		provFirstName.sendKeys('Shelly');
 		provLastName.sendKeys('Senders');
-		search = element(by.css('[ng-click="prescriberSearch(pFirstName, pLastName, pZip, pState)"]'));
+		search = element(by.css('[ng-click="prescriberSearch(pFirstName, pLastName, pState)"]'));
 		search.click();
 		
 		firstRow = element(by.repeater('prescriber in prescriberResults').row(0));
@@ -38,8 +38,8 @@ describe('Enter new medication information', function () {
 		next.click();
 		
 		// additional info
-		var medImage = element(by.css('[ng-click="setSelectedImage(rximageResults.nlmRxImages[0])"]'));
-		medImage.click();
+		var medStartDate = element(by.css('[ng-model="$parent.pStart"]'));
+		medStartDate.sendKeys('11/16/2001')
 		next = element(by.css('[ng-click="nextStep()"]'));
 		next.click();
 		

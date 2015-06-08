@@ -2,7 +2,7 @@ describe('record scenario', function() {
     
 
     function matchScenario() {
-    	var record = element(by.css('[href="#/record"]'));
+    	var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
         record.click();
 
         var allergies = element(by.id('navallergies'));
