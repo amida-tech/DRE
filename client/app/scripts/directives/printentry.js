@@ -59,6 +59,7 @@ angular.module('phrPrototypeApp')
                     }
                     break;
                 case 'medications':
+                    scope.medication = scope.entryData;
                     if (scope.entryData.product && scope.entryData.product.product && scope.entryData.product.product.name) {
                         scope.entryTitle = scope.entryData.product.product.name;
                     }

@@ -12,7 +12,8 @@ angular.module('phrPrototypeApp')
             template: '<div class="col-sm-6">\
         <h4 class="text-left">{{entryTitle}}</h4>\
         <h5 class="text-left">{{entrySubTitleOne}}</h5>\
-        <h5 class="text-left">{{entrySubTitleTwo}}</h5>\
+        <h5 ng-if="entryType!==\'medications\'" class="text-left">{{entrySubTitleTwo}}</h5>\
+        <h5 ng-if="entryType===\'medications\'" class="text-left text-muted">{{entrySubTitleTwo}}</h5>\
         </div>',
             restrict: 'EA',
             link: function postLink(scope, element, attrs) {
@@ -67,6 +68,11 @@ angular.module('phrPrototypeApp')
                     }
                     if (scope.recordEntry.metadata.displayDate) {
                         scope.entrySubTitleOne = format.outputDate(scope.entryData.date_time);
+                    }
+                    if (scope.recordEntry.data.med_metadata) {
+                        if (scope.recordEntry.data.med_metadata.patient_entered) {
+                            scope.entrySubTitleTwo = 'Patient Entered';
+                        }
                     }
                     break;
                 case 'conditions':

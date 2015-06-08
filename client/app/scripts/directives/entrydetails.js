@@ -179,7 +179,7 @@ angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $
 
                 matches.saveMatch(scope.finalData);
                 dataservice.getLastSection(function (last_section) {
-                    console.log("last_section:",last_section);
+                    console.log("last_section:", last_section);
                     $location.path('/record' + last_section.record);
                     dataservice.forceRefresh();
                 });

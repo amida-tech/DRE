@@ -286,24 +286,24 @@ angular.module('phrPrototypeApp')
                 }
             }
         });
-/*
-        $scope.goToMatches = function (section) {
-            dataservice.setLastSection('record', '');
-            dataservice.getLastSection(function(last_section) {
-                console.log("last section: ",last_section);
-            });
-            $location.path('/matches');
-        };
+        /*
+                $scope.goToMatches = function (section) {
+                    dataservice.setLastSection('record', '');
+                    dataservice.getLastSection(function(last_section) {
+                        console.log("last section: ",last_section);
+                    });
+                    $location.path('/matches');
+                };
 
-        //launch specific match (by ID and section name)
-        $scope.launchMatch = function (el) {
-            matches.setSection(el.match.section);
-            matches.setMatchId(el.match.match_id);
+                //launch specific match (by ID and section name)
+                $scope.launchMatch = function (el) {
+                    matches.setSection(el.match.section);
+                    matches.setMatchId(el.match.match_id);
 
-            dataservice.setLastSection('record', '');
-            $location.path('/matches');
-        };
-*/
+                    dataservice.setLastSection('record', '');
+                    $location.path('/matches');
+                };
+        */
     })
     .controller('SectionMedicationCtrl', function ($scope, $location, $modal, $route, matches, merges, history, dataservice) {
 
@@ -432,6 +432,24 @@ angular.module('phrPrototypeApp')
             }
         });
 
+        function processActiveInactive(callback) {
+            _.each($scope.recordEntries, function (med) {
+                if (med.category === 'medications') {
+                    var curDate = new Date();
+                    var entryDate = new Date();
+                    if (angular.isDefined(med.data.date_time) && angular.isDefined(med.data.date_time.high)) {
+                        entryDate = new Date(med.data.date_time.high.date);
+                    }
+                    if (entryDate < curDate) {
+                        med.inactive = true;
+                    } else {
+                        med.inactive = false;
+                    }
+                }
+            });
+            callback();
+        }
+
         function filterEntries(val) {
             console.log("UNFILTERED ", $scope.recordEntries);
 
@@ -486,7 +504,9 @@ angular.module('phrPrototypeApp')
                         return '1979-12-12';
                     }
                 }).reverse();
-                filterEntries($scope.entryType);
+                processActiveInactive(function () {
+                    filterEntries($scope.entryType);
+                });
             }
         });
 

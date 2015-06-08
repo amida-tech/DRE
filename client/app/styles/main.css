@@ -1518,7 +1518,7 @@ img {
 }
 
 /* line 106, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
-.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .timeline-entry-icon-medication, .icon-circle {
+.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .timeline-entry-icon-medication, .timeline-entry-icon-medication-inactive, .icon-circle {
   border-radius: 50%;
 }
 
@@ -8382,9 +8382,25 @@ h6, .h6 {
   bottom: -20px;
   z-index: 100;
 }
+
+.timeline-entry-icon-medication-inactive {
+  background: #fff;
+  height: 50px;
+  width: 50px;
+  box-shadow: 0 0 0 4px #777777, 0 3px 0 4px rgba(0, 0, 0, 0.05);
+  line-height: 3.5em;
+  position: relative;
+  bottom: -20px;
+  z-index: 100;
+}
+
 /* line 32, _timeline-vertical.scss */
 .timeline-entry-icon i, .timeline-entry-icon-medication i {
   color: #6AA6FF;
+}
+
+.timeline-entry-icon-medication-inactive i {
+  color: #777777;
 }
 
 /* line 37, _timeline-vertical.scss */
@@ -8406,6 +8422,10 @@ h6, .h6 {
   vertical-align: middle;
 }
 
+.timeline-entry-icon-medication-inactive i {
+  vertical-align: middle;
+}
+
 /* line 54, _timeline-vertical.scss */
 .timeline-entry-icon-medication i {
   vertical-align: text-top;
@@ -8418,8 +8438,13 @@ h6, .h6 {
   cursor: default;
   background: #6AA6FF;
 }
+
+.timeline-entry-icon-medication-inactive:hover {
+  cursor: default;
+  background: #777777;
+}
 /* line 63, _timeline-vertical.scss */
-.timeline-entry-icon:hover i, .timeline-entry-icon-medication:hover i {
+.timeline-entry-icon:hover i, .timeline-entry-icon-medication:hover i, .timeline-entry-icon-medication-inactive:hover i {
   color: #fff;
 }
 
