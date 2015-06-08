@@ -183,8 +183,13 @@
         <h3>Additional Info</h3>
         <div class="form-group row">
             <label class="col-sm-5 control-label">When did you start taking it?</label>
-            <div class="col-sm-6">
-                <input type="date" class="form-control" ng-model="$parent.pStart" placeholder="MM/DD/YYYY">
+            <div class="col-sm-6" style="display: inline-block; position: relative;">
+                <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="$parent.pStart" is-open="$parent.opened" required ng-required="true" close-text="Close" placeholder="MM/DD/YYYY"/>
+                <span class="input-group-btn" style="position: absolute; top: 0px; right: 0px;">
+                    <button type="button" class="btn btn-default" ng-click="$parent.open($event)" style="height: 42px">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
             </div>
         </div>
         <div class="form-group row">
