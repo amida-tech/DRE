@@ -126,7 +126,6 @@ describe("OAuth acceptance test (expect that user test/test exists and DRE is ru
 
                                             //access_params.access_token = res.body.access_token;
                                             //access_params.expires_in = res.body.expires_in;
-
                                             expect(res.body).to.have.property('access_token');
                                             expect(res.body).to.have.property('refresh_token');
                                             expect(res.body).to.have.property('expires_in');
