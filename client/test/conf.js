@@ -22,7 +22,7 @@ exports.config = {
   suites: {
     populate: ['register.js','upload_1.js','upload_2.js','upload_3.js','logout.js'],
     scenarios: ['login.js','scenarios.js','match.js','logout.js'],
-    medications: ['login.js','med_view.js', 'med_new.js']
+    medications: ['login.js','med_view.js', 'med_new.js','logout.js']
   },
   capabilities: {
     browserName: 'firefox'
