@@ -60,6 +60,8 @@ module.exports = function () {
 
     app.use('/docs', express.static('./swagger'));
 
+    app.engine('html', require('ejs').renderFile);
+
     app.use(logger('dev'));
     app.use(methodOverride());
     app.use(cookieParser());
