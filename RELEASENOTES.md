@@ -1,8 +1,26 @@
 # DRE Release Notes
 
-# v1.5.0 - TBD
+# v1.5.0 - June 15, 2015
+
+This release of the DRE includes:
 
 - Parser benchmarking
+- New Medications UI
+    - Icons correspond to medication type
+    - Expanded details section
+    - Display adverse events
+    - Link to MedlinePlus for additional information
+- Support for self-reported medications
+    - Record prescribing provider
+    - Store date ranges for taking medications
+    - Record prescriber instructions
+- Performance updates:
+    - Image compression on landing page
+- Medication API integrations:
+    - RxNorm
+    - OpenFDA adverse events
+    - MedlinePlus
+    - BloomAPI (NPI information)
 
 # v1.4.0 - March 16, 2015
 
