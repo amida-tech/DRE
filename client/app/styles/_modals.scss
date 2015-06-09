@@ -4,19 +4,30 @@
 }
 
 .modal-content {
-    text-align: left;
+    text-align: left;  	
+    background-color: #eee;
+
 }
 
 .modal-open {
     overflow: scroll;
 }
 
+.modal-body .table {
+  	background-color: #eee;
+}
+
 .modal-body .navbar {
-  background-color: white;
+  background-color: #eee;
+}
+
+.modal-body .navbar .btn {
+  color: #6aa6ff;
 }
 
 .modal-body li {
   width: 100%;
+
 }
 
 .modal-body span {

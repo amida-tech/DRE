@@ -38,18 +38,18 @@
   @extend .timeline-entry-icon;
   height: 90px;
   width: 90px;
-  position:initial;
+  position: initial;
 }
 
 .timeline-entry-icon-medication-inactive {
-  @extend .img-circle;
+  @extend .timeline-entry-icon;
   background: #fff;
   box-shadow: 0 0 0 4px #777777,
     0 3px 0 4px rgba(0, 0, 0, 0.05);
-  line-height: 3.5em;
-  position: relative;
-  bottom: -20px;
-  z-index: 100;
+  /*line-height: 3.5em;*/
+  /*position: relative;*/
+  /*bottom: -20px;*/
+  /*z-index: 100;*/
   i {
   color: #777777;
   }
@@ -60,6 +60,12 @@
   height: 90px;
   -webkit-border-radius: 45px;
 }
+
+/*.timeline-entry-icon-medication-inactive img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 45px;
+}*/
 
 .timeline-entry-icon i {
   vertical-align: middle;
@@ -86,7 +92,6 @@
   i {
     color: #fff;
   }
-
 }
 
 .timeline-footer circle {
