@@ -47,6 +47,12 @@ angular
                 controllerAs: 'vm',
                 requireLogin: false
             })
+            .when('/oauth2', {
+                templateUrl: 'views/oauth.html',
+                controller: 'OAuthCtrl',
+                controllerAs: 'vm',
+                requireLogin: false
+            })
             .when('/home', {
                 templateUrl: 'views/home.html',
                 controller: 'HomeCtrl',
