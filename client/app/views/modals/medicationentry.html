@@ -187,6 +187,12 @@
                 <input type="date" class="form-control" ng-model="$parent.pStart" placeholder="MM/DD/YYYY">
             </div>
         </div>
+        <div class="row">
+            <div class="alert alert-danger" role="alert" ng-show="startDateError">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span> {{startDateError}}
+            </div>
+        </div>
         <div class="form-group row">
             <label class="col-sm-5 control-label">Is this a current medication?</label>
             <div class="col-sm-6">

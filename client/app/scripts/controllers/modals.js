@@ -158,25 +158,27 @@ angular.module('phrPrototypeApp')
                 }
                 break;
             case 3:
-                enteredObject(function () {
-                    if ($scope.enteredMedication.date_time) {
+                if(!_.has($scope, 'enteredMedication.date_time.low')) {
+                    $scope.startDateError = "You must enter a start date";
+                } else {
+                    enteredObject(function () {
                         format.formatDate($scope.enteredMedication.date_time.low);
                         if ($scope.enteredMedication.date_time.high) {
                             format.formatDate($scope.enteredMedication.date_time.high);
                         }
-                    }
-                    if ($scope.enteredMedication.performer) {
-                        if ($scope.enteredMedication.performer.address) {
-                            format.formatAddress($scope.enteredMedication.performer.address[0]);
+                        if ($scope.enteredMedication.performer) {
+                            if ($scope.enteredMedication.performer.address) {
+                                format.formatAddress($scope.enteredMedication.performer.address[0]);
+                            }
+                            if ($scope.enteredMedication.performer.name) {
+                                format.formatName($scope.enteredMedication.performer.name[0]);
+                            }
                         }
-                        if ($scope.enteredMedication.performer.name) {
-                            format.formatName($scope.enteredMedication.performer.name[0]);
-                        }
-                    }
-                    console.log($scope.enteredMedication);
-                    $scope.medication = $scope.enteredMedication;
-                    $scope.entryStep = 4;
-                });
+                        console.log($scope.enteredMedication);
+                        $scope.medication = $scope.enteredMedication;
+                        $scope.entryStep = 4;
+                    });
+                }
                 break;
             default:
                 break;
