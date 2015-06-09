@@ -158,7 +158,7 @@ angular.module('phrPrototypeApp')
                 }
                 break;
             case 3:
-                if(!_.has($scope, 'enteredMedication.date_time.low')) {
+                if(!_.has($scope, 'pStart')) {
                     $scope.startDateError = "You must enter a start date";
                 } else {
                     enteredObject(function () {
