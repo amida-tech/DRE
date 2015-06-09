@@ -10,6 +10,12 @@ angular.module('phrPrototypeApp')
         $scope.saveMedicationStatus = null;
         $scope.pCurrentMedRadio = true;
 
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = true;
+        };
+
         $scope.previousStep = function previousStep() {
             if ($scope.entryStep === 3 && $scope.medSearchType !== 'prescription') {
                 $scope.entryStep = 1;
@@ -390,6 +396,12 @@ angular.module('phrPrototypeApp')
         $scope.updateMedication = updateMedication;
         $scope.updateMedicationStatus = null;
         $scope.saveMed = {};
+
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = true;
+        };
 
         if ($scope.medication.med_metadata.is_prescription) {
             $scope.medSearchType = 'prescription';

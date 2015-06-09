@@ -8,14 +8,15 @@
  * # format
  * Filter in the phrPrototypeApp.
  */
-angular.module('phrPrototypeApp')
+angular
+    .module('phrPrototypeApp')
     .filter('format', function () {
-        return function (input, type) {
-            if (_.isUndefined(input)) {
-                return;
-            }
+    return function (input, type) {
+        if (_.isUndefined(input)) {
+            return;
+        }
 
-            switch (type) {
+        switch (type) {
             case 'address':
 
                 var address = input;
@@ -96,7 +97,6 @@ angular.module('phrPrototypeApp')
 
             case 'date':
                 var date_time = input;
-                var input_date = '';
                 if (!date_time) {
                     return "Date Not Reported";
                 }
@@ -114,34 +114,32 @@ angular.module('phrPrototypeApp')
                 } else {
                     return "Date Not Reported";
                 }
+        }
+    };
+});
 
-                function formatDate(input_date) {
-                    var tmpDateArr;
-                    if (input_date.precision === "year") {
-                        tmpDateArr = moment.utc(input_date.date).format('YYYY');
-                    }
-                    if (input_date.precision === "month") {
-                        tmpDateArr = moment.utc(input_date.date).format('MMM, YYYY');
-                    }
-                    if (input_date.precision === "day") {
-                        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY');
-                    }
-                    if (input_date.precision === "hour") {
-                        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
-                    }
-                    if (input_date.precision === "minute") {
-                        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
-                    }
-                    if (input_date.precision === "second") {
-                        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
-                    }
-                    if (input_date.precision === "subsecond") {
-                        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
-                    }
-                    return tmpDateArr;
-                }
-
-            }
-
-        };
-    });
+function formatDate(input_date) {
+    var tmpDateArr;
+    if (input_date.precision === "year") {
+        tmpDateArr = moment.utc(input_date.date).format('YYYY');
+    }
+    if (input_date.precision === "month") {
+        tmpDateArr = moment.utc(input_date.date).format('MMM, YYYY');
+    }
+    if (input_date.precision === "day") {
+        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY');
+    }
+    if (input_date.precision === "hour") {
+        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
+    }
+    if (input_date.precision === "minute") {
+        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
+    }
+    if (input_date.precision === "second") {
+        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
+    }
+    if (input_date.precision === "subsecond") {
+        tmpDateArr = moment.utc(input_date.date).format('MMM D, YYYY h:mm a');
+    }
+    return tmpDateArr;
+}

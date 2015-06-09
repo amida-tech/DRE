@@ -22,7 +22,7 @@ describe('angularjs homepage', function() {
 
         confirmButton.click();
 
-        var record = element(by.css('[href="#/record"]'));
+        var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
 
         record.click();
         
