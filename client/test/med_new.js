@@ -66,7 +66,7 @@ describe('Enter new medication information:', function () {
 		next.click();
 	});
 	
-	it('should save successfullty', function() {
+	it('should save successfully', function() {
 		var submit = element(by.css('[ng-click="saveMedication()"]'));
 		submit.click();
 	});
