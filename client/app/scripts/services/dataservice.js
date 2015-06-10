@@ -415,10 +415,6 @@ angular.module('phrPrototypeApp').service('dataservice', function dataservice($h
         master_merges = [];
         master_entries = [];
         all_notes = [];
-        last_section = {
-            record: '',
-            billing: ''
-        };
         inactiveMeds = ['active', 'inactive'];
         inactiveSocial = ['active', 'inactive'];
     };

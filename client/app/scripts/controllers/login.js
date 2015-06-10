@@ -11,9 +11,9 @@ angular
     .module('phrPrototypeApp')
     .controller('LoginCtrl', Login);
 
-Login.$inject = ['$location', 'authentication'];
+Login.$inject = ['$location', 'authentication', 'dataservice'];
 
-function Login($location, authentication) {
+function Login($location, authentication, dataservice) {
     /* jshint validthis: true */
     var vm = this;
     vm.login = function () {
@@ -21,6 +21,7 @@ function Login($location, authentication) {
             if (err) {
                 vm.error = err;
             } else {
+                dataservice.forceRefresh();
                 $location.path('/home');
             }
         });
