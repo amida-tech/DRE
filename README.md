@@ -98,7 +98,7 @@ To run, use `node server`
 #### Protractor Tests:
 
 ```
-# you need Firefox installed, and MongoDB, Redis, Node, and Selenium running
+# you need MongoDB, Redis, Node, and Selenium running
 # option selects which suite of tests to run (populate, scenarios, and/or medications)
 # screenshots and report are saved to ./protractor-result/
 
