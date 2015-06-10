@@ -11,12 +11,12 @@
 angular
     .module('phrPrototypeApp')
     .filter('format', function () {
-    return function (input, type) {
-        if (_.isUndefined(input)) {
-            return;
-        }
+        return function (input, type) {
+            if (_.isUndefined(input)) {
+                return;
+            }
 
-        switch (type) {
+            switch (type) {
             case 'address':
 
                 var address = input;
@@ -114,9 +114,9 @@ angular
                 } else {
                     return "Date Not Reported";
                 }
-        }
-    };
-});
+            }
+        };
+    });
 
 function formatDate(input_date) {
     var tmpDateArr;
