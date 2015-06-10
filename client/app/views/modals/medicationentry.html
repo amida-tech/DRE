@@ -192,6 +192,12 @@
                 </span>
             </div>
         </div>
+        <div class="row">
+            <div class="alert alert-danger" role="alert" ng-show="startDateError">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span> {{startDateError}}
+            </div>
+        </div>
         <div class="form-group row">
             <label class="col-sm-5 control-label">Is this a current medication?</label>
             <div class="col-sm-6">
@@ -235,8 +241,8 @@
             <h4 class="row">
                 {{selectedDrug.synonym}}
             </h4>
-            <div class="row" ng-show="pCurrentMedRadio&&pStart">Date: {{pStart}} - Present</div>
-            <div class="row" ng-show="pStart&&pLast">Date: {{pStart}} - {{pLast}}</div>
+            <div class="row" ng-show="pCurrentMedRadio&&pStart">Date: {{enteredMedication.date_time.low.displayDate}} - Present</div>
+            <div class="row" ng-show="pStart&&pLast">Date: {{enteredMedication.date_time.low.displayDate}} - {{enteredMedication.date_time.high.displayDate}}</div>
             <div class="sub-entry" ng-include="'views/templates/details/medications.html'"></div>
         </div>
         <!--         <h4>Save Object</h4>
