@@ -94,8 +94,9 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            files: ['Gruntfile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js', '<%= yeoman.app %>/scripts/{,*/}*.js',
-                '!./lib/dre/remove_dups.js'
+            files: [
+                'Gruntfile.js', 'package.json', '*.js', './lib/*.js', './lib/**/*.js', './test/*.js', './test/**/*.js', '<%= yeoman.app %>/scripts/{,*/}*.js',
+                '!./lib/dre/remove_dups.js', '!./test/coverage/lcov-report/**/*.js'
             ],
             options: {
                 reporter: require('jshint-stylish'),
@@ -177,7 +178,7 @@ module.exports = function (grunt) {
         protractor: {
             options: {
                 configFile: "client/test/conf.js", // Default config file 
-                keepAlive: true,
+                keepAlive: false,
             },
             populate: {
                 options: {

@@ -183,8 +183,13 @@
         <h3>Additional Info</h3>
         <div class="form-group row">
             <label class="col-sm-5 control-label">When did you start taking it?</label>
-            <div class="col-sm-6">
-                <input type="date" class="form-control" ng-model="$parent.pStart" placeholder="MM/DD/YYYY">
+            <div class="col-sm-6" style="display: inline-block; position: relative;">
+                <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="$parent.pStart" is-open="$parent.opened" required ng-required="true" close-text="Close" placeholder="MM/DD/YYYY"/>
+                <span class="input-group-btn" style="position: absolute; top: 0px; right: 0px;">
+                    <button type="button" class="btn btn-default" ng-click="$parent.open($event)" style="height: 42px">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
             </div>
         </div>
         <div class="form-group row">
@@ -212,27 +217,13 @@
         </div>
         <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length == 0">
             <h5>Images: </h5>
-            <h5 class="col-sm-6">No Images Found</h5>
+            <h5 class="col-sm-6">No images found in the NIH NLM RxImage Database.</h5>
         </div>
         <div class="row" ng-show="rximageResults" ng-if="rximageResults.nlmRxImages.length >= 1">
-            <div ng-if="rximageResults.nlmRxImages.length == 1">
-                <h5>Is this what it looks like? If so, please click on the image to select it.</h5>
-                <div>
-                    <input type="checkbox" ng-class="{active:rximageResults.nlmRxImages[0].selected}" class="pull-left" ng-click="setSelectedImage(rximageResults.nlmRxImages[0])">
-                </div>
+            <h5>Searching the NIH NLM RxImage Database returns the following image(s) for this medication:</h5>
+            <div class="row" ng-repeat="rxImage in rximageResults.nlmRxImages">
                 <div class="col-sm-2">
-                    <a class="thumbnail" ng-class="{active:rximageResults.nlmRxImages[0].selected}" ng-click="setSelectedImage(rximageResults.nlmRxImages[0])"><img ng-src="{{rximageResults.nlmRxImages[0].imageUrl}}" class="img-responsive img-thumbnail" /></a>
-                </div>
-            </div>
-            <div ng-if="rximageResults.nlmRxImages.length > 1">
-                <h4>Is your pill one of these? Please click on an image to select it.</h4>
-                <div class="row" ng-repeat="rxImage in rximageResults.nlmRxImages">
-                    <div>
-                        <input type="checkbox" ng-class="{active:rximage.selected}" class="pull-left" ng-click="setSelectedImage(rximage)">
-                    </div>
-                    <div class="col-sm-2">
-                        <a class="thumbnail" ng-class="{active:rxImage.selected}" ng-click="setSelectedImage(rxImage)"><img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" /></a>
-                    </div>
+                    <img ng-src="{{rxImage.imageUrl}}" class="img-responsive img-thumbnail" />
                 </div>
             </div>
             <!--<pre>{{rximageResults}}</pre>-->
