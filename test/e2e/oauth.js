@@ -19,26 +19,23 @@ var cookieParser = require('cookie-parser');
 var client = {
     "client_name": "Cool SMART App",
     "redirect_uris": [
-        "https://srv.me/app/cool"
+        "https://srv.me/app/cool",
+        "https://srv.me/app/cool2"
     ],
     "token_endpoint_auth_method": "none",
     "grant_types": ["authorization_code"],
     "initiate_login_uri": "https://srv.me/app/launch.html",
     "logo_uri": "https://srv.me/img/cool.png",
-    "scope": "launch launch/patient launch/encounter patient/*.read user/*.* openid profile"
+    "scope": "launch launch/patient launch/encounter patient/*.read user/*.* openid profile",
+    "state": "nonsence"
 };
 var callback = "https://srv.me/app/cool";
 var username = 'test';
 var password = 'test';
-var client_id;
-var client_secret;
-var login_uri;
-var decide_uri;
-var access_params;
 
-describe("OAuth acceptance test (expect that user test/test exists)", function () {
-    describe("dynamic client registration", function () {
-        it("should register a new confidential client", function (done) {
+describe("OAuth acceptance test (expect that user test/test exists and DRE is running on a port 3000)", function () {
+    describe("dynamic confidential client registration", function () {
+        it("should register a new client", function (done) {
             // remove test record
             api.get('/oauth2/cleantest').end(function (err, res) {
                 if (err) {
@@ -59,6 +56,7 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                 });
             });
         });
+
         it("should login with new id and secret", function (done) {
 
             // remove test record
@@ -78,15 +76,16 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                     keys.push('client_id');
                     keys.push('client_secret');
                     expect(res.body).to.have.all.keys(keys);
-                    client_id = res.body.client_id;
-                    client_secret = res.body.client_secret;
+
+                    var client_id = res.body.client_id;
+                    var client_secret = res.body.client_secret;
 
                     // Attempt to get authorization
                     api.get('/oauth2/authorize?redirect_uri=' + encodeURIComponent(callback + '?client_id=' + client_id) + '&response_type=code&client_id=' + client_id).expect(302).end(function (err, res) {
                         if (err) {
                             return done(err);
                         }
-                        login_uri = res.headers.location;
+                        var login_uri = res.headers.location;
                         expect(login_uri && (login_uri.indexOf('/oauth2/login') === 0)).to.be.true;
                         var query = url.parse(login_uri, true).query;
 
@@ -99,7 +98,6 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                             if (err) {
                                 return done(err);
                             }
-
                             // Read 'decision' form
                             api.get(res.header.location).expect(200).end(function (err, res) {
                                 if (err) {
@@ -114,22 +112,22 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                                 api.post(decide_uri).type('form').send({
                                     transaction_id: transaction_id
                                 }).expect(302).end(function (err, res) {
+
                                     if (err) {
                                         return done(err);
                                     }
                                     expect(res.header.location && res.header.location.indexOf('https://srv.me/app/cool?client_id=' + client_id + '&code=') === 0).to.be.true;
                                     var query = url.parse(res.header.location, true).query;
-
                                     // Get access & refresh tokens (also some other ....)
                                     api.post('/oauth2/token').type('form').auth(client_id, client_secret).send({
                                         code: query.code,
-                                        redirect_uri: client.redirect_uris[0],
+                                        redirect_uri: (callback + '?client_id=' + client_id),
                                         client_id: client_id,
                                         client_secret: client_secret,
                                         grant_type: 'authorization_code'
                                     }).expect(302).end(function (err, res) {
 
-                                        access_params = res.body;
+                                        var access_params = res.body;
                                         expect(access_params).to.have.property('access_token');
                                         expect(access_params).to.have.property('refresh_token');
                                         expect(access_params).to.have.property('expires_in');
@@ -143,13 +141,15 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                                             grant_type: 'refresh_token'
                                         }).expect(200).end(function (err, res) {
 
-                                            access_params.access_token = res.body.access_token;
-                                            access_params.expires_in = res.body.expires_in;
-
+                                            //access_params.access_token = res.body.access_token;
+                                            //access_params.expires_in = res.body.expires_in;
                                             expect(res.body).to.have.property('access_token');
                                             expect(res.body).to.have.property('refresh_token');
                                             expect(res.body).to.have.property('expires_in');
                                             expect(res.body).to.have.property('token_type', 'Bearer');
+
+                                            expect(res.body.access_token).is.not.equal(access_params.access_token);
+                                            expect(res.body.refresh_token).is.equal(access_params.refresh_token);
 
                                             done();
                                         });
@@ -163,13 +163,15 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
         });
     });
 
-    describe("dynamic client registration", function () {
-        it("should register a new public client", function (done) {
+    describe("dynamic public client registration", function () {
+        it("should register a new client", function (done) {
+
             // remove test record
             api.get('/oauth2/cleantest').end(function (err, res) {
                 if (err) {
                     done(err);
                 }
+
                 // Register a public client
                 api.post('/oauth2/register').send(client).expect(200).end(function (err, res) {
                     if (err) {
@@ -182,6 +184,7 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                 });
             });
         });
+
         it("should login with new id", function (done) {
 
             // remove test record
@@ -200,17 +203,16 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                     var keys = Object.keys(temp);
                     keys.push('client_id');
                     //keys.push('client_secret'); // No client sicret since it's a public client
-                    client_secret = null; // Drop it if any
                     expect(res.body).to.have.all.keys(keys);
-                    client_id = res.body.client_id;
+
+                    var client_id = res.body.client_id;
 
                     // Attempt to get authorization
                     api.get('/oauth2/authorize?redirect_uri=' + encodeURIComponent(callback + '?client_id=' + client_id) + '&response_type=code&client_id=' + client_id).expect(302).end(function (err, res) {
-                        console.log(res.body);
                         if (err) {
                             return done(err);
                         }
-                        login_uri = res.headers.location;
+                        var login_uri = res.headers.location;
                         expect(login_uri && (login_uri.indexOf('/oauth2/login') === 0)).to.be.true;
                         var query = url.parse(login_uri, true).query;
 
@@ -220,8 +222,6 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                             password: password,
                             redirectUri: query.redirectUri
                         }).expect(302).end(function (err, res) {
-                            console.log(res.body);
-
                             if (err) {
                                 return done(err);
                             }
@@ -240,6 +240,7 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                                 api.post(decide_uri).type('form').send({
                                     transaction_id: transaction_id
                                 }).expect(302).end(function (err, res) {
+
                                     if (err) {
                                         return done(err);
                                     }
@@ -247,17 +248,16 @@ describe("OAuth acceptance test (expect that user test/test exists)", function (
                                     var query = url.parse(res.header.location, true).query;
 
                                     // Get access & refresh tokens (also some other ....)
-                                    api.post('/oauth2/token').type('form').auth(client_id, client_secret).send({
+                                    api.post('/oauth2/token').type('form').auth(client_id, null).send({
                                         code: query.code,
-                                        redirect_uri: client.redirect_uris[0],
+                                        redirect_uri: (callback + '?client_id=' + client_id),
                                         client_id: client_id,
-                                        client_secret: client_secret,
                                         grant_type: 'authorization_code'
                                     }).expect(302).end(function (err, res) {
 
-                                        access_params = res.body;
+                                        var access_params = res.body;
                                         expect(access_params).to.have.property('access_token');
-                                        expect(access_params).not.to.have.property('refresh_token');
+                                        expect(access_params).to.have.property('refresh_token');
                                         expect(access_params).to.have.property('expires_in');
                                         expect(access_params).to.have.property('patient');
                                         expect(access_params).to.have.property('token_type', 'Bearer');
