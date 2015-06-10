@@ -9,7 +9,7 @@ install:
 - npm install -g protractor
 - npm install --quiet
 - bower install
-- webdriver-manager update --chrome
+- webdriver-manager update --firefox
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start 
