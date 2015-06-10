@@ -51,6 +51,8 @@ describe("OAuth acceptance test (expect that user test/test exists and DRE is ru
                     var keys = Object.keys(temp);
                     keys.push('client_id');
                     keys.push('client_secret');
+                    console.log("body: ", res.body);
+                    console.log("keys: ", keys);
                     expect(res.body).to.have.all.keys(keys);
                     done();
                 });
