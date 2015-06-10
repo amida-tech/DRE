@@ -11,10 +11,9 @@ angular
     .module('phrPrototypeApp')
     .controller('NavbarCtrl', Navbar);
 
-Navbar.$inject = ['$rootScope', '$location', '$window', 'authentication', 'dataservice'];
+Navbar.$inject = ['$rootScope', '$location', '$window', 'authentication', 'dataservice', 'history', 'notes'];
 
-//function Navbar($rootScope, $location, authentication, logout) {
-function Navbar($rootScope, $location, $window, authentication, dataservice) {
+function Navbar($rootScope, $location, $window, authentication, dataservice, history, notes) {
     /* jshint validthis: true */
     var vm = this;
     vm.navbarLogout = navbarLogout;
@@ -36,15 +35,17 @@ function Navbar($rootScope, $location, $window, authentication, dataservice) {
     };
 
     function navbarLogout() {
-        //logout.logout(function (err) {
         dataservice.forceRefresh();
+        history.forceRefresh();
+        notes.forceRefresh();
         authentication.logout(function (err) {
             if (err) {
                 vm.error = err;
             } else {
                 // $scope.loginStatus = false;
                 //$location.path('/');
-                $window.location.href('/');
+                $location.path('/');
+                $window.location.reload();
             }
         });
     }

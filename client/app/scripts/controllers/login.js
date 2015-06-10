@@ -11,18 +11,21 @@ angular
     .module('phrPrototypeApp')
     .controller('LoginCtrl', Login);
 
-Login.$inject = ['$location', 'authentication', 'dataservice'];
+Login.$inject = ['$location', '$window', 'authentication', 'dataservice', 'history', 'notes'];
 
-function Login($location, authentication, dataservice) {
+function Login($location, $window, authentication, dataservice, history, notes) {
     /* jshint validthis: true */
     var vm = this;
     vm.login = function () {
+        dataservice.forceRefresh();
+        history.forceRefresh();
+        notes.forceRefresh();
         authentication.login(vm.inputLogin, vm.inputPassword, function (err) {
             if (err) {
                 vm.error = err;
             } else {
-                dataservice.forceRefresh();
                 $location.path('/home');
+                $window.location.reload();
             }
         });
     };
