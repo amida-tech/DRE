@@ -85,13 +85,27 @@ To run, use `node server`
 
 #### Grunt commands:
 
-`grunt` - To Run Server Side tests
+`grunt` - To run Server Side tests
 
-`grunt test` - To Run Client Side tests. Make sure a Selenium server is running with `webdriver-manager start`.
+`grunt test` - To run and watch Client Side tests. Make sure a Selenium server and Node are running with `webdriver-manager start` and `node server.js`.
+
+`grunt travis-protractor` - To run Client Side tests. Make sure a Selenium server and Node are running with `webdriver-manager start` and `node server.js`.
 
 ```grunt build``` - Executes build and puts it into /dist.
 
 ```grunt live``` - Build and watch files for development (just linting, compiling styles and watching).
+
+#### Protractor Tests:
+
+```
+# you need MongoDB, Redis, Node, and Selenium running
+# option selects which suite of tests to run (populate, scenarios, and/or medications)
+# screenshots and report are saved to ./protractor-result/
+
+npm install -g protractor
+protractor client/test/conf.js --suite option
+
+```
 
 ## Contributing
 
