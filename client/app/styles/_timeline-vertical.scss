@@ -46,13 +46,44 @@
   background: #fff;
   box-shadow: 0 0 0 4px #777777,
     0 3px 0 4px rgba(0, 0, 0, 0.05);
-  /*line-height: 3.5em;*/
-  /*position: relative;*/
-  /*bottom: -20px;*/
-  /*z-index: 100;*/
+  position: relative;
+  overflow: hidden;
   i {
   color: #777777;
+    /*font-size: 14px;*/
   }
+/*  @extend .img-circle;
+  background-color: #fff;
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  i {
+    font-size: 3em
+  }*/
+}
+.overlay {
+  font-size: 28px;
+  display:block;
+  text-align:center;
+  overflow:hidden;
+  box-sizing:border-box;
+}
+.overlay i {
+  display: none;
+}
+.overlay::before {
+content: ("\\");
+overflow:hidden!important;
+position: absolute;
+font-size:100px;
+font-weight:400;
+top:-30px;
+left:-4px;
+bottom:-50px;
+color: #777;
+-ms-transform: rotate(-14deg);
+-webkit-transform: rotate(-14deg);
+transform: rotate(-14deg);
 }
 
 .timeline-entry-icon-medication img {

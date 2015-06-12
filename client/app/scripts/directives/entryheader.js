@@ -67,7 +67,11 @@ angular.module('phrPrototypeApp')
                         scope.entryTitle = scope.entryData.product.product.name;
                     }
                     if (scope.recordEntry.metadata.displayDate) {
-                        scope.entrySubTitleOne = format.outputDate(scope.entryData.date_time);
+                        if (scope.recordEntry.inactive) {
+                            scope.entrySubTitleOne = format.outputDate(scope.entryData.date_time);
+                        } else {
+                            scope.entrySubTitleOne = format.outputDate(scope.entryData.date_time);
+                        }
                     }
                     if (scope.recordEntry.data.med_metadata) {
                         if (scope.recordEntry.data.med_metadata.patient_entered) {

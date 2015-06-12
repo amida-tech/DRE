@@ -120,7 +120,7 @@ function Profile($rootScope, $location, $route, $anchorScroll, account, profile,
     function displayProfile() {
         vm.profile = $rootScope.profile_info;
         if (vm.profile && vm.profile.dob) {
-            vm.editDOB = moment(vm.profile.dob.point.date).format('YYYY-MM-DD');
+            vm.editDOB = moment(vm.profile.dob.point.date).toDate();
             vm.viewDOB = format.formatDate(vm.profile.dob.point);
         }
         if (vm.profile && vm.profile.name.middle) {

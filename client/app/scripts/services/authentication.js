@@ -8,7 +8,7 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-    .service('authentication', function authentication($rootScope, $location, $http, dataservice, history, notes) {
+    .service('authentication', function authentication($rootScope, $location, $http, dataservice, history, notes, profile) {
         var auth_data = {};
 
         function clearAuth() {
@@ -50,6 +50,7 @@ angular.module('phrPrototypeApp')
                         password: password
                     })
                     .success(function (data) {
+                        profile.forceRefresh();
                         notes.forceRefresh();
                         dataservice.forceRefresh();
                         history.forceRefresh();

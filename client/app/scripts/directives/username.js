@@ -14,6 +14,7 @@ angular.module('phrPrototypeApp')
             restrict: 'EA',
             link: function postLink(scope, element, attrs) {
                 //$scope.user_first="blah";
+
                 function displayUsername() {
                     if ($rootScope.profile_info && !angular.isUndefined($rootScope.profile_info.name)) {
                         scope.user_first = $rootScope.profile_info.name.first;

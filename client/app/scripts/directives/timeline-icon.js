@@ -60,21 +60,20 @@ angular.module('phrPrototypeApp')
                 if (iconEntry) {
                     if (iconEntry.type === 'medications') {
                         var html = '<i class="fa-2x icon-pill"></i>';
+                        if (scope.recordEntry && scope.recordEntry.inactive) {
+                            html = '<span class="fa-stack fa-lg"><i class="fa fa-ban fa-stack-2x fa-rotate-90"></i><i class="fa-stack-1x icon-pill"></i></span>';
+                        }
                         if (attrs.timelineIconMeta) {
                             var iconMeta = JSON.parse(attrs.timelineIconMeta);
-                            if (iconMeta.image) {
-                                if (iconMeta.image.imageUrl) {
-                                    if (iconMeta.image.imageUrl !== "") {
-                                        html = '<img ng-src=' + iconMeta.image.imageUrl + '>';
-                                    }
-                                }
-                            } else {
-                                if (_.deepGet(scope.entryData, 'administration.form.code')) {
-                                    var route = scope.entryData.administration.form.code;
-                                    var medRouteIconEntry = _.findWhere(medRouteIconMap, {
-                                        code: route
-                                    });
-                                    if (medRouteIconEntry) {
+                            if (_.deepGet(scope.entryData, 'administration.form.code')) {
+                                var route = scope.entryData.administration.form.code;
+                                var medRouteIconEntry = _.findWhere(medRouteIconMap, {
+                                    code: route
+                                });
+                                if (medRouteIconEntry) {
+                                    if (scope.recordEntry.inactive) {
+                                        html = '<span class="fa-stack fa-lg"><i class="fa fa-ban fa-stack-2x fa-rotate-90"></i><i class="fa-stack-1x ' + medRouteIconEntry.icon + ' "></i></span>';
+                                    } else {
                                         html = '<i class="fa-2x ' + medRouteIconEntry.icon + '"></i>';
                                     }
                                 }
