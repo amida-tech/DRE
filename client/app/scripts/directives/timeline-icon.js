@@ -60,7 +60,7 @@ angular.module('phrPrototypeApp')
                 if (iconEntry) {
                     if (iconEntry.type === 'medications') {
                         var html = '<i class="fa-2x icon-pill"></i>';
-                        if (scope.recordEntry.inactive) {
+                        if (scope.recordEntry && scope.recordEntry.inactive) {
                             html = '<span class="fa-stack fa-lg"><i class="fa fa-ban fa-stack-2x fa-rotate-90"></i><i class="fa-stack-1x icon-pill"></i></span>';
                         }
                         if (attrs.timelineIconMeta) {
