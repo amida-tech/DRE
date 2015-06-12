@@ -72,9 +72,12 @@ describe("OAuth acceptance test (expect that user test/test exists and DRE is ru
                         return done(err2);
                     }
                     var keys = Object.keys(temp);
+                    console.log(keys, res2.body);
                     keys.push('client_id');
                     keys.push('client_secret');
-                    expect(res2.body).to.have.all.keys(keys);
+                    for (var i = 0; i < keys.length; i++) {
+                        expect(res2.body).to.have.property(keys[i]);
+                    }
                     done();
                 });
             });
@@ -98,7 +101,9 @@ describe("OAuth acceptance test (expect that user test/test exists and DRE is ru
                     var keys = Object.keys(temp);
                     keys.push('client_id');
                     keys.push('client_secret');
-                    expect(res2.body).to.have.all.keys(keys);
+                    for (var i = 0; i < keys.length; i++) {
+                        expect(res2.body).to.have.property(keys[i]);
+                    }
 
                     var client_id = res2.body.client_id;
                     var client_secret = res2.body.client_secret;
@@ -202,7 +207,10 @@ describe("OAuth acceptance test (expect that user test/test exists and DRE is ru
                     }
                     var keys = Object.keys(client);
                     keys.push('client_id');
-                    expect(res2.body).to.have.all.keys(keys);
+                    for (var i = 0; i < keys.length; i++) {
+                        expect(res2.body).to.have.property(keys[i]);
+                    }
+
                     done();
                 });
             });
@@ -226,7 +234,10 @@ describe("OAuth acceptance test (expect that user test/test exists and DRE is ru
                     var keys = Object.keys(temp);
                     keys.push('client_id');
                     //keys.push('client_secret'); // No client sicret since it's a public client
-                    expect(res2.body).to.have.all.keys(keys);
+                    expect(res2.body).not.to.have.property('client_secret');
+                    for (var i = 0; i < keys.length; i++) {
+                        expect(res2.body).to.have.property(keys[i]);
+                    }
 
                     var client_id = res2.body.client_id;
 
