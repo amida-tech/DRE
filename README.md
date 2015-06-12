@@ -113,5 +113,3 @@ See release notes [here] (./RELEASENOTES.md)
 ## License
 
 Licensed under [Apache 2.0](./LICENSE)
-
-
