@@ -35,7 +35,7 @@ describe('record scenario', function() {
         var saveNote = firstEntry.element(by.css('[ng-click="saveNote(editComment)"]'));
         saveNote.click();
 
-        var notePage = element(by.css('[href="#/notes"]'));
+        var notePage = element(by.css('[ng-click="vm.navbarClick(\'notes\')"]'));
         notePage.click();
     }
 

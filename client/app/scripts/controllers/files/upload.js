@@ -11,9 +11,9 @@ angular
     .module('phrPrototypeApp')
     .controller('FilesUploadCtrl', FilesUpload);
 
-FilesUpload.$inject = ['$location', '$route', 'upload', '$http', 'format', 'record'];
+FilesUpload.$inject = ['$location', '$route', 'upload', '$http', 'format', 'record', 'dataservice'];
 
-function FilesUpload($location, $route, upload, $http, format, record) {
+function FilesUpload($location, $route, upload, $http, format, record, dataservice) {
     /* jshint validthis: true */
     var vm = this;
     vm.importAndSave = importAndSave;
@@ -30,9 +30,11 @@ function FilesUpload($location, $route, upload, $http, format, record) {
     function incrementStep() {
         vm.uploadStep = vm.uploadStep + 1;
 
+        var uploadFile;
+
         if (vm.uploadStep === 1) {
 
-            var uploadFile = vm.myFile;
+            uploadFile = vm.myFile;
             console.log("extracting demographics", uploadFile);
 
             upload.uploadRecord(uploadFile, true, function (err, results) {
@@ -48,7 +50,7 @@ function FilesUpload($location, $route, upload, $http, format, record) {
             });
 
         } else if (vm.uploadStep === 2) {
-            var uploadFile = vm.myFile;
+            uploadFile = vm.myFile;
             console.log("uploading file", uploadFile);
 
             upload.uploadRecord(uploadFile, false, function (err, results) {
@@ -66,9 +68,9 @@ function FilesUpload($location, $route, upload, $http, format, record) {
     function importAndSave() {
         var uploadFile = vm.myFile;
         console.log("uploading file", uploadFile);
-
         upload.uploadRecord(uploadFile, false, function (err, results) {
             vm.uploadStep = 0;
+            dataservice.forceRefresh();
             $location.path('/files');
         });
 

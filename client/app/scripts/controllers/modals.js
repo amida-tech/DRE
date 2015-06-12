@@ -164,7 +164,7 @@ angular.module('phrPrototypeApp')
                 }
                 break;
             case 3:
-                if(!_.has($scope, 'pStart')) {
+                if (!_.has($scope, 'pStart')) {
                     $scope.startDateError = "You must enter a start date";
                 } else {
                     enteredObject(function () {

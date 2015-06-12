@@ -1,7 +1,7 @@
 describe('angularjs homepage', function() {
 
     var path = require('path');
-    var files = element(by.css('[href="#/files"]'));
+    var files = element(by.css('[ng-click="vm.navbarClick(\'files\')"]'));
 
     var pathToFiles = "../../test/artifacts/demo-r1.5/";
 
