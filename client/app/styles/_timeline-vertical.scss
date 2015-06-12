@@ -47,10 +47,10 @@
   box-shadow: 0 0 0 4px #777777,
     0 3px 0 4px rgba(0, 0, 0, 0.05);
   position: relative;
-  /*overflow: hidden;*/
+  overflow: hidden;
   i {
   color: #777777;
-    font-size: 14px;
+    /*font-size: 14px;*/
   }
 /*  @extend .img-circle;
   background-color: #fff;
@@ -80,7 +80,7 @@ font-weight:400;
 top:-30px;
 left:-4px;
 bottom:-50px;
-color: $brand-primary;
+color: #777;
 -ms-transform: rotate(-14deg);
 -webkit-transform: rotate(-14deg);
 transform: rotate(-14deg);

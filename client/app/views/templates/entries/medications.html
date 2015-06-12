@@ -1,7 +1,7 @@
 <div class="col-sm-2">
     <a ng-hide="recordEntry.inactive" class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{entryType}}" timeline-index="{{recordIndex}}" timeline-icon-meta="{{recordEntry.metadata}}" data-toggle="collapse" data-target="#details{{recordIndex}}" aria-expanded="false" aria-controls="details{{recordIndex}}" ng-click="swapTabs('details', recordIndex)"></a>
 
-    <a ng-show="recordEntry.inactive" class="timeline-entry-icon text-center center-block overlay" timeline-icon timeline-icon-type="{{entryType}}" timeline-index="{{recordIndex}}" timeline-icon-meta="{{recordEntry.metadata}}" data-toggle="collapse" data-target="#details{{recordIndex}}" aria-expanded="false" aria-controls="details{{recordIndex}}" ng-click="swapTabs('details', recordIndex)"></a>
+    <a ng-show="recordEntry.inactive" class="timeline-entry-icon-medication-inactive text-center center-block overlay" timeline-icon timeline-icon-type="{{entryType}}" timeline-index="{{recordIndex}}" timeline-icon-meta="{{recordEntry.metadata}}" data-toggle="collapse" data-target="#details{{recordIndex}}" aria-expanded="false" aria-controls="details{{recordIndex}}" ng-click="swapTabs('details', recordIndex)"></a>
 </div>
 <div class="col-sm-10">
     <div class="panel timeline-entry">

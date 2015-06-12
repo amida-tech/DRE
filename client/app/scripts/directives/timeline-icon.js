@@ -61,7 +61,7 @@ angular.module('phrPrototypeApp')
                     if (iconEntry.type === 'medications') {
                         var html = '<i class="fa-2x icon-pill"></i>';
                         if (scope.recordEntry.inactive) {
-                            html = '<i class="overlay fa-2x icon-pill"></i>';
+                            html = '<i class="fa-2x icon-pill overlay"></i>';
                         }
                         if (attrs.timelineIconMeta) {
                             var iconMeta = JSON.parse(attrs.timelineIconMeta);
@@ -72,7 +72,7 @@ angular.module('phrPrototypeApp')
                                 });
                                 if (medRouteIconEntry) {
                                     if (scope.recordEntry.inactive) {
-                                        html = '<i class="overlay fa-stack-2x ' + medRouteIconEntry.icon + '"></i></span>';
+                                        html = '<i class="fa-2x ' + medRouteIconEntry.icon + ' overlay"></i></span>';
                                     } else {
                                         html = '<i class="fa-2x ' + medRouteIconEntry.icon + '"></i>';
                                     }

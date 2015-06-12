@@ -8948,7 +8948,7 @@ h6, .h6 {
   background: #fff;
   box-shadow: 0 0 0 4px #777777, 0 3px 0 4px rgba(0, 0, 0, 0.05);
   position: relative;
-  /*overflow: hidden;*/
+  overflow: hidden;
   /*  @extend .img-circle;
     background-color: #fff;
     height: 50px;
@@ -8961,7 +8961,7 @@ h6, .h6 {
 /* line 51, _timeline-vertical.scss */
 .timeline-entry-icon-medication-inactive i {
   color: #777777;
-  font-size: 14px;
+  /*font-size: 14px;*/
 }
 
 /* line 64, _timeline-vertical.scss */
@@ -8988,7 +8988,7 @@ h6, .h6 {
   top: -30px;
   left: -4px;
   bottom: -50px;
-  color: #6aa6ff;
+  color: #777;
   -ms-transform: rotate(-14deg);
   -webkit-transform: rotate(-14deg);
   transform: rotate(-14deg);
