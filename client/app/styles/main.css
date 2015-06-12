@@ -8947,17 +8947,54 @@ h6, .h6 {
 .timeline-entry-icon-medication-inactive {
   background: #fff;
   box-shadow: 0 0 0 4px #777777, 0 3px 0 4px rgba(0, 0, 0, 0.05);
-  /*line-height: 3.5em;*/
-  /*position: relative;*/
-  /*bottom: -20px;*/
-  /*z-index: 100;*/
+  position: relative;
+  /*overflow: hidden;*/
+  /*  @extend .img-circle;
+    background-color: #fff;
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    i {
+      font-size: 3em
+    }*/
 }
-/* line 53, _timeline-vertical.scss */
+/* line 51, _timeline-vertical.scss */
 .timeline-entry-icon-medication-inactive i {
   color: #777777;
+  font-size: 14px;
 }
 
-/* line 58, _timeline-vertical.scss */
+/* line 64, _timeline-vertical.scss */
+.overlay {
+  font-size: 28px;
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* line 71, _timeline-vertical.scss */
+.overlay i {
+  display: none;
+}
+
+/* line 74, _timeline-vertical.scss */
+.overlay::before {
+  content: "\\";
+  overflow: hidden !important;
+  position: absolute;
+  font-size: 100px;
+  font-weight: 400;
+  top: -30px;
+  left: -4px;
+  bottom: -50px;
+  color: #6aa6ff;
+  -ms-transform: rotate(-14deg);
+  -webkit-transform: rotate(-14deg);
+  transform: rotate(-14deg);
+}
+
+/* line 89, _timeline-vertical.scss */
 .timeline-entry-icon-medication img {
   width: 90px;
   height: 90px;
@@ -8969,50 +9006,50 @@ h6, .h6 {
   height: 90px;
   -webkit-border-radius: 45px;
 }*/
-/* line 70, _timeline-vertical.scss */
+/* line 101, _timeline-vertical.scss */
 .timeline-entry-icon i, .timeline-entry-icon-medication i, .timeline-entry-icon-medication-inactive i {
   vertical-align: middle;
 }
 
-/* line 74, _timeline-vertical.scss */
+/* line 105, _timeline-vertical.scss */
 .timeline-entry-icon-medication i {
   vertical-align: text-top;
   line-height: 1.4em;
   font-size: 3em;
 }
 
-/* line 80, _timeline-vertical.scss */
+/* line 111, _timeline-vertical.scss */
 .timeline-entry-icon:hover, .timeline-entry-icon-medication:hover, .timeline-entry-icon-medication-inactive:hover {
   cursor: default;
   background: #6aa6ff;
 }
-/* line 83, _timeline-vertical.scss */
+/* line 114, _timeline-vertical.scss */
 .timeline-entry-icon:hover i, .timeline-entry-icon-medication:hover i, .timeline-entry-icon-medication-inactive:hover i {
   color: #fff;
 }
 
-/* line 89, _timeline-vertical.scss */
+/* line 120, _timeline-vertical.scss */
 .timeline-entry-icon-medication-inactive:hover {
   cursor: default;
   background: #777777;
 }
-/* line 92, _timeline-vertical.scss */
+/* line 123, _timeline-vertical.scss */
 .timeline-entry-icon-medication-inactive:hover i {
   color: #fff;
 }
 
-/* line 97, _timeline-vertical.scss */
+/* line 128, _timeline-vertical.scss */
 .timeline-footer circle {
   fill: #ccc;
 }
 @media (max-width: 991px) {
-  /* line 97, _timeline-vertical.scss */
+  /* line 128, _timeline-vertical.scss */
   .timeline-footer circle {
     display: none;
   }
 }
 @media (min-width: 768px) {
-  /* line 97, _timeline-vertical.scss */
+  /* line 128, _timeline-vertical.scss */
   .timeline-footer circle {
     display: inherit;
   }
