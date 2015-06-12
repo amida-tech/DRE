@@ -68,7 +68,7 @@ angular.module('phrPrototypeApp')
                     }
                     if (scope.recordEntry.metadata.displayDate) {
                         if (scope.recordEntry.inactive) {
-                            scope.entrySubTitleOne = '[INACTIVE] ' + format.outputDate(scope.entryData.date_time) + ' [INACTIVE]';
+                            scope.entrySubTitleOne = format.outputDate(scope.entryData.date_time);
                         } else {
                             scope.entrySubTitleOne = format.outputDate(scope.entryData.date_time);
                         }
