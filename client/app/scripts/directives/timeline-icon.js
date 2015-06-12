@@ -72,7 +72,7 @@ angular.module('phrPrototypeApp')
                                 });
                                 if (medRouteIconEntry) {
                                     if (scope.recordEntry.inactive) {
-                                        html = '<i class="fa-2x ' + medRouteIconEntry.icon + ' overlay"></i></span>';
+                                        html = '<i class="fa-2x ' + medRouteIconEntry.icon + ' overlay"></i>';
                                     } else {
                                         html = '<i class="fa-2x ' + medRouteIconEntry.icon + '"></i>';
                                     }
