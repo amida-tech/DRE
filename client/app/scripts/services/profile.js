@@ -37,4 +37,8 @@ angular.module('phrPrototypeApp')
                     callback('error saving profile info');
                 });
         };
+
+        this.forceRefresh = function () {
+            profileInfo = {};
+        };
     });

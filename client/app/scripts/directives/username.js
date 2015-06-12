@@ -7,13 +7,15 @@
  * # username
  */
 angular.module('phrPrototypeApp')
-    .directive('username', function ($rootScope) {
+    .directive('username', function ($rootScope, dataservice) {
 
         return {
             template: '{{user_first}} {{user_last}}',
             restrict: 'EA',
             link: function postLink(scope, element, attrs) {
                 //$scope.user_first="blah";
+                dataservice.forceRefresh();
+
                 function displayUsername() {
                     if ($rootScope.profile_info && !angular.isUndefined($rootScope.profile_info.name)) {
                         scope.user_first = $rootScope.profile_info.name.first;
