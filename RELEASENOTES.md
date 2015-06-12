@@ -18,11 +18,22 @@ This release of the DRE includes:
 - Performance updates:
     - Image compression on landing page
 - Medication API integrations:
-    - RxNorm
-    - OpenFDA adverse events
-    - MedlinePlus
-    - BloomAPI (NPI information)
-    - C3PI RxImageAccess (Medication images)
+    - [RxNorm](http://www.nlm.nih.gov/research/umls/rxnorm/])
+    - [OpenFDA adverse events](https://open.fda.gov/drug/event/)
+    - [MedlinePlus](http://www.nlm.nih.gov/medlineplus/)
+    - [BloomAPI](https://www.bloomapi.com/) (NPI information)
+    - [C3PI RxImageAccess](http://rximage.nlm.nih.gov/docs/doku.php) (Medication images)
+- NCPDP SCRIPT
+    - This release of the DRE adds support for ingestion of [NCPDP SCRIPT standard](https://www.ncpdp.org/Standards/Standards-Info)
+    messages of the following types:
+        - NewRx
+        - RxRenewalResponse
+        - RxHistoryResponse
+    - Due to the licensing agreement with NCPDP, any software detailing the
+    specifications of NCPDP standards may not be open source. If you are interested
+    in supporting NCPDP SCRIPT with your DRE deployment, please contact us and we
+    would be happy to assist you with installing these components. 
+ 
 
 # v1.4.0 - March 16, 2015
 
