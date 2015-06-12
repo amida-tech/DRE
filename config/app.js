@@ -60,6 +60,8 @@ module.exports = function () {
 
     app.use('/docs', express.static('./swagger'));
 
+    app.engine('html', require('ejs').renderFile);
+
     app.use(logger('dev'));
     app.use(methodOverride());
     app.use(cookieParser());
@@ -166,6 +168,9 @@ module.exports = function () {
     
     var npiapi = require('../lib/npiapi');
     app.use(npiapi);
+
+    var metadata = require('../lib/metadata');
+    app.use(metadata);
 
     app.set('port', (process.env.PORT || 3000));
 

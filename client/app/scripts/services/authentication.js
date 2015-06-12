@@ -18,7 +18,6 @@ angular.module('phrPrototypeApp')
         this.clearAuth = clearAuth;
 
         this.authStatus = function (callback) {
-            console.log("auth_data", auth_data);
             if (Object.keys(auth_data).length > 0) {
                 if (auth_data.authenticated) {
                     callback(null, true);
@@ -26,12 +25,10 @@ angular.module('phrPrototypeApp')
                     callback(null, false);
                 }
             } else {
-                console.log("should be api call");
                 $http.get('/api/v1/account')
                     .success(function (data) {
                         if (data && data.authenticated) {
                             auth_data.authenticated = true;
-                            console.log("authenticated: ", auth_data);
                             callback(null, true);
                         } else {
                             auth_data.authenticated = false;
@@ -82,12 +79,5 @@ angular.module('phrPrototypeApp')
                     console.log("logout failed");
                     callback(err);
                 });
-
-            //Stubbed logout.
-            /*if (err) {
-                callback(err);
-            } else {
-                callback(null);
-            }*/
         };
     });
