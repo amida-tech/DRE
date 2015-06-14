@@ -12,6 +12,7 @@ server/coverage
 client/coverage
 protractor-result
 coverage
+test/coverage
 .DS_Store
 
 */**/.DS_Store

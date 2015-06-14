@@ -38,6 +38,7 @@ module.exports = function (grunt) {
     //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
     grunt.registerTask('live', ['concurrent:default']);
 
+
     // Print a timestamp (useful for when watching)
     grunt.registerTask('timestamp', function () {
         grunt.log.subhead(Date());
@@ -425,6 +426,9 @@ module.exports = function (grunt) {
             run_istanbul: {
                 command: "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec --recursive"
             }
+        },
+        exec: {
+            coverage: './cover.sh'
         }
     });
 };

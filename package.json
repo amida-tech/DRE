@@ -111,5 +111,6 @@
     "protractor-html-screenshot-reporter": "0.0.19",
     "time-grunt": "^1.1.1",
     "xmldom": "*"
+
   }
 }
