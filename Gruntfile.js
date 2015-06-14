@@ -76,6 +76,7 @@ module.exports = function (grunt) {
             test: {
                 options: {
                     reporter: 'tap',
+                    captureFile: 'test.tap',
                     timeout: '10000'
                 },
                 src: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
