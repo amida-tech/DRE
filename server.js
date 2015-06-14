@@ -100,6 +100,8 @@ app.use(function (req, res, next) {
 //     2)app.use(connect.json());
 //     2)app.use(connect.urlencoded());
 //     2)app.use(connect.multipart());
+app.set('redis_url', process.env.REDIS_URL || 'localhost');
+app.set('redis_port', process.env.REDIS_PORT || 6379);
 
 //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
 app.use(session({
@@ -107,8 +109,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: new redisStore({
-            host: '127.0.0.1',
-            port: 6379,
+            host: app.get('redis_url'),
+            port: app.get('redis_port'),
             prefix: 'chs-sess'
         }) //uncomment for Redis session support during development
 }));
@@ -118,13 +120,13 @@ app.use(passport.session());
 app.use(flash());
 
 //Initialize Database Connection.
-//var databaseServer = process.env.DB || 'mongodb://localhost:27017';
-//var databaseServer = process.env.DB || 'localhost:27017';
 
-app.set('db_url', process.env.DB || 'localhost:27017');
-app.set('db_name', 'dre');
+app.set('db_url', process.env.MONGO_URL || 'localhost');
+app.set('db_port',process.env.MONGO_PORT || 27017);
+app.set('db_name', process.env.MONGO_NAME || 'dre');
 
 console.log("DB URL: ", app.get('db_url'));
+console.log("DB PORT: ", app.get('db_port'));
 
 var storage = require('./lib/storage');
 app.use(storage);
@@ -158,12 +160,12 @@ app.use(notes);
 
 app.set('port', (process.env.PORT || 3000));
 
-app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
-app.set('mllp_port', (process.env.PORT || 6969));
+app.set('mllp_host', (process.env.MLLP_HOST || '127.0.0.1'));
+app.set('mllp_port', (process.env.MLLP_PORT || 6969));
 
 //Launch Application.
-record.connectDatabase(app.get('db_url'), function (err) {
-    console.log(app.get('db_url'));
+record.connectDatabase(app.get('db_url')+':'+app.get('db_port'), function (err) {
+    console.log(app.get('db_url')+':'+app.get('db_port'));
     if (err) {
         console.log("DB error");
         console.log(err);
@@ -176,7 +178,7 @@ record.connectDatabase(app.get('db_url'), function (err) {
 //Launch MLLP server/listener
 var mllp = require('mllp-node');
 
-var server = new mllp.MLLPServer('127.0.0.1', 6969);
+var server = new mllp.MLLPServer(app.get('mllp_host'), app.get('mllp_port'));
 console.log("MLLP listening on host " + app.get('mllp_host') + ", port " + app.get('mllp_port'));
 
 server.on('hl7', function (data) {
