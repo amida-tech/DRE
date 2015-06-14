@@ -7,7 +7,7 @@
  * # timelineIcon
  */
 angular.module('phrPrototypeApp')
-    .directive('timelineIcon', function () {
+    .directive('timelineIcon', function ($compile) {
         return {
             template: '<i class="fa fa-2x"></i>',
             restrict: 'EA',
@@ -42,12 +42,48 @@ angular.module('phrPrototypeApp')
                     icon: 'fa-group'
                 }];
 
+                var medRouteIconMap = [{
+                    code: 'C38216',
+                    icon: 'icon-inhaler'
+                }, {
+                    code: 'C42944',
+                    icon: 'icon-inhaler'
+                }, {
+                    code: 'C42998',
+                    icon: 'icon-pill'
+                }];
+
                 var iconEntry = _.findWhere(iconMap, {
                     type: attrs.timelineIconType
                 });
 
                 if (iconEntry) {
-                    element.children().addClass(iconEntry.icon);
+                    if (iconEntry.type === 'medications') {
+                        var html = '<i class="fa-2x icon-pill"></i>';
+                        if (scope.recordEntry && scope.recordEntry.inactive) {
+                            html = '<span class="fa-stack fa-lg"><i class="fa fa-ban fa-stack-2x fa-rotate-90"></i><i class="fa-stack-1x icon-pill"></i></span>';
+                        }
+                        if (attrs.timelineIconMeta) {
+                            var iconMeta = JSON.parse(attrs.timelineIconMeta);
+                            if (_.deepGet(scope.entryData, 'administration.form.code')) {
+                                var route = scope.entryData.administration.form.code;
+                                var medRouteIconEntry = _.findWhere(medRouteIconMap, {
+                                    code: route
+                                });
+                                if (medRouteIconEntry) {
+                                    if (scope.recordEntry.inactive) {
+                                        html = '<span class="fa-stack fa-lg"><i class="fa fa-ban fa-stack-2x fa-rotate-90"></i><i class="fa-stack-1x ' + medRouteIconEntry.icon + ' "></i></span>';
+                                    } else {
+                                        html = '<i class="fa-2x ' + medRouteIconEntry.icon + '"></i>';
+                                    }
+                                }
+                            }
+                        }
+                        var i = $compile(html)(scope);
+                        element.children().replaceWith(i);
+                    } else {
+                        element.children().addClass(iconEntry.icon);
+                    }
                 } else {
                     element.children().addClass('fa-pencil');
                 }

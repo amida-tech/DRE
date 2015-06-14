@@ -9,28 +9,36 @@
  */
 angular.module('phrPrototypeApp')
     .service('profile', function profile($location, $http, format) {
+        var profileInfo = {};
 
         this.getProfile = function (callback) {
-            $http.get('api/v1/record/demographics')
-                .success(function (data) {
-                    var profileInfo = data.demographics[0];
-                    // format.formatDate(profileInfo.dob);
-                    // console.log('profile service', profileInfo);
-                    callback(null, profileInfo);
-                })
-                .error(function (data) {
-                    callback('error getting profile info');
-                });
+            if (Object.keys(profileInfo).length > 0) {
+                callback(null, profileInfo);
+            } else {
+                $http.get('/api/v1/record/demographics')
+                    .success(function (data) {
+                        console.log("master record fetched successfuly");
+                        profileInfo = data.demographics[0];
+                        callback(null, profileInfo);
+                    })
+                    .error(function (err) {
+                        console.log("fetching master record failed", err);
+                        callback("profileInfo failed " + err);
+                    });
+            }
         };
 
         this.saveProfile = function (info, callback) {
-            $http.post('api/v1/record/demographics', info)
+            $http.post('/api/v1/record/demographics', info)
                 .success(function (data) {
-                    // console.log('updated profile information');
                     callback(null);
                 })
                 .error(function (data) {
                     callback('error saving profile info');
                 });
+        };
+
+        this.forceRefresh = function () {
+            profileInfo = {};
         };
     });

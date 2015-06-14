@@ -1,29 +1,27 @@
 language: node_js
 node_js:
-- '0.10'
-before_script:
-- npm install -g grunt-cli@0.1.x
-- npm install -g mocha
+- '0.12'
+install:
+- npm install -g npm
+- npm install -g bower grunt-cli 
+- npm install -g mocha 
 - npm install -g istanbul
+- npm install -g protractor
 - npm install --quiet
-- sleep 3
-- cd ./client
-- npm install --quiet
-- cd ..
+- bower install
+- webdriver-manager update --firefox
+before_script:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start 
+- nohup bash -c "webdriver-manager start 2>&1 &"
+- sleep 5
 services:
 - mongodb
 - redis-server
 script:
-- grunt --gruntfile client/Gruntfile.js
 - grunt --gruntfile ./Gruntfile.js
-#- git config --global user.email "dmitry.kachaev@gmail.com"
-#- git config --global user.name "Dmitry Kachaev"
-#- git add -A
-#- git commit -a -m "commit post-build files"
-#deploy:
-#  provider: heroku
-#  api_key:
-#    secure: Vd+ZApYihHFIquQXWElWtJjv4Y9Jchy/48GL7DwOH/WHVOdUJT2PlYypSugtQvJI09QbW4Kb/C471kS4+iH/vyg3ZUkc4TCcHnI50EI8F0V2p/CX2GWvA9IS9bUICHseIqfUtrWowGOhOg2gAlPMhqAETgMMB0Z8OWVqnzKr0aU=
-#  app:
-#    master: amida-dre
-#    deployment: amida-dre
+- node server.js &
+- sleep 5
+- grunt travis-protractor --gruntfile ./Gruntfile.js
+notifications:
+  slack: amida:GclZqFLfLqmjWZ4bwUbRIw5M

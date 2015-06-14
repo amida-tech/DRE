@@ -5,6 +5,7 @@ DRE is a patient frontend (UI) and Node.js server for reconciling health data.
 
 
 [![Build Status](https://travis-ci.org/amida-tech/DRE.svg)](https://travis-ci.org/amida-tech/DRE)
+[![Dependency Status](https://david-dm.org/amida-tech/DRE.svg)](https://david-dm.org/amida-tech/DRE)
 
 High Level Overview
 ===================
@@ -21,7 +22,7 @@ DRE has 4 primary elements
 
 #### 1 - Parsing and Normalization Library.
 
-This parses incoming data into a homogenous, simplified and normalized data model in JSON format. 
+This parses incoming data into a homogenous, simplified and normalized data model in JSON format.
 
 Parsing library code: [amida-tech/blue-button](https://github.com/amida-tech/blue-button)
 
@@ -43,13 +44,13 @@ This provides a API for interaction with and access to the aggregated health rec
 Documentation for record.js [API](./docs/recordjs.md)
 
 ### Screenshots of the Demo
--![Landing Page](./docs/images/1-LandingBars.png)		
--![Master Health Record View](./docs/images/2-MyRecord.png)		
--![My Files](./docs/images/3-MyFiles.png)	
+-![Landing Page](./docs/images/1-LandingBars.png)
+-![Master Health Record View](./docs/images/2-MyRecord.png)
+-![My Files](./docs/images/3-MyFiles.png)
 
--![Reconciliation Interface](./docs/images/4-Match.png)		
--![Billing Section](./docs/images/5-Billing.png)		
--![Notes](./docs/images/6-NotesDetails.png)		
+-![Reconciliation Interface](./docs/images/4-Match.png)
+-![Billing Section](./docs/images/5-Billing.png)
+-![Notes](./docs/images/6-NotesDetails.png)
 -![Account History](./docs/images/7-History.png)
 
 
@@ -63,25 +64,47 @@ Documentation for record.js [API](./docs/recordjs.md)
 - Redis
 - Ruby/Compass/Bower
 
+#### prepare
 ```
 # you need Node.js and Grunt.js installed
 # and MongoDB + Redis runnning
 
-#build client app
-cd client
+npm install -g bower
+gem update --system
+gem install compass
+npm install -g yo
+npm install -g grunt-cli
+npm install -g generator-angular
+
+#then
 npm install
 bower install
-grunt build # you can run "grunt dev" for dev purposes 
+```
 
-#run server side tests
-cd ..
-npm install
-grunt
+To run, use `node server`
 
-#run server
-node server.js
+#### Grunt commands:
 
-# go to localhost:3000 in your browser
+`grunt` - To run Server Side tests
+
+`grunt test` - To run and watch Client Side tests. Make sure a Selenium server and Node are running with `webdriver-manager start` and `node server.js`.
+
+`grunt travis-protractor` - To run Client Side tests. Make sure a Selenium server and Node are running with `webdriver-manager start` and `node server.js`.
+
+```grunt build``` - Executes build and puts it into /dist.
+
+```grunt live``` - Build and watch files for development (just linting, compiling styles and watching).
+
+#### Protractor Tests:
+
+```
+# you need MongoDB, Redis, Node, and Selenium running
+# option selects which suite of tests to run (populate, scenarios, and/or medications)
+# screenshots and report are saved to ./protractor-result/
+
+npm install -g protractor
+protractor client/test/conf.js --suite option
+
 ```
 
 ## Contributing
@@ -96,6 +119,9 @@ Contributors are welcome. See issues https://github.com/amida-tech/DRE/issues
 - Matt McCall
 - Ekavali Mishra
 - Jamie Johnson
+- Matt Martz
+- Jacob Sachs
+- Mike Hiner
 - Byung Joo Shin (summer '14 intern, UVA)
 - Kevin Young (summer '14 intern, UMD)
 - Nadia Wallace (winter '15 intern, MIT)

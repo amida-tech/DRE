@@ -8,7 +8,7 @@
  * Controller of the phrPrototypeApp
  */
 angular.module('phrPrototypeApp')
-    .controller('RegisterCtrl', function ($scope, $location, registration, login, username) {
+    .controller('RegisterCtrl', function ($scope, $location, registration, authentication, username) {
 
         $scope.step = 0;
 
@@ -16,25 +16,38 @@ angular.module('phrPrototypeApp')
 
         $scope.isUser = false;
         $scope.userList = {};
+        $scope.focusInput = false;
+
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = true;
+        };
 
         $scope.nextStep = function () {
             if ($scope.step === 0) {
 
-                username.checkLogin(function (err, userInfo) {
-                    $scope.userList = userInfo;
-                    // console.log('register controller', $scope.userList);
-                    for (var element in $scope.userList) {
-                        // console.log($scope.userList[element].username);
-                        if ($scope.inputLogin === $scope.userList[element].username) {
-                            $scope.isUser = true;
-                            // console.log($scope.isUser, $scope.userList[element].username, $scope.inputLogin);
-                            $scope.error = "That Username already exists, please choose another";
-                            return;
-                        }
+                username.checkLogin($scope.inputLogin, function (err, user_exists) {
+                    if (user_exists) {
+                        $scope.error = "That Username already exists, please choose another";
+                        return;
                     }
+
+                    // $scope.userList = userInfo;
+                    // // console.log('register controller', $scope.userList);
+                    // for (var element in $scope.userList) {
+                    //     // console.log($scope.userList[element].username);
+                    //     if ($scope.inputLogin === $scope.userList[element].username) {
+                    //         $scope.isUser = true;
+                    //         // console.log($scope.isUser, $scope.userList[element].username, $scope.inputLogin);
+                    //         $scope.error = "That Username already exists, please choose another";
+                    //         return;
+                    //     }
+                    // }
                     if ($scope.inputPassword === $scope.inputRepeatPassword) {
                         $scope.step = $scope.step + 1;
                         $scope.error = null;
+                        $scope.focusInput = true;
                     } else {
                         $scope.error = "Entered Passwords did not match";
                         return;
@@ -44,6 +57,7 @@ angular.module('phrPrototypeApp')
             } else {
                 $scope.step = $scope.step + 1;
                 $scope.error = null;
+                $scope.focusInput = false;
                 // $scope.isUser = false;
                 // console.log($scope.step);
             }
@@ -71,7 +85,7 @@ angular.module('phrPrototypeApp')
                 if (err) {
                     $scope.error = err;
                 } else {
-                    login.login($scope.inputLogin, $scope.inputPassword, function (err) {
+                    authentication.login($scope.inputLogin, $scope.inputPassword, function (err) {
                         if (err) {
                             $scope.error = err;
                         } else {

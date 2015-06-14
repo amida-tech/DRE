@@ -1,8 +1,39 @@
 # DRE Release Notes
 
-# v1.5.0 - mid-June, 2015
+# v1.5.0 - June 15, 2015
 
-TBD
+This release of the DRE includes:
+
+- Parser benchmarking
+- New Medications UI
+    - Icons correspond to medication type
+    - Expanded details section
+    - Display adverse events
+    - Link to MedlinePlus for additional information
+    - Display images
+- Support for self-reported medications
+    - Record prescribing provider
+    - Store date ranges for taking medications
+    - Record prescriber instructions
+- Performance updates:
+    - Image compression on landing page
+- Medication API integrations:
+    - [RxNorm](http://www.nlm.nih.gov/research/umls/rxnorm/])
+    - [OpenFDA adverse events](https://open.fda.gov/drug/event/)
+    - [MedlinePlus](http://www.nlm.nih.gov/medlineplus/)
+    - [BloomAPI](https://www.bloomapi.com/) (NPI information)
+    - [C3PI RxImageAccess](http://rximage.nlm.nih.gov/docs/doku.php) (Medication images)
+- NCPDP SCRIPT
+    - This release of the DRE adds support for ingestion of [NCPDP SCRIPT standard](https://www.ncpdp.org/Standards/Standards-Info)
+    messages of the following types:
+        - NewRx
+        - RxRenewalResponse
+        - RxHistoryResponse
+    - Due to the licensing agreement with NCPDP, any software detailing the
+    specifications of NCPDP standards may not be open source. If you are interested
+    in supporting NCPDP SCRIPT with your DRE deployment, please contact us and we
+    would be happy to assist you with installing these components. 
+ 
 
 # v1.4.0 - March 16, 2015
 
@@ -11,7 +42,7 @@ This release of the DRE includes:
 - New DIRECT/Abelian DRE integration, see https://github.com/amida-tech/abelian-connector
 - FHIR data model support in DRE (for five resources), see https://github.com/amida-tech/blue-button-fhir
 - Export notes to CCDA
-- Updated UI 
+- Updated UI
     - New images
     - Measurements Chart
     - Notes editing/deleting
@@ -31,7 +62,7 @@ This release of the DRE includes:
     - Password reset
     - Improved sign up forms
     - Profile updates
-    
+
 # v1.3.0.1 - January 24, 2015
 
 This minor release of the DRE includes:
@@ -89,6 +120,3 @@ This is the initial release of the DRE.
 	- e.g. Identity Management solution to track patient IDs
 - Records are uploaded from web UI
 	- Integration with DIRECT is possible
-
-
-

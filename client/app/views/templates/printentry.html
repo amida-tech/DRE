@@ -13,8 +13,7 @@
                         <div ng-include="entryTemplatePath"></div>
                     </div>
                     <!--Record comments pane.-->
-                    <div id="comments{{recordIndex}}" data-parent="#selector" ng-if="entryMetaData.comments">
-
+                    <div id="comments{{recordIndex}}" data-parent="#selector" ng-if="entryMetaData.comments.length > 0">
                         <table class="table">
                             <tr>
                                 <td class="col-xs-1">Notes: </td>
@@ -46,6 +45,13 @@
                                                 <tr ng-repeat="(attrIndex, attrEntry) in entryData.metadata.attribution">
                                                     <td><a href="#/files">{{attrEntry.record.filename}}</a>
                                                     </td>
+                                                    <td class="capitalize">{{attrEntry.merge_reason}}</td>
+                                                    <td>{{attrEntry.merged | date:'short'}}</td>
+                                                </tr>
+                                                <tr ng-repeat="(attrIndex, attrEntry) in entryData.med_metadata.attribution">
+                                                    <td ng-hide="entryData.med_metadata.patient_entered"><a href="#/files">{{attrEntry.record.filename}}</a>
+                                                    </td>
+                                                    <td ng-show="entryData.med_metadata.patient_entered"><a href="#/record/medications">User-entered</a></td>
                                                     <td class="capitalize">{{attrEntry.merge_reason}}</td>
                                                     <td>{{attrEntry.merged | date:'short'}}</td>
                                                 </tr>

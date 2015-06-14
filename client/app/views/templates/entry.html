@@ -5,18 +5,13 @@
     <div class="panel timeline-entry">
         <div class="panel-body" id="accordian">
             <div class="timeline-entry-header col-sm-12">
-                <div class="col-sm-6">
-                    <h4 class="text-left">{{entryTitle}}</h4>
-                    <h5 class="text-left">{{entrySubTitleOne}}</h5>
-                    <h5 class="text-left">{{entrySubTitleTwo}}</h5>
-                </div>
+                <entry-header></entry-header>
                 <div class="col-sm-6 text-right">
                     <!-- only one match example per entry for now -->
                     <div ng-if="recordEntry.metadata.match.count>0">
                         <button class="pull-right btn btn-link" ng-click="launchMatch(recordEntry.metadata)"><i class="fa fa-flag fa-inline"></i>{{recordEntry.metadata.match.count}} pending update<span ng-show="recordEntry.metadata.match.count > 1">s</span>
                         </button>
                     </div>
-
                     <div ng-if="recordEntry.metadata.starred_comments > 0">
                         <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)"><i class="fa fa-star fa-inline"></i>{{recordEntry.metadata.starred_comments}} starred note<span ng-show="recordEntry.metadata.starred_comments > 1">s</span>
                         </button>
@@ -27,7 +22,7 @@
                 <!--Tab nav-->
                 <div class="col-sm-12">
                     <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#history{{recordIndex}}" aria-expanded="false" aria-controls="history{{recordIndex}}" ng-click="swapTabs('history', recordIndex)">
-                        <span><i class="fa fa-clock-o"></i> History</span>
+                        <span><i class="fa fa-clock-o"></i> Sources</span>
                     </button>
                     <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#comments{{recordIndex}}" aria-expanded="false" aria-controls="comments{{recordIndex}}" ng-click="swapTabs('comments', recordIndex)">
                         <span><i class="fa fa-comment"></i> Notes</span>
@@ -45,17 +40,16 @@
                         </div>
                     </div>-->
                     <!--Record detail pane.-->
-                    <div role="tabpanel" class="collapse" id="details{{recordIndex}}">
-
+                    <div ng-show="showDetails">
                         <div class="sub-entry">
                             <h3>Entry Details</h3>
                             <div ng-include="entryTemplatePath"></div>
                         </div>
                     </div>
                     <!--Record history pane.-->
-                    <div role="tabpanel" class="collapse" id="history{{recordIndex}}">
+                    <div ng-show="showHistory">
                         <div class="sub-entry">
-                            <h3>Entry History</h3>
+                            <h3>Entry Sources</h3>
                             <table class="table table-hover table-condensed">
                                 <thead>
                                     <tr>
@@ -76,7 +70,7 @@
                         </div>
                     </div>
                     <!--Record comments pane.-->
-                    <div role="tabpanel" class="collapse" id="comments{{recordIndex}}" data-parent="#selector">
+                    <div ng-show="showComments">
                         <div class="sub-entry">
                             <h3>Entry Notes</h3>
                             <div ng-hide="editflag" class="col-sm-12" ng-repeat="(commentIndex, commentEntry) in entryMetaData.comments">
@@ -84,7 +78,8 @@
                                     <h5>{{commentEntry.date | date:'short'}}</h5>
                                 </div>
                                 <div class="col-sm-1 panel-body text-center">
-                                    <h5 ng-show="commentEntry.starred === true"><a><i class="fa fa-star"></i></a></h5>
+                                    <h5 ng-show="commentEntry.starred" ng-click="toggleStar()"><a><i class="fa fa-star"></i></a></h5>
+                                    <h5 ng-hide="commentEntry.starred" ng-click="toggleStar()"><a><i class="fa fa-star-o"></i></a></h5>
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="panel">
@@ -102,8 +97,8 @@
                             <div class="col-sm-12" ng-show="!entryMetaData.comments[0]">
                                 <form novalidate role="form" name="commentForm" ng-submit="addNote(recordIndex)">
                                     <div class="col-sm-1 panel-body text-center">
-                                        <h5 ng-show="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star"></i></a></h5>
-                                        <h5 ng-hide="newComment.starred === true" ng-click="toggleNewStar()"><a><i class="fa fa-star-o"></i></a></h5>
+                                        <h5 ng-show="newComment.starred" ng-click="toggleNewStar()"><a><i class="fa fa-star"></i></a></h5>
+                                        <h5 ng-hide="newComment.starred" ng-click="toggleNewStar()"><a><i class="fa fa-star-o"></i></a></h5>
                                     </div>
                                     <div class="form-group col-sm-10">
                                         <label for="commentEntry">New:</label>
@@ -130,56 +125,14 @@
                                         <button type="submit" ng-click="deleteNote()" class="btn btn-danger pull-left">Delete Note</button>
                                         <div class="pull-right">
                                             <button type="cancel" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
-                                            <button type="submit" ng-click="saveNote()" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>
+                                            <button type="submit" ng-click="saveNote(editComment)" class="btn btn-primary" ng-disabled="editForm.$invalid">Save Note</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="collapse{{recordIndex}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-                <table class="table table-hover">
-                    <tr>
-                        <td>Code:</td>
-                        <td>{{recordEntry.observation.allergen.code}}</td>
-                    </tr>
-                    <tr>
-                        <td>Code System:</td>
-                        <td>{{recordEntry.observation.allergen.code_system_name}}</td>
-                    </tr>
-                    <tr ng-repeat="(reactionIndex, reactionEntry) in recordEntry.observation.reactions">
-                        <td>Reactions:</td>
-                        <td>
-                            <div class="panel">
-                                <table class="table sub-table">
-                                    <thead>
-                                        <tr>
-                                            <td>Reaction:</td>
-                                            <td>{{reactionEntry.reaction.name}}</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Severity:</td>
-                                            <td>{{reactionEntry.severity.code.name}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Code:</td>
-                                            <td>{{reactionEntry.reaction.code}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Code System:</td>
-                                            <td>{{reactionEntry.reaction.code_system_name}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
             </div>
         </div>
     </div>

@@ -1,9 +1,9 @@
 describe('angularjs homepage', function() {
 
     var path = require('path');
-    var files = element(by.css('[href="#/files"]'));
+    var files = element(by.css('[ng-click="vm.navbarClick(\'files\')"]'));
 
-    var pathToFiles = "../../test/artifacts/demo-r1.3.1/";
+    var pathToFiles = "../../test/artifacts/demo-r1.5/";
 
     function uploadTest(un, pw) {
     	files.click();
@@ -22,7 +22,7 @@ describe('angularjs homepage', function() {
 
         confirmButton.click();
 
-        var record = element(by.css('[href="#/record"]'));
+        var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
 
         record.click();
         
@@ -43,7 +43,7 @@ describe('angularjs homepage', function() {
         })
       expect(errors).toEqual(0);
       // Uncomment to actually see the log.
-      console.log('log: ' + require('util').inspect(browserLog));
+      // console.log('log: ' + require('util').inspect(browserLog));
     });
   });
 

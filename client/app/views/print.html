@@ -4,27 +4,27 @@
     <div class="col-sm-12 print-record">
 
 
-        <div class="col-sm-12" ng-if="sectionOrder">
+        <div class="col-sm-12" ng-if="vm.sectionOrder">
             <h4 class="text-center">Demographics</h4>
-            <div profiledetail demographics="demographics"></div>
+            <div profiledetail demographics="vm.demographics"></div>
 
         </div>
 
 
-        <div ng-repeat="section in sectionOrder">
+        <div ng-repeat="section in vm.sectionOrder">
             <!--Timeline View-->
             <div class="col-sm-12" ng-show="section !== 'print'">
                 <h4 class="text-center">{{section}}</h4>
-                <div class="panel" ng-hide="recordEntries">
+                <div class="panel" ng-if="vm.filterBySection(vm.recordEntries,section).length===0">
                     <div class="panel-body">
-                        <h5 class="col-sm-12 text-center">No Record Entries</h5>
+                        <h5 class="col-sm-12 text-center">No Entries In This Record</h5>
                     </div>
                 </div>
 
 
-                <div ng-repeat="(recordIndex, recordEntry) in filterBySection(recordEntries,section)" class="col-sm-12 row" id="record{{recordIndex}}">
+                <div ng-repeat="(recordIndex, recordEntry) in vm.filterBySection(vm.recordEntries,section)" class="col-sm-12 row" id="record{{recordIndex}}">
 
-                    <printentry type="{{recordEntry.category}}" entry-index="{{recordIndex}}" on-finish-render="ngRepeatFinished"></printentry>
+                    <printentry type="{{recordEntry.category}}" entry-index="{{recordIndex}}"></printentry>
 
                 </div>
                 <!--end timeline-->

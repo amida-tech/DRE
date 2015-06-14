@@ -2,15 +2,13 @@ describe('record scenario', function() {
     
 
     function scenarioOne() {
-    	var record = element(by.css('[href="#/record"]'));
+    	var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
         record.click();
 
         var allergies = element(by.id('navallergies'));
         allergies.click();
 
-
         var firstEntry = element(by.css('[entry-index="0"]'));
-
 
         var details = firstEntry.all(by.css('[data-target="#details0"]')).last();
         details.click();
@@ -18,34 +16,27 @@ describe('record scenario', function() {
         var history = firstEntry.all(by.css('[data-target="#history0"]')).last();
         history.click();
 
-
-
         var notes = firstEntry.all(by.css('[data-target="#comments0"]')).last();
-
         notes.click();
-        
-
-        
-
-        
-        
 
         var noteField = firstEntry.element(by.model('newComment.comment'));
         noteField.sendKeys('New comment');
 
         var addNote = firstEntry.element(by.className('btn-primary'));
         addNote.click();
-
-        var star = firstEntry.all(by.css('[ng-show="commentEntry.starred === false"]')).last().element(by.tagName('a'));
+        
+        var editNote = firstEntry.element(by.css('[ng-click="editNote()"]'));
+        editNote.click();
+        
+        var edit = firstEntry.element(by.css('[name="editForm"]'));
+        var star = edit.element(by.css('[ng-show="entryMetaData.comments[0].starred === false"]'));
         star.click();
+        
+        var saveNote = firstEntry.element(by.css('[ng-click="saveNote(editComment)"]'));
+        saveNote.click();
 
-        var notePage = element(by.css('[href="#/notes"]'));
-
+        var notePage = element(by.css('[ng-click="vm.navbarClick(\'notes\')"]'));
         notePage.click();
-
-
-
-
     }
 
     beforeEach(function() {
@@ -63,16 +54,11 @@ describe('record scenario', function() {
         })
       expect(errors).toEqual(0);
       // Uncomment to actually see the log.
-      console.log('log: ' + require('util').inspect(browserLog));
+      // console.log('log: ' + require('util').inspect(browserLog));
     });
   });
 
     it('should run', function() {
-        
-    	
-
         scenarioOne();
-
-
     });
 });

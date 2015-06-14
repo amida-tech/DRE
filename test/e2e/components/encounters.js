@@ -1,14 +1,13 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + process.env.DBname || 'tests';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
 var database = require('mongodb').Db;
 
 var common = require(path.join(__dirname, '../../common/common.js'));
-var common2 = require('../common.js');
 
 describe('Pre Test Cleanup', function () {
 
@@ -22,8 +21,8 @@ describe('Pre Test Cleanup', function () {
         });
     });
     it('Login', function (done) {
-        common2.register(api, 'test', 'test', function () {
-            common2.login(api, 'test', 'test', function () {
+        common.register(api, 'test', 'test', function () {
+            common.login(api, 'test', 'test', function () {
                 done();
             });
         });

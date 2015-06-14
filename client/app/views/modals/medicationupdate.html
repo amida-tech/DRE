@@ -1,0 +1,125 @@
+<div class="modal-header" ng-init="initStuff()">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title">Update {{medication.product.product.name}}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <h3>Update the Details</h3>
+                <div class="sub-entry">
+                    <br />
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Is this medication still active?</label>
+                        <div class="col-sm-7">
+                            <div>
+                                <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="pcurrentRadioYes" ng-value="true"> Yes, I am still taking this medication.
+                            </div>
+                            <div>
+                                <input type="radio" name="pCurrentMedRadio" ng-model="pCurrentMedRadio" id="pcurrentRadioNo" ng-value="false"> No, I am no longer taking this medication.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">When did you start taking it?</label>
+                        <div class="col-sm-7">
+                            <input type="date" class="form-control" ng-model="pStart">
+                        </div>
+                    </div>
+                    <div class="form-group row" ng-show="!pCurrentMedRadio">
+                        <label class="col-sm-5 control-label">When was your last dose?</label>
+                        <div class="col-sm-7">
+                            <input type="date" class="form-control" ng-model="pLast">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 control-label">Instructions from your physician:</label>
+                        <div class="col-sm-7">
+                            <textarea ng-model="pWhy" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" ng-show="medication.med_metadata.is_prescription">
+                <h3>Update the Prescriber</h3>
+                <div class="row">
+                    <br/>
+                    <form novalidate role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">First name (REQUIRED)</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="pFirstName" ng-disabled="prescriberSearchActive">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Last name (REQUIRED)</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="pLastName" ng-disabled="prescriberSearchActive">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">State</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" ng-model="pState" placeholder="State" ng-disabled="prescriberSearchActive">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button style="width: initial" class="btn btn-default pull-right" ng-click="prescriberSearch(pFirstName, pLastName, pState)" ng-disabled="prescriberSearchActive">Search</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="alert alert-danger" role="alert" ng-show="prescriberError">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span> {{prescriberError}}
+                            </div>
+                        </div>
+                        <div class="row" ng-show="prescriberResults" ng-if="medSearchType=='prescription'">
+                            <h4>Prescriber Results ({{prescriberCount}})</h4>
+                            <h5>Please select your prescriber by clicking on one of the rows below:</h5>
+                            <table class="table table-bordered table-hover" style="cursor:pointer">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center"><span><i class="fa fa-check" style="color: black"></i></span></th>
+                                        <th>Name</th>
+                                        <th>Practice</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-class="{info: prescriber.selected}" ng-repeat="prescriber in prescriberResults" ng-click="setUpdatedPrescriber()">
+                                        <td style="text-align: center"><span ng-show="prescriber.selected"><i class="fa fa-check" style="color: green"></i></span></td>
+                                        <td title="NPI: {{prescriber.npi}}">
+                                            <span>{{prescriber.first_name}} {{prescriber.last_name}}, {{prescriber.credential}}</span>
+                                            <br/>
+                                            <span class="text-muted">NPI: {{prescriber.npi}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="prescriber.practice_address">{{prescriber.practice_address.address_line}}, {{prescriber.practice_address.address_details_line}}</span>
+                                            <br/>
+                                            <span ng-show="prescriber.practice_address">{{prescriber.practice_address.city}}, {{prescriber.practice_address.state}} {{prescriber.practice_address.zip}}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--<pre>{{prescriberResults}}</pre>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--     <div class="row">
+        <h3>Debug</h3>
+        <pre>{{medication}}</pre>
+    </div> -->
+    <div ng-if="updateMedicationStatus==='error'">
+        <span>There was an error saving the medication.</span>
+    </div>
+    <div ng-if="updateMedicationStatus==='success'" ng-init="$hide()"></div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger pull-left" ng-click="close()">Cancel</button>
+    <button class="btn btn-primary pull-right" ng-click="updateMedication()">Save Updates</button>
+</div>

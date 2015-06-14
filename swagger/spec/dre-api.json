@@ -14,6 +14,8 @@
     }, {
         "name": "match"
     }, {
+        "name": "medications"
+    }, {
         "name": "merges"
     }, {
         "name": "notes"
@@ -23,6 +25,10 @@
         "name": "record"
     }, {
         "name": "storage"
+    }, {
+        "name": "medapi"
+    }, {
+        "name": "npiapi"
     }],
     "host": "localhost:3000",
     "basePath": "/api/v1",
@@ -108,18 +114,13 @@
                     "description": "File to be uploaded",
                     "in": "formData",
                     "type": "file",
-                    "schema": {
-                        "type": "formData"
-                    },
                     "required": true
                 }, {
                     "name": "check",
                     "description": "Save file without importing entries or update Master Health Record",
-                    "in": "body",
+                    "in": "formData",
                     "type": "boolean",
-                    "schema": {
-                        "type": "boolean"
-                    }
+                    "required": true
                 }],
                 "responses": {
                     "200": {
@@ -154,10 +155,7 @@
                 }],
                 "responses": {
                     "200": {
-                        "description": "file",
-                        "schema": {
-                            "type": "file"
-                        }
+                        "description": "file"
                     },
                     "400": {
                         "description": "Event error"
@@ -184,22 +182,24 @@
             }
         },
         "/users": {
-            "get": {
-                "summary": "Retrieve list of users",
-                "description": "Retrieve list of all users",
-                "operationId": "getUsers",
+            "post": {
+                "summary": "Check if username exists",
+                "description": "Check if username exists during registration",
+                "operationId": "checkUsername",
                 "tags": [
                     "account"
                 ],
+                "parameters": [{
+                    "name": "username",
+                    "description": "Username",
+                    "in": "body",
+                    "type": "string",
+                    "required": true
+                }],
                 "responses": {
                     "200": {
-                        "description": "get list of users",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/userSchema"
-                            }
-                        }
+                        "description": "check if username exists",
+                        "type": "boolean"
                     }
                 }
             }
@@ -332,11 +332,13 @@
                     "record"
                 ],
                 "parameters": [{
-                    "name": "record ID",
+                    "name": "profileInfo",
                     "description": "Profile section information and database ID",
                     "in": "body",
-                    "type": "string",
-                    "required": true
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/bodySchema"
+                    }
                 }],
                 "summary": "Update profile information",
                 "responses": {
@@ -361,9 +363,19 @@
                     "name": "component",
                     "description": "area of health",
                     "in": "path",
-                    "schema": {
-                        "$ref": "#/definitions/recordSchema"
-                    },
+                    "type": "string",
+                    "enum": [
+                        "demographics",
+                        "medications",
+                        "results",
+                        "encounters",
+                        "vitals",
+                        "immunizations",
+                        "allergies",
+                        "conditions",
+                        "procedures",
+                        "social"
+                    ],
                     "required": true
                 }],
                 "responses": {
@@ -391,17 +403,16 @@
                     "name": "format",
                     "description": "Defaults to CCDA format",
                     "in": "path",
-                    "schema": {
-                        "$ref": "#/definitions/formatSchema"
-                    },
+                    "type": "string",
+                    "enum": [
+                        "json",
+                        "string"
+                    ],
                     "required": true
                 }],
                 "responses": {
                     "200": {
-                        "description": "Master health record downloaded in format {format}",
-                        "schema": {
-                            "type": "file"
-                        }
+                        "description": "Master health record downloaded in Blue Button or CCDA format"
                     },
                     "400": {
                         "description": "Event error while saving event"
@@ -442,9 +453,19 @@
                     "name": "component",
                     "description": "area of health",
                     "in": "path",
-                    "schema": {
-                        "$ref": "#/definitions/recordSchema"
-                    },
+                    "type": "string",
+                    "enum": [
+                        "demographics",
+                        "medications",
+                        "results",
+                        "encounters",
+                        "vitals",
+                        "immunizations",
+                        "allergies",
+                        "conditions",
+                        "procedures",
+                        "social"
+                    ],
                     "required": true
                 }],
                 "responses": {
@@ -465,9 +486,19 @@
                 "name": "component",
                 "in": "path",
                 "description": "area of health",
-                "schema": {
-                    "$ref": "#/definitions/recordSchema"
-                },
+                "type": "string",
+                "enum": [
+                    "demographics",
+                    "medications",
+                    "results",
+                    "encounters",
+                    "vitals",
+                    "immunizations",
+                    "allergies",
+                    "conditions",
+                    "procedures",
+                    "social"
+                ],
                 "required": true
             }, {
                 "name": "record_id",
@@ -501,9 +532,19 @@
                 "name": "component",
                 "in": "path",
                 "description": "area of health",
-                "schema": {
-                    "$ref": "#/definitions/recordSchema"
-                },
+                "type": "string",
+                "enum": [
+                    "demographics",
+                    "medications",
+                    "results",
+                    "encounters",
+                    "vitals",
+                    "immunizations",
+                    "allergies",
+                    "conditions",
+                    "procedures",
+                    "social"
+                ],
                 "required": true
             }, {
                 "name": "record_id",
@@ -537,9 +578,19 @@
                 "name": "component",
                 "in": "path",
                 "description": "area of health",
-                "schema": {
-                    "$ref": "#/definitions/recordSchema"
-                },
+                "type": "string",
+                "enum": [
+                    "demographics",
+                    "medications",
+                    "results",
+                    "encounters",
+                    "vitals",
+                    "immunizations",
+                    "allergies",
+                    "conditions",
+                    "procedures",
+                    "social"
+                ],
                 "required": true
             }, {
                 "name": "record_id",
@@ -572,6 +623,95 @@
                 }
             }
         },
+        "/medications/all": {
+            "get": {
+                "summary": "Get all medications",
+                "description": "Retrieve all medications in chronological order",
+                "tags": [
+                    "medications"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all medications"
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/medications/add": {
+            "post": {
+                "summary": "Save a medication",
+                "description": "Add and save a new medication",
+                "tags": [
+                    "medications"
+                ],
+                "parameters": [{
+                    "name": "Medication",
+                    "description": "New medication entry",
+                    "in": "body",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Medication added to account"
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/medications/edit": {
+            "post": {
+                "summary": "Edit a medication",
+                "description": "Edit a current medication",
+                "tags": [
+                    "medications"
+                ],
+                "parameters": [{
+                    "name": "Medication",
+                    "description": "Updated medication entry",
+                    "in": "body",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Edited medication"
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/medications/delete": {
+            "post": {
+                "summary": "Delete a medication",
+                "description": "Delete a medication by its ID",
+                "tags": [
+                    "medications"
+                ],
+                "parameters": [{
+                    "name": "Medication ID",
+                    "description": "Medication identifier",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/deleteMedicationSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Medication successfully deleted"
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
         "/merges": {
             "get": {
                 "summary": "Get all merges",
@@ -597,9 +737,19 @@
                     "name": "component",
                     "description": "area of health",
                     "in": "path",
-                    "schema": {
-                        "$ref": "#/definitions/recordSchema"
-                    },
+                    "type": "string",
+                    "enum": [
+                        "demographics",
+                        "medications",
+                        "results",
+                        "encounters",
+                        "vitals",
+                        "immunizations",
+                        "allergies",
+                        "conditions",
+                        "procedures",
+                        "social"
+                    ],
                     "required": true
                 }],
                 "responses": {
@@ -776,6 +926,215 @@
                     }
                 }
             }
+        },
+        "/rximage": {
+            "post": {
+                "summary": "Look up image for an RxNorm code",
+                "description": "Retrieve image URL from NIH NLM RxImage database",
+                "tags": [
+                    "medapi"
+                ],
+                "parameters": [{
+                    "name": "RxCUI",
+                    "description": "RxNorm code",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/rxcuiSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Get images",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/rximageSchema"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/rxnorm/name": {
+            "post": {
+                "summary": "Look up drug RxNorm code using name",
+                "description": "Retrieve RxCUI from RxNorm database",
+                "tags": [
+                    "medapi"
+                ],
+                "parameters": [{
+                    "name": "medname",
+                    "description": "drug name",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/mednameSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Get RxNorm code",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/RxNormSchema"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/rxnorm/group": {
+            "post": {
+                "summary": "Look up multiple drugs in RxNorm database using name",
+                "description": "Retrieve RxCUI options from RxNorm database",
+                "tags": [
+                    "medapi"
+                ],
+                "parameters": [{
+                    "name": "medname",
+                    "description": "drug name",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/mednameSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Get RxNorm code",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/openfda/name": {
+            "post": {
+                "summary": "Look up openFDA database",
+                "description": "Retrieve adverse events from openFDA.gov using drug name",
+                "tags": [
+                    "medapi"
+                ],
+                "parameters": [{
+                    "name": "medname",
+                    "description": "drug name",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/mednameSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Get openFDA data",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/openfda/code": {
+            "post": {
+                "summary": "Look up openFDA database",
+                "description": "Retrieve adverse events from openFDA.gov using RxNorm code",
+                "tags": [
+                    "medapi"
+                ],
+                "parameters": [{
+                    "name": "rxcui",
+                    "description": "drug code",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/rxcuiSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Get openFDA data",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/medlineplus": {
+            "post": {
+                "summary": "Look up drug information in MedlinePlus Connect",
+                "description": "Retrieve URLs for MedlinePlus information on drug using RxNorm code",
+                "tags": [
+                    "medapi"
+                ], 
+                "parameters": [{
+                    "name": "rxcui",
+                    "description": "drug code",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/rxcuiSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Get MedlinePlus Connect URL",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/findnpi": {
+            "post": {
+                "summary": "Look up NPI information in bloomAPI",
+                "description": "Retrieve provider information",
+                "tags": [
+                    "npiapi"
+                ],
+                "parameters": [{
+                    "name": "searchObj",
+                    "description": "{'name':[{'first':'firstName', 'last':'lastName'}]}",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/npiSchema"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Get NPI data",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -792,17 +1151,7 @@
                     "type": "string"
                 },
                 "event_type": {
-                    "type": "string",
-                    "enum": [
-                        "initAccount",
-                        "loggedIn",
-                        "loggedOut",
-                        "fileUploaded",
-                        "fileDownloaded",
-                        "labResults",
-                        "passwordChange",
-                        "infoUpdate"
-                    ]
+                    "type": "string"
                 },
                 "note": {
                     "type": "string"
@@ -963,39 +1312,13 @@
                 }
             }
         },
-        "recordSchema": {
+        "bodySchema": {
             "required": [
-                "component"
+                "data"
             ],
             "properties": {
-                "component": {
-                    "type": "string",
-                    "enum": [
-                        "demographics",
-                        "medications",
-                        "results",
-                        "encounters",
-                        "vitals",
-                        "immunizations",
-                        "allergies",
-                        "conditions",
-                        "procedures",
-                        "social"
-                    ]
-                }
-            }
-        },
-        "formatSchema": {
-            "required": [
-                "format"
-            ],
-            "properties": {
-                "format": {
-                    "type": "string",
-                    "enum": [
-                        "json",
-                        "ccda"
-                    ]
+                "data": {
+                    "type": "string"
                 }
             }
         },
@@ -1010,19 +1333,7 @@
             ],
             "properties": {
                 "section": {
-                    "type": "string",
-                    "enum": [
-                        "demographics",
-                        "medications",
-                        "results",
-                        "encounters",
-                        "vitals",
-                        "immunizations",
-                        "allergies",
-                        "conditions",
-                        "procedures",
-                        "social"
-                    ]
+                    "type": "string"
                 },
                 "_id": {
                     "type": "string"
@@ -1120,6 +1431,16 @@
                 }
             }
         },
+        "deleteMedicationSchema": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
         "notificationSchema": {
             "required": [
                 "unreviewed_merges",
@@ -1139,6 +1460,60 @@
                 },
                 "file_count": {
                     "type": "integer"
+                }
+            }
+        },
+        "rxcuiSchema": {
+            "required": [
+                "rxcui"
+            ],
+            "properties": {
+                "rxcui": {
+                    "type": "string"
+                }
+            }
+        },
+        "rximageSchema": {
+            "required": [
+                "replyStatus",
+                "nlmRxImages"
+            ],
+            "properties": {
+                "replyStatus": {
+                    "type": "object"
+                },
+                "nlmRxImages": {
+                    "type": "array"
+                }
+            }
+        },
+        "mednameSchema": {
+            "required": [
+                "medname"
+            ],
+            "properties": {
+                "medname": {
+                    "type": "string"
+                }
+            }
+        },
+        "RxNormSchema": {
+            "required": [
+                "idGroup"
+            ],
+            "properties": {
+                "idGroup": {
+                    "type": "object"
+                }
+            }
+        },
+        "npiSchema": {
+            "required": [
+                "searchObj"
+            ],
+            "properties": {
+                "searchObj": {
+                    "type": "object"
                 }
             }
         }

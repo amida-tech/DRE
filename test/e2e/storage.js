@@ -1,43 +1,19 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
-var database = require('mongodb').Db;
-var common = require('./common.js');
-
-function removeCollection(inputCollection, callback) {
-    var db;
-    database.connect(databaseLocation, function (err, dbase) {
-        if (err) {
-            throw err;
-        }
-        db = dbase;
-        db.collection(inputCollection, function (err, coll) {
-            if (err) {
-                throw err;
-            }
-            coll.remove({}, function (err, results) {
-                if (err) {
-                    throw err;
-                }
-                db.close();
-                callback();
-            });
-        });
-    });
-}
+var common = require('../common/common.js');
 
 describe('Pre Test Cleanup 1', function () {
 
     it('Remove File Collections', function (done) {
-        removeCollection('storage.files', function (err) {
+        common.removeCollection('storage.files', function (err) {
             if (err) {
                 done(err);
             }
-            removeCollection('storage.chunks', function (err) {
+            common.removeCollection('storage.chunks', function (err) {
                 if (err) {
                     done(err);
                 }
@@ -79,16 +55,16 @@ describe('Pre Test Cleanup 2', function () {
         }
 
         function removeSections(componentSingular, componentPlural, callback) {
-            removeCollection(componentPlural, function (err) {
+            common.removeCollection(componentPlural, function (err) {
                 if (err) {
                     done(err);
                 }
-                removeCollection(componentSingular + 'merges', function (err) {
+                common.removeCollection(componentSingular + 'merges', function (err) {
                     if (err) {
                         console.log(err);
                         done(err);
                     }
-                    removeCollection(componentSingular + 'matches', function (err) {
+                    common.removeCollection(componentSingular + 'matches', function (err) {
                         if (err) {
                             done(err);
                         }
@@ -121,7 +97,7 @@ describe('Storage API', function () {
     });
 
     it('File Endpoint PUT', function (done) {
-        var filepath = path.join(__dirname, '../artifacts/test-r1.0/bluebutton-01-original.xml');
+        var filepath = path.join(__dirname, '../artifacts/test-r1.5/bluebutton-01-original.xml');
         api.put('/api/v1/storage')
             .attach('file', filepath)
             .expect(200)

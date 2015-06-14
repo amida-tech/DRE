@@ -3,7 +3,7 @@
         <div profile></div>
     </div>
     <!--Upload File Dialogue 1.-->
-    <div class="col-sm-9 body-right" ng-show="uploadStep === 0">
+    <div class="col-sm-9 body-right" ng-show="vm.uploadStep === 0">
         <div class="panel">
             <div class="panel-body">
                 <!--Header Items-->
@@ -17,9 +17,9 @@
                 <div class="col-sm-12 row">
                     <form role="form">
                         <div class="form-group col-sm-12 file">
-                            <input class="form-control" type="file" id="uploadFile" file-model="myFile" ng-model="myFile" valid-file required />
+                            <input class="form-control" type="file" id="uploadFile" file-model="vm.myFile" ng-model="vm.myFile" valid-file required />
                             <div class="pull-right button-well">
-                                <button id="continue-button" class="btn btn-primary" ng-click="incrementStep()">Continue</button>
+                                <button id="continue-button" class="btn btn-primary" ng-click="vm.incrementStep()">Continue</button>
                             </div>
                         </div>
                     </form>
@@ -28,7 +28,7 @@
         </div>
     </div>
     <!--Upload File Dialogue 2.-->
-    <div class="col-sm-7 body-right" ng-show="uploadStep === 1">
+    <div class="col-sm-7 body-right" ng-show="vm.uploadStep === 1">
         <div class="panel">
             <div class="panel-body">
                 <!--Header Items-->
@@ -66,7 +66,7 @@
                                                                 Name:
                                                             </td>
                                                             <td class="col-sm-6">
-                                                                {{new_first}} {{new_middle}} {{new_last}}
+                                                                {{vm.new_first}} {{vm.new_middle}} {{vm.new_last}}
                                                             </td>
                                                         </tr>
                                                     </thead>
@@ -98,7 +98,7 @@
                                                                 Date of Birth:
                                                             </td>
                                                             <td class="col-sm-6">
-                                                                {{new_dob}}
+                                                                {{vm.new_dob}}
                                                             </td>
                                                         </tr>
                                                     </thead>
@@ -132,7 +132,7 @@
                                                                 Gender:
                                                             </td>
                                                             <td class="col-sm-6">
-                                                                {{new_gender}}
+                                                                {{vm.new_gender}}
                                                             </td>
                                                         </tr>
                                                     </thead>
@@ -160,15 +160,15 @@
                         </div>
                     </div>
                     <div class="pull-right button-well">
-                        <button class="btn btn-default" ng-click="return()">Cancel</button>
-                        <button id="confirm-button" class="btn btn-primary" ng-click="incrementStep()">Confirm</button>
+                        <button class="btn btn-default" ng-click="vm.returnToFiles()">Cancel</button>
+                        <button id="confirm-button" class="btn btn-primary" ng-click="vm.incrementStep()">Confirm</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!--Upload File Dialogue 3.-->
-    <div class="col-sm-7 body-right" ng-show="uploadStep === 2222">
+    <div class="col-sm-7 body-right" ng-show="vm.uploadStep === 2222">
         <div class="panel">
             <div class="panel-body">
                 <!--Header Items-->
@@ -189,9 +189,9 @@
                 </div>
                 <div class="col-sm-12 row">
                     <div class="pull-right button-well">
-                        <button class="btn btn-default" ng-click="return()">Cancel</button>
-                        <button class="btn btn-info" ng-click="return()">Save Only</button>
-                        <button class="btn btn-primary" ng-click="importAndSave()">Import & Save</button>
+                        <button class="btn btn-default" ng-click="vm.returnToFiles()">Cancel</button>
+                        <button class="btn btn-info" ng-click="vm.returnToFiles()">Save Only</button>
+                        <button class="btn btn-primary" ng-click="vm.importAndSave()">Import & Save</button>
                     </div>
                 </div>
             </div>
