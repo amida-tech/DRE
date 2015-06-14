@@ -33,6 +33,8 @@ module.exports = function (grunt) {
                 eqnull: true,
                 node: true,
                 expr: true,
+                reporter:'checkstyle',
+                reporterOutput: 'checkstyle-result.xml',
                 globals: {
                     'xit': true,
                     'xdescribe': true,
