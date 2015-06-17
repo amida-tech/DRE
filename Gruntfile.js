@@ -14,7 +14,8 @@ module.exports = function (grunt) {
         clientJS: ['client/app/scripts/**/*.js'],
         clientCSS: ['client/app/styles/*.css'],
         clientSCSS: ['client/app/styles/{,*/}*.{scss,sass}'],
-        mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
+        mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js'],
+        oauthTests: ['test/oauth/*.js']
     };
 
     var appConfig = {
@@ -26,7 +27,9 @@ module.exports = function (grunt) {
     //grunt.option('force', true); //DISABLED, not good idea in general
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'jsbeautifier:beautify', 'env:test', 'express:dev', 'mochaTest']);
+    grunt.registerTask('default', ['jshint', 'jsbeautifier:beautify', 'env:test', 'express:dev', 'mochaTest:test']); //need to add in 'mochaTest:oauthTest'
+
+    grunt.registerTask('oauth', ['env:test', 'express:dev', 'jshint', 'mochaTest:oauthTest']);
 
     // Run benchmark tests
     grunt.registerTask('benchmark', ['execute']);
@@ -37,7 +40,6 @@ module.exports = function (grunt) {
     // Test task.
     //grunt.registerTask('test', ['env:test', 'jshint', 'lint', 'concurrent:test']);
     grunt.registerTask('live', ['concurrent:default']);
-
 
     // Print a timestamp (useful for when watching)
     grunt.registerTask('timestamp', function () {
@@ -379,7 +381,7 @@ module.exports = function (grunt) {
         // Run some tasks in parallel to speed up the build process
         concurrent: {
             default: ['nodemon', 'watch'],
-            test: ['env:test', 'nodemon', 'watch', 'mochaTest'],
+            test: ['env:test', 'nodemon', 'watch', 'mochaTest:test', 'mochaTest:oauthTest'],
             server: ['compass:server'],
             dist: ['compass:dist', 'imagemin', 'svgmin', 'htmlmin'],
             options: {
@@ -408,6 +410,13 @@ module.exports = function (grunt) {
                     timeout: '10000'
                 },
                 src: watchFiles.mochaTests
+            },
+            oauthTest: {
+                options: {
+                    reporter: 'spec',
+                    timeout: '10000'
+                },
+                src: watchFiles.oauthTests
             }
         },
         express: {
