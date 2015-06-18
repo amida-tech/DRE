@@ -33,14 +33,14 @@
             </div>
         </div>
         <h4 class="text-center text-white">Account History</h4>
-        <div class="panel" ng-cloak ng-show="vm.accountHistory && vm.accountHistory.recordHistory">
-            <div class="panel-body">
+        <div class="panel" ng-show="vm.accountHistory && vm.accountHistory.recordHistory">
+            <div ng-cloak class="panel-body">
                 <div>
                     <p>Timeline</p>
                 </div>
                 <div timeline ng-if="vm.accountHistory" chart-data="vm" chart-type="account" class="timeline-graph"></div>
 
-                <div ng-repeat="(recordIndex, recordEntry) in vm.accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
+                <div ng-cloak ng-repeat="(recordIndex, recordEntry) in vm.accountHistory.recordHistory" class="col-sm-12 row" id="record{{recordIndex}}">
 
                     <div class="col-sm-12 row timeline-side">
 
