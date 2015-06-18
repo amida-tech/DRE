@@ -2,6 +2,7 @@ describe('login', function() {
     var username = element(by.model('vm.inputLogin'));
     var password = element(by.model('vm.inputPassword'));
     var submit = element(by.id('main-login-btn'));
+   
 
     function loginTest(un, pw) {
     	username.clear();
@@ -9,6 +10,11 @@ describe('login', function() {
         username.sendKeys(un);
         password.sendKeys(pw);
         password.sendKeys(protractor.Key.ENTER);
+    }
+    
+    function accountHistoryTimeline() {
+        var timeline = element(by.css('.timeline-graph'));
+        expect(timeline.isDisplayed()).toBeTruthy;
     }
 
     beforeEach(function() {
@@ -25,7 +31,6 @@ describe('login', function() {
             };
         })
       expect(errors).toEqual(0);
-      expect()
       // Uncomment to actually see the log.
       // console.log('log: ' + require('util').inspect(browserLog));
     });
@@ -34,5 +39,6 @@ describe('login', function() {
     it('should login', function() {
         loginTest('protractor_test','Protractor');
         expect(browser.getLocationAbsUrl()).toContain('home');
+        accountHistoryTimeline();
     });
 });
