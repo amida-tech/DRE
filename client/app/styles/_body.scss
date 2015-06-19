@@ -8,8 +8,8 @@ html, body {
 }
 
 .wrapper {
-    
-    
+
+
     height: auto;
     margin: 0 auto -40px;
     background-image: $blur-background;
@@ -52,7 +52,7 @@ html, body {
 	padding: 20px;
     height: 100%;
     float: left;
-    /*background-color: rgba(0,0,0,0.5);*/    
+    /*background-color: rgba(0,0,0,0.5);*/
 
 }
 .body-right {
@@ -62,19 +62,14 @@ html, body {
 
 }
 .body-bottom {
-	
+
 }
 .body-footer {
-    
+
 }
 
 .default-background {
     background-image: $blur-background;
     background-repeat: no-repeat;
     background-attachment: fixed; /* the bottom margin is the negative value of the footer's height */
-}
-
-.konami-background {
-    background-image: url('../images/va_photo.jpg');
-    background-repeat: repeat;
 }

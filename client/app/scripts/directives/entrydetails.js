@@ -5,7 +5,7 @@
  * @description
  * # recordNavigation
  */
-angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $location, format, matches, $route, record) {
+angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $location, format, matches, $route, record, dataservice) {
     return {
         templateUrl: 'views/templates/entrydetails.html',
         restrict: 'EA',
@@ -178,52 +178,28 @@ angular.module('phrPrototypeApp').directive('entryDetails', function ($window, $
                 console.log("MATCH!! >>", scope.finalData);
 
                 matches.saveMatch(scope.finalData);
-                $location.path('/record');
-                //record.getData(function(err, data) {
-                //    return;
-                //});
-                $route.reload();
-
-                /*
-                var send = $window.confirm("Are these changes accurate?");
-                if (send) {
-                    console.log("sending...", scope.finalData);
-                    //switch to detail tab
-                } else {
-                    console.log("didn't send");
-                    scope.undoAllButton();
-                }
-                */
+                dataservice.getLastSection(function (last_section) {
+                    console.log("last_section:", last_section);
+                    $location.path('/record' + last_section.record);
+                    dataservice.forceRefresh();
+                });
             };
             scope.ignoreButton = function () {
-                //stub to send scope.finalData to merge service
-
                 console.log("match ignored");
                 matches.discardMatch();
-                $location.path('/record');
-                //record.getData(function(err, data) {
-                //    return;
-                //});
-                $route.reload();
-
-                /*
-                var send = $window.confirm("Ignore changes?");
-                if (send) {
-                    console.log("discarding changes");
-                    //switch to detail tab
-                } else {
-                    console.log("didn't send");
-                    scope.undoAllButton();
-                }
-                */
+                dataservice.getLastSection(function (last_section) {
+                    $location.path('/record' + last_section.record);
+                    dataservice.forceRefresh();
+                });
             };
             scope.createNewButton = function () {
                 // create a new entry during reconciliation
-
                 console.log("match: create new entry");
                 matches.createMatch();
-                $location.path('/record');
-                $route.reload();
+                dataservice.getLastSection(function (last_section) {
+                    dataservice.forceRefresh();
+                    $location.path('/record' + last_section.record);
+                });
             };
         }
     };

@@ -1,37 +1,13 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var deploymentLocation = 'http://' + 'localhost' + ':' + '3000';
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + 'dre';
 var api = supertest.agent(deploymentLocation);
 var fs = require('fs');
 var path = require('path');
-var database = require('mongodb').Db;
-var common2 = require('../common.js');
-
-function removeCollection(inputCollection, callback) {
-    var db;
-    database.connect(databaseLocation, function (err, dbase) {
-        if (err) {
-            throw err;
-        }
-        db = dbase;
-        db.collection(inputCollection, function (err, coll) {
-            if (err) {
-                throw err;
-            }
-            coll.remove({}, function (err, results) {
-                if (err) {
-                    throw err;
-                }
-                db.close();
-                callback();
-            });
-        });
-    });
-}
+var common = require('../../common/common.js');
 
 function loadTestRecord(fileName, callback) {
-    var filepath = path.join(__dirname, '../../artifacts/test-r1.0/' + fileName);
+    var filepath = path.join(__dirname, '../../artifacts/test-r1.5/' + fileName);
     api.put('/api/v1/storage')
         .attach('file', filepath)
         .expect(200)
@@ -46,23 +22,23 @@ function loadTestRecord(fileName, callback) {
 describe('Pre Test Cleanup', function () {
 
     it('Remove Problem Collections', function (done) {
-        removeCollection('problems', function (err) {
+        common.removeCollection('problems', function (err) {
             if (err) {
                 done(err);
             }
-            removeCollection('problemsmerges', function (err) {
+            common.removeCollection('problemsmerges', function (err) {
                 if (err) {
                     done(err);
                 }
-                removeCollection('problemsmatches', function (err) {
+                common.removeCollection('problemsmatches', function (err) {
                     if (err) {
                         done(err);
                     }
-                    removeCollection('storage.files', function (err) {
+                    common.removeCollection('storage.files', function (err) {
                         if (err) {
                             done(err);
                         }
-                        removeCollection('storage.chunks', function (err) {
+                        common.removeCollection('storage.chunks', function (err) {
                             if (err) {
                                 done(err);
                             }
@@ -74,8 +50,8 @@ describe('Pre Test Cleanup', function () {
         });
     });
     it('Login', function (done) {
-        common2.register(api, 'test', 'test', function () {
-            common2.login(api, 'test', 'test', function () {
+        common.register(api, 'test', 'test', function () {
+            common.login(api, 'test', 'test', function () {
                 done();
             });
         });

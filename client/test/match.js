@@ -2,28 +2,22 @@ describe('record scenario', function() {
     
 
     function matchScenario() {
-    	var record = element(by.css('[href="#/record"]'));
+    	var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
         record.click();
 
         var allergies = element(by.id('navallergies'));
         allergies.click();
 
         var match = element.all(by.css('[ng-click="launchMatch(recordEntry.metadata)"]')).first();
-
         match.click();
 
         var checkbox = element.all(by.css('[type="checkbox"]')).first();
-
         checkbox.click();
 
         var submit = element(by.css('[ng-click="submitButton()"]'));
-
         submit.click();
 
         allergies.click();
-
-
-
     }
 
     beforeEach(function() {
@@ -32,11 +26,6 @@ describe('record scenario', function() {
     });
 
     it('should run', function() {
-        
-    	
-
         matchScenario();
-
-
     });
 });

@@ -1,0 +1,841 @@
+--------------------------------
+MYMEDICARE.GOV PERSONAL HEALTH INFORMATION
+
+--------------------------------
+**********CONFIDENTIAL***********
+
+Produced by the Blue Button (v2.0)
+
+03/16/2013 5:10 AM
+
+
+
+
+--------------------------------
+Demographic
+
+--------------------------------
+
+Source: MyMedicare.gov
+
+
+
+Name: Isabella Isa Jones
+
+Date of Birth: 05/01/1975
+
+Address Line 1: 1357 Amber Drive
+
+Address Line 2: 
+
+City: Beaverton
+
+State: OR
+
+Zip: 97867
+
+Phone Number: (816)276-6909
+
+Email: isabella@amida.com
+
+Part A Effective Date: 01/01/2012
+
+Part B Effective Date: 01/01/2012
+
+
+
+--------------------------------
+Emergency Contact
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Contact Name: JANE DOE
+
+Address Type:Home
+
+Address Line 1: 123 AnyWhere St
+
+Address Line 2: 
+
+City: AnyWhere
+
+State: DC
+
+Zip: 00002-1111
+
+Relationship: Other
+
+Home Phone: 123-456-7890
+
+Work Phone: 000-001-0001
+
+Mobile Phone: 000-001-0002
+
+Email Address: JANEDOE@example.com
+
+
+
+Contact Name: STEVE DOE
+
+Address Type:
+
+Address Line 1: 123 AnyWhere Rd
+
+Address Line 2: 
+
+City: AnyWhere
+
+State: VA
+
+Zip: 00001
+
+Relationship: Other
+
+Home Phone: 123-456-7890
+
+Work Phone: 000-001-0001
+
+Mobile Phone: 000-001-0002
+
+Email Address: STEVEDOE@example.com
+
+
+
+--------------------------------
+Self Reported Medical Conditions
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Condition Name: Pneumonia
+
+Medical Condition Start Date: 01/03/2008
+
+Medical Condition End Date: 01/03/2008
+
+
+
+Condition Name: Asthma
+
+Medical Condition Start Date: 01/03/2007
+
+Medical Condition End Date: 01/03/2008
+
+
+
+--------------------------------
+Self Reported Allergies
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Allergy Name: ALLERGENIC EXTRACT, PENICILLIN
+
+Type: Drugs
+
+Reaction: Nausea
+
+Severity: Mild
+
+Diagnosed: Yes
+
+Treatment: Allergy Shots
+
+First Episode Date: 05/01/2007
+
+
+
+Allergy Name: Codeine
+
+Type: Drugs
+
+Reaction: Wheezing
+
+Severity: Mild
+
+Diagnosed: Yes
+
+Treatment: Avoidance
+
+First Episode Date: 05/01/2006
+
+Comments: 
+
+
+
+--------------------------------
+Self Reported Implantable Device
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Device Name: Artificial Eye Lenses
+
+Date Implanted: 1/27/1942
+
+
+
+--------------------------------
+Self Reported Immunizations
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Immunization Name: Influenza virus vaccine
+
+Date Administered: 11/01/1999
+
+Method: Intramuscular injection
+
+
+
+Immunization Name: Influenza virus vaccine
+
+Date Administered: 12/15/1998
+
+Method: Intramuscular injection
+
+Were you vaccinated in the US: 
+
+Comments: 
+
+Booster 1 Date: 
+
+Booster 2 Date: 
+
+Booster 3 Date: 
+
+
+
+Immunization Name: Pneumococcal polysaccharide vaccine
+
+Date Administered: 12/15/1998
+
+Method: Intramuscular injection
+
+Were you vaccinated in the US: 
+
+Comments: 
+
+Booster 1 Date: 
+
+Booster 2 Date: 
+
+Booster 3 Date: 
+
+
+
+Immunization Name: Tetanus and diphtheria toxoids - preservative free
+
+Date Administered: 12/15/1998
+
+Method: Intramuscular injection
+
+Were you vaccinated in the US: 
+
+Comments: 
+
+Booster 1 Date: 
+
+Booster 2 Date: 
+
+Booster 3 Date: 
+
+
+
+--------------------------------
+Self Reported Labs and Tests
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Test/Lab Type: CBC WO DIFFERENTIAL
+Date Taken: 03/23/2000
+
+Administered by: QUEST DIAGNOSTICS
+
+Requesting Doctor: Dr. Smith
+
+Reason Test/Lab Requested: 
+
+Results: 13.2, 6.7, 123
+
+Comments: HGB, WBC, PLT
+
+
+
+--------------------------------
+Self Reported Vital Statistics
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Vital Statistic Type: Blood Pressure
+
+Date: 11/14/1999
+
+Time: 3:00 PM
+
+Reading: 132/80
+
+Comments: mmHg
+
+
+
+Vital Statistic Type: Patient Body Weight - Measured
+
+Date: 11/14/1999
+
+Time: 12:00 PM
+
+Reading: 86
+
+Comments: 
+
+
+Vital Statistic Type: Height
+
+Date: 11/14/1999
+
+Time: 12:00 PM
+
+Reading: 177
+
+Comments: cm
+
+
+
+--------------------------------
+Family Medical History
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Family Member: Brother
+
+Type: 
+
+DOB:1/10/1915
+
+DOD: 
+
+Age: 
+
+Type: Allergy
+
+Description: Antiarrythmia
+
+Description: Antibiotic
+
+Description: Anticonvulsants
+
+Type: Condition
+
+Description: Allergies
+
+Description: Alzheimer's Disease
+
+Description: Angina (Heart Pain)
+
+Description: Cataracts
+
+
+--------------------------------
+Drugs
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Drug Name: Proventil HFA INH 1MG/ACTUAT
+
+Supply: Daily
+
+Orig Drug Entry: Proventil HFA
+
+
+
+Drug Name: Aspirin
+
+Supply: Daily
+
+Orig Drug Entry: Aspirin
+
+
+
+--------------------------------
+Preventive Services
+
+--------------------------------
+
+Source: MyMedicare.gov
+
+
+
+Description: DIABETES
+
+Next Eligible Date: 10/1/2011
+
+Last Date of Service: 
+
+
+
+Description: PAP TEST DR
+
+Next Eligible Date: 10/1/2011
+
+Last Date of Service: 
+
+
+
+Description: ABDOMINAL AORTIC ANEURYSM
+
+Next Eligible Date: 7/1/2012
+
+Last Date of Service: 
+
+
+
+Description: ANNUAL WELLNESS VISIT
+
+Next Eligible Date: 1/1/2013
+
+Last Date of Service: 
+
+
+
+Description: DEPRESSION SCREENING
+
+Next Eligible Date: 10/14/2012
+
+Last Date of Service: 
+
+
+
+--------------------------------
+Providers
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Provider Name: ANY CARE
+
+Provider Address: 123 Any Rd, Anywhere, MD 99999
+
+Type: NHC
+
+Specialty: 
+
+Medicare Provider: Not Available
+
+
+
+Provider Name: ANY HOSPITAL1
+
+Provider Address: 123 Drive, Anywhere, VA 00001
+
+Type: HOS
+
+Specialty: 
+
+Medicare Provider: Not Available
+
+Provider Name: Jane Doe
+
+Provider Address: 123 Road, Anywhere, VA 00001
+
+Type: PHY
+
+Specialty: Other
+
+Medicare Provider: Not Available
+
+
+
+--------------------------------
+Pharmacies
+
+--------------------------------
+
+Source: Self-Entered
+
+
+
+Pharmacy Name: PHARMACY, EAST STREET ANYWHERE, DC 00002
+
+Pharmacy Phone: 000-000-0001
+
+
+
+Pharmacy Name: ANY PHARMACY, WEST STREET ANYWHERE, VA 00001
+
+Pharmacy Phone: 000-000-0002
+
+
+
+--------------------------------
+Plans
+
+--------------------------------
+
+Source: MyMedicare.gov
+
+
+
+Contract ID/Plan ID: H9999/9999
+
+Plan Period: 09/01/2011 - current
+
+Plan Name: Aetna Medicare Value Plan (HMO)
+
+Marketing Name: Aetna Medicare
+
+Plan Address: 123 Any Road Anytown PA 00003
+
+Plan Type: 3 - Coordinated Care Plan (HMO, PPO, PSO, SNP)
+
+
+
+Contract ID/Plan ID: S9999/000
+
+Plan Period: 01/01/2010 - current
+
+Plan Name: AARP MedicareRx Saver Plus (PDP)
+
+Marketing Name: UnitedHealthcare
+
+Plan Address: 123 Any Road Anytown PA 00003
+
+Plan Type: 11 - Medicare Prescription Drug Plan
+
+
+
+--------------------------------
+Employer Subsidy
+
+--------------------------------
+
+Source: MyMedicare.gov
+
+
+Employer Plan: STATE HEALTH BENEFITS PROGRAM
+
+Employer Subsidy Start Date: 01/01/2011
+
+Employer Subsidy End Date: 12/31/2011
+
+
+
+--------------------------------
+Claim Summary
+
+--------------------------------
+
+Source: MyMedicare.gov
+
+
+
+Claim Number: 4830293857102
+
+Provider: SAFEWAY INC
+
+Provider Billing Address: PO BOX 742382 SAFEWAY INC PHARMACY LOS ANGELES CA 900742382
+
+Service Start Date: 10/09/2013
+
+Service End Date: 10/09/2013
+
+Amount Charged: $57.20
+
+Medicare Approved: $57.20
+
+Provider Paid: $57.20
+
+You May be Billed: $0.00
+
+Claim Type: PartB
+
+Diagnosis Code 1: V0481
+
+--------------------------------
+Claim Lines for Claim Number: 4830293857102
+
+--------------------------------
+
+
+
+Line number:  1
+
+Date of Service From:  11/01/1999
+
+Date of Service To:  11/01/1999
+
+Procedure Code/Description:  90662 - Vaccine For Influenza For Injection Into Muscle
+
+Modifier 1/Description:  
+
+Modifier 2/Description:  
+
+Modifier 3/Description:  
+
+Modifier 4/Description:  
+
+Quantity Billed/Units:  1
+
+Submitted Amount/Charges:  $31.90
+
+Allowed Amount:  $31.90
+
+Non-Covered:  $0.00
+
+Place of Service/Description:  60 - Mass Immunization Center
+
+Type of Service/Description:  V - Pneumococcal/Flu Vaccine
+
+Rendering Provider No:  PHC011
+
+Rendering Provider NPI:  4839202847
+
+
+
+Line number:  2
+
+Date of Service From:  11/01/1999
+
+Date of Service To:  11/01/1999
+
+Procedure Code/Description:  G0008 - Administration Of Influenza Virus Vaccine
+
+Modifier 1/Description:  
+
+Modifier 2/Description:  
+
+Modifier 3/Description:  
+
+Modifier 4/Description:  
+
+Quantity Billed/Units:  1
+
+Submitted Amount/Charges:  $25.30
+
+Allowed Amount:  $25.30
+
+Non-Covered:  $0.00
+
+Place of Service/Description:  60 - Mass Immunization Center
+
+Type of Service/Description:  V - Pneumococcal/Flu Vaccine
+
+Rendering Provider No:  PHC011
+
+Rendering Provider NPI:  4839202847
+
+
+
+--------------------------------
+
+
+
+--------------------------------
+
+
+
+Claim Number: 5834920430293
+
+Provider: QUEST DIAGNOSTICS INC MD
+
+Provider Billing Address: 1901 SULPHUR SPRING ROAD BALTIMORE MD 212272997
+
+Service Start Date: 03/23/2000
+
+Service End Date: 03/23/2000
+
+Amount Charged: $308.62
+
+Medicare Approved: $308.62
+
+Provider Paid: $38.89
+
+You May be Billed: $269.73
+
+Claim Type: PartB
+
+Diagnosis Code 1: 2720
+Diagnosis Code 2: 4019
+
+--------------------------------
+Claim Lines for Claim Number: 5834920430293
+
+--------------------------------
+
+
+
+Line number:  1
+
+Date of Service From:  03/23/2000
+
+Date of Service To:  03/23/2000
+
+Procedure Code/Description:  36415 - Insertion Of Needle Into Vein For Collection Of Blood Sample
+
+Modifier 1/Description:  
+
+Modifier 2/Description:  
+
+Modifier 3/Description:  
+
+Modifier 4/Description:  
+
+Quantity Billed/Units:  1
+
+Submitted Amount/Charges:  $18.87
+
+Allowed Amount:  $3.00
+
+Non-Covered:  $15.87
+
+Place of Service/Description:  81 - Independent Laboratory
+
+Type of Service/Description:  5 - Diagnostic Lab
+
+Rendering Provider No:  W520
+
+Rendering Provider NPI:  5493844123
+
+
+
+Line number:  2
+
+Date of Service From:  03/23/2000
+
+Date of Service To:  03/23/2000
+
+Procedure Code/Description:  80053 - Blood Test, Comprehensive Group Of Blood Chemicals
+
+Modifier 1/Description:  QP - Documentation Is On File Showing That The Laboratory Test(S) Was Ordered Individually Or Ordere
+
+Modifier 2/Description:  
+
+Modifier 3/Description:  
+
+Modifier 4/Description:  
+
+Quantity Billed/Units:  1
+
+Submitted Amount/Charges:  $80.98
+
+Allowed Amount:  $8.84
+
+Non-Covered:  $72.14
+
+Place of Service/Description:  81 - Independent Laboratory
+
+Type of Service/Description:  5 - Diagnostic Lab
+
+Rendering Provider No:  W520
+
+Rendering Provider NPI:  5493844123
+
+
+
+Line number:  3
+
+Date of Service From:  03/23/2000
+
+Date of Service To:  03/23/2000
+
+Procedure Code/Description:  80061 - Blood Test, Lipids (Cholesterol And Triglycerides)
+
+Modifier 1/Description:  
+
+Modifier 2/Description:  
+
+Modifier 3/Description:  
+
+Modifier 4/Description:  
+
+Quantity Billed/Units:  1
+
+Submitted Amount/Charges:  $146.80
+
+Allowed Amount:  $16.03
+
+Non-Covered:  $130.77
+
+Place of Service/Description:  81 - Independent Laboratory
+
+Type of Service/Description:  5 - Diagnostic Lab
+
+Rendering Provider No:  W520
+
+Rendering Provider NPI:  5493844123
+
+
+
+Line number:  4
+
+Date of Service From:  03/23/2000
+
+Date of Service To:  03/23/2000
+
+Procedure Code/Description:  85025 - Complete Blood Cell Count (Red Cells, White Blood Cell, Platelets), Automated Test
+
+Modifier 1/Description:  
+
+Modifier 2/Description:  
+
+Modifier 3/Description:  
+
+Modifier 4/Description:  
+
+Quantity Billed/Units:  1
+
+Submitted Amount/Charges:  $61.97
+
+Allowed Amount:  $11.02
+
+Non-Covered:  $50.95
+
+Place of Service/Description:  81 - Independent Laboratory
+
+Type of Service/Description:  5 - Diagnostic Lab
+
+Rendering Provider No:  W520
+
+Rendering Provider NPI:  5493844123
+
+
+
+--------------------------------
+
+

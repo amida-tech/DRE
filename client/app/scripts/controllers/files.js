@@ -7,40 +7,52 @@
  * # FilesCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('FilesCtrl', function ($scope, files) {
+angular
+    .module('phrPrototypeApp')
+    .controller('FilesCtrl', Files);
 
-        $scope.fileList = [];
+Files.$inject = ['files'];
 
+function Files(files) {
+    /* jshint validthis: true */
+    var vm = this;
+    vm.fileList = [];
+    vm.modifiedSort = modifiedSort;
+    vm.nameSort = nameSort;
+    vm.predicate = "file_name";
+    vm.typeSort = typeSort;
+
+    activate();
+
+    function activate() {
         files.getFiles(function (err, results) {
-            $scope.fileList = results;
+            vm.fileList = results;
             console.log(results);
         });
+    }
 
-        $scope.predicate = "file_name";
+    function nameSort() {
+        if (vm.predicate === "file_name") {
+            vm.predicate = "-file_name";
+        } else {
+            vm.predicate = "file_name";
+        }
+    }
 
-        $scope.nameSort = function () {
-            if ($scope.predicate === "file_name") {
-                $scope.predicate = "-file_name";
-            } else {
-                $scope.predicate = "file_name";
-            }
-        };
+    function typeSort() {
+        if (vm.predicate === "file_class") {
+            vm.predicate = "-file_class";
+        } else {
+            vm.predicate = "file_class";
+        }
+    }
 
-        $scope.typeSort = function () {
-            if ($scope.predicate === "file_class") {
-                $scope.predicate = "-file_class";
-            } else {
-                $scope.predicate = "file_class";
-            }
-        };
+    function modifiedSort() {
+        if (vm.predicate === "file_upload_date") {
+            vm.predicate = "-file_upload_date";
+        } else {
+            vm.predicate = "file_upload_date";
+        }
+    }
 
-        $scope.modifiedSort = function () {
-            if ($scope.predicate === "file_upload_date") {
-                $scope.predicate = "-file_upload_date";
-            } else {
-                $scope.predicate = "file_upload_date";
-            }
-        };
-
-    });
+}

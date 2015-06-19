@@ -1,6 +1,6 @@
 describe('login', function() {
-    var username = element(by.model('inputLogin'));
-    var password = element(by.model('inputPassword'));
+    var username = element(by.model('vm.inputLogin'));
+    var password = element(by.model('vm.inputPassword'));
     var submit = element(by.id('main-login-btn'));
 
     function loginTest(un, pw) {
@@ -26,17 +26,12 @@ describe('login', function() {
         })
       expect(errors).toEqual(0);
       // Uncomment to actually see the log.
-      console.log('log: ' + require('util').inspect(browserLog));
+      // console.log('log: ' + require('util').inspect(browserLog));
     });
   });
 
     it('should login', function() {
-        
-    	
-
         loginTest('protractor_test','Protractor');
-
         expect(browser.getLocationAbsUrl()).toContain('home');
-
     });
 });

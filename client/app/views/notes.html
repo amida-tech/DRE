@@ -1,8 +1,5 @@
 <div class="container-fluid body-content">
-
-
     <div class="col-sm-3 body-left">
-
         <div profile></div>
         <div>
             <div class="panel-body">
@@ -12,23 +9,16 @@
                     </div>
                     <p>&nbsp;</p>
                     <div class="btn-group-vertical col-sm-12" role="group">
-                        <button class="btn btn-info btn-block" ng-click="toggle(0)" ng-class="{active: filters[0].value}">Starred
-                            <!-- <i class="fa fa-check" ng-show="filters[0].value"></i>-->
+                        <button class="btn btn-info btn-block" ng-click="toggleFilter('star')" ng-class="{active: starFilters.indexOf(true)>-1}">Starred
                         </button>
-                        <button class="btn btn-info btn-block" ng-click="toggle(1)" ng-class="{active: filters[1].value}">Unstarred
-                            <!-- <i class="fa fa-check" ng-show="filters[1].value"></i>-->
+                        <button class="btn btn-info btn-block" ng-click="toggleFilter('unstar')" ng-class="{active: starFilters.indexOf(false)>-1}">Unstarred
                         </button>
                     </div>
                     <p>&nbsp;</p>
                     <div class="btn-group-vertical col-sm-12" role="group">
-
-                        <button class="btn btn-info btn-block" ng-repeat="(nameIndex , nameEntry) in filters" ng-hide="nameEntry.name === 'starred' || nameEntry.name === 'unStarred'" ng-click="toggle(nameIndex)" ng-class="{active: nameEntry.value}">{{nameEntry.displayName}}
-                            <!-- <i class="fa fa-check" ng-show="nameEntry.value"></i>-->
+                        <button class="btn btn-info btn-block" ng-repeat="section in sectionList" ng-click="toggleFilter(section)" ng-class="{active: sectionFilters.indexOf(section)>-1}">{{displaySection(section)}}
                         </button>
-
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -50,56 +40,72 @@
         <h4 class="text-center text-white">Review Notes</h4>
         <div class="panel">
             <div class="panel-body">
-                <div ng-show="!notes" class="col-sm-12 text-center">
+                <div ng-if="notesList.length === 0" class="col-sm-12 text-center">
                     <h5>No notes are available for display</h5>
                 </div>
-                <div ng-if="noMatch()" class="col-sm-12 text-center">
-                    <h5>No notes matching your selection</h5>
-                </div>
-
-                <p ng-show="notes" class="row pull-right">Sort by: <a href="" ng-click="dateSort()">Date</a> | <a href="" ng-click="predicate = 'displaySection'; reverse=!reverse"> Section Name</a>
-                </p>
-
-                <!-- http://angular-tips.com/blog/2014/08/tip-accessing-filtered-array-outside-ng-repeat/ -->
-                <div ng-show="any_sections_selected" ng-repeat="(sectionIndex, sectionEntry) in sections = (notes | sections:filters) | orderBy:predicate:reverse">
-
-                    <div ng-repeat="(noteIndex, noteEntry) in subNotes = (sectionEntry.notes | starred:filters) | orderBy:'note.starred':true:predicate:reverse ">
-                        <div ng-show="noteIndex === 0">
-                            <h4>{{sectionEntry.displaySection}}</h4>
-                        </div>
-                        <div class="col-sm-1 panel-body text-center">
-                            <h5 ng-show="noteEntry.note.starred === true" ng-click="clickStar(true, noteIndex, sectionEntry.section, noteEntry)"><a><i class="fa fa-star"></i></a></h5>
-                            <h5 ng-show="noteEntry.note.starred === false" ng-click="clickStar(false, noteIndex, sectionEntry.section, noteEntry)"><a><i class="fa fa-star-o"></i></a></h5>
-                        </div>
-                        <div class="panel col-sm-11">
-                            <div class="panel-body">
-                                <div class="col-sm-12">
-                                    <h5>{{noteEntry.note.comment}}</h5>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="pull-left">
-                                        <h6>{{noteEntry.note.date | date:'short'}}</h6>
-                                    </div>
-                                    <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#details{{sectionEntry.section}}{{noteIndex}}" aria-expanded="false" aria-controls="details{{sectionEntry.section}}{{noteIndex}}">
-                                        <span><i class="fa fa-ellipsis-h"></i> Entry</span>
-                                    </button>
-                                </div>
-                                <div class="col-sm-12">
-                                    <!--Record detail pane.-->
-                                    <div role="tabpanel" class="collapse" id="details{{sectionEntry.section}}{{noteIndex}}">
-                                        <div class="sub-entry">
-                                            <h3>Entry Details</h3>
-                                            <a ng-hide="sectionEntry.section === 'claims' || sectionEntry.section === 'insurance'" ng-click="setEntry(sectionEntry.section)"><h5>{{noteEntry.entryTitle}}</h5></a>
-                                            <a ng-show="sectionEntry.section === 'claims' || sectionEntry.section === 'insurance'" ng-click="setEntry(sectionEntry.section)"><h5>{{noteEntry.entryTitle}}</h5></a>
-                                            <h5>{{noteEntry.entrySubTitleOne}}</h5>
-                                            <h5>{{noteEntry.entrySubTitleTwo}}</h5>
+                <div ng-hide="notesList.length === 0">
+                    <div ng-show="sectionFilters.length === 0 && starFilters.length === 0" class="col-sm-12 text-center">
+                        <h5>No notes matching your selection</h5>
+                    </div>
+                    <div>
+                        <p>Timeline</p><span ng-if="notesList.length !== 0" class="row pull-right">Sort by: <a href="" ng-click="dateSort()">Date <span ng-bind-html="sortString"></span></a>
+                        </span>
+                    </div>
+                    <div class="row col-sm-12">
+                        <div timeline chart-data="notesList" chart-type="notes" class="timeline-graph"></div>
+                    </div>
+                    <div ng-repeat="(noteIndex, noteEntry) in notesList | orderBy:['-starred',predicate]">
+                        <div class="col-sm-12 row timeline-side" ng-if="recordEntry.entry_type !== 'demographics' ">
+                            <!--Timeline Icon-->
+                            <div class="col-sm-2">
+                                <a ng-if="noteEntry.section === 'medications'" class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{noteEntry.section}}" timeline-index="{{recordIndex}}" timeline-icon-meta="{{entryData.metadata}}"></a>
+                                <a ng-if="noteEntry.section !== 'medications'" class="timeline-entry-icon text-center center-block" timeline-icon timeline-icon-type="{{noteEntry.section}}" timeline-index="{{recordIndex}}" timeline-icon-meta="{{entryData.metadata}}"></a>
+                            </div>
+                            <div class="col-sm-10">
+                                <div class="panel timeline-entry">
+                                    <div class="panel-body" id="accordian">
+                                        <div class="timeline-entry-header col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-1 text-center">
+                                                    <h5 ng-show="noteEntry.note.starred === true" ng-click="clickStar(true, noteEntry)"><a><i class="fa fa-star"></i></a></h5>
+                                                    <h5 ng-show="noteEntry.note.starred === false" ng-click="clickStar(false, noteEntry)"><a><i class="fa fa-star-o"></i></a></h5>
+                                                </div>
+                                                <div class="col-sm-11">
+                                                    <div class="row">
+                                                        <h5>{{noteEntry.note.comment}}</h5>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="pull-left">
+                                                            <h6>{{noteEntry.note.date | date:'short'}}</h6>
+                                                        </div>
+                                                        <button class="pull-right btn btn-link" data-toggle="collapse" data-target="#details{{noteIndex}}" aria-expanded="false" aria-controls="details{{noteIndex}}">
+                                                            <span><i class="fa fa-ellipsis-h"></i> Entry</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div role="tabpanel" class="collapse" id="details{{noteIndex}}">
+                                                    <div class="sub-entry">
+                                                        <h3>Entry Details</h3>
+                                                        <a ng-hide="noteEntry.section === 'claims' || noteEntry.section === 'insurance'" ng-click="setEntry(noteEntry.section, noteEntry.entry_id)"><h5>{{noteEntry.entryTitle}}</h5></a>
+                                                        <a ng-show="noteEntry.section === 'claims' || noteEntry.section === 'insurance'" ng-click="setEntry(noteEntry.section, noteEntry.entry_id)"><h5>{{noteEntry.entryTitle}}</h5></a>
+                                                        <h5>{{noteEntry.entrySubTitleOne}}</h5>
+                                                        <h5>{{noteEntry.entrySubTitleTwo}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--<pre>{{notes | json}}</pre>-->
+                    <div class="col-sm-2 center-block text-center timeline-footer">
+                        <svg width="30" height="30">
+                            <circle cx="15" cy="15" r="15"></circle>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>

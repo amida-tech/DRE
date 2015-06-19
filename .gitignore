@@ -1,6 +1,8 @@
 node_modules
 bower_components
 
+typings
+
 .project
 .settings
 .vagrant
@@ -8,6 +10,7 @@ bower_components
 
 server/coverage
 client/coverage
+protractor-result
 coverage
 test/coverage
 .DS_Store
@@ -18,6 +21,11 @@ test/coverage
 
 npm-debug.log
 
+log
+
 .anvil
 
 #client/app/styles/main.css
+
+.nodemon_find_ref
+.sass-cache

@@ -7,46 +7,42 @@
  * # HomeCtrl
  * Controller of the phrPrototypeApp
  */
-angular.module('phrPrototypeApp')
-    .controller('HomeCtrl', function ($scope, history, merges, dataservice) {
+angular
+    .module('phrPrototypeApp')
+    .controller('HomeCtrl', Home);
 
-        //TODO : fetch notes and updates counts
-        $scope.noteCount = 0;
-        $scope.updatesCount = 0;
+Home.$inject = ['history', 'dataservice', 'notes'];
 
-        function refresh() {
-            dataservice.curr_section = $scope.entryType;
-            dataservice.getData(function () {
-                $scope.noteCount = 0;
+function Home(history, dataservice, notes) {
+    /* jshint validthis: true */
+    var vm = this;
 
-                _.each(dataservice.all_notes, function (entry) {
-                    //console.log(entry);
-                    if (entry.star) {
-                        $scope.noteCount++;
-                    }
-                });
+    vm.updatesCount = 0;
+    vm.noteCount = 0;
 
-                merges.getMerges(function (err, merges) {
-                    $scope.updatesCount = merges.length;
-                });
-                //$scope.updatesCount = dataservice.matches
+    dataservice.forceRefresh();
 
-            });
+    notes.noteCount(function (err, noteCount) {
+        if (err) {
+            console.log("err: ", err);
+        } else {
+            vm.noteCount = noteCount;
         }
-
-        refresh();
-
-        function getHistory() {
-            history.getHistory(function (err, history) {
-                if (err) {
-                    console.log('ERRROR', err);
-                } else {
-                    //console.log('>>>>accountHistory', history);
-                    $scope.accountHistory = history;
-                }
-            });
-        }
-
-        getHistory();
-
     });
+
+    dataservice.getMergesListRecord(function (err, merges) {
+        if (err) {
+            console.log("err: ", err);
+        } else {
+            vm.updatesCount = merges.length;
+        }
+    });
+
+    history.getAccountHistory(function (err, history) {
+        if (err) {
+            console.log('ERRROR', err);
+        } else {
+            vm.accountHistory = history;
+        }
+    });
+}

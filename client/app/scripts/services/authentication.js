@@ -8,51 +8,77 @@
  * Service in the phrPrototypeApp.
  */
 angular.module('phrPrototypeApp')
-    .service('authentication', function authentication($location, $http) {
+    .service('authentication', function authentication($rootScope, $location, $http, dataservice, history, notes, profile) {
+        var auth_data = {};
+
+        function clearAuth() {
+            auth_data = {};
+            $rootScope.isAuthorized = false;
+        }
+        this.clearAuth = clearAuth;
+
+        this.authStatus = function (callback) {
+            if (Object.keys(auth_data).length > 0) {
+                if (auth_data.authenticated) {
+                    callback(null, true);
+                } else {
+                    callback(null, false);
+                }
+            } else {
+                $http.get('/api/v1/account')
+                    .success(function (data) {
+                        if (data && data.authenticated) {
+                            auth_data.authenticated = true;
+                            callback(null, true);
+                        } else {
+                            auth_data.authenticated = false;
+                            callback(null, false);
+                        }
+
+                    }).error(function (err) {
+                        auth_data.authenticated = false;
+                        callback(err, false);
+                    });
+            }
+        };
+
+        this.login = function (username, password, callback) {
+            // console.log("login service:", username, password);
+            if (username && password) {
+                $http.post('api/v1/login', {
+                        username: username,
+                        password: password
+                    })
+                    .success(function (data) {
+                        profile.forceRefresh();
+                        notes.forceRefresh();
+                        dataservice.forceRefresh();
+                        history.forceRefresh();
+                        auth_data.authenticated = true;
+                        callback(null);
+                    })
+                    .error(function (data) {
+                        console.log("login failed");
+                        //callback(data);
+                        auth_data.authenticated = false;
+                        callback('Invalid Login and/or Password.');
+                    });
+            }
+        };
 
         this.logout = function (callback) {
-
             var err = null;
 
             $http.post('api/v1/logout')
                 .success(function () {
-                    //$rootScope.isAuthenticated = false;
-                    //$location.path('/home');
+                    notes.forceRefresh();
+                    dataservice.forceRefresh();
+                    history.forceRefresh();
+                    clearAuth();
                     callback(null);
                 }).error(function (err) {
+                    console.log("logout failed");
                     callback(err);
                 });
-
-            //Stubbed logout.
-            /*if (err) {
-                callback(err);
-            } else {
-                callback(null);
-            }*/
         };
-
-        //This would be a server call, but now just stubbed with $location.
-        this.authStatus = function (callback) {
-
-            $http.get('api/v1/account')
-                .success(function (data) {
-                    if (data && data.authenticated) {
-                        callback(null, true);
-                        // console.log(data, data.authenticated);
-                    } else {
-                        callback(null, false);
-                    }
-
-                }).error(function (err) {
-                    callback(err, false);
-                });
-
-            /*if ($location.path() === "/" || $location.path() === "/login" || $location.path() === "/register" || $location.path() === "/reset") {
-                callback(null, false);
-            } else {
-                callback(null, true);
-            }*/
-
-        };
-
     });
