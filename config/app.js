@@ -105,14 +105,17 @@ module.exports = function () {
     //     2)app.use(connect.urlencoded());
     //     2)app.use(connect.multipart());
 
+    app.set('redis_url', process.env.REDIS_URL || 'localhost');
+    app.set('redis_port', process.env.REDIS_PORT || 6379);
+
     //app.use(express.session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}));
     app.use(session({
         secret: 'keyboard cat',
         resave: true,
         saveUninitialized: true,
         store: new redisStore({
-                host: '127.0.0.1',
-                port: 6379,
+        		host: app.get('redis_url'),
+        		port: app.get('redis_port'),
                 prefix: 'chs-sess'
             }) //uncomment for Redis session support during development
     }));
@@ -124,11 +127,12 @@ module.exports = function () {
     //Initialize Database Connection.
     //var databaseServer = process.env.DB || 'mongodb://localhost:27017';
     //var databaseServer = process.env.DB || 'localhost:27017';
+    
+    app.set('db_url', process.env.MONGO_URL || 'localhost');
+    app.set('db_port',process.env.MONGO_PORT || 27017);
+    app.set('db_name', process.env.MONGO_NAME || 'dre');
 
-    app.set('db_url', process.env.DB || 'localhost');
-    app.set('db_name', process.env.DBname || 'dre');
-
-    console.log("DB URL: ", app.get('db_url') + ":27017/" + app.get('db_name'));
+    console.log("DB URL: ", app.get('db_url') + ":"+app.get('db_port')+"/" + app.get('db_name'));
 
     var storage = require('../lib/storage');
     app.use(storage);
@@ -174,13 +178,13 @@ module.exports = function () {
 
     app.set('port', (process.env.PORT || 3000));
 
-    app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
-    app.set('mllp_port', (process.env.PORT || 6969));
-
+    app.set('mllp_host', (process.env.MLLP_HOST || '127.0.0.1'));
+    app.set('mllp_port', (process.env.MLLP_PORT || 6969));
+    
     //Launch MLLP server/listener
     var mllp = require('mllp-node');
 
-    var server = new mllp.MLLPServer('127.0.0.1', 6969);
+    var server = new mllp.MLLPServer(app.get('mllp_host'), app.get('mllp_port'));
     console.log("MLLP listening on host " + app.get('mllp_host') + ", port " + app.get('mllp_port'));
 
     server.on('hl7', function (data) {
