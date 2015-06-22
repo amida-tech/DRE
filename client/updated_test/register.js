@@ -32,7 +32,7 @@ describe('register user', function () {
         var password = element(by.model('inputPassword'));
         var repeatPassword = element(by.model('inputRepeatPassword'));
 
-        username.sendKeys('protractor_test');
+        username.sendKeys('amida-demo');
         email.sendKeys('isabella@amida-demo');
         password.sendKeys('Protractor');
         repeatPassword.sendKeys('Protractor');

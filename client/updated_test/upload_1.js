@@ -5,33 +5,34 @@ describe('angularjs homepage', function() {
 
     var pathToFiles = "../../test/artifacts/demo-r1.5/";
 
-    function uploadTest(un, pw) {
+    function uploadTest() {
     	files.click();
         var upload = element(by.css('[href="#/files/upload"]'));
         upload.click();
 
         var fileToUpload = pathToFiles + "bluebutton-01-original.xml";
         var absolutePath = path.resolve(__dirname, fileToUpload);
-        $('input[type="file"]').sendKeys(absolutePath);
-
+        $('input[type="file"]').sendKeys(absolutePath);     
+    }
+    
+    function continueUpload() {
         var continueButton = element(by.id('continue-button'));
-
-        continueButton.click();
-
+        continueButton.click();        
+    }
+    
+    function confirmUpload() {
         var confirmButton = element(by.id('confirm-button'));
-
         confirmButton.click();
-
-        var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
-
-        record.click();
         
+        var fileList = element.all(by.repeater('file in vm.fileList'));
+        expect(fileList.length).toEqual(1);     
+    }
+    
+    function gotoRecord() {
+        var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
+        record.click();        
     }
 
-    beforeEach(function() {
-        browser.get('http://localhost:3000/');
-        browser.driver.manage().window().setSize(1280, 1024);
-    });
 
     afterEach(function() {
     browser.manage().logs().get('browser').then(function(browserLog) {
@@ -47,13 +48,24 @@ describe('angularjs homepage', function() {
     });
   });
 
-    it('upload test', function() {
-        
-    	
-
+    it('upload bb01', function() {        
         uploadTest();
         //browser.pause();
-
-
     });
+    
+    it('continue bb01 upload', function() {        
+        continueUpload();
+        //browser.pause();
+    });
+    
+    it('confirm bb01 upload', function() {        
+        confirmUpload();
+        //browser.pause();
+    });   
+    
+    
+    it('go to record page after bb01 upload', function() {        
+        gotoRecord();
+        //browser.pause();
+    });    
 });

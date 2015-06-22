@@ -5,9 +5,6 @@ describe('record scenario', function() {
     	var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
         record.click();
 
-        var allergies = element(by.id('navallergies'));
-        allergies.click();
-
         var firstEntry = element(by.css('[entry-index="0"]'));
 
         var details = firstEntry.all(by.css('[data-target="#details0"]')).last();
@@ -37,6 +34,27 @@ describe('record scenario', function() {
 
         var notePage = element(by.css('[ng-click="vm.navbarClick(\'notes\')"]'));
         notePage.click();
+    }
+    function record() {
+    	var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
+        record.click();
+    }
+    function allergies() {
+        var allergies = element(by.id('navallergies'));
+        allergies.click();
+    }
+    function allergyDetails() {
+        var firstEntry = element(by.css('[entry-index="0"]'));
+
+        var details = firstEntry.all(by.css('[data-target="#details0"]')).last();
+        details.click();
+    }
+    function showAllergies() {
+        var firstEntry = element(by.css('[entry-index="0"]'));
+
+
+        var history = firstEntry.all(by.css('[data-target="#history0"]')).last();
+        history.click();
     }
 
     beforeEach(function() {
