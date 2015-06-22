@@ -4,6 +4,8 @@ describe('angularjs homepage', function() {
     var files = element(by.css('[ng-click="vm.navbarClick(\'files\')"]'));
 
     var pathToFiles = "../../test/artifacts/demo-r1.5/";
+    var continueButton = element(by.id('continue-button'));
+    var confirmButton = element(by.id('confirm-button'));
 
     function uploadTest() {
     	files.click();
@@ -12,18 +14,18 @@ describe('angularjs homepage', function() {
 
         var fileToUpload = pathToFiles + "bluebutton-01-original.xml";
         var absolutePath = path.resolve(__dirname, fileToUpload);
-        $('input[type="file"]').sendKeys(absolutePath);     
+        $('input[type="file"]').sendKeys(absolutePath);
+        expect(continueButton.isDisplayed()).toBeTruthy();     
     }
     
     function continueUpload() {
-        var continueButton = element(by.id('continue-button'));
-        continueButton.click();        
+        continueButton.click();
+        expect(confirmButton.isDisplayed()).toBeTruthy();        
     }
     
     function confirmUpload() {
-        var confirmButton = element(by.id('confirm-button'));
         confirmButton.click();
-        browser.pause();
+        // browser.pause();
         
         var fileList = element.all(by.repeater('file in vm.fileList')).count();
         expect(fileList).toEqual(1);     
@@ -32,6 +34,11 @@ describe('angularjs homepage', function() {
     function gotoRecord() {
         var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
         record.click();        
+    }
+    
+    function recordTimeline() {
+        var timeline = element(by.css('.timeline-graph'));
+        expect(timeline.isDisplayed()).toBeTruthy;
     }
 
 
@@ -67,6 +74,7 @@ describe('angularjs homepage', function() {
     
     it('go to record page after bb01 upload', function() {        
         gotoRecord();
+        recordTimeline();
         //browser.pause();
     });    
 });
