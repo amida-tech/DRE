@@ -23,9 +23,10 @@ describe('angularjs homepage', function() {
     function confirmUpload() {
         var confirmButton = element(by.id('confirm-button'));
         confirmButton.click();
+        browser.pause();
         
-        var fileList = element.all(by.repeater('file in vm.fileList'));
-        expect(fileList.length).toEqual(1);     
+        var fileList = element.all(by.repeater('file in vm.fileList')).count();
+        expect(fileList).toEqual(1);     
     }
     
     function gotoRecord() {
