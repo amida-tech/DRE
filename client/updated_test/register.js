@@ -3,6 +3,9 @@ var path = require('path');
 var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
 var common = require(path.join(__dirname, '../../test/common/common.js'));
+var next1 = element(by.id('next1'));
+var next2 = element(by.id('next2'));
+var next3 = element(by.id('next3'));
 
 describe('register user', function () {
 
@@ -20,7 +23,6 @@ describe('register user', function () {
 
         var registerLink = element.all(by.css('.navbar-right a')).first();
         registerLink.click();
-        var next1 = element(by.id('next1'));
         expect(next1.isDisplayed()).toBeTruthy();
     }
 
@@ -31,12 +33,11 @@ describe('register user', function () {
         var repeatPassword = element(by.model('inputRepeatPassword'));
 
         username.sendKeys('protractor_test');
-        email.sendKeys('isabella@gmail.com');
+        email.sendKeys('isabella@amida-demo');
         password.sendKeys('Protractor');
         repeatPassword.sendKeys('Protractor');
         element(by.id('next1')).click();
 
-        var next2 = element(by.id('next2'));
         expect(next2.isDisplayed()).toBeTruthy();
     }
 
@@ -54,7 +55,6 @@ describe('register user', function () {
         dob.sendKeys('05/01/1975');
 
         element(by.id('next2')).click();
-        var next3 = element(by.id('next3'));
         expect(next3.isDisplayed()).toBeTruthy();
     }
 
