@@ -1,4 +1,4 @@
-describe('record scenario', function() {
+describe('allergies scenario one', function() {
     
 
     function scenarioOne() {
@@ -35,19 +35,22 @@ describe('record scenario', function() {
         var notePage = element(by.css('[ng-click="vm.navbarClick(\'notes\')"]'));
         notePage.click();
     }
-    function record() {
+    function recordTimeline() {
     	var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
         record.click();
+        var timeline = element(by.css('.timeline-graph'));
+        expect(timeline.isDisplayed()).toBeTruthy;
     }
     function allergies() {
         var allergies = element(by.id('navallergies'));
         allergies.click();
+        var allergyEntries = element.all(by.repeater('(recordIndex, recordEntry) in entryListFiltered'));
+        expect(allergyEntries.count()).toEqual(3);
     }
     function allergyDetails() {
-        var firstEntry = element(by.css('[entry-index="0"]'));
-
-        var details = firstEntry.all(by.css('[data-target="#details0"]')).last();
-        details.click();
+        var details = element.all(by.css('[data-target="#details1"]'));
+        details.first().click();
+        expect(details.first().isDisplayed()).toBeTruthy();
     }
     function showAllergies() {
         var firstEntry = element(by.css('[entry-index="0"]'));
@@ -57,10 +60,10 @@ describe('record scenario', function() {
         history.click();
     }
 
-    beforeEach(function() {
-        browser.get('http://localhost:3000/');
-        browser.driver.manage().window().setSize(1280, 1024);
-    });
+    // beforeEach(function() {
+    //     browser.get('http://localhost:3000/');
+    //     browser.driver.manage().window().setSize(1280, 1024);
+    // });
 
     afterEach(function() {
     browser.manage().logs().get('browser').then(function(browserLog) {
@@ -76,7 +79,17 @@ describe('record scenario', function() {
     });
   });
 
-    it('should run', function() {
-        scenarioOne();
+    it('go to My Record', function() {
+        recordTimeline();
+    });
+    
+    
+    it('view all Allergies', function() {
+        allergies();
+    });
+    
+        
+    it('view Penicillin Allergy details', function() {
+        allergyDetails();
     });
 });
