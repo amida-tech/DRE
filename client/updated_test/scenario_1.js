@@ -1,40 +1,5 @@
 describe('allergies scenario one', function() {
     
-
-    function scenarioOne() {
-    	var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
-        record.click();
-
-        var firstEntry = element(by.css('[entry-index="0"]'));
-
-        var details = firstEntry.all(by.css('[data-target="#details0"]')).last();
-        details.click();
-
-        var history = firstEntry.all(by.css('[data-target="#history0"]')).last();
-        history.click();
-
-        var notes = firstEntry.all(by.css('[data-target="#comments0"]')).last();
-        notes.click();
-
-        var noteField = firstEntry.element(by.model('newComment.comment'));
-        noteField.sendKeys('New comment');
-
-        var addNote = firstEntry.element(by.className('btn-primary'));
-        addNote.click();
-        
-        var editNote = firstEntry.element(by.css('[ng-click="editNote()"]'));
-        editNote.click();
-        
-        var edit = firstEntry.element(by.css('[name="editForm"]'));
-        var star = edit.element(by.css('[ng-show="entryMetaData.comments[0].starred === false"]'));
-        star.click();
-        
-        var saveNote = firstEntry.element(by.css('[ng-click="saveNote(editComment)"]'));
-        saveNote.click();
-
-        var notePage = element(by.css('[ng-click="vm.navbarClick(\'notes\')"]'));
-        notePage.click();
-    }
     function recordTimeline() {
     	var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
         record.click();
@@ -50,15 +15,64 @@ describe('allergies scenario one', function() {
     function allergyDetails() {
         var details = element.all(by.css('[data-target="#details1"]'));
         details.first().click();
-        expect(details.first().isDisplayed()).toBeTruthy();
+        var allergyStatus = element(by.id('record1')).element(by.binding('entryData.observation.status.name'));
+        expect(allergyStatus.isDisplayed()).toBeTruthy();
     }
-    function showAllergies() {
-        var firstEntry = element(by.css('[entry-index="0"]'));
+    function allergySource() {
+        var source = element.all(by.css('[data-target="#history1"]'));
+        source.first().click();
+        var showHistory = element(by.id('record1')).element(by.css('[ng-show="showDetails"]'));
+        expect(showHistory).toBeTruthy();
+    }    
+    function allergyNotes() {
+        var notes = element.all(by.css('[data-target="#comments1"]'));
+        notes.first().click();
+        var showNotes = element(by.id('record1')).element(by.css('[ng-show="showComments"]'));
+        expect(showNotes).toBeTruthy();
+    }
+    
+    function addNote() {
+        var noteField = element(by.id('record1')).element(by.model('newComment.comment'));
+        noteField.sendKeys('Inconsistent reaction.');
+
+        var addNote = element(by.id('record1')).element(by.css('[ng-submit="addNote(recordIndex)"]')).element(by.className('btn-primary'));
+        addNote.click();
+        
+        var editNote = element(by.id('record1')).element(by.css('[ng-click="editNote()"]'));
+        expect(editNote.isDisplayed()).toBeTruthy();
+        // var editNote = firstEntry.element(by.css('[ng-click="editNote()"]'));
+        // editNote.click();
+        // var edit = firstEntry.element(by.css('[name="editForm"]'));
+        // var saveNote = firstEntry.element(by.css('[ng-click="saveNote(editComment)"]'));
+        // saveNote.click();
+        
+        // var star = edit.element(by.css('[ng-show="entryMetaData.comments[0].starred === false"]'));
+        // star.click();
+        // expect();
+    }
+    
+    function notePage() {
+        var notePage = element(by.css('[ng-click="vm.navbarClick(\'notes\')"]'));
+        notePage.click();
+        var timeline = element(by.css('.timeline-graph'));
+        expect(timeline.isDisplayed()).toBeTruthy;
+        expect(element.all(by.repeater('(noteIndex, noteEntry) in notesList')).count()).toEqual(1);
+    }
+    
+    function notePageLink() {
+        var entryLink = element(by.css('[data-target="#details0"]'));
+        entryLink.click();
+    }
+    
+    function noteEntryLink() {
+        var recordLink = element(by.css('[ng-hide="noteEntry.section === \'claims\' || noteEntry.section === \'insurance\'"]'));
+        recordLink.click();
+        var allergyEntries = element.all(by.repeater('(recordIndex, recordEntry) in entryListFiltered'));
+        expect(allergyEntries.count()).toEqual(3);
+    }
+    
 
 
-        var history = firstEntry.all(by.css('[data-target="#history0"]')).last();
-        history.click();
-    }
 
     // beforeEach(function() {
     //     browser.get('http://localhost:3000/');
@@ -83,13 +97,36 @@ describe('allergies scenario one', function() {
         recordTimeline();
     });
     
-    
     it('view all Allergies', function() {
         allergies();
     });
     
-        
     it('view Penicillin Allergy details', function() {
         allergyDetails();
+    });
+        
+    it('view Penicillin Allergy source', function() {
+        allergySource();
+    });
+        
+    it('view Penicillin Allergy notes', function() {
+        allergyNotes();
+    });
+        
+    it('add Penicillin Allergy notes', function() {
+        addNote();
+    });
+    
+    it('go to Notes page', function() {
+        notePage();
+    });
+    
+    it('go to Entry Details for note', function() {
+        notePageLink();
+    });
+    
+    
+    it('return to Allergies page', function() {
+        noteEntryLink();
     });
 });
