@@ -12,19 +12,19 @@ exports.config = {
   specs: [
     'register.js',
     'upload_1.js',
+    'scenario_1.js',
     'upload_2.js',
-    'scenarios.js',
+    'scenario_2.js',
     'upload_3.js',
     'match.js',
+    'print.js',
     'logout.js',
     'med_view.js',
     'med_new.js'],
   suites: {
     populate: ['register.js','upload_1.js','upload_2.js','upload_3.js','logout.js'],
-    scenarios: ['login.js','scenarios.js','match.js','logout.js'],
     medications: ['login.js','med_view.js', 'med_new.js','logout.js'],
-    test: ['login.js', 'scenario_1.js', 'upload_2.js'],
-    demo: ['register.js', 'upload_1.js', 'scenario_1.js', 'upload_2.js']
+    original_demo: ['register.js', 'upload_1.js', 'scenario_1.js', 'upload_2.js', 'scenario_2.js', 'upload_3.js', 'match.js', 'print.js', 'logout.js']
   },
   capabilities: {
     browserName: 'firefox'
