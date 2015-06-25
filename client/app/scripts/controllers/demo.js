@@ -16,5 +16,16 @@ Demo.$inject = ['$location'];
 function Demo($location) {
     /* jshint validthis: true */
     var vm = this;
-    vm.demo = function () {};
+    vm.showFiles = false;
+    vm.fileView = fileView;
+
+    function fileView() {
+        console.log(vm.showFiles);
+        if (!vm.showFiles) {
+            vm.showFiles = true;
+        } else {
+            vm.showFiles = false;
+        }
+    }
+
 }
