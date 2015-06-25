@@ -180,7 +180,7 @@ module.exports = function () {
     //Launch MLLP server/listener
     var mllp = require('mllp-node');
 
-    var server = new mllp.MLLPServer('127.0.0.1', 6969);
+    var server = new mllp.MLLPServer('0.0.0.0', 6969);
     console.log("MLLP listening on host " + app.get('mllp_host') + ", port " + app.get('mllp_port'));
 
     server.on('hl7', function (data) {
