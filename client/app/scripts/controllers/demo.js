@@ -11,16 +11,16 @@ angular
     .module('phrPrototypeApp')
     .controller('DemoCtrl', Demo);
 
-Demo.$inject = ['$location'];
+Demo.$inject = ['$location', 'dataservice'];
 
-function Demo($location) {
+function Demo($location, dataservice) {
     /* jshint validthis: true */
     var vm = this;
     vm.showFiles = false;
     vm.fileView = fileView;
 
     function fileView() {
-        console.log(vm.showFiles);
+        // console.log(vm.showFiles);
         if (!vm.showFiles) {
             vm.showFiles = true;
         } else {
