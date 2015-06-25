@@ -72,11 +72,18 @@ angular.module('phrPrototypeApp')
                     };
                     _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
                 }
-                if ($scope.pCurrentMedRadio) {
-                    pmed_highdate = {
-                        "date": moment($scope.pLast).format('YYYY-MM-DD') + 'T00:00:00.000Z',
-                        "precision": 'day'
-                    };
+                if (!$scope.pCurrentMedRadio) {
+                    if ($scope.pLast) {
+                        pmed_highdate = {
+                            "date": moment($scope.pLast).format('YYYY-MM-DD') + 'T00:00:00.000Z',
+                            "precision": 'day'
+                        };
+                    } else {
+                        pmed_highdate = {
+                            "date": moment().format('YYYY-MM-DD') + 'T00:00:00.000Z',
+                            "precision": 'day'
+                        };
+                    }
                     _.deepSet($scope.enteredMedication, 'date_time.high', pmed_highdate);
                 }
             } else {
@@ -116,7 +123,8 @@ angular.module('phrPrototypeApp')
                     _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
                 }
                 console.log("pCurrentMedRadio" + $scope.pCurrentMedRadio);
-                if ($scope.pCurrentMedRadio) {
+
+                if (!$scope.pCurrentMedRadio) {
                     if ($scope.pLast) {
                         pmed_highdate = {
                             "date": moment($scope.pLast).format('YYYY-MM-DD') + 'T00:00:00.000Z',
@@ -379,7 +387,7 @@ angular.module('phrPrototypeApp')
             $scope.pWhy = null;
             $scope.pOften = "";
             $scope.pLast = null;
-            $scope.pCurrentMedRadio = null;
+            // $scope.pCurrentMedRadio = null;
             $scope.pStart = null;
             $scope.drugSpelling = null;
         };
