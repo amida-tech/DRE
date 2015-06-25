@@ -8,13 +8,13 @@
             <td>Sig:</td>
             <td>{{medication.sig}}</td>
         </tr>
-        <tr ng-show="medication.administration&&medication.administration.dose.displayQuantity">
+        <tr ng-show="medication.administration&&medication.administration.dose">
             <td>Dose:</td>
-            <td>{{medication.administration.dose}}</td>
+            <td>{{medication.administration.dose | format:'quantity'}}</td>
         </tr>
-        <tr ng-show="medication.administration.rate.displayQuantity">
+        <tr ng-show="medication.administration.rate">
             <td>Rate:</td>
-            <td>{{medication.administration.rate}}</td>
+            <td>{{medication.administration.rate | format: 'quantity'}}</td>
         </tr>
         <!--        <tr ng-show="medication.administration.rate">
             <td>Rate:</td>
