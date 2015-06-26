@@ -27,7 +27,7 @@ function Demo($location, dataservice) {
             vm.showFiles = false;
         }
     }
-    
+
     vm.demoClick = function demoClick(new_location) {
         dataservice.getLastSection(function (last_section) {
             if (new_location === 'medications') {
@@ -37,7 +37,7 @@ function Demo($location, dataservice) {
                 dataservice.forceRefresh();
                 $location.path('/' + new_location);
             }
-            
+
         });
     };
 
