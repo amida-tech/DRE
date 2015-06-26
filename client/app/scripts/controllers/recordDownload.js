@@ -10,4 +10,4 @@
 angular.module('phrPrototypeApp')
     .controller('RecordDownloadCtrl', function () {
 
-    });
+});

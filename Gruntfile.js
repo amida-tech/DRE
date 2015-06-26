@@ -99,7 +99,8 @@ module.exports = function (grunt) {
                 '!./lib/dre/remove_dups.js', '!./test/coverage/lcov-report/**/*.js'
             ],
             options: {
-                reporter: require('jshint-stylish'),
+                reporter:'checkstyle',
+                reporterOutput: 'checkstyle-result.xml',
                 "bitwise": true,
                 "browser": false,
                 "camelcase": false,
@@ -397,13 +398,15 @@ module.exports = function (grunt) {
                 }
             },
             test: {
-                DBname: 'devtests'
+                DBname: 'devtests',
+                MONGO_NAME: 'devtests'
             }
         },
         mochaTest: {
             test: {
                 options: {
-                    reporter: 'spec',
+                    reporter: 'tap',
+                    captureFile: 'test.tap',
                     timeout: '10000'
                 },
                 src: watchFiles.mochaTests
