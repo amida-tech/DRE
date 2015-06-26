@@ -181,6 +181,27 @@ module.exports = function (grunt) {
                 configFile: "client/updated_test/conf.js", // Default config file 
                 keepAlive: false,
             },
+            populate: {
+                options: {
+                    args: {
+                        suite: 'populate'
+                    }
+                }
+            },
+            scenarios: {
+                options: {
+                    args: {
+                        suite: 'scenarios'
+                    }
+                }
+            },
+            medications: {
+                options: {
+                    args: {
+                        suite: 'medications'
+                    }
+                }
+            },
             original_demo: {
                 options: {
                     args: {

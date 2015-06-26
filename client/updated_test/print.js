@@ -11,7 +11,7 @@ describe('export record', function() {
 	
 	function withPatient() {
 		var downloadYes = element(by.css('[ng-click="exportWithPatient()"]'));
-		downloadYes.click();
+		expect(downloadYes.isDisplayed()).toBeTruthy();
 	}
 	
 	it('Export CCDA', function() {
