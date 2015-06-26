@@ -171,6 +171,9 @@ module.exports = function () {
 
     var metadata = require('../lib/metadata');
     app.use(metadata);
+    
+    var demo = require('../lib/demo');
+    app.use(demo);
 
     app.set('port', (process.env.PORT || 3000));
 
