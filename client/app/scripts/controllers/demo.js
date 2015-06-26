@@ -27,5 +27,18 @@ function Demo($location, dataservice) {
             vm.showFiles = false;
         }
     }
+    
+    vm.demoClick = function demoClick(new_location) {
+        dataservice.getLastSection(function (last_section) {
+            if (new_location === 'medications') {
+                dataservice.setLastSection('record', '/' + new_location);
+                $location.path('record/' + new_location);
+            } else {
+                dataservice.forceRefresh();
+                $location.path('/' + new_location);
+            }
+            
+        });
+    };
 
 }
