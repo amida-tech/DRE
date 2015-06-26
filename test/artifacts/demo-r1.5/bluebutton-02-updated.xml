@@ -2292,7 +2292,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 								<high nullFlavor="UNK"/>
 							</effectiveTime>
 							<effectiveTime xsi:type="PIVL_TS" institutionSpecified="false" operator="A">
-								<period value="12" unit="h"/>
+								<period value="10" unit="h"/>
 							</effectiveTime>
 							<administrationUnitCode codeSystemName="NCI Thesaurus" codeSystem="2.16.840.1.113883.3.26.1.1" code="C42986" displayName="SOLUTION"/>
 							<consumable typeCode="CSM">
