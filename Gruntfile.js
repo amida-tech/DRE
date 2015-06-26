@@ -398,7 +398,8 @@ module.exports = function (grunt) {
                 }
             },
             test: {
-                DBname: 'devtests'
+                DBname: 'devtests',
+                MONGO_NAME: 'devtests'
             }
         },
         mochaTest: {
