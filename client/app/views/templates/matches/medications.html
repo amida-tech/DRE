@@ -102,6 +102,46 @@
                     </div>
                 </td>
             </tr>
+            
+            
+            <tr>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.administration.dose, finalData.administration.dose) && {'background-color': '#B0C4DE'}"><span style="white-space:nowrap"><input ng-if="exists(flagData.administration.dose)" type="checkbox" ng-checked="!areEqual(matchData.administration.dose, finalData.administration.dose)" ng-click="checkboxToggle(flagData.administration.dose, matchData.administration.dose, finalData.administration.dose)"> Dose:</span>
+                </td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.administration.dose, finalData.administration.dose) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Dose:</td>
+                                    <td>{{entryData.administration.dose | format:'quantity'}} <span ng-if="isDifferent(flagData.administration.dose.kind)" class="label label-info pull-right">Different</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td style="border:none;">&nbsp</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.administration.dose, finalData.administration.dose) && {'background-color': '#B0C4DE'}">Interval Period:</td>
+                <td class="panel" style="border:none;" ng-style="!areEqual(matchData.administration.dose, finalData.administration.dose) && {'background-color': '#B0C4DE'}">
+                    <div class="panel">
+                        <table class="table sub-table">
+                            <tbody>
+                                <tr>
+                                    <td>Dose:</td>
+                                    <td ng-if="matchData.administration.dose === finalData.administration.dose">{{matchData.administration.dose | format:'quantity'}}</td>
+                                    <td ng-if="matchData.administration.dose !== finalData.administration.dose">{{finalData.administration.dose | format:'quantity'}} <span class="label label-warning pull-right">Updated</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            
+            
+            
+            
+            
             <tr>
                 <td colspan="2">
                     <div class="col-sm-8 col-sm-offset-2 btn-group-vertical">
@@ -125,3 +165,5 @@
         </tbody>
     </table>
 </div>
+<pre>{{entryData | json}}</pre>
+<pre>{{flagData | json}}</pre>
