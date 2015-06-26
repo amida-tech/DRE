@@ -48,7 +48,7 @@ module.exports = function (grunt) {
     grunt.registerTask('dev', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'watch']);
     grunt.registerTask('test', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'protractor:populate', 'protractor:medications', 'protractor:scenarios', 'watch']);
     grunt.registerTask('release', ['jshint', 'jsbeautifier:beautify', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
-    grunt.registerTask('travis-protractor', ['protractor:populate', 'protractor:medications', 'protractor:scenarios']);
+    grunt.registerTask('travis-protractor', ['protractor:original_demo']);
     grunt.registerTask('populate_demo', ['protractor:populate']);
 
     // Project Configuration
@@ -181,24 +181,10 @@ module.exports = function (grunt) {
                 configFile: "client/updated_test/conf.js", // Default config file 
                 keepAlive: false,
             },
-            populate: {
+            original_demo: {
                 options: {
                     args: {
-                        suite: 'populate'
-                    }
-                }
-            },
-            scenarios: {
-                options: {
-                    args: {
-                        suite: 'scenarios'
-                    }
-                }
-            },
-            medications: {
-                options: {
-                    args: {
-                        suite: 'medications'
+                        suite: 'original_demo'
                     }
                 }
             }
