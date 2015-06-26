@@ -2292,7 +2292,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 								<high nullFlavor="UNK"/>
 							</effectiveTime>
 							<effectiveTime xsi:type="PIVL_TS" institutionSpecified="false" operator="A">
-								<period value="10" unit="h"/>
+								<period value="12" unit="h"/>
 							</effectiveTime>
 							<administrationUnitCode codeSystemName="NCI Thesaurus" codeSystem="2.16.840.1.113883.3.26.1.1" code="C42986" displayName="SOLUTION"/>
 							<consumable typeCode="CSM">
@@ -2432,7 +2432,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 							<routeCode code="C38216" codeSystem="2.16.840.1.113883.3.26.1.1"
 								codeSystemName="NCI Thesaurus"
 								displayName="RESPIRATORY (INHALATION)"/>
-							<doseQuantity value="1" unit="mg/actuat"/>
+							<doseQuantity value="10" unit="mg/actuat"/>
 							<rateQuantity value="90" unit="ml/min"/>
 							<maxDoseQuantity nullFlavor="UNK">
 								<numerator nullFlavor="UNK"/>
