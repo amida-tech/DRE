@@ -135,8 +135,7 @@ module.exports = function (grunt) {
                 "smarttabs": true,
                 "trailing": true,
                 "undef": true,
-                "unused": false,
-                
+                "unused": false
             }
         },
         jsbeautifier: {
