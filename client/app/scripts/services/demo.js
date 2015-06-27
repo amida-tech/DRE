@@ -27,4 +27,20 @@ function demo($http) {
             });
     };
 
+    this.uploadFile = function (file, format, callback) {
+        var uploadUrl = "/api/v1/storage/demo";
+        var fd = {
+            filepath: file,
+            fileformat: format
+        };
+        $http.put(uploadUrl, fd)
+            .success(function (data) {
+                callback(null, data);
+            })
+            .error(function (data) {
+                callback(data);
+            });
+
+    };
+
 }

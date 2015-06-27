@@ -34,49 +34,50 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
 
     function reset() {
         // demo.resetDemo(function (err, results) {
-        //     var uploadFile = "../../../../test/artifacts/demo-r1.5/bluebutton-01-original.xml";
+        var filePath = "test/artifacts/demo-r1.5/bluebutton-01-original.xml";
         //     console.log(vm.uploadFile);
         //     dataservice.forceRefresh();
 
         //     // $location.path('/login');
         //     // $window.location.reload();
-        //     upload.uploadRecord(vm.uploadFile, true, function (err, results) {
-        //         if (err) {
-        //             console.log(err);
-        //         } else {
-        //             console.log('demo instance file uploaded', results);
-        //         }
-        //     });
-        // });
-
-        var info = {
-            'username': 'amida-demo',
-            'password': 'testtest',
-            'email': 'isabella@amida-demo.com',
-            'firstName': 'Isabella',
-            'middleName': 'Isa',
-            'lastName': 'Jones',
-            'dob': moment('1975-05-01').format('YYYY-MM-DD'),
-            'gender': 'female'
-        };
-
-        console.log("starting registration", info.dob);
-
-        registration.signup(info, function (err) {
-            // console.log("done");
-            // $location.path('/home');
+        demo.uploadFile(filePath, 'xml', function (err, results) {
             if (err) {
-                console.log(err);
+                // console.log(err);
             } else {
-                authentication.login(info.username, info.password, function (err) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        $location.path('/demo');
-                    }
-                });
+                console.log('demo instance file uploaded', results);
             }
         });
+        // });
+
+        // var info = {
+        //     'username': 'amida-demo',
+        //     'password': 'testtest',
+        //     'email': 'isabella@amida-demo.com',
+        //     'firstName': 'Isabella',
+        //     'middleName': 'Isa',
+        //     'lastName': 'Jones',
+        //     'dob': moment('1975-05-01').format('YYYY-MM-DD'),
+        //     'gender': 'female'
+        // };
+
+        // console.log("starting registration", info.dob);
+
+        // registration.signup(info, function (err) {
+        //     // console.log("done");
+        //     // $location.path('/home');
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         authentication.login(info.username, info.password, function (err) {
+        //             if (err) {
+        //                 console.log(err);
+        //             } else {
+        //                 $location.path('/demo');
+        //             }
+        //         });
+        //     }
+        // });
+
     }
 
 }
