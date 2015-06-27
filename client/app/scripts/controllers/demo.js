@@ -30,13 +30,13 @@ function Demo($location, $window, dataservice, upload, demo) {
 
         });
     };
-    
+
     function reset() {
-        demo.resetDemo(function(err, results) { 
+        demo.resetDemo(function (err, results) {
             var file = "../../../../test/artifacts/demo-r1.5/bluebutton-01-original.xml";
             console.log(file);
             dataservice.forceRefresh();
-            
+
             $location.path('/login');
             $window.location.reload();
             // upload.uploadRecord(file, true, function(err, results) {
