@@ -10,14 +10,14 @@
 angular
     .module('phrPrototypeApp')
     .service('demo', demo);
-demo.$inject = ['$http', 'dataservice'];
+demo.$inject = ['$http'];
 
-function demo($http, dataservice) {
+function demo($http) {
 
         this.resetDemo = function (callback) {
             $http.get('/api/v1/demo')
                 .success(function (data) {
-                    dataservice.forceRefresh();
+                    // dataservice.forceRefresh();
                     callback(null, data);
                 })
                 .error(function (err) {

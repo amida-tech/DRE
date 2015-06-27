@@ -11,9 +11,9 @@ angular
     .module('phrPrototypeApp')
     .controller('DemoCtrl', Demo);
 
-Demo.$inject = ['$location', 'dataservice', 'upload', 'demo'];
+Demo.$inject = ['$location', '$window', 'dataservice', 'upload', 'demo'];
 
-function Demo($location, dataservice, upload, demo) {
+function Demo($location, $window, dataservice, upload, demo) {
     /* jshint validthis: true */
     var vm = this;
     vm.reset = reset;
@@ -33,15 +33,19 @@ function Demo($location, dataservice, upload, demo) {
     
     function reset() {
         demo.resetDemo(function(err, results) { 
-            var file = "../../test/artifacts/demo-r1.5/bluebutton-01-original.xml";
+            var file = "../../../../test/artifacts/demo-r1.5/bluebutton-01-original.xml";
             console.log(file);
-            upload.uploadRecord(file, true, function(err, results) {
-                if (err) {
-                    throw (err);
-                } else {
-                    console.log('demo instance file uploaded', results);
-                }
-            });
+            dataservice.forceRefresh();
+            
+            $location.path('/login');
+            $window.location.reload();
+            // upload.uploadRecord(file, true, function(err, results) {
+            //     if (err) {
+            //         throw (err);
+            //     } else {
+            //         console.log('demo instance file uploaded', results);
+            //     }
+            // });
         });
     }
 
