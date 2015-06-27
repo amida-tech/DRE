@@ -11,22 +11,12 @@ angular
     .module('phrPrototypeApp')
     .controller('DemoCtrl', Demo);
 
-Demo.$inject = ['$location', 'dataservice'];
+Demo.$inject = ['$location', 'dataservice', 'upload', 'demo'];
 
-function Demo($location, dataservice) {
+function Demo($location, dataservice, upload, demo) {
     /* jshint validthis: true */
     var vm = this;
-    vm.showFiles = false;
-    vm.fileView = fileView;
-
-    function fileView() {
-        // console.log(vm.showFiles);
-        if (!vm.showFiles) {
-            vm.showFiles = true;
-        } else {
-            vm.showFiles = false;
-        }
-    }
+    vm.reset = reset;
 
     vm.demoClick = function demoClick(new_location) {
         dataservice.getLastSection(function (last_section) {
@@ -40,5 +30,19 @@ function Demo($location, dataservice) {
 
         });
     };
+    
+    function reset() {
+        demo.resetDemo(function(err, results) { 
+            var file = "../../test/artifacts/demo-r1.5/bluebutton-01-original.xml";
+            console.log(file);
+            upload.uploadRecord(file, true, function(err, results) {
+                if (err) {
+                    throw (err);
+                } else {
+                    console.log('demo instance file uploaded', results);
+                }
+            });
+        });
+    }
 
 }
