@@ -10,21 +10,21 @@
 angular
     .module('phrPrototypeApp')
     .service('demo', demo);
+
 demo.$inject = ['$http'];
 
 function demo($http) {
+    /* jshint validthis: true */
+    this.resetDemo = function (callback) {
+        $http.get('/api/v1/demo')
+            .success(function (data) {
+                // dataservice.forceRefresh();
+                callback(null, data);
+            })
+            .error(function (err) {
+                // console.log(err);
+                callback(err);
+            });
+    };
 
-        this.resetDemo = function (callback) {
-            $http.get('/api/v1/demo')
-                .success(function (data) {
-                    // dataservice.forceRefresh();
-                    callback(null, data);
-                })
-                .error(function (err) {
-                    console.log(err);
-                    callback(err);
-                });
-        };
-
-        
-};
+}
