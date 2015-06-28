@@ -27,13 +27,14 @@ function demo($http) {
             });
     };
 
-    this.uploadFile = function (file, format, callback) {
-        var uploadUrl = "/api/v1/storage/demo";
+    this.uploadFile = function (file, callback) {
         var fd = {
-            filepath: file,
-            fileformat: format
+            'file': file,
+            'check': false
         };
-        $http.put(uploadUrl, fd)
+        // fd.append('file', file);
+        // fd.append('check', false);
+        $http.put('/api/v1/storage/demo', fd)
             .success(function (data) {
                 callback(null, data);
             })

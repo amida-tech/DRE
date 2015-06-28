@@ -40,7 +40,7 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
 
         //     // $location.path('/login');
         //     // $window.location.reload();
-        demo.uploadFile(filePath, 'xml', function (err, results) {
+        demo.uploadFile(filePath, function (err, results) {
             if (err) {
                 // console.log(err);
             } else {
