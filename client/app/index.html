@@ -53,7 +53,7 @@
                             </li>
                             <li><a ng-click="vm.navbarClick('files')">My Files</a>
                             </li>
-                            <li><a ng-click="vm.navbarClick('demo')">DEMO</a>
+                            <li ng-if="(profile_info.name.first==='Isabella')&&(profile_info.name.last==='Jones')"><a ng-click="vm.navbarClick('demo')">DEMO</a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
