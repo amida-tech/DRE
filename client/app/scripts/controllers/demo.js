@@ -59,17 +59,11 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
                     $location.path('/demo');
                     console.log('start uploading files');
                     demo.uploadFile(filePath1, fileName1, fileType1, function (err, results) {
-                    });
-
-                    demo.uploadFile(filePath2, fileName2, fileType2, function (err, results) {
-                    });
-
-                    demo.uploadFile(filePath3, fileName3, fileType3, function (err, results) {
-                        if (err) {
-                            // console.log(err);
-                        } else {
-                            $window.location.reload();
-                        }
+                        demo.uploadFile(filePath2, fileName2, fileType2, function (err, results) {
+                            demo.uploadFile(filePath3, fileName3, fileType3, function (err, results) {
+                                $window.location.reload();
+                            });
+                        });
                     });
                 });
             });

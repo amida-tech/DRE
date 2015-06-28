@@ -11,14 +11,16 @@ angular
     .module('phrPrototypeApp')
     .service('demo', demo);
 
-demo.$inject = ['$http', 'dataservice'];
+demo.$inject = ['$http', 'dataservice', 'notes', 'history'];
 
-function demo($http, dataservice) {
+function demo($http, dataservice, notes, history) {
     /* jshint validthis: true */
     this.resetDemo = function (callback) {
         $http.get('/api/v1/demo')
             .success(function (data) {
                 dataservice.forceRefresh();
+                notes.forceRefresh();
+                history.forceRefresh();
                 callback(null, data);
             })
             .error(function (err) {
