@@ -88,6 +88,8 @@ angular.module('phrPrototypeApp')
                     authentication.login($scope.inputLogin, $scope.inputPassword, function (err) {
                         if (err) {
                             $scope.error = err;
+                        } else if (vm.inputLogin === 'isabella') {
+                            $location.path('/demo');
                         } else {
                             $location.path('/home');
                         }

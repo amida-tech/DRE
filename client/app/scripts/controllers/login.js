@@ -23,6 +23,8 @@ function Login($location, $window, authentication, dataservice, history, notes) 
         authentication.login(vm.inputLogin, vm.inputPassword, function (err) {
             if (err) {
                 vm.error = err;
+            } else if (vm.inputLogin === 'isabella') {
+                $location.path('/demo');
             } else {
                 $location.path('/home');
                 $window.location.reload();

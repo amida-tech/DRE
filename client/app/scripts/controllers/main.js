@@ -43,6 +43,8 @@ function Main($location, authentication) {
         authentication.login(vm.inputLogin, vm.inputPassword, function (err) {
             if (err) {
                 vm.error = err;
+            } else if (vm.inputLogin === 'isabella') {
+                $location.path('/demo');
             } else {
                 $location.path('/home');
             }
