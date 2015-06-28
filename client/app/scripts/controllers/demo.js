@@ -33,7 +33,7 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
 
     function reset() {
         var info = {
-            'username': 'amida-demo',
+            'username': 'isabella',
             'password': 'testtest',
             'email': 'isabella@amida-demo.com',
             'firstName': 'Isabella',
