@@ -11,14 +11,14 @@ angular
     .module('phrPrototypeApp')
     .service('demo', demo);
 
-demo.$inject = ['$http'];
+demo.$inject = ['$http', 'dataservice'];
 
-function demo($http) {
+function demo($http, dataservice) {
     /* jshint validthis: true */
     this.resetDemo = function (callback) {
         $http.get('/api/v1/demo')
             .success(function (data) {
-                // dataservice.forceRefresh();
+                dataservice.forceRefresh();
                 callback(null, data);
             })
             .error(function (err) {
@@ -27,13 +27,12 @@ function demo($http) {
             });
     };
 
-    this.uploadFile = function (file, callback) {
+    this.uploadFile = function (filePath, fileName, fileType, callback) {
         var fd = {
-            'file': file,
-            'check': false
+            'path': filePath,
+            'name': fileName,
+            'type': fileType
         };
-        // fd.append('file', file);
-        // fd.append('check', false);
         $http.put('/api/v1/storage/demo', fd)
             .success(function (data) {
                 callback(null, data);
