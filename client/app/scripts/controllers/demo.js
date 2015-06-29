@@ -16,7 +16,22 @@ Demo.$inject = ['$location', '$window', 'dataservice', 'upload', 'demo', 'regist
 function Demo($location, $window, dataservice, upload, demo, registration, authentication) {
     /* jshint validthis: true */
     var vm = this;
+    vm.demoAuth = '';
     vm.reset = reset;
+    vm.login = login;
+    isAuth();
+    
+    
+    vm.info = {
+        'username': 'isabella',
+        'password': 'testtest',
+        'email': 'isabella@amida-demo.com',
+        'firstName': 'Isabella',
+        'middleName': 'Isa',
+        'lastName': 'Jones',
+        'dob': moment('1975-05-01').format('YYYY-MM-DD'),
+        'gender': 'female'
+    };
 
     vm.demoClick = function demoClick(new_location) {
         dataservice.getLastSection(function (last_section) {
@@ -30,18 +45,24 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
 
         });
     };
+    
+    function isAuth() {
+        authentication.authStatus(function (err, auth) {
+            vm.demoAuth = auth;
+            console.log(vm.demoAuth);
+        });
+    };
+    
+    // if account already exists, login will work anyway.
+    function login() {
+        registration.signup(vm.info, function (err) {
+            authentication.login(vm.info.username, vm.info.password, function (err) {
+                $window.location.reload();
+            });
+        });
+    }
 
     function reset() {
-        var info = {
-            'username': 'isabella',
-            'password': 'testtest',
-            'email': 'isabella@amida-demo.com',
-            'firstName': 'Isabella',
-            'middleName': 'Isa',
-            'lastName': 'Jones',
-            'dob': moment('1975-05-01').format('YYYY-MM-DD'),
-            'gender': 'female'
-        };
         var filePath1 = "test/artifacts/demo-r1.5/bluebutton-01-original.xml";
         var fileName1 = "bluebutton-01-original.xml";
         var fileType1 = "text/xml";
