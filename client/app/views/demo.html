@@ -2,24 +2,35 @@
     <div ng-cloak ng-show="vm.demoAuth" class="row">
         <h1 class="text-center">DEMO SCENARIOS</h1>
         <div class="row">
-            <button class="btn btn-default col-sm-4 col-sm-offset-4" ng-click="vm.demoClick('files')"><a>Scenario 1: Go to file list</a></button>
-        </div>
-        <div class="row">
-            <button class="btn btn-default col-sm-4 col-sm-offset-4" ng-click="vm.demoClick('medications')"><a>Scenario 2: Go to meds</a></button>
-        </div>
-        <div class="row">
-            <button class="btn btn-default col-sm-4 col-sm-offset-4"><a href="http://argonaut.amida-demo.com:3001/">Scenario 3: Project Argonaut Demo</a></button>
-        </div>
-        <div class="row">
-            <button class="btn btn-default col-sm-4 col-sm-offset-4" ng-click="vm.demoClick('record')"><a>Get me out of here!</a></button>
-        </div>
-        <div class="row">
-            <button class="btn btn-default col-sm-4 col-sm-offset-4" ng-click="vm.reset()"><a>Reset</a></button>
+            <div class="panel panel-default col-sm-4 col-sm-offset-4">
+                <div class="panel-body">
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1" ng-click="vm.demoClick('files')"><a>Scenario 1: Go to file list</a></button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1" ng-click="vm.demoClick('medications')"><a>Scenario 2: Go to meds</a></button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1"><a href="http://argonaut.amida-demo.com:3001/">Scenario 3: Project Argonaut Demo</a></button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1" ng-click="vm.demoClick('record')"><a>Get me out of here!</a></button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1" ng-click="vm.reset()"><a>Reset</a></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div ng-hide="vm.demoAuth" class="row">
+        <h1 class="text-center">DEMO</h1>
         <div class="row">
-            <button class="btn btn-default col-sm-4 col-sm-offset-4" ng-click="vm.login()"><a>Log into the Demo Page</a></button>
+            <div class="panel panel-default col-sm-4 col-sm-offset-4">
+                <div class="panel-body">
+                    <button class="btn btn-default col-sm-10 col-sm-offset-1" ng-click="vm.login()"><a>Log into the Demo Page</a></button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
