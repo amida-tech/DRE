@@ -80,7 +80,9 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
                     demo.uploadFile(filePath1, fileName1, fileType1, function (err, results) {
                         demo.uploadFile(filePath2, fileName2, fileType2, function (err, results) {
                             demo.uploadFile(filePath3, fileName3, fileType3, function (err, results) {
-                                $window.location.reload();
+                                demo.clientCollection(function (err) {
+                                    $window.location.reload();
+                                });
                             });
                         });
                     });

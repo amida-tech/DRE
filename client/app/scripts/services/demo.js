@@ -44,4 +44,14 @@ function demo($http, dataservice, notes, history) {
 
     };
 
+    this.clientCollection = function (callback) {
+        $http.get('/oauth2/populate')
+            .success(function (data) {
+                callback(null);
+            })
+            .error(function (data) {
+                callback(data);
+            });
+    };
+
 }
