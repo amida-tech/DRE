@@ -77,12 +77,12 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
                 authentication.login(vm.info.username, vm.info.password, function (err) {
                     //$location.path('/demo');
                     console.log('start uploading files');
-                    demo.uploadFile(filePath1, fileName1, fileType1, function (err, results) {
-                        console.log('file 1 uploaded');
+                    demo.uploadFile(filePath3, fileName3, fileType3, function (err, results) {
+                        console.log('file 3 uploaded');
                         demo.uploadFile(filePath2, fileName2, fileType2, function (err, results) {
                             console.log('file 2 uploaded');
-                            demo.uploadFile(filePath3, fileName3, fileType3, function (err, results) {
-                                console.log('file 3 uploaded');
+                            demo.uploadFile(filePath1, fileName1, fileType1, function (err, results) {
+                                console.log('file 1 uploaded');
                                 demo.clientCollection(function (err) {
                                     console.log('uploading done, client collection done');
                                     dataservice.forceRefresh();
