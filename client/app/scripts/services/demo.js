@@ -21,10 +21,9 @@ function demo($http, dataservice, notes, history) {
                 dataservice.forceRefresh();
                 notes.forceRefresh();
                 history.forceRefresh();
-                callback(null, data);
+                callback(null);
             })
             .error(function (err) {
-                // console.log(err);
                 callback(err);
             });
     };

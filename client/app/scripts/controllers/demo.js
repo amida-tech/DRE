@@ -73,10 +73,9 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
         var fileName3 = "bluebutton-03-cms.txt";
         var fileType3 = "text/xml";
 
-        demo.resetDemo(function (err, results) {
-            registration.signup(info, function (err) {
-
-                authentication.login(info.username, info.password, function (err) {
+        demo.resetDemo(function (err) {
+            registration.signup(vm.info, function (err) {
+                authentication.login(vm.info.username, vm.info.password, function (err) {
                     $location.path('/demo');
                     console.log('start uploading files');
                     demo.uploadFile(filePath1, fileName1, fileType1, function (err, results) {
