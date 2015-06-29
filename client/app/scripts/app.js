@@ -181,7 +181,7 @@ angular
                 templateUrl: 'views/demo.html',
                 controller: 'DemoCtrl',
                 controllerAs: 'vm',
-                requireLogin: true
+                requireLogin: false
             })
             .otherwise({
                 redirectTo: '/'
