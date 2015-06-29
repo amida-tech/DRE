@@ -382,6 +382,13 @@ Orig Drug Entry: Proventil HFA
 
 
 
+Drug Name: CEFEPIME 20 MG/ML
+
+Supply: Daily
+
+Orig Drug Entry: CEFEPIME 20 MG/ML
+
+
 Drug Name: Aspirin
 
 Supply: Daily

@@ -2289,7 +2289,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 							<statusCode code="completed"/>
 							<effectiveTime xsi:type="IVL_TS">
 								<low value="20121002"/>
-								<high nullFlavor="UNK"/>
+								<high nullFlavor="20151002"/>
 							</effectiveTime>
 							<effectiveTime xsi:type="PIVL_TS" institutionSpecified="false" operator="A">
 								<period value="12" unit="h"/>
@@ -2299,7 +2299,7 @@ encoded in RxNorm, RxNorm, NDF-RT and UNII respectively.
 								<manufacturedProduct classCode="MANU">
 									<templateId root="2.16.840.1.113883.10.20.22.4.23"/>
 									<manufacturedMaterial>
-										<code code="329646" codeSystem="2.16.840.1.113883.6.88" codeSystemName="RxNorm" displayName="Cefepime 20 MG/ML">
+										<code code="329646" codeSystem="2.16.840.1.113883.6.88" codeSystemName="RxNorm" displayName="Cefepime">
 											<originalText>
 												<reference value="#ID0ECDPACA"/>
 											</originalText>
