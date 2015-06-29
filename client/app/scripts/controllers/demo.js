@@ -20,8 +20,7 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
     vm.reset = reset;
     vm.login = login;
     isAuth();
-    
-    
+
     vm.info = {
         'username': 'isabella',
         'password': 'testtest',
@@ -45,14 +44,14 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
 
         });
     };
-    
+
     function isAuth() {
         authentication.authStatus(function (err, auth) {
             vm.demoAuth = auth;
             console.log(vm.demoAuth);
         });
-    };
-    
+    }
+
     // if account already exists, login will work anyway.
     function login() {
         registration.signup(vm.info, function (err) {
