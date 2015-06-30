@@ -62,38 +62,30 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
     }
 
     function reset() {
-        var filePath1 = "test/artifacts/demo-r1.5/bluebutton-duplicate.xml";
-        var fileName1 = "bluebutton-duplicate.xml";
-        var fileType1 = "text/xml";
-        var filePath2 = "test/artifacts/demo-r1.5/bluebutton-primary.xml";
-        var fileName2 = "bluebutton-primary.xml";
-        var fileType2 = "text/xml";
-        var filePath3 = "test/artifacts/demo-r1.5/bluebutton-cms.txt";
-        var fileName3 = "bluebutton-cms.txt";
-        var fileType3 = "text/xml";
-
         demo.resetDemo(function (err) {
-            registration.signup(vm.info, function (err) {
-                authentication.login(vm.info.username, vm.info.password, function (err) {
-                    //$location.path('/demo');
-                    console.log('start uploading files');
-                    demo.uploadFile(filePath3, fileName3, fileType3, function (err, results) {
-                        console.log('file 3 uploaded');
-                        demo.uploadFile(filePath2, fileName2, fileType2, function (err, results) {
-                            console.log('file 2 uploaded');
-                            demo.uploadFile(filePath1, fileName1, fileType1, function (err, results) {
-                                console.log('file 1 uploaded');
-                                demo.clientCollection(function (err) {
-                                    console.log('uploading done, client collection done');
-                                    dataservice.forceRefresh();
-                                    //$location.path('/demo');
-                                    $window.location.reload();
-                                });
-                            });
-                        });
-                    });
-                });
-            });
+
+            $window.location.reload();
+
+            // registration.signup(vm.info, function (err) {
+            //     authentication.login(vm.info.username, vm.info.password, function (err) {
+            //         //$location.path('/demo');
+            //         console.log('start uploading files');
+            //         demo.uploadFile(filePath3, fileName3, fileType3, function (err, results) {
+            //             console.log('file 3 uploaded');
+            //             demo.uploadFile(filePath2, fileName2, fileType2, function (err, results) {
+            //                 console.log('file 2 uploaded');
+            //                 demo.uploadFile(filePath1, fileName1, fileType1, function (err, results) {
+            //                     console.log('file 1 uploaded');
+            //                     demo.clientCollection(function (err) {
+            //                         console.log('uploading done, client collection done');
+            //                         dataservice.forceRefresh();
+            //                         //$location.path('/demo');
+            //                     });
+            //                 });
+            //             });
+            //         });
+            //     });
+            // });
         });
 
     }
