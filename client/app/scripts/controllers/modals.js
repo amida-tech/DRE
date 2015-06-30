@@ -521,7 +521,7 @@ angular.module('phrPrototypeApp')
             if (state) {
                 _.deepSet(searchObj, 'address[0].state', state);
             }
-            if (!_isEmpty(searchObj)) {
+            if (!_.isEmpty(searchObj)) {
                 npiapi.findNPI(searchObj, function (err, data) {
                     $scope.prescriberSearchActive = false;
                     if (err) {
