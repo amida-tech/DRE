@@ -62,14 +62,14 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
     }
 
     function reset() {
-        var filePath1 = "test/artifacts/demo-r1.5/bluebutton-01-original.xml";
-        var fileName1 = "bluebutton-01-original.xml";
+        var filePath1 = "test/artifacts/demo-r1.5/bluebutton-duplicate.xml";
+        var fileName1 = "bluebutton-duplicate.xml";
         var fileType1 = "text/xml";
-        var filePath2 = "test/artifacts/demo-r1.5/bluebutton-02-updated.xml";
-        var fileName2 = "bluebutton-02-updated.xml";
+        var filePath2 = "test/artifacts/demo-r1.5/bluebutton-primary.xml";
+        var fileName2 = "bluebutton-primary.xml";
         var fileType2 = "text/xml";
-        var filePath3 = "test/artifacts/demo-r1.5/bluebutton-03-cms.txt";
-        var fileName3 = "bluebutton-03-cms.txt";
+        var filePath3 = "test/artifacts/demo-r1.5/bluebutton-cms.txt";
+        var fileName3 = "bluebutton-cms.txt";
         var fileType3 = "text/xml";
 
         demo.resetDemo(function (err) {
