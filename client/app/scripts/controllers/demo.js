@@ -63,8 +63,8 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
 
     function reset() {
         demo.resetDemo(function (err) {
-            console.log(err);
-            // $window.location.reload();
+            // console.log(err);
+            $window.location.reload();
 
             // registration.signup(vm.info, function (err) {
             //     authentication.login(vm.info.username, vm.info.password, function (err) {
