@@ -28,16 +28,6 @@ function demo($http, dataservice, notes, history) {
             });
     };
 
-    this.resetArgonaut = function (callback) {
-        $http.get('http://argonaut.amida-demo.com:3001/reset')
-            .success(function (data) {
-                callback(null);
-            })
-            .error(function (err) {
-                callback(err);
-            });
-    };
-
     this.uploadFile = function (filePath, fileName, fileType, callback) {
         var fd = {
             'path': filePath,
