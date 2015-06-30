@@ -85,8 +85,8 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
                                 console.log('file 1 uploaded');
                                 demo.clientCollection(function (err) {
                                     console.log('uploading done, client collection done');
-                                    demo.resetArgonaut(function(err) {
-                                        console.log("argonaut reset",err);
+                                    demo.resetArgonaut(function (err) {
+                                        console.log("argonaut reset", err);
                                         dataservice.forceRefresh();
                                         //$location.path('/demo');
                                         $window.location.reload();

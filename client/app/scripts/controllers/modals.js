@@ -337,22 +337,30 @@ angular.module('phrPrototypeApp')
                 _.deepSet(searchObj, 'address[0].state', state);
             }
             if (!_.isEmpty(searchObj)) {
+                console.log('searchObj ', searchObj);
                 npiapi.findNPI(searchObj, function (err, data) {
                     $scope.prescriberSearchActive = false;
                     if (err) {
                         console.log("Martz err: " + err);
                         $scope.prescriberError = "No matches found, please try again";
                     } else {
-                        if ((data.length >= 100) && (_.isUndefined(state))) {
-                            $scope.prescriberError = "More than 100 matches found, please enter a state";
+                        if (data.length >= 100) {
+                            if (_.isEmpty(state)) {
+                                $scope.prescriberError = "More than 100 matches found, please enter a state";
+                            } else {
+                                $scope.prescriberError = "More than 100 matches found, please adjust your search terms";
+                            }
                         } else {
-                            console.log("Martz success: " + JSON.stringify(data));
+                            console.log("prescriberError ", state, data.length);
                             $scope.prescriberResults = data;
                             $scope.prescriberCount = data.length;
                             $scope.prescriberError = null;
                         }
                     }
                 });
+            } else {
+                $scope.prescriberError = "Please enter search terms";
+                $scope.prescriberSearchActive = false;
             }
         };
 
@@ -500,6 +508,9 @@ angular.module('phrPrototypeApp')
             $scope.prescriberSearchActive = true;
             var searchTest = false;
             var searchObj = {};
+            $scope.prescriberResults = null;
+            $scope.prescriberCount = null;
+            $scope.prescriberError = null;
             $scope.selectedPrescriber = null;
             if (firstName) {
                 _.deepSet(searchObj, 'name[0].first', firstName);
@@ -510,17 +521,29 @@ angular.module('phrPrototypeApp')
             if (state) {
                 _.deepSet(searchObj, 'address[0].state', state);
             }
-            if (searchObj !== {}) {
+            if (!_isEmpty(searchObj)) {
                 npiapi.findNPI(searchObj, function (err, data) {
                     $scope.prescriberSearchActive = false;
                     if (err) {
                         $scope.prescriberError = "No matches found, please try again";
                     } else {
-                        $scope.prescriberResults = data;
-                        $scope.prescriberCount = data.length;
-                        $scope.prescriberError = null;
+                        if (data.length >= 100) {
+                            if (_.isEmpty(state)) {
+                                $scope.prescriberError = "More than 100 matches found, please enter a state";
+                            } else {
+                                $scope.prescriberError = "More than 100 matches found, please adjust your search terms";
+                            }
+                        } else {
+                            console.log("prescriberError ", state, data.length);
+                            $scope.prescriberResults = data;
+                            $scope.prescriberCount = data.length;
+                            $scope.prescriberError = null;
+                        }
                     }
                 });
+            } else {
+                $scope.prescriberError = "Please enter search terms";
+                $scope.prescriberSearchActive = false;
             }
         };
 
