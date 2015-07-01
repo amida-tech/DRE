@@ -17,6 +17,7 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
     /* jshint validthis: true */
     var vm = this;
     vm.demoAuth = '';
+    vm.demoThinking = false;
     vm.reset = reset;
     vm.login = login;
     isAuth();
@@ -62,9 +63,11 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
     }
 
     function reset() {
+        vm.demoThinking = true;
         demo.resetDemo(function (err) {
             // console.log(err);
-            $window.location.reload();
+            // $window.location.reload();
+            vm.demoThinking = false;
 
             // registration.signup(vm.info, function (err) {
             //     authentication.login(vm.info.username, vm.info.password, function (err) {

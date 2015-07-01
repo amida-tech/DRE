@@ -3,7 +3,7 @@
         <h1 class="text-center">DEMO SCENARIOS</h1>
         <div class="row">
             <div class="panel panel-default col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-                <div class="panel-body text-center">
+                <div class="panel-body text-center" ng-hide="vm.demoThinking">
                     <div class="row">
                         <button class="btn btn-default col-sm-10 col-sm-offset-1 col-xs-12" ng-click="vm.demoClick('files')"><a>Scenario 1: Go to file list</a></button>
                     </div>
@@ -18,6 +18,11 @@
                     </div>
                     <div class="row">
                         <button class="btn btn-default col-sm-10 col-sm-offset-1 col-xs-12" ng-click="vm.reset()"><a>Reset</a></button>
+                    </div>
+                </div>
+                <div class="panel-body text-center" ng-show="vm.demoThinking">
+                    <div class="row">
+                        <p>Please wait while we reset the demo.</p>
                     </div>
                 </div>
             </div>
