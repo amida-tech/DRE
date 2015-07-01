@@ -43,21 +43,21 @@
                 <div ng-if="notesList.length === 0" class="col-sm-12 text-center">
                     <h5>No notes are available for display</h5>
                 </div>
-                <div ng-cloak ng-hide="notesList.length === 0">
+                <div ng-hide="notesList.length === 0">
                     <div ng-show="sectionFilters.length === 0 && starFilters.length === 0" class="col-sm-12 text-center">
                         <h5>No notes matching your selection</h5>
                     </div>
                     <div>
                         <p>Timeline</p>
                     </div>
-                    <div ng-cloak class="row col-sm-12">
+                    <div class="row col-sm-12">
                         <div timeline chart-data="notesList" chart-type="notes" class="timeline-graph"></div>
                     </div>
 
                     <div class="col-sm-12 row timeline-side"><span ng-if="notesList.length !== 0" class="pull-right">Sort by: <a href="" ng-click="dateSort()">Date <span ng-bind-html="sortString"></span></a>
                         </span>
                     </div>
-                    <div ng-repeat="(noteIndex, noteEntry) in notesList | orderBy:['-starred',predicate]">
+                    <div ng-cloak ng-repeat="(noteIndex, noteEntry) in notesList | orderBy:['-starred',predicate]">
                         <div class="col-sm-12 row timeline-side" ng-if="recordEntry.entry_type !== 'demographics' ">
                             <!--Timeline Icon-->
                             <div class="col-sm-2">
