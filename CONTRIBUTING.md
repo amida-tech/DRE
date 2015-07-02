@@ -1,30 +1,36 @@
 # Contributing
 
-We love pull requests from everyone. By submitting your PR you agree to Contributor Licence Agreement (below).
+By submitting your Pull Request you agree to the [Contributor License Agreement](#contributor-license-agreement).
 
 When you contribute code, you affirm that the contribution is your original work and that you license the work to the project under the project's open source license. Whether or not you state this explicitly, by submitting any copyrighted material via pull request, email, or other means you agree to license the material under the project's open source license and warrant that you have the legal authority to do so.
 
+======
 
-# How to contribute:
 
-Make sure the tests pass:
+# How to contribute
 
-    grunt
+## Create an issue
+* Make sure it isn't a duplicate of an existing issue.
+* Include system details.
+* Paste any error output logs
 
-Make your change. Add tests for your change. Make the tests pass:
 
-    grunt
+## Submit a Pull Request
 
-[submit a pull request][pr].
+1. Fork and clone the repo.
+2. Create a branch for your changes.
+3. Write tests for your changes.
+4. Make sure all tests pass.
+5. Submit a Pull Request
 
 
 
 Some things that will increase the chance that your pull request is accepted:
 
 * Write tests.
-* Write a [good commit message][commit].
+* Write a good commit message. 
 
-
+====
 
 # Contributor License Agreement
 
