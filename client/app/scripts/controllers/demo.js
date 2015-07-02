@@ -55,9 +55,11 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
 
     // if account already exists, login will work anyway.
     function login() {
+        vm.demoThinking = true;
         registration.signup(vm.info, function (err) {
             authentication.login(vm.info.username, vm.info.password, function (err) {
-                $window.location.reload();
+                reset();
+                isAuth();
             });
         });
     }

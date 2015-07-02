@@ -31,9 +31,14 @@
     <div ng-hide="vm.demoAuth" class="row">
         <h1 class="text-center">DEMO</h1>
         <div class="row">
-            <div class="panel panel-default col-sm-4 col-sm-offset-4 col-xs-12">
-                <div class="panel-body">
+            <div class="panel panel-default  col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="panel-body" ng-hide="vm.demoThinking">
                     <button class="btn btn-default col-sm-10 col-sm-offset-1 col-xs-12" ng-click="vm.login()"><a>Log into the Demo Page</a></button>
+                </div>
+                <div class="panel-body text-center" ng-show="vm.demoThinking">
+                    <div class="row col-sm-10 col-sm-offset-1 col-xs-12">
+                        <p>Please wait while we reset the demo.</p>
+                    </div>
                 </div>
             </div>
         </div>
