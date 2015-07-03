@@ -97,7 +97,7 @@ angular
 
             case 'date':
                 var date_time = input;
-                if (!date_time) {
+                if (!date_time || (date_time === '')) {
                     return "Date Not Reported";
                 }
 

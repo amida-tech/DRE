@@ -72,11 +72,18 @@ angular.module('phrPrototypeApp')
                     };
                     _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
                 }
-                if ($scope.pCurrentMedRadio) {
-                    pmed_highdate = {
-                        "date": moment($scope.pLast).format('YYYY-MM-DD') + 'T00:00:00.000Z',
-                        "precision": 'day'
-                    };
+                if (!$scope.pCurrentMedRadio) {
+                    if ($scope.pLast) {
+                        pmed_highdate = {
+                            "date": moment($scope.pLast).format('YYYY-MM-DD') + 'T00:00:00.000Z',
+                            "precision": 'day'
+                        };
+                    } else {
+                        pmed_highdate = {
+                            "date": moment().format('YYYY-MM-DD') + 'T00:00:00.000Z',
+                            "precision": 'day'
+                        };
+                    }
                     _.deepSet($scope.enteredMedication, 'date_time.high', pmed_highdate);
                 }
             } else {
@@ -116,7 +123,8 @@ angular.module('phrPrototypeApp')
                     _.deepSet($scope.enteredMedication, 'date_time.low', pmed_lowdate);
                 }
                 console.log("pCurrentMedRadio" + $scope.pCurrentMedRadio);
-                if ($scope.pCurrentMedRadio) {
+
+                if (!$scope.pCurrentMedRadio) {
                     if ($scope.pLast) {
                         pmed_highdate = {
                             "date": moment($scope.pLast).format('YYYY-MM-DD') + 'T00:00:00.000Z',
@@ -329,22 +337,30 @@ angular.module('phrPrototypeApp')
                 _.deepSet(searchObj, 'address[0].state', state);
             }
             if (!_.isEmpty(searchObj)) {
+                console.log('searchObj ', searchObj);
                 npiapi.findNPI(searchObj, function (err, data) {
                     $scope.prescriberSearchActive = false;
                     if (err) {
                         console.log("Martz err: " + err);
                         $scope.prescriberError = "No matches found, please try again";
                     } else {
-                        if ((data.length >= 100) && (_.isUndefined(state))) {
-                            $scope.prescriberError = "More than 100 matches found, please enter a state";
+                        if (data.length >= 100) {
+                            if (_.isEmpty(state)) {
+                                $scope.prescriberError = "More than 100 matches found, please enter a state";
+                            } else {
+                                $scope.prescriberError = "More than 100 matches found, please adjust your search terms";
+                            }
                         } else {
-                            console.log("Martz success: " + JSON.stringify(data));
+                            console.log("prescriberError ", state, data.length);
                             $scope.prescriberResults = data;
                             $scope.prescriberCount = data.length;
                             $scope.prescriberError = null;
                         }
                     }
                 });
+            } else {
+                $scope.prescriberError = "Please enter search terms";
+                $scope.prescriberSearchActive = false;
             }
         };
 
@@ -379,7 +395,7 @@ angular.module('phrPrototypeApp')
             $scope.pWhy = null;
             $scope.pOften = "";
             $scope.pLast = null;
-            $scope.pCurrentMedRadio = null;
+            // $scope.pCurrentMedRadio = null;
             $scope.pStart = null;
             $scope.drugSpelling = null;
         };
@@ -492,6 +508,9 @@ angular.module('phrPrototypeApp')
             $scope.prescriberSearchActive = true;
             var searchTest = false;
             var searchObj = {};
+            $scope.prescriberResults = null;
+            $scope.prescriberCount = null;
+            $scope.prescriberError = null;
             $scope.selectedPrescriber = null;
             if (firstName) {
                 _.deepSet(searchObj, 'name[0].first', firstName);
@@ -502,17 +521,29 @@ angular.module('phrPrototypeApp')
             if (state) {
                 _.deepSet(searchObj, 'address[0].state', state);
             }
-            if (searchObj !== {}) {
+            if (!_.isEmpty(searchObj)) {
                 npiapi.findNPI(searchObj, function (err, data) {
                     $scope.prescriberSearchActive = false;
                     if (err) {
                         $scope.prescriberError = "No matches found, please try again";
                     } else {
-                        $scope.prescriberResults = data;
-                        $scope.prescriberCount = data.length;
-                        $scope.prescriberError = null;
+                        if (data.length >= 100) {
+                            if (_.isEmpty(state)) {
+                                $scope.prescriberError = "More than 100 matches found, please enter a state";
+                            } else {
+                                $scope.prescriberError = "More than 100 matches found, please adjust your search terms";
+                            }
+                        } else {
+                            console.log("prescriberError ", state, data.length);
+                            $scope.prescriberResults = data;
+                            $scope.prescriberCount = data.length;
+                            $scope.prescriberError = null;
+                        }
                     }
                 });
+            } else {
+                $scope.prescriberError = "Please enter search terms";
+                $scope.prescriberSearchActive = false;
             }
         };
 

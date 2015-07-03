@@ -306,6 +306,7 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
             }
             $timeout(function () {
                 gatherData();
+                console.log('timeout timeline plot');
                 renderPlot();
             }, 500);
 
@@ -340,6 +341,13 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                     renderPlot();
                 }
             }, true);
+            // scope.$watch('notesList', function (newValue, oldValue) {
+            //     if (newValue !== oldValue) {
+            //         console.log('notes updated');
+            //         gatherData();
+            //         renderPlot();
+            //     }
+            // }, true);
         }
     };
 });
