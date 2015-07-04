@@ -13,7 +13,7 @@ When you contribute code, you affirm that the contribution is your original work
 ## Create an issue
 * Make sure it isn't a duplicate of an existing issue.
 * Include system details.
-* Paste any error output logs
+* Paste any error output logs.
 
 
 ## Submit a Pull Request
@@ -22,13 +22,13 @@ When you contribute code, you affirm that the contribution is your original work
 2. Create a branch for your changes.
 3. Write tests for your changes.
 4. Make sure all tests pass.
-5. Submit a Pull Request
+5. Submit a Pull Request.
 
 
 
 Some things that will increase the chance that your pull request is accepted:
 
-* Write tests.
+* Write good tests.
 * Write a good commit message. 
 
 ====
