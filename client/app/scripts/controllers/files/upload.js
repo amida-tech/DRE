@@ -43,13 +43,15 @@ function FilesUpload($location, $route, upload, $http, format, record, dataservi
                 if (results.refresh) {
                     $location.path('/files');
                 } else {
-                    vm.new_first = results.name.first;
-                    vm.new_last = results.name.last;
-                    if (results.name.middle && results.name.middle[0]) {
-                        vm.new_middle = results.name.middle[0];
+                    if (results.name) {
+                        vm.new_first = results.name.first;
+                        vm.new_last = results.name.last;
+                        if (results.name.middle && results.name.middle[0]) {
+                            vm.new_middle = results.name.middle[0];
+                        }
+                        vm.new_dob = format.formatDate(results.dob.point);
+                        vm.new_gender = results.gender;
                     }
-                    vm.new_dob = format.formatDate(results.dob.point);
-                    vm.new_gender = results.gender;
                 }
             });
 
