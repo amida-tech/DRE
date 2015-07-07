@@ -12,12 +12,17 @@ describe('measurements-chart', function() {
         password.sendKeys(protractor.Key.ENTER);
     }
     
-    
-
-    beforeEach(function() {
+    function goToRecord() {
         browser.get('http://localhost:3000/');
         browser.driver.manage().window().setSize(1280, 1024);
-    });
+    	var record = element(by.css('[ng-click="vm.navbarClick(\'record\')"]'));
+        record.click();
+    }
+    
+
+    // beforeEach(function() {
+    //     goToRecord();
+    // });
 
     afterEach(function() {
     browser.manage().logs().get('browser').then(function(browserLog) {
@@ -33,9 +38,8 @@ describe('measurements-chart', function() {
     });
   });
 
-    it('should login', function() {
-        loginTest('amida-demo','Protractor');
-        // expect(browser.getLocationAbsUrl()).toContain('home');
-        accountHistoryTimeline();
+    it('should contain d3 charts', function() {
+        var chart = $$('.chart');
+        expect(chart.count()).toEqual(2);
     });
 });
