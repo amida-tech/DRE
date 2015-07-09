@@ -342,11 +342,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                 }
             }, true);
             scope.$watch('notesList', function (newValue, oldValue) {
-                if (newValue !== oldValue) {
-                    console.log('notes updated');
-                    gatherData();
-                    renderPlot();
-                }
+                // if (newValue !== oldValue) {
+                console.log('notes updated');
+                gatherData();
+                renderPlot();
+                // }
             }, true);
         }
     };
