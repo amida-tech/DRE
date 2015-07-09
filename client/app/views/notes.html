@@ -43,7 +43,7 @@
                 <div ng-if="notesList.length === 0" class="col-sm-12 text-center">
                     <h5>No notes are available for display</h5>
                 </div>
-                <div ng-hide="notesList.length === 0">
+                <div ng-if="notesList.length !== 0">
                     <div ng-show="sectionFilters.length === 0 && starFilters.length === 0" class="col-sm-12 text-center">
                         <h5>No notes matching your selection</h5>
                     </div>
