@@ -24,7 +24,7 @@ function FilesImport($location, $window, importService, $http, format, record, d
     }
 
     function oauthWithings() {
-        importService.getRequestToken(function(err, authUrl) {
+        importService.getRequestToken(function (err, authUrl) {
             if (err) {
                 // throw error
                 return;
