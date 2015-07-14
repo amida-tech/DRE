@@ -17,6 +17,9 @@ test/coverage
 
 */**/.DS_Store
 
+.idea
+.idea/*
+
 .rdb
 
 npm-debug.log
