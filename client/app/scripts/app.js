@@ -177,6 +177,15 @@ angular
                 controllerAs: 'vm',
                 requireLogin: true
             })
+            .when('/admin', {
+                templateUrl: 'views/admin.html',
+                controller: 'AdminCtrl',
+                controllerAs: 'vm',
+                requireLogin: true,
+                permissions: {
+                    permissionType: 'Admin'
+                }
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -204,6 +213,19 @@ angular
                         event.preventDefault();
                         $location.path("/login");
                     }
+                }
+                if (next.permissions !== undefined) {
+                    authentication.adminStatus(function (err, admin) {
+                        if (err) {
+                            console.log('ADMIN ERROR:', err);
+                            event.preventDefault();
+                            $location.path("/login");
+                        } else {
+                            $rootScope.isAdmin = admin;
+                            console.log($rootScope.isAdmin);
+                        }
+                    });
+
                 }
             });
         });
