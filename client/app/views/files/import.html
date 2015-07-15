@@ -17,9 +17,8 @@
                 <div class="col-sm-12 row">
                     <form role="form">
                         <button type="submit" class="btn btn-primary" ng-click="vm.oauthWithings()">Withings</button>
-                    </form>
-                    <form role="form" ng-show="vm.isAuthorized">
-                        <button type="submit" class="btn btn-success">Get today's step count.</button>
+                        <button type="submit" class="btn btn-success" ng-click="vm.getWeight()" ng-show="vm.isAuthorized">Get today's weight.</button>
+                        <button type="submit" class="btn btn-warning" ng-click="vm.subscribeWeight()" ng-show="vm.isAuthorized">Subscribe to weight data.</button>
                     </form>
                 </div>
             </div>

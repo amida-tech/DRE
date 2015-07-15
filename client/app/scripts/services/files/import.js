@@ -37,4 +37,17 @@ function importService($http, dataservice, history, notes) {
                 cb(data);
             });
     };
+
+    this.getDailyWeight = function (cb) {
+        var weightUrl = "/api/v1/oauth/withings/weight";
+        $http.get(weightUrl)
+            .success(function (data) {
+                // do something with the data
+                // put it in CSV
+                cb(null, data);
+            })
+            .error(function (data) {
+                cb(data);
+            });
+    }
 }

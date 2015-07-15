@@ -68,7 +68,7 @@
     "serve-favicon": "2.2.0",
     "serve-static": "~1.9.2",
     "supertest": "0.15.0",
-    "withings-lib": "^0.1.1"
+    "withings-lib": "^0.2.0"
   },
   "engines": {
     "node": "0.10.x"

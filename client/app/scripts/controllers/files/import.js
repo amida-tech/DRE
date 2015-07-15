@@ -17,8 +17,9 @@ function FilesImport($location, $window, importService, $http, format, record, d
     /* jshint validthis: true */
     var vm = this;
     vm.isAuthorized = false;
+    vm.getWeight = getWeight;
+    vm.subscribeWeight = subscribeWeight;
     vm.oauthWithings = oauthWithings;
-    vm.returnToFiles = returnToFiles;
     vm.uploadStep = 0;
 
     activate();
@@ -49,6 +50,20 @@ function FilesImport($location, $window, importService, $http, format, record, d
             }
             $window.location.href = authUrl;
         });
+    }
+
+    function getWeight() {
+        importService.getDailyWeight(function (err) {
+            if (err) {
+                // throw error
+                return;
+            }
+            returnToFiles();
+        });
+    }
+
+    function subscribeWeight() {
+
     }
 
 }
