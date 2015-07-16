@@ -27,5 +27,8 @@ function Clients($location, authentication) {
             }
         });
     }
+    vm.getClients = function() {
+        
+    }
 
 }
