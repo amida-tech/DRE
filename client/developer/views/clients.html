@@ -13,7 +13,7 @@
                 <a class="navbar-brand" href="#/"><img class="img-navbar-logo" src="images/bb-logo-vector.png">
                 </a>
             </div>
-            <div ng-hide="isAuthorized" class="collapse navbar-collapse" id="logout-menu">
+            <div class="collapse navbar-collapse" id="logout-menu">
                 <ul class="nav navbar-nav navbar-right ">
                     <li><a ng-click="vm.devLogout()">Log Out</a>
                     </li>
@@ -22,4 +22,51 @@
             </div>
         </div>
     </div>
+</div>
+<div class="panel">
+<h3 class="text-center"> CLIENT LIST ({{vm.clientsList.length}}): </h3>
+
+<div class="panel col-sm-offset-3 col-sm-6" ng-repeat="client in vm.clientsList">
+    <table class="table table-hover">
+        <th ng-click="vm.showClient(client.name)">{{client.name}}</th>
+        <tbody>
+            <tr>
+                <td>Client ID</td>
+                <td>{{client.clientId}}</td>
+            </tr>
+            <tr>
+                <td>Created</td>
+                <td>{{client.created | date:'medium'}}</td>
+            </tr>
+            <tr>
+                <td>Launch Uri</td>
+                <td>{{client.launchUri}}</td>
+            </tr>
+            <tr>
+                <td>Logo Uri</td>
+                <td>{{client.logoUri}}</td>
+            </tr>
+            <tr>
+                <td>Redirect Uri</td>
+                <td>{{client.redirectUri}}</td>
+            </tr>
+            <tr>
+                <td>Token Endpoing Auth Method</td>
+                <td>{{client.tokenEndpointAuthMethod}}</td>
+            </tr>
+            <tr>
+                <td>Added by</td>
+                <td>{{client.ownerEmail}}</td>
+            </tr>
+            <tr>
+                <td>Grant Types</td>
+                <td>{{client.grantTypes}}</td>
+            </tr>
+            <tr>
+                <td>Scope</td>
+                <td>{{client.scope}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </div>

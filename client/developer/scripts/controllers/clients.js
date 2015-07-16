@@ -11,11 +11,11 @@ angular
     .module('phrDeveloperApp')
     .controller('ClientsCtrl', Clients);
 
-Clients.$inject = ['$location', 'authentication'];
+Clients.$inject = ['$location', 'authentication', 'devclient'];
 
-//function Clients($location, login, authentication) {
-function Clients($location, authentication) {
+function Clients($location, authentication, devclient) {
     var vm = this;
+    vm.clientsList=[];
     vm.devLogout = function() {
         authentication.logout(function (err) {
             if (err) {
@@ -28,7 +28,25 @@ function Clients($location, authentication) {
         });
     }
     vm.getClients = function() {
-        
+        devclient.getClients(function (clients, err) {
+            if (err) {
+                console.log("Error: ", err);
+            } else {
+                vm.clientsList = clients;
+                console.log(vm.clientsList);   
+            }
+        });
     }
+    vm.showClient = function(client_name) {
+        devclient.getClients(function (clients, err) {
+            if (err) {
+                console.log(err);
+            } else {
+                vm.clientsList = clients;
+                console.log(vm.clientsList);   
+            }
+        });
+    }
+    vm.getClients();
 
 }
