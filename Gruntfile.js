@@ -226,23 +226,23 @@ module.exports = function (grunt) {
         },
         compass: { //from client
             options: {
-                sassDir: 'client/app/styles',
+                sassDir: 'client/developer/styles',
                 cssDir: 'client/.tmp/styles',
                 generatedImagesDir: 'client/.tmp/images/generated',
-                imagesDir: 'client/app/images',
-                javascriptsDir: 'client/app/scripts',
-                fontsDir: 'client/app/styles/fonts',
-                importPath: 'client/app/bower_components',
-                httpImagesPath: 'client/app/images',
-                httpGeneratedImagesPath: 'client/app/images/generated',
-                httpFontsPath: 'client/app/styles/fonts',
+                imagesDir: 'client/developer/images',
+                javascriptsDir: 'client/developer/scripts',
+                fontsDir: 'client/developer/styles/fonts',
+                importPath: 'client/developer/bower_components',
+                httpImagesPath: 'client/developer/images',
+                httpGeneratedImagesPath: 'client/developer/images/generated',
+                httpFontsPath: 'client/developer/styles/fonts',
                 relativeAssets: false,
                 assetCacheBuster: false,
                 raw: 'Sass::Script::Number.precision = 10\n'
             },
             dist: {
                 options: {
-                    generatedImagesDir: './client/app/images/generated'
+                    generatedImagesDir: './client/developer/images/generated'
                 }
             },
             server: {
@@ -252,8 +252,8 @@ module.exports = function (grunt) {
             },
             dev: { // Another target
                 options: {
-                    sassDir: './client/app/styles',
-                    cssDir: './client/app/styles',
+                    sassDir: './client/developer/styles',
+                    cssDir: './client/developer/styles',
                     debugInfo: false
                 }
             }
