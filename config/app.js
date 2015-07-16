@@ -73,7 +73,7 @@ module.exports = function () {
     //app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
     //to run development version of UI use this line
-    app.set('client_location', path.resolve(__dirname, '../client/app'));
+    app.set('client_location', path.resolve(__dirname, '../client/developer'));
 
     //app.set('client_location', path.resolve(__dirname, '../phr-prototype/dist'));
 
@@ -171,6 +171,9 @@ module.exports = function () {
 
     var metadata = require('../lib/metadata');
     app.use(metadata);
+    
+    var developer = require('../lib/developer');
+    app.use(developer);
 
     app.set('port', (process.env.PORT || 3000));
 
