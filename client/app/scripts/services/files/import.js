@@ -68,4 +68,26 @@ function importService($http, dataservice, history, notes) {
                 cb(data);
             });
     }
+
+    this.subscribeWeightNotifications = function (cb) {
+        var subscribeUrl = "/api/v1/oauth/withings/subscribe/weight";
+        $http.post(subscribeUrl)
+            .success(function (data) {
+                cb(null, data);
+            })
+            .error(function (data) {
+                cb(data);
+            });
+    }
+
+    this.revokeWeightNotifications = function (cb) {
+        var unsubscribeUrl = "/api/v1/oauth/withings/subscribe/weight";
+        $http.delete(unsubscribeUrl)
+            .success(function (data) {
+                cb(null, data);
+            })
+            .error(function (data) {
+                cb(data);
+            });
+    }
 }
