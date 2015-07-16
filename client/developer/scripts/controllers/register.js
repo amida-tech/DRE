@@ -59,7 +59,7 @@ angular.module('phrDeveloperApp')
                         if (err) {
                             $scope.error = err;
                         } else {
-                            $location.path('/developer/home');
+                            $location.path('/developer/clients');
                         }
                     });
                 }

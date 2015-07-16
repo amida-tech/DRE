@@ -21,7 +21,7 @@ function Login($location, $window, authentication) {
             if (err) {
                 vm.error = err;
             } else {
-                $location.path('/developer/home');
+                $location.path('/developer/clients');
                 $window.location.reload();
             }
         });

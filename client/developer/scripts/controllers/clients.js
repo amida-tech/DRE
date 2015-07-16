@@ -2,22 +2,22 @@
 
 /**
  * @ngdoc function
- * @name phrDeveloperApp.controller:homeCtrl
+ * @name phrDeveloperApp.controller:ClientsCtrl
  * @description
- * # homeCtrl
+ * # ClientsCtrl
  * Controller of the phrDeveloperApp
  */
 angular
     .module('phrDeveloperApp')
-    .controller('HomeCtrl', Home);
+    .controller('ClientsCtrl', Clients);
 
-Home.$inject = ['$location', 'authentication'];
+Clients.$inject = ['$location', 'authentication'];
 
-//function home($location, login, authentication) {
-function Home($location, authentication) {
+//function Clients($location, login, authentication) {
+function Clients($location, authentication) {
     // /* jshint validthis: true */
     // var vm = this;
-    // vm.homeLogin = homeLogin;
+    // vm.ClientsLogin = ClientsLogin;
 
     // activate();
 
@@ -31,20 +31,20 @@ function Home($location, authentication) {
     //                 throw err;
     //             } else {
     //                 if (res) {
-    //                     $location.path('/home');
+    //                     $location.path('/Clients');
     //                 }
     //             }
     //         });
     //     }
     // }
 
-    // function homeLogin() {
+    // function ClientsLogin() {
     //     //    login.login(vm.inputLogin, vm.inputPassword, function (err) {
     //     authentication.login(vm.inputLogin, vm.inputPassword, function (err) {
     //         if (err) {
     //             vm.error = err;
     //         } else {
-    //             $location.path('/home');
+    //             $location.path('/Clients');
     //         }
     //     });
     // }

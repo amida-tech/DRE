@@ -38,9 +38,9 @@ angular
                 templateUrl: 'views/register.html',
                 controller: 'RegisterCtrl'
             })
-            .when('/developer/home', {
-                templateUrl: '/views/home.html',
-                controller: 'HomeCtrl',
+            .when('/developer/clients', {
+                templateUrl: '/views/clients.html',
+                controller: 'ClientsCtrl',
                 controllerAs: 'vm',
                 requireLogin: true
             })
