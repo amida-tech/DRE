@@ -20,35 +20,6 @@
 <div class="dev-background" id="index-wrapper">
 
         <!--Site Header.-->
-        <div class="navbar navbar-default" role="navigation">
-            <!--Logged Out Navbar-->
-            <div class="container-fluid">
-                <!--div ng-if="false" class="container-fluid"-->
-                <div style="margin: 0px 20px;">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logout-menu">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#/"><img class="img-navbar-logo" src="images/bb-logo-vector.png">
-                        </a>
-                    </div>
-                    <div ng-hide="isAuthorized" class="collapse navbar-collapse" id="logout-menu">
-                        <ul class="nav navbar-nav navbar-right ">
-                            <li><a href="#/developer/register">Sign Up</a>
-                            </li>
-                            <li><a href="#/developer/login">Log In</a>
-                            </li>
-                        </ul>
-
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
         <div ng-view=""></div>
         <div class="text-center col-md-12 footer hidden-print">
             <div class="row">

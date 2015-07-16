@@ -1,3 +1,31 @@
+<div class="navbar navbar-default" role="navigation">
+    <!--Logged Out Navbar-->
+    <div class="container-fluid">
+        <!--div ng-if="false" class="container-fluid"-->
+        <div style="margin: 0px 20px;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logout-menu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/"><img class="img-navbar-logo" src="images/bb-logo-vector.png">
+                </a>
+            </div>
+            <div ng-hide="isAuthorized" class="collapse navbar-collapse" id="logout-menu">
+                <ul class="nav navbar-nav navbar-right ">
+                    <li><a href="#/developer/register">Sign Up</a>
+                    </li>
+                    <li><a href="#/developer/login">Log In</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="dev-background col-sm-12 body-left" style="min-height:575px">
     <div class="col-sm-4 col-sm-offset-4">
         <h4 class="text-center text-white">Developer Portal Registration</h4>
