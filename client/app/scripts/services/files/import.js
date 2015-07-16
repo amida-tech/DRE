@@ -41,10 +41,28 @@ function importService($http, dataservice, history, notes) {
     this.getDailyWeight = function (cb) {
         var weightUrl = "/api/v1/oauth/withings/weight";
         $http.get(weightUrl)
-            .success(function (data) {
-                // do something with the data
-                // put it in CSV
-                cb(null, data);
+            .success(function (file) {
+                // gets the absolute path of a new CSV
+                // we now use the storage API
+                var uploadUrl = "/api/v1/storage";
+                var blob = new Blob([file.data]);
+                blob.lastModified = new Date();
+                var fd = new FormData();
+                fd.append('file', blob, file.name);
+                $http.put(uploadUrl, fd, {
+                        headers: {
+                            'Content-Type': undefined
+                        }
+                    })
+                    .success(function (data) {
+                        notes.forceRefresh();
+                        dataservice.forceRefresh();
+                        history.forceRefresh();
+                        cb(null, data);
+                    })
+                    .error(function (data) {
+                        cb(data);
+                    });
             })
             .error(function (data) {
                 cb(data);

@@ -29,3 +29,5 @@ log
 
 .nodemon_find_ref
 .sass-cache
+
+*.csv
