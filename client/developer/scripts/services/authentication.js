@@ -42,7 +42,7 @@ angular.module('phrDeveloperApp')
             }
         };
 
-        this.adminStatus = function (callback) {
+        this.devStatus = function (callback) {
             $http.get('/api/v1/developer/')
                 .success(function (data) {
                     console.log(data);

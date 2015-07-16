@@ -11,9 +11,9 @@ angular
     .module('phrDeveloperApp')
     .controller('LoginCtrl', Login);
 
-Login.$inject = ['$location', '$window', 'authentication'];
+Login.$inject = ['$location', 'authentication'];
 
-function Login($location, $window, authentication) {
+function Login($location, authentication) {
     /* jshint validthis: true */
     var vm = this;
     vm.login = function () {
@@ -22,7 +22,6 @@ function Login($location, $window, authentication) {
                 vm.error = err;
             } else {
                 $location.path('/developer/clients');
-                $window.location.reload();
             }
         });
     };

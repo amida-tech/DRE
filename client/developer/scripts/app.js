@@ -42,7 +42,8 @@ angular
                 templateUrl: '/views/clients.html',
                 controller: 'ClientsCtrl',
                 controllerAs: 'vm',
-                requireLogin: true
+                requireLogin: true,
+                permissions: 'dev'
             })
             .otherwise({
                 redirectTo: '/developer'
@@ -62,15 +63,12 @@ angular
                         $location.path("/developer/login");
                     }
                 }
-                if (next.permissions !== undefined) {
-                    authentication.role(function (err, role) {
+                if (next.permissions !== undefined && next.permissions === 'dev') {
+                    authentication.devStatus(function (err, role) {
                         if (err) {
-                            console.log('ADMIN ERROR:', err);
+                            console.log('NOT AUTHORIZED FOR THIS ROUTE:', err);
                             event.preventDefault();
                             $location.path("/developer/login");
-                        } else {
-                            $rootScope.isAdmin = admin;
-                            console.log($rootScope.isAdmin);
                         }
                     });
 
