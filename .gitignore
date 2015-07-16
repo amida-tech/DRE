@@ -8,6 +8,7 @@ typings
 .vagrant
 .pem
 .idea
+.idea/*
 
 server/coverage
 client/coverage
