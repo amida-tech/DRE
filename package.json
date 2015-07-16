@@ -47,7 +47,7 @@
     "grunt-execute": "0.2.2",
     "hl7": "~1.0.0",
     "jsdom": "^3.0.0",
-    "json2csv": "^2.5.0",
+    "json2csv": "^2.7.1",
     "lodash": "^3.7.0",
     "method-override": "2.3.2",
     "mllp-node": "~1.0.0",
