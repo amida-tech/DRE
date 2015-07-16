@@ -1,0 +1,37 @@
+<div class="dev-background col-sm-12 body-left" style="min-height:575px">
+    <div class="col-sm-4 col-sm-offset-4">
+
+        <h4 class="text-center text-white">Log In</h4>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form novalidate role="form" name="vm.loginForm" ng-submit="vm.login()">
+                    <div class="form-group">
+                        <label for="inputLogin">User ID:</label>
+                        <input type="text" class="form-control" name="inputLogin" ng-model="vm.inputLogin" required ng-required="true" ng-minLength="1" focus="true">
+                        <p ng-show="vm.loginForm.inputLogin.$invalid && !vm.loginForm.inputLogin.$pristine" class="help-block">Username or email is required.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword">Password:</label>
+                        <input type="password" class="form-control" name="inputPassword" ng-model="vm.inputPassword" required ng-required="true" ng-minLength="1">
+                        <p ng-show="vm.loginForm.inputPassword.$invalid && !vm.loginForm.inputPassword.$pristine" class="help-block">Password is required.</p>
+                    </div>
+                    <button id="main-login-btn" type="submit" class="btn btn-block btn-primary" ng-disabled="vm.loginForm.$invalid">Log In</button>
+                    <div ng-if="vm.error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{vm.error}}</div>
+                    <!--         <div class="text-center col-sm-12">
+            <div class="col-sm-5 text-right">
+            <label for="remember_me">
+               <h5><input type="checkbox" name="remember_me" value="true" checked="checked"></input> Remember Me</h5>
+            </label>
+            </div>
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-5 text-left">
+              <h5><a href="#/reset">Forgot Password</a></h5>
+            </div>
+          </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

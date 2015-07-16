@@ -1,0 +1,119 @@
+<!doctype html>
+<html class="no-js" ng-app="phrDeveloperApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+
+<body>
+<div class="dev-background" id="index-wrapper">
+
+        <!--Site Header.-->
+        <div class="navbar navbar-default" role="navigation">
+            <!--Logged Out Navbar-->
+            <div class="container-fluid">
+                <!--div ng-if="false" class="container-fluid"-->
+                <div style="margin: 0px 20px;">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logout-menu">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#/"><img class="img-navbar-logo" src="images/bb-logo-vector.png">
+                        </a>
+                    </div>
+                    <div ng-hide="isAuthorized" class="collapse navbar-collapse" id="logout-menu">
+                        <ul class="nav navbar-nav navbar-right ">
+                            <li><a href="#/developer/register">Sign Up</a>
+                            </li>
+                            <li><a href="#/developer/login">Log In</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div ng-view=""></div>
+        <div class="text-center col-md-12 footer hidden-print">
+            <div class="row">
+                <h6>Made by Amida Technology Solutions | Licensed under Creative Commons</h6>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-XXXXX-X');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/lodash-deep/lodash-deep.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!--<script src="bower_components/jquery-lockfixed/jquery.lockfixed.js"></script>-->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/controllers/login.js"></script>
+    <script src="/scripts/controllers/main.js"></script>
+    <script src="/scripts/controllers/register.js"></script>
+    <script src="/scripts/controllers/home.js"></script>
+    <script src="/scripts/directives/finishrender.js"></script>
+    <script src="/scripts/directives/focus.js"></script>
+    <script src="/scripts/services/authentication.js"></script>
+    <script src="/scripts/services/registration.js"></script>
+    <script src="/scripts/services/username.js"></script>
+
+    <!-- endbuild -->
+</body>
+
+</html>
