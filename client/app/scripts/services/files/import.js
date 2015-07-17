@@ -52,19 +52,23 @@ function importService($http, $q, dataservice, history, notes) {
     this.getDailyWeight = function (cb) {
         var weightUrl = "/api/v1/oauth/withings/weight";
         $http.get(weightUrl)
-            .success(function (data) {               
+            .success(function (data) {
                 // we now use the storage API to upload
                 // BB JSON and the CSV
                 var uploadUrl = "/api/v1/storage";
-                var blobCSV = new Blob([data.csv]);
-                var blobJSON = new Blob([JSON.stringify(data.json)]);
+                var blobCSV = new Blob([data.csv], {
+                    type: 'text/csv'
+                });
+                var blobJSON = new Blob([JSON.stringify(data.json)], {
+                    type: 'application/json'
+                });
                 blobCSV.lastModified = new Date();
                 blobJSON.lastModified = new Date();
                 var fdCSV = new FormData();
                 var fdJSON = new FormData();
                 fdCSV.append('file', blobCSV, data.name);
                 fdJSON.append('file', blobJSON, data.name + '.json');
-                
+
                 $q.all({
                     csv: $http.put(uploadUrl, fdCSV, {
                         headers: {
@@ -76,7 +80,7 @@ function importService($http, $q, dataservice, history, notes) {
                             'Content-Type': undefined
                         }
                     })
-                }).then(function(data) {
+                }).then(function (data) {
                     notes.forceRefresh();
                     dataservice.forceRefresh();
                     history.forceRefresh();
