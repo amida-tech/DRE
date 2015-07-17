@@ -19,13 +19,22 @@ angular.module('phrDeveloperApp')
                     callback('Error retrieving clients', data);
                 });
         };
-        this.addClient = function (new_client, callback) {
+        this.saveClient = function (new_client, callback) {
             $http.post('api/v1/developer/clients/add', new_client)
                 .success(function (data) {
                     console.log("new client added successfully");
                     callback(data);
                 }).error(function (data) {
                     callback('Error adding new client');
+                });
+        };
+        this.deleteClient = function (client_name, callback) {
+            $http.post('api/v1/developer/clients/delete', client_name)
+                .success(function (data) {
+                    console.log(client_name, " deleted successfully");
+                    callback(data);
+                }).error(function (data) {
+                    callback('Error deleting ', client_name);
                 });
         };
     });
