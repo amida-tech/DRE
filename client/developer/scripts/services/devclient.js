@@ -29,7 +29,10 @@ angular.module('phrDeveloperApp')
                 });
         };
         this.deleteClient = function (client_name, callback) {
-            $http.post('api/v1/developer/clients/delete', client_name)
+            var info = {
+                client_name: client_name
+            };
+            $http.post('api/v1/developer/clients/delete', info)
                 .success(function (data) {
                     console.log(client_name, " deleted successfully");
                     callback(data);

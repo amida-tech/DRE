@@ -44,7 +44,6 @@ function Clients($location, $route, authentication, devclient) {
         vm.showForm = true;
     }
     vm.addClient = function() {
-        console.log(vm.clientInfo);
         devclient.saveClient(vm.clientInfo, function (err) {
            if (err) {
                console.log(err);
@@ -54,7 +53,16 @@ function Clients($location, $route, authentication, devclient) {
            }
         });
     }
-    vm.delete
+    vm.deleteClient = function (client_name) {
+        console.log(client_name);
+        devclient.deleteClient(client_name, function (err) {
+            if (err) {
+                console.log("Deleting client error: ", err);
+            } else {
+                $route.reload();
+            }
+        });
+    }
     vm.cancelAdd = function() {
         vm.showForm = false;
     }
