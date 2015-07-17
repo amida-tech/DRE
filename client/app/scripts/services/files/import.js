@@ -11,9 +11,9 @@ angular
     .module('phrPrototypeApp')
     .service('importService', importService);
 
-importService.$inject = ['$http', 'dataservice', 'history', 'notes'];
+importService.$inject = ['$http', '$q', 'dataservice', 'history', 'notes'];
 
-function importService($http, dataservice, history, notes) {
+function importService($http, $q, dataservice, history, notes) {
     /* jshint validthis: true */
 
     this.isAuthorized = function (cb) {
@@ -25,7 +25,7 @@ function importService($http, dataservice, history, notes) {
             .error(function (data) {
                 cb(data);
             });
-    }
+    };
 
     this.getRequestToken = function (cb) {
         var requestTokenUrl = "/api/v1/oauth/withings";
@@ -52,33 +52,43 @@ function importService($http, dataservice, history, notes) {
     this.getDailyWeight = function (cb) {
         var weightUrl = "/api/v1/oauth/withings/weight";
         $http.get(weightUrl)
-            .success(function (file) {
-                // gets the absolute path of a new CSV
-                // we now use the storage API
+            .success(function (data) {               
+                // we now use the storage API to upload
+                // BB JSON and the CSV
                 var uploadUrl = "/api/v1/storage";
-                var blob = new Blob([file.data]);
-                blob.lastModified = new Date();
-                var fd = new FormData();
-                fd.append('file', blob, file.name);
-                $http.put(uploadUrl, fd, {
+                var blobCSV = new Blob([data.csv]);
+                var blobJSON = new Blob([JSON.stringify(data.json)]);
+                blobCSV.lastModified = new Date();
+                blobJSON.lastModified = new Date();
+                var fdCSV = new FormData();
+                var fdJSON = new FormData();
+                fdCSV.append('file', blobCSV, data.name);
+                fdJSON.append('file', blobJSON, data.name + '.json');
+                
+                $q.all({
+                    csv: $http.put(uploadUrl, fdCSV, {
+                        headers: {
+                            'Content-Type': undefined
+                        }
+                    }),
+                    json: $http.put(uploadUrl, fdJSON, {
                         headers: {
                             'Content-Type': undefined
                         }
                     })
-                    .success(function (data) {
-                        notes.forceRefresh();
-                        dataservice.forceRefresh();
-                        history.forceRefresh();
-                        cb(null, data);
-                    })
-                    .error(function (data) {
-                        cb(data);
-                    });
+                }).then(function(data) {
+                    notes.forceRefresh();
+                    dataservice.forceRefresh();
+                    history.forceRefresh();
+                    cb(null, data);
+                }, function (error) {
+                    cb(error);
+                })
             })
             .error(function (data) {
                 cb(data);
             });
-    }
+    };
 
     this.subscribeWeightNotifications = function (cb) {
         var subscribeUrl = "/api/v1/oauth/withings/subscribe/weight";
@@ -89,7 +99,7 @@ function importService($http, dataservice, history, notes) {
             .error(function (data) {
                 cb(data);
             });
-    }
+    };
 
     this.revokeWeightNotifications = function (cb) {
         var unsubscribeUrl = "/api/v1/oauth/withings/subscribe/weight";
@@ -100,5 +110,5 @@ function importService($http, dataservice, history, notes) {
             .error(function (data) {
                 cb(data);
             });
-    }
+    };
 }
