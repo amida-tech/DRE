@@ -177,15 +177,6 @@ angular
                 controllerAs: 'vm',
                 requireLogin: true
             })
-            .when('/admin', {
-                templateUrl: 'views/admin.html',
-                controller: 'AdminCtrl',
-                controllerAs: 'vm',
-                requireLogin: true,
-                permissions: {
-                    permissionType: 'Admin'
-                }
-            })
             .otherwise({
                 redirectTo: '/'
             });
