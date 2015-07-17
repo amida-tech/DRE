@@ -44,12 +44,12 @@ function Clients($location, $route, authentication, devclient) {
         vm.showForm = true;
     }
     vm.addClient = function () {
-        devclient.saveClient(vm.clientInfo, function (err) {
+        devclient.saveClient(vm.clientInfo, function (data, err) {
             if (err) {
                 console.log(err);
             } else {
-                $route.reload();
                 vm.showForm = false;
+                $route.reload();
             }
         });
     }
