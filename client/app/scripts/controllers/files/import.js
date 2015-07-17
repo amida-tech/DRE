@@ -32,11 +32,16 @@ function FilesImport($location, $window, importService, $http, format, record, d
                     // throw error
                     return;
                 }
-                importService.isAuthorized = true;
                 $location.url('/files/import');
             });
         }
-        vm.isAuthorized = importService.isAuthorized;
+        importService.isAuthorized(function (err, data) {
+            if (err) {
+                //throw error
+                return;
+            }
+            vm.isAuthorized = data;
+        });
     }
 
     function returnToFiles() {

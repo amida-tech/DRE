@@ -15,11 +15,12 @@
                     </div>
                 </div>
                 <div class="col-sm-12 row">
+                    <h3>Withings</h3>
                     <form role="form">
-                        <button type="submit" class="btn btn-primary" ng-click="vm.oauthWithings()">Withings</button>
-                        <button type="submit" class="btn btn-success" ng-click="vm.getWeight()" ng-show="vm.isAuthorized">Get today's weight.</button>
-                        <button type="submit" class="btn btn-warning" ng-click="vm.subscribeWeight()" ng-show="vm.isAuthorized">Subscribe to weight data.</button>
-                        <button type="submit" class="btn btn-danger" ng-click="vm.unsubscribeWeight()" ng-show="vm.isAuthorized">Unsubscribe from weight data.</button>
+                        <button type="submit" class="btn btn-primary" ng-click="vm.oauthWithings()" ng-hide="vm.isAuthorized">Authorize</button>
+                        <button type="submit" class="btn btn-success" ng-click="vm.getWeight()" ng-show="vm.isAuthorized">Get today's weight</button>
+                        <button type="submit" class="btn btn-warning" ng-click="vm.subscribeWeight()" ng-show="vm.isAuthorized">Subscribe to weight data</button>
+                        <button type="submit" class="btn btn-danger" ng-click="vm.unsubscribeWeight()" ng-show="vm.isAuthorized">Unsubscribe from weight data</button>
                     </form>
                 </div>
             </div>
