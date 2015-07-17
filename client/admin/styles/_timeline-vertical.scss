@@ -1,0 +1,139 @@
+//Vertical timeline components.
+
+.timeline-side {
+  padding-top: 20px;
+  background-image: url('../images/bg-line.png');
+  background-repeat: repeat-y;
+  background-position: 8.2% 0%;
+
+  @media (max-width: $screen-sm-max) {
+    background: none;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    background-image: url('../images/bg-line.png');
+    background-repeat: repeat-y;
+    background-position: 8.2% 0%;
+  }
+
+}
+
+.timeline-entry-icon {
+  @extend .img-circle;
+  background: #fff;
+  height: 50px;
+  width: 50px;
+  box-shadow: 0 0 0 4px $brand-primary,
+    0 3px 0 4px rgba(0, 0, 0, 0.05);
+  line-height: 3.5em;
+  position: relative;
+  bottom: -20px;
+  z-index: 100;
+  i {
+  color: $brand-primary;
+  }
+}
+
+.timeline-entry-icon-medication {
+  @extend .timeline-entry-icon;
+  height: 90px;
+  width: 90px;
+  position: initial;
+}
+
+.timeline-entry-icon-medication-inactive {
+  @extend .timeline-entry-icon;
+  background: #fff;
+  box-shadow: 0 0 0 4px #777777,
+    0 3px 0 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+  i {
+  color: #777777;
+    /*font-size: 14px;*/
+  }
+/*  @extend .img-circle;
+  background-color: #fff;
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  i {
+    font-size: 3em
+  }*/
+}
+.overlay {
+  font-size: 28px;
+  display:block;
+  text-align:center;
+  overflow:hidden;
+  box-sizing:border-box;
+}
+.overlay i {
+  display: none;
+}
+.overlay::before {
+content: ("\\");
+overflow:hidden!important;
+position: absolute;
+font-size:100px;
+font-weight:400;
+top:-30px;
+left:-4px;
+bottom:-50px;
+color: #777;
+-ms-transform: rotate(-14deg);
+-webkit-transform: rotate(-14deg);
+transform: rotate(-14deg);
+}
+
+.timeline-entry-icon-medication img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 45px;
+}
+
+/*.timeline-entry-icon-medication-inactive img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 45px;
+}*/
+
+.timeline-entry-icon i {
+  vertical-align: middle;
+}
+
+.timeline-entry-icon-medication i {
+    vertical-align: text-top;
+    line-height: 1.4em;
+    font-size: 3em;
+}
+
+.timeline-entry-icon:hover {
+  cursor: default;
+  background: $brand-primary;
+  i {
+    color: #fff;
+  }
+
+}
+
+.timeline-entry-icon-medication-inactive:hover {
+  cursor: default;
+  background: #777777;
+  i {
+    color: #fff;
+  }
+}
+
+.timeline-footer circle {
+  fill: #ccc;
+
+  @media (max-width: $screen-sm-max) {
+    display: none;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    display: inherit;
+  }
+
+}

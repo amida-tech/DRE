@@ -1,0 +1,88 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// $fa-font-path: "../fonts" !default;
+//@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+//@import url(http://fonts.googleapis.com/css?family=Roboto);
+//@import url(http://fonts.googleapis.com/css?family=Montserrat);
+//Using local fonts for dev, need to configure grunt for CDN pointers.
+@font-face {
+    font-family: "Open Sans";
+    src: url(../fonts/OpenSans.ttf);
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url(../fonts/Montserrat.ttf);
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url(../../fonts/Roboto.ttf);
+}
+
+@font-face {
+    font-family: "Raleway";
+    src: url("../fonts/Raleway-Medium.otf");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Raleway";
+    src: url("../fonts/Raleway-Light.otf");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Raleway";
+    src: url("../fonts/Raleway-Medium.otf");
+    font-weight: 500;
+}
+
+// Bootstrap Preprocessing
+@import "variables";
+$padding-base-vertical: 10px !default;
+$padding-base-horizontal: 20px !default;
+$grid-gutter-width: 0px !default;
+$border-radius-base: 0px;
+// bower:scss
+@import "../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+// Bootstrap Postprocessing
+@import "body";
+@import "fonts";
+@import "images";
+@import "profile";
+@import "timeline-nav";
+@import "timeline-vertical";
+@import "timeline-entry";
+@import "buttons";
+@import "tables";
+@import "landing";
+@import "links";
+@import "login";
+@import "panels";
+@import "navbar";
+@import "files";
+@import "modals";
+@import "fontcustom";
+//Not migrating yet, cannot preview section.
+.update-selected {
+    background-color: #def;
+    color: black
+}
+
+.update-pill {
+    :hover {
+        color: #fff;
+    }
+}
+
+.img-header {
+    display: block;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    float: left !important;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right: 10px;
+}
