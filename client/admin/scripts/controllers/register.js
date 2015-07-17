@@ -10,7 +10,6 @@
 angular.module('phrAdminApp')
     .controller('RegisterCtrl', function ($scope, $location, registration, authentication, username) {
 
-
         $scope.registration = {};
 
         $scope.isUser = false;
@@ -25,20 +24,20 @@ angular.module('phrAdminApp')
 
         $scope.nextStep = function () {
 
-                username.checkLogin($scope.inputEmail, function (err, user_exists) {
-                    if (user_exists) {
-                        $scope.error = "That Username already exists, please choose another";
-                        return;
-                    }
-                    if ($scope.inputPassword === $scope.inputRepeatPassword) {
-                        $scope.error = null;
-                        $scope.focusInput = true;
-                        $scope.finish();
-                    } else {
-                        $scope.error = "Entered Passwords did not match";
-                        return;
-                    }
-                });
+            username.checkLogin($scope.inputEmail, function (err, user_exists) {
+                if (user_exists) {
+                    $scope.error = "That Username already exists, please choose another";
+                    return;
+                }
+                if ($scope.inputPassword === $scope.inputRepeatPassword) {
+                    $scope.error = null;
+                    $scope.focusInput = true;
+                    $scope.finish();
+                } else {
+                    $scope.error = "Entered Passwords did not match";
+                    return;
+                }
+            });
 
         };
 

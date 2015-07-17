@@ -16,9 +16,9 @@ Clients.$inject = ['$location', '$route', 'authentication', 'devclient', 'userna
 function Clients($location, $route, authentication, devclient) {
     var vm = this;
     vm.showForm = false;
-    vm.clientsList=[];
+    vm.clientsList = [];
     vm.clientInfo = {};
-    vm.devLogout = function() {
+    vm.devLogout = function () {
         authentication.logout(function (err) {
             if (err) {
                 vm.error = err;
@@ -29,28 +29,28 @@ function Clients($location, $route, authentication, devclient) {
             }
         });
     }
-    vm.getClients = function() {
+    vm.getClients = function () {
         devclient.getClients(function (clients, err) {
             if (err) {
                 console.log("Error: ", err);
             } else {
                 vm.clientsList = clients;
-                console.log(vm.clientsList);   
+                console.log(vm.clientsList);
             }
         });
     }
     vm.getClients();
-    vm.showAddClient = function () { 
+    vm.showAddClient = function () {
         vm.showForm = true;
     }
-    vm.addClient = function() {
+    vm.addClient = function () {
         devclient.saveClient(vm.clientInfo, function (err) {
-           if (err) {
-               console.log(err);
-           } else {
-               $route.reload();
-               vm.showForm = false;
-           }
+            if (err) {
+                console.log(err);
+            } else {
+                $route.reload();
+                vm.showForm = false;
+            }
         });
     }
     vm.deleteClient = function (client_name) {
@@ -63,7 +63,7 @@ function Clients($location, $route, authentication, devclient) {
             }
         });
     }
-    vm.cancelAdd = function() {
+    vm.cancelAdd = function () {
         vm.showForm = false;
     }
 

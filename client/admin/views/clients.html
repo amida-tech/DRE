@@ -28,31 +28,31 @@
     <form name="addclient" novalidate>
         <div class="row">
             <label for="clientName">Client Name:</label>
-            <input name="clientName" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.client_name"/>
+            <input name="clientName" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.client_name" />
         </div>
         <div class="row">
             <label for="launchUri">Launch Uri:</label>
-            <input name="launchUri" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.launch_uri"/>
+            <input name="launchUri" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.launch_uri" />
         </div>
         <div class="row">
             <label for="logoUri">Logo Uri:</label>
-            <input name="logoUri" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.logo_uri"/>
+            <input name="logoUri" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.logo_uri" />
         </div>
         <div class="row">
             <label for="redirectUri">Redirect Uri:</label>
-            <input name="redirectUri" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.redirect_uri"/>
+            <input name="redirectUri" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.redirect_uri" />
         </div>
-        <div class="row">        
+        <div class="row">
             <label for="authMethod">Token Endpoint Auth Method:</label>
-            <input name="authMethod" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.token_endpoint_auth_method"/>
+            <input name="authMethod" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.token_endpoint_auth_method" />
         </div>
-        <div class="row">        
+        <div class="row">
             <label for="grantType">Grant Types:</label>
-            <input name="grantType" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.grant_types"/>
+            <input name="grantType" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.grant_types" />
         </div>
-        <div class="row">        
+        <div class="row">
             <label for="clientScope">Scope:</label>
-            <input name="clientScope" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.scope"/>
+            <input name="clientScope" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.scope" />
         </div>
         <div class="row">
             <button class="btn btn-primary pull-right" type="submit" ng-click="vm.addClient()">Save</button>
@@ -68,7 +68,9 @@
     <div class="panel col-sm-offset-3 col-sm-6" ng-repeat="client in vm.clientsList">
         <table class="table table-hover">
             <th>{{client.name}}</th>
-            <th><button class="pull-right" ng-click="vm.deleteClient(client.name)"><i class="fa fa-trash-o"></i></button></th>
+            <th>
+                <button class="pull-right" ng-click="vm.deleteClient(client.name)"><i class="fa fa-trash-o"></i></button>
+            </th>
             <tbody>
                 <tr>
                     <td>Client ID</td>
