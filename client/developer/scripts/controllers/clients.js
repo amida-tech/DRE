@@ -37,16 +37,7 @@ function Clients($location, authentication, devclient) {
             }
         });
     }
-    vm.showClient = function(client_name) {
-        devclient.getClients(function (clients, err) {
-            if (err) {
-                console.log(err);
-            } else {
-                vm.clientsList = clients;
-                console.log(vm.clientsList);   
-            }
-        });
-    }
     vm.getClients();
+    vm.addClient = function()
 
 }

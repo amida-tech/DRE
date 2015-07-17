@@ -16,7 +16,7 @@ angular.module('phrDeveloperApp')
                     console.log("retrieval successful");
                     callback(data);
                 }).error(function (data) {
-                    callback('Error retrieving clients');
+                    callback('Error retrieving clients', data);
                 });
         };
         this.addClient = function (new_client, callback) {
