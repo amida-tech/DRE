@@ -182,7 +182,7 @@ module.exports = function () {
     app.use(withings);
     app.set('consumer-key', '1b2fff4f26bfeb92b642fdcf54709e0954d9d21935d3444febf3e1884e973');
     app.set('consumer-secret', '2d91017e9212bb0ec47f4de08b8423809537c9fd9f3c0d85d28c5d6b3db');
-    app.set('callback-url', 'http://localhost:' + app.get('port') + '/#/files/import');
+    app.set('callback-url', 'http://devices.amida-demo.com:' + app.get('port') + '/#/files/import');
 
     //Launch MLLP server/listener
     var mllp = require('mllp-node');
