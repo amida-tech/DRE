@@ -1752,11 +1752,11 @@ html {
 
 /* line 27, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
 body {
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background-color: #eeeeee;
+  background-color: white;
 }
 
 /* line 39, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
@@ -1771,12 +1771,12 @@ textarea {
 
 /* line 48, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
 a {
-  color: #6aa6ff;
+  color: #337ab7;
   text-decoration: none;
 }
 /* line 53, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
 a:hover, a:focus {
-  color: #1e78ff;
+  color: #23527c;
   text-decoration: underline;
 }
 /* line 58, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
@@ -1812,9 +1812,9 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.428571429;
-  background-color: #eeeeee;
+  background-color: white;
   border: 1px solid #dddddd;
-  border-radius: 0px;
+  border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -1824,7 +1824,7 @@ img {
 }
 
 /* line 106, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_scaffolding.scss */
-.img-circle, .img-navbar-avatar, .profile .profile-image img, .timeline-entry-icon, .timeline-entry-icon-medication, .timeline-entry-icon-medication-inactive, .icon-circle {
+.img-circle {
   border-radius: 50%;
 }
 
@@ -1866,7 +1866,7 @@ hr {
 /* line 10, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_type.scss */
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: inherit;
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
@@ -2040,13 +2040,13 @@ mark,
 
 /* line 5, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_text-emphasis.scss */
 .text-primary {
-  color: #6aa6ff;
+  color: #337ab7;
 }
 
 /* line 9, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_text-emphasis.scss */
 a.text-primary:hover,
 a.text-primary:focus {
-  color: #3788ff;
+  color: #286090;
 }
 
 /* line 5, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_text-emphasis.scss */
@@ -2100,13 +2100,13 @@ a.text-danger:focus {
 
 /* line 5, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_background-variant.scss */
 .bg-primary {
-  background-color: #6aa6ff;
+  background-color: #337ab7;
 }
 
 /* line 9, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_background-variant.scss */
 a.bg-primary:hover,
 a.bg-primary:focus {
-  background-color: #3788ff;
+  background-color: #286090;
 }
 
 /* line 5, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_background-variant.scss */
@@ -2331,7 +2331,7 @@ code {
   font-size: 90%;
   color: #c7254e;
   background-color: #f9f2f4;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 
 /* line 24, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_code.scss */
@@ -2363,7 +2363,7 @@ pre {
   color: #333333;
   background-color: whitesmoke;
   border: 1px solid #cccccc;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 /* line 55, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_code.scss */
 pre code {
@@ -2385,8 +2385,8 @@ pre code {
 .container {
   margin-right: auto;
   margin-left: auto;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 /* line 15, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
 .container:before, .container:after {
@@ -2400,19 +2400,19 @@ pre code {
 @media (min-width: 768px) {
   /* line 10, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_grid.scss */
   .container {
-    width: 720px;
+    width: 750px;
   }
 }
 @media (min-width: 992px) {
   /* line 10, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_grid.scss */
   .container {
-    width: 940px;
+    width: 970px;
   }
 }
 @media (min-width: 1200px) {
   /* line 10, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_grid.scss */
   .container {
-    width: 1140px;
+    width: 1170px;
   }
 }
 
@@ -2420,8 +2420,8 @@ pre code {
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 /* line 15, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
 .container-fluid:before, .container-fluid:after {
@@ -2434,17 +2434,17 @@ pre code {
 }
 
 /* line 39, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_grid.scss */
-.row, .profile .profile-body {
-  margin-left: 0px;
-  margin-right: 0px;
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
 }
 /* line 15, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
-.row:before, .profile .profile-body:before, .row:after, .profile .profile-body:after {
+.row:before, .row:after {
   content: " ";
   display: table;
 }
 /* line 19, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
-.row:after, .profile .profile-body:after {
+.row:after {
   clear: both;
 }
 
@@ -2452,8 +2452,8 @@ pre code {
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /* line 27, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_grid-framework.scss */
@@ -3555,7 +3555,7 @@ th {
 }
 /* line 62, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_tables.scss */
 .table .table {
-  background-color: #eeeeee;
+  background-color: white;
 }
 
 /* line 76, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_tables.scss */
@@ -3843,7 +3843,7 @@ input[type="checkbox"]:focus {
 /* line 83, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
 output {
   display: block;
-  padding-top: 11px;
+  padding-top: 7px;
   font-size: 14px;
   line-height: 1.428571429;
   color: #555555;
@@ -3853,15 +3853,15 @@ output {
 .form-control {
   display: block;
   width: 100%;
-  height: 42px;
-  padding: 10px 20px;
+  height: 34px;
+  padding: 6px 12px;
   font-size: 14px;
   line-height: 1.428571429;
   color: #555555;
   background-color: white;
   background-image: none;
   border: 1px solid #cccccc;
-  border-radius: 0px;
+  border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -3914,7 +3914,7 @@ input[type="search"] {
   input[type="time"].form-control,
   input[type="datetime-local"].form-control,
   input[type="month"].form-control {
-    line-height: 42px;
+    line-height: 34px;
   }
   /* line 192, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
   input[type="date"].input-sm, .input-group-sm > input[type="date"].form-control,
@@ -4041,8 +4041,8 @@ input[type="checkbox"] {
 
 /* line 301, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
 .form-control-static {
-  padding-top: 11px;
-  padding-bottom: 11px;
+  padding-top: 7px;
+  padding-bottom: 7px;
   margin-bottom: 0;
   min-height: 34px;
 }
@@ -4176,7 +4176,7 @@ select[multiple].input-lg,
 }
 /* line 387, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
 .has-feedback .form-control {
-  padding-right: 52.5px;
+  padding-right: 42.5px;
 }
 
 /* line 392, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
@@ -4186,9 +4186,9 @@ select[multiple].input-lg,
   right: 0;
   z-index: 2;
   display: block;
-  width: 42px;
-  height: 42px;
-  line-height: 42px;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
   text-align: center;
   pointer-events: none;
 }
@@ -4397,17 +4397,17 @@ select[multiple].input-lg,
 .form-horizontal .checkbox-inline {
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 11px;
+  padding-top: 7px;
 }
 /* line 564, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
 .form-horizontal .radio,
 .form-horizontal .checkbox {
-  min-height: 31px;
+  min-height: 27px;
 }
 /* line 569, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
 .form-horizontal .form-group {
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: -15px;
+  margin-right: -15px;
 }
 /* line 15, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
 .form-horizontal .form-group:before, .form-horizontal .form-group:after {
@@ -4423,12 +4423,12 @@ select[multiple].input-lg,
   .form-horizontal .control-label {
     text-align: right;
     margin-bottom: 0;
-    padding-top: 11px;
+    padding-top: 7px;
   }
 }
 /* line 587, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
 .form-horizontal .has-feedback .form-control-feedback {
-  right: 0px;
+  right: 15px;
 }
 @media (min-width: 768px) {
   /* line 597, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
@@ -4457,10 +4457,10 @@ select[multiple].input-lg,
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 10px 20px;
+  padding: 6px 12px;
   font-size: 14px;
   line-height: 1.428571429;
-  border-radius: 0px;
+  border-radius: 4px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -4546,32 +4546,32 @@ a.btn.disabled, fieldset[disabled] a.btn {
 /* line 71, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_buttons.scss */
 .btn-primary {
   color: white;
-  background-color: #6aa6ff;
-  border-color: #5197ff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
 }
 /* line 12, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:focus, .btn-primary.focus {
   color: white;
-  background-color: #3788ff;
-  border-color: #0054d0;
+  background-color: #286090;
+  border-color: #122b40;
 }
 /* line 17, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:hover {
   color: white;
-  background-color: #3788ff;
-  border-color: #1372ff;
+  background-color: #286090;
+  border-color: #204d74;
 }
 /* line 24, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
   color: white;
-  background-color: #3788ff;
-  border-color: #1372ff;
+  background-color: #286090;
+  border-color: #204d74;
 }
 /* line 31, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active.focus, .btn-primary.active:hover, .btn-primary.active:focus, .btn-primary.active.focus, .open > .btn-primary.dropdown-toggle:hover, .open > .btn-primary.dropdown-toggle:focus, .open > .btn-primary.dropdown-toggle.focus {
   color: white;
-  background-color: #1372ff;
-  border-color: #0054d0;
+  background-color: #204d74;
+  border-color: #122b40;
 }
 /* line 39, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
@@ -4579,12 +4579,12 @@ a.btn.disabled, fieldset[disabled] a.btn {
 }
 /* line 50, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active {
-  background-color: #6aa6ff;
-  border-color: #5197ff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
 }
 /* line 56, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-primary .badge {
-  color: #6aa6ff;
+  color: #337ab7;
   background-color: white;
 }
 
@@ -4770,7 +4770,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 
 /* line 96, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_buttons.scss */
 .btn-link {
-  color: #6aa6ff;
+  color: #337ab7;
   font-weight: normal;
   border-radius: 0;
 }
@@ -4786,7 +4786,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 }
 /* line 116, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_buttons.scss */
 .btn-link:hover, .btn-link:focus {
-  color: #1e78ff;
+  color: #23527c;
   text-decoration: underline;
   background-color: transparent;
 }
@@ -4923,7 +4923,7 @@ tbody.collapse.in {
   background-color: white;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0px;
+  border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
@@ -4963,7 +4963,7 @@ tbody.collapse.in {
   color: white;
   text-decoration: none;
   outline: 0;
-  background-color: #6aa6ff;
+  background-color: #337ab7;
 }
 
 /* line 105, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_dropdowns.scss */
@@ -5237,13 +5237,13 @@ tbody.collapse.in {
 }
 /* line 175, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_button-groups.scss */
 .btn-group-vertical > .btn:first-child:not(:last-child) {
-  border-top-right-radius: 0px;
+  border-top-right-radius: 4px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 /* line 179, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_button-groups.scss */
 .btn-group-vertical > .btn:last-child:not(:first-child) {
-  border-bottom-left-radius: 0px;
+  border-bottom-left-radius: 4px;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 }
@@ -5343,7 +5343,7 @@ tbody.collapse.in {
 
 /* line 73, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_input-groups.scss */
 .input-group-addon {
-  padding: 10px 20px;
+  padding: 6px 12px;
   font-size: 14px;
   font-weight: normal;
   line-height: 1;
@@ -5351,7 +5351,7 @@ tbody.collapse.in {
   text-align: center;
   background-color: #eeeeee;
   border: 1px solid #cccccc;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 /* line 85, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_input-groups.scss */
 .input-group-addon.input-sm,
@@ -5484,7 +5484,7 @@ tbody.collapse.in {
 /* line 48, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
   background-color: #eeeeee;
-  border-color: #6aa6ff;
+  border-color: #337ab7;
 }
 /* line 59, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
 .nav .nav-divider {
@@ -5512,7 +5512,7 @@ tbody.collapse.in {
   margin-right: 2px;
   line-height: 1.428571429;
   border: 1px solid transparent;
-  border-radius: 0px 0px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 /* line 89, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
 .nav-tabs > li > a:hover {
@@ -5521,7 +5521,7 @@ tbody.collapse.in {
 /* line 98, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   color: #555555;
-  background-color: #eeeeee;
+  background-color: white;
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -5533,7 +5533,7 @@ tbody.collapse.in {
 }
 /* line 122, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
 .nav-pills > li > a {
-  border-radius: 0px;
+  border-radius: 4px;
 }
 /* line 125, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
 .nav-pills > li + li {
@@ -5542,7 +5542,7 @@ tbody.collapse.in {
 /* line 133, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
   color: white;
-  background-color: #6aa6ff;
+  background-color: #337ab7;
 }
 
 /* line 144, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
@@ -5592,7 +5592,7 @@ tbody.collapse.in {
 /* line 193, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
 .nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
   margin-right: 0;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 /* line 201, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
 .nav-tabs-justified > .active > a, .nav-tabs.nav-justified > .active > a,
@@ -5606,7 +5606,7 @@ tbody.collapse.in {
   /* line 206, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
   .nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
     border-bottom: 1px solid #dddddd;
-    border-radius: 0px 0px 0 0;
+    border-radius: 4px 4px 0 0;
   }
   /* line 212, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navs.scss */
   .nav-tabs-justified > .active > a, .nav-tabs.nav-justified > .active > a,
@@ -5614,7 +5614,7 @@ tbody.collapse.in {
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus,
   .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: #eeeeee;
+    border-bottom-color: white;
   }
 }
 
@@ -5653,7 +5653,7 @@ tbody.collapse.in {
 @media (min-width: 768px) {
   /* line 11, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
   .navbar {
-    border-radius: 0px;
+    border-radius: 4px;
   }
 }
 
@@ -5676,8 +5676,8 @@ tbody.collapse.in {
 /* line 50, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-collapse {
   overflow-x: visible;
-  padding-right: 0px;
-  padding-left: 0px;
+  padding-right: 15px;
+  padding-left: 15px;
   border-top: 1px solid transparent;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   -webkit-overflow-scrolling: touch;
@@ -5738,8 +5738,8 @@ tbody.collapse.in {
 .container > .navbar-collapse,
 .container-fluid > .navbar-header,
 .container-fluid > .navbar-collapse {
-  margin-right: 0px;
-  margin-left: 0px;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 @media (min-width: 768px) {
   /* line 109, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
@@ -5796,7 +5796,7 @@ tbody.collapse.in {
 /* line 163, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-brand {
   float: left;
-  padding: 15px 0px;
+  padding: 15px 15px;
   font-size: 18px;
   line-height: 20px;
   height: 50px;
@@ -5812,7 +5812,7 @@ tbody.collapse.in {
 @media (min-width: 768px) {
   /* line 181, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
   .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
-    margin-left: 0px;
+    margin-left: -15px;
   }
 }
 
@@ -5820,14 +5820,14 @@ tbody.collapse.in {
 .navbar-toggle {
   position: relative;
   float: right;
-  margin-right: 0px;
+  margin-right: 15px;
   padding: 9px 10px;
   margin-top: 8px;
   margin-bottom: 8px;
   background-color: transparent;
   background-image: none;
   border: 1px solid transparent;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 /* line 206, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-toggle:focus {
@@ -5853,7 +5853,7 @@ tbody.collapse.in {
 
 /* line 232, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-nav {
-  margin: 7.5px 0px;
+  margin: 7.5px -15px;
 }
 /* line 235, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-nav > li > a {
@@ -5905,15 +5905,15 @@ tbody.collapse.in {
 
 /* line 286, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-form {
-  margin-left: 0px;
-  margin-right: 0px;
-  padding: 10px 0px;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 10px 15px;
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 @media (min-width: 768px) {
   /* line 472, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_forms.scss */
@@ -6010,16 +6010,16 @@ tbody.collapse.in {
 /* line 332, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-fixed-bottom .navbar-nav > li > .dropdown-menu {
   margin-bottom: 0;
-  border-top-right-radius: 0px;
-  border-top-left-radius: 0px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
 /* line 343, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-btn {
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 /* line 346, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-btn.btn-sm, .btn-group-sm > .navbar-btn.btn {
@@ -6041,8 +6041,8 @@ tbody.collapse.in {
   /* line 359, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
   .navbar-text {
     float: left;
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left: 15px;
+    margin-right: 15px;
   }
 }
 
@@ -6055,7 +6055,7 @@ tbody.collapse.in {
   /* line 382, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
   .navbar-right {
     float: right !important;
-    margin-right: 0px;
+    margin-right: -15px;
   }
   /* line 386, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_navbar.scss */
   .navbar-right ~ .navbar-right {
@@ -6278,7 +6278,7 @@ tbody.collapse.in {
   margin-bottom: 20px;
   list-style: none;
   background-color: whitesmoke;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 /* line 13, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_breadcrumbs.scss */
 .breadcrumb > li {
@@ -6300,7 +6300,7 @@ tbody.collapse.in {
   display: inline-block;
   padding-left: 0;
   margin: 20px 0;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 /* line 10, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_pagination.scss */
 .pagination > li {
@@ -6311,10 +6311,10 @@ tbody.collapse.in {
 .pagination > li > span {
   position: relative;
   float: left;
-  padding: 10px 20px;
+  padding: 6px 12px;
   line-height: 1.428571429;
   text-decoration: none;
-  color: #6aa6ff;
+  color: #337ab7;
   background-color: white;
   border: 1px solid #dddddd;
   margin-left: -1px;
@@ -6323,21 +6323,21 @@ tbody.collapse.in {
 .pagination > li:first-child > a,
 .pagination > li:first-child > span {
   margin-left: 0;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 0px;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
 }
 /* line 33, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_pagination.scss */
 .pagination > li:last-child > a,
 .pagination > li:last-child > span {
-  border-bottom-right-radius: 0px;
-  border-top-right-radius: 0px;
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
 }
 /* line 42, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_pagination.scss */
 .pagination > li > a:hover, .pagination > li > a:focus,
 .pagination > li > span:hover,
 .pagination > li > span:focus {
   z-index: 3;
-  color: #1e78ff;
+  color: #23527c;
   background-color: #eeeeee;
   border-color: #dddddd;
 }
@@ -6348,8 +6348,8 @@ tbody.collapse.in {
 .pagination > .active > span:focus {
   z-index: 2;
   color: white;
-  background-color: #6aa6ff;
-  border-color: #6aa6ff;
+  background-color: #337ab7;
+  border-color: #337ab7;
   cursor: default;
 }
 /* line 69, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_pagination.scss */
@@ -6501,11 +6501,11 @@ a.label:hover, a.label:focus {
 
 /* line 48, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_labels.scss */
 .label-primary {
-  background-color: #6aa6ff;
+  background-color: #337ab7;
 }
 /* line 8, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_labels.scss */
 .label-primary[href]:hover, .label-primary[href]:focus {
-  background-color: #3788ff;
+  background-color: #286090;
 }
 
 /* line 52, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_labels.scss */
@@ -6575,7 +6575,7 @@ a.label:hover, a.label:focus {
 }
 /* line 42, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_badges.scss */
 .list-group-item.active > .badge, .nav-pills > .active > a > .badge {
-  color: #6aa6ff;
+  color: #337ab7;
   background-color: white;
 }
 /* line 47, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_badges.scss */
@@ -6653,9 +6653,9 @@ a.badge:hover, a.badge:focus {
   padding: 4px;
   margin-bottom: 20px;
   line-height: 1.428571429;
-  background-color: #eeeeee;
+  background-color: white;
   border: 1px solid #dddddd;
-  border-radius: 0px;
+  border-radius: 4px;
   -webkit-transition: border 0.2s ease-in-out;
   -o-transition: border 0.2s ease-in-out;
   transition: border 0.2s ease-in-out;
@@ -6679,7 +6679,7 @@ a.badge:hover, a.badge:focus {
 a.thumbnail:hover,
 a.thumbnail:focus,
 a.thumbnail.active {
-  border-color: #6aa6ff;
+  border-color: #337ab7;
 }
 
 /* line 9, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_alerts.scss */
@@ -6687,7 +6687,7 @@ a.thumbnail.active {
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 /* line 16, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_alerts.scss */
 .alert h4 {
@@ -6812,7 +6812,7 @@ a.thumbnail.active {
   height: 20px;
   margin-bottom: 20px;
   background-color: whitesmoke;
-  border-radius: 0px;
+  border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -6826,7 +6826,7 @@ a.thumbnail.active {
   line-height: 20px;
   color: white;
   text-align: center;
-  background-color: #6aa6ff;
+  background-color: #337ab7;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   -webkit-transition: width 0.6s ease;
@@ -6984,14 +6984,14 @@ a.thumbnail.active {
 }
 /* line 31, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_list-group.scss */
 .list-group-item:first-child {
-  border-top-right-radius: 0px;
-  border-top-left-radius: 0px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
 }
 /* line 34, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_list-group.scss */
 .list-group-item:last-child {
   margin-bottom: 0;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 /* line 47, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_list-group.scss */
@@ -7037,8 +7037,8 @@ button.list-group-item {
 .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
   z-index: 2;
   color: white;
-  background-color: #6aa6ff;
-  border-color: #6aa6ff;
+  background-color: #337ab7;
+  border-color: #337ab7;
 }
 /* line 98, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_list-group.scss */
 .list-group-item.active .list-group-item-heading,
@@ -7052,7 +7052,7 @@ button.list-group-item {
 }
 /* line 101, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_list-group.scss */
 .list-group-item.active .list-group-item-text, .list-group-item.active:hover .list-group-item-text, .list-group-item.active:focus .list-group-item-text {
-  color: white;
+  color: #c7ddef;
 }
 
 /* line 4, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_list-group.scss */
@@ -7204,22 +7204,22 @@ button.list-group-item-danger.active:focus {
   margin-bottom: 20px;
   background-color: white;
   border: 1px solid transparent;
-  border-radius: 0px;
+  border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 /* line 16, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
-.panel-body, .profile .profile-body {
+.panel-body {
   padding: 15px;
 }
 /* line 15, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
-.panel-body:before, .profile .profile-body:before, .panel-body:after, .profile .profile-body:after {
+.panel-body:before, .panel-body:after {
   content: " ";
   display: table;
 }
 /* line 19, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
-.panel-body:after, .profile .profile-body:after {
+.panel-body:after {
   clear: both;
 }
 
@@ -7227,8 +7227,8 @@ button.list-group-item-danger.active:focus {
 .panel-heading {
   padding: 10px 15px;
   border-bottom: 1px solid transparent;
-  border-top-right-radius: -1px;
-  border-top-left-radius: -1px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
 }
 /* line 27, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel-heading > .dropdown .dropdown-toggle {
@@ -7256,8 +7256,8 @@ button.list-group-item-danger.active:focus {
   padding: 10px 15px;
   background-color: whitesmoke;
   border-top: 1px solid #dddddd;
-  border-bottom-right-radius: -1px;
-  border-bottom-left-radius: -1px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 
 /* line 64, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
@@ -7275,15 +7275,15 @@ button.list-group-item-danger.active:focus {
 .panel > .list-group:first-child .list-group-item:first-child,
 .panel > .panel-collapse > .list-group:first-child .list-group-item:first-child {
   border-top: 0;
-  border-top-right-radius: -1px;
-  border-top-left-radius: -1px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
 }
 /* line 82, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .list-group:last-child .list-group-item:last-child,
 .panel > .panel-collapse > .list-group:last-child .list-group-item:last-child {
   border-bottom: 0;
-  border-bottom-right-radius: -1px;
-  border-bottom-left-radius: -1px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 /* line 89, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .panel-heading + .panel-collapse > .list-group .list-group-item:first-child {
@@ -7317,16 +7317,16 @@ button.list-group-item-danger.active:focus {
 /* line 122, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:first-child,
 .panel > .table-responsive:first-child > .table:first-child {
-  border-top-right-radius: -1px;
-  border-top-left-radius: -1px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
 }
 /* line 127, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:first-child > thead:first-child > tr:first-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child {
-  border-top-left-radius: -1px;
-  border-top-right-radius: -1px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 /* line 132, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:first-child > thead:first-child > tr:first-child td:first-child,
@@ -7337,7 +7337,7 @@ button.list-group-item-danger.active:focus {
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child {
-  border-top-left-radius: -1px;
+  border-top-left-radius: 3px;
 }
 /* line 136, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:first-child > thead:first-child > tr:first-child td:last-child,
@@ -7348,21 +7348,21 @@ button.list-group-item-danger.active:focus {
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child {
-  border-top-right-radius: -1px;
+  border-top-right-radius: 3px;
 }
 /* line 144, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:last-child,
 .panel > .table-responsive:last-child > .table:last-child {
-  border-bottom-right-radius: -1px;
-  border-bottom-left-radius: -1px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 /* line 149, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:last-child > tbody:last-child > tr:last-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child {
-  border-bottom-left-radius: -1px;
-  border-bottom-right-radius: -1px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 /* line 154, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:last-child > tbody:last-child > tr:last-child td:first-child,
@@ -7373,7 +7373,7 @@ button.list-group-item-danger.active:focus {
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child {
-  border-bottom-left-radius: -1px;
+  border-bottom-left-radius: 3px;
 }
 /* line 158, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel > .table:last-child > tbody:last-child > tr:last-child td:last-child,
@@ -7384,16 +7384,13 @@ button.list-group-item-danger.active:focus {
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child {
-  border-bottom-right-radius: -1px;
+  border-bottom-right-radius: 3px;
 }
 /* line 167, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
-.panel > .panel-body + .table, .profile .panel > .profile-body + .table,
+.panel > .panel-body + .table,
 .panel > .panel-body + .table-responsive,
-.profile .panel > .profile-body + .table-responsive,
 .panel > .table + .panel-body,
-.profile .panel > .table + .profile-body,
-.panel > .table-responsive + .panel-body,
-.profile .panel > .table-responsive + .profile-body {
+.panel > .table-responsive + .panel-body {
   border-top: 1px solid #dddddd;
 }
 /* line 171, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
@@ -7471,7 +7468,7 @@ button.list-group-item-danger.active:focus {
 /* line 226, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel-group .panel {
   margin-bottom: 0;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 /* line 230, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel-group .panel + .panel {
@@ -7482,7 +7479,7 @@ button.list-group-item-danger.active:focus {
   border-bottom: 0;
 }
 /* line 239, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
-.panel-group .panel-heading + .panel-collapse > .panel-body, .panel-group .profile .panel-heading + .panel-collapse > .profile-body, .profile .panel-group .panel-heading + .panel-collapse > .profile-body,
+.panel-group .panel-heading + .panel-collapse > .panel-body,
 .panel-group .panel-heading + .panel-collapse > .list-group {
   border-top: 1px solid #dddddd;
 }
@@ -7491,7 +7488,7 @@ button.list-group-item-danger.active:focus {
   border-top: 0;
 }
 /* line 246, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
-.panel-group .panel-footer + .panel-collapse .panel-body, .panel-group .panel-footer + .panel-collapse .profile .profile-body, .profile .panel-group .panel-footer + .panel-collapse .profile-body {
+.panel-group .panel-footer + .panel-collapse .panel-body {
   border-bottom: 1px solid #dddddd;
 }
 
@@ -7506,7 +7503,7 @@ button.list-group-item-danger.active:focus {
   border-color: #dddddd;
 }
 /* line 11, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-default > .panel-heading + .panel-collapse > .panel-body, .profile .panel-default > .panel-heading + .panel-collapse > .profile-body {
+.panel-default > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #dddddd;
 }
 /* line 14, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
@@ -7515,32 +7512,32 @@ button.list-group-item-danger.active:focus {
   background-color: #333333;
 }
 /* line 20, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-default > .panel-footer + .panel-collapse > .panel-body, .profile .panel-default > .panel-footer + .panel-collapse > .profile-body {
+.panel-default > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #dddddd;
 }
 
 /* line 257, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
 .panel-primary {
-  border-color: #6aa6ff;
+  border-color: #337ab7;
 }
 /* line 6, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-primary > .panel-heading {
   color: white;
-  background-color: #6aa6ff;
-  border-color: #6aa6ff;
+  background-color: #337ab7;
+  border-color: #337ab7;
 }
 /* line 11, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-primary > .panel-heading + .panel-collapse > .panel-body, .profile .panel-primary > .panel-heading + .panel-collapse > .profile-body {
-  border-top-color: #6aa6ff;
+.panel-primary > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #337ab7;
 }
 /* line 14, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-primary > .panel-heading .badge {
-  color: #6aa6ff;
+  color: #337ab7;
   background-color: white;
 }
 /* line 20, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-primary > .panel-footer + .panel-collapse > .panel-body, .profile .panel-primary > .panel-footer + .panel-collapse > .profile-body {
-  border-bottom-color: #6aa6ff;
+.panel-primary > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #337ab7;
 }
 
 /* line 260, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_panels.scss */
@@ -7554,7 +7551,7 @@ button.list-group-item-danger.active:focus {
   border-color: #d6e9c6;
 }
 /* line 11, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-success > .panel-heading + .panel-collapse > .panel-body, .profile .panel-success > .panel-heading + .panel-collapse > .profile-body {
+.panel-success > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #d6e9c6;
 }
 /* line 14, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
@@ -7563,7 +7560,7 @@ button.list-group-item-danger.active:focus {
   background-color: #3c763d;
 }
 /* line 20, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-success > .panel-footer + .panel-collapse > .panel-body, .profile .panel-success > .panel-footer + .panel-collapse > .profile-body {
+.panel-success > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #d6e9c6;
 }
 
@@ -7578,7 +7575,7 @@ button.list-group-item-danger.active:focus {
   border-color: #bce8f1;
 }
 /* line 11, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-info > .panel-heading + .panel-collapse > .panel-body, .profile .panel-info > .panel-heading + .panel-collapse > .profile-body {
+.panel-info > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #bce8f1;
 }
 /* line 14, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
@@ -7587,7 +7584,7 @@ button.list-group-item-danger.active:focus {
   background-color: #31708f;
 }
 /* line 20, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-info > .panel-footer + .panel-collapse > .panel-body, .profile .panel-info > .panel-footer + .panel-collapse > .profile-body {
+.panel-info > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #bce8f1;
 }
 
@@ -7602,7 +7599,7 @@ button.list-group-item-danger.active:focus {
   border-color: #faebcc;
 }
 /* line 11, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-warning > .panel-heading + .panel-collapse > .panel-body, .profile .panel-warning > .panel-heading + .panel-collapse > .profile-body {
+.panel-warning > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #faebcc;
 }
 /* line 14, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
@@ -7611,7 +7608,7 @@ button.list-group-item-danger.active:focus {
   background-color: #8a6d3b;
 }
 /* line 20, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-warning > .panel-footer + .panel-collapse > .panel-body, .profile .panel-warning > .panel-footer + .panel-collapse > .profile-body {
+.panel-warning > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #faebcc;
 }
 
@@ -7626,7 +7623,7 @@ button.list-group-item-danger.active:focus {
   border-color: #ebccd1;
 }
 /* line 11, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-danger > .panel-heading + .panel-collapse > .panel-body, .profile .panel-danger > .panel-heading + .panel-collapse > .profile-body {
+.panel-danger > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #ebccd1;
 }
 /* line 14, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
@@ -7635,7 +7632,7 @@ button.list-group-item-danger.active:focus {
   background-color: #a94442;
 }
 /* line 20, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/_panels.scss */
-.panel-danger > .panel-footer + .panel-collapse > .panel-body, .profile .panel-danger > .panel-footer + .panel-collapse > .profile-body {
+.panel-danger > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #ebccd1;
 }
 
@@ -7679,7 +7676,7 @@ button.list-group-item-danger.active:focus {
   margin-bottom: 20px;
   background-color: whitesmoke;
   border: 1px solid #e3e3e3;
-  border-radius: 0px;
+  border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
@@ -7905,7 +7902,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -7957,7 +7954,7 @@ button.close {
   color: white;
   text-align: center;
   background-color: black;
-  border-radius: 0px;
+  border-radius: 4px;
 }
 
 /* line 36, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_tooltip.scss */
@@ -8043,7 +8040,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -8464,7 +8461,7 @@ button.close {
 }
 
 /* line 12, ../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_utilities.scss */
-.center-block, .profile .profile-image {
+.center-block {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -8818,908 +8815,9 @@ button.close {
     display: none !important;
   }
 }
-/* line 1, _body.scss */
-* {
-  margin: 0;
-}
-
-/* line 5, _body.scss */
-html, body {
-  height: 100%;
-  background-color: #333333;
-}
-
-/* line 10, _body.scss */
-.wrapper {
-  height: auto;
-  margin: 0 auto -40px;
-  background-image: url("../images/blur.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  /* the bottom margin is the negative value of the footer's height */
-}
-
-/* line 19, _body.scss */
-.dev-wrapper {
-  height: auto;
-  margin: 0 auto -40px;
-  background-image: url("../images/dev-hero.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  /* the bottom margin is the negative value of the footer's height */
-}
-
-/* line 26, _body.scss */
-.marketing-block {
-  background-image: url("../images/blur.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-/* line 30, _body.scss */
-.marketing-block h2, .marketing-block p {
-  color: #fff;
-}
-
-/* line 34, _body.scss */
-.blur-background {
-  background-image: url("../images/blur.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-/* line 39, _body.scss */
-.dev-background {
-  background-image: url("../images/dev-hero.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-/* line 45, _body.scss */
-.footer {
-  background-color: #333333;
-  height: 40px;
-}
-/* line 49, _body.scss */
-.footer > .row > h6, .profile .footer > .profile-body > h6 {
-  color: #777777;
-}
-
-/* line 57, _body.scss */
-.body-content {
-  margin: 0px;
-  bottom: 0px;
-  overflow: hidden;
-}
-
-/* line 63, _body.scss */
-.body-left {
-  padding: 20px;
-  height: 100%;
-  float: left;
-  /*background-color: rgba(0,0,0,0.5);*/
-}
-
-/* line 70, _body.scss */
-.body-right {
-  padding: 20px;
-  height: 100%;
-  float: left;
-}
-
-/* line 83, _body.scss */
-.default-background {
-  background-image: url("../images/blur.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  /* the bottom margin is the negative value of the footer's height */
-}
-
-/* line 6, _fonts.scss */
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  font-weight: 500;
-  line-height: 1.1;
-}
-/* line 10, _fonts.scss */
-h1 small,
-h1 .small, h2 small,
-h2 .small, h3 small,
-h3 .small, h4 small,
-h4 .small, h5 small,
-h5 .small, h6 small,
-h6 .small,
-.h1 small,
-.h1 .small, .h2 small,
-.h2 .small, .h3 small,
-.h3 .small, .h4 small,
-.h4 .small, .h5 small,
-.h5 .small, .h6 small,
-.h6 .small {
-  font-weight: normal;
-  line-height: 1;
-  color: #777777;
-}
-
-/* line 17, _fonts.scss */
-h1, .h1 {
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: inherit;
-}
-
-/* line 22, _fonts.scss */
-h2, .h2 {
-  font-family: "Montserrat", serif;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #3869b2;
-}
-
-/* line 29, _fonts.scss */
-h3, .h3 {
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: inherit;
-}
-
-/* line 34, _fonts.scss */
-h4, .h4 {
-  font-family: "Montserrat", serif;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #3869b2;
-}
-
-/* line 42, _fonts.scss */
-h5, .h5,
-h6, .h6 {
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: inherit;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-/* line 49, _fonts.scss */
-.capitalize {
-  text-transform: capitalize;
-}
-
-/* line 53, _fonts.scss */
-.fa-inline {
-  margin-right: 10px;
-}
-
-/* line 56, _fonts.scss */
-.success {
-  color: #6aa6ff;
-}
-
-/* line 59, _fonts.scss */
-.text-white {
-  color: #fff;
-}
-
-/* line 3, _images.scss */
-.img-navbar-avatar {
-  max-width: 30px;
-  max-height: 30px;
-  margin: 10px;
-}
-
-/* line 10, _images.scss */
+/* line 46, main.scss */
 .img-navbar-logo {
   max-width: 30px;
   max-height: 30px;
   margin: -5px 10px;
-}
-
-/* line 1, _profile.scss */
-.profile {
-  height: 100%;
-}
-/* line 7, _profile.scss */
-.profile .profile-body {
-  text-align: center;
-}
-/* line 16, _profile.scss */
-.profile .profile-image {
-  margin-bottom: 20px;
-}
-/* line 19, _profile.scss */
-.profile .profile-image img {
-  max-width: 100px;
-  max-height: 100px;
-  border: 3px solid #fff;
-}
-/* line 30, _profile.scss */
-.profile .profile-content > h4, .profile .profile-content p {
-  color: #fff;
-}
-
-/* line 40, _profile.scss */
-.profile-divider {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
-}
-
-/* line 4, _timeline-nav.scss */
-.timeline-graph {
-  border-bottom: 1px solid #ccc;
-  width: 100%;
-}
-
-/* line 9, _timeline-nav.scss */
-.plotPoint {
-  fill: #fff;
-  stroke: #6aa6ff;
-  stroke-width: 3;
-  cursor: pointer;
-}
-
-/* line 16, _timeline-nav.scss */
-.plotPoint:hover {
-  fill: #6aa6ff;
-}
-
-/* line 20, _timeline-nav.scss */
-.d3-tip {
-  line-height: 1;
-  padding: 10px;
-  background: #6aa6ff;
-  color: #fff;
-  border-radius: 0px;
-  pointer-events: none;
-  margin: -10px 0 0 0;
-}
-
-/* Creates a small triangle extender for the tooltip */
-/* line 31, _timeline-nav.scss */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: #6aa6ff;
-  position: absolute;
-  pointer-events: none;
-}
-
-/* Northward tooltips */
-/* line 43, _timeline-nav.scss */
-.d3-tip.n:after {
-  content: "\25BC";
-  margin: -4px 0 0 0;
-  top: 100%;
-  left: 0;
-  text-align: center;
-}
-
-/* Eastward tooltips */
-/* line 52, _timeline-nav.scss */
-.d3-tip.e:after {
-  content: "\25C0";
-  margin: -4px 0 0 0;
-  top: 50%;
-  left: -8px;
-}
-
-/* Southward tooltips */
-/* line 60, _timeline-nav.scss */
-.d3-tip.s:after {
-  content: "\25B2";
-  margin: 0 0 1px 0;
-  top: -8px;
-  left: 0;
-  text-align: center;
-}
-
-/* Westward tooltips */
-/* line 69, _timeline-nav.scss */
-.d3-tip.w:after {
-  content: "\25B6";
-  margin: -4px 0 0 -1px;
-  top: 50%;
-  left: 100%;
-}
-
-/* line 3, _timeline-vertical.scss */
-.timeline-side {
-  padding-top: 20px;
-  background-image: url("../images/bg-line.png");
-  background-repeat: repeat-y;
-  background-position: 8.2% 0%;
-}
-@media (max-width: 991px) {
-  /* line 3, _timeline-vertical.scss */
-  .timeline-side {
-    background: none;
-  }
-}
-@media (min-width: 768px) {
-  /* line 3, _timeline-vertical.scss */
-  .timeline-side {
-    background-image: url("../images/bg-line.png");
-    background-repeat: repeat-y;
-    background-position: 8.2% 0%;
-  }
-}
-
-/* line 21, _timeline-vertical.scss */
-.timeline-entry-icon, .timeline-entry-icon-medication, .timeline-entry-icon-medication-inactive {
-  background: #fff;
-  height: 50px;
-  width: 50px;
-  box-shadow: 0 0 0 4px #6aa6ff, 0 3px 0 4px rgba(0, 0, 0, 0.05);
-  line-height: 3.5em;
-  position: relative;
-  bottom: -20px;
-  z-index: 100;
-}
-/* line 32, _timeline-vertical.scss */
-.timeline-entry-icon i, .timeline-entry-icon-medication i, .timeline-entry-icon-medication-inactive i {
-  color: #6aa6ff;
-}
-
-/* line 37, _timeline-vertical.scss */
-.timeline-entry-icon-medication {
-  height: 90px;
-  width: 90px;
-  position: initial;
-}
-
-/* line 44, _timeline-vertical.scss */
-.timeline-entry-icon-medication-inactive {
-  background: #fff;
-  box-shadow: 0 0 0 4px #777777, 0 3px 0 4px rgba(0, 0, 0, 0.05);
-  position: relative;
-  overflow: hidden;
-  /*  @extend .img-circle;
-    background-color: #fff;
-    height: 50px;
-    width: 50px;
-    border-radius: 25px;
-    i {
-      font-size: 3em
-    }*/
-}
-/* line 51, _timeline-vertical.scss */
-.timeline-entry-icon-medication-inactive i {
-  color: #777777;
-  /*font-size: 14px;*/
-}
-
-/* line 64, _timeline-vertical.scss */
-.overlay {
-  font-size: 28px;
-  display: block;
-  text-align: center;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-/* line 71, _timeline-vertical.scss */
-.overlay i {
-  display: none;
-}
-
-/* line 74, _timeline-vertical.scss */
-.overlay::before {
-  content: "\\";
-  overflow: hidden !important;
-  position: absolute;
-  font-size: 100px;
-  font-weight: 400;
-  top: -30px;
-  left: -4px;
-  bottom: -50px;
-  color: #777;
-  -ms-transform: rotate(-14deg);
-  -webkit-transform: rotate(-14deg);
-  transform: rotate(-14deg);
-}
-
-/* line 89, _timeline-vertical.scss */
-.timeline-entry-icon-medication img {
-  width: 90px;
-  height: 90px;
-  -webkit-border-radius: 45px;
-}
-
-/*.timeline-entry-icon-medication-inactive img {
-  width: 90px;
-  height: 90px;
-  -webkit-border-radius: 45px;
-}*/
-/* line 101, _timeline-vertical.scss */
-.timeline-entry-icon i, .timeline-entry-icon-medication i, .timeline-entry-icon-medication-inactive i {
-  vertical-align: middle;
-}
-
-/* line 105, _timeline-vertical.scss */
-.timeline-entry-icon-medication i {
-  vertical-align: text-top;
-  line-height: 1.4em;
-  font-size: 3em;
-}
-
-/* line 111, _timeline-vertical.scss */
-.timeline-entry-icon:hover, .timeline-entry-icon-medication:hover, .timeline-entry-icon-medication-inactive:hover {
-  cursor: default;
-  background: #6aa6ff;
-}
-/* line 114, _timeline-vertical.scss */
-.timeline-entry-icon:hover i, .timeline-entry-icon-medication:hover i, .timeline-entry-icon-medication-inactive:hover i {
-  color: #fff;
-}
-
-/* line 120, _timeline-vertical.scss */
-.timeline-entry-icon-medication-inactive:hover {
-  cursor: default;
-  background: #777777;
-}
-/* line 123, _timeline-vertical.scss */
-.timeline-entry-icon-medication-inactive:hover i {
-  color: #fff;
-}
-
-/* line 128, _timeline-vertical.scss */
-.timeline-footer circle {
-  fill: #ccc;
-}
-@media (max-width: 991px) {
-  /* line 128, _timeline-vertical.scss */
-  .timeline-footer circle {
-    display: none;
-  }
-}
-@media (min-width: 768px) {
-  /* line 128, _timeline-vertical.scss */
-  .timeline-footer circle {
-    display: inherit;
-  }
-}
-
-/* line 3, _timeline-entry.scss */
-.timeline-entry {
-  border: 1px solid #ccc;
-}
-
-/* line 7, _timeline-entry.scss */
-.sub-entry {
-  border-top: 1px solid #ccc;
-  margin-top: 20px;
-}
-
-/* line 1, _buttons.scss */
-.btn {
-  padding: 10px 20px;
-  font-size: 12px;
-  line-height: 1.428571429;
-  border-radius: 0px;
-  font-weight: normal;
-  font-family: "Montserrat", serif;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-@media (max-width: 1051px) {
-  /* line 10, _buttons.scss */
-  .btn-responsive {
-    padding: 4px 4px;
-    font-size: 65%;
-    line-height: 1;
-    min-width: 123px;
-  }
-  /* line 16, _buttons.scss */
-  .btn-responsive i {
-    font-size: 3em;
-  }
-
-  /* line 20, _buttons.scss */
-  .h6-responsive {
-    visibility: hidden;
-  }
-}
-/* line 27, _buttons.scss */
-.btn-group-vertical .btn {
-  border-radius: 0px;
-}
-/* line 31, _buttons.scss */
-.btn-group-vertical .btn:first-child:not(:last-child) {
-  border-top-right-radius: 0px;
-}
-/* line 35, _buttons.scss */
-.btn-group-vertical .btn:last-child:not(:first-child) {
-  border-bottom-left-radius: 0px;
-}
-/* line 39, _buttons.scss */
-.btn-group-vertical .btn.btn-default {
-  border-color: #ddd;
-}
-/* line 42, _buttons.scss */
-.btn-group-vertical .btn.btn-info {
-  background-color: transparent;
-  border-color: #fff;
-  border-width: 2px;
-}
-/* line 47, _buttons.scss */
-.btn-group-vertical .btn.btn-info.active, .btn-group-vertical .btn.btn-info:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-}
-
-/* line 52, _buttons.scss */
-.btn-group {
-  float: right;
-}
-
-/* line 1, _tables.scss */
-.table .table {
-  background-color: transparent;
-  margin-bottom: 0px;
-}
-
-/* line 6, _tables.scss */
-.table .update-spacer {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-top: 0px;
-}
-
-/* line 14, _tables.scss */
-.table tbody tr:hover td.update-spacer {
-  background-color: transparent;
-}
-
-/* line 18, _tables.scss */
-.bordered {
-  border: 1px solid #ccc;
-}
-
-/* line 22, _tables.scss */
-.table i {
-  color: #6aa6ff;
-}
-
-/* line 25, _tables.scss */
-.table.panel {
-  padding: 0px;
-}
-
-/* line 2, _landing.scss */
-.landing-advertising {
-  margin: 50px;
-}
-
-/* line 6, _landing.scss */
-.landing-panel {
-  background: #fff;
-  padding: 20px;
-  background-image: url("../images/hero3-optimized.jpg");
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: 1600px;
-  background-color: #333333;
-  min-height: 400px;
-}
-/* line 17, _landing.scss */
-.landing-panel h1 {
-  color: #fff;
-}
-
-/* line 21, _landing.scss */
-.dev-landing-panel {
-  background: #fff;
-  padding: 20px;
-  background-image: url("../images/dev-hero.jpg");
-  background-repeat: no-repeat;
-  background-size: 1600px;
-  background-color: #333333;
-  min-height: 400px;
-}
-/* line 31, _landing.scss */
-.dev-landing-panel h1 {
-  color: #fff;
-}
-
-/* line 36, _landing.scss */
-.icon-circle {
-  background: #6aa6ff;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto;
-  text-align: center;
-}
-/* line 44, _landing.scss */
-.icon-circle i {
-  margin-top: 20px;
-  color: #fff;
-}
-
-/* line 1, _links.scss */
-a:hover {
-  cursor: pointer;
-}
-
-/* line 1, _login.scss */
-.login-alert {
-  color: #d9534f;
-  margin: 10px;
-}
-
-/* line 1, _panels.scss */
-.panel {
-  border-color: #ddd;
-  border-radius: 0px;
-  background-color: rgba(255, 255, 255, 0.75);
-}
-
-/* line 6, _panels.scss */
-.panel.panel-transparent {
-  background-color: transparent;
-}
-
-/* line 10, _panels.scss */
-.print-record {
-  margin: 0px;
-  border-style: none;
-  font-size: 10px;
-}
-/* line 11, _panels.scss */
-.print-record td {
-  padding: 5px;
-  vertical-align: top;
-}
-/* line 15, _panels.scss */
-.print-record table {
-  margin: 0px;
-}
-/* line 21, _panels.scss */
-.print-record h5, .print-record h4 {
-  font-size: 12px !important;
-}
-/* line 24, _panels.scss */
-.print-record .panel {
-  margin: 0px;
-}
-/* line 28, _panels.scss */
-.print-record .profile-content > h4, .print-record .profile-content p {
-  color: #000 !important;
-}
-
-/* line 1, _navbar.scss */
-.navbar-brand {
-  padding: 12px 0;
-}
-
-/* line 5, _navbar.scss */
-.navbar-default {
-  background: #000;
-  border: 0px;
-  border-radius: 0px;
-  margin-bottom: 0px;
-}
-
-/* line 19, _navbar.scss */
-.navbar-default {
-  background-color: #333333;
-  border-color: #777777;
-}
-/* line 22, _navbar.scss */
-.navbar-default .navbar-brand {
-  color: white;
-}
-/* line 24, _navbar.scss */
-.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
-  color: #6aa6ff;
-}
-/* line 26, _navbar.scss */
-.navbar-default .navbar-text {
-  color: white;
-}
-/* line 30, _navbar.scss */
-.navbar-default .navbar-nav > li > a {
-  color: white;
-  font-weight: normal;
-  font-family: "Montserrat", serif;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-/* line 36, _navbar.scss */
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: #6aa6ff;
-}
-/* line 39, _navbar.scss */
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  color: #6aa6ff;
-  background-color: #777777;
-}
-/* line 43, _navbar.scss */
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-  color: #6aa6ff;
-  background-color: #777777;
-}
-/* line 46, _navbar.scss */
-.navbar-default .navbar-toggle {
-  border-color: #777777;
-}
-/* line 48, _navbar.scss */
-.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-  background-color: #777777;
-}
-/* line 50, _navbar.scss */
-.navbar-default .navbar-toggle .icon-bar {
-  background-color: white;
-}
-/* line 53, _navbar.scss */
-.navbar-default .navbar-collapse,
-.navbar-default .navbar-form {
-  border-color: white;
-}
-/* line 55, _navbar.scss */
-.navbar-default .navbar-link {
-  color: white;
-}
-/* line 57, _navbar.scss */
-.navbar-default .navbar-link:hover {
-  color: #6aa6ff;
-}
-
-@media (max-width: 767px) {
-  /* line 61, _navbar.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: white;
-  }
-  /* line 63, _navbar.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #6aa6ff;
-  }
-  /* line 66, _navbar.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #6aa6ff;
-    background-color: #777777;
-  }
-}
-/* line 3, _files.scss */
-form .button-well {
-  margin: 10px;
-}
-
-/* line 7, _files.scss */
-.diff .diff-left {
-  padding-right: 20px;
-}
-
-/* line 11, _files.scss */
-.diff .diff-right {
-  padding-left: 20px;
-}
-
-/* line 2, _modals.scss */
-.modal-dialog {
-  width: 80%;
-}
-
-/* line 6, _modals.scss */
-.modal-content {
-  text-align: left;
-  background-color: #eee;
-}
-
-/* line 12, _modals.scss */
-.modal-open {
-  overflow: scroll;
-}
-
-/* line 16, _modals.scss */
-.modal-body .table {
-  background-color: #eee;
-}
-
-/* line 20, _modals.scss */
-.modal-body .navbar {
-  background-color: #eee;
-}
-
-/* line 24, _modals.scss */
-.modal-body .navbar .btn {
-  color: #6aa6ff;
-}
-
-/* line 28, _modals.scss */
-.modal-body li {
-  width: 100%;
-}
-
-/* line 33, _modals.scss */
-.modal-body span {
-  font-size: 14px;
-}
-
-/* line 37, _modals.scss */
-.modal-body .control-label {
-  padding-right: 11px;
-}
-
-/*
-  Icon Font: fontcustom
-*/
-@font-face {
-  font-family: "fontcustom";
-  src: url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.eot");
-  src: url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.eot?#iefix") format("embedded-opentype"), url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.woff") format("woff"), url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.ttf") format("truetype"), url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.svg#fontcustom") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  @font-face {
-    font-family: "fontcustom";
-    src: url("../fonts/fontcustom/fontcustom_70b7fa0ed885149a1bdc067ddb1fa080.svg#fontcustom") format("svg");
-}
-}
-/* line 23, _fontcustom.scss */
-[data-icon]:before {
-  content: attr(data-icon);
-}
-
-/* line 29, _fontcustom.scss */
-[data-icon]:before,
-.icon-inhaler:before,
-.icon-liquid:before,
-.icon-pill:before,
-.icon-syringe:before {
-  display: inline-block;
-  font-family: "fontcustom";
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  line-height: 1;
-  text-decoration: inherit;
-  text-rendering: optimizeLegibility;
-  text-transform: none;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-}
-
-/* line 44, _fontcustom.scss */
-.icon-inhaler:before {
-  content: "\f104";
-}
-
-/* line 45, _fontcustom.scss */
-.icon-liquid:before {
-  content: "\f105";
-}
-
-/* line 46, _fontcustom.scss */
-.icon-pill:before {
-  content: "\f106";
-}
-
-/* line 47, _fontcustom.scss */
-.icon-syringe:before {
-  content: "\f107";
-}
-
-/* line 68, main.scss */
-.update-selected {
-  background-color: #def;
-  color: black;
-}
-
-/* line 74, main.scss */
-.update-pill :hover {
-  color: #fff;
-}
-
-/* line 79, main.scss */
-.img-header {
-  display: block;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  float: left !important;
-  margin-top: -10px;
-  margin-left: -10px;
-  margin-right: 10px;
 }
