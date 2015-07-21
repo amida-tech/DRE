@@ -59,10 +59,11 @@
     </div>
 </div>
 <div class="container" ng-hide="vm.showForm">
-    <div>
-        <h3 class="text-center"> CLIENT LIST ({{vm.clientsList.length}}): </h3>
+    <div class="text-center">
+        <h3 class="text-center"> CLIENT LIST ({{vm.clientsList.length}} total): </h3>
+        <label>Search: <input ng-model="searchText"></label>
     </div>
-    <div class="panel panel-default col-sm-offset-3 col-sm-6" ng-repeat="client in vm.clientsList">
+    <div class="panel panel-default col-sm-offset-3 col-sm-6" ng-repeat="client in vm.clientsList | filter:searchText">
         <table class="table">
             <th>{{client.name}}</th>
             <th><button class="pull-right" ng-click="vm.deleteClient(client.name)"><i class="fa fa-trash-o"></i></button></th>
