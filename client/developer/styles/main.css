@@ -8821,3 +8821,8 @@ button.close {
   max-height: 30px;
   margin: -5px 10px;
 }
+
+/* line 51, main.scss */
+.container {
+  min-height: 300px;
+}
