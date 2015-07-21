@@ -4,18 +4,14 @@
         <!--div ng-if="false" class="container-fluid"-->
         <div style="margin: 0px 20px;">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logout-menu">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="#/"><img class="img-navbar-logo" src="images/bb-logo-vector.png">
                 </a>
             </div>
-            <div class="collapse navbar-collapse" id="logout-menu">
+            <div ng-show="isAuthorized" class="collapse navbar-collapse" id="logout-menu">
                 <ul class="nav navbar-nav navbar-right ">
-                    <li><a ng-click="vm.devLogout()">Log Out</a>
+                    <li><a class="btn" ng-click="vm.showAddClient()">Add Client</a>
+                    </li>
+                    <li><a class="btn" ng-click="vm.devLogout()">Log Out</a>
                     </li>
                 </ul>
 
@@ -23,50 +19,51 @@
         </div>
     </div>
 </div>
-<div class="panel col-sm-4 col-sm-offset-4" ng-show="vm.showForm">
-    <h3>Add a New Client:</h3>
+<div class="panel panel-default col-sm-4 col-sm-offset-4" ng-show="vm.showForm">
+    <div><h3>Add a New Client:</h3></div>
+    <div class="col-sm-10 col-sm-offset-1">
     <form name="addclient" novalidate>
-        <div class="row">
+        <div class="row form-group">
             <label for="clientName">Client Name:</label>
             <input name="clientName" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.client_name"/>
         </div>
-        <div class="row">
+        <div class="row form-group">
             <label for="launchUri">Launch Uri:</label>
             <input name="launchUri" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.launch_uri"/>
         </div>
-        <div class="row">
+        <div class="row form-group">
             <label for="logoUri">Logo Uri:</label>
             <input name="logoUri" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.logo_uri"/>
         </div>
-        <div class="row">
+        <div class="row form-group">
             <label for="redirectUri">Redirect Uri:</label>
             <input name="redirectUri" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.redirect_uri"/>
         </div>
-        <div class="row">        
+        <div class="row form-group">        
             <label for="authMethod">Token Endpoint Auth Method:</label>
             <input name="authMethod" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.token_endpoint_auth_method"/>
         </div>
-        <div class="row">        
+        <div class="row form-group">        
             <label for="grantType">Grant Types:</label>
             <input name="grantType" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.grant_types"/>
         </div>
-        <div class="row">        
+        <div class="row form-group">        
             <label for="clientScope">Scope:</label>
             <input name="clientScope" class="col-sm-10 col-sm-offset-1" type="text" ng-model="vm.clientInfo.scope"/>
         </div>
-        <div class="row">
-            <button class="btn btn-primary pull-right" type="submit" ng-click="vm.addClient()">Save</button>
-            <button class="btn btn-defaul" type="submit" ng-click="vm.cancelAdd()">Cancel</button>
-        </div>
     </form>
+    </div>
+    <div class="row form-group">
+        <button class="btn btn-primary pull-right" type="submit" ng-click="vm.addClient()">Save</button>
+        <button class="btn btn-defaul" type="submit" ng-click="vm.cancelAdd()">Cancel</button>
+    </div>
 </div>
-<div class="panel" ng-hide="vm.showForm">
+<div ng-hide="vm.showForm">
     <div>
-        <button class="pull-right col-sm-3" ng-click="vm.showAddClient()">Add a Client</button>
         <h3 class="text-center"> CLIENT LIST ({{vm.clientsList.length}}): </h3>
     </div>
-    <div class="panel col-sm-offset-3 col-sm-6" ng-repeat="client in vm.clientsList">
-        <table class="table table-hover">
+    <div class="panel panel-default col-sm-offset-3 col-sm-6" ng-repeat="client in vm.clientsList">
+        <table class="table">
             <th>{{client.name}}</th>
             <th><button class="pull-right" ng-click="vm.deleteClient(client.name)"><i class="fa fa-trash-o"></i></button></th>
             <tbody>
