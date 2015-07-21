@@ -45,6 +45,9 @@ angular
                 requireLogin: true,
                 permissions: 'dev'
             })
+            .when('/403', {
+                templateUrl: '/views/403.html'
+            })
             .otherwise({
                 redirectTo: '/developer'
             });

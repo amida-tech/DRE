@@ -45,6 +45,9 @@ angular
                 requireLogin: true,
                 permissions: 'admin'
             })
+            .when('/403', {
+                templateUrl: '/views/403.html'
+            })
             .otherwise({
                 redirectTo: '/admin'
             });
@@ -63,12 +66,12 @@ angular
                         $location.path("/admin/login");
                     }
                 }
-                if (next.permissions !== undefined && next.permissions === 'dev') {
+                if (next.permissions !== undefined && next.permissions === 'admin') {
                     authentication.adminStatus(function (err, role) {
                         if (err) {
                             console.log('NOT AUTHORIZED FOR THIS ROUTE:', err);
                             event.preventDefault();
-                            $location.path("/admin/login");
+                            $location.path("/403");
                         }
                     });
 
