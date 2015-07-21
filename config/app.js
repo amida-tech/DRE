@@ -73,8 +73,8 @@ module.exports = function () {
     //app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
     //to run admin or developer apps comment out app and uncomment the branch you want to run
-    app.set('client_location', path.resolve(__dirname, '../client/app'));
-    // app.set('client_location', path.resolve(__dirname, '../client/admin'));
+    // app.set('client_location', path.resolve(__dirname, '../client/app'));
+    app.set('client_location', path.resolve(__dirname, '../client/admin'));
     // app.set('client_location', path.resolve(__dirname, '../client/developer'));
 
     //app.set('client_location', path.resolve(__dirname, '../phr-prototype/dist'));
