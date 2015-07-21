@@ -10,10 +10,10 @@ module.exports = function (grunt) {
     // Unified Watch Object
     var watchFiles = {
         serverJS: ['Gruntfile.js', 'server.js', 'lib/**/*.js'],
-        clientViews: ['client/developer/views/**/*.html', 'client/developer/index.html'],
-        clientJS: ['client/developer/scripts/**/*.js'],
-        clientCSS: ['client/developer/styles/*.css'],
-        clientSCSS: ['client/developer/styles/{,*/}*.{scss,sass}'],
+        clientViews: ['client/app/views/**/*.html', 'client/app/index.html'],
+        clientJS: ['client/app/scripts/**/*.js'],
+        clientCSS: ['client/app/styles/*.css'],
+        clientSCSS: ['client/app/styles/{,*/}*.{scss,sass}'],
         mochaTests: ['test/unit/*.js', 'test/e2e/**/*.js', 'test/e2e/*.js']
     };
 
@@ -226,23 +226,23 @@ module.exports = function (grunt) {
         },
         compass: { //from client
             options: {
-                sassDir: 'client/developer/styles',
+                sassDir: 'client/app/styles',
                 cssDir: 'client/.tmp/styles',
                 generatedImagesDir: 'client/.tmp/images/generated',
-                imagesDir: 'client/developer/images',
-                javascriptsDir: 'client/developer/scripts',
-                fontsDir: 'client/developer/styles/fonts',
-                importPath: 'client/developer/bower_components',
-                httpImagesPath: 'client/developer/images',
-                httpGeneratedImagesPath: 'client/developer/images/generated',
-                httpFontsPath: 'client/developer/styles/fonts',
+                imagesDir: 'client/app/images',
+                javascriptsDir: 'client/app/scripts',
+                fontsDir: 'client/app/styles/fonts',
+                importPath: 'client/app/bower_components',
+                httpImagesPath: 'client/app/images',
+                httpGeneratedImagesPath: 'client/app/images/generated',
+                httpFontsPath: 'client/app/styles/fonts',
                 relativeAssets: false,
                 assetCacheBuster: false,
                 raw: 'Sass::Script::Number.precision = 10\n'
             },
             dist: {
                 options: {
-                    generatedImagesDir: './client/developer/images/generated'
+                    generatedImagesDir: './client/app/images/generated'
                 }
             },
             server: {
@@ -252,8 +252,8 @@ module.exports = function (grunt) {
             },
             dev: { // Another target
                 options: {
-                    sassDir: './client/developer/styles',
-                    cssDir: './client/developer/styles',
+                    sassDir: './client/app/styles',
+                    cssDir: './client/app/styles',
                     debugInfo: false
                 }
             }
