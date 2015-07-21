@@ -100,10 +100,10 @@ To run, use `node server`
 ```
 # you need MongoDB, Redis, Node, and Selenium running
 # option selects which suite of tests to run (populate, scenarios, and/or medications)
-# screenshots and report are saved to ./protractor-result/
+# screenshots and report are saved to ./protractor-test-result/
 
 npm install -g protractor
-protractor client/test/conf.js --suite option
+protractor client/updated_test/conf.js --suite option
 
 ```
 
