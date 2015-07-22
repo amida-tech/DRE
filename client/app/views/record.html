@@ -29,7 +29,7 @@
                             <p ng-if="accountHistory.lastUpdate">Last Updated: {{accountHistory.lastUpdate | date: 'short'}}</p>
                             <p ng-if="!accountHistory.lastUpdate">Last Updated: Never</p>
                         </div>
-                        <div class="col-sm-3" ng-if="entryType==='all'" ng-hide="!accountHistory.lastUpdate">
+                        <div class="col-sm-3" ng-if="entryType==='all' && accountHistory.lastUpdate">
                             <!--<a href="#/print" target="_blank">-->
                             <a href="" ng-click="printModal()">
                                 <button class="btn btn-default btn-responsive" style="color: #6AA6FF">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                     <div class="col-sm-10 col-sm-offset-1 text-center" ng-if="entryType!=='all' && masterMatches.count>0">
-                        <i class="fa fa-flag-o" style="margin-right: 10px;"></i>{{masterMatches.count}} update<span ng-show="masterMatches.count>1">s</span> to your {{entryType}} requiring review.
+                        <i class="fa fa-flag-o" style="margin-right: 10px;"></i>{{masterMatches.count}} update<span ng-if="masterMatches.count>1">s</span> to your {{entryType}} requiring review.
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
         </div>
         <div class="col-sm-12">
             <!--end d3-->
-            <div ng-if="entryType==='all'" ng-hide="!accountHistory.lastUpdate">
+            <div ng-if="entryType==='all' && accountHistory.lastUpdate">
                 <div class="col-sm-12">
                     <!--end d3-->
                     <!--Timeline View-->
