@@ -19,6 +19,7 @@ function FilesImport($location, $window, importService, $http, format, record, d
     vm.hasSubscription = false;
     vm.isAuthorized = false;
     vm.getWeight = getWeight;
+    vm.getWeightHistory = getWeightHistory;
     vm.oauthWithings = oauthWithings;
     vm.subscribeWeight = subscribeWeight;
     vm.unsubscribeWeight = unsubscribeWeight;
@@ -62,6 +63,16 @@ function FilesImport($location, $window, importService, $http, format, record, d
 
     function getWeight() {
         importService.getDailyWeight(function (err) {
+            if (err) {
+                // throw error
+                return;
+            }
+            returnToFiles();
+        });
+    }
+    
+    function getWeightHistory() {
+        importService.getAllWeight(function (err) {
             if (err) {
                 // throw error
                 return;
