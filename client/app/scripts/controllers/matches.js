@@ -70,17 +70,22 @@ function Matches($location, matches, dataservice) {
         }
 
         function getData(section) {
-            matches.getCategory(section).then(function (data) {
-                //console.log('data', data);
-                _.each(data.matches, function (match) {
-                    vm.masterMatches.push({
-                        'category': section,
-                        'data': match
-                    });
-
-                });
-
-                setScopeVars();
+            
+            dataservice.getMatchSection(section, function (err, matches) {
+                    if (err) {
+                        console.log("err: " + err);
+                    } else {
+                        console.log('dataservice match', matches, matches.data);
+                        _.each(matches.data, function (match) {
+                            // console.log(match);
+                            vm.masterMatches.push({
+                                'category': section,
+                                'data': match
+                            });
+        
+                        });
+                        setScopeVars();
+                    }
             });
         }
     }
