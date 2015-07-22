@@ -16,11 +16,11 @@ importService.$inject = ['$http', '$q', 'dataservice', 'history', 'notes'];
 function importService($http, $q, dataservice, history, notes) {
     /* jshint validthis: true */
 
-    this.isAuthorized = function (cb) {
+    this.checkWithingsStatus = function (cb) {
         var authUrl = "/api/v1/oauth/withings/auth";
         $http.get(authUrl)
             .success(function (data) {
-                cb(null, data.bool);
+                cb(null, data);
             })
             .error(function (data) {
                 cb(data);

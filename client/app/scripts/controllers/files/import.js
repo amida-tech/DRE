@@ -16,6 +16,7 @@ FilesImport.$inject = ['$location', '$window', 'importService', '$http', 'format
 function FilesImport($location, $window, importService, $http, format, record, dataservice) {
     /* jshint validthis: true */
     var vm = this;
+    vm.hasSubscription = false;
     vm.isAuthorized = false;
     vm.getWeight = getWeight;
     vm.oauthWithings = oauthWithings;
@@ -35,12 +36,13 @@ function FilesImport($location, $window, importService, $http, format, record, d
                 $location.url('/files/import');
             });
         }
-        importService.isAuthorized(function (err, data) {
+        importService.checkWithingsStatus(function (err, data) {
             if (err) {
                 //throw error
                 return;
             }
-            vm.isAuthorized = data;
+            vm.isAuthorized = data.auth;
+            vm.hasSubscription = data.sub;
         });
     }
 

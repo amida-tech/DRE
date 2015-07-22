@@ -182,7 +182,8 @@ module.exports = function () {
     app.use(withings);
     app.set('consumer-key', process.env.WITHINGS_TOKEN);
     app.set('consumer-secret', process.env.WITHINGS_SECRET);
-    app.set('callback-url', 'http://' + process.env.WITHINGS_URL + ':' + app.get('port') + '/#/files/import');
+    var withingsUrl = process.env.WITHINGS_URL || 'localhost';
+    app.set('callback-url', 'http://' + withingsUrl + ':' + app.get('port') + '/#/files/import');
 
     //Launch MLLP server/listener
     var mllp = require('mllp-node');
