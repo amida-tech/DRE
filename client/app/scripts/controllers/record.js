@@ -196,7 +196,8 @@ angular.module('phrPrototypeApp')
                 }
             }
 
-            if ($scope.dashMetrics.height !== null) {
+            if ($scope.dashMetrics.hasOwnProperty('height')) {
+                console.log("DASH METRICS:", $scope.dashMetrics);
                 //convert height to inches if needed
                 if ($scope.dashMetrics.height.unit === "cm") {
                     $scope.dashMetrics.height.unit = "[in_us]";
@@ -211,7 +212,7 @@ angular.module('phrPrototypeApp')
                 }
             }
 
-            if ($scope.dashMetrics.weight !== null) {
+            if ($scope.dashMetrics.hasOwnProperty('weight')) {
                 //convert weight to lbs
                 if ($scope.dashMetrics.weight.unit === "kg") {
                     $scope.dashMetrics.weight.unit = "[lb_av]";
@@ -231,7 +232,7 @@ angular.module('phrPrototypeApp')
                 BMI = BMI.toFixed(1);
                 return BMI;
             }
-            if ($scope.dashMetrics.weight !== null && $scope.dashMetrics.height !== null) {
+            if ($scope.dashMetrics.hasOwnProperty('weight') && $scope.dashMetrics.hasOwnProperty('height')) {
                 $scope.dashMetrics.bmi = calculateBMI($scope.dashMetrics.weight.value, $scope.dashMetrics.height.value);
             }
         }
