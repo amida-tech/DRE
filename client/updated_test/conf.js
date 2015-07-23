@@ -23,7 +23,7 @@ exports.config = {
     'med_new.js'],
   suites: {
     populate: ['register.js','upload_1.js', 'chart.js','upload_2.js','upload_3.js','logout.js'],
-    scenarios: ['login.js','scenario_1.js','scenario_2.js','match.js','logout.js'],
+    scenarios: ['login.js','scenario_2.js','match.js','logout.js'],
     medications: ['login.js','med_view.js', 'med_new.js','logout.js'],
     original_demo: ['register.js', 'upload_1.js','chart.js', 'scenario_1.js', 'upload_2.js', 'scenario_2.js', 'upload_3.js', 'match.js', 'print.js', 'logout.js']
   },
