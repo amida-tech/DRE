@@ -54,7 +54,6 @@ function Clients($location, $route, authentication, devclient) {
         });
     }
     vm.deleteClient = function (client_name) {
-        console.log(client_name);
         devclient.deleteClient(client_name, function (err) {
             if (err) {
                 console.log("Deleting client error: ", err);
@@ -65,6 +64,24 @@ function Clients($location, $route, authentication, devclient) {
     }
     vm.cancelAdd = function () {
         vm.showForm = false;
+    }
+    vm.approveClient = function (client_name) {
+        devclient.editClient(client_name, true, function (err) {
+            if (err) {
+                console.log("Err: ", err);
+            } else {
+                $route.reload();
+            }
+        });
+    }
+    vm.unapproveClient = function (client_name) {
+        devclient.editClient(client_name, false, function (err) {
+            if (err) {
+                console.log("Err: ", err);
+            } else {
+                $route.reload();
+            }
+        });
     }
 
 }

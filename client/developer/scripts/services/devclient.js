@@ -11,7 +11,7 @@ angular.module('phrDeveloperApp')
     .service('devclient', function devclient($http) {
 
         this.getClients = function (callback) {
-            $http.get('api/v1/developer/clients')
+            $http.get('api/v1/developer/clients/all')
                 .success(function (data) {
                     console.log("retrieval successful");
                     callback(data);
