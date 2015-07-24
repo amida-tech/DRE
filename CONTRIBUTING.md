@@ -9,7 +9,7 @@ When you contribute code, you affirm that the contribution is your original work
 
 ### Non-trivial Contributions (e.g. >100 lines of code, or new functionality)
 
-We require a signed CLA prior to reviewing and merging the Pull Request. Please complete and sign, then scan and email a pdf file of the [Contributor License Agreement](./amida_CLA.pdf) to tech@amida-tech.com
+We require a signed CLA prior to reviewing and merging the Pull Request. Please complete and sign, then scan and email a pdf file of the [Contributor License Agreement](./amida_CLA.pdf) to <tech@amida-tech.com>.
 
 ======
 
