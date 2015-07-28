@@ -49,9 +49,9 @@ module.exports = function (grunt) {
     // Client tasks 
     grunt.registerTask('build', ['jshint', 'jsbeautifier:beautify', 'clean:dist', 'wiredep', 'compass:dev']);
     grunt.registerTask('dev', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'watch']);
-    grunt.registerTask('test', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'protractor:populate', 'protractor:medications', 'protractor:scenarios', 'watch']);
+    grunt.registerTask('test', ['jshint', 'jsbeautifier:beautify', 'compass:dev', 'protractor:original_demo', 'watch']);
     grunt.registerTask('release', ['jshint', 'jsbeautifier:beautify', 'clean:dist', 'wiredep', 'autoprefixer', 'copy:dist', 'copy:styles', 'copy:scripts', 'concurrent:dist', 'cdnify', 'uglify', 'cssmin']);
-    grunt.registerTask('travis-protractor', ['protractor:populate', 'protractor:medications', 'protractor:scenarios']);
+    grunt.registerTask('travis-protractor', ['protractor:original_demo', 'protractor:medications']);
 
     // Project Configuration
     grunt.initConfig({
@@ -180,27 +180,20 @@ module.exports = function (grunt) {
         //protratorjs
         protractor: {
             options: {
-                configFile: "client/test/conf.js", // Default config file 
+                configFile: "client/updated_test/conf.js", // Default config file 
                 keepAlive: false,
-            },
-            populate: {
-                options: {
-                    args: {
-                        suite: 'populate'
-                    }
-                }
-            },
-            scenarios: {
-                options: {
-                    args: {
-                        suite: 'scenarios'
-                    }
-                }
             },
             medications: {
                 options: {
                     args: {
                         suite: 'medications'
+                    }
+                }
+            },
+            original_demo: {
+                options: {
+                    args: {
+                        suite: 'original_demo'
                     }
                 }
             }
