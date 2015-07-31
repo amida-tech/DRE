@@ -4,9 +4,12 @@ var api = request.agent('http://localhost:3000');
 var expect = require('chai').expect;
 var path = require('path');
 var common = require(path.join(__dirname, '../common/common.js'));
+var databaseLocation = 'mongodb://' + 'localhost' + '/' + process.env.DBname || 'tests';
+var database = require('mongodb').Db;
 
-describe('Pre Admin Test Cleanup', function (done) {
-    it('Clear DB', function (done) {
+describe('Pre Test Cleanup', function () {
+
+    it('Clean Database', function (done) {
         common.removeAll(function (err, results) {
             if (err) {
                 done(err);
@@ -15,67 +18,75 @@ describe('Pre Admin Test Cleanup', function (done) {
             }
         });
     });
+
+    it('Login', function (done) {
+        common.adminRegister(api, 'test', 'test', function () {
+            common.adminLogin(api, 'test', 'test', function () {
+                done();
+            });
+        });
+    });
 });
 
-describe('authentication', function (done) {
-    it('admin should be unauthenticated', function (done) {
-        api
-            .get('/api/v1/admin/account')
-            .expect(200)
-            .end(function (err, res) {
+describe('admin', function (done) {
+    // it('admin should be unauthenticated', function (done) {
+    //     api
+    //         .get('/api/v1/admin/account')
+    //         .expect(200)
+    //         .end(function (err, res) {
 
-                if (err) {
-                    throw err;
-                }
-                expect(res.body.authenticated).to.equal(false);
-                done();
-            });
-    });
+    //             if (err) {
+    //                 throw err;
+    //             }
+    //             expect(res.body.authenticated).to.equal(false);
+    //             done();
+    //         });
+    // });
 
-    it('should register admin', function (done) {
-        api
-            .post('/api/v1/admin/register')
-            .send({
-                'username': 'admin@amida-demo.com',
-                'password': 'asdf'
-            })
-            .expect(200)
-            .end(function (err, res) {
-                if (err) {
-                    throw err;
-                }
-                done();
-            });
-    });
+    // it('should register admin', function (done) {
+    //     api
+    //         .post('/api/v1/admin/register')
+    //         .send({
+    //             'username': 'admin@amida-demo.com',
+    //             'password': 'asdf'
+    //         })
+    //         .expect(200)
+    //         .end(function (err, res) {
+    //             if (err) {
+    //                 throw err;
+    //             }
+    //             done();
+    //         });
+    // });
 
-    it('admin should still be unauthenticated', function (done) {
-        api
-            .get('/api/v1/admin/account')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) {
-                    throw err;
-                }
-                expect(res.body.authenticated).to.equal(false);
-                done();
-            });
-    });
+    // it('admin should still be unauthenticated', function (done) {
+    //     api
+    //         .get('/api/v1/admin/account')
+    //         .expect(200)
+    //         .end(function (err, res) {
+    //             if (err) {
+    //                 throw err;
+    //             }
+    //             expect(res.body.authenticated).to.equal(false);
+    //             done();
+    //         });
+    // });
 
-    it('admin should login', function (done) {
-        api
-            .post('/api/v1/admin/login')
-            .send({
-                'username': 'admin@amida-demo.com',
-                'password': 'asdf'
-            })
-            .expect(200)
-            .end(function (err, res) {
-                if (err) {
-                    throw err;
-                }
-                done();
-            });
-    });
+    // it('admin should login', function (done) {
+    //     api
+    //         .post('/api/v1/admin/login')
+    //         .send({
+    //             'username': 'admin@amida-demo.com',
+    //             'password': 'asdf'
+    //         })
+    //         .expect(200)
+    //         .end(function (err, res) {
+    //             if (err) {
+    //                 throw err;
+    //             }
+    //             done();
+    //         });
+    // });
 
     it('admin should be authenticated', function (done) {
         api
@@ -112,7 +123,7 @@ describe('authentication', function (done) {
                 'launch_uri': '',
                 'redirect_uri': '',
                 'logo_uri': '',
-                'owner_email': 'admin@amida-demo.com',
+                'owner_email': 'kevin@ba.com',
                 'grant_types': '',
                 'scope': '',
                 'approved': true

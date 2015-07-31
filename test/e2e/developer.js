@@ -7,7 +7,7 @@ var common = require(path.join(__dirname, '../common/common.js'));
 
 describe('Pre Dev Test Cleanup', function (done) {
     it('Clear DB', function (done) {
-        common.removeAll(function (err, results) {
+        common.removeClients(function (err, results) {
             if (err) {
                 done(err);
             } else {

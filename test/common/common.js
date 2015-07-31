@@ -77,6 +77,22 @@ function removeAllCollections(callback) {
 
 }
 
+function removeClients(callback) {
+    removeCollection('clients', function (err) {
+        if (err) {
+            callback(err);
+        } else {
+            removeCollection('users', function (err) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback();
+                }
+            });
+        }
+    });
+}
+
 function removeAll(callback) {
 
     removeCollection('storage.files', function (err) {
@@ -130,6 +146,36 @@ function login(api, username, password, done) {
         });
 }
 
+function adminlogin(api, username, password, done) {
+    api
+        .post('/api/v1/admin/login')
+        .send({
+            'username': username,
+            'password': password
+        })
+        .end(function (err, res) {
+            if (err) {
+                throw err;
+            }
+            done();
+        });
+}
+
+function adminregister(api, username, password, done) {
+    api
+        .post('/api/v1/admin/register')
+        .send({
+            'username': username,
+            'password': password
+        })
+        .end(function (err, res) {
+            if (err) {
+                throw err;
+            }
+            done();
+        });
+}
+
 function register(api, username, password, done) {
     api
         .post('/api/v1/register')
@@ -154,8 +200,11 @@ function register(api, username, password, done) {
 
 module.exports = {
     'login': login,
+    'adminLogin': adminlogin,
     'register': register,
+    'adminRegister': adminregister,
     'removeAll': removeAll,
     'removeCollection': removeCollection,
+    'removeClients': removeClients,
     'loadTestRecord': loadTestRecord
 };
