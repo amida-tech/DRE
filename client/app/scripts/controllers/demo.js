@@ -68,7 +68,7 @@ function Demo($location, $window, dataservice, upload, demo, registration, authe
         vm.demoThinking = true;
         demo.resetDemo(function (err) {
             // console.log(err);
-            // $window.location.reload();
+            $window.location.reload();
             vm.demoThinking = false;
 
             // registration.signup(vm.info, function (err) {
