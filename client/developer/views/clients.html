@@ -69,43 +69,47 @@
             <th><button class="pull-right" ng-click="vm.deleteClient(client.name)"><i class="fa fa-trash-o"></i></button></th>
             <tbody>
                 <tr>
-                    <td>Client ID</td>
+                    <td><strong>Client ID:</strong></td>
                     <td>{{client.clientId}}</td>
                 </tr>
                 <tr>
-                    <td>Client Secret</td>
+                    <td><strong>Approved:</strong></td>
+                    <td class="text-capitalize">{{client.approved}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Client Secret:</strong></td>
                     <td>{{client.clientSecret}}</td>
                 </tr>
                 <tr>
-                    <td>Created</td>
+                    <td><strong>Created:</strong></td>
                     <td>{{client.created | date:'medium'}}</td>
                 </tr>
                 <tr>
-                    <td>Launch Uri</td>
+                    <td><strong>Launch Uri:</strong></td>
                     <td>{{client.launchUri}}</td>
                 </tr>
                 <tr>
-                    <td>Logo Uri</td>
+                    <td><strong>Logo Uri:</strong></td>
                     <td>{{client.logoUri}}</td>
                 </tr>
                 <tr>
-                    <td>Redirect Uri</td>
+                    <td><strong>Redirect Uri:</strong></td>
                     <td>{{client.redirectUri}}</td>
                 </tr>
                 <tr>
-                    <td>Token Endpoing Auth Method</td>
+                    <td><strong>Token Endpoint Auth Method:</strong></td>
                     <td>{{client.tokenEndpointAuthMethod}}</td>
                 </tr>
                 <tr>
-                    <td>Added by</td>
+                    <td><strong>Added by:</strong></td>
                     <td>{{client.ownerEmail}}</td>
                 </tr>
                 <tr>
-                    <td>Grant Types</td>
+                    <td><strong>Grant Types:</strong></td>
                     <td>{{client.grantTypes}}</td>
                 </tr>
                 <tr>
-                    <td>Scope</td>
+                    <td><strong>Scope:</strong></td>
                     <td>{{client.scope}}</td>
                 </tr>
             </tbody>

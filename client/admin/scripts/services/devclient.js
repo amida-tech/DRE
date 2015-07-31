@@ -11,7 +11,7 @@ angular.module('phrAdminApp')
     .service('devclient', function devclient($http) {
 
         this.getClients = function (callback) {
-            $http.get('api/v1/admin/clients')
+            $http.get('api/v1/admin/clients/all')
                 .success(function (data) {
                     console.log("retrieval successful");
                     callback(data);
@@ -38,6 +38,20 @@ angular.module('phrAdminApp')
                     callback(data);
                 }).error(function (data) {
                     callback('Error deleting ', client_name);
+                });
+        };
+        
+        this.editClient = function (client_name, approval_status, callback) {
+            var info = {
+                client_name: client_name,
+                approval: approval_status
+            };
+            $http.post('api/v1/admin/clients/approve', info)
+                .success(function (data) {
+                    console.log(client_name, " approval set to ", approval_status);
+                    callback(data);
+                }).error(function (data) {
+                    callback('Error updating approval status ', data);
                 });
         };
     });
