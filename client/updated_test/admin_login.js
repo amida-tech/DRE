@@ -4,11 +4,11 @@ describe('login', function() {
     var submit = element(by.buttonText('Log In'));
 
     function loginTest(un, pw) {
-        browser.get('http://localhost:3000/');
+        browser.get('http://localhost:3000/admin');
         browser.driver.manage().window().setSize(1280, 1024);
         username.sendKeys(un);
         password.sendKeys(pw);
-        expect(browser.getLocationAbsUrl()).toContain('dev');
+        expect(browser.getLocationAbsUrl()).toContain('admin');
     }
 
   afterEach(function() {
@@ -26,7 +26,7 @@ describe('login', function() {
   });
 
     it('should enter login', function() {
-        loginTest('dev@third-party.com','asdf');
+        loginTest('admin@amida-demo.com','asdf');
         // browser.pause();
     });
     it('should login', function() {

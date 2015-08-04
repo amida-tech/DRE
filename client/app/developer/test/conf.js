@@ -16,7 +16,7 @@ exports.config = {
     'logout.js'
   ],
   suites: {
-    all: ['login.js', 'client.js', 'logout.js']
+    all: ['register.js', 'client.js', 'logout.js']
     },
   capabilities: {
     browserName: 'firefox'
