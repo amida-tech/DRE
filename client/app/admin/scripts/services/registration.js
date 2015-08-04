@@ -16,7 +16,7 @@ angular.module('phrAdminApp')
 
             // verify info for all the elements in api
 
-            $http.post('api/v1/admin/register', info)
+            $http.post('/api/v1/admin/register', info)
                 .success(function (data) {
                     console.log("registration successful");
                     callback(null);

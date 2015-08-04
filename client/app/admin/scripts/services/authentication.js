@@ -56,7 +56,7 @@ angular.module('phrAdminApp')
         this.login = function (username, password, callback) {
             // console.log("login service:", username, password);
             if (username && password) {
-                $http.post('api/v1/admin/login', {
+                $http.post('/api/v1/admin/login', {
                         username: username,
                         password: password
                     })
@@ -76,7 +76,7 @@ angular.module('phrAdminApp')
         this.logout = function (callback) {
             var err = null;
 
-            $http.post('api/v1/admin/logout')
+            $http.post('/api/v1/admin/logout')
                 .success(function () {
                     clearAuth();
                     callback(null);

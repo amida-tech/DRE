@@ -12,7 +12,7 @@ angular.module('phrAdminApp')
 
         this.checkLogin = function (user, callback) {
             console.log('user>>>', user);
-            $http.post('api/v1/admin/users', {
+            $http.post('/api/v1/admin/users', {
                     username: user
                 })
                 .success(function (data) {
