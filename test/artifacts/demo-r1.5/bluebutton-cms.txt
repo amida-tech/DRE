@@ -374,14 +374,6 @@ Source: Self-Entered
 
 
 
-Drug Name: Proventil HFA INH 1MG/ACTUAT
-
-Supply: Daily
-
-Orig Drug Entry: Proventil HFA
-
-
-
 Drug Name: CEFEPIME 20 MG/ML
 
 Supply: Daily

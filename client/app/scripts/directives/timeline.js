@@ -304,10 +304,11 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                     });
                 }
             }
-            $timeout(function () {
-                gatherData();
-                renderPlot();
-            }, 500);
+            // $timeout(function () {
+            //     gatherData();
+            //     console.log('timeout timeline plot');
+            //     renderPlot();
+            // }, 500);
 
             //Re-evaluate scope on resize.
             $window.onresize = function () {
@@ -339,6 +340,13 @@ angular.module('phrPrototypeApp').directive('timeline', function ($window, $loca
                     gatherData();
                     renderPlot();
                 }
+            }, true);
+            scope.$watch('notesList', function (newValue, oldValue) {
+                // if (newValue !== oldValue) {
+                console.log('notes updated');
+                gatherData();
+                renderPlot();
+                // }
             }, true);
         }
     };

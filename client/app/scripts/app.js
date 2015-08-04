@@ -183,6 +183,12 @@ angular
                 controllerAs: 'vm',
                 requireLogin: true
             })
+            .when('/demo', {
+                templateUrl: 'views/demo.html',
+                controller: 'DemoCtrl',
+                controllerAs: 'vm',
+                requireLogin: false
+            })
             .otherwise({
                 redirectTo: '/'
             });

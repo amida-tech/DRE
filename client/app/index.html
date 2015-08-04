@@ -53,6 +53,8 @@
                             </li>
                             <li><a ng-click="vm.navbarClick('files')">My Files</a>
                             </li>
+                            <li ng-if="(profile_info.name.first==='Isabella')&&(profile_info.name.last==='Jones')"><a ng-click="vm.navbarClick('demo')">DEMO</a>
+                            </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -196,6 +198,7 @@
     <script src="/scripts/controllers/register.js"></script>
     <script src="/scripts/controllers/reset.js"></script>
     <script src="/scripts/controllers/title.js"></script>
+    <script src="/scripts/controllers/demo.js"></script>
     <script src="/scripts/directives/billingentry.js"></script>
     <script src="/scripts/directives/billingentry_old.js"></script>
     <script src="/scripts/directives/billingnavigation.js"></script>
@@ -239,6 +242,7 @@
     <script src="/scripts/services/record.js"></script>
     <script src="/scripts/services/registration.js"></script>
     <script src="/scripts/services/username.js"></script>
+    <script src="/scripts/services/demo.js"></script>
 
     <!-- endbuild -->
 </body>
