@@ -11,7 +11,7 @@ angular.module('phrDeveloperApp')
     .service('devclient', function devclient($http) {
 
         this.getClients = function (callback) {
-            $http.get('api/v1/developer/clients/all')
+            $http.get('/api/v1/developer/clients/all')
                 .success(function (data) {
                     console.log("retrieval successful");
                     callback(data);
@@ -20,7 +20,7 @@ angular.module('phrDeveloperApp')
                 });
         };
         this.saveClient = function (new_client, callback) {
-            $http.post('api/v1/developer/clients/add', new_client)
+            $http.post('/api/v1/developer/clients/add', new_client)
                 .success(function (data) {
                     console.log("new client added successfully");
                     callback(data);
@@ -32,7 +32,7 @@ angular.module('phrDeveloperApp')
             var info = {
                 client_name: client_name
             };
-            $http.post('api/v1/developer/clients/delete', info)
+            $http.post('/api/v1/developer/clients/delete', info)
                 .success(function (data) {
                     console.log(client_name, " deleted successfully");
                     callback(data);

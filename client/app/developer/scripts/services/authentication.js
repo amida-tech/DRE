@@ -56,7 +56,7 @@ angular.module('phrDeveloperApp')
         this.login = function (username, password, callback) {
             // console.log("login service:", username, password);
             if (username && password) {
-                $http.post('api/v1/developer/login', {
+                $http.post('/api/v1/developer/login', {
                         username: username,
                         password: password
                     })
@@ -76,7 +76,7 @@ angular.module('phrDeveloperApp')
         this.logout = function (callback) {
             var err = null;
 
-            $http.post('api/v1/developer/logout')
+            $http.post('/api/v1/developer/logout')
                 .success(function () {
                     clearAuth();
                     callback(null);

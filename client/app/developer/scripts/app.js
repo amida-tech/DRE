@@ -23,30 +23,30 @@ angular
     .config(function ($routeProvider) {
         $routeProvider
             .when('/developer', {
-                templateUrl: 'views/main.html',
+                templateUrl: '/developer/views/main.html',
                 controller: 'MainCtrl',
                 controllerAs: 'vm',
                 requireLogin: false
             })
             .when('/developer/login', {
-                templateUrl: 'views/login.html',
+                templateUrl: '/developer/views/login.html',
                 controller: 'LoginCtrl',
                 controllerAs: 'vm',
                 requireLogin: false
             })
             .when('/developer/register', {
-                templateUrl: 'views/register.html',
+                templateUrl: '/developer/views/register.html',
                 controller: 'RegisterCtrl'
             })
             .when('/developer/clients', {
-                templateUrl: '/views/clients.html',
+                templateUrl: '/developer/views/clients.html',
                 controller: 'ClientsCtrl',
                 controllerAs: 'vm',
                 requireLogin: true,
                 permissions: 'dev'
             })
             .when('/403', {
-                templateUrl: '/views/403.html'
+                templateUrl: '/developer/views/403.html'
             })
             .otherwise({
                 redirectTo: '/developer'

@@ -12,7 +12,7 @@ angular.module('phrDeveloperApp')
 
         this.checkLogin = function (user, callback) {
             console.log('user>>>', user);
-            $http.post('api/v1/developer/users', {
+            $http.post('/api/v1/developer/users', {
                     username: user
                 })
                 .success(function (data) {

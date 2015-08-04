@@ -29,7 +29,7 @@ angular
                 requireLogin: false
             })
             .when('/admin/login', {
-                templateUrl: 'admin/views/login.html',
+                templateUrl: '/admin/views/login.html',
                 controller: 'LoginCtrl',
                 controllerAs: 'vm',
                 requireLogin: false

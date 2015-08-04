@@ -16,7 +16,7 @@ angular.module('phrDeveloperApp')
 
             // verify info for all the elements in api
 
-            $http.post('api/v1/developer/register', info)
+            $http.post('/api/v1/developer/register', info)
                 .success(function (data) {
                     console.log("registration successful");
                     callback(null);
