@@ -3,30 +3,31 @@ var request = require('supertest');
 var api = request.agent('http://localhost:3000');
 var expect = require('chai').expect;
 var path = require('path');
-var common = require(path.join(__dirname, '../common/common.js'));
-var databaseLocation = 'mongodb://' + 'localhost' + '/' + process.env.DBname || 'tests';
-var database = require('mongodb').Db;
+var mongoose = require('mongoose');
+var databaseServer = process.env.DB || 'localhost:27017';
+var db = mongoose.createConnection('mongodb://' + databaseServer + '/dre');
 
-describe('Pre Test Cleanup', function () {
 
-    // it('Clean Database', function (done) {
-    //     common.removeAll(function (err, results) {
-    //         if (err) {
-    //             done(err);
-    //         } else {
-    //             done();
-    //         }
-    //     });
-    // });
+// describe('Pre Test Cleanup', function () {
 
-    // it('Login', function (done) {
-    //     common.adminRegister(api, 'test', 'test', function () {
-    //         common.adminLogin(api, 'test', 'test', function () {
-    //             done();
-    //         });
-    //     });
-    // });
-});
+//     // it('Clean Database', function (done) {
+//     //     common.removeAll(function (err, results) {
+//     //         if (err) {
+//     //             done(err);
+//     //         } else {
+//     //             done();
+//     //         }
+//     //     });
+//     // });
+
+//     // it('Login', function (done) {
+//     //     common.adminRegister(api, 'test', 'test', function () {
+//     //         common.adminLogin(api, 'test', 'test', function () {
+//     //             done();
+//     //         });
+//     //     });
+//     // });
+// });
 
 describe('admin', function (done) {
     it('admin should be unauthenticated', function (done) {

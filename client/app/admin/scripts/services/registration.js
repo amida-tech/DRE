@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name phrDeveloperApp.registration
+ * @name phrAdminApp.registration
  * @description
  * # registration
- * Service in the phrDeveloperApp.
+ * Service in the phrAdminApp.
  */
-angular.module('phrDeveloperApp')
+angular.module('phrAdminApp')
     .service('registration', function registration($location, $http) {
 
         //TODO:  Hygiene here for max length of inputs.
@@ -16,7 +16,7 @@ angular.module('phrDeveloperApp')
 
             // verify info for all the elements in api
 
-            $http.post('api/v1/developer/register', info)
+            $http.post('/api/v1/admin/register', info)
                 .success(function (data) {
                     console.log("registration successful");
                     callback(null);

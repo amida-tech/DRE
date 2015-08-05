@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name phrDeveloperApp.authentication
+ * @name phrAdminApp.authentication
  * @description
  * # authentication
- * Service in the phrDeveloperApp.
+ * Service in the phrAdminApp.
  */
-angular.module('phrDeveloperApp')
+angular.module('phrAdminApp')
     .service('authentication', function authentication($rootScope, $location, $http) {
         var auth_data = {};
 
@@ -25,7 +25,7 @@ angular.module('phrDeveloperApp')
                     callback(null, false);
                 }
             } else {
-                $http.get('/api/v1/developer/account')
+                $http.get('/api/v1/admin/account')
                     .success(function (data) {
                         if (data && data.authenticated) {
                             auth_data.authenticated = true;
@@ -42,8 +42,8 @@ angular.module('phrDeveloperApp')
             }
         };
 
-        this.devStatus = function (callback) {
-            $http.get('/api/v1/developer/')
+        this.adminStatus = function (callback) {
+            $http.get('/api/v1/admin/')
                 .success(function (data) {
                     console.log(data);
                     callback(null, true);
@@ -56,7 +56,7 @@ angular.module('phrDeveloperApp')
         this.login = function (username, password, callback) {
             // console.log("login service:", username, password);
             if (username && password) {
-                $http.post('api/v1/developer/login', {
+                $http.post('/api/v1/admin/login', {
                         username: username,
                         password: password
                     })
@@ -76,7 +76,7 @@ angular.module('phrDeveloperApp')
         this.logout = function (callback) {
             var err = null;
 
-            $http.post('api/v1/developer/logout')
+            $http.post('/api/v1/admin/logout')
                 .success(function () {
                     clearAuth();
                     callback(null);

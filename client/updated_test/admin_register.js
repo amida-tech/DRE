@@ -8,7 +8,7 @@ describe('register admin', function () {
 
     function registerLinkTest() {
 
-        browser.get('http://localhost:3000/');
+        browser.get('http://localhost:3000/admin');
         browser.driver.manage().window().setSize(1280, 1024);
 
         var db = new Db('dre', new Server('localhost', 27017));

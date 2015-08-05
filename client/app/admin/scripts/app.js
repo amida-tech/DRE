@@ -4,14 +4,14 @@
 
 /**
  * @ngdoc overview
- * @name phrDeveloperApp
+ * @name phrAdminApp
  * @description
- * # phrDeveloperApp
+ * # phrAdminApp
  *
  * Main module of the application.
  */
 angular
-    .module('phrDeveloperApp', [
+    .module('phrAdminApp', [
         'ngAnimate',
         'ngCookies',
         'ngResource',
@@ -22,34 +22,34 @@ angular
     ])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/developer', {
-                templateUrl: 'views/main.html',
+            .when('/admin', {
+                templateUrl: '/admin/views/main.html',
                 controller: 'MainCtrl',
                 controllerAs: 'vm',
                 requireLogin: false
             })
-            .when('/developer/login', {
-                templateUrl: 'views/login.html',
+            .when('/admin/login', {
+                templateUrl: '/admin/views/login.html',
                 controller: 'LoginCtrl',
                 controllerAs: 'vm',
                 requireLogin: false
             })
-            .when('/developer/register', {
-                templateUrl: 'views/register.html',
+            .when('/admin/register', {
+                templateUrl: '/admin/views/register.html',
                 controller: 'RegisterCtrl'
             })
-            .when('/developer/clients', {
-                templateUrl: '/views/clients.html',
+            .when('/admin/clients', {
+                templateUrl: '/admin/views/clients.html',
                 controller: 'ClientsCtrl',
                 controllerAs: 'vm',
                 requireLogin: true,
-                permissions: 'dev'
+                permissions: 'admin'
             })
             .when('/403', {
-                templateUrl: '/views/403.html'
+                templateUrl: '/admin/views/403.html'
             })
             .otherwise({
-                redirectTo: '/developer'
+                redirectTo: '/admin'
             });
     })
     .run(function ($rootScope, $location, authentication) {
@@ -63,15 +63,15 @@ angular
                 if (next.requireLogin) {
                     if (!auth) {
                         event.preventDefault();
-                        $location.path("/developer/login");
+                        $location.path("/admin/login");
                     }
                 }
-                if (next.permissions !== undefined && next.permissions === 'dev') {
-                    authentication.devStatus(function (err, role) {
+                if (next.permissions !== undefined && next.permissions === 'admin') {
+                    authentication.adminStatus(function (err, role) {
                         if (err) {
                             console.log('NOT AUTHORIZED FOR THIS ROUTE:', err);
                             event.preventDefault();
-                            $location.path("/developer/login");
+                            $location.path("/403");
                         }
                     });
 

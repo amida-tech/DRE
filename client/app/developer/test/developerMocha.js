@@ -3,36 +3,25 @@ var request = require('supertest');
 var api = request.agent('http://localhost:3000');
 var expect = require('chai').expect;
 var path = require('path');
-var mongoose = require('mongoose');
-var databaseServer = process.env.DB || 'localhost:27017';
-var db = mongoose.createConnection('mongodb://' + databaseServer + '/dre');
+// var common = require(path.join(__dirname, '../../../test/common/common.js'));
 
 
-describe('Pre Test Cleanup', function () {
-
-    it('Clean Database', function (done) {
-        common.removeAll(function (err, results) {
-            if (err) {
-                done(err);
-            } else {
-                done();
-            }
-        });
-    });
-
-    it('Login', function (done) {
-        common.adminRegister(api, 'test', 'test', function () {
-            common.adminLogin(api, 'test', 'test', function () {
-                done();
-            });
-        });
-    });
-});
+// describe('Pre Dev Test Cleanup', function (done) {
+//     it('Clear DB', function (done) {
+//         common.removeClients(function (err, results) {
+//             if (err) {
+//                 done(err);
+//             } else {
+//                 done();
+//             }
+//         });
+//     });
+// });
 
 describe('authentication', function (done) {
-    it('admin should be unauthenticated', function (done) {
+    it('dev should be unauthenticated', function (done) {
         api
-            .get('/api/v1/admin/account')
+            .get('/api/v1/developer/account')
             .expect(200)
             .end(function (err, res) {
 
@@ -44,14 +33,14 @@ describe('authentication', function (done) {
             });
     });
 
-    it('should register admin', function (done) {
+    it('should register developer', function (done) {
         api
-            .post('/api/v1/admin/register')
+            .post('/api/v1/developer/register')
             .send({
-                'username': 'admin@amida-demo.com',
+                'username': 'developer@other-app.com',
                 'password': 'asdf'
             })
-            .expect(200)
+            // .expect(200)
             .end(function (err, res) {
                 if (err) {
                     throw err;
@@ -60,9 +49,9 @@ describe('authentication', function (done) {
             });
     });
 
-    it('admin should still be unauthenticated', function (done) {
+    it('developer should still be unauthenticated', function (done) {
         api
-            .get('/api/v1/admin/account')
+            .get('/api/v1/developer/account')
             .expect(200)
             .end(function (err, res) {
                 if (err) {
@@ -73,11 +62,11 @@ describe('authentication', function (done) {
             });
     });
 
-    it('admin should login', function (done) {
+    it('developer should login', function (done) {
         api
-            .post('/api/v1/admin/login')
+            .post('/api/v1/developer/login')
             .send({
-                'username': 'admin@amida-demo.com',
+                'username': 'developer@other-app.com',
                 'password': 'asdf'
             })
             .expect(200)
@@ -89,9 +78,9 @@ describe('authentication', function (done) {
             });
     });
 
-    it('admin should be authenticated', function (done) {
+    it('developer should be authenticated', function (done) {
         api
-            .get('/api/v1/admin/account')
+            .get('/api/v1/developer/account')
             .expect(200)
             .end(function (err, res) {
                 if (err) {
@@ -102,32 +91,32 @@ describe('authentication', function (done) {
             });
     });
     
-    it('admin should see client list', function (done) {
+    it('developer should see client list', function (done) {
         api
-            .get('/api/v1/admin/clients/all')
+            .get('/api/v1/developer/clients/all')
             .expect(200)
             .end(function (err, res) {
                 if (err) {
                     throw err;
                 }
-                expect(res.body.length).to.equal(4);
+                expect(res.body.length).to.equal(0);
                 done();
             });
     });
     
-    it('admin adds a new client', function (done) {
+    it('developer adds a new client', function (done) {
         api
-            .post('/api/v1/admin/clients/add')
+            .post('/api/v1/developer/clients/add')
             .send({
-                'client_name': 'mochaTestClient',
+                'client_name': 'mochaDevTestClient',
                 'token_endpoint_auth_method':'',
                 'launch_uri': '',
                 'redirect_uri': '',
                 'logo_uri': '',
-                'owner_email': 'admin@amida-demo.com',
+                'owner_email': 'developer@other-app.com',
                 'grant_types': '',
                 'scope': '',
-                'approved': true
+                'approved': false
             })
             .expect(200)
             .end(function (err, client) {
@@ -138,55 +127,26 @@ describe('authentication', function (done) {
             });
     });
     
-    it('admin should see updated client list', function (done) {
+    it('developer should see updated client list', function (done) {
         api
-            .get('/api/v1/admin/clients/all')
+            .get('/api/v1/developer/clients/all')
             .expect(200)
             .end(function (err, res) {
                 if (err) {
                     throw err;
                 }
-                expect(res.body.length).to.equal(5);
-                expect(res.body[4].name).to.equal('mochaTestClient');
-                expect(res.body[4]._id).to.exist;
+                expect(res.body.length).to.equal(1);
+                expect(res.body[0].name).to.equal('mochaDevTestClient');
+                expect(res.body[0]._id).to.exist;
                 done();
             });
     });
     
-    it('admin unapproves new client', function (done) {
-       api
-            .post('/api/v1/admin/clients/approve')
+    it('developer deletes new client', function (done) {
+        api
+            .post('/api/v1/developer/clients/delete')
             .send({
-                'client_name': 'mochaTestClient',
-                'approval': false
-            })
-            .expect(200)
-            .end(function (err, client) {
-                if (err) {
-                    throw err;
-                }
-                done();
-            });
-    });
-        
-    it('admin should see unapproved new client in client list', function (done) {
-        api
-            .get('/api/v1/admin/clients/all')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) {
-                    throw err;
-                }
-                expect(res.body[4].approved).to.equal(false);
-                done();
-            });
-    });
-    
-    it('admin deletes new client', function (done) {
-        api
-            .post('/api/v1/admin/clients/delete')
-            .send({
-                'client_name': 'mochaTestClient'
+                'client_name': 'mochaDevTestClient'
             })
             .expect(200)
             .end(function (err, client) {
@@ -197,22 +157,22 @@ describe('authentication', function (done) {
             });
     });
     
-    it('admin should see reverted client list', function (done) {
+    it('developer should see reverted client list', function (done) {
         api
-            .get('/api/v1/admin/clients/all')
+            .get('/api/v1/developer/clients/all')
             .expect(200)
             .end(function (err, res) {
                 if (err) {
                     throw err;
                 }
-                expect(res.body.length).to.equal(4);
+                expect(res.body.length).to.equal(0);
                 done();
             });
     });
 
-    it('admin should logout', function (done) {
+    it('developer should logout', function (done) {
         api
-            .post('/api/v1/admin/logout')
+            .post('/api/v1/developer/logout')
             .expect(200)
             .end(function (err, res) {
                 if (err) {
@@ -222,9 +182,9 @@ describe('authentication', function (done) {
             });
     });
 
-    it('admin should be unauthenticated again', function (done) {
+    it('developer should be unauthenticated again', function (done) {
         api
-            .get('/api/v1/admin/account')
+            .get('/api/v1/developer/account')
             .expect(200)
             .end(function (err, res) {
                 if (err) {

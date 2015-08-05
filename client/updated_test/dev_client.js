@@ -3,7 +3,7 @@ describe('dev client', function() {
     var addForm = element(by.css('[ng-show="vm.showForm"]'));
     
     function clientPage() {
-        browser.get('http://localhost:3000/#/developer/clients');
+        browser.get('http://localhost:3000/developer/#/developer/clients');
         // browser.driver.manage().window().setSize(1280, 1024);
         expect(browser.getLocationAbsUrl()).toContain('clients');
     }
