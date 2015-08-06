@@ -1,0 +1,30 @@
+<div class="container-fluid body-content">
+    <div id="profileSidebar" class="col-sm-3 body-left">
+        <div profile></div>
+    </div>
+    <!--Upload File Dialogue 1.-->
+    <div class="col-sm-9 body-right" ng-show="vm.uploadStep === 0">
+        <div class="panel">
+            <div class="panel-body">
+                <!--Header Items-->
+                <div class="col-sm-12 row">
+                    <div class="col-sm-12">
+                        <div breadcrumb></div>
+                        <h4>Import Device Data</h4>
+                        <p>Please select the type of data you intend to import.</p>
+                    </div>
+                </div>
+                <div class="col-sm-12 row">
+                    <h3>Withings</h3>
+                    <form role="form">
+                        <button type="submit" class="btn btn-primary" ng-click="vm.oauthWithings()" ng-hide="vm.isAuthorized">Authorize</button>
+                        <button type="submit" class="btn btn-success" ng-click="vm.getWeight()" ng-show="vm.isAuthorized">Get today's weight</button>
+                        <button type="submit" class="btn btn-success" ng-click="vm.getWeightHistory()" ng-show="vm.isAuthorized">Get weight history</button>
+                        <button type="submit" class="btn btn-warning" ng-click="vm.subscribeWeight()" ng-show="vm.isAuthorized && !vm.hasSubscription">Subscribe to weight data</button>
+                        <button type="submit" class="btn btn-danger" ng-click="vm.unsubscribeWeight()" ng-show="vm.isAuthorized && vm.hasSubscription">Unsubscribe from weight data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -179,6 +179,14 @@ module.exports = function () {
 
     app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
     app.set('mllp_port', (process.env.PORT || 6969));
+    
+    // Withings OAuth settings
+    var withings = require('../lib/oauth/withings');
+    app.use(withings);
+    app.set('consumer-key', process.env.WITHINGS_TOKEN);
+    app.set('consumer-secret', process.env.WITHINGS_SECRET);
+    var withingsUrl = process.env.WITHINGS_URL || 'localhost';
+    app.set('callback-url', 'http://' + withingsUrl + ':' + app.get('port') + '/#/files/import');
 
     //Launch MLLP server/listener
     var mllp = require('mllp-node');

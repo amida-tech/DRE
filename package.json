@@ -48,6 +48,7 @@
     "grunt-execute": "0.2.2",
     "hl7": "~1.0.0",
     "jsdom": "^3.0.0",
+    "json2csv": "^2.7.1",
     "lodash": "^3.7.0",
     "method-override": "2.3.2",
     "mllp-node": "~1.0.0",
@@ -69,7 +70,8 @@
     "rxnorm-js": "^0.1.0",
     "serve-favicon": "2.2.0",
     "serve-static": "~1.9.2",
-    "supertest": "0.15.0"
+    "supertest": "0.15.0",
+    "withings-lib": "^0.2.2"
   },
   "engines": {
     "node": "0.10.x"
