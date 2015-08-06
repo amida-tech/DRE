@@ -1,0 +1,46 @@
+<div class="row">
+    <div ng-cloak ng-show="vm.demoAuth" class="row">
+        <h1 class="text-center">DEMO SCENARIOS</h1>
+        <div class="row">
+            <div class="panel panel-default col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="panel-body text-center" ng-hide="vm.demoThinking">
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1 col-xs-12" ng-click="vm.demoClick('files')"><a>Scenario 1: Go to file list</a></button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1 col-xs-12" ng-click="vm.demoClick('medications')"><a>Scenario 2: Go to meds</a></button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1 col-xs-12"><a ng-href="http://argonaut.amida-demo.com:3001/" target="_blank">Scenario 3: Project Argonaut Demo</a></button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1 col-xs-12" ng-click="vm.demoClick('record')"><a>Get me out of here!</a></button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-default col-sm-10 col-sm-offset-1 col-xs-12" ng-click="vm.reset()"><a>Reset</a></button>
+                    </div>
+                </div>
+                <div class="panel-body text-center" ng-show="vm.demoThinking">
+                    <div class="row">
+                        <p>Please wait while we reset the demo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-hide="vm.demoAuth" class="row">
+        <h1 class="text-center">DEMO</h1>
+        <div class="row">
+            <div class="panel panel-default  col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="panel-body" ng-hide="vm.demoThinking">
+                    <button class="btn btn-default col-sm-10 col-sm-offset-1 col-xs-12" ng-click="vm.login()"><a>Log into the Demo Page</a></button>
+                </div>
+                <div class="panel-body text-center" ng-show="vm.demoThinking">
+                    <div class="row col-sm-10 col-sm-offset-1 col-xs-12">
+                        <p>Please wait while we reset the demo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

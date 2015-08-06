@@ -30,17 +30,17 @@
                             <tbody>
                                 <tr>
                                     <td>Name:</td>
-                                    <td>{{entryData.observation.allergen.name}} <span ng-if="isDifferent(flagData.observation.allergen.name.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{entryData.observation.allergen.name}} <span ng-if="flagData.observation.allergen.name" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{entryData.observation.allergen.code}} <span ng-if="isDifferent(flagData.observation.allergen.code.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{entryData.observation.allergen.code}} <span ng-if="flagData.observation.allergen.code" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{entryData.observation.allergen.code_system_name}} <span ng-if="isDifferent(flagData.observation.allergen.code_system_name.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{entryData.observation.allergen.code_system_name}} <span ng-if="flagData.observation.allergen.code_system_name" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -85,17 +85,17 @@
                             <tbody>
                                 <tr>
                                     <td>Name:</td>
-                                    <td>{{entryData.observation.severity.code.name}} <span ng-if="isDifferent(flagData.observation.severity.code.name.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{entryData.observation.severity.code.name}} <span ng-if="flagData.observation.severity.code.name" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{entryData.observation.severity.code.code}} <span ng-if="isDifferent(flagData.observation.severity.code.code.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{entryData.observation.severity.code.code}} <span ng-if="flagData.observation.severity.code.code)" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{entryData.observation.severity.code.code_system_name}} <span ng-if="isDifferent(flagData.observation.severity.code.code_system_name.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{entryData.observation.severity.code.code_system_name}} <span ng-if="flagData.observation.severity.code.code_system_name" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -140,17 +140,17 @@
                             <tbody>
                                 <tr>
                                     <td>Status:</td>
-                                    <td>{{entryData.observation.status.name}} <span ng-if="isDifferent(flagData.observation.status.name.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{entryData.observation.status.name}} <span ng-if="flagData.observation.status.name" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{entryData.observation.status.code}} <span ng-if="isDifferent(flagData.observation.status.code.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{entryData.observation.status.code}} <span ng-if="flagData.observation.status.code" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{entryData.observation.status.code_system_name}} <span ng-if="isDifferent(flagData.observation.status.code_system_name.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{entryData.observation.status.code_system_name}} <span ng-if="flagData.observation.status.code_system_name" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -196,24 +196,24 @@
                             <thead>
                                 <tr>
                                     <td>Reaction:</td>
-                                    <td>{{reactionEntry.reaction.name}} <span ng-if="isDifferent(flagData.observation.reactions[reactionIndex].reaction.name.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{reactionEntry.reaction.name}} <span ng-if="flagData.observation.reactions[reactionIndex].reaction.name" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>Severity:</td>
-                                    <td>{{reactionEntry.severity.code.name}} <span ng-if="isDifferent(flagData.observation.reactions[reactionIndex].severity.code.name.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{reactionEntry.severity.code.name}} <span ng-if="flagData.observation.reactions[reactionIndex].severity.code.name" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Code:</td>
-                                    <td>{{reactionEntry.reaction.code}} <span ng-if="isDifferent(flagData.observation.reactions[reactionIndex].reaction.code.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{reactionEntry.reaction.code}} <span ng-if="flagData.observation.reactions[reactionIndex].reaction.code" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Code System:</td>
-                                    <td>{{reactionEntry.reaction.code_system_name}} <span ng-if="isDifferent(flagData.observation.reactions[reactionIndex].reaction.code_system_name.kind)" class="label label-info pull-right">Different</span>
+                                    <td>{{reactionEntry.reaction.code_system_name}} <span ng-if="flagData.observation.reactions[reactionIndex].reaction.code_system_name" class="label label-info pull-right">Different</span>
                                     </td>
                                 </tr>
                             </tbody>

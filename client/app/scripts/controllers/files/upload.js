@@ -40,13 +40,19 @@ function FilesUpload($location, $route, upload, $http, format, record, dataservi
             upload.uploadRecord(uploadFile, true, function (err, results) {
                 console.log("file check ", results);
 
-                vm.new_first = results.name.first;
-                vm.new_last = results.name.last;
-                if (results.name.middle && results.name.middle[0]) {
-                    vm.new_middle = results.name.middle[0];
+                if (results.refresh) {
+                    $location.path('/files');
+                } else {
+                    if (results.name) {
+                        vm.new_first = results.name.first;
+                        vm.new_last = results.name.last;
+                        if (results.name.middle && results.name.middle[0]) {
+                            vm.new_middle = results.name.middle[0];
+                        }
+                        vm.new_dob = format.formatDate(results.dob.point);
+                        vm.new_gender = results.gender;
+                    }
                 }
-                vm.new_dob = format.formatDate(results.dob.point);
-                vm.new_gender = results.gender;
             });
 
         } else if (vm.uploadStep === 2) {

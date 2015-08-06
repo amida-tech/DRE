@@ -12,15 +12,15 @@ describe('register user', function () {
 
     function registerLinkTest() {
 
-        browser.get('http://localhost:3000/');
-        browser.driver.manage().window().setSize(1280, 1024);
-
         var db = new Db('dre', new Server('localhost', 27017));
         db.open(function(err, db) {
             db.dropDatabase();
         });
         db.dropDatabase();
 
+
+        browser.get('http://localhost:3000/');
+        browser.driver.manage().window().setSize(1280, 1024);
         var registerLink = element.all(by.css('.navbar-right a')).first();
         registerLink.click();
         expect(next1.isDisplayed()).toBeTruthy();

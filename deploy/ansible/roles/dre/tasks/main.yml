@@ -45,7 +45,7 @@
 #  command: npm install chdir=/var/www/dre/current/client 
 
 - name:  Install DRE client bower dependencies
-  command: bower install --allow-root chdir=/var/www/dre/current/client 
+  command: bower install --allow-root chdir=/var/www/dre/current
 
 
 #- name: Install ruby
@@ -70,7 +70,8 @@
 
 
 - name:  Install DRE server dependencies
-  command: npm install --production chdir=/var/www/dre/current 
+  command: npm install --production chdir=/var/www/dre/current
+  sudo: yes 
 
 - name:  Install PM2
   command: npm install -g pm2 --unsafe-perm
@@ -79,5 +80,6 @@
   command: pm2 start /var/www/dre/current/server.js
   
 - name:  Configure PM2 for Auto-reload
+  sudo: yes
   command: pm2 startup centos -u node && pm2 save
 

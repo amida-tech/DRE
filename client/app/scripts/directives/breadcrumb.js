@@ -73,6 +73,12 @@ angular.module('phrPrototypeApp')
                             tmpObject.path = pathString;
                         }
 
+                        if (parsedPath[i] === "import") {
+                            pathString = pathString + parsedPath[i] + "/";
+                            tmpObject.name = "Import data";
+                            tmpObject.path = pathString;
+                        }
+
                         if (parsedPath[i] === "account") {
                             pathString = pathString + parsedPath[i] + "/";
                             tmpObject.name = "My account";

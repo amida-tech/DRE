@@ -111,7 +111,7 @@ module.exports = function () {
         resave: true,
         saveUninitialized: true,
         store: new redisStore({
-                host: '127.0.0.1',
+                host: '0.0.0.0',
                 port: 6379,
                 prefix: 'chs-sess'
             }) //uncomment for Redis session support during development
@@ -177,16 +177,27 @@ module.exports = function () {
     
     var admin = require('../lib/admin');
     app.use(admin);
+    
+    var demo = require('../lib/demo');
+    app.use(demo);
 
     app.set('port', (process.env.PORT || 3000));
 
     app.set('mllp_host', (process.env.PORT || '127.0.0.1'));
     app.set('mllp_port', (process.env.PORT || 6969));
+    
+    // Withings OAuth settings
+    var withings = require('../lib/oauth/withings');
+    app.use(withings);
+    app.set('consumer-key', process.env.WITHINGS_TOKEN);
+    app.set('consumer-secret', process.env.WITHINGS_SECRET);
+    var withingsUrl = process.env.WITHINGS_URL || 'localhost';
+    app.set('callback-url', 'http://' + withingsUrl + ':' + app.get('port') + '/#/files/import');
 
     //Launch MLLP server/listener
     var mllp = require('mllp-node');
 
-    var server = new mllp.MLLPServer('127.0.0.1', 6969);
+    var server = new mllp.MLLPServer('0.0.0.0', 6969);
     console.log("MLLP listening on host " + app.get('mllp_host') + ", port " + app.get('mllp_port'));
 
     server.on('hl7', function (data) {

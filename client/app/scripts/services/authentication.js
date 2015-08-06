@@ -69,7 +69,7 @@ angular.module('phrPrototypeApp')
                         callback(null);
                     })
                     .error(function (data) {
-                        console.log("login failed");
+                        // console.log("login failed");
                         //callback(data);
                         auth_data.authenticated = false;
                         callback('Invalid Login and/or Password.');
@@ -88,7 +88,7 @@ angular.module('phrPrototypeApp')
                     clearAuth();
                     callback(null);
                 }).error(function (err) {
-                    console.log("logout failed");
+                    // console.log("logout failed");
                     callback(err);
                 });
         };

@@ -166,6 +166,12 @@ angular
                 controllerAs: 'vm',
                 requireLogin: true
             })
+            .when('/files/import', {
+                templateUrl: 'views/files/import.html',
+                controller: 'FilesImportCtrl',
+                controllerAs: 'vm',
+                requireLogin: true
+            })
             .when('/notes', {
                 templateUrl: 'views/notes.html',
                 controller: 'NotesCtrl',
@@ -176,6 +182,12 @@ angular
                 controller: 'MatchesCtrl',
                 controllerAs: 'vm',
                 requireLogin: true
+            })
+            .when('/demo', {
+                templateUrl: 'views/demo.html',
+                controller: 'DemoCtrl',
+                controllerAs: 'vm',
+                requireLogin: false
             })
             .otherwise({
                 redirectTo: '/'
