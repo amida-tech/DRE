@@ -58,7 +58,7 @@ function importService($http, $q, dataservice, history, notes) {
         var weightUrl = "/api/v1/oauth/withings/weight/all";
         getWeight(weightUrl, cb);
     }
-
+    
     function getWeight(url, cb) {
         var weightUrl = url;
         $http.get(weightUrl)

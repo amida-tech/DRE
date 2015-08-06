@@ -171,7 +171,7 @@ module.exports = function () {
 
     var metadata = require('../lib/metadata');
     app.use(metadata);
-    
+
     var developer = require('../lib/developer');
     app.use(developer);
     
