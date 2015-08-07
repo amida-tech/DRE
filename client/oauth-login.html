@@ -29,12 +29,6 @@
             <div class="container-fluid">
                 <div style="margin: 0px 20px;">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logout-menu">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
                         <a class="navbar-brand" href="../#/"><img class="img-navbar-logo" src="../images/bb-logo-vector.png">
                         </a>
                     </div>
@@ -50,7 +44,7 @@
                         <form method="post" role="form" name="vm.loginForm" action="/oauth2/login">
                             <div class="form-group">
                                 <label for="inputLogin">User ID:</label>
-                                <input type="text" class="form-control" name="username" required focus="true">
+                                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" class="form-control" name="username" required focus="true">
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword">Password:</label>
