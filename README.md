@@ -83,6 +83,13 @@ bower install
 
 To run, use `node server`
 
+#### Developer and Admin Apps
+
+These apps provide Developer and Admin interfaces to manage connections to 3rd party clients.
+They are in `client/admin` and `client/developer`.
+To set up, go to `config/app.js`, comment out `app.set('client_location', path.resolve(__dirname, '../client/app'));` and uncomment one of the two lines below depending on which app you'd like to run.
+
+
 #### Grunt commands:
 
 `grunt` - To run Server Side tests
@@ -100,10 +107,10 @@ To run, use `node server`
 ```
 # you need MongoDB, Redis, Node, and Selenium running
 # option selects which suite of tests to run (populate, scenarios, and/or medications)
-# screenshots and report are saved to ./protractor-result/
+# screenshots and report are saved to ./protractor-test-result/
 
 npm install -g protractor
-protractor client/test/conf.js --suite option
+protractor client/updated_test/conf.js --suite option
 
 ```
 

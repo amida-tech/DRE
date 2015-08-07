@@ -42,6 +42,17 @@ angular.module('phrPrototypeApp')
             }
         };
 
+        this.adminStatus = function (callback) {
+            $http.get('/api/v1/admin')
+                .success(function (data) {
+                    console.log(data);
+                    callback(null, true);
+                })
+                .error(function (err) {
+                    callback(err, false);
+                });
+        };
+
         this.login = function (username, password, callback) {
             // console.log("login service:", username, password);
             if (username && password) {

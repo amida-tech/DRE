@@ -1,0 +1,52 @@
+<div class="navbar navbar-default" role="navigation">
+    <!--Logged Out Navbar-->
+    <div class="container-fluid">
+        <!--div ng-if="false" class="container-fluid"-->
+        <div style="margin: 0px 20px;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logout-menu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/"><img class="img-navbar-logo" src="images/bb-logo-vector.png">
+                </a>
+            </div>
+            <div ng-hide="isAuthorized" class="collapse navbar-collapse" id="logout-menu">
+                <ul class="nav navbar-nav navbar-right ">
+                    <li><a href="#/admin/register">Sign Up</a>
+                    </li>
+                    <li><a href="#/admin/login">Log In</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12 container">
+    <h1 class="col-sm-offset-1 col-sm-4">Welcome to the DRE Admin Portal.</h1>
+    <div class="col-sm-4 col-sm-offset-3">
+        <div class="panel panel-default landing-login">
+            <div class="panel-body">
+                <form novalidate role="form" name="vm.loginForm" ng-submit="vm.mainLogin()">
+                    <div class="form-group">
+                        <label for="inputLogin">User ID:</label>
+                        <input type="text" class="form-control" name="inputLogin" ng-model="vm.inputLogin" required ng-required="true" ng-minLength="1" focus="true">
+                        <p ng-show="vm.loginForm.inputLogin.$invalid && !vm.loginForm.inputLogin.$pristine" class="help-block">Username or email is required.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword">Password:</label>
+                        <input type="password" class="form-control" name="inputPassword" ng-model="vm.inputPassword" required ng-required="true" ng-minLength="1">
+                        <p ng-show="vm.loginForm.inputPassword.$invalid && !vm.loginForm.inputPassword.$pristine" class="help-block">Password is required.</p>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-block btn-primary" ng-disabled="vm.loginForm.$invalid">Log In</button>
+                    <div ng-if="vm.error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{vm.error}}</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

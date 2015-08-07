@@ -217,6 +217,19 @@ angular
                         $location.path("/login");
                     }
                 }
+                if (next.permissions !== undefined) {
+                    authentication.adminStatus(function (err, admin) {
+                        if (err) {
+                            console.log('ADMIN ERROR:', err);
+                            event.preventDefault();
+                            $location.path("/login");
+                        } else {
+                            $rootScope.isAdmin = admin;
+                            console.log($rootScope.isAdmin);
+                        }
+                    });
+
+                }
             });
         });
     });

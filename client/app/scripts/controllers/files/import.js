@@ -70,7 +70,8 @@ function FilesImport($location, $window, importService, $http, format, record, d
             returnToFiles();
         });
     }
-    
+
+
     function getWeightHistory() {
         importService.getAllWeight(function (err) {
             if (err) {

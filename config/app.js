@@ -72,9 +72,9 @@ module.exports = function () {
     //to run fully built UI use this line (run "grunt build" in /client first)
     //app.set('client_location', path.resolve(__dirname, '../client/dist'));
 
-    //to run development version of UI use this line
+    //to run admin or developer apps comment out app and uncomment the branch you want to run
     app.set('client_location', path.resolve(__dirname, '../client/app'));
-
+    
     //app.set('client_location', path.resolve(__dirname, '../phr-prototype/dist'));
 
     //app.use(express.favicon(config.client.location + '/favicon.ico'));
@@ -171,6 +171,12 @@ module.exports = function () {
 
     var metadata = require('../lib/metadata');
     app.use(metadata);
+
+    var developer = require('../lib/developer');
+    app.use(developer);
+    
+    var admin = require('../lib/admin');
+    app.use(admin);
     
     var demo = require('../lib/demo');
     app.use(demo);

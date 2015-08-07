@@ -1,0 +1,64 @@
+<div class="navbar navbar-default" role="navigation">
+    <!--Logged Out Navbar-->
+    <div class="container-fluid">
+        <!--div ng-if="false" class="container-fluid"-->
+        <div style="margin: 0px 20px;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logout-menu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/"><img class="img-navbar-logo" src="images/bb-logo-vector.png">
+                </a>
+            </div>
+            <div ng-hide="isAuthorized" class="collapse navbar-collapse" id="logout-menu">
+                <ul class="nav navbar-nav navbar-right ">
+                    <li><a href="#/admin/register">Sign Up</a>
+                    </li>
+                    <li><a href="#/admin/login">Log In</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container col-sm-12 body-left">
+    <div class="col-sm-4 col-sm-offset-4">
+        <h4 class="text-center text-white">Admin Portal Registration</h4>
+
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="text-center">
+                    <h5>Note: All fields are required.</h5>
+                </div>
+
+                <form novalidate role="form" name="regForm1" ng-submit="nextStep()">
+                    <div class="form-group">
+                        <label for="inputEmail">Email Address:</label>
+                        <input type="email" class="form-control" name="inputEmail" ng-model="inputEmail" required ng-required="true" ng-minLength="1">
+                        <p ng-show="regForm1.inputEmail.$invalid && !regForm1.inputEmail.$pristine" class="help-block">Must be a valid email address.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword">Password:</label>
+                        <input type="password" class="form-control" name="inputPassword" ng-model="inputPassword" required ng-required="true">
+                        <p ng-show="regForm1.inputPassword.$invalid && !regForm1.inputPassword.$pristine" class="help-block">Must be a valid password.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRepeatPassword">Repeat Password:</label>
+                        <input type="password" class="form-control" name="inputRepeatPassword" ng-model="inputRepeatPassword" required ng-required="true">
+                        <p ng-show="regForm1.inputRepeatPassword.$invalid && !regForm1.inputRepeatPassword.$pristine" class="help-block">Must be a valide password</p>
+                    </div>
+                    <button id="finish" type="submit" class="btn btn-block btn-success">Complete</button>
+                    <div class="text-center">
+                        <div ng-if="error" class="text-center login-alert"><i class="fa fa-exclamation-circle"></i> {{error}}</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
